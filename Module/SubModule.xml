@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+	<Name value="CheatMenu"/>
+	<Id value="CheatMenu"/>
+	<Version value="v1.0.0"/>
+	<SingleplayerModule value="true"/>
+	<MultiplayerModule value="false"/>
+	<DefaultModule value="false"/>
+	<ModuleCategory value="Singleplayer"/>
+	<ModuleType value="Community"/>
+	<DependedModules>
+		<DependedModule Id="Native" DependentVersion="v1.4.8" Optional="false"/>
+		<DependedModule Id="SandBoxCore" DependentVersion="v1.4.8" Optional="false"/>
+		<DependedModule Id="Sandbox" DependentVersion="v1.4.8" Optional="false"/>
+	</DependedModules>
+	<Xmls>
+	</Xmls>
+	<SubModules>
+		<SubModule>
+			<Name value="CheatMenu"/>
+			<DLLName value="CheatMenu.dll"/>
+			<SubModuleClassType value="CheatMenu.SubModule"/>
+			<Tags>
+				<Tag key="DedicatedServerType" value="none"/>
+			</Tags>
+		</SubModule>
+	</SubModules>
+</Module>

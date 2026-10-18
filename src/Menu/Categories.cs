@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using CheatMenu.Cheats;
+// Oyunun konsol hileleri de TaleWorlds.CampaignSystem.CampaignCheats adında; onlar kayda "hile kullanıldı"
+// işareti koyar. Burada her zaman bizim sınıfımız kullanılsın.
+using CampaignCheats = CheatMenu.Cheats.CampaignCheats;
+
+namespace CheatMenu.Menu
+{
+    /// <summary>
+    /// Ana menü ve kategoriler. Her ShowX listeyi her seferinde yeniden kurar;
+    /// böylece aç/kapa etiketleri ve güncel değerler doğru görünür.
+    /// Bu dosya: kök + hileler. Categories.World.cs: Harita ve Adlandır. Categories.Editors.cs: editörler.
+    /// </summary>
+    public static partial class Categories
+    {
+        public static void ShowRoot()
+        {
+            MenuUI.ShowList("HİLE MENÜSÜ", new List<MenuEntry>
+            {
+                MenuEntry.Submenu("Para & Ekonomi", ShowEconomy),
+                MenuEntry.Submenu("Karakter", ShowCharacter),
+                MenuEntry.Submenu("Ordu / Parti", ShowParty),
+                MenuEntry.Submenu("Savaş içi", ShowCombat),
+                MenuEntry.Submenu("Harita", ShowMap),
+                MenuEntry.Submenu("Adlandır", ShowRename),
+                MenuEntry.Submenu("Kahraman editörü", ShowHeroEditorPick),
+                MenuEntry.Submenu("İlişkiler", ShowRelationPick),
+                MenuEntry.Submenu("Yerleşim editörü", ShowSettlementPick),
+                MenuEntry.Submenu("Eşya ekle", ShowItemCategories),
+                MenuEntry.Submenu("Klan & krallık", ShowPolitics),
+                MenuEntry.Submenu("Bilgi", ShowInfo),
+                MenuEntry.Submenu("Kurallar", ShowRules),
+            }, ShowRoot, "Kapat", null);
+        }
+
+        private static void ShowEconomy()
+        {
+            ShowCategory("Para & Ekonomi", new List<MenuEntry>
+            {
+                MenuEntry.Simple("+1.000 altın", () => CampaignCheats.AddGold(1000)),
+                MenuEntry.Simple("+10.000 altın", () => CampaignCheats.AddGold(10000)),
+                MenuEntry.Simple("+100.000 altın", () => CampaignCheats.AddGold(100000)),
+                MenuEntry.Custom("Özel miktar altın...", CampaignCheats.AddGold),
+                MenuEntry.Simple("+100 etki", () => CampaignCheats.AddInfluence(100)),
+                MenuEntry.Simple("+500 etki", () => CampaignCheats.AddInfluence(500)),
+                MenuEntry.Custom("Özel miktar etki...", CampaignCheats.AddInfluence),
+                MenuEntry.Simple("+100 tahıl", () => CampaignCheats.AddGrain(100)),
+            }, ShowEconomy);
+        }
+
+        private static void ShowCharacter()
+        {
+            ShowCategory("Karakter", new List<MenuEntry>
+            {
+                MenuEntry.Simple("+5 odak puanı", () => CampaignCheats.AddFocusPoints(5)),
+                MenuEntry.Custom("Özel miktar odak puanı...", CampaignCheats.AddFocusPoints),
+                MenuEntry.Simple("+2 attribute puanı", () => CampaignCheats.AddAttributePoints(2)),
+                MenuEntry.Custom("Özel miktar attribute puanı...", CampaignCheats.AddAttributePoints),
+                MenuEntry.Simple("Tüm yeteneklere +25", () => CampaignCheats.AddAllSkills(25)),
+                MenuEntry.Simple("Canı doldur", CampaignCheats.HealHero),
+            }, ShowCharacter);
+        }
+
+        private static void ShowParty()
+        {
+            ShowCategory("Ordu / Parti", new List<MenuEntry>
+            {
+                MenuEntry.Simple("+10 temel kültür askeri", () => CampaignCheats.AddBasicTroops(10)),
+                MenuEntry.Simple("+50 temel kültür askeri", () => CampaignCheats.AddBasicTroops(50)),
+                MenuEntry.Custom("Özel sayıda temel asker...", CampaignCheats.AddBasicTroops),
+                MenuEntry.Simple("+10 elit kültür askeri", () => CampaignCheats.AddEliteTroops(10)),
+                MenuEntry.Simple("Tüm askerlere terfi XP'si", CampaignCheats.GiveUpgradeXp),
+                MenuEntry.Simple("Yaralıları iyileştir", CampaignCheats.HealWounded),
+                MenuEntry.Simple("+50 moral", () => CampaignCheats.AddMorale(50)),
+                MenuEntry.Toggle("Parti hızı x2", () => CheatState.FastParty, v => CheatState.FastParty = v),
+            }, ShowParty);
+        }
+
+        private static void ShowCombat()
+        {
+            ShowCategory("Savaş içi", new List<MenuEntry>
+            {
+                MenuEntry.Toggle("Ölümsüzlük (Ben)", () => CheatState.GodModeMe, v => CheatState.GodModeMe = v),
+                MenuEntry.Toggle("Ölümsüzlük (Ordu)", () => CheatState.GodModeArmy, v => CheatState.GodModeArmy = v),
+                MenuEntry.Toggle("Tek vuruş (Ben)", () => CheatState.OneHitMe, v => CheatState.OneHitMe = v),
+                MenuEntry.Toggle("Tek vuruş (Ordu)", () => CheatState.OneHitArmy, v => CheatState.OneHitArmy = v),
+                MenuEntry.Toggle("Sınırsız cephane (Ben)", () => CheatState.InfiniteAmmoMe, v => CheatState.InfiniteAmmoMe = v),
+                MenuEntry.Toggle("Sınırsız cephane (Ordu)", () => CheatState.InfiniteAmmoArmy, v => CheatState.InfiniteAmmoArmy = v),
+                MenuEntry.Toggle("(Ordu) hilelerine müttefikleri de kat", () => CheatState.ArmyIncludesAllies,
+                    v => CheatState.ArmyIncludesAllies = v),
+            }, ShowCombat);
+        }
+
+        private static void ShowCategory(string title, List<MenuEntry> entries, Action reshow, string description = "") =>
+            MenuUI.ShowList(title, entries, reshow, "Geri", ShowRoot, description);
+    }
+}
