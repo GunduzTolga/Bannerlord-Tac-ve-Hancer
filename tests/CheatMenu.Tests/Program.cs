@@ -71,6 +71,9 @@ namespace CheatMenu.Tests
             Check("settings: party limit bonus -3 -> 0", ModSettings.Parse("PartyLimitBonus=-3").PartyLimitBonus == 0);
             Check("settings: no party limit 1", ModSettings.Parse("NoPartyLimit=1").NoPartyLimit);
             Check("settings: no party limit default off", !ModSettings.Parse("NoCompanionLimit=1").NoPartyLimit);
+            Check("settings: intrigue difficulty default normal", ModSettings.Parse("").IntrigueDifficulty == SchemeMath.NormalDifficulty);
+            Check("settings: intrigue difficulty hard", ModSettings.Parse("IntrigueDifficulty=2").IntrigueDifficulty == SchemeMath.HardDifficulty);
+            Check("settings: intrigue difficulty 7 -> normal", ModSettings.Parse("IntrigueDifficulty=7").IntrigueDifficulty == 1);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -80,10 +83,11 @@ namespace CheatMenu.Tests
             full.NoCompanionLimit = true;
             full.SetPartyLimitBonus(4);
             full.NoPartyLimit = true;
+            full.SetIntrigueDifficulty(0);
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
-                && back.PartyLimitBonus == 4 && back.NoPartyLimit);
+                && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -109,9 +113,161 @@ namespace CheatMenu.Tests
             Check("intrigue: null -> empty", IntrigueState.Parse(null).SaveTestMarker == null);
             Check("intrigue: garbage -> empty", IntrigueState.Parse("çöp\\x\n\t\t").SaveTestMarker == null);
 
+            IntrigueMathTests();
+            IntrigueStateTests();
+
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
         }
+
+        // Tasarım 5.4'teki örnek hesaplar. Bu testler bozulursa ya formül değişti ya da tasarım tablosu güncellenmeli.
+        private static void IntrigueMathTests()
+        {
+            SchemeInputs early = new SchemeInputs { Roguery = 40, TargetRoguery = 30, TargetClanTier = 2 };
+            CheckChance("murder A 2 phases", SchemeMath.MurderSuccess(Phases(early, 2)), 9);
+            CheckChance("murder A 5 phases", SchemeMath.MurderSuccess(Phases(early, 5)), 27);
+            early.HasReport = true;
+            CheckChance("murder A 5 phases + report", SchemeMath.MurderSuccess(Phases(early, 5)), 37);
+            CheckChance("discovery A", SchemeMath.MurderDiscovery(early), 11);
+
+            SchemeInputs mid = new SchemeInputs
+            {
+                Roguery = 120, Calculating = 1, HasReport = true,
+                TargetRoguery = 60, TargetClanTier = 4, TargetIsClanLeader = true, TargetInOwnSettlement = true,
+            };
+            CheckChance("murder B 2 phases", SchemeMath.MurderSuccess(Phases(mid, 2)), 9);
+            CheckChance("murder B 5 phases", SchemeMath.MurderSuccess(Phases(mid, 5)), 27);
+            mid.BribeLevel = 2;
+            CheckChance("murder B 5 phases + medium bribe", SchemeMath.MurderSuccess(Phases(mid, 5)), 37);
+            CheckChance("discovery B", SchemeMath.MurderDiscovery(mid), 9);
+
+            SchemeInputs late = new SchemeInputs
+            {
+                Roguery = 250, Calculating = 2, HasReport = true,
+                TargetRoguery = 100, TargetCalculating = 1, TargetClanTier = 6,
+                TargetIsClanLeader = true, TargetIsRuler = true, TargetInOwnSettlement = true,
+            };
+            CheckChance("murder C 2 phases (floor)", SchemeMath.MurderSuccess(Phases(late, 2)), 5);
+            CheckChance("murder C 5 phases", SchemeMath.MurderSuccess(Phases(late, 5)), 19);
+            late.BribeLevel = 3;
+            CheckChance("murder C 5 phases + big bribe", SchemeMath.MurderSuccess(Phases(late, 5)), 34);
+            CheckChance("discovery C", SchemeMath.MurderDiscovery(late), 7);
+
+            Check("cost A", SchemeMath.StartCost(SchemeKind.Murder, 2, false, false) == 2500);
+            Check("cost B", SchemeMath.StartCost(SchemeKind.Murder, 4, true, false) == 5000);
+            Check("cost C", SchemeMath.StartCost(SchemeKind.Murder, 6, true, true) == 13000);
+            Check("bribe C big", SchemeMath.BribeCost(13000, 3) == 26000);
+            Check("spy cost tier 3", SchemeMath.StartCost(SchemeKind.Spy, 3, true, false) == 1250);
+
+            // Sınırlar
+            SchemeInputs best = new SchemeInputs
+            {
+                Roguery = 300, Calculating = 2, HasReport = true, CompletedPhases = 5, EventSuccess = 99, BribeLevel = 3,
+                TargetIsPlayersCaptive = true, Difficulty = SchemeMath.EasyDifficulty,
+            };
+            CheckChance("murder cap 85", SchemeMath.MurderSuccess(best), 85);
+            best.TargetIsRuler = true;
+            CheckChance("murder ruler cap 70", SchemeMath.MurderSuccess(best), 70);
+            CheckChance("discovery floor 2", SchemeMath.MurderDiscovery(best), 2);
+            SchemeInputs worst = new SchemeInputs
+            {
+                TargetRoguery = 300, TargetCalculating = 2, TargetClanTier = 6, EventDiscovery = 30, Difficulty = SchemeMath.HardDifficulty,
+            };
+            CheckChance("discovery cap 40", SchemeMath.MurderDiscovery(worst), 40);
+            CheckChance("spy floor 20", SchemeMath.SpySuccess(worst), 20);
+            CheckChance("spy discovery cap 25", SchemeMath.SpyDiscovery(worst), 25);
+            CheckChance("spy unmet -10", SchemeMath.SpySuccess(new SchemeInputs { HasMet = false }), 40);
+            Check("event success capped at 15", SchemeMath.MurderSuccess(new SchemeInputs { EventSuccess = 50 })
+                == SchemeMath.MurderSuccess(new SchemeInputs { EventSuccess = 15 }));
+
+            Check("phase days murder r0 = 7", SchemeMath.PhaseDays(SchemeKind.Murder, 0) == 7);
+            Check("phase days murder r120 = 5", SchemeMath.PhaseDays(SchemeKind.Murder, 120) == 5);
+            Check("phase days murder r300 = 4", SchemeMath.PhaseDays(SchemeKind.Murder, 300) == 4);
+            Check("phase days spy r0 = 5", SchemeMath.PhaseDays(SchemeKind.Spy, 0) == 5);
+            Check("phase days spy r300 = 3", SchemeMath.PhaseDays(SchemeKind.Spy, 300) == 3);
+            Check("max schemes 1/2/3", SchemeMath.MaxActiveSchemes(124) == 1 && SchemeMath.MaxActiveSchemes(125) == 2
+                && SchemeMath.MaxActiveSchemes(225) == 3);
+            Check("secret chance", SchemeMath.SecretChance(0, 1) == 30 && SchemeMath.SecretChance(300, 1) == 80
+                && SchemeMath.SecretChance(300, 2) == 95);
+            Check("trace chance", SchemeMath.TraceChance(10, false, false) == 20 && SchemeMath.TraceChance(10, true, false) == 40
+                && SchemeMath.TraceChance(10, false, true) == 10 && SchemeMath.TraceChance(40, true, false) == 90);
+            Check("caught chance", SchemeMath.CaughtOnFailureChance(0) == 50 && SchemeMath.CaughtOnFailureChance(300) == 20);
+            Check("opportunity", SchemeMath.Opportunity(SchemeKind.Murder, 1) == 0 && SchemeMath.Opportunity(SchemeKind.Murder, 4) == 12
+                && SchemeMath.Opportunity(SchemeKind.Murder, 9) == 18 && SchemeMath.Opportunity(SchemeKind.Spy, 2) == 0);
+
+            // Tohumlu zar: aynı tohum + sayaç aynı sonucu verir; dağılım kabaca düzgün.
+            int c1 = 0, c2 = 0;
+            Check("dice deterministic", SchemeRandom.Roll100(42, ref c1) == SchemeRandom.Roll100(42, ref c2) && c1 == 1);
+            int counter = 0, low = 0, min = 100, max = 1;
+            for (int i = 0; i < 10000; i++)
+            {
+                int roll = SchemeRandom.Roll100(7, ref counter);
+                if (roll <= 30) low++;
+                min = Math.Min(min, roll);
+                max = Math.Max(max, roll);
+            }
+            Check("dice range 1..100", min == 1 && max == 100);
+            Check("dice ~30% <= 30 (" + low + ")", low > 2700 && low < 3300);
+        }
+
+        private static void IntrigueStateTests()
+        {
+            var state = new IntrigueState { SpymasterId = "spc_x", NextSchemeId = 4, Seed = 99, Rolls = 3, SaveTestMarker = "gün 5" };
+            state.Schemes.Add(new Scheme
+            {
+                Id = 3, Kind = SchemeKind.Murder, TargetId = "lord_1_1", StartDay = 10, Phase = 2, DaysIntoPhase = 3, PhaseDays = 6,
+                StartCost = 2500, Seed = -12345, Rolls = 7, EventSuccess = 8, EventDiscovery = -3, UsedEvents = { 1, 3 },
+                Method = SchemeMethod.Dagger, HalfSpeedNext = true, FeastRisk = true, PendingEvent = 5, AskedToExecute = true,
+            });
+            state.Reports.Add(new IntelReport
+            {
+                TargetId = "lord_1_1", TargetName = "Derthert", Day = 12, Location = "Pravend", Party = "120 asker",
+                Gold = "~20.000", Relations = "hükümdar: 10\tsen: -5", Traits = "Onur +1",
+            });
+            state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true });
+            state.CooldownUntil["lord_2"] = 200;
+            state.AlertUntil["lord_3"] = 300;
+            state.Notices.Add(new Notice { Title = "Başlık", Text = "satır 1\nsatır 2", HeroId = "lord_1_1" });
+            state.LiegeDemand = new LiegeDemand { KingdomId = "vlandia", VictimName = "X", Gold = 10000, Influence = 100 };
+            state.AddLog(12, "olay");
+
+            IntrigueState back = IntrigueState.Parse(state.Write());
+            Scheme s = back.Schemes.Count == 1 ? back.Schemes[0] : null;
+            Check("state: meta", back.SpymasterId == "spc_x" && back.NextSchemeId == 4 && back.Seed == 99 && back.Rolls == 3
+                && back.SaveTestMarker == "gün 5");
+            Check("state: scheme", s != null && s.Id == 3 && s.Kind == SchemeKind.Murder && s.TargetId == "lord_1_1"
+                && s.StartDay == 10 && s.Phase == 2 && s.DaysIntoPhase == 3 && s.PhaseDays == 6 && s.StartCost == 2500
+                && s.Seed == -12345 && s.Rolls == 7 && s.EventSuccess == 8 && s.EventDiscovery == -3
+                && s.UsedEvents.Count == 2 && s.UsedEvents[1] == 3 && s.Method == SchemeMethod.Dagger
+                && s.HalfSpeedNext && s.FeastRisk && s.PendingEvent == 5 && !s.AwaitingSpyChoice && s.AskedToExecute);
+            IntelReport r = back.Reports.Count == 1 ? back.Reports[0] : null;
+            Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
+            Check("state: secret", back.Secrets.Count == 1 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed);
+            Check("state: cooldown/alert", back.CooldownUntil["lord_2"] == 200 && back.AlertUntil["lord_3"] == 300);
+            Check("state: notice", back.Notices.Count == 1 && back.Notices[0].Text == "satır 1\nsatır 2" && back.Notices[0].HeroId == "lord_1_1");
+            Check("state: liege", back.LiegeDemand != null && back.LiegeDemand.Gold == 10000 && back.LiegeDemand.KingdomId == "vlandia");
+            Check("state: log", back.Log.Count == 1 && back.Log[0].Text == "olay");
+
+            Check("state: report valid at 72", back.HasValidReport("lord_1_1", 72) && !back.HasValidReport("lord_1_1", 73));
+            Check("state: cooldown", back.IsOnCooldown("lord_2", 199) && !back.IsOnCooldown("lord_2", 200));
+            back.RemoveExpired(250);
+            Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3"));
+
+            for (int i = 0; i < 30; i++) back.AddLog(i, "e" + i);
+            Check("state: log capped", back.Log.Count == IntrigueState.MaxLogEntries && back.Log[back.Log.Count - 1].Text == "e29");
+
+            IntrigueState bad = IntrigueState.Parse("scheme\tkind=9\ttarget=x\nscheme\tkind=2\nsecret\tkind=77\ttarget=y\nmeta\tnext=-5");
+            Check("state: bad records skipped", bad.Schemes.Count == 0 && bad.Secrets.Count == 0 && bad.NextSchemeId == 1);
+        }
+
+        private static SchemeInputs Phases(SchemeInputs inputs, int phases)
+        {
+            inputs.CompletedPhases = phases;
+            return inputs;
+        }
+
+        private static void CheckChance(string label, int actual, int expected) =>
+            Check(label + ": " + actual + " (expected " + expected + ")", actual == expected);
 
         private static void Expect(string input, bool expectedOk, int expectedValue = 0)
         {
