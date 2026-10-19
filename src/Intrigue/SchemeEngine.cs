@@ -161,7 +161,8 @@ namespace CheatMenu.Intrigue
             else
             {
                 MenuUI.Info(SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): aşama " + scheme.Phase + "/" + max + " tamamlandı"
-                    + (scheme.Phase == min ? " - artık harekete geçebilirsin (Entrika menüsü)" : ""));
+                    + (scheme.Phase >= max ? " - plan hazır; hedef müsait olunca sorulacak"
+                        : scheme.Phase == min ? " - artık harekete geçebilirsin (Entrika menüsü)" : ""));
                 if (scheme.Phase >= max) scheme.AskedToExecute = false;
             }
 
@@ -185,6 +186,11 @@ namespace CheatMenu.Intrigue
 
         private static void Resolve(IntrigueState state, Scheme scheme, Hero spymaster, Hero target)
         {
+            if (scheme.Kind == SchemeKind.Blackmail && SchemeFactors.BestSecret(state, target) == null)
+            {
+                Close(state, scheme, "Şantaj boşa çıktı: elindeki sır bu arada herkesçe duyuldu, artık bir koz değil.", target);
+                return;
+            }
             state.Schemes.Remove(scheme);
             SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme);
             bool success = scheme.Roll100() <= (CheatState.IntrigueAlwaysSucceed ? 100 : SchemeMath.Success(scheme.Kind, inputs));
@@ -236,6 +242,8 @@ namespace CheatMenu.Intrigue
         public static string CannotExecuteReason(Scheme scheme, bool ignoreMinPhases = false)
         {
             if (!SchemeRules.IsStrike(scheme.Kind)) return "Yalnızca suikast ve kaçırmada harekete geçilir";
+            if (!State.Schemes.Contains(scheme)) return "Bu entrika artık sürmüyor";
+            if (Hero.MainHero.IsPrisoner) return "Esirken harekete geçemezsin";
             if (!ignoreMinPhases && scheme.Phase < SchemeRules.MinPhases(scheme.Kind))
                 return "En az " + SchemeRules.MinPhases(scheme.Kind) + " aşama tamamlanmalı";
             Hero spymaster = SchemeFactors.Spymaster(State);

@@ -304,6 +304,12 @@ namespace CheatMenu.Menu
             foreach (Secret secret in state.Secrets.Where(s => s.TargetId == report.TargetId))
             {
                 string name = SecretRules.Name(secret.Kind);
+                bool blackmailRunning = state.FindScheme(report.TargetId)?.Kind == SchemeKind.Blackmail;
+                if (!secret.Exposed && blackmailRunning)
+                {
+                    entries.Add(MenuEntry.Simple("İfşa et: " + name + " (şantaj sürerken olmaz)", () => MenuUI.Error("Önce şantajı bitir ya da iptal et")));
+                    continue;
+                }
                 entries.Add(secret.Exposed
                     ? MenuEntry.Simple("(ifşa edildi) " + name, () => MenuUI.Info(name + " zaten herkesin ağzında"))
                     : MenuEntry.Submenu("İfşa et: " + name + "...", () => MenuUI.Confirm("Sır ifşası: " + report.TargetName,

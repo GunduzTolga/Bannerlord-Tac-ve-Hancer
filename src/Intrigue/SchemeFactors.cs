@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CheatMenu.Intrigue.Core;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Settlements;
@@ -68,10 +69,14 @@ namespace CheatMenu.Intrigue
             if (kind == SchemeKind.Kidnap ? !h.IsLord && !h.IsWanderer : !h.IsLord && !h.IsWanderer && !h.IsNotable)
                 return "bu kişi " + SchemeRules.Name(kind).ToLower(new System.Globalization.CultureInfo("tr-TR")) + " hedefi olamaz";
             if (kind == SchemeKind.Kidnap && h.IsPrisoner) return "hedef zaten birinin esiri";
+            if (kind == SchemeKind.Murder && !CanBeMurdered(h)) return "bu kampanyada cinayetle ölüm kapalı (Doğum ve Ölüm ayarı)";
             if (!h.HasMet && !state.HasValidReport(h.StringId, Today)) return "tanışmadığın biri için güncel istihbarat raporu gerekir";
             if (h.IsFugitive || !IsLocatable(h)) return "hedefin yeri belli değil";
             return null;
         }
+
+        /// <summary>Oyun bu kahramanın cinayetle ölmesine izin veriyor mu (Doğum ve Ölüm kapalıysa vermez).</summary>
+        public static bool CanBeMurdered(Hero h) => h.CanDie(KillCharacterAction.KillCharacterActionDetail.Murdered);
 
         /// <summary>Hedefin ifşa edilmemiş en ağır sırrı (şantajın gücü buna bağlı); yoksa null.</summary>
         public static Secret BestSecret(IntrigueState state, Hero h) =>

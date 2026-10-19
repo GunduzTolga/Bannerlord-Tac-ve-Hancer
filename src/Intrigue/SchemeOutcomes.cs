@@ -60,6 +60,11 @@ namespace CheatMenu.Intrigue
 
         public static void MurderSucceeded(IntrigueState state, Scheme scheme, Hero spymaster, Hero target, int discovery, bool captive)
         {
+            if (!SchemeFactors.CanBeMurdered(target))
+            {
+                Notify(state, "Suikast olmadı: " + target.Name, "Bu kampanyada cinayetle ölüm kapalı (Doğum ve Ölüm ayarı); plan dağıldı.", target);
+                return;
+            }
             int trace = SchemeMath.TraceChance(discovery, captive, scheme.Method == SchemeMethod.Accident);
             bool traced = !CheatState.IntrigueNeverDiscovered && scheme.Roll100() <= trace;
             Victim victim = Victim.Of(target);

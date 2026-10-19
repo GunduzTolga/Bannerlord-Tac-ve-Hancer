@@ -27,11 +27,14 @@ namespace CheatMenu.Intrigue
 
         private static bool _open;
         private static int _lastSeenActive;
-        private static int _pausedUntil;
+        private static bool _paused;
+        private static int _pausedSince;
 
         public static void Tick()
         {
-            if (Environment.TickCount - _pausedUntil < 0) return;
+            // TickCount ~25 günde bir negatife döner; bu yüzden mutlak değil, geçen süre karşılaştırılır.
+            if (_paused && Environment.TickCount - _pausedSince < ErrorPauseMs) return;
+            _paused = false;
             try
             {
                 TickCore();
@@ -39,7 +42,8 @@ namespace CheatMenu.Intrigue
             catch (Exception ex)
             {
                 _open = false;
-                _pausedUntil = Environment.TickCount + ErrorPauseMs;
+                _paused = true;
+                _pausedSince = Environment.TickCount;
                 MenuUI.Error("Entrika popup'ı gösterilemedi: " + ex.Message);
                 Debug.Print("[CheatMenu] intrigue popup failed: " + ex);
             }
@@ -87,8 +91,9 @@ namespace CheatMenu.Intrigue
                 ShowSpyChoice(state, next);
                 return;
             }
-            next = state.Schemes.FirstOrDefault(s => s.Kind == SchemeKind.Murder && !s.AskedToExecute
-                && s.Phase >= SchemeRules.MaxPhases(s.Kind));
+            // Hedef savaştaysa ya da casus başı esirse sorulmaz; engel kalkınca sorulur (tasarım 5.2.4).
+            next = state.Schemes.FirstOrDefault(s => SchemeRules.IsStrike(s.Kind) && !s.AskedToExecute
+                && s.Phase >= SchemeRules.MaxPhases(s.Kind) && SchemeEngine.CannotExecuteReason(s) == null);
             if (next != null) ShowExecuteAsk(next);
         }
 
@@ -281,7 +286,7 @@ namespace CheatMenu.Intrigue
                     apply();
                 };
             }
-            ShowChoice("Suikast (" + target.Name + "): plan hazır",
+            ShowChoice(SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): plan hazır",
                 "Hazırlıklar tamamlandı; daha fazla beklemek bir şey kazandırmaz. Ne zaman vuracağına sen karar ver.", options);
         }
 

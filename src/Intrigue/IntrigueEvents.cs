@@ -235,6 +235,8 @@ namespace CheatMenu.Intrigue
             if (def == null || target == null || !target.IsAlive || spymaster == null) return false;
 
             var context = new Context { State = state, Scheme = scheme, Target = target, Spymaster = spymaster };
+            // Seçildiğinden beri durum değişmiş olabilir (hedef şehirden çıktı vs.): koşul tutmuyorsa olay düşer.
+            if (!def.Condition(context)) return false;
             title = SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): " + def.Title;
             text = def.Text(context);
             options = def.Options(context);

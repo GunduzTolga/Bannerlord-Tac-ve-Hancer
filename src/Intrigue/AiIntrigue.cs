@@ -39,7 +39,10 @@ namespace CheatMenu.Intrigue
             if (plotter == null || target == null) return;
 
             int today = SchemeFactors.Today;
-            bool kidnap = plotter.PartyBelongedTo != null && target != Hero.MainHero && state.Roll100() <= KidnapShare;
+            bool canKidnap = plotter.PartyBelongedTo != null && target != Hero.MainHero;
+            bool canMurder = SchemeFactors.CanBeMurdered(target);
+            if (!canKidnap && !canMurder) return;
+            bool kidnap = canKidnap && (!canMurder || state.Roll100() <= KidnapShare);
             state.AiPlots.Add(new AiPlot
             {
                 Id = state.NextPlotId++,
@@ -137,7 +140,7 @@ namespace CheatMenu.Intrigue
                     continue;
                 }
                 if (today < plot.ResolveDay) continue;
-                if (SchemeFactors.InBattle(target))
+                if (SchemeFactors.InBattle(target) || (plot.Kind == SchemeKind.Kidnap && target.IsPrisoner))
                 {
                     plot.ResolveDay = today + 3;
                     continue;
@@ -160,8 +163,10 @@ namespace CheatMenu.Intrigue
         private static void Resolve(IntrigueState state, AiPlot plot, Hero plotter, Hero target)
         {
             int chance = Math.Max(5, SchemeMath.Success(plot.Kind, Inputs(state, plotter, target)) - (plot.Protected ? SchemeMath.ProtectionBonus : 0));
-            bool success = plot.Roll100() <= chance;
             bool kidnap = plot.Kind == SchemeKind.Kidnap;
+            // Partisi dağılmış entrikacı kaçıramaz; cinayet kapalı kampanyada öldüremez. İkisi de başarısızlık sayılır, asla öbürüne dönmez.
+            bool possible = kidnap ? plotter.PartyBelongedTo != null : SchemeFactors.CanBeMurdered(target);
+            bool success = possible && plot.Roll100() <= chance;
             bool known = plot.Detected || plot.Roll100() <= (success ? IdentifyAfterSuccess : IdentifyAfterFailure);
             if (known && !plot.Detected) Expose(state, plotter, true);
             string who = known ? "\n\nArkasında " + plotter.Name + " (" + SchemeFactors.Affiliation(plotter) + ") var. Hakkında rapor ve \"suikast planı\" sırrı artık elinde."
@@ -178,7 +183,7 @@ namespace CheatMenu.Intrigue
                 return;
             }
 
-            if (kidnap && plotter.PartyBelongedTo != null)
+            if (kidnap)
             {
                 TakePrisonerAction.Apply(plotter.PartyBelongedTo.Party, target);
                 SchemeOutcomes.Notify(state, targetName + " kaçırıldı!",
