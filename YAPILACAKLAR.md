@@ -2,7 +2,7 @@
 
 Son güncelleme: 19 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna kuruldu.
 Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
-**Kademeye göre asker ekleme** ve **yoldaş sınırını kaldır** kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
+**Kademeye göre asker ekleme**, **yoldaş sınırını kaldır** ve **parti sayısı sınırı** kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
 
 > ⚠️ Telefondan kod yazılıp GitHub'a gönderilebilir, ama **derleyip oyuna kurmak bilgisayar ister**
 > (Visual Studio + oyunun DLL'leri). Telefonda yapılanlar, bilgisayarda `build.ps1` çalışınca oyuna gelir.
@@ -22,6 +22,11 @@ Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 - [ ] Kurallar → **Yoldaş sınırını kaldır** AÇIK → klan ekranında yoldaş sınırı 999 görünüyor
 - [ ] Sınır dolduktan sonra tavernada yeni bir yoldaş **işe alınabiliyor** (eskiden "daha fazla yoldaş alamazsın" deniyordu)
 - [ ] KAPALI → sınır klan kademesine göre normale dönüyor (fazla yoldaşlar gitmez, sadece yenisi alınamaz)
+
+### Parti sayısı sınırı — yeni
+- [ ] Kurallar → **Parti sayısı sınırına ekle** → 3 yaz → klan ekranının Partiler sekmesinde sınır 3 artmış
+- [ ] Sınır dolduktan sonra yeni parti **kurulabiliyor**
+- [ ] **Parti sayısı sınırını kaldır** AÇIK → sınır 999; KAPALI → yine "normal + ekleme"
 
 ### Faz 3A — Klan & krallık, Bilgi
 - [ ] Bağımsızken bir krallığa **vasal olarak katıl**, sonra **krallığından ayrıl**

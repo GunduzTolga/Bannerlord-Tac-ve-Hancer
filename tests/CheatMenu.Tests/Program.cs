@@ -63,6 +63,12 @@ namespace CheatMenu.Tests
             Check("settings: no companion limit 1", ModSettings.Parse("NoCompanionLimit=1").NoCompanionLimit);
             Check("settings: no companion limit default off", !ModSettings.Parse("NoLearningLimit=1").NoCompanionLimit);
             Check("settings: no companion limit garbage -> off", !ModSettings.Parse("NoCompanionLimit=evet").NoCompanionLimit);
+            Check("settings: party limit bonus 7", ModSettings.Parse("PartyLimitBonus=7").PartyLimitBonus == 7);
+            Check("settings: party limit bonus 100", ModSettings.Parse("PartyLimitBonus=100").PartyLimitBonus == 100);
+            Check("settings: party limit bonus 101 -> 0", ModSettings.Parse("PartyLimitBonus=101").PartyLimitBonus == 0);
+            Check("settings: party limit bonus -3 -> 0", ModSettings.Parse("PartyLimitBonus=-3").PartyLimitBonus == 0);
+            Check("settings: no party limit 1", ModSettings.Parse("NoPartyLimit=1").NoPartyLimit);
+            Check("settings: no party limit default off", !ModSettings.Parse("NoCompanionLimit=1").NoPartyLimit);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -70,9 +76,12 @@ namespace CheatMenu.Tests
             full.SetPartySizeBonus(100);
             full.NoLearningLimit = true;
             full.NoCompanionLimit = true;
+            full.SetPartyLimitBonus(4);
+            full.NoPartyLimit = true;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
-                && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit);
+                && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
+                && back.PartyLimitBonus == 4 && back.NoPartyLimit);
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;

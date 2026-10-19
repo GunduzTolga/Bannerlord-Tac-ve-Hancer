@@ -22,7 +22,13 @@ namespace CheatMenu.Menu
                     v => Rules.Change(s => s.NoLearningLimit = v, null)),
                 MenuEntry.Toggle("Yoldaş sınırını kaldır", () => Rules.Settings.NoCompanionLimit,
                     v => Rules.Change(s => s.NoCompanionLimit = v, null)),
-            }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz.");
+                MenuEntry.Range("Parti sayısı sınırına ekle: +" + Rules.Settings.PartyLimitBonus, 0, ModSettings.MaxPartyLimitBonus,
+                    () => Rules.Settings.PartyLimitBonus,
+                    v => Rules.Change(s => s.SetPartyLimitBonus(v), "Parti sayısı sınırına ekleme: +" + v)),
+                MenuEntry.Toggle("Parti sayısı sınırını kaldır", () => Rules.Settings.NoPartyLimit,
+                    v => Rules.Change(s => s.NoPartyLimit = v, null)),
+            }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. "
+                + "Parti sayısı sınırı = klanının aynı anda kurabileceği parti sayısı (kaldırma açıkken ekleme yok sayılır).");
         }
 
         private static MenuEntry Choice(string name, int[] options, Func<int> current, Action<int> set, Func<int, string> format) =>

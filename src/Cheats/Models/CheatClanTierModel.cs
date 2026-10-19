@@ -6,13 +6,14 @@ using TaleWorlds.Localization;
 namespace CheatMenu.Cheats.Models
 {
     /// <summary>
-    /// "Yoldaş sınırını kaldır": oyuncu klanının yoldaş sınırı (Clan.CompanionLimit) pratikte sınırsız olur.
-    /// Klan kademesi, parti sayısı sınırı ve diğer 13 üye olduğu gibi delege edilir.
+    /// Oyuncu klanının yoldaş sınırı (Clan.CompanionLimit) ve parti sayısı sınırı (Clan.WarPartyLimit):
+    /// "kaldır" açıkken pratikte sınırsız, değilse parti sayısına ayarlanan ekleme yapılır.
+    /// Klan kademesi ve diğer 12 üye olduğu gibi delege edilir.
     /// </summary>
     public sealed class CheatClanTierModel : ClanTierModel
     {
         // int.MaxValue değil: oyunda sınıra ekleme yapan bir hesap taşmasın; klan ekranında da okunur kalsın.
-        private const int NoLimitCompanions = 999;
+        private const int NoLimit = 999;
 
         public override int MinClanTier => BaseModel.MinClanTier;
         public override int MaxClanTier => BaseModel.MaxClanTier;
@@ -32,13 +33,17 @@ namespace CheatMenu.Cheats.Models
 
         public override int GetRequiredRenownForTier(int tier) => BaseModel.GetRequiredRenownForTier(tier);
 
-        public override int GetPartyLimitForTier(Clan clan, int clanTierToCheck) =>
-            BaseModel.GetPartyLimitForTier(clan, clanTierToCheck);
+        public override int GetPartyLimitForTier(Clan clan, int clanTierToCheck)
+        {
+            int limit = BaseModel.GetPartyLimitForTier(clan, clanTierToCheck);
+            if (clan != Clan.PlayerClan) return limit;
+            return SettingsStore.Current.NoPartyLimit ? Math.Max(limit, NoLimit) : limit + SettingsStore.Current.PartyLimitBonus;
+        }
 
         public override int GetCompanionLimit(Clan clan)
         {
             int limit = BaseModel.GetCompanionLimit(clan);
-            return SettingsStore.Current.NoCompanionLimit && clan == Clan.PlayerClan ? Math.Max(limit, NoLimitCompanions) : limit;
+            return SettingsStore.Current.NoCompanionLimit && clan == Clan.PlayerClan ? Math.Max(limit, NoLimit) : limit;
         }
     }
 }
