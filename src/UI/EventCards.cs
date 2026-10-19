@@ -224,12 +224,24 @@ namespace CheatMenu.UI
                     },
                 })
                 .ToList();
+            options.Add(new CardOption
+            {
+                Label = "Hizmetine davet et (%" + Recruitment.Chance(hero) + "): kabul ederse klanına katılır",
+                DisabledHint = Recruitment.Blocked(state, prisoner),
+                Apply = () =>
+                {
+                    Recruitment.Offer(SchemeEngine.State, prisoner);
+                    afterwards?.Invoke();
+                },
+            });
             var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
             options.Add(cancel);
-            Show("SORGU", "Esir: " + hero.Name,
+            Show("ESİR", "Esir: " + hero.Name,
                 hero.Name + " (" + SchemeFactors.Affiliation(hero) + ") " + prisoner.WhereText.ToLower(Tr.Culture) + ".\n\n"
                 + "Konuşursa hakkında rapor alırsın; belki bir sırrını, belki efendisi hakkında bilgi de kaçırır. "
-                + "Aynı esir " + InterrogationRules.CooldownDays + " günde bir sorgulanabilir.",
+                + "Aynı esir " + InterrogationRules.CooldownDays + " günde bir sorgulanabilir.\n\n"
+                + "Ya da hizmetine davet et: kendi isteğiyle kabul ederse klanına katılır, eski klanı bunu ihanet sayar. "
+                + "Reddederse esir kalır (fidye oyunun kendi sistemi). Klan liderleri ve evliler kabul etmez.",
                 CardImages.Interrogation, hero, options, cancel, null);
         }
 

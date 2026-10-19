@@ -29,6 +29,22 @@ efendileri hakkında bilgi. Mevcut rapor, sır ve kart sistemlerini kullanır, y
 - **Başarısızlık:** bir şey öğrenilmez; bedeller yine ödenir (baskıda ilişki ve Merhamet, anlaşmada esir yine de bırakılır: söz verdin).
 - Zarlar kaydın tohumuyla atılır: kaydı yükleyip tekrar denemek sonucu değiştirmez.
 
+## Hizmetine davet
+
+Kullanıcı isteği: "Esire seçenek sunarsın, sana katılıp belirlediğin işi yapması için. Katılmazsa zindana gider ya da fidyesini
+ödeyip çıkartırlar." Oyunda esir soylular yalnızca fidye, serbest bırakma ya da idam için var; hizmete almak yok.
+
+- **Kim:** elindeki (partindeki ya da o an bulunduğun kalenin zindanındaki) yetişkin lord ya da leydi. Klan liderleri, hükümdarlar
+  ve evliler kabul etmez (klanını ya da eşini bırakmaz).
+- **Kabul olasılığı** (%5–75): 10 + seninle ilişki/2; kendi klan lideriyle arası kötüyse +, iyiyse −; −10 × Onur (sadık kalır);
+  +5 × Hesapçı (fırsatı tartar); + Charm/10; +5 × (senin klan kademen − onunki); zorluk ±10. Örnek: seni seven (+30), klan
+  liderinden nefret eden (−30) biri, Charm 100: %50.
+- **Kabul ederse:** serbest kalır, kendi isteğiyle klanına ve partine katılır (ilişki +10). Ona oyunun kendi görevlerini verirsin:
+  parti, vali, kervan; ya da casus başı yaparsın. Eski klan lideri bunu ihanet sayar (onunla −20, seninle −10).
+- **Reddederse:** esirin olarak kalır; fidye ve serbest bırakma oyunun kendi sistemi. 30 gün yeniden sorulmaz.
+- **Nerede:** Entrika ekranı > Esirler > "Esirle konuş..." kartında "Hizmetine davet et (%N)"; klasik menüde de aynı kart.
+  Kabul kartının resmi `sonuc_hizmet_yemini`.
+
 ## İçerik politikası
 
 Sahne yok, yalnızca metin. Baskı "tehdit ve korkutma"dır; işkence, şiddet tasviri ya da cinsel içerik yok.

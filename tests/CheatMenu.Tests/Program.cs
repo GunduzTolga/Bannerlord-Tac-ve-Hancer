@@ -148,6 +148,7 @@ namespace CheatMenu.Tests
             RomanceTests();
             CrisisTests();
             HouseTests();
+            RecruitTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -343,6 +344,7 @@ namespace CheatMenu.Tests
             state.GiftUntil["lord_13"] = 248;
             state.Tension["vlandia"] = 55;
             state.Tension["empire"] = 0;
+            state.RecruitUntil["lord_7"] = 210;
             state.Houses.Add(new House { TownId = "town_V1", Staff = 5, Share = HouseShare.Fair, Since = 120 });
             state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
@@ -380,6 +382,7 @@ namespace CheatMenu.Tests
             Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
             Check("state: audiences", back.Audiences.Count == 2 && back.Audiences[0].Relation == 3 && back.Audiences[0].Asked
                 && !back.Audiences[1].Asked && back.GiftUntil["lord_13"] == 248);
+            Check("state: recruit cooldown", back.RecruitUntil.Count == 1 && back.RecruitUntil["lord_7"] == 210);
             Check("state: house", back.Houses.Count == 1 && back.HouseIn("town_V1") != null && back.Houses[0].Staff == 5
                 && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null);
             Check("state: tension", back.TensionWith("vlandia") == 55 && !back.Tension.ContainsKey("empire") && back.TensionWith("nope") == 0);
@@ -471,6 +474,18 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Esiri hizmetine davet: tasarımdaki örnekler.</summary>
+        private static void RecruitTests()
+        {
+            const int normal = SchemeMath.NormalDifficulty;
+            CheckChance("recruit: neutral, charm 100", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, normal), 20);
+            CheckChance("recruit: likes you, hates own leader", RecruitRules.Chance(30, -30, 0, 0, 100, 3, 3, normal), 50);
+            CheckChance("recruit: honorable and loyal", RecruitRules.Chance(0, 40, 2, 0, 0, 3, 3, normal), 5);
+            CheckChance("recruit: calculating, bigger clan", RecruitRules.Chance(10, 0, 0, 1, 50, 5, 2, normal), 40);
+            CheckChance("recruit: cap", RecruitRules.Chance(100, -100, -2, 2, 300, 6, 1, SchemeMath.EasyDifficulty), 75);
+            CheckChance("recruit: hard", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, SchemeMath.HardDifficulty), 10);
         }
 
         /// <summary>Gece evi: tasarımdaki sayılar.</summary>
