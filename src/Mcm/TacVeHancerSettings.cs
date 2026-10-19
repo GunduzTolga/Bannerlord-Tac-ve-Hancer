@@ -116,12 +116,12 @@ namespace CheatMenu.Mcm
         // ---- Arayüz ----
 
         [SettingPropertyDropdown("Entrika ekranı kısayolu", Order = 0, RequireRestart = false,
-            HintText = "Haritadayken entrika ekranını açar/kapatır. Oyunun kendi harita tuşlarıyla çakışmayanlar listelenir. Insert menüsü her zaman çalışır.")]
+            HintText = "Klan ekranını Entrika sekmesinde açar/kapatır. Oyunun kendi harita tuşlarıyla çakışmayanlar listelenir. Insert menüsü her zaman çalışır.")]
         [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
         public Dropdown<string> ScreenHotkey { get; set; } = new Dropdown<string>(ModSettings.ScreenHotkeyNames, ModSettings.DefaultScreenHotkey);
 
         [SettingPropertyDropdown("Haritadaki Entrika düğmesi", Order = 1, RequireRestart = false,
-            HintText = "Düğmenin yeri: haritanın üst kenarı ya da oyunun sol alttaki harita çubuğu (Klan ve Krallık düğmelerinin yanında). Harita çubuğu seçeneği kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
+            HintText = "Entrika düğmesinin yeri: oyunun sol alttaki harita çubuğu (varsayılan; Klan ve Krallık düğmelerinin yanında) ya da haritanın üst kenarı. Düğme Klan ekranını Entrika sekmesinde açar; sekme her zaman Klan ekranında, Birlikler ile Tımarlar arasında. Harita çubuğu seçeneği kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
         [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
         public Dropdown<string> MapButtonPosition { get; set; } = new Dropdown<string>(ModSettings.MapButtonPositionNames, ModSettings.DefaultMapButtonPosition);
 
@@ -146,6 +146,13 @@ namespace CheatMenu.Mcm
             _syncing = true;
             try
             {
+                if (e.PropertyName == LoadingComplete && SettingsStore.ConsumeMigration())
+                {
+                    // Ayar dosyası bu açılışta yeni sürüme taşındı: MCM'in kayıtlı eski değeri onu ezmesin, MCM taşınanı alsın.
+                    CopyFrom(SettingsStore.Current);
+                    BaseSettingsProvider.Instance?.SaveSettings(this);
+                    return;
+                }
                 ApplyTo(SettingsStore.Current);
                 SettingsStore.Save();
                 TimeSpeed.MarkChanged();

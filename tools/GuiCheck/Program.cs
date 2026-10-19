@@ -23,8 +23,23 @@ static class Program
         { "TvhMapButton", "CheatMenu.UI.ViewModels.MapButtonVM" },
     };
 
-    // Yalnızca her oyun sürümünde bulunduğundan emin olduğumuz sprite'lar.
-    static readonly HashSet<string> AllowedSprites = new HashSet<string> { "BlankWhiteSquare_9" };
+    // Kullandığımız oyun sprite'ları: yalnızca HER ZAMAN YÜKLÜ kategorilerden (ui_group1, ui_textures). Başka bir ekranın
+    // kategorisindeki sprite (ör. ui_clan) o ekran kapalıyken boş çizilir. "--game" verilirse her biri oyunda doğrulanır.
+    static readonly HashSet<string> AllowedSprites = new HashSet<string>
+    {
+        "BlankWhiteSquare_9",
+        @"StdAssets\Popup\canvas", @"StdAssets\Popup\canvas_gradient", @"StdAssets\Popup\divider",
+        @"SPGeneral\SPOptions\options_divider_flat",
+        "button_default_9", "button_default_hover_9", "done_button_9", "done_button_hover_9",
+        "rounded_canvas_9", "rounded_frame_9", "stone_texture_continuous",
+        "Scrollbar.Vertical.Handle",
+    };
+
+    // Prefab'larımızda doğrudan kullandığımız oyun fırçaları (sprite'ları da her zaman yüklü olmalı).
+    static readonly HashSet<string> GameBrushes = new HashSet<string> { "Popup.Frame" };
+
+    // Oyunun her zaman yüklediği sprite kategorileri (SpriteData'da AlwaysLoad).
+    static readonly HashSet<string> AlwaysLoadedCategories = new HashSet<string> { "ui_group1", "ui_textures", "ui_fonts", "ui_fullbackgrounds" };
 
     static readonly List<string> Errors = new List<string>();
     static readonly Dictionary<string, Type> WidgetTypes = new Dictionary<string, Type>();
@@ -37,9 +52,16 @@ static class Program
 
     static int Main(string[] args)
     {
+        string game = null;
+        int gameArg = Array.IndexOf(args, "--game");
+        if (gameArg >= 0 && gameArg + 1 < args.Length)
+        {
+            game = args[gameArg + 1];
+            args = args.Where((_, i) => i != gameArg && i != gameArg + 1).ToArray();
+        }
         if (args.Length < 3)
         {
-            Console.WriteLine("Kullanım: GuiCheck <GUI klasörü> <CheatMenu.dll> <referans klasörü>...");
+            Console.WriteLine("Kullanım: GuiCheck <GUI klasörü> <CheatMenu.dll> <referans klasörü>... [--game <oyun klasörü>]");
             return 2;
         }
         string gui = args[0];
@@ -67,9 +89,13 @@ static class Program
             var doc = new XmlDocument();
             doc.Load(file);
             foreach (XmlElement b in doc.SelectNodes("//Brush")) Brushes.Add(b.GetAttribute("Name"));
-            foreach (XmlElement layer in doc.SelectNodes("//BrushLayer[@Sprite]"))
-                if (!AllowedSprites.Contains(layer.GetAttribute("Sprite"))) Error(file, "izinsiz sprite: " + layer.GetAttribute("Sprite"));
+            foreach (XmlElement layer in doc.SelectNodes("//BrushLayer[@Sprite or @OverlaySprite]"))
+                foreach (string attr in new[] { "Sprite", "OverlaySprite" })
+                    if (layer.HasAttribute(attr) && !AllowedSprites.Contains(layer.GetAttribute(attr))) Error(file, "izinsiz sprite: " + layer.GetAttribute(attr));
         }
+        Brushes.UnionWith(GameBrushes);
+        if (game != null) CheckGameAssets(game);
+        else Console.WriteLine("Oyun klasörü verilmedi: oyun sprite ve fırçaları yalnızca izinli listeye göre denetlendi");
         foreach (string file in Directory.GetFiles(Path.Combine(gui, "Prefabs"), "*.xml", SearchOption.AllDirectories))
         {
             var doc = new XmlDocument();
@@ -95,6 +121,58 @@ static class Program
         foreach (string e in Errors) Console.WriteLine("HATA " + e);
         Console.WriteLine(Errors.Count == 0 ? "ARAYÜZ DENETİMİ GEÇTİ (" + Prefabs.Count + " prefab, " + Brushes.Count + " fırça)" : Errors.Count + " hata");
         return Errors.Count == 0 ? 0 : 1;
+    }
+
+    /// <summary>
+    /// İzinli oyun sprite'ları ve fırçaları bu oyun sürümünde gerçekten var mı, sprite'ları her zaman yüklü bir kategoride mi.
+    /// Oyunun SpriteData ve fırça dosyalarından okunur (yalnızca adlar ve kategoriler).
+    /// </summary>
+    static void CheckGameAssets(string game)
+    {
+        string modules = Path.Combine(game, "Modules");
+        if (!Directory.Exists(modules)) { Console.WriteLine("Oyun klasörü bulunamadı (" + game + "): oyun varlıkları doğrulanmadı"); return; }
+        var category = new Dictionary<string, string>();
+        // Yalnızca modüllerin oyun içi arayüzü (Modules\X\GUI); LauncherGUI'nin kendi kategorileri var (ui_launcher).
+        IEnumerable<string> spriteFiles = Directory.GetDirectories(modules)
+            .Select(m => Path.Combine(m, "GUI")).Where(Directory.Exists)
+            .SelectMany(g => Directory.GetFiles(g, "*SpriteData.xml", SearchOption.TopDirectoryOnly));
+        foreach (string file in spriteFiles)
+        {
+            var doc = new XmlDocument();
+            doc.Load(file);
+            foreach (XmlElement part in doc.SelectNodes("//SpritePart"))
+                category[part.SelectSingleNode("Name")?.InnerText ?? ""] = part.SelectSingleNode("CategoryName")?.InnerText;
+            foreach (XmlElement nine in doc.SelectNodes("//NineRegionSprite"))
+            {
+                string partName = nine.SelectSingleNode("SpritePartName")?.InnerText ?? "";
+                category[nine.SelectSingleNode("Name")?.InnerText ?? ""] = category.TryGetValue(partName, out string c) ? c : null;
+            }
+        }
+        void CheckSprite(string where, string sprite)
+        {
+            if (!category.TryGetValue(sprite, out string c)) Error(where, "oyunda böyle bir sprite yok: " + sprite);
+            else if (c == null || !AlwaysLoadedCategories.Contains(c)) Error(where, "sprite her zaman yüklü değil (" + c + "): " + sprite);
+        }
+        foreach (string sprite in AllowedSprites) CheckSprite("izinli sprite", sprite);
+
+        var gameBrushLayers = new Dictionary<string, List<string>>();
+        IEnumerable<string> brushFiles = Directory.GetDirectories(modules)
+            .Select(m => Path.Combine(m, "GUI", "Brushes")).Where(Directory.Exists)
+            .SelectMany(b => Directory.GetFiles(b, "*.xml", SearchOption.AllDirectories));
+        foreach (string file in brushFiles)
+        {
+            var doc = new XmlDocument();
+            try { doc.Load(file); } catch { continue; }
+            foreach (XmlElement b in doc.SelectNodes("//Brush"))
+                gameBrushLayers[b.GetAttribute("Name")] = b.SelectNodes(".//BrushLayer").Cast<XmlElement>()
+                    .SelectMany(l => new[] { l.GetAttribute("Sprite"), l.GetAttribute("OverlaySprite") }).Where(s => s.Length > 0).ToList();
+        }
+        foreach (string brush in GameBrushes)
+        {
+            if (!gameBrushLayers.TryGetValue(brush, out List<string> sprites)) { Error("izinli oyun fırçası", "oyunda böyle bir fırça yok: " + brush); continue; }
+            foreach (string sprite in sprites) CheckSprite("oyun fırçası " + brush, sprite);
+        }
+        Console.WriteLine("Oyun varlıkları doğrulandı: " + AllowedSprites.Count + " sprite, " + GameBrushes.Count + " fırça (" + category.Count + " oyun sprite'ı okundu)");
     }
 
     static void CheckPrefab(string name, Type vm)

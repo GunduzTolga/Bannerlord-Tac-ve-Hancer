@@ -38,12 +38,25 @@ namespace CheatMenu.UI
 
         public static bool Wanted => SettingsStore.Current.MapButtonPosition == ModSettings.MapBarButtonPosition;
 
+        private static WeakReference<INavigationElement[]> _elements;
+
+        /// <summary>
+        /// Şu anki harita çubuğunun bir öğesi (ör. "clan"): Klan ekranını oyunun kendi yoluyla (izin denetimi dahil) açmak için.
+        /// </summary>
+        internal static INavigationElement Find(string id) =>
+            _elements != null && _elements.TryGetTarget(out INavigationElement[] all) ? all?.FirstOrDefault(e => e?.StringId == id) : null;
+
         /// <summary>Kampanya kapanırken: bir sonraki harita çubuğu yeniden karar versin.</summary>
-        public static void Reset() => Injected = false;
+        public static void Reset()
+        {
+            Injected = false;
+            _elements = null;
+        }
 
         /// <summary>Harita çubuğu kurulurken (MapNavigationHandler.OnCreateElements) çağrılır; hata fırlatmaz.</summary>
         internal static INavigationElement[] AddTo(MapNavigationHandler handler, INavigationElement[] elements)
         {
+            _elements = new WeakReference<INavigationElement[]>(elements);
             try
             {
                 if (!Wanted || elements == null || elements.Any(e => e?.StringId == ElementId)) return elements;
@@ -53,7 +66,9 @@ namespace CheatMenu.UI
                 int kingdom = list.FindIndex(e => e?.StringId == "kingdom");
                 list.Insert(kingdom >= 0 ? kingdom : list.Count, new IntrigueNavigationElement(handler));
                 Injected = true;
-                return list.ToArray();
+                INavigationElement[] result = list.ToArray();
+                _elements = new WeakReference<INavigationElement[]>(result);
+                return result;
             }
             catch (Exception ex)
             {
@@ -94,7 +109,7 @@ namespace CheatMenu.UI
 
         public override string StringId => MapBarButton.ElementId;
 
-        public override bool IsActive => Safe(() => IntrigueScreen.IsOpen);
+        public override bool IsActive => Safe(() => IntrigueScreen.IsOpen || ClanIntrigueTab.IsShowing);
 
         // Ekran açıkken çubuktaki diğer ekranlar onun üstüne açılmasın.
         public override bool IsLockingNavigation => true;

@@ -22,8 +22,19 @@ namespace CheatMenu
         /// (sol alttaki Klan / Krallık düğmelerinin yanında). Yeni seçenekler sona eklenir: kayıtlı sıra numaraları kaymasın.
         /// </summary>
         public static readonly string[] MapButtonPositionNames = { "Gizli", "Sol üst", "Üst orta", "Sağ üst", "Harita çubuğunda" };
-        public const int DefaultMapButtonPosition = 2;
         public const int MapBarButtonPosition = 4;
+        public const int DefaultMapButtonPosition = MapBarButtonPosition;
+        /// <summary>Harita çubuğuna eklenemezse (oyun yaması) düğmenin yedek yeri: üst orta.</summary>
+        public const int MapBarFallbackPosition = 2;
+
+        /// <summary>
+        /// Ayar dosyasının biçim sürümü. 2: varsayılan düğme yeri harita çubuğu oldu; sürüm satırı olmayan (eski) dosyada
+        /// kayıtlı "Üst orta" (eski varsayılan) bir kez harita çubuğuna taşınır.
+        /// </summary>
+        public const int CurrentVersion = 2;
+
+        /// <summary>Parse sırasında eski dosyadan taşıma yapıldı (MCM'in eski değeri geri yazmaması için).</summary>
+        public bool Migrated { get; private set; }
         /// <summary>Entrika ekranı kısayolu (sıra numarasıyla saklanır; 0 = yok). Oyunun kendi harita tuşlarıyla çakışmayanlar.</summary>
         public static readonly string[] ScreenHotkeyNames = { "Yok", "Home", "End", "PageUp", "PageDown", "U", "Y", "O", "F9", "F10" };
         public const int DefaultScreenHotkey = 1;
@@ -71,6 +82,7 @@ namespace CheatMenu
             var settings = new ModSettings();
             if (string.IsNullOrEmpty(text)) return settings;
 
+            int version = 1;
             foreach (string rawLine in text.Split('\n'))
             {
                 string line = rawLine.Trim();
@@ -100,13 +112,20 @@ namespace CheatMenu
                     case "NightHouses": settings.NightHouses = IsTrue(value); break;
                     case "SpouseInfidelity": settings.SpouseInfidelity = IsTrue(value); break;
                     case "TailInScene": settings.TailInScene = IsTrue(value); break;
+                    case "SettingsVersion": if (isNumber) version = number; break;
                 }
+            }
+            if (version < 2 && settings.MapButtonPosition == MapBarFallbackPosition)
+            {
+                settings.MapButtonPosition = MapBarButtonPosition;
+                settings.Migrated = true;
             }
             return settings;
         }
 
         public string Format() =>
             "# CheatMenu (Tac ve Hancer) ayarlari\n"
+            + "SettingsVersion=" + Invariant(CurrentVersion) + "\n"
             + "FastForwardSpeed=" + Invariant(FastForwardSpeed) + "\n"
             + "SkillXpMultiplier=" + Invariant(SkillXpMultiplier) + "\n"
             + "TroopXpMultiplier=" + Invariant(TroopXpMultiplier) + "\n"

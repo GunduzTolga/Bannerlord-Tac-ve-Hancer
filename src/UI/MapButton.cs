@@ -4,6 +4,8 @@ using CheatMenu.Intrigue;
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
+using TaleWorlds.CampaignSystem.GameState;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace CheatMenu.UI
@@ -32,8 +34,9 @@ namespace CheatMenu.UI
             {
                 int position = SettingsStore.Current.MapButtonPosition;
                 if (position == ModSettings.MapBarButtonPosition)
-                    position = MapBarButton.Injected ? 0 : ModSettings.DefaultMapButtonPosition;
-                bool wanted = position != 0 && !IntrigueScreen.IsOpen && IntrigueScreen.CannotOpenReason() == null;
+                    position = MapBarButton.Injected ? 0 : ModSettings.MapBarFallbackPosition;
+                bool wanted = position != 0 && !IntrigueScreen.IsOpen && IntrigueScreen.CannotOpenReason() == null
+                    && Game.Current?.GameStateManager?.ActiveState is MapState;
                 if (!wanted)
                 {
                     if (Layer.IsOpen) Layer.Close();

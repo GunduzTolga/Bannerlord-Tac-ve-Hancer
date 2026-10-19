@@ -6,6 +6,7 @@ using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.GameState;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.CampaignSystem.Settlements.Workshops;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
@@ -13,6 +14,7 @@ using TaleWorlds.Core;
 using TaleWorlds.Core.ImageIdentifiers;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
+using TaleWorlds.ScreenSystem;
 
 namespace CheatMenu.UI
 {
@@ -59,6 +61,9 @@ namespace CheatMenu.UI
             CardOption dismiss, Action onClosed)
         {
             if (IsOpen || !SettingsStore.Current.EventCards || IntrigueScreen.CannotOpenReason() != null) return false;
+            // Klan ekranındaki Entrika sekmesinden açılıyorsa kart o ekranın üstüne; Klan ekranının başka sekmesindeyse düz pencere.
+            ScreenBase host = ClanIntrigueTab.CardHost;
+            if (host == null && !(Game.Current?.GameStateManager?.ActiveState is MapState)) return false;
             if (!TvhUi.ImageWidgetAvailable())
             {
                 if (!_failedOnce) Debug.Print("[CheatMenu] TvhImageWidget is not registered; event cards fall back to inquiries");
@@ -70,7 +75,7 @@ namespace CheatMenu.UI
             try
             {
                 vm = new EventCardVM(caption, title, text, image, hero, options, Choose);
-                if (!Layer.Open(Movie, vm, Order, true)) return false;
+                if (!Layer.Open(Movie, vm, Order, true, host)) return false;
             }
             catch (Exception ex)
             {

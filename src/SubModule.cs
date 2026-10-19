@@ -92,7 +92,7 @@ namespace CheatMenu
                 // Oyun açılışında değil burada: kayıt, oyunun ansiklopedi kodunu derletir ve bu, oyun metinlerini isteyen
                 // CampaignUIHelper'ın başlangıcını çalıştırır. Metinler ancak bir oyun başlayınca yüklüdür; açılışta yapılan
                 // kayıt CampaignUIHelper'ı bozuyor, karakter oluşturma çöküyordu.
-                LateInit("ansiklopedi bölümü (UIExtenderEx)", () => EncyclopediaIntrigue.Register());
+                LateInit("ansiklopedi bölümü ve Klan ekranındaki Entrika sekmesi (UIExtenderEx)", () => UiExtensions.Register());
             }
         }
 
@@ -139,6 +139,7 @@ namespace CheatMenu
         {
             base.OnGameEnd(game);
             IntrigueScreen.Close();
+            ClanIntrigueTab.Reset();
             EventCards.CloseForGameEnd();
             MapButton.Close();
             TimePause.Reset();
@@ -156,6 +157,7 @@ namespace CheatMenu
             IntriguePopups.Tick();
             EventCards.Tick();
             IntrigueScreen.Tick();
+            ClanIntrigueTab.Tick();
             MapButton.Tick();
             CleanSaveGuard.Tick();
 

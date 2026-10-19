@@ -5,9 +5,9 @@
 -->
 <Prefab>
   <Window>
-    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="314" SuggestedHeight="200" MarginRight="6" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
+    <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="314" SuggestedHeight="200" MarginRight="6" Brush="Tvh.Card">
       <Children>
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF">
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1">
           <Children>
             <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="12" MarginRight="12" MarginTop="8" Brush="Tvh.Text.Section" Text="@Header" />
 
@@ -42,17 +42,17 @@
 
                 <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="30" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="10" MarginBottom="8" StackLayout.LayoutMethod="HorizontalLeftToRight">
                   <Children>
-                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="30" MarginRight="4" Brush="Tvh.Button.Danger" Command.Click="ExecuteSpecial" IsVisible="@HasSpecial" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="30" MarginRight="4" Brush="Tvh.Button.SmallDanger" Command.Click="ExecuteSpecial" IsVisible="@HasSpecial" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@SpecialText" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="30" MarginRight="4" Brush="Tvh.Button" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="30" MarginRight="4" Brush="Tvh.Button.Small" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@ChangeText" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="30" Brush="Tvh.Button.Danger" Command.Click="ExecuteDismiss" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="30" Brush="Tvh.Button.SmallDanger" Command.Click="ExecuteDismiss" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@DismissText" />
                       </Children>
@@ -64,6 +64,6 @@
           </Children>
         </Widget>
       </Children>
-    </Widget>
+    </BrushWidget>
   </Window>
 </Prefab>

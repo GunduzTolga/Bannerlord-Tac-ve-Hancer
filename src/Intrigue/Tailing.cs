@@ -95,6 +95,12 @@ namespace CheatMenu.Intrigue
         {
             string blocked = Blocked(state, target);
             if (blocked != null) throw new InvalidOperationException(blocked);
+            if (SettingsStore.Current.TailInScene && UI.ClanIntrigueTab.Current != null)
+            {
+                // Sahne Klan ekranının üstünde açılmasın: ekran kapanır, takip harita gelince başlar.
+                UI.ClanIntrigueTab.WhenOnMap(() => Start(SchemeEngine.State, target));
+                return;
+            }
             Settlement town = Settlement.CurrentSettlement;
             state.TailUntil[target.StringId] = Today + TailRules.CooldownDays;
             UI.IntrigueScreen.Close();
