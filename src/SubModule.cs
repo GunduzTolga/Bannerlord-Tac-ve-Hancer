@@ -8,6 +8,7 @@ using CheatMenu.Patches;
 using CheatMenu.Menu;
 using CheatMenu.UI;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.ComponentInterfaces;
 using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
@@ -78,6 +79,8 @@ namespace CheatMenu
             {
                 RuleModels.Register(starter);
                 starter.AddBehavior(new IntrigueBehavior());
+                // Bilgi, oyunun kendi ikna konuşmalarına bonus verir (lordu krallığa davet vb.).
+                starter.AddModel<PersuasionModel>(new IntriguePersuasionModel());
             }
         }
 

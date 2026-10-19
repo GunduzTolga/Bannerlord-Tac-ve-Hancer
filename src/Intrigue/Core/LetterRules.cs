@@ -5,8 +5,6 @@ namespace CheatMenu.Intrigue.Core
     {
         /// <summary>Uzaktaki bir lorda koz talebi: koz, mektup varınca harcanır.</summary>
         HookDemand = 1,
-        /// <summary>Hükümdarından hoşnutsuz bir klan liderine taraf değiştirme daveti.</summary>
-        Defection = 2,
     }
 
     /// <summary>
@@ -20,12 +18,12 @@ namespace CheatMenu.Intrigue.Core
         public const int MaxTravelDays = 8;
         /// <summary>Bu kadar yakındaysa yüz yüze sayılır: koz hemen kullanılır, haberci gerekmez.</summary>
         public const float FaceToFaceDistance = 10f;
-        /// <summary>Davet reddedilince aynı lorda bu kadar gün yeni davet gönderilemez.</summary>
-        public const int DefectionCooldownDays = 60;
-        public const int DefectionGiftPerTier = 500;
-        public const int DefectionRelationBonus = 10;
-        public const int RefusalRelationPenalty = 5;
-        public const int ForwardedRulerPenalty = 15;
+        /// <summary>
+        /// Oyunun kendi ikna konuşmalarında (krallığa davet, evlilik, görevler) bilginin getirdiği başarı: hakkında güncel raporun
+        /// varsa her denemede +10 puan, bildiğin ve ifşa edilmemiş bir sırrı varsa +5 daha.
+        /// </summary>
+        public const int PersuasionReportBonus = 10;
+        public const int PersuasionSecretBonus = 5;
 
         /// <summary>Mesafeye göre yolculuk (1-8 gün).</summary>
         public static int TravelDays(float distance)
@@ -37,25 +35,9 @@ namespace CheatMenu.Intrigue.Core
 
         public static int MessengerCost(int travelDays) => 50 + 25 * travelDays;
 
-        /// <summary>Davet mektubuna eklenen hediye (geri gelmez).</summary>
-        public static int DefectionGift(int clanTier) => DefectionGiftPerTier * System.Math.Max(1, clanTier);
-
-        /// <param name="relationWithRuler">Lordun kendi hükümdarıyla ilişkisi (eksi = hoşnutsuz).</param>
-        /// <param name="strengthRatio">Senin krallığının gücü / onun krallığının gücü.</param>
-        /// <param name="hasReport">Güncel raporun var: teklifi ona göre yazarsın.</param>
-        public static int DefectionChance(int relationWithRuler, int relationWithYou, int honor, float strengthRatio, bool hasReport,
-            int difficulty)
-        {
-            int value = 10 - relationWithRuler / 2 + relationWithYou / 3 - 12 * honor;
-            if (strengthRatio >= 1.25f) value += 10;
-            else if (strengthRatio <= 0.8f) value -= 10;
-            if (hasReport) value += 10;
-            value += difficulty == SchemeMath.EasyDifficulty ? 10 : difficulty == SchemeMath.HardDifficulty ? -10 : 0;
-            return SchemeMath.Clamp(value, 0, 80);
-        }
-
-        /// <summary>Reddeden lordun mektubu hükümdarına götürme olasılığı: onurlu lordlar ihaneti bildirir.</summary>
-        public static int ForwardChance(int honor) => SchemeMath.Clamp(25 + 15 * honor, 5, 60);
+        /// <summary>İkna denemesine eklenen başarı puanı (0-15).</summary>
+        public static int PersuasionBonus(bool hasReport, bool knowsSecret) =>
+            (hasReport ? PersuasionReportBonus : 0) + (knowsSecret ? PersuasionSecretBonus : 0);
 
         // ---- Saray istihbaratı ----
 
@@ -67,7 +49,7 @@ namespace CheatMenu.Intrigue.Core
             : relationWithRuler > -30 ? "hoşnutsuz"
             : "düşmanca";
 
-        /// <summary>Davet için umut veren: hükümdarına en az "hoşnutsuz".</summary>
+        /// <summary>Kendi tarafına çekmek için umut veren: hükümdarına en az "hoşnutsuz".</summary>
         public static bool IsDiscontent(int relationWithRuler) => relationWithRuler <= -10;
     }
 }

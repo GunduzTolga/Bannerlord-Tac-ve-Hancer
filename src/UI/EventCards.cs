@@ -115,6 +115,64 @@ namespace CheatMenu.UI
                 kidnap ? CardImages.Kidnap : CardImages.Murder, target, options, cancel, null);
         }
 
+        /// <summary>Casus başı görevi seçimi (P2.3). Söylenti seçilirse ardından hedef listesi açılır.</summary>
+        public static void ShowMissionChoice(Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero spymaster = SchemeFactors.Spymaster(state);
+            if (spymaster == null)
+            {
+                MenuUI.Error("Önce bir casus başı ata");
+                return;
+            }
+            int roguery = SchemeFactors.Roguery(spymaster);
+            int difficulty = SettingsStore.Current.IntrigueDifficulty;
+            CardOption Option(SpymasterMission mission, string label, string blocked, Action apply) => new CardOption
+            {
+                Label = label + (state.Mission == mission ? "  [şu anki görev]" : ""),
+                DisabledHint = blocked,
+                Apply = () =>
+                {
+                    apply();
+                    afterwards?.Invoke();
+                },
+            };
+            var options = new List<CardOption>
+            {
+                Option(SpymasterMission.CounterIntel, "Karşı casusluk: sezme haftalık %" + MissionRules.Detection(true, roguery, SpymasterMission.CounterIntel),
+                    null, () => SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.CounterIntel)),
+                Option(SpymasterMission.WatchDissent, "Muhalefeti izle: haftada " + MissionRules.DissentReportsPerWeek(roguery) + " rapor",
+                    Clan.PlayerClan.Kingdom == null ? "Bir krallıkta değilsin" : null,
+                    () => SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.WatchDissent)),
+                Option(SpymasterMission.SpreadRumors, "Söylenti yay...: hedef seç (haftada -" + MissionRules.RumorRelationLoss(roguery) + ")",
+                    SpymasterMissions.RumorCandidates(state).Count == 0 ? "Sarayında kulağın olan bir lord yok (rapor ya da gölge ağı)" : null,
+                    () => MenuUI.Defer(() => PickRumorTarget(afterwards))),
+                Option(SpymasterMission.None, "Boşta: yalnızca entrikalar", null,
+                    () => SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.None)),
+            };
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            string text = spymaster.Name + " entrikaları yürütürken arka planda bir göreve de bakabilir. Şu an: "
+                + SpymasterMissions.StatusText(state) + ".\n\n"
+                + "Karşı casusluk: " + SpymasterMissions.Description(SpymasterMission.CounterIntel, roguery, difficulty) + "\n\n"
+                + "Muhalefeti izle: " + SpymasterMissions.Description(SpymasterMission.WatchDissent, roguery, difficulty) + "\n\n"
+                + "Söylenti yay: " + SpymasterMissions.Description(SpymasterMission.SpreadRumors, roguery, difficulty);
+            Show("CASUS BAŞI · GÖREV", "Görev: " + spymaster.Name, text, CardImages.Spy, spymaster, options, cancel, null);
+        }
+
+        private static void PickRumorTarget(Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Picker.Pick("Söylenti yay: hedef", SpymasterMissions.RumorCandidates(state),
+                h => h.Name + " (" + h.Clan.Name + ", " + h.Clan.Kingdom.Name + ") - hükümdarıyla " + Court.MoodText(state, h),
+                h => MenuUI.SafeRun("Söylenti", () =>
+                {
+                    SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.SpreadRumors, h);
+                    afterwards?.Invoke();
+                }),
+                null, h => Categories.HeroPortrait(h), sort: false);
+        }
+
         /// <summary>Esir sorgusu: yöntem seçimi kartı (Entrika ekranı > Esirler ve liste menüsü).</summary>
         public static void ShowInterrogation(Interrogation.Prisoner prisoner, Action afterwards)
         {

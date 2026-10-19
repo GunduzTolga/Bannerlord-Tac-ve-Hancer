@@ -2,6 +2,7 @@
 
 **Tarih:** 2026-10-19 · **Durum:** Kodlandı (oyunda test bekliyor) · **Yol haritası:** bölüm 4, sıra 2
 **Kullanıcı isteği:** "Lordların kralıyla ilişkisini de öğrenebilelim; lordları kendi tarafımıza çekmek için iyi olur."
+"Oyunda herhangi bir lordu 3 soruyu cevaplayıp kendine çekebilirsin; oyunun kendi sistemini kullan."
 
 ## Neden
 
@@ -20,24 +21,30 @@ Her lordun **hükümdarıyla ilişkisi**, bildiğin kadarıyla görünür:
 | O krallığın bir şehrinde gölge ağın var / kendi sarayın | Söylenti: sadık, hoşnut, kayıtsız, hoşnutsuz, düşmanca |
 | Hiçbiri | "bilinmiyor" (casusluk düğmesi) |
 
-Hoşnutsuzlar (≤ −10) kırmızı ve en üstte. Kişi dosyasında da "Hükümdarı X ile: ..." satırı var.
+Hoşnutsuzlar (≤ −10) kırmızı ve en üstte. Kişi dosyasında da "Hükümdarı X ile: ..." satırı var. Her lordda: haritada izle,
+hakkında söylenti yay (P2.3), bilgi tam değilse casusluk.
 
 ## Haberci
+
+Haberci yalnızca **koz talebi** taşır.
 
 - **Mektup süresi:** atlı haberci günde 150 harita birimi; 1–8 gün. **Ücret:** 50 + 25 × gün.
 - Aynı lorda aynı anda tek haberci. Mektup varınca sonuçlanır; bu arada koşullar değiştiyse (koz bitti, lord krallık değiştirdi)
   sonuçsuz döner, koz harcanmaz.
 - **Koz talebi:** yüz yüzeyken (aynı yerleşim ya da çok yakın) hemen; uzaktaysa haberciyle. Kozu bırakmak her zaman hemen.
   Lord diyaloğu zaten yüz yüze, değişmedi.
-- **Taraf değiştirme daveti:** başka bir krallıktaki klan liderini kendi krallığına çağırırsın.
-  - Şart: bir krallıkta olmak, hedefin klan lideri olması (hükümdar ve paralı asker değil), 200 etkin olması ve onun havasını bilmek
-    (rapor ya da söylenti).
-  - Bedel: haberci ücreti + hediye (500 × klan kademesi, geri gelmez). Kabul ederse 200 etki.
-  - Şans: 10 − (hükümdarla ilişki)/2 + (seninle ilişki)/3 − 12 × Onur; krallığın 1,25 kat güçlüyse +10, 0,8 katından zayıfsa −10;
-    güncel raporla +10; zorluk ±10. Sınır %0–80. Raporun yoksa şans yaklaşık (onluk aralık) gösterilir.
-  - Örnek: hükümdarıyla −40, seninle +20, Onur 0, eşit güç, raporlu: %46. Sadık ve onurlu bir lord: %0.
-  - Reddederse: ilişki −5, 60 gün yeni davet yok; %25 + 15 × Onur ihtimalle mektubu hükümdarına götürür (hükümdarla −15).
-  - Kozun varsa "krallığıma katılsın" talebi kesin yoldur; davet kozsuz yoldur.
+
+## Lordları kendi tarafına çekmek: oyunun kendi sistemi
+
+İlk taslakta kendi "davet mektubu" zarımız vardı. Kullanıcının haklı uyarısıyla kaldırıldı: oyunda lordun yanına gidip krallığına davet
+etmek (ikna turları + pazarlık) zaten var. Aynı işi yapan ikinci bir mekanik yerine bilgi **oyunun ikna sistemini besler**:
+
+- Oyunun ikna modeli zincirlenir (`IntriguePersuasionModel`): konuştuğun kişi hakkında güncel raporun varsa **her ikna turunda
+  başarı +10 puan**, bildiğin ve ifşa edilmemiş bir sırrı varsa **+5 daha**. Puan "başarısız"dan alınır; kritikler oyunun hesabında kalır.
+  Davet, evlilik ve görev iknalarının hepsinde geçerli (bilgi her konuşmada işe yarar).
+- Saray sekmesi kime gitmen gerektiğini söyler (hoşnutsuzlar üstte, "ikna +15" etiketi) ve lordu **haritada izlemeye** alır.
+- Casus başının **söylenti** görevi (P2.3) seçtiğin lordun kralıyla arasını açar; ikna turlarını kolaylaştırır.
+- Kozla "krallığıma katılsın" talebi ayrı kalır: o şantajdır, oyunda karşılığı yok.
 
 ## Görünüm
 

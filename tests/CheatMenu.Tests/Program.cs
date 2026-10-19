@@ -325,10 +325,11 @@ namespace CheatMenu.Tests
             state.FeudUntil["lord_6"] = 400;
             state.InterrogatedUntil["lord_7"] = 230;
             state.InterrogatedUntil["lord_8"] = 300;
-            state.Letters.Add(new Letter { Id = 4, Kind = LetterKind.Defection, TargetId = "lord_9", SentDay = 100, ArriveDay = 104 });
+            state.Letters.Add(new Letter { Id = 4, Kind = LetterKind.HookDemand, TargetId = "lord_9", Use = 1, SentDay = 100, ArriveDay = 104 });
             state.Letters.Add(new Letter { Id = 5, Kind = LetterKind.HookDemand, TargetId = "lord_10", Use = 2, SentDay = 101, ArriveDay = 103 });
             state.NextLetterId = 6;
-            state.DefectionUntil["lord_11"] = 240;
+            state.Mission = SpymasterMission.SpreadRumors;
+            state.RumorTargetId = "lord_12";
 
             IntrigueState back = IntrigueState.Parse(state.Write());
             Scheme s = back.Schemes.Count == 1 ? back.Schemes[0] : null;
@@ -356,9 +357,11 @@ namespace CheatMenu.Tests
             Check("state: network", back.Network("town_V1") != null && back.Network("town_V1").Level == 2 && back.Network("town_V1").Since == 40);
             Check("state: feud", back.HasFeud("lord_6", 399) && !back.HasFeud("lord_6", 400));
             Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
-            Check("state: letters", back.Letters.Count == 2 && back.NextLetterId == 6 && back.Letters[0].Kind == LetterKind.Defection
+            Check("state: letters", back.Letters.Count == 2 && back.NextLetterId == 6 && back.Letters[0].Kind == LetterKind.HookDemand
                 && back.Letters[0].ArriveDay == 104 && back.Letters[1].Use == 2 && back.Letters[1].TargetId == "lord_10");
-            Check("state: defection cooldown", back.DefectionUntil["lord_11"] == 240);
+            Check("state: mission", back.Mission == SpymasterMission.SpreadRumors && back.RumorTargetId == "lord_12");
+            Check("state: unknown letter kind dropped", IntrigueState.Parse("letter\tid=1\tkind=2\ttarget=x\tarrive=5").Letters.Count == 0);
+            Check("state: mission default", IntrigueState.Parse("").Mission == SpymasterMission.None);
 
             Check("state: report valid at 72", back.HasValidReport("lord_1_1", 72) && !back.HasValidReport("lord_1_1", 73));
             Check("state: cooldown", back.IsOnCooldown("lord_2", 199) && !back.IsOnCooldown("lord_2", 200));
@@ -366,7 +369,7 @@ namespace CheatMenu.Tests
             Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3")
                 && back.Hooks.Count == 0 && back.FeudUntil.ContainsKey("lord_6")
                 && !back.InterrogatedUntil.ContainsKey("lord_7") && back.InterrogatedUntil.ContainsKey("lord_8")
-                && !back.DefectionUntil.ContainsKey("lord_11") && back.Letters.Count == 2);
+                && back.Letters.Count == 2);
 
             int logged = IntrigueState.MaxLogEntries + 10;
             for (int i = 0; i < logged; i++) back.AddLog(i, "e" + i);
@@ -415,16 +418,20 @@ namespace CheatMenu.Tests
             CheckChance("letter: travel 151", LetterRules.TravelDays(151), 3);
             CheckChance("letter: travel capped", LetterRules.TravelDays(5000), LetterRules.MaxTravelDays);
             CheckChance("letter: messenger cost", LetterRules.MessengerCost(2), 100);
-            CheckChance("letter: gift tier 0 -> 1", LetterRules.DefectionGift(0), LetterRules.DefectionGiftPerTier);
-            CheckChance("letter: defection discontent", LetterRules.DefectionChance(-40, 20, 0, 1f, false, normal), 36);
-            CheckChance("letter: defection with report", LetterRules.DefectionChance(-40, 20, 0, 1f, true, normal), 46);
-            CheckChance("letter: defection stronger kingdom", LetterRules.DefectionChance(-40, 20, 0, 1.5f, false, normal), 46);
-            CheckChance("letter: defection weaker kingdom", LetterRules.DefectionChance(-40, 20, 0, 0.5f, false, normal), 26);
-            CheckChance("letter: defection loyal honorable", LetterRules.DefectionChance(50, 0, 1, 1f, false, normal), 0);
-            CheckChance("letter: defection cap", LetterRules.DefectionChance(-100, 100, -2, 2f, true, SchemeMath.EasyDifficulty), 80);
-            CheckChance("letter: forward neutral", LetterRules.ForwardChance(0), 25);
-            CheckChance("letter: forward honorable", LetterRules.ForwardChance(2), 55);
-            CheckChance("letter: forward dishonorable floor", LetterRules.ForwardChance(-2), 5);
+            CheckChance("persuasion: nothing known", LetterRules.PersuasionBonus(false, false), 0);
+            CheckChance("persuasion: report", LetterRules.PersuasionBonus(true, false), 10);
+            CheckChance("persuasion: report and secret", LetterRules.PersuasionBonus(true, true), 15);
+            CheckChance("mission: detection counter-intel", MissionRules.Detection(true, 100, SpymasterMission.CounterIntel), 65);
+            CheckChance("mission: detection other mission", MissionRules.Detection(true, 100, SpymasterMission.WatchDissent), 40);
+            CheckChance("mission: detection idle spymaster", MissionRules.Detection(false, 100, SpymasterMission.CounterIntel), 5);
+            CheckChance("mission: detection cap", MissionRules.Detection(true, 400, SpymasterMission.CounterIntel), 95);
+            CheckChance("mission: dissent reports", MissionRules.DissentReportsPerWeek(0), 1);
+            CheckChance("mission: dissent reports 300", MissionRules.DissentReportsPerWeek(300), 3);
+            CheckChance("mission: rumor loss", MissionRules.RumorRelationLoss(100), 2);
+            CheckChance("mission: rumor loss cap", MissionRules.RumorRelationLoss(500), 4);
+            CheckChance("mission: rumor discovery", MissionRules.RumorDiscovery(100, normal), 6);
+            CheckChance("mission: rumor discovery hard", MissionRules.RumorDiscovery(100, SchemeMath.HardDifficulty), 9);
+            CheckChance("mission: rumor discovery floor", MissionRules.RumorDiscovery(600, SchemeMath.EasyDifficulty), 2);
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));

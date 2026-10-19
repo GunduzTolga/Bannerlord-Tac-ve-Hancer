@@ -21,6 +21,7 @@ namespace CheatMenu.UI.ViewModels
         private string _statusText = "";
         private string _limitsText = "";
         private string _intelText = "";
+        private string _missionText = "";
         private bool _canDismiss;
 
         public SpymasterVM(Action changed)
@@ -38,6 +39,8 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string LimitsText { get => _limitsText; set => Set(ref _limitsText, value, nameof(LimitsText)); }
         [DataSourceProperty] public string IntelText { get => _intelText; set => Set(ref _intelText, value, nameof(IntelText)); }
         [DataSourceProperty] public bool CanDismiss { get => _canDismiss; set => Set(ref _canDismiss, value, nameof(CanDismiss)); }
+        [DataSourceProperty] public string MissionText { get => _missionText; set => Set(ref _missionText, value, nameof(MissionText)); }
+        [DataSourceProperty] public string MissionButtonText => "Görev...";
         [DataSourceProperty] public string AssignText => "Casus başı ata";
         [DataSourceProperty] public string ChangeText => "Değiştir";
         [DataSourceProperty] public string DismissText => "Görevden al";
@@ -76,7 +79,10 @@ namespace CheatMenu.UI.ViewModels
             LimitsText = "Entrika " + state.Schemes.Count + "/" + SchemeMath.MaxActiveSchemes(roguery)
                 + "  ·  Gölge ağı " + state.Networks.Count + "/" + SchemeMath.MaxNetworks(roguery);
             CanDismiss = state.Schemes.Count == 0;
+            MissionText = "Görev: " + SpymasterMissions.StatusText(state);
         }
+
+        public void ExecuteMission() => EventCards.ShowMissionChoice(_changed);
 
         public void ExecuteAssign()
         {

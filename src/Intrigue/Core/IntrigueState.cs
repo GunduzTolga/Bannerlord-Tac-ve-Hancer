@@ -178,8 +178,11 @@ namespace CheatMenu.Intrigue.Core
         // P2.2
         public List<Letter> Letters = new List<Letter>();
         public int NextLetterId = 1;
-        /// <summary>Taraf değiştirme daveti reddedildi: kahraman → yeniden davet edilebileceği gün.</summary>
-        public Dictionary<string, int> DefectionUntil = new Dictionary<string, int>();
+
+        // P2.3
+        public SpymasterMission Mission;
+        /// <summary>Söylenti görevinin hedefi.</summary>
+        public string RumorTargetId;
 
         /// <summary>E0 kayıt testi: oyuncunun bıraktığı işaret; kaydet-yükle sonrası durmalı.</summary>
         public string SaveTestMarker { get; set; }
@@ -220,7 +223,6 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in AlertUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) AlertUntil.Remove(id);
             foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
             foreach (string id in InterrogatedUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) InterrogatedUntil.Remove(id);
-            foreach (string id in DefectionUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DefectionUntil.Remove(id);
             Hooks.RemoveAll(h => h.Until <= today);
         }
 
@@ -232,7 +234,8 @@ namespace CheatMenu.Intrigue.Core
             {
                 new TextRecord("version").Add("v", I(CurrentVersion)),
                 new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
-                    .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)),
+                    .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId))
+                    .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -281,8 +284,6 @@ namespace CheatMenu.Intrigue.Core
             foreach (Letter l in Letters)
                 records.Add(new TextRecord("letter").Add("id", I(l.Id)).Add("kind", I((int)l.Kind)).Add("target", l.TargetId)
                     .Add("use", I(l.Use)).Add("sent", I(l.SentDay)).Add("arrive", I(l.ArriveDay)));
-            foreach (KeyValuePair<string, int> p in DefectionUntil)
-                records.Add(new TextRecord("defection").Add("hero", p.Key).Add("until", I(p.Value)));
             return TextRecords.Write(records);
         }
 
@@ -301,6 +302,9 @@ namespace CheatMenu.Intrigue.Core
                         state.Rolls = Int(r, "rolls");
                         state.NextPlotId = Math.Max(1, Int(r, "nextplot"));
                         state.NextLetterId = Math.Max(1, Int(r, "nextletter"));
+                        int mission = Int(r, "mission");
+                        state.Mission = Enum.IsDefined(typeof(SpymasterMission), mission) ? (SpymasterMission)mission : SpymasterMission.None;
+                        state.RumorTargetId = Empty(r.Get("rumor"));
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");
@@ -386,9 +390,6 @@ namespace CheatMenu.Intrigue.Core
                             Id = Int(r, "id"), Kind = (LetterKind)letterKind, TargetId = r.Get("target"), Use = Int(r, "use"),
                             SentDay = Int(r, "sent"), ArriveDay = Int(r, "arrive"),
                         });
-                        break;
-                    case "defection":
-                        if (Empty(r.Get("hero")) != null) state.DefectionUntil[r.Get("hero")] = Int(r, "until");
                         break;
                 }
             }

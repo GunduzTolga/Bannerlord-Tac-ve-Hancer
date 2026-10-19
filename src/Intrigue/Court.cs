@@ -56,6 +56,27 @@ namespace CheatMenu.Intrigue
             }
         }
 
+        /// <summary>Lordu haritada izlemeye alır (oyunun izleme işareti); yeri belli değilse neden döner.</summary>
+        public static string Track(Hero lord)
+        {
+            if (lord.PartyBelongedTo != null)
+            {
+                Campaign.Current.VisualTrackerManager.RegisterObject(lord.PartyBelongedTo);
+                return null;
+            }
+            Settlement where = SchemeFactors.TargetSettlement(lord);
+            if (where == null) return "Yeri belli değil";
+            Campaign.Current.VisualTrackerManager.RegisterObject(where);
+            return null;
+        }
+
+        /// <summary>Lordu kendi tarafına çekmenin yolu: oyunun kendi ikna konuşması; bilgi ona bonus verir.</summary>
+        public static string RecruitGuide =>
+            "Kendi tarafına çekmek için yanına git ve konuşmada krallığına katılmasını teklif et (oyunun ikna turları ve pazarlığı). "
+            + "Hakkında güncel raporun varsa her ikna turunda başarı +" + LetterRules.PersuasionReportBonus
+            + ", bildiğin bir sırrı varsa +" + LetterRules.PersuasionSecretBonus + " daha. Kralına küs olanlar ayrılmaya daha yatkındır; "
+            + "casus başının söylentileri bu küslüğü büyütebilir.";
+
         /// <summary>Saray için bilgi kaynağının açıklaması.</summary>
         public static string SourceText(IntrigueState state, Kingdom kingdom)
         {

@@ -11,7 +11,8 @@ namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
     /// "Saray" sekmesi (P2.2): bir krallığın klan liderleri ve hükümdarlarıyla ilişkileri, bildiğin kadarıyla
-    /// (rapor: tam sayı, gölge ağı ya da kendi sarayın: söylenti, yoksa bilinmiyor). Hoşnutsuzlara haberciyle davet gönderilir.
+    /// (rapor: tam sayı, gölge ağı ya da kendi sarayın: söylenti, yoksa bilinmiyor). Kendi tarafına çekmek oyunun ikna konuşmasıyla;
+    /// buradan lord haritada izlenir, hakkında söylenti yayılır ya da tam bilgi için casusluk başlatılır.
     /// </summary>
     public sealed class CourtVM : TvhViewModel
     {
@@ -47,6 +48,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string RulerName { get => _rulerName; set => Set(ref _rulerName, value, nameof(RulerName)); }
         [DataSourceProperty] public string RulerLine { get => _rulerLine; set => Set(ref _rulerLine, value, nameof(RulerLine)); }
         [DataSourceProperty] public string SourceText { get => _sourceText; set => Set(ref _sourceText, value, nameof(SourceText)); }
+        [DataSourceProperty] public string GuideText => Intrigue.Court.RecruitGuide;
         [DataSourceProperty] public string PrevText => "« Önceki";
         [DataSourceProperty] public string NextText => "Sonraki »";
         [DataSourceProperty] public string EmptyText => "Bu krallıkta hükümdardan başka klan lideri yok.";
@@ -126,20 +128,26 @@ namespace CheatMenu.UI.ViewModels
             if (report != null && state.HasValidReport(lord.StringId, today)) tags.Add("rapor: gün " + report.Day);
             if (state.ActiveHook(lord.StringId, today) != null) tags.Add("üzerinde kozun var");
             if (Messengers.PendingTo(state, lord) != null) tags.Add("haberci yolda");
+            int bonus = IntriguePersuasionModel.Bonus(lord);
+            if (bonus > 0) tags.Add("ikna +" + bonus);
             TagsText = string.Join("  ·  ", tags);
 
             Actions = new MBBindingList<ActionItemVM>();
-            string defection = Messengers.DefectionBlocked(state, lord);
-            int days = Messengers.TravelDays(lord);
-            int cost = LetterRules.MessengerCost(days) + LetterRules.DefectionGift(SchemeFactors.TargetTier(lord));
-            Actions.Add(new ActionItemVM(
-                "Davet mektubu: şans " + Messengers.DefectionChanceText(state, lord) + ", " + SchemeFactors.Money(cost) + ", " + days + " gün",
-                defection, () =>
+            Actions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
+            {
+                string missing = Intrigue.Court.Track(lord);
+                if (missing != null) throw new InvalidOperationException(missing);
+                Menu.MenuUI.Success(lord.Name + " haritada izleniyor");
+            }));
+            bool rumoring = state.Mission == SpymasterMission.SpreadRumors && state.RumorTargetId == lord.StringId;
+            Actions.Add(new ActionItemVM(rumoring ? "Söylenti yayılıyor (casus başının görevi)" : "Hakkında söylenti yay (casus başı görevi)",
+                rumoring ? "zaten bu lord" : SchemeFactors.Spymaster(state) == null ? "Önce bir casus başı ata" : SpymasterMissions.RumorBlocked(state, lord),
+                () =>
                 {
-                    Messengers.SendDefection(SchemeEngine.State, lord);
+                    SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.SpreadRumors, lord);
                     changed();
                 }));
-            if (knowledge != Court.Knowledge.Exact)
+            if (knowledge != Intrigue.Court.Knowledge.Exact)
                 Actions.Add(new ActionItemVM("Casusluk (tam bilgi için)...",
                     SchemeEngine.CannotStartReason(state) ?? SchemeFactors.BlockedReason(state, lord, SchemeKind.Spy),
                     () => startScheme(SchemeKind.Spy, lord)));
@@ -168,10 +176,7 @@ namespace CheatMenu.UI.ViewModels
         public LetterItemVM(Letter letter)
         {
             Hero target = Hero.Find(letter.TargetId);
-            string what = letter.Kind == LetterKind.Defection
-                ? "Taraf değiştirme daveti"
-                : "Koz talebi: " + HookUseName((HookActions.Use)letter.Use);
-            Text = what + ": " + (target?.Name.ToString() ?? letter.TargetId);
+            Text = "Koz talebi (" + HookUseName((HookActions.Use)letter.Use) + "): " + (target?.Name.ToString() ?? letter.TargetId);
             int left = Math.Max(0, letter.ArriveDay - SchemeFactors.Today);
             DaysText = left == 0 ? "bugün varıyor" : left + " gün sonra varır";
         }

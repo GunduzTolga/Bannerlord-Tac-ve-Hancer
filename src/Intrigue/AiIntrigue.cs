@@ -59,7 +59,7 @@ namespace CheatMenu.Intrigue
         {
             Hero spymaster = SchemeFactors.Spymaster(state);
             bool working = spymaster != null && SchemeFactors.SpymasterBusyReason(spymaster) == null;
-            int chance = SchemeMath.DetectionChance(working, SchemeFactors.Roguery(spymaster));
+            int chance = MissionRules.Detection(working, SchemeFactors.Roguery(spymaster), state.Mission);
             foreach (AiPlot plot in state.AiPlots.Where(p => !p.Detected))
             {
                 if (plot.Roll100() > chance) continue;

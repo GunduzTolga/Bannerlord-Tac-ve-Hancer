@@ -32,6 +32,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("İstihbarat raporları (" + state.Reports.Count + ")...", ShowReports),
                 MenuEntry.Submenu("Kozlar (" + state.Hooks.Count(h => h.Until > SchemeFactors.Today) + ")...", ShowHooks),
                 MenuEntry.Submenu("Esirleri sorgula (" + Interrogation.Prisoners().Count + ")...", ShowPrisoners),
+                MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),

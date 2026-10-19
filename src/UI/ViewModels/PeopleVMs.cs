@@ -233,16 +233,22 @@ namespace CheatMenu.UI.ViewModels
                     SchemeKind chosen = kind;
                     StartActions.Add(new ActionItemVM(SchemeRules.Name(kind) + "...", blocked, () => _startScheme(chosen, hero), kind == SchemeKind.Murder));
                 }
-            if (hero.IsAlive && hero.IsClanLeader && hero.Clan?.Kingdom != null && hero.Clan.Kingdom != Clan.PlayerClan.Kingdom)
+            if (hero.IsAlive && hero.IsLord && hero.Clan != Clan.PlayerClan)
             {
-                int days = Messengers.TravelDays(hero);
-                int cost = LetterRules.MessengerCost(days) + LetterRules.DefectionGift(SchemeFactors.TargetTier(hero));
-                StartActions.Add(new ActionItemVM("Davet mektubu: şans " + Messengers.DefectionChanceText(state, hero) + ", "
-                    + SchemeFactors.Money(cost) + ", " + days + " gün", Messengers.DefectionBlocked(state, hero), () =>
-                    {
-                        Messengers.SendDefection(SchemeEngine.State, hero);
-                        _changed();
-                    }));
+                StartActions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
+                {
+                    string missing = Intrigue.Court.Track(hero);
+                    if (missing != null) throw new InvalidOperationException(missing);
+                    MenuUI.Success(hero.Name + " haritada izleniyor");
+                }));
+                bool rumoring = state.Mission == SpymasterMission.SpreadRumors && state.RumorTargetId == hero.StringId;
+                if (!rumoring)
+                    StartActions.Add(new ActionItemVM("Hakkında söylenti yay (casus başı görevi)",
+                        SchemeFactors.Spymaster(state) == null ? "Önce bir casus başı ata" : SpymasterMissions.RumorBlocked(state, hero), () =>
+                        {
+                            SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.SpreadRumors, hero);
+                            _changed();
+                        }));
             }
         }
 

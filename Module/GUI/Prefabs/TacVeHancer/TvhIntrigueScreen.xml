@@ -67,9 +67,15 @@
                             <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" MarginLeft="18" MarginRight="18" MarginTop="346" Brush="Tvh.Text.SmallTop" Text="@StatusText" />
                             <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="18" MarginRight="18" MarginTop="396" Brush="Tvh.Text.Small" Text="@LimitsText" />
                             <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="18" MarginRight="18" MarginTop="424" Brush="Tvh.Text.Muted" Text="@IntelText" />
+                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" MarginLeft="18" MarginRight="18" MarginTop="456" Brush="Tvh.Text.SmallTop" Text="@MissionText" />
 
                             <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Bottom" MarginLeft="18" MarginRight="18" MarginBottom="18" StackLayout.LayoutMethod="VerticalTopToBottom">
                               <Children>
+                                <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginBottom="10" Brush="Tvh.Button.Primary" Command.Click="ExecuteMission" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                                  <Children>
+                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@MissionButtonText" />
+                                  </Children>
+                                </ButtonWidget>
                                 <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginBottom="10" Brush="Tvh.Button" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                                   <Children>
                                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ChangeText" />

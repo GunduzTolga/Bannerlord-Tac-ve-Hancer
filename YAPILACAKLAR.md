@@ -43,16 +43,28 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
       dosyalarını ara (Windows aramasıyla) ve ikisini gönder. Bunlarla lord sayfasına "bildiğin sırlar / koz / entrika başlat" bölümünü
       ve oyunun harita çubuğuna düğmeyi doğru yere ekleyebilirim
 
-### P2.2 — Haberci ve saray istihbaratı (yeni)
+### P2.3 — Casus başı görevleri (yeni)
+- [ ] Sol sütunda "Görev: Boşta" ve **Görev...** düğmesi → kart: Karşı casusluk / Muhalefeti izle / Söylenti yay... / Boşta
+- [ ] Karşı casusluk seç → kart metninde sezme yüzdesi arttı; (uzun oyunda) sana karşı entrikalar daha sık seziliyor
+- [ ] Muhalefeti izle (bir krallıktayken) → bir hafta sonra "Muhalefet raporu" kartı; adı geçenler Kişiler sekmesinde raporlu
+- [ ] Söylenti yay... → hedef listesi → seç → sol sütunda "Görev: Söylenti yay: X"; haftada 100 dinar düşüyor
+- [ ] Birkaç hafta sonra Saray'da X'in hükümdarıyla ilişkisi düştü (raporun varsa sayıyla görürsün)
+- [ ] Yakalanırsa "Söylentilerin kaynağı ortaya çıktı" kartı, ilişkiler düştü, görev Boşta'ya döndü
+- [ ] Saray ve kişi dosyasında "Hakkında söylenti yay" düğmesi de görevi o lordla başlatıyor
+- [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
+- [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
+
+### P2.2 — Haberci, saray istihbaratı, ikna bonusu (yeni)
 - [ ] Entrika ekranı → **Saray**: « Önceki / Sonraki » ile krallıklar; hükümdar portresi, güç karşılaştırması, bilgi kaynağı yazısı
 - [ ] Raporun olan lordda "Hükümdarıyla: hoşnutsuz (-24)" gibi tam sayı; gölge ağın olan krallıkta "(söylenti)"; diğerlerinde "bilinmiyor"
 - [ ] Hoşnutsuzlar kırmızı ve listenin başında; "Casusluk (tam bilgi için)..." Yeni entrika'yı o lordla açıyor
-- [ ] **Davet mektubu** (bir krallıktayken, 200 etkin varken): şans, ücret ve gün yazıyor → gönder → altın düştü,
-      "Süren" sekmesinde **Yoldaki haberciler** altında görünüyor
-- [ ] Günler geçince kart: kabul (klan krallığına geçti, etki düştü) ya da ret (ilişki -5; bazen mektup hükümdarına gitti)
-- [ ] Kişiler → kozun olduğu uzak bir lord: koz düğmelerinde "(haberciyle N gün, … dinar)"; seç → haberci yola çıktı → varınca sonuç kartı
+- [ ] **Haritada izle** → lord haritada izleme işaretiyle görünüyor
+- [ ] Raporun olan bir lordla konuşup **krallığına davet et** (oyunun ikna turları): Saray'da "ikna +10" (sırrı da varsa +15) yazıyor;
+      ikna turlarındaki başarı yüzdeleri raporsuz bir lorda göre daha yüksek görünüyor
+- [ ] Kişiler → kozun olduğu uzak bir lord: koz düğmelerinde "(haberciyle N gün, … dinar)"; seç → haberci yola çıktı,
+      "Süren" sekmesinde **Yoldaki haberciler** altında; varınca sonuç kartı
 - [ ] Aynı lorda yan yana: koz düğmeleri haberci yazısız, hemen çalışıyor
-- [ ] Kişi dosyasında "Hükümdarı X ile: ..." satırı ve (başka krallıktaki klan liderinde) davet düğmesi
+- [ ] Kişi dosyasında "Hükümdarı X ile: ..." satırı, Haritada izle ve Söylenti yay düğmeleri
 - [ ] Haberci yoldayken kaydet → yükle → haberci hâlâ yolda, aynı gün varıyor
 
 ### P2.1 — Esir sorgulama (yeni)

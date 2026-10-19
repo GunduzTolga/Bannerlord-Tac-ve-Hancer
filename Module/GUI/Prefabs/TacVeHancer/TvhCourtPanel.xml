@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  "Saray" paneli (ViewModel: CourtVM): krallık seçici, hükümdar, bilgi kaynağı ve klan liderleri
-  (hükümdarıyla ilişkisi bildiğin kadarıyla, seninle ilişkisi, davet ve casusluk düğmeleri).
+  "Saray" paneli (ViewModel: CourtVM): krallık seçici, hükümdar, bilgi kaynağı, kendi tarafına çekme açıklaması ve klan liderleri
+  (hükümdarıyla ilişkisi bildiğin kadarıyla, seninle ilişkisi, ikna bonusu; haritada izle, söylenti yay, casusluk).
 -->
 <Prefab>
   <Window>
@@ -44,10 +44,12 @@
           </Children>
         </Widget>
 
-        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="170" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoLords" />
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="64" MarginTop="160" MarginRight="16" Brush="Tvh.Text.SmallTop" Text="@GuideText" IsVisible="@HasKingdom" />
+
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="230" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoLords" />
 
         <!-- Klan liderleri -->
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="166" IsVisible="@HasKingdom">
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="230" IsVisible="@HasKingdom">
           <Children>
             <ScrollablePanel Id="CourtScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CourtClip" InnerPanel="CourtClip\CourtList" VerticalScrollbar="..\CourtBar">
               <Children>
