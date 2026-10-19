@@ -324,6 +324,11 @@ namespace CheatMenu.Intrigue.Core
         public int PhysicianWarnUntil;
         /// <summary>Klanındaki annelerin (oyunun kendi gebeliği) gebe kaldığı gün: doğuma kalan süre için.</summary>
         public Dictionary<string, int> Conceived = new Dictionary<string, int>();
+
+        // P2.14: divan, serdar
+        public string MarshalId;
+        /// <summary>Uyarısı sorulmuş "ordu|hedef" çiftleri → yeniden sorulabileceği gün.</summary>
+        public Dictionary<string, int> MarshalWarned = new Dictionary<string, int>();
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
@@ -384,6 +389,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in RomanceUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RomanceUntil.Remove(id);
             foreach (string id in DuelUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DuelUntil.Remove(id);
             foreach (string id in TailUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) TailUntil.Remove(id);
+            foreach (string id in MarshalWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) MarshalWarned.Remove(id);
             foreach (string id in CourtDayUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CourtDayUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
@@ -401,7 +407,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)).Add("nextcourt", I(NextCourtshipId))
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId)
                     .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
-                    .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)),
+                    .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -470,6 +476,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in DuelUntil) records.Add(new TextRecord("duelcd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in TailUntil) records.Add(new TextRecord("tailcd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in Conceived) records.Add(new TextRecord("conceived").Add("hero", p.Key).Add("day", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in MarshalWarned) records.Add(new TextRecord("marshalwarn").Add("key", p.Key).Add("until", I(p.Value)));
             foreach (CaravanBook b in CaravanBooks)
                 records.Add(new TextRecord("caravanbook").Add("party", b.PartyId).Add("town", b.TownId).Add("worth", I(b.Worth))
                     .Add("day", I(b.Day)).Add("sent", I(b.SentHome)));
@@ -519,6 +526,7 @@ namespace CheatMenu.Intrigue.Core
                         state.EmbezzleFound = Bool(r, "embezzlefound");
                         state.PhysicianId = Empty(r.Get("physician"));
                         state.PhysicianWarnUntil = Int(r, "physicianwarn");
+                        state.MarshalId = Empty(r.Get("marshal"));
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");
@@ -657,6 +665,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "tailcd":
                         if (Empty(r.Get("hero")) != null) state.TailUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "marshalwarn":
+                        if (Empty(r.Get("key")) != null) state.MarshalWarned[r.Get("key")] = Int(r, "until");
                         break;
                     case "conceived":
                         if (Empty(r.Get("hero")) != null) state.Conceived[r.Get("hero")] = Int(r, "day");

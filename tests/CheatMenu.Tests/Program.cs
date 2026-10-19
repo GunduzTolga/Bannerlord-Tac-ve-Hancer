@@ -163,6 +163,7 @@ namespace CheatMenu.Tests
             TailTests();
             TreasuryTests();
             PhysicianTests();
+            MarshalTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -375,6 +376,8 @@ namespace CheatMenu.Tests
             state.TailUntil["lord_16"] = 260;
             state.TreasurerId = "companion_1";
             state.PhysicianId = "companion_2";
+            state.MarshalId = "lord_17";
+            state.MarshalWarned["party_3|town_V1"] = 310;
             state.PhysicianWarnUntil = 300;
             state.Conceived["spouse_1"] = 275;
             state.Embezzled = 450;
@@ -441,6 +444,7 @@ namespace CheatMenu.Tests
             Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
             Check("state: tail cooldown", back.TailUntil.Count == 1 && back.TailUntil["lord_16"] == 260);
             Check("state: treasurer", back.TreasurerId == "companion_1" && back.Embezzled == 450 && back.EmbezzleFound);
+            Check("state: marshal", back.MarshalId == "lord_17" && back.MarshalWarned.Count == 1 && back.MarshalWarned["party_3|town_V1"] == 310);
             Check("state: physician", back.PhysicianId == "companion_2" && back.PhysicianWarnUntil == 300
                 && back.Conceived.Count == 1 && back.Conceived["spouse_1"] == 275);
             Check("state: caravan book", back.CaravanBooks.Count == 1 && back.CaravanBooks[0].PartyId == "caravan_1" && back.CaravanBooks[0].TownId == "town_V1"
@@ -667,6 +671,26 @@ namespace CheatMenu.Tests
             double daily = 1 - Math.Pow(0.7, 1.0 / PhysicianRules.DaysPerYear);
             Check("physician: yearly risk", PhysicianRules.YearlyRisk(0) == 0 && PhysicianRules.YearlyRisk(1) == 1
                 && Math.Abs(PhysicianRules.YearlyRisk(daily) - 0.3) < 1e-9);
+        }
+
+        /// <summary>Divan, serdar (P2.14): hata payı, görüş, uyarı, savunma, erzak, yol, yuvarlama, tavsiye.</summary>
+        private static void MarshalTests()
+        {
+            Check("marshal: error", MarshalRules.ErrorPercent(0) == 45 && MarshalRules.ErrorPercent(120) == 25 && MarshalRules.ErrorPercent(300) == 5);
+            Check("marshal: range", MarshalRules.KnownRange(0) == 200f && MarshalRules.KnownRange(100) == 400f && MarshalRules.KnownRange(500) == 900f);
+            Check("marshal: warning", MarshalRules.WarningChance(0) == 30 && MarshalRules.WarningChance(100) == 55 && MarshalRules.WarningChance(300) == 95);
+            Check("marshal: defense", MarshalRules.DefenseScore(100, 50, 2) == 195 && MarshalRules.DefenseScore(0, 0, 3) == 0
+                && MarshalRules.DefenseScore(200, 100, 1) == 325);
+            Check("marshal: food days", MarshalRules.FoodDays(100, -5) == 20 && MarshalRules.FoodDays(100, 0) == int.MaxValue
+                && MarshalRules.FoodDays(100, 2) == int.MaxValue && MarshalRules.FoodDays(-10, -5) == 0 && MarshalRules.FoodDays(99, -10) == 9);
+            Check("marshal: travel hours", MarshalRules.TravelHours(100, 4) == 25 && MarshalRules.TravelHours(0, 4) == 0 && MarshalRules.TravelHours(10, 0) == 20);
+            Check("marshal: travel text", MarshalRules.TravelText(5) == "~5 saat" && MarshalRules.TravelText(0) == "~1 saat"
+                && MarshalRules.TravelText(24) == "~1 gün" && MarshalRules.TravelText(60) == "~3 gün" && MarshalRules.TravelText(47) == "~2 gün");
+            Check("marshal: rounding", MarshalRules.Round(43) == 45 && MarshalRules.Round(42.5) == 45 && MarshalRules.Round(437) == 440
+                && MarshalRules.Round(1234) == 1250 && MarshalRules.Round(-5) == 0);
+            Check("marshal: advice", MarshalRules.Advice(1.6).Contains("barış") && MarshalRules.Advice(1.2).Contains("savunmada")
+                && MarshalRules.Advice(1.0).Contains("denk") && MarshalRules.Advice(0.7).Contains("saldırı") && MarshalRules.Advice(0.3).Contains("kalelerine"));
+            Check("marshal: danger", MarshalRules.IsDangerous(1.15) && !MarshalRules.IsDangerous(1.1));
         }
 
         private static void PetitionTests()

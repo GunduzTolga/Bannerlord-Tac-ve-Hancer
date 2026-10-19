@@ -54,6 +54,17 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.14 — Divan: serdar (yeni)
+- [ ] Divan'da üç koltuk yan yana sığıyor mu (SERDAR, HAZİNEDAR, SARAY HEKİMİ)? Yazılar taşıyorsa ekran görüntüsü at
+- [ ] Serdar ata (Tactics, Scouting, tahmin payı) → kart: görüş menzili, erken uyarı yüzdesi; parti başındaki biri de olabiliyor
+- [ ] Savaştayken SAVAŞ MECLİSİ: krallık gücü (onlar / biz), oran, tavsiye
+- [ ] SAVUNMAN: şehir ve kalelerin garnizon, milis, sur, erzak; kuşatma altındaysa kırmızı
+- [ ] DÜŞMAN ORDULARI: kaç kişi, nerede, hedef ("Pravend'i kuşatmaya gidiyor"), sana kaç gün; "Haritada izle"
+- [ ] ZAYIF HEDEFLER: en zayıf beş düşman kalesi; birine git ve oyundaki garnizonla karşılaştır (Tactics düşükse sapmalı)
+- [ ] Bir ordu şehrine ya da köyüne yürürken (çoğu zaman) kuşatmadan önce "Serdarın uyarıyor" kartı geliyor mu, süre doğru mu?
+- [ ] Insert > Entrika > Divan > Serdar: rapor metni
+- [ ] Kaydet → yükle: serdar duruyor
+
 ### P2.13 — Divan: saray hekimi (yeni)
 - [ ] Divan sekmesinin üstünde iki koltuk kartı yan yana (HAZİNEDAR, SARAY HEKİMİ); boşsa açıklama ve "Ata"
 - [ ] Hekim ata → liste (Medicine, şarlatan, ömür etkisi) → kart: Medicine, koruma özeti ("Doğumda ölüm -%30, yaşlılık -%18, ...")

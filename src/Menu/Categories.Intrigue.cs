@@ -51,7 +51,7 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
-                MenuEntry.Submenu("Divan (hazinedar, hekim)...", ShowCouncil),
+                MenuEntry.Submenu("Divan (serdar, hazinedar, hekim)...", ShowCouncil),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -70,16 +70,39 @@ namespace CheatMenu.Menu
                 + "Kayıt testi işareti: " + (state.SaveTestMarker ?? "yok"));
         }
 
-        // ---- Divan (P2.12 hazinedar, P2.13 hekim) ----
+        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 serdar) ----
 
         private static void ShowCouncil()
         {
             IntrigueState state = SchemeEngine.State;
             ShowCategory("Divan", new List<MenuEntry>
             {
+                MenuEntry.Submenu("Serdar: " + (Marshal.Current(state)?.Name.ToString() ?? "boş") + "...", ShowMarshal),
                 MenuEntry.Submenu("Hazinedar: " + (Treasury.Treasurer(state)?.Name.ToString() ?? "boş") + "...", ShowTreasury),
                 MenuEntry.Submenu("Saray hekimi: " + (Physician.Current(state)?.Name.ToString() ?? "boş") + "...", ShowPhysician),
             }, ShowCouncil, "Casus başı Entrika menüsünde. Ayrıntılı raporlar: Entrika ekranı > Divan.", ShowIntrigue);
+        }
+
+        private static void ShowMarshal()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero marshal = Marshal.Current(state);
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu(marshal == null ? "Serdar ata..." : "Serdarı değiştir...", () => Picker.Pick("Serdar seç",
+                    Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Serdar", () => Marshal.Assign(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowMarshal);
+                    }, ShowMarshal, HeroPortrait, sort: false)),
+            };
+            if (marshal != null) entries.Add(MenuEntry.Simple("Serdarı görevden al", () => Marshal.Dismiss(SchemeEngine.State)));
+            ShowCategory("Divan: serdar", entries, ShowMarshal,
+                marshal == null
+                    ? "Klanından Tactics'i ve Scouting'i yüksek birini serdar yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
+                    : Marshal.ReportText(state) + "\n\nOrdular, zayıf hedefler ve savunman: Entrika ekranı > Divan.",
+                ShowCouncil);
         }
 
         private static void ShowPhysician()
