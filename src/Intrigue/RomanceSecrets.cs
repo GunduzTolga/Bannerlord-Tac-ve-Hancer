@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CheatMenu.Bundle;
 using CheatMenu.Intrigue.Core;
 using TaleWorlds.CampaignSystem;
 
@@ -10,10 +11,15 @@ namespace CheatMenu.Intrigue
     /// Gizli ilişki ve gayrimeşru çocuk sırları (P2.4, tasarım: docs/superpowers/specs/2026-10-19-p2-gizli-iliski.md). Sahnesiz, yalnızca
     /// metin. İki taraf da yetişkin olmak zorunda (SecretRules.CanBeLovers ve CouldBeParent). Bir sır iki tarafta da kayıtlıdır: ikisine de
     /// şantaj yapılabilir; ifşa ya da aldatılan eşe söylemek ikisini birden kullanır. Oyuncunun klanına ve aile ağacına dokunulmaz.
+    /// İçine paketlenen Regard and Standing varsa lordlar arası ilişkilerin sahibi odur: sırlar onun gerçek ilişkilerinden ve gerçek
+    /// babalarından bulunur, uydurulmaz; ifşanın skandalını o işler (tasarım: 2026-10-20-regardstanding-iliskiler.md).
     /// </summary>
     public static class RomanceSecrets
     {
         public static bool Enabled => SettingsStore.Current.RomanceSecrets;
+
+        /// <summary>Gizli ilişkiler Regard and Standing'den mi geliyor.</summary>
+        public static bool FromRegardStanding => RegardStandingCompat.Available;
 
         public static int Age(Hero h) => (int)Math.Floor(h.Age);
 
@@ -57,10 +63,51 @@ namespace CheatMenu.Intrigue
                 .Select(s => Hero.Find(s.OtherId))
                 .FirstOrDefault(h => h != null && h.IsAlive);
 
+        // ---- Regard and Standing'den ----
+
+        /// <summary>Hedefin henüz ifşa olmamış son ilişkisi (sürmekte olan önce); öbür taraf hayatta bir yetişkin değilse null.</summary>
+        private static RegardStandingCompat.Affair HiddenAffair(Hero target)
+        {
+            string id = target.StringId;
+            foreach (RegardStandingCompat.Affair affair in RegardStandingCompat.AffairsOf(target)
+                .Where(a => !a.Exposed).OrderByDescending(a => a.Ongoing).ThenByDescending(a => a.Day))
+            {
+                Hero other = Hero.Find(affair.Other(id));
+                if (Alive(other) && other != Hero.MainHero && !other.IsChild && SecretRules.IsAdult(Age(other))) return affair;
+            }
+            return null;
+        }
+
+        /// <summary>Hedefin gerçek ebeveyni olduğu, resmî babası başkası olan çocuklar: (çocuk, öbür ebeveyn).</summary>
+        private static List<KeyValuePair<Hero, Hero>> HiddenChildren(Hero target)
+        {
+            var result = new List<KeyValuePair<Hero, Hero>>();
+            foreach (RegardStandingCompat.Parentage p in RegardStandingCompat.ParentageOf(target).Where(p => p.Born))
+            {
+                Hero mother = Hero.Find(p.Mother ?? "");
+                Hero father = Hero.Find(p.Father ?? "");
+                if (mother == null || father == null) continue;
+                foreach (Hero child in p.Children.Select(id => Hero.Find(id)))
+                {
+                    if (!Alive(child) || child.Mother != mother || child.Father == null || child.Father == father || child.Father == Hero.MainHero
+                        || child.Clan == Clan.PlayerClan) continue;
+                    result.Add(new KeyValuePair<Hero, Hero>(child, target == mother ? father : mother));
+                }
+            }
+            return result.OrderBy(kv => kv.Key.StringId, StringComparer.Ordinal).ToList();
+        }
+
         /// <summary>FindSecret'in romantik adayları. Zarlar çağıranın (tohumlu).</summary>
         public static void Consider(IntrigueState state, Hero target, HashSet<SecretKind> known, Func<int> roll100, List<SecretKind> candidates)
         {
             if (!Enabled || target.IsChild || !SecretRules.IsAdult(Age(target))) return;
+            if (FromRegardStanding)
+            {
+                // Uydurma yok: casus başı yalnızca gerçekte olanı bulur.
+                if (!known.Contains(SecretKind.Affair) && HiddenAffair(target) != null) candidates.Add(SecretKind.Affair);
+                if (!known.Contains(SecretKind.Bastard) && HiddenChildren(target).Count > 0) candidates.Add(SecretKind.Bastard);
+                return;
+            }
             if (target.Spouse != null && !known.Contains(SecretKind.Affair) && roll100() <= SecretRules.AffairChance
                 && LoverCandidates(target).Count > 0)
                 candidates.Add(SecretKind.Affair);
@@ -73,6 +120,21 @@ namespace CheatMenu.Intrigue
         /// <summary>Seçilen romantik sırrın kişilerini doldurur (sevgili, çocuk).</summary>
         public static void Fill(IntrigueState state, Secret secret, Hero target, Func<int, int> pick)
         {
+            if (FromRegardStanding)
+            {
+                if (secret.Kind == SecretKind.Affair)
+                {
+                    secret.OtherId = HiddenAffair(target).Other(target.StringId);
+                }
+                else if (secret.Kind == SecretKind.Bastard)
+                {
+                    List<KeyValuePair<Hero, Hero>> children = HiddenChildren(target);
+                    KeyValuePair<Hero, Hero> chosen = children[pick(children.Count)];
+                    secret.OtherId = chosen.Value.StringId;
+                    secret.ChildId = chosen.Key.StringId;
+                }
+                return;
+            }
             if (secret.Kind == SecretKind.Affair)
             {
                 List<Hero> lovers = LoverCandidates(target);
@@ -126,9 +188,13 @@ namespace CheatMenu.Intrigue
             if (secret.Kind == SecretKind.Affair)
             {
                 Hero spouse = target?.Spouse;
-                return spouse != null
-                    ? spouse.Name + " ile evli olduğu hâlde " + other + " ile gizli bir ilişkisi var."
-                    : "Evli biriyle, " + other + " ile gizli bir ilişkisi var.";
+                Hero otherHero = Hero.Find(secret.OtherId);
+                // Regard and Standing'de ilişki bittiyse (ama ifşa olmadıysa) sır hâlâ geçerli: geçmiş zamanla.
+                RegardStandingCompat.Affair record = FromRegardStanding ? RegardStandingCompat.Between(target, otherHero) : null;
+                string tense = record != null && !record.Ongoing ? "vardı" : "var";
+                if (spouse != null) return spouse.Name + " ile evli olduğu hâlde " + other + " ile gizli bir ilişkisi " + tense + ".";
+                if (otherHero?.Spouse != null) return "Evli biriyle, " + other + " ile gizli bir ilişkisi " + tense + ".";
+                return other + " ile gizli bir ilişkisi " + tense + " (ikisi de evli değil).";
             }
             Hero child = Hero.Find(secret.ChildId ?? "");
             if (target == null || child == null) return SecretRules.Description(secret.Kind);
@@ -144,6 +210,9 @@ namespace CheatMenu.Intrigue
         {
             if (!SecretRules.IsRomantic(secret.Kind) || secret.OtherId == null)
                 return "İfşa edilirse hükümdarıyla (gizli ilişkide eşiyle) arası açılır.";
+            if (HandledByRegardStanding(secret))
+                return "İfşa edilirse saray skandalı: eşler, aileler ve saray kendi tepkisini verir (kin, dışlanma, dedikodu); ilişki biter ve "
+                    + "ikisi de ifşa edenin sen olduğunu bilir." + (secret.Kind == SecretKind.Bastard ? " Çocuğa ve aile ağacına dokunulmaz." : "");
             return secret.Kind == SecretKind.Affair
                 ? "İfşa edilirse saray skandalı: aldatılan eş(ler)le -" + SecretRules.ExposurePenalty(SecretKind.Affair) + ", kayınlarla -"
                   + SecretRules.InLawPenalty + "; aldatılan eş sevgiliyi de affetmez (-" + SecretRules.LoverResentment + ")."
@@ -154,12 +223,30 @@ namespace CheatMenu.Intrigue
 
         // ---- İfşa ----
 
+        /// <summary>
+        /// Bu sırrın çifti Regard and Standing'de kayıtlı mı (oyuncu taraf değil): ifşanın skandalını o işler. Eski kayıtlardaki uydurma
+        /// sırların orada karşılığı yok; onlara kendi kurallarımız uygulanır.
+        /// </summary>
+        private static bool HandledByRegardStanding(Secret secret)
+        {
+            if (!FromRegardStanding || !SecretRules.IsRomantic(secret.Kind) || secret.OtherId == null) return false;
+            Hero a = Hero.Find(secret.TargetId);
+            Hero b = Hero.Find(secret.OtherId);
+            return a != null && b != null && a != Hero.MainHero && b != Hero.MainHero && RegardStandingCompat.Between(a, b) != null;
+        }
+
         /// <summary>Herkese ifşanın ilişki etkileri; uygulananların listesi.</summary>
         public static List<string> ExposeEffects(Secret secret)
         {
             var parts = new List<string>();
             Hero a = Hero.Find(secret.TargetId);
             Hero b = Hero.Find(secret.OtherId);
+            // Skandal iki kez sayılmasın: çift o modda kayıtlıysa tepkiyi o verir, bizim ilişki cezalarımız uygulanmaz.
+            if (HandledByRegardStanding(secret) && RegardStandingCompat.Expose(a, b, Hero.MainHero))
+            {
+                parts.Add("skandal sarayda yayıldı (kin, dışlanma, dedikodu); " + a.Name + " ile " + b.Name + " arasındaki ilişki bitti");
+                return parts;
+            }
             if (secret.Kind == SecretKind.Affair)
             {
                 Betrayal(a, b, SecretRules.ExposurePenalty(SecretKind.Affair), parts);

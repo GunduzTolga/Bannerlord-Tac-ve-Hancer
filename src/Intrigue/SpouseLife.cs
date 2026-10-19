@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CheatMenu.Bundle;
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
@@ -15,6 +16,7 @@ namespace CheatMenu.Intrigue
     /// da uzun süre ayrı kalırsanız kendi başına bir sevgili edinebilir (gerçek bir lord, P2.4 kurallarıyla); gebelik P2.6 sistemiyle
     /// olur ama gerçek baba sen öğrenene kadar gizlidir. Casus başın araştırırsa ya da karşı casusluktayken ortaya çıkar. Yüzleşir,
     /// görmezden gelir ya da boşarsın. Oyunda boşanma yok: eş bağı kaldırılır, eşin ailesinin klanına döner.
+    /// İçine paketlenen Regard and Standing varsa eşinin ilişkisini ve gebeliğini o kurar; burada yalnızca izlenir (FollowRegardStanding).
     /// </summary>
     public static class SpouseLife
     {
@@ -57,7 +59,15 @@ namespace CheatMenu.Intrigue
             state.SpouseApartWeeks = Together(spouse) ? 0 : state.SpouseApartWeeks + 1;
             if (!Enabled || spouse.IsPrisoner) return;
 
-            SpouseAffair affair = state.SpouseAffair;
+            SpouseAffair affair;
+            if (RomanceSecrets.FromRegardStanding)
+            {
+                affair = FollowRegardStanding(state, spouse);
+                if (affair != null) CounterIntel(state, affair);
+                return;
+            }
+
+            affair = state.SpouseAffair;
             if (affair == null)
             {
                 if (!SecretRules.IsAdult(RomanceSecrets.Age(spouse))) return;
@@ -76,9 +86,48 @@ namespace CheatMenu.Intrigue
                 affair.NextMeetingDay = Today + FidelityRules.MeetingDays;
                 Courtships.TryConceive(state, spouse, partner, spouse.GetTraitLevel(DefaultTraits.Calculating) >= 1, hidden: true);
             }
+            CounterIntel(state, affair);
+        }
+
+        private static void CounterIntel(IntrigueState state, SpouseAffair affair)
+        {
             if (!affair.Discovered && state.Mission == SpymasterMission.CounterIntel && SchemeFactors.Spymaster(state) != null
                 && state.Roll100() <= FidelityRules.CounterIntelWeeklyChance)
                 Discover(state, "Karşı casusluk yapan casus başın tesadüfen öğrendi.");
+        }
+
+        /// <summary>
+        /// Regard and Standing varken eşinin ilişkisini o kurar; burada yalnızca izlenir: sürmekte olan ilişkisi kayda alınır (araştırma,
+        /// karşı casusluk, yüzleşme ve boşanma aynen çalışsın), sen öğrenmeden biterse ya da sevgili değişirse kayıt da değişir. O ilişkiden
+        /// doğan çocuklar onun gerçek baba kayıtlarından eklenir.
+        /// </summary>
+        private static SpouseAffair FollowRegardStanding(IntrigueState state, Hero spouse)
+        {
+            Hero lover = RegardStandingCompat.CurrentLover(spouse);
+            if (lover == Hero.MainHero) lover = null;
+            SpouseAffair affair = state.SpouseAffair;
+            if (affair != null && !affair.Discovered && (lover == null || lover.StringId != affair.LoverId))
+                state.SpouseAffair = affair = null;
+            if (affair == null && lover != null)
+            {
+                RegardStandingCompat.Affair record = RegardStandingCompat.Between(spouse, lover);
+                state.SpouseAffair = affair = new SpouseAffair
+                {
+                    SpouseId = spouse.StringId,
+                    LoverId = lover.StringId,
+                    Since = record?.Day ?? Today,
+                    NextMeetingDay = int.MaxValue,
+                };
+            }
+            if (affair == null) return null;
+            foreach (RegardStandingCompat.Parentage p in RegardStandingCompat.ParentageOf(spouse))
+            {
+                bool samePair = (p.Mother == spouse.StringId && p.Father == affair.LoverId) || (p.Father == spouse.StringId && p.Mother == affair.LoverId);
+                if (!p.Born || !samePair) continue;
+                foreach (string childId in p.Children)
+                    if (Hero.Find(childId)?.IsAlive == true && !affair.ChildIds.Contains(childId)) affair.ChildIds.Add(childId);
+            }
+            return affair;
         }
 
         // ---- Araştırma ----
@@ -187,6 +236,7 @@ namespace CheatMenu.Intrigue
             if (state.Roll100() <= FidelityRules.ConfrontEndChance(spouse.GetRelation(Hero.MainHero), spouse.GetTraitLevel(DefaultTraits.Honor)))
             {
                 state.SpouseAffair = null;
+                if (RomanceSecrets.FromRegardStanding) RegardStandingCompat.BreakOff(spouse, lover);
                 SchemeOutcomes.Relate(spouse, -FidelityRules.ConfrontEndRelation);
                 SchemeOutcomes.Notify(state, "Yüzleşme: " + spouse.Name, spouse.Name + " suçunu kabul etti ve " + lover.Name
                     + " ile ilişkisini bitirdi. Aranızdaki soğukluk bir süre sürecek: ilişki -" + FidelityRules.ConfrontEndRelation + ".", spouse, CardImages.Betrayal);

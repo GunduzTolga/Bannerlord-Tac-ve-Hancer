@@ -28,6 +28,7 @@ Bunun yaması `src\Bundle\BundleShim.cs`'dedir; modun kök klasöründeki dosyal
 | DLX Hair Layers | `HairAddons` | Dosyalarını DLL'in yanından bulur. |
 | Women in Calradia | `WomeninCalradia` | Ayar dosyası `Bundled\WomeninCalradia\config.xml`. |
 | AutoTrader | `AutoTrader` | Ayarları ve günlüğü Belgeler\...\Configs'te; oyun 1.4.6 için derlenmiş, 1.4.8'de bütün çağrıları karşılık buluyor. |
+| Regard and Standing | `RegardStanding` | Ayarları Belgeler\RegardStanding\regard_standing.txt (ve Mod Seçenekleri). Lordlar arası gizli ilişkilerin sahibi o; casus başımız onun gerçek ilişkilerini bulur (`src\Bundle\RegardStandingCompat.cs`, tasarım: `2026-10-20-regardstanding-iliskiler.md`). |
 
 Pakete girmeyenler:
 - **Hot Butter:** genelevin yetişkin içerik taşımayan mekanikleri onun fikirlerinden kendi kodumuzla yazıldı.
