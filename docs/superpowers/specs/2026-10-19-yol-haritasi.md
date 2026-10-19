@@ -1,9 +1,9 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
 **Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0, P1, P2.1 (esir sorgulama), P2.2 (haberci + saray istihbaratı), P2.3 (casus başı görevleri), P2.4 (gizli ilişki
-ve gayrimeşru çocuk sırları) P2.5 (ağ ifşasından diplomatik kriz), gece evi işletmesi, esiri hizmete davet, P2.6 (kur, sevgili, gebelik), eşinin gizli hayatı / boşanma ve P2.7 (aile editörü) kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
+ve gayrimeşru çocuk sırları) P2.5 (ağ ifşasından diplomatik kriz), gece evi işletmesi, esiri hizmete davet, P2.6 (kur, sevgili, gebelik), eşinin gizli hayatı / boşanma P2.7 (aile editörü) ve düello kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
 `2026-10-19-p2-haberci-saray.md`, `2026-10-19-p2-casus-basi-gorevleri.md`, `2026-10-19-p2-gizli-iliski.md`,
-`2026-10-19-p2-diplomatik-kriz.md`, `2026-10-19-p2-gece-evi.md`, `2026-10-19-p2-sevgili.md`, `2026-10-19-p2-esin-gizli-hayati.md`, `2026-10-19-p2-aile-editoru.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+`2026-10-19-p2-diplomatik-kriz.md`, `2026-10-19-p2-gece-evi.md`, `2026-10-19-p2-sevgili.md`, `2026-10-19-p2-esin-gizli-hayati.md`, `2026-10-19-p2-aile-editoru.md`, `2026-10-19-duello.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)
@@ -98,7 +98,7 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | 9 | **Saray günü** | Barış zamanı içeriği ve olay kartlarının doğal yeri | Şehir menüsünden dilekçeler ve yargılamalar; kararlar kişilik, sadakat, güvenlik ve altını etkiler |
 | 10 | **Rehine anlaşmaları** | Aile, diplomasi ve kaçırmanın kesişimi | Barış ya da ittifak teminatı. Esir değil "misafir" olarak tutulur (Harmony gerekmez). |
 
-**Oyun API taramasından adaylar** (`2026-10-19-oyun-api-taramasi.md`): düello, oyunun 3B sahneleri (doğum, düğün), evlat edinme ve
+**Oyun API taramasından adaylar** (`2026-10-19-oyun-api-taramasi.md`): düello (✅ kodlandı), oyunun 3B sahneleri (doğum, düğün), evlat edinme ve
 varis (P2.8'e), casusluğu kendin yap (takip ve kılık değiştirme görevleri), zindan baskını, çete savaşı, manastıra çekilme, gizlilikle
 suikast. Alevli ok (War Sails) kullanıcının DLC dosyaları gelince.
 

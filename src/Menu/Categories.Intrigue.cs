@@ -266,6 +266,12 @@ namespace CheatMenu.Menu
             }
             if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Blackmail) == null)
                 entries.Add(MenuEntry.Submenu("Bu sırla şantaj başlat...", () => StartFromReport(report, SchemeKind.Blackmail)));
+            if (target != null && target.IsAlive && target.IsLord && target.Clan != Clan.PlayerClan)
+            {
+                string duelBlocked = Duels.Blocked(state, target);
+                entries.Add(duelBlocked == null ? MenuEntry.Simple("Düelloya davet et...", () => UI.EventCards.ShowDuel(target, null))
+                    : MenuEntry.Simple("Düelloya davet et - " + duelBlocked, () => MenuUI.Error(duelBlocked)));
+            }
             if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Murder) == null)
                 entries.Add(MenuEntry.Submenu("Bu hedefe suikast başlat...", () => StartFromReport(report, SchemeKind.Murder)));
             if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Kidnap) == null)

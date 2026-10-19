@@ -200,6 +200,30 @@ namespace CheatMenu.UI
                 text + "\n\nYalnızca yetişkinler; olanlar metinle anlatılır, sahne yok.", CardImages.Courtship, target, options, cancel, null);
         }
 
+        /// <summary>Düello: meydan okuma kartı.</summary>
+        public static void ShowDuel(Hero target, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            string blocked = Duels.Blocked(state, target);
+            DuelReason reason = Duels.ReasonFor(state, target);
+            int accept = Duels.AcceptChance(state, target);
+            var options = new List<CardOption>
+            {
+                new CardOption
+                {
+                    Label = "Meydan oku (kabul %" + accept + ")", DisabledHint = blocked,
+                    Apply = () => { Duels.Challenge(SchemeEngine.State, target); afterwards?.Invoke(); },
+                },
+            };
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("DÜELLO", "Düello: " + target.Name,
+                "Sebep: " + DuelRules.ReasonName(reason) + ". " + target.Name + " herkesin önünde meydan okumanı kabul ederse ikiniz şehrin arenasında "
+                + "dövüşürsünüz; düşen kaybeder, kimse ölmez. Reddederse korkak görünür (ün +" + DuelRules.RefuseRenown + " sana).\n\n"
+                + Duels.Stakes(state, target) + "\n\nKabul ihtimali Cesaretine, Onuruna, sana olan nefretine ve ikinizin dövüş becerisine bağlı.",
+                CardImages.Duel, target, options, cancel, null);
+        }
+
         /// <summary>Sevgilinle gizli buluşma (P2.6).</summary>
         public static void ShowMeeting(Hero lover, Action afterwards)
         {

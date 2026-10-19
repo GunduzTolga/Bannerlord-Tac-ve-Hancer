@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **37 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **38 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -85,6 +85,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 35 | `sonuc_dogum.png` | Kurdan ya da sevgiliden doğan çocuk (P2.6) | |
 | 36 | `sonuc_aldatma.png` | Eşinin gizli ilişkisi ortaya çıktı, yüzleşme | |
 | 37 | `sonuc_bosanma.png` | Boşanma | |
+| 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -256,6 +257,12 @@ A grim lord standing alone in a dark castle chamber at night, holding a crumpled
 
 ```
 A noble spouse in a travel cloak leaving a castle courtyard at dawn with a small retinue and a loaded packhorse, looking back once at the keep, a lord watching from a high window, a family banner being taken down, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**38 · `sonuc_duello.png`** — düello
+
+```
+Two noblemen in mail and padded gambesons facing each other with swords and round shields on the sand of a town arena, a crowd of townsfolk and nobles watching from wooden stands, banners hanging from the railings, dust in the late afternoon light, no blood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -698,4 +705,14 @@ A noble couple standing apart in a chapel before a priest, a broken ring on a ve
 
 ```
 A noblewoman riding away from a castle at dusk with her servants and a packhorse, the drawbridge rising behind her, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_duello_2.png`** · `sonuc_duello_3.png` — düello
+
+```
+A nobleman throwing down a leather glove at the feet of a rival lord in a crowded castle hall, courtiers stepping back in shock, torches on the walls, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A victorious lord lowering his sword over a fallen rival kneeling on the sand of a Vlandian arena, the rival raising an open hand in yield, spectators cheering from the stands, no blood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

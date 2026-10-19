@@ -154,6 +154,7 @@ namespace CheatMenu.Tests
             RecruitTests();
             CourtshipTests();
             FidelityTests();
+            DuelTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -359,6 +360,7 @@ namespace CheatMenu.Tests
                 How = "Casus başın buldu.", ChildIds = { "child_1", "child_2" } };
             state.SpouseWatchUntil = 205;
             state.NoChildren.Add("lord_12");
+            state.DuelUntil["lord_14"] = 240;
             state.AgeFrozen.Add("main_hero");
             state.AgeFrozen.Add("lord_13");
             state.SpouseApartWeeks = 3;
@@ -411,6 +413,7 @@ namespace CheatMenu.Tests
             SpouseAffair sa = back.SpouseAffair;
             Check("state: spouse affair", sa != null && sa.SpouseId == "spouse_1" && sa.LoverId == "lord_11" && sa.Since == 120 && sa.NextMeetingDay == 190
                 && sa.Discovered && !sa.Asked && sa.How == "Casus başın buldu." && sa.ChildIds.Count == 2 && sa.ChildIds[1] == "child_2");
+            Check("state: duel cooldown", back.DuelUntil.Count == 1 && back.DuelUntil["lord_14"] == 240);
             Check("state: family editor", back.NoChildren.SetEquals(new[] { "lord_12" }) && back.AgeFrozen.SetEquals(new[] { "main_hero", "lord_13" }));
             Check("state: spouse watch", back.SpouseWatchUntil == 205 && back.SpouseApartWeeks == 3);
             Check("state: romance cooldown", back.RomanceUntil["lord_10"] == 220);
@@ -506,6 +509,21 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Düello: kabul olasılığı örnekleri.</summary>
+        private static void DuelTests()
+        {
+            CheckChance("duel: neutral equal fighters", DuelRules.AcceptChance(0, 0, 0, 100, 100, DuelReason.Honor), 40);
+            CheckChance("duel: brave honorable", DuelRules.AcceptChance(2, 1, 0, 100, 100, DuelReason.Honor), 80);
+            CheckChance("duel: hates you", DuelRules.AcceptChance(0, 0, -60, 100, 100, DuelReason.Honor), 55);
+            CheckChance("duel: you are far better", DuelRules.AcceptChance(0, 0, 0, 250, 50, DuelReason.Honor), 5);
+            CheckChance("duel: feud wants revenge", DuelRules.AcceptChance(0, 0, -40, 100, 100, DuelReason.Feud), 70);
+            CheckChance("duel: affair", DuelRules.AcceptChance(1, 0, -20, 120, 100, DuelReason.Affair), 65);
+            CheckChance("duel: cowardly cap floor", DuelRules.AcceptChance(-2, -2, 40, 300, 0, DuelReason.Honor), 5);
+            CheckChance("duel: cap", DuelRules.AcceptChance(2, 2, -100, 0, 300, DuelReason.Feud), 95);
+            Check("duel: reason names", DuelRules.ReasonName(DuelReason.Affair) == "aldatma" && DuelRules.ReasonName(DuelReason.Feud) == "kan davası"
+                && DuelRules.ReasonName(DuelReason.Honor) == "onur");
         }
 
         /// <summary>Eşinin gizli hayatı ve boşanma: tasarımdaki örnekler.</summary>
