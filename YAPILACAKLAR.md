@@ -54,6 +54,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.5 — Ağ ifşasından diplomatik kriz (yeni)
+- [ ] Hile ya da sabırla barışta olduğun bir krallığın şehrinde gölge ağı kur; çökertilince tek kart: "Diplomatik kriz: Krallık"
+      (ne oldu, suç puanı, gerilim, üç seçenek; resim: elçi)
+- [ ] Kart sonrası o krallığın şehrinde oyunun kendi suç göstergesi yükselmiş (muhafızlar sert); **Tazminat öde** → suç siliniyor
+- [ ] **İnkâr et** ve **Reddet** sonuç kartları; hükümdarla ilişki ve "gerilim a -> b" yazıyor
+- [ ] Entrika ekranı > Saray > o krallık: "casus gerilimi: gergin (N/100)"; haftalar geçtikçe azalıyor
+- [ ] Gerilim 60+ (birkaç reddedilmiş skandal): bir hafta "Savaş meclisi" kartı; o krallığın kararlarında savaş oylaması görünüyor;
+      vasalsan hükümdarınla -20
+- [ ] Kendi krallığının bir şehrinde ağ çökerse kriz yok, yalnızca bildirim ve hükümdarla ilişki düşüşü
+- [ ] Savaşta olduğun krallıkta ağ çökerse kriz yok
+- [ ] Kriz kartı açıkken kaydet → yükle → kart yine soruluyor
+
 ### P2.4 — Gizli ilişki ve gayrimeşru çocuk sırları (yeni)
 - [ ] Evli lordlara casusluk/sorgu → bir süre sonra "SIR BULUNDU: Gizli ilişki - X ile evli olduğu hâlde Y ile..." (resim: gizli buluşma)
 - [ ] Kişiler sekmesinde sevgili Y de görünüyor, onda da aynı sır var; ikisine de **Şantaj** başlatılabiliyor

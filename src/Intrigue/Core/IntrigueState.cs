@@ -145,6 +145,19 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Yabancı bir krallıkta gölge ağı çökertildi; hükümdarı hesap soruyor (P2.5). Cevaplanana kadar kartla sorulur.</summary>
+    public sealed class Crisis
+    {
+        public string KingdomId;
+        public string TownId;
+        public int Level;
+        public int Day;
+        /// <summary>Eklenen suç puanı (tazminat bunu siler).</summary>
+        public int Crime;
+        /// <summary>Şehrin sahibiyle ilişki cezası uygulandıysa onun kimliği (kartta yazılır).</summary>
+        public string OwnerId;
+    }
+
     /// <summary>Ulağı kabul eden ve görüşmeye hazır lord (P2.2): süresi dolana kadar konuşma penceresi açılabilir.</summary>
     public sealed class Audience
     {
@@ -198,6 +211,11 @@ namespace CheatMenu.Intrigue.Core
         public List<Audience> Audiences = new List<Audience>();
         /// <summary>Hediye: kahraman → hediyeden yeniden ilişki gelebileceği gün.</summary>
         public Dictionary<string, int> GiftUntil = new Dictionary<string, int>();
+        /// <summary>Casus skandallarından krallıklarla gerilim, 0-100 (P2.5).</summary>
+        public Dictionary<string, int> Tension = new Dictionary<string, int>();
+        public List<Crisis> Crises = new List<Crisis>();
+
+        public int TensionWith(string kingdomId) => kingdomId != null && Tension.TryGetValue(kingdomId, out int t) ? t : 0;
 
         // P2.3
         public SpymasterMission Mission;
@@ -308,6 +326,11 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("audience").Add("hero", a.HeroId).Add("until", I(a.Until)).Add("relation", I(a.Relation))
                     .Add("asked", B(a.Asked)));
             foreach (KeyValuePair<string, int> p in GiftUntil) records.Add(new TextRecord("gift").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in Tension.Where(p => p.Value > 0))
+                records.Add(new TextRecord("tension").Add("kingdom", p.Key).Add("value", I(p.Value)));
+            foreach (Crisis c in Crises)
+                records.Add(new TextRecord("crisis").Add("kingdom", c.KingdomId).Add("town", c.TownId).Add("level", I(c.Level))
+                    .Add("day", I(c.Day)).Add("crime", I(c.Crime)).Add("owner", c.OwnerId));
             foreach (Letter l in Letters)
                 records.Add(new TextRecord("letter").Add("id", I(l.Id)).Add("kind", I((int)l.Kind)).Add("target", l.TargetId)
                     .Add("use", I(l.Use)).Add("sent", I(l.SentDay)).Add("arrive", I(l.ArriveDay)));
@@ -419,6 +442,18 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "gift":
                         if (Empty(r.Get("hero")) != null) state.GiftUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "tension":
+                        if (Empty(r.Get("kingdom")) != null)
+                            state.Tension[r.Get("kingdom")] = SchemeMath.Clamp(Int(r, "value"), 0, CrisisRules.MaxTension);
+                        break;
+                    case "crisis":
+                        if (Empty(r.Get("kingdom")) == null) break;
+                        state.Crises.Add(new Crisis
+                        {
+                            KingdomId = r.Get("kingdom"), TownId = Empty(r.Get("town")), Level = SchemeMath.Clamp(Int(r, "level"), 1, SchemeMath.MaxNetworkLevel),
+                            Day = Int(r, "day"), Crime = Int(r, "crime"), OwnerId = Empty(r.Get("owner")),
+                        });
                         break;
                     case "letter":
                         int letterKind = Int(r, "kind");

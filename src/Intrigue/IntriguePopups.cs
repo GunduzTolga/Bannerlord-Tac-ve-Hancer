@@ -81,6 +81,12 @@ namespace CheatMenu.Intrigue
                 ShowLiegeDemand(state);
                 return;
             }
+            Crisis crisis = state.Crises.FirstOrDefault();
+            if (crisis != null)
+            {
+                ShowCrisis(state, crisis);
+                return;
+            }
             AiPlot plot = state.AiPlots.FirstOrDefault(p => p.Detected && !p.Asked);
             if (plot != null)
             {
@@ -170,6 +176,40 @@ namespace CheatMenu.Intrigue
                 + "\n\nKonuşmada oyunun kendi seçenekleri var: krallığına davet (ikna turları ve pazarlık), evlilik, görevler."
                 + (bonus > 0 ? " Hakkında bildiklerin sayesinde ikna turlarında başarı +" + bonus + "." : ""),
                 options, CardImages.Messenger, hero);
+        }
+
+        /// <summary>Yabancı krallıkta ağ çökertildi: tazminat, inkâr ya da ret (P2.5).</summary>
+        private static void ShowCrisis(IntrigueState state, Crisis crisis)
+        {
+            if (!DiplomaticCrises.StillValid(crisis))
+            {
+                state.Crises.Remove(crisis);
+                return;
+            }
+            Kingdom kingdom = DiplomaticCrises.KingdomOf(crisis);
+            int gold = CrisisRules.Reparations(crisis.Level);
+            int deny = DiplomaticCrises.DenyChance(state, crisis);
+            var options = new List<IntrigueEvents.Option>
+            {
+                new IntrigueEvents.Option
+                {
+                    Label = "Tazminat öde: " + SchemeFactors.Money(gold) + " (suç silinir, gerilim yatışır, ilişki -" + CrisisRules.PayRulerPenalty + ")",
+                    DisabledHint = SchemeFactors.CanAfford(gold) ? null : "Yeterli altının yok",
+                    Apply = () => DiplomaticCrises.Answer(state, crisis, CrisisAnswer.Pay),
+                },
+                new IntrigueEvents.Option
+                {
+                    Label = "İnkâr et (%" + deny + "): tutarsa ilişki -" + CrisisRules.DenyRulerPenalty + "; tutmazsa -"
+                        + CrisisRules.DenyFailRulerPenalty + " ve gerilim +" + CrisisRules.DenyFailTension,
+                    Apply = () => DiplomaticCrises.Answer(state, crisis, CrisisAnswer.Deny),
+                },
+                new IntrigueEvents.Option
+                {
+                    Label = "Reddet: ilişki -" + CrisisRules.DefyRulerPenalty + ", gerilim +" + CrisisRules.DefyTension + ", suç kalır",
+                    Apply = () => DiplomaticCrises.Answer(state, crisis, CrisisAnswer.Defy),
+                },
+            };
+            ShowChoice("KRİZ", "Diplomatik kriz: " + kingdom.Name, DiplomaticCrises.CardText(state, crisis), options, CardImages.Crisis, kingdom.Leader);
         }
 
         private static void ShowLiegeDemand(IntrigueState state)

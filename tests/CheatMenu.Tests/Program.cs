@@ -143,6 +143,7 @@ namespace CheatMenu.Tests
             InterrogationTests();
             LetterTests();
             RomanceTests();
+            CrisisTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -336,6 +337,9 @@ namespace CheatMenu.Tests
             state.Audiences.Add(new Audience { HeroId = "lord_13", Until = 245, Relation = 3, Asked = true });
             state.Audiences.Add(new Audience { HeroId = "lord_14", Until = 260 });
             state.GiftUntil["lord_13"] = 248;
+            state.Tension["vlandia"] = 55;
+            state.Tension["empire"] = 0;
+            state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
             state.Mission = SpymasterMission.SpreadRumors;
             state.RumorTargetId = "lord_12";
@@ -371,6 +375,9 @@ namespace CheatMenu.Tests
             Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
             Check("state: audiences", back.Audiences.Count == 2 && back.Audiences[0].Relation == 3 && back.Audiences[0].Asked
                 && !back.Audiences[1].Asked && back.GiftUntil["lord_13"] == 248);
+            Check("state: tension", back.TensionWith("vlandia") == 55 && !back.Tension.ContainsKey("empire") && back.TensionWith("nope") == 0);
+            Check("state: crisis", back.Crises.Count == 1 && back.Crises[0].KingdomId == "vlandia" && back.Crises[0].TownId == "town_V1"
+                && back.Crises[0].Level == 2 && back.Crises[0].Day == 140 && back.Crises[0].Crime == 30 && back.Crises[0].OwnerId == "lord_4_1");
             Check("state: audience letter", back.Letters.Count == 3 && back.Letters[2].Kind == LetterKind.Audience && back.Letters[2].Use == 3000);
             Check("state: letters", back.Letters.Count == 3 && back.NextLetterId == 7 && back.Letters[0].Kind == LetterKind.HookDemand
                 && back.Letters[0].ArriveDay == 104 && back.Letters[1].Use == 2 && back.Letters[1].TargetId == "lord_10");
@@ -457,6 +464,34 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Ağ ifşasından diplomatik kriz (P2.5): tasarımdaki sayılar.</summary>
+        private static void CrisisTests()
+        {
+            Check("crisis: exposure tension by level", CrisisRules.ExposureTension(1) == 10 && CrisisRules.ExposureTension(3) == 30 && CrisisRules.ExposureTension(9) == 30);
+            Check("crisis: crime by level", CrisisRules.Crime(1) == 15 && CrisisRules.Crime(3) == 45);
+            Check("crisis: reparations", CrisisRules.Reparations(1) == 2500 && CrisisRules.Reparations(2) == 4000 && CrisisRules.Reparations(3) == 5500);
+            CheckChance("crisis: deny base", CrisisRules.DenyChance(0, 0, 1, SchemeMath.NormalDifficulty), 20);
+            CheckChance("crisis: deny skilled", CrisisRules.DenyChance(150, 100, 1, SchemeMath.NormalDifficulty), 60);
+            CheckChance("crisis: deny big network", CrisisRules.DenyChance(150, 100, 3, SchemeMath.NormalDifficulty), 40);
+            CheckChance("crisis: deny floor", CrisisRules.DenyChance(0, 0, 3, SchemeMath.HardDifficulty), 5);
+            CheckChance("crisis: deny cap", CrisisRules.DenyChance(400, 300, 1, SchemeMath.EasyDifficulty), 80);
+            Check("crisis: pay cancels exposure", CrisisRules.TensionAfter(50, 2, CrisisAnswer.Pay, false) == 30);
+            Check("crisis: deny success halves", CrisisRules.TensionAfter(50, 2, CrisisAnswer.Deny, true) == 40);
+            Check("crisis: deny fail and defy raise", CrisisRules.TensionAfter(50, 2, CrisisAnswer.Deny, false) == 65
+                && CrisisRules.TensionAfter(90, 1, CrisisAnswer.Defy, false) == 100);
+            Check("crisis: tension never negative", CrisisRules.TensionAfter(5, 3, CrisisAnswer.Pay, false) == 0 && CrisisRules.Decay(3) == 0);
+            Check("crisis: ruler penalties", CrisisRules.RulerPenalty(CrisisAnswer.Pay, false) == 5 && CrisisRules.RulerPenalty(CrisisAnswer.Deny, true) == 5
+                && CrisisRules.RulerPenalty(CrisisAnswer.Deny, false) == 20 && CrisisRules.RulerPenalty(CrisisAnswer.Defy, false) == 15);
+            Check("crisis: decay", CrisisRules.Decay(40) == 35);
+            Check("crisis: war chance", CrisisRules.WeeklyWarChance(59) == 0 && CrisisRules.WeeklyWarChance(60) == 10
+                && CrisisRules.WeeklyWarChance(75) == 25 && CrisisRules.WeeklyWarChance(100) == 40);
+            Check("crisis: may propose war", CrisisRules.MayProposeWar(60, 500f, 900f, 1) && !CrisisRules.MayProposeWar(59, 500f, 900f, 0)
+                && !CrisisRules.MayProposeWar(80, 500f, 900f, 2) && !CrisisRules.MayProposeWar(80, 400f, 900f, 0));
+            Check("crisis: one defied level-3 exposure is not war yet", CrisisRules.TensionAfter(CrisisRules.ExposureTension(3), 3, CrisisAnswer.Defy, false) < CrisisRules.WarThreshold);
+            Check("crisis: names", CrisisRules.TensionName(0) == "yok" && CrisisRules.TensionName(10) == "soğuk"
+                && CrisisRules.TensionName(30) == "gergin" && CrisisRules.TensionName(60) == "savaş eşiğinde");
         }
 
         /// <summary>Gizli ilişki ve gayrimeşru çocuk (P2.4): 18+ kuralı kodda zorunlu, sınırlar burada denetlenir.</summary>

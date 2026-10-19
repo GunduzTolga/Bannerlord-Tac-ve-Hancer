@@ -77,7 +77,7 @@ namespace CheatMenu.UI.ViewModels
             RulerLine = "Hükümdar  ·  seninle ilişkisi " + SchemeFactors.Signed(Hero.MainHero.GetRelation(ruler))
                 + "  ·  krallığın gücü " + ((int)kingdom.CurrentTotalStrength).ToString("N0")
                 + (Clan.PlayerClan.Kingdom != null && kingdom != Clan.PlayerClan.Kingdom ? " (seninki " + ((int)ours).ToString("N0") + ")" : "");
-            SourceText = Court.SourceText(state, kingdom);
+            SourceText = Court.SourceText(state, kingdom) + DiplomaticCrises.TensionLine(state, kingdom);
 
             // Önce bilinen hoşnutsuzlar (en kötüsü en üstte), sonra söylentiler, en sonda bilinmeyenler.
             IEnumerable<Hero> ordered = Court.ClanLeaders(kingdom)
