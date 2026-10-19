@@ -31,6 +31,8 @@ namespace CheatMenu.UI
         }
 
         private static readonly MovieLayer Layer = new MovieLayer();
+        private static readonly EscapeKey Escape = new EscapeKey();
+        private static readonly object PauseOwner = new object();
         private static string _title;
         private static Action _onClosed;
         private static CardOption _dismiss;
@@ -79,6 +81,9 @@ namespace CheatMenu.UI
             _onClosed = onClosed;
             _dismiss = dismiss;
             _choosing = false;
+            Escape.Reset();
+            // Eski popup'lar gibi: kart açıkken gün ilerlemesin (karar eskimesin).
+            TimePause.Acquire(PauseOwner);
             return true;
         }
 
@@ -110,6 +115,33 @@ namespace CheatMenu.UI
                 kidnap ? CardImages.Kidnap : CardImages.Murder, target, options, cancel, null);
         }
 
+        /// <summary>Esir sorgusu: yöntem seçimi kartı (Entrika ekranı > Esirler ve liste menüsü).</summary>
+        public static void ShowInterrogation(Interrogation.Prisoner prisoner, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero hero = prisoner.Hero;
+            string blocked = Interrogation.BlockedReason(state, prisoner);
+            List<CardOption> options = new[] { InterrogationMethod.Talk, InterrogationMethod.Pressure, InterrogationMethod.Deal }
+                .Select(method => new CardOption
+                {
+                    Label = Interrogation.OptionLabel(state, hero, method),
+                    DisabledHint = blocked,
+                    Apply = () =>
+                    {
+                        Interrogation.Interrogate(SchemeEngine.State, prisoner, method);
+                        afterwards?.Invoke();
+                    },
+                })
+                .ToList();
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("SORGU", "Esir: " + hero.Name,
+                hero.Name + " (" + SchemeFactors.Affiliation(hero) + ") " + prisoner.WhereText.ToLower(Tr.Culture) + ".\n\n"
+                + "Konuşursa hakkında rapor alırsın; belki bir sırrını, belki efendisi hakkında bilgi de kaçırır. "
+                + "Aynı esir " + InterrogationRules.CooldownDays + " günde bir sorgulanabilir.",
+                CardImages.Interrogation, hero, options, cancel, null);
+        }
+
         /// <summary>Her kare (SubModule): harita ekranı değiştiyse kartı kapatır, Esc ile kapatılabilir kartları kapatır.</summary>
         public static void Tick()
         {
@@ -123,7 +155,7 @@ namespace CheatMenu.UI
                     closed?.Invoke();
                     return;
                 }
-                if (_dismiss != null && !_choosing && !InformationManager.IsAnyInquiryActive() && Input.IsKeyPressed(InputKey.Escape))
+                if (Escape.Released(_dismiss != null && !_choosing && !InformationManager.IsAnyInquiryActive()))
                     Choose(_dismiss);
             }
             catch (Exception ex)
@@ -142,6 +174,7 @@ namespace CheatMenu.UI
             _dismiss = null;
             _choosing = false;
             Layer.Close();
+            TimePause.Release(PauseOwner);
         }
 
         private static void Choose(CardOption option)
@@ -166,6 +199,7 @@ namespace CheatMenu.UI
             _choosing = false;
             if (!Layer.IsOpen) return;
             Layer.Close();
+            TimePause.Release(PauseOwner);
             IntrigueScreen.Refocus();
         }
 

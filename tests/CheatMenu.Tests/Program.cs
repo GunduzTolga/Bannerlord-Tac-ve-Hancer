@@ -137,6 +137,7 @@ namespace CheatMenu.Tests
             IntrigueStateTests();
             TurkishSuffixTests();
             CardImageTests();
+            InterrogationTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -321,6 +322,8 @@ namespace CheatMenu.Tests
             });
             state.Networks.Add(new ShadowNetwork { SettlementId = "town_V1", Level = 2, Since = 40 });
             state.FeudUntil["lord_6"] = 400;
+            state.InterrogatedUntil["lord_7"] = 230;
+            state.InterrogatedUntil["lord_8"] = 300;
 
             IntrigueState back = IntrigueState.Parse(state.Write());
             Scheme s = back.Schemes.Count == 1 ? back.Schemes[0] : null;
@@ -347,12 +350,14 @@ namespace CheatMenu.Tests
                 && plot.Detected && !plot.Asked && plot.Protected && back.NextPlotId == 6);
             Check("state: network", back.Network("town_V1") != null && back.Network("town_V1").Level == 2 && back.Network("town_V1").Since == 40);
             Check("state: feud", back.HasFeud("lord_6", 399) && !back.HasFeud("lord_6", 400));
+            Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
 
             Check("state: report valid at 72", back.HasValidReport("lord_1_1", 72) && !back.HasValidReport("lord_1_1", 73));
             Check("state: cooldown", back.IsOnCooldown("lord_2", 199) && !back.IsOnCooldown("lord_2", 200));
             back.RemoveExpired(250);
             Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3")
-                && back.Hooks.Count == 0 && back.FeudUntil.ContainsKey("lord_6"));
+                && back.Hooks.Count == 0 && back.FeudUntil.ContainsKey("lord_6")
+                && !back.InterrogatedUntil.ContainsKey("lord_7") && back.InterrogatedUntil.ContainsKey("lord_8"));
 
             int logged = IntrigueState.MaxLogEntries + 10;
             for (int i = 0; i < logged; i++) back.AddLog(i, "e" + i);
@@ -390,6 +395,32 @@ namespace CheatMenu.Tests
         {
             inputs.CompletedPhases = phases;
             return inputs;
+        }
+
+        /// <summary>Esir sorgulama formülleri (P2.1): örnek hesaplar ve sınırlar.</summary>
+        private static void InterrogationTests()
+        {
+            const int normal = SchemeMath.NormalDifficulty;
+            int Chance(InterrogationMethod m, int charm = 0, int roguery = 0, int relation = 0, int calc = 0, int valor = 0, int honor = 0,
+                int difficulty = normal) => InterrogationRules.Chance(m, charm, roguery, relation, calc, valor, honor, difficulty);
+
+            CheckChance("interrogate: talk charm 100", Chance(InterrogationMethod.Talk, charm: 100), 50);
+            CheckChance("interrogate: talk hostile calculating -> floor", Chance(InterrogationMethod.Talk, relation: -40, calc: 2), 10);
+            CheckChance("interrogate: talk cap", Chance(InterrogationMethod.Talk, charm: 300, relation: 100, calc: -2), 85);
+            CheckChance("interrogate: pressure roguery 100", Chance(InterrogationMethod.Pressure, roguery: 100), 65);
+            CheckChance("interrogate: pressure brave", Chance(InterrogationMethod.Pressure, valor: 2), 35);
+            CheckChance("interrogate: pressure cap", Chance(InterrogationMethod.Pressure, roguery: 300), 90);
+            CheckChance("interrogate: pressure easy", Chance(InterrogationMethod.Pressure, roguery: 100, difficulty: SchemeMath.EasyDifficulty), 75);
+            CheckChance("interrogate: pressure hard", Chance(InterrogationMethod.Pressure, roguery: 100, difficulty: SchemeMath.HardDifficulty), 55);
+            CheckChance("interrogate: deal neutral", Chance(InterrogationMethod.Deal), 70);
+            CheckChance("interrogate: deal floor", Chance(InterrogationMethod.Deal, relation: -60, honor: -2), 40);
+            CheckChance("interrogate: deal cap", Chance(InterrogationMethod.Deal, relation: 100, honor: 2), 95);
+            CheckChance("interrogate: secret talk", InterrogationRules.SecretChance(InterrogationMethod.Talk, 60), 40);
+            CheckChance("interrogate: secret pressure", InterrogationRules.SecretChance(InterrogationMethod.Pressure, 60), 60);
+            CheckChance("interrogate: secret cap", InterrogationRules.SecretChance(InterrogationMethod.Pressure, 600), 95);
+            Check("interrogate: pressure talks about liege most",
+                InterrogationRules.LiegeIntelChance(InterrogationMethod.Pressure) > InterrogationRules.LiegeIntelChance(InterrogationMethod.Deal)
+                && InterrogationRules.LiegeIntelChance(InterrogationMethod.Deal) > InterrogationRules.LiegeIntelChance(InterrogationMethod.Talk));
         }
 
         /// <summary>Olay kartı resim adları: benzersiz, dosya adına uygun ve docs/gorseller/olay-kartlari.md ile aynı liste.</summary>

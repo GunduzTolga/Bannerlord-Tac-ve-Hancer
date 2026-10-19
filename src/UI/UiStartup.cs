@@ -2,6 +2,7 @@ using System;
 using Bannerlord.UIExtenderEx.ResourceManager;
 using CheatMenu.UI.Widgets;
 using TaleWorlds.InputSystem;
+using TaleWorlds.ScreenSystem;
 
 namespace CheatMenu.UI
 {
@@ -30,11 +31,16 @@ namespace CheatMenu.UI
         /// <summary>Ayarlardaki kısayol (ModSettings.ScreenHotkeyNames ile aynı sıra); 0 ya da geçersizse Invalid.</summary>
         public static InputKey ScreenHotkey(int index) => index > 0 && index < HotkeyKeys.Length ? HotkeyKeys[index] : InputKey.Invalid;
 
-        /// <summary>Kısayol bu karede basıldı mı (metin kutusuna yazarken ya da popup açıkken sayılmaz).</summary>
+        /// <summary>
+        /// Kısayol bu karede basıldı mı. Metin kutusuna yazarken sayılmaz; ekran kapalıyken yalnızca açılabileceği yerde
+        /// (haritada) sayılır, böylece savaşta ya da başka ekranda basınca hata mesajı çıkmaz.
+        /// </summary>
         public static bool ScreenHotkeyPressed()
         {
             InputKey key = ScreenHotkey(SettingsStore.Current.ScreenHotkey);
-            return key != InputKey.Invalid && Input.IsKeyPressed(key);
+            if (key == InputKey.Invalid || !Input.IsKeyPressed(key)) return false;
+            if (ScreenManager.FocusedLayer?.IsFocusedOnInput() == true) return false;
+            return IntrigueScreen.IsOpen || IntrigueScreen.CannotOpenReason() == null;
         }
     }
 }

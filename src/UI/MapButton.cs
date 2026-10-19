@@ -57,6 +57,9 @@ namespace CheatMenu.UI
             }
         }
 
+        /// <summary>Kampanya kapanırken: eski harita ekranına bağlı katman bırakılsın.</summary>
+        public static void Close() => Layer.Close();
+
         private static int Badge()
         {
             IntrigueState state = IntrigueBehavior.Current?.State;

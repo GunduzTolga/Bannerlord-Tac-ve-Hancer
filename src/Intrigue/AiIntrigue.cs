@@ -239,6 +239,7 @@ namespace CheatMenu.Intrigue
 
         public static void Protect(IntrigueState state, AiPlot plot)
         {
+            if (!state.AiPlots.Contains(plot)) throw new InvalidOperationException("Bu entrika artık sürmüyor");
             if (plot.Protected) throw new InvalidOperationException("Zaten koruma tuttun");
             SchemeFactors.Pay(SchemeMath.ProtectionCost);
             plot.Protected = true;

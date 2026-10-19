@@ -108,6 +108,8 @@ namespace CheatMenu
             base.OnGameEnd(game);
             IntrigueScreen.Close();
             EventCards.CloseForGameEnd();
+            MapButton.Close();
+            TimePause.Reset();
             CheatState.ResetAll();
         }
 

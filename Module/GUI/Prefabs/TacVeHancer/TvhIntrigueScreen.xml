@@ -154,6 +154,36 @@
                               </Children>
                             </Widget>
 
+                            <!-- ===== Esirler ===== -->
+                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsPrisonersTab">
+                              <Children>
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" Brush="Tvh.Text.SmallTop" Text="@PrisonersInfoText" />
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="70" Brush="Tvh.Text.BodyCenter" Text="Elinde esir bir kahraman yok." IsVisible="@HasNoPrisoners" />
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="70">
+                                  <Children>
+                                    <ScrollablePanel Id="PrisonersScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="PrisonersClip" InnerPanel="PrisonersClip\PrisonersList" VerticalScrollbar="..\PrisonersBar">
+                                      <Children>
+                                        <Widget Id="PrisonersClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                                          <Children>
+                                            <ListPanel Id="PrisonersList" DataSource="{Prisoners}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                              <ItemTemplate>
+                                                <TvhPrisonerCard />
+                                              </ItemTemplate>
+                                            </ListPanel>
+                                          </Children>
+                                        </Widget>
+                                      </Children>
+                                    </ScrollablePanel>
+                                    <ScrollbarWidget Id="PrisonersBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="PrisonersHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
+                                      <Children>
+                                        <Widget Id="PrisonersHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
+                                      </Children>
+                                    </ScrollbarWidget>
+                                  </Children>
+                                </Widget>
+                              </Children>
+                            </Widget>
+
                             <!-- ===== Gölge ağları ===== -->
                             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsNetworksTab">
                               <Children>

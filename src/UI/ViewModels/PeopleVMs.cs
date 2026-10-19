@@ -5,6 +5,7 @@ using CheatMenu.Intrigue;
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core.ViewModelCollection.ImageIdentifiers;
 using TaleWorlds.Library;
@@ -277,6 +278,55 @@ namespace CheatMenu.UI.ViewModels
                 + SecretRules.SourceTracedChance + " ihtimalle kaynağın sen olduğun anlaşılır (seninle ilişkisi -"
                 + SecretRules.SourceTracedPenalty + "). İfşa edilsin mi?",
                 () => SchemeOutcomes.ExposeSecret(state, secret), null);
+        }
+    }
+
+    /// <summary>Esir satırı (P2.1): kim, nerede, sorguya etkisi olan özellikleri, sorgula düğmesi.</summary>
+    public sealed class PrisonerItemVM : TvhViewModel
+    {
+        private readonly Interrogation.Prisoner _prisoner;
+        private readonly Action _changed;
+
+        public PrisonerItemVM(IntrigueState state, Interrogation.Prisoner prisoner, Action changed)
+        {
+            _prisoner = prisoner;
+            _changed = changed;
+            Hero hero = prisoner.Hero;
+            Portrait = PortraitOf(hero);
+            Name = hero.Name.ToString();
+            Affiliation = SchemeFactors.Affiliation(hero);
+            WhereText = prisoner.WhereText;
+            TraitsText = "İlişki " + SchemeFactors.Signed(Hero.MainHero.GetRelation(hero))
+                + "  ·  Hesapçı " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Calculating))
+                + "  ·  Cesaret " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Valor))
+                + "  ·  Onur " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Honor));
+            ChanceText = "Konuştur %" + Interrogation.Chance(state, hero, InterrogationMethod.Talk)
+                + "  ·  Baskı %" + Interrogation.Chance(state, hero, InterrogationMethod.Pressure)
+                + "  ·  Anlaşma %" + Interrogation.Chance(state, hero, InterrogationMethod.Deal);
+            Hint = Interrogation.BlockedReason(state, prisoner) ?? "";
+            IntelText = state.HasValidReport(hero.StringId, SchemeFactors.Today) ? "Güncel raporun var" : "";
+        }
+
+        [DataSourceProperty] public ImageIdentifierVM Portrait { get; }
+        [DataSourceProperty] public string Name { get; }
+        [DataSourceProperty] public string Affiliation { get; }
+        [DataSourceProperty] public string WhereText { get; }
+        [DataSourceProperty] public string TraitsText { get; }
+        [DataSourceProperty] public string ChanceText { get; }
+        [DataSourceProperty] public string IntelText { get; }
+        [DataSourceProperty] public string Hint { get; }
+        [DataSourceProperty] public bool CanInterrogate => Hint.Length == 0;
+        [DataSourceProperty] public string InterrogateText => "Sorgula...";
+
+        public void ExecuteInterrogate()
+        {
+            if (CanInterrogate) EventCards.ShowInterrogation(_prisoner, _changed);
+        }
+
+        public override void OnFinalize()
+        {
+            base.OnFinalize();
+            Portrait?.OnFinalize();
         }
     }
 

@@ -31,11 +31,13 @@ namespace CheatMenu.UI
             ScreenBase screen = MapScreen.Instance;
             if (screen == null) return false;
             var layer = new GauntletLayer("TacVeHancer_" + movieName, order);
+            bool added = false;
             try
             {
                 _movie = layer.LoadMovie(movieName, dataSource);
                 layer.InputRestrictions.SetInputRestrictions(true, modal ? InputUsageMask.All : InputUsageMask.Mouse);
                 screen.AddLayer(layer);
+                added = true;
                 if (modal)
                 {
                     layer.IsFocusLayer = true;
@@ -45,8 +47,20 @@ namespace CheatMenu.UI
             }
             catch
             {
-                if (_movie != null) layer.ReleaseMovie(_movie);
+                // Yarım kalan katman haritada kalıp girdiyi engellemesin.
+                try
+                {
+                    if (_focused) ScreenManager.TryLoseFocus(layer);
+                    layer.InputRestrictions.ResetInputRestrictions();
+                    if (_movie != null) layer.ReleaseMovie(_movie);
+                    if (added) screen.RemoveLayer(layer);
+                }
+                catch (Exception cleanup)
+                {
+                    Debug.Print("[CheatMenu] layer cleanup failed: " + cleanup);
+                }
                 _movie = null;
+                _focused = false;
                 throw;
             }
             _layer = layer;

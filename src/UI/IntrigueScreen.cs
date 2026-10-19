@@ -22,8 +22,9 @@ namespace CheatMenu.UI
         private const int Order = 400;
 
         private static readonly MovieLayer Layer = new MovieLayer();
+        private static readonly EscapeKey Escape = new EscapeKey();
+        private static readonly object PauseOwner = new object();
         private static bool _wasBusy;
-        private static bool _lockedTime;
         private static int _lastTab;
 
         public static bool IsOpen => Layer.IsOpen;
@@ -61,7 +62,8 @@ namespace CheatMenu.UI
                 return;
             }
             _wasBusy = false;
-            PauseTime();
+            Escape.Reset();
+            TimePause.Acquire(PauseOwner);
         }
 
         public static void Close()
@@ -69,7 +71,7 @@ namespace CheatMenu.UI
             if (!IsOpen) return;
             if (Layer.DataSource is IntrigueScreenVM vm) _lastTab = vm.CurrentTab;
             Layer.Close();
-            ResumeTime();
+            TimePause.Release(PauseOwner);
         }
 
         /// <summary>Ekranın üstünde açılan olay kartı kapanınca: klavye yeniden ekrana.</summary>
@@ -90,9 +92,10 @@ namespace CheatMenu.UI
                     return;
                 }
                 bool busy = InformationManager.IsAnyInquiryActive() || EventCards.IsOpen || MenuUI.HasPending;
-                if (!busy && Input.IsKeyPressed(InputKey.Escape))
+                if (Escape.Released(!busy))
                 {
-                    Close();
+                    // Bir sonraki karede: bırakılan tuş bu karede alttaki haritaya ulaşmasın.
+                    MenuUI.Defer(Close);
                     return;
                 }
                 if (!busy && Layer.DataSource is IntrigueScreenVM vm && (_wasBusy || vm.IsDirty)) vm.Refresh();
@@ -114,24 +117,6 @@ namespace CheatMenu.UI
             if (MapScreen.Instance == null) return "Harita ekranı hazır değil";
             if (Campaign.Current.ConversationManager?.IsConversationInProgress == true) return "Konuşma sırasında açılmaz";
             return null;
-        }
-
-        private static void PauseTime()
-        {
-            Campaign campaign = Campaign.Current;
-            if (campaign == null) return;
-            campaign.TimeControlMode = CampaignTimeControlMode.Stop;
-            if (!campaign.TimeControlModeLock)
-            {
-                campaign.SetTimeControlModeLock(true);
-                _lockedTime = true;
-            }
-        }
-
-        private static void ResumeTime()
-        {
-            if (_lockedTime) Campaign.Current?.SetTimeControlModeLock(false);
-            _lockedTime = false;
         }
     }
 }

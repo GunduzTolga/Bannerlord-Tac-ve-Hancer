@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,21 +17,21 @@ namespace CheatMenu.UI.ViewModels
     /// </summary>
     public sealed class IntrigueScreenVM : TvhViewModel
     {
-        public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabNetworks = 3, TabPlots = 4, TabLog = 5;
+        public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabNetworks = 4, TabPlots = 5, TabLog = 6;
 
         private readonly Action _close;
         private int _tab;
         private bool _dirty;
         private string _subtitle = "", _status = "";
-        private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isNetworksTab, _isPlotsTab, _isLogTab;
-        private bool _hasNoSchemes, _hasNoNetworks, _hasNoPlots, _hasNoLog;
+        private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isNetworksTab, _isPlotsTab, _isLogTab;
+        private bool _hasNoSchemes, _hasNoPrisoners, _hasNoNetworks, _hasNoPlots, _hasNoLog;
 
         public IntrigueScreenVM(Action close, int tab)
         {
             _close = close;
             Spymaster = new SpymasterVM(MarkDirty);
             Tabs = new MBBindingList<TabVM>();
-            string[] names = { "Süren entrikalar", "Yeni entrika", "Kişiler", "Gölge ağları", "Sana karşı", "Kronik" };
+            string[] names = { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Gölge ağları", "Sana karşı", "Kronik" };
             for (int i = 0; i < names.Length; i++) Tabs.Add(new TabVM(i, names[i], t => SelectTab(t.Index)));
             Schemes = new MBBindingList<SchemeItemVM>();
             NewScheme = new NewSchemeVM(() =>
@@ -39,6 +40,7 @@ namespace CheatMenu.UI.ViewModels
                 MarkDirty();
             });
             People = new PeopleVM(MarkDirty, StartSchemeOn);
+            Prisoners = new MBBindingList<PrisonerItemVM>();
             Networks = new MBBindingList<NetworkItemVM>();
             Plots = new MBBindingList<PlotItemVM>();
             Log = new MBBindingList<LogItemVM>();
@@ -60,6 +62,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool IsSchemesTab { get => _isSchemesTab; set => Set(ref _isSchemesTab, value, nameof(IsSchemesTab)); }
         [DataSourceProperty] public bool IsNewTab { get => _isNewTab; set => Set(ref _isNewTab, value, nameof(IsNewTab)); }
         [DataSourceProperty] public bool IsPeopleTab { get => _isPeopleTab; set => Set(ref _isPeopleTab, value, nameof(IsPeopleTab)); }
+        [DataSourceProperty] public bool IsPrisonersTab { get => _isPrisonersTab; set => Set(ref _isPrisonersTab, value, nameof(IsPrisonersTab)); }
         [DataSourceProperty] public bool IsNetworksTab { get => _isNetworksTab; set => Set(ref _isNetworksTab, value, nameof(IsNetworksTab)); }
         [DataSourceProperty] public bool IsPlotsTab { get => _isPlotsTab; set => Set(ref _isPlotsTab, value, nameof(IsPlotsTab)); }
         [DataSourceProperty] public bool IsLogTab { get => _isLogTab; set => Set(ref _isLogTab, value, nameof(IsLogTab)); }
@@ -75,6 +78,11 @@ namespace CheatMenu.UI.ViewModels
 
         [DataSourceProperty] public NewSchemeVM NewScheme { get; }
         [DataSourceProperty] public PeopleVM People { get; }
+        [DataSourceProperty] public MBBindingList<PrisonerItemVM> Prisoners { get; }
+        [DataSourceProperty] public bool HasNoPrisoners { get => _hasNoPrisoners; set => Set(ref _hasNoPrisoners, value, nameof(HasNoPrisoners)); }
+        [DataSourceProperty] public string PrisonersInfoText =>
+            "Partindeki ve klanının zindanlarındaki esir kahramanlar. Sorgu rapor, belki bir sır ve belki efendisi hakkında bilgi verir. "
+            + "Zindandaki bir esiri sorgulamak için o yerleşimde olmalısın. Her esir " + InterrogationRules.CooldownDays + " günde bir sorgulanır.";
         [DataSourceProperty] public MBBindingList<NetworkItemVM> Networks { get; }
         [DataSourceProperty] public bool HasNoNetworks { get => _hasNoNetworks; set => Set(ref _hasNoNetworks, value, nameof(HasNoNetworks)); }
         [DataSourceProperty] public string NetworksInfoText =>
@@ -123,20 +131,24 @@ namespace CheatMenu.UI.ViewModels
             int detected = state.AiPlots.Count(p => p.Detected);
             int people = state.Reports.Select(r => r.TargetId).Concat(state.Secrets.Select(s => s.TargetId))
                 .Concat(state.Hooks.Where(h => h.Until > today).Select(h => h.TargetId)).Distinct().Count();
-            Tabs[TabSchemes].Name = "Süren entrikalar (" + state.Schemes.Count + ")";
+            List<Interrogation.Prisoner> prisoners = Interrogation.Prisoners();
+            Tabs[TabSchemes].Name = "Süren (" + state.Schemes.Count + ")";
             Tabs[TabPeople].Name = "Kişiler (" + people + ")";
+            Tabs[TabPrisoners].Name = "Esirler (" + prisoners.Count + ")";
             Tabs[TabNetworks].Name = "Gölge ağları (" + state.Networks.Count + ")";
             Tabs[TabPlots].Name = "Sana karşı (" + detected + ")";
             foreach (TabVM tab in Tabs) tab.IsSelected = tab.Index == _tab;
             IsSchemesTab = _tab == TabSchemes;
             IsNewTab = _tab == TabNew;
             IsPeopleTab = _tab == TabPeople;
+            IsPrisonersTab = _tab == TabPrisoners;
             IsNetworksTab = _tab == TabNetworks;
             IsPlotsTab = _tab == TabPlots;
             IsLogTab = _tab == TabLog;
 
             // Yalnızca görünen sekme kurulur: portreler pahalı.
             Clear(Schemes);
+            Clear(Prisoners);
             Clear(Networks);
             Clear(Plots);
             Log.Clear();
@@ -151,6 +163,10 @@ namespace CheatMenu.UI.ViewModels
                     break;
                 case TabPeople:
                     People.Refresh(state);
+                    break;
+                case TabPrisoners:
+                    foreach (Interrogation.Prisoner prisoner in prisoners) Prisoners.Add(new PrisonerItemVM(state, prisoner, MarkDirty));
+                    HasNoPrisoners = Prisoners.Count == 0;
                     break;
                 case TabNetworks:
                     foreach (ShadowNetwork network in state.Networks) Networks.Add(new NetworkItemVM(state, network));
@@ -207,6 +223,7 @@ namespace CheatMenu.UI.ViewModels
             base.OnFinalize();
             Spymaster.OnFinalize();
             Clear(Schemes);
+            Clear(Prisoners);
             Clear(Networks);
             Clear(Plots);
             NewScheme.OnFinalize();

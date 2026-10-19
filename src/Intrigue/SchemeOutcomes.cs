@@ -373,7 +373,14 @@ namespace CheatMenu.Intrigue
             + "Kişilik: " + report.Traits;
 
         /// <summary>Lordun gerçek kişiliğinden ve durumundan türeyebilecek, henüz bilinmeyen bir sır (tasarım 6.2).</summary>
-        private static SecretKind? FindSecret(IntrigueState state, Scheme scheme, Hero target)
+        private static SecretKind? FindSecret(IntrigueState state, Scheme scheme, Hero target) =>
+            FindSecret(state, target, scheme.Roll100, scheme.Pick);
+
+        /// <summary>
+        /// Hedefin gerçek kişiliğinden ve durumundan çıkan, henüz bilinmeyen bir sır; yoksa null.
+        /// Zarlar çağıranın tohumundan (entrika ya da sorgu): kaydı yükleyip tekrar denemek sonucu değiştirmez.
+        /// </summary>
+        public static SecretKind? FindSecret(IntrigueState state, Hero target, Func<int> roll100, Func<int, int> pick)
         {
             var known = new HashSet<SecretKind>(state.Secrets.Where(s => s.TargetId == target.StringId).Select(s => s.Kind));
             Hero ruler = target.Clan?.Kingdom?.Leader;
@@ -390,10 +397,10 @@ namespace CheatMenu.Intrigue
             Consider(SecretKind.Cowardice, target.GetTraitLevel(DefaultTraits.Valor) <= -1);
             Consider(SecretKind.Debt, target.Gold < SecretRules.DebtGoldThreshold);
             Consider(SecretKind.Smuggling, target.GetSkillValue(DefaultSkills.Roguery) >= SecretRules.SmugglingRoguery);
-            if (target.Spouse != null && !known.Contains(SecretKind.Affair) && scheme.Roll100() <= SecretRules.AffairChance)
+            if (target.Spouse != null && !known.Contains(SecretKind.Affair) && roll100() <= SecretRules.AffairChance)
                 candidates.Add(SecretKind.Affair);
 
-            return candidates.Count == 0 ? (SecretKind?)null : candidates[scheme.Pick(candidates.Count)];
+            return candidates.Count == 0 ? (SecretKind?)null : candidates[pick(candidates.Count)];
         }
 
         // ---- Sır ifşası ----

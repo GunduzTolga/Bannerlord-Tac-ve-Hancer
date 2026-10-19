@@ -43,6 +43,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
       dosyalarını ara (Windows aramasıyla) ve ikisini gönder. Bunlarla lord sayfasına "bildiğin sırlar / koz / entrika başlat" bölümünü
       ve oyunun harita çubuğuna düğmeyi doğru yere ekleyebilirim
 
+### P2.1 — Esir sorgulama (yeni)
+- [ ] Bir lordu esir al → Entrika ekranı → **Esirler** sekmesi: portre, "Partinde", ilişki/Hesapçı/Cesaret/Onur, üç yöntemin olasılığı
+- [ ] **Sorgula...** → kart: Konuştur / Baskı yap / Anlaşma teklif et / Vazgeç (her birinde başarı ve bedel yazıyor)
+- [ ] Konuştur başarılı → sonuç kartında rapor; bazen "SIR BULUNDU" ve "Efendisi ... hakkında da konuştu"; Kişiler sekmesinde görünüyor
+- [ ] Baskı yap → Merhamet düştü, esirle ilişki -15; bazen "klanı duydu"
+- [ ] Anlaşma → esir serbest kaldı (parti ekranında yok), ilişki +10
+- [ ] Aynı esiri hemen tekrar sorgulamak: "yakında sorgulandı; N gün sonra"
+- [ ] Bir kalendeki/şehirdeki zindanda tutulan esir: uzaktayken "oraya git", o yerleşimdeyken sorgulanabiliyor
+- [ ] Efendisi hakkında rapor alınan, tanışmadığın lord **Yeni entrika > Suikast** listesinde çıkıyor
+- [ ] Insert → Entrika (liste menüsü) → **Esirleri sorgula** da çalışıyor
+- [ ] Kart açıkken oyun duruyor (gün ilerlemiyor); Esc ile kapanan kartta oyunun kaçış menüsü açılmıyor
+
 ### Entrika E0 — yeni ad, menü düzeni, kayıt testi (önemli: E1 buna dayanıyor)
 - [ ] Launcher'da mod **Taç ve Hançer** adıyla görünüyor, Türkçe harfler düzgün
 - [ ] Insert → ana menü: Entrika, Hileler, Editörler, Klan & krallık, Bilgi, Kurallar; alt menülerde **Geri** doğru gruba dönüyor

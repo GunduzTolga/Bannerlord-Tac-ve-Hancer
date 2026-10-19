@@ -42,6 +42,7 @@ no text, no letters, no logos, no watermark, no gore, no nudity
 | 12 | `sonuc_entrika_sezildi.png` | Sana karşı entrika sezildi | A loyal advisor leaning in to whisper urgent news to a lord at night, an open window and a dark city behind them |
 | 13 | `yer_golge_agi.png` | Gölgelerde iş çevir (şehir menüsü) | A tavern back room, a scarred gang leader counting coins across the table from a hooded visitor, smoke and lantern light |
 | 14 | `sonuc_koz.png` | Koz kullanıldı | A proud lord reluctantly handing a heavy coin purse to a cloaked visitor in his private study |
+| 25 | `sonuc_sorgu.png` | Esir sorgusu | A captive noble seated at a rough wooden table in a dim stone cell, a calm hooded questioner across from him, a single candle and an open ledger, no violence |
 
 ### Olaylar (aşamalar arasında)
 

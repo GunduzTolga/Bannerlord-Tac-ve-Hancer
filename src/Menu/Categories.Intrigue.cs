@@ -31,6 +31,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Yeni entrika...", ShowNewScheme),
                 MenuEntry.Submenu("İstihbarat raporları (" + state.Reports.Count + ")...", ShowReports),
                 MenuEntry.Submenu("Kozlar (" + state.Hooks.Count(h => h.Until > SchemeFactors.Today) + ")...", ShowHooks),
+                MenuEntry.Submenu("Esirleri sorgula (" + Interrogation.Prisoners().Count + ")...", ShowPrisoners),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -327,6 +328,23 @@ namespace CheatMenu.Menu
             MenuUI.ShowList("Koz: " + target.Name, entries, () => ShowHook(hook), "Geri", ShowHooks,
                 (hook.Until - SchemeFactors.Today) + " gün geçerli. Bırakma dışındaki her talep kozu harcar ve ilişkiyi -"
                 + SchemeMath.HookUseRelationPenalty + " düşürür. Aynı şeyleri onunla konuşurken \"özel bir konu\" açarak da yapabilirsin.");
+        }
+
+        // ---- Esir sorgusu ----
+
+        private static void ShowPrisoners()
+        {
+            IntrigueState state = SchemeEngine.State;
+            List<Interrogation.Prisoner> prisoners = Interrogation.Prisoners();
+            if (prisoners.Count == 0)
+            {
+                MenuUI.Info("Elinde esir bir kahraman yok");
+                MenuUI.Defer(ShowIntrigue);
+                return;
+            }
+            Picker.Pick("Esirleri sorgula", prisoners,
+                p => p.Hero.Name + " - " + p.WhereText + (Interrogation.BlockedReason(state, p) is string why ? "  [" + why + "]" : ""),
+                p => UI.EventCards.ShowInterrogation(p, null), ShowIntrigue, p => HeroPortrait(p.Hero), sort: false);
         }
 
         // ---- Gölge ağları ----

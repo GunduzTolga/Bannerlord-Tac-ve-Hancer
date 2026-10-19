@@ -159,6 +159,10 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Kan davası: kahraman → bitiş günü. Bu süre boyunca nefret eşiğine bakılmadan entrika adayıdır.</summary>
         public Dictionary<string, int> FeudUntil = new Dictionary<string, int>();
 
+        // P2.1
+        /// <summary>Esir sorgusu: kahraman → yeniden sorgulanabileceği gün.</summary>
+        public Dictionary<string, int> InterrogatedUntil = new Dictionary<string, int>();
+
         /// <summary>E0 kayıt testi: oyuncunun bıraktığı işaret; kaydet-yükle sonrası durmalı.</summary>
         public string SaveTestMarker { get; set; }
 
@@ -197,6 +201,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in CooldownUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CooldownUntil.Remove(id);
             foreach (string id in AlertUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) AlertUntil.Remove(id);
             foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
+            foreach (string id in InterrogatedUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) InterrogatedUntil.Remove(id);
             Hooks.RemoveAll(h => h.Until <= today);
         }
 
@@ -252,6 +257,8 @@ namespace CheatMenu.Intrigue.Core
             foreach (ShadowNetwork n in Networks)
                 records.Add(new TextRecord("network").Add("settlement", n.SettlementId).Add("level", I(n.Level)).Add("since", I(n.Since)));
             foreach (KeyValuePair<string, int> p in FeudUntil) records.Add(new TextRecord("feud").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in InterrogatedUntil)
+                records.Add(new TextRecord("interrogated").Add("hero", p.Key).Add("until", I(p.Value)));
             return TextRecords.Write(records);
         }
 
@@ -342,6 +349,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "feud":
                         if (Empty(r.Get("hero")) != null) state.FeudUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "interrogated":
+                        if (Empty(r.Get("hero")) != null) state.InterrogatedUntil[r.Get("hero")] = Int(r, "until");
                         break;
                 }
             }

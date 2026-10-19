@@ -38,7 +38,7 @@ Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar I
 
 | Kategori | Neler var |
 |---|---|
-| **Entrika ekranı** | Tam ekran pencere: casus başı kartı; süren entrikalar (portre, aşama çubuğu, başarı/yakalanma, harekete geç); yeni entrika (tür, filtre, sayfalı hedef listesi, özet); kişiler (rapor, sırlar, koz, doğrudan entrika); gölge ağları; sana karşı entrikalar; kronik (dosyaya aktarma). Olaylar resimli kartlarla gelir |
+| **Entrika ekranı** | Tam ekran pencere: casus başı kartı; süren entrikalar (portre, aşama çubuğu, başarı/yakalanma, harekete geç); yeni entrika (tür, filtre, sayfalı hedef listesi, özet); kişiler (rapor, sırlar, koz, doğrudan entrika); esirler (sorgu: konuştur, baskı, anlaşma); gölge ağları; sana karşı entrikalar; kronik (dosyaya aktarma). Olaylar resimli kartlarla gelir |
 | **Entrika** | Casus başı; casusluk (rapor + gerçek kişilikten sırlar); şantaj ve kozlar (altın, etki, esir, klan koparma; lord diyaloğundan da); kaçırma; suikast (aşamalar, 10 olay, rüşvet, kan davası); şehirlerde gölge ağı; yapay zekânın sana kurduğu entrikalar ve karşı casusluk |
 | **Hileler →** | |
 | Para & Ekonomi | Altın, etki, tahıl |

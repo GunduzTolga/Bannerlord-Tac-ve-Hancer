@@ -1,6 +1,7 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
-**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0 ve P1 kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0, P1 ve P2.1 (esir sorgulama) kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda,
+P2.1 tasarımı `2026-10-19-p2-esir-sorgulama.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)
@@ -82,7 +83,7 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 
 | Sıra | Özellik | Neden mantıklı | Oyundaki etkisi |
 |---|---|---|---|
-| 1 | **Esir sorgulama** | Elindeki esir lordlar boşa duruyor; sır altyapısını doğrudan besler | Sorgu: rapor ve sır şansı. Baskı seçeneği Onur ve Merhamet cezası verir. Sahne yok, metin var. |
+| 1 ✅ | **Esir sorgulama** (kodlandı) | Elindeki esir lordlar boşa duruyor; sır altyapısını doğrudan besler | Sorgu: rapor, sır ve efendisi hakkında bilgi. Baskı Merhamet ve ilişki bedeli; anlaşma esiri bırakır. Sahne yok, metin var. |
 | 2 | **Haberci / mektup** | Koz kullanmak için lordu haritada kovalamak gereksiz zahmet | Uzaktan koz harcama ve tehdit; gecikmeli cevap (birkaç gün) |
 | 3 | **Casus başı görev modu** | Karşı casusluğa oyuncu kararı katar | Üç mod: karşı casusluk (sezme ↑), muhalefeti izle (krallığındaki hoşnutsuzları raporlar), söylenti yay (seçili lordun hükümdarla ilişkisi yavaşça ↓) |
 | 4 | **Gizli ilişki ve gayrimeşru çocuk sırları** (sahnesiz) | Şantajın en doğal yakıtı | İki yeni sır türü; ifşa, şantaj, meşrulaştırma kararı. İki tarafın da 18+ olması kodda zorunlu. |
