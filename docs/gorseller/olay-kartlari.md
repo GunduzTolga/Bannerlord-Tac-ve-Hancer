@@ -47,59 +47,59 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
 ## Kontrol listesi
 
-Ürettikçe işaretle. **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
+`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 9/49 tamamlandı** — 8 adet `★` öncelikli + 1 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
 
-| # | Dosya | Nerede görünür | Öncelik |
-|---|---|---|---|
-| 1 | `tur_casusluk.png` | Casusluk başlarken ve casusluk raporu | ★ |
-| 2 | `sonuc_sir_bulundu.png` | Casuslukta bir sır bulundu | |
-| 3 | `tur_santaj.png` | Şantaj aşamaları ve şantaj tuttu | ★ |
-| 4 | `tur_suikast.png` | Suikast aşamaları | ★ |
-| 5 | `sonuc_suikast_zehir.png` | Suikast zehirle başarılı | |
-| 6 | `sonuc_suikast_hancer.png` | Suikast hançerle başarılı | |
-| 7 | `sonuc_suikast_kaza.png` | Suikast kaza süsüyle başarılı | |
-| 8 | `tur_kacirma.png` | Kaçırma aşamaları ve sonucu | ★ |
-| 9 | `sonuc_yakalandi.png` | Ajan yakalandı, girişim başarısız | ★ |
-| 10 | `sonuc_ifsa.png` | Sır ifşası, şantaj tutmadı | ★ |
-| 11 | `sonuc_hukumdar_hesap.png` | Hükümdar hesap soruyor | |
-| 12 | `sonuc_entrika_sezildi.png` | Sana karşı entrika sezildi, korundun | ★ |
-| 13 | `yer_golge_agi.png` | Şehir menüsü > Gölgelerde iş çevir | |
-| 14 | `sonuc_koz.png` | Koz kullanıldı | |
-| 15 | `olay_rusvetci_hizmetkar.png` | Olay: rüşvetçi hizmetkâr | ★ |
-| 16 | `olay_ajan_yakalandi.png` | Olay: ajan yakalandı | ★ |
-| 17 | `olay_zehir_hancer.png` | Olay: zehir mi, hançer mi? | ★ |
-| 18 | `olay_hedef_yola_cikti.png` | Olay: hedef yer değiştirdi | ★ |
-| 19 | `olay_rakip_suikastci.png` | Olay: rakip suikastçı | ★ |
-| 20 | `olay_muhafiz_degisimi.png` | Olay: muhafız değişimi | ★ |
-| 21 | `olay_vicdan_azabi.png` | Olay: vicdan azabı | ★ |
-| 22 | `olay_supheli_tuccar.png` | Olay: şüpheli tüccar | ★ |
-| 23 | `olay_ziyafet.png` | Olay: ziyafet daveti | ★ |
-| 24 | `olay_cete_teklifi.png` | Olay: çete liderinin teklifi | ★ |
-| 25 | `sonuc_sorgu.png` | Esir sorgusu (P2.1) | ★ |
-| 26 | `sonuc_haberci.png` | Haberci sonucu, ulak döndü, görüşme (P2.2) | ★ |
-| 27 | `sonuc_gizli_bulusma.png` | Gizli ilişki ya da gayrimeşru çocuk sırrı bulundu (P2.4) | |
-| 28 | `sonuc_skandal.png` | Gizli ilişki ya da gayrimeşru çocuk ifşa edildi (P2.4) | |
-| 29 | `sonuc_fisilti.png` | Aldatılan eşe söylendi (P2.4) | |
-| 30 | `sonuc_diplomatik_kriz.png` | Yabancı krallıkta ağın çökertildi, elçi hesap soruyor (P2.5) | |
-| 31 | `sonuc_savas_meclisi.png` | Casus skandalları yüzünden savaş meclisi toplandı (P2.5) | |
-| 32 | `yer_gece_evi.png` | Gece evi: müşterilerden duyulanlar, ayrılanlar, baskın, dedikodu | |
-| 33 | `sonuc_hizmet_yemini.png` | Esir hizmetine katıldı (bağlılık yemini) | |
-| 34 | `sonuc_kur.png` | Kur: başlangıç, ret, eşin reddi, eşinin bilgi görevi (P2.6) | |
-| 35 | `sonuc_dogum.png` | Kurdan ya da sevgiliden doğan çocuk (P2.6) | |
-| 36 | `sonuc_aldatma.png` | Eşinin gizli ilişkisi ortaya çıktı, yüzleşme | |
-| 37 | `sonuc_bosanma.png` | Boşanma | |
-| 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ |
-| 39 | `sonuc_mesrulastirma.png` | Gayrimeşru çocuk meşrulaştırıldı (P2.8) | |
-| 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ |
-| 41 | `sonuc_rehine.png` | Rehine anlaşması: gönderme, değişim, dönüş, bozulan barış (P2.10) | |
-| 42 | `olay_takip.png` | Kendin takip et: gündüz sahneleri ve takip raporu (P2.11) | ★ |
-| 43 | `olay_takip_gece.png` | Kendin takip et: gece sahneleri (P2.11) | ★ |
-| 44 | `sonuc_hazine.png` | Divan: hazinedarın atölye önerisi, uzaktan üretim emri (P2.12) | ★ |
-| 45 | `sonuc_zimmet.png` | Divan: hazinedarın zimmeti ortaya çıktı, hesap sor (P2.12) | |
-| 46 | `sonuc_hekim.png` | Divan: saray hekiminin uyarısı, sağlık (P2.13) | |
-| 47 | `sonuc_panzehir.png` | Hekim suikast kurbanını kurtardı (P2.13) | |
-| 48 | `sonuc_serdar.png` | Divan: serdarın erken uyarısı, düşman ordusu yürüyor (P2.14) | ★ |
-| 49 | `sonuc_kahya.png` | Divan: kâhyanın uyarısı (isyan, kıtlık) ve uzaktan inşaat emri (P2.15) | ★ |
+| # | Dosya | Nerede görünür | Öncelik | Durum |
+|---|---|---|---|---|
+| 1 | `tur_casusluk.png` | Casusluk başlarken ve casusluk raporu | ★ | ✅ |
+| 2 | `sonuc_sir_bulundu.png` | Casuslukta bir sır bulundu | | ⏳ |
+| 3 | `tur_santaj.png` | Şantaj aşamaları ve şantaj tuttu | ★ | ✅ |
+| 4 | `tur_suikast.png` | Suikast aşamaları | ★ | ✅ |
+| 5 | `sonuc_suikast_zehir.png` | Suikast zehirle başarılı | | ⏳ |
+| 6 | `sonuc_suikast_hancer.png` | Suikast hançerle başarılı | | ⏳ |
+| 7 | `sonuc_suikast_kaza.png` | Suikast kaza süsüyle başarılı | | ⏳ |
+| 8 | `tur_kacirma.png` | Kaçırma aşamaları ve sonucu | ★ | ✅ |
+| 9 | `sonuc_yakalandi.png` | Ajan yakalandı, girişim başarısız | ★ | ✅ |
+| 10 | `sonuc_ifsa.png` | Sır ifşası, şantaj tutmadı | ★ | ✅ |
+| 11 | `sonuc_hukumdar_hesap.png` | Hükümdar hesap soruyor | | ⏳ |
+| 12 | `sonuc_entrika_sezildi.png` | Sana karşı entrika sezildi, korundun | ★ | ⏳ |
+| 13 | `yer_golge_agi.png` | Şehir menüsü > Gölgelerde iş çevir | | ⏳ |
+| 14 | `sonuc_koz.png` | Koz kullanıldı | | ⏳ |
+| 15 | `olay_rusvetci_hizmetkar.png` | Olay: rüşvetçi hizmetkâr | ★ | ✅ |
+| 16 | `olay_ajan_yakalandi.png` | Olay: ajan yakalandı | ★ | ✅ |
+| 17 | `olay_zehir_hancer.png` | Olay: zehir mi, hançer mi? | ★ | ⏳ |
+| 18 | `olay_hedef_yola_cikti.png` | Olay: hedef yer değiştirdi | ★ | ⏳ |
+| 19 | `olay_rakip_suikastci.png` | Olay: rakip suikastçı | ★ | ⏳ |
+| 20 | `olay_muhafiz_degisimi.png` | Olay: muhafız değişimi | ★ | ⏳ |
+| 21 | `olay_vicdan_azabi.png` | Olay: vicdan azabı | ★ | ⏳ |
+| 22 | `olay_supheli_tuccar.png` | Olay: şüpheli tüccar | ★ | ⏳ |
+| 23 | `olay_ziyafet.png` | Olay: ziyafet daveti | ★ | ⏳ |
+| 24 | `olay_cete_teklifi.png` | Olay: çete liderinin teklifi | ★ | ⏳ |
+| 25 | `sonuc_sorgu.png` | Esir sorgusu (P2.1) | ★ | ⏳ |
+| 26 | `sonuc_haberci.png` | Haberci sonucu, ulak döndü, görüşme (P2.2) | ★ | ⏳ |
+| 27 | `sonuc_gizli_bulusma.png` | Gizli ilişki ya da gayrimeşru çocuk sırrı bulundu (P2.4) | | ✅ |
+| 28 | `sonuc_skandal.png` | Gizli ilişki ya da gayrimeşru çocuk ifşa edildi (P2.4) | | ⏳ |
+| 29 | `sonuc_fisilti.png` | Aldatılan eşe söylendi (P2.4) | | ⏳ |
+| 30 | `sonuc_diplomatik_kriz.png` | Yabancı krallıkta ağın çökertildi, elçi hesap soruyor (P2.5) | | ⏳ |
+| 31 | `sonuc_savas_meclisi.png` | Casus skandalları yüzünden savaş meclisi toplandı (P2.5) | | ⏳ |
+| 32 | `yer_gece_evi.png` | Gece evi: müşterilerden duyulanlar, ayrılanlar, baskın, dedikodu | | ⏳ |
+| 33 | `sonuc_hizmet_yemini.png` | Esir hizmetine katıldı (bağlılık yemini) | | ⏳ |
+| 34 | `sonuc_kur.png` | Kur: başlangıç, ret, eşin reddi, eşinin bilgi görevi (P2.6) | | ⏳ |
+| 35 | `sonuc_dogum.png` | Kurdan ya da sevgiliden doğan çocuk (P2.6) | | ⏳ |
+| 36 | `sonuc_aldatma.png` | Eşinin gizli ilişkisi ortaya çıktı, yüzleşme | | ⏳ |
+| 37 | `sonuc_bosanma.png` | Boşanma | | ⏳ |
+| 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ | ⏳ |
+| 39 | `sonuc_mesrulastirma.png` | Gayrimeşru çocuk meşrulaştırıldı (P2.8) | | ⏳ |
+| 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ | ⏳ |
+| 41 | `sonuc_rehine.png` | Rehine anlaşması: gönderme, değişim, dönüş, bozulan barış (P2.10) | | ⏳ |
+| 42 | `olay_takip.png` | Kendin takip et: gündüz sahneleri ve takip raporu (P2.11) | ★ | ⏳ |
+| 43 | `olay_takip_gece.png` | Kendin takip et: gece sahneleri (P2.11) | ★ | ⏳ |
+| 44 | `sonuc_hazine.png` | Divan: hazinedarın atölye önerisi, uzaktan üretim emri (P2.12) | ★ | ⏳ |
+| 45 | `sonuc_zimmet.png` | Divan: hazinedarın zimmeti ortaya çıktı, hesap sor (P2.12) | | ⏳ |
+| 46 | `sonuc_hekim.png` | Divan: saray hekiminin uyarısı, sağlık (P2.13) | | ⏳ |
+| 47 | `sonuc_panzehir.png` | Hekim suikast kurbanını kurtardı (P2.13) | | ⏳ |
+| 48 | `sonuc_serdar.png` | Divan: serdarın erken uyarısı, düşman ordusu yürüyor (P2.14) | ★ | ⏳ |
+| 49 | `sonuc_kahya.png` | Divan: kâhyanın uyarısı (isyan, kıtlık) ve uzaktan inşaat emri (P2.15) | ★ | ⏳ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
