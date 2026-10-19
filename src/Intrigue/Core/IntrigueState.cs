@@ -287,6 +287,9 @@ namespace CheatMenu.Intrigue.Core
         public int SpouseWatchUntil;
         /// <summary>Eşinle kaç haftadır ayrısınız (ayrı partide, ayrı yerde).</summary>
         public int SpouseApartWeeks;
+        /// <summary>Aile editörü (P2.7): "çocuk istemiyorlar" (çiftten biri yeter) ve yaşlanması dondurulanlar.</summary>
+        public HashSet<string> NoChildren = new HashSet<string>();
+        public HashSet<string> AgeFrozen = new HashSet<string>();
 
         public Lover LoverOf(string heroId) => Lovers.FirstOrDefault(l => l.HeroId == heroId);
 
@@ -419,6 +422,8 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("spouseaffair").Add("spouse", SpouseAffair.SpouseId).Add("lover", SpouseAffair.LoverId)
                     .Add("since", I(SpouseAffair.Since)).Add("next", I(SpouseAffair.NextMeetingDay)).Add("discovered", B(SpouseAffair.Discovered))
                     .Add("asked", B(SpouseAffair.Asked)).Add("how", SpouseAffair.How).Add("children", string.Join(";", SpouseAffair.ChildIds)));
+            foreach (string id in NoChildren) records.Add(new TextRecord("nochild").Add("hero", id));
+            foreach (string id in AgeFrozen) records.Add(new TextRecord("frozen").Add("hero", id));
             if (SpouseWatchUntil > 0 || SpouseApartWeeks > 0)
                 records.Add(new TextRecord("spouse").Add("watch", I(SpouseWatchUntil)).Add("apart", I(SpouseApartWeeks)));
             foreach (KeyValuePair<string, int> p in RomanceUntil) records.Add(new TextRecord("romancecd").Add("hero", p.Key).Add("until", I(p.Value)));
@@ -573,6 +578,12 @@ namespace CheatMenu.Intrigue.Core
                             Discovered = Bool(r, "discovered"), Asked = Bool(r, "asked"), How = Empty(r.Get("how")),
                             ChildIds = (r.Get("children") ?? "").Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                         };
+                        break;
+                    case "nochild":
+                        if (Empty(r.Get("hero")) != null) state.NoChildren.Add(r.Get("hero"));
+                        break;
+                    case "frozen":
+                        if (Empty(r.Get("hero")) != null) state.AgeFrozen.Add(r.Get("hero"));
                         break;
                     case "spouse":
                         state.SpouseWatchUntil = Math.Max(0, Int(r, "watch"));

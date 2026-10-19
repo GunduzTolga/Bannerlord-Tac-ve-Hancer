@@ -46,6 +46,77 @@ namespace CheatMenu.Menu
             MenuUI.ShowList("Kahraman: " + hero.Name, entries, () => ShowHero(hero), "Geri", ShowHeroEditorPick);
         }
 
+        // ---- Aile editörü (P2.7) ----
+
+        private static void ShowFamilyPick()
+        {
+            var heroes = new List<Hero> { Hero.MainHero };
+            heroes.AddRange(Clan.PlayerClan.Heroes.Where(h => h.IsAlive && h != Hero.MainHero)
+                .OrderBy(h => h.Age).ThenBy(h => h.Name.ToString(), StringComparer.CurrentCultureIgnoreCase));
+            heroes.AddRange(Lists.LordsAndCompanions(true).Where(h => h.Clan != Clan.PlayerClan)
+                .OrderBy(h => h.Name.ToString(), StringComparer.CurrentCultureIgnoreCase));
+            Picker.Pick("Aile editörü", heroes,
+                h => (h == Hero.MainHero ? "[Ben] " : h.Clan == Clan.PlayerClan ? "[Klanım] " : "") + h.Name + ", " + (int)h.Age + " yaş"
+                    + (h.Spouse != null && h.Spouse.IsAlive ? ", eşi " + h.Spouse.Name : "") + (h.Clan != null ? " (" + h.Clan.Name + ")" : ""),
+                ShowFamily, ShowEditors, sort: false);
+        }
+
+        private static void ShowFamily(Hero hero)
+        {
+            var entries = new List<MenuEntry>();
+            Hero spouse = hero.Spouse != null && hero.Spouse.IsAlive ? hero.Spouse : null;
+            void Add(string label, string blocked, Action action) =>
+                entries.Add(blocked == null ? MenuEntry.Simple(label, action) : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
+
+            if (spouse == null)
+            {
+                string blocked = FamilyEditor.MarryBlocked(hero);
+                entries.Add(blocked == null ? MenuEntry.Submenu("Evlendir...", () => PickSpouseFor(hero))
+                    : MenuEntry.Simple("Evlendir - " + blocked, () => MenuUI.Error(blocked)));
+            }
+            else
+            {
+                string blocked = FamilyEditor.DivorceBlocked(hero);
+                bool player = hero == Hero.MainHero || spouse == Hero.MainHero;
+                entries.Add(blocked != null ? MenuEntry.Simple("Boşa (" + spouse.Name + ") - " + blocked, () => MenuUI.Error(blocked))
+                    : MenuEntry.Submenu("Boşa (" + spouse.Name + ")...", () =>
+                    {
+                        if (player) UI.ViewModels.DossierVM.ConfirmDivorce(() => MenuUI.Defer(() => ShowFamily(hero)));
+                        else MenuUI.Confirm("Boşa", hero.Name + " ile " + spouse.Name + " boşansın mı? Evlilikle klana giren taraf ailesine döner.",
+                            () => FamilyEditor.Divorce(hero), () => ShowFamily(hero));
+                    }));
+            }
+            Hero mother = hero.IsFemale ? hero : spouse;
+            if (mother != null)
+                Add("Gebelik başlat (" + mother.Name + ", oyunun kendi gebeliği)", FamilyEditor.PregnancyBlocked(mother), () => FamilyEditor.StartPregnancy(mother));
+            entries.Add(MenuEntry.Toggle("Çocuk istemiyorlar" + (spouse != null ? " (çift)" : ""), () => FamilyEditor.WantsNoChildren(hero),
+                v => FamilyEditor.SetNoChildren(hero, v)));
+            if (hero.IsChild)
+            {
+                entries.Add(MenuEntry.Simple("Bir yaş büyüt (" + (int)hero.Age + " yaş)", () => FamilyEditor.Grow(hero, 1)));
+                entries.Add(MenuEntry.Simple("Yetişkinlik yaşına getir (" + FamilyEditor.ComesOfAge + ")", () => FamilyEditor.Grow(hero, FamilyEditor.ComesOfAge)));
+            }
+            entries.Add(MenuEntry.Toggle("Yaşlanmayı dondur", () => FamilyEditor.IsFrozen(hero), v => FamilyEditor.SetFrozen(hero, v)));
+
+            List<Hero> children = hero.Children.Where(c => c.IsAlive).ToList();
+            MenuUI.ShowList("Aile: " + hero.Name, entries, () => ShowFamily(hero), "Geri", ShowFamilyPick,
+                hero.Name + ", " + (int)hero.Age + " yaş. " + (spouse != null ? "Eşi: " + spouse.Name + ". " : "Evli değil. ")
+                + (children.Count > 0 ? "Çocukları: " + string.Join(", ", children.Select(c => c.Name + " (" + (int)c.Age + ")")) + ". " : "")
+                + "Evlilik ve gebelik oyunun kendi kurallarıyla olur: yaş, akrabalık, Doğum ve Ölüm ayarı.");
+        }
+
+        private static void PickSpouseFor(Hero hero)
+        {
+            Picker.Pick(hero.Name + " kiminle evlensin?", FamilyEditor.MarriageCandidates(hero),
+                h => h.Name + ", " + (int)h.Age + " yaş" + (h.Clan != null ? " (" + h.Clan.Name + ")" : ""),
+                h =>
+                {
+                    MenuUI.SafeRun("Evlendir", () => FamilyEditor.Marry(hero, h));
+                    MenuUI.Defer(() => ShowFamily(hero));
+                },
+                () => ShowFamily(hero), sort: false);
+        }
+
         private static void PickSkill(Hero hero, string what, Func<SkillObject, int> current, int max,
             Action<SkillObject, int> apply)
         {

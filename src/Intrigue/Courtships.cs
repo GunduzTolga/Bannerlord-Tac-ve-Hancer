@@ -269,6 +269,7 @@ namespace CheatMenu.Intrigue
         public static bool MayConceive(IntrigueState state, Hero a, Hero b)
         {
             if (CampaignOptions.IsLifeDeathCycleDisabled || a.IsFemale == b.IsFemale) return false;
+            if (state.NoChildren.Contains(a.StringId) || state.NoChildren.Contains(b.StringId)) return false;
             Hero mother = a.IsFemale ? a : b;
             return !mother.IsPregnant && RomanceRules.CanConceive(RomanceSecrets.Age(mother)) && state.Pregnancies.All(p => p.MotherId != mother.StringId);
         }

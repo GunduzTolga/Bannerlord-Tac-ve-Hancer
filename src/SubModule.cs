@@ -81,6 +81,8 @@ namespace CheatMenu
                 starter.AddBehavior(new IntrigueBehavior());
                 // Bilgi, oyunun kendi ikna konuşmalarına bonus verir (lordu krallığa davet vb.).
                 starter.AddModel<PersuasionModel>(new IntriguePersuasionModel());
+                // Aile editörü: "çocuk istemiyorlar" işaretli çiftte oyunun gebeliği olmaz.
+                starter.AddModel<PregnancyModel>(new Cheats.Models.FamilyPregnancyModel());
             }
         }
 

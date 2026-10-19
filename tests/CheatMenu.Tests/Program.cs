@@ -358,6 +358,9 @@ namespace CheatMenu.Tests
             state.SpouseAffair = new SpouseAffair { SpouseId = "spouse_1", LoverId = "lord_11", Since = 120, NextMeetingDay = 190, Discovered = true,
                 How = "Casus başın buldu.", ChildIds = { "child_1", "child_2" } };
             state.SpouseWatchUntil = 205;
+            state.NoChildren.Add("lord_12");
+            state.AgeFrozen.Add("main_hero");
+            state.AgeFrozen.Add("lord_13");
             state.SpouseApartWeeks = 3;
             state.RomanceUntil["lord_10"] = 220;
             state.NextCourtshipId = 5;
@@ -408,6 +411,7 @@ namespace CheatMenu.Tests
             SpouseAffair sa = back.SpouseAffair;
             Check("state: spouse affair", sa != null && sa.SpouseId == "spouse_1" && sa.LoverId == "lord_11" && sa.Since == 120 && sa.NextMeetingDay == 190
                 && sa.Discovered && !sa.Asked && sa.How == "Casus başın buldu." && sa.ChildIds.Count == 2 && sa.ChildIds[1] == "child_2");
+            Check("state: family editor", back.NoChildren.SetEquals(new[] { "lord_12" }) && back.AgeFrozen.SetEquals(new[] { "main_hero", "lord_13" }));
             Check("state: spouse watch", back.SpouseWatchUntil == 205 && back.SpouseApartWeeks == 3);
             Check("state: romance cooldown", back.RomanceUntil["lord_10"] == 220);
             Check("state: recruit cooldown", back.RecruitUntil.Count == 1 && back.RecruitUntil["lord_7"] == 210);
