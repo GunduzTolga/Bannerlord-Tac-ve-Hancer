@@ -8,8 +8,11 @@ adının burada olduğunu denetler.
 
 - **Boyut:** 1600×900 (16:9), PNG. Daha büyük üretilirse sorun yok; oyuna koyarken küçültülür.
 - **Dosya adı:** tablodaki ad (küçük harf, Türkçe karakter yok), örn. `olay_rusvetci_hizmetkar.png`.
-- **Nereye:** oyunda doğrudan denemek için modun klasöründe `Modules\CheatMenu\Images\` içine koy; kart bir sonraki açılışta resmi gösterir
-  (sprite paketine çevirmek gerekmez). Depoya eklenmesi için bana gönder ya da `Module/Images/` klasörüne koy.
+- **Nereye (en kolay):** resimleri `Masaüstü\TVH Resimler` klasörüne koy ve depoda
+  `powershell -ExecutionPolicy Bypass -File tools\resim-aktar.ps1` çalıştır: adı düzeltir (büyük harf, Türkçe harf, boşluk), yanlış adda en
+  yakınını önerir, 16:9'a kırpıp 1600×900 JPG yapar, hem `Modules\CheatMenu\Images\` (oyun) hem `Module/Images/` (depo) içine koyar,
+  sonunda kaç kartın bittiğini ve eksik ★ kartları yazar. Elle koyarsan: modun klasöründe `Modules\CheatMenu\Images\`; kart bir sonraki
+  açılışta resmi gösterir. Aynı adla hem .png hem .jpg varsa oyun .png'yi gösterir.
 - **Resim yoksa:** kartta ilgili kişinin portresi görünür; hiçbir şey bozulmaz. Bu yüzden resimler tek tek, istenen sırayla eklenebilir.
 
 ## Oyuna uygunluk (önemli)
