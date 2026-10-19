@@ -155,6 +155,7 @@ namespace CheatMenu.Tests
             CourtshipTests();
             FidelityTests();
             DuelTests();
+            PetitionTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -363,6 +364,7 @@ namespace CheatMenu.Tests
             state.SpouseWatchUntil = 205;
             state.NoChildren.Add("lord_12");
             state.DuelUntil["lord_14"] = 240;
+            state.CourtDayUntil["town_V1"] = 250;
             state.AgeFrozen.Add("main_hero");
             state.AgeFrozen.Add("lord_13");
             state.SpouseApartWeeks = 3;
@@ -415,6 +417,7 @@ namespace CheatMenu.Tests
             SpouseAffair sa = back.SpouseAffair;
             Check("state: spouse affair", sa != null && sa.SpouseId == "spouse_1" && sa.LoverId == "lord_11" && sa.Since == 120 && sa.NextMeetingDay == 190
                 && sa.Discovered && !sa.Asked && sa.How == "Casus başın buldu." && sa.ChildIds.Count == 2 && sa.ChildIds[1] == "child_2");
+            Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
             Check("state: duel cooldown", back.DuelUntil.Count == 1 && back.DuelUntil["lord_14"] == 240);
             Check("state: family editor", back.NoChildren.SetEquals(new[] { "lord_12" }) && back.AgeFrozen.SetEquals(new[] { "main_hero", "lord_13" }));
             Check("state: spouse watch", back.SpouseWatchUntil == 205 && back.SpouseApartWeeks == 3);
@@ -511,6 +514,29 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Saray günü: dilekçe verisi ve çekiliş.</summary>
+        private static void PetitionTests()
+        {
+            Petition[] all = PetitionRules.All;
+            Check("petition: unique ids", all.Select(p => p.Id).Distinct().Count() == all.Length);
+            Check("petition: 2-3 options each, texts present", all.All(p => p.Options.Length >= 2 && p.Options.Length <= 3
+                && p.Title.Length > 0 && p.Text.Length > 0 && p.Options.All(o => o.Label.Length > 0)));
+            Check("petition: castles have enough", PetitionRules.Available(false).Count >= PetitionRules.PetitionsPerSession
+                && PetitionRules.Available(false).All(p => !p.TownOnly) && PetitionRules.Available(true).Count == all.Length);
+            Check("petition: effects in sane bounds", all.SelectMany(p => p.Options).All(o => Math.Abs(o.Effect.Loyalty) <= 10
+                && Math.Abs(o.Effect.Security) <= 10 && Math.Abs(o.Effect.Prosperity) <= 100 && Math.Abs(o.Effect.Food) <= 60
+                && Math.Abs(o.Effect.Gold) <= 1000 && Math.Abs(o.Effect.TraitXp) <= 50));
+            Check("petition: other relation names a notable", all.SelectMany(p => p.Options)
+                .All(o => o.Effect.OtherRelation == 0 || o.Effect.OtherKind != NotableKind.None));
+            int seed = 7, rolls = 0;
+            List<Petition> drawn = PetitionRules.Draw(false, count => SchemeRandom.Pick(seed, ref rolls, count));
+            Check("petition: draw three distinct castle petitions", drawn.Count == 3 && drawn.Select(p => p.Id).Distinct().Count() == 3
+                && drawn.All(p => !p.TownOnly));
+            Check("petition: effect text", PetitionRules.EffectText(new PetitionEffect { Gold = -500, Loyalty = 3, Security = -2, Trait = TraitKind.Mercy, TraitXp = 40 })
+                == "500 dinar, sadakat +3, güvenlik -2, Merhamet +" && PetitionRules.EffectText(new PetitionEffect()) == ""
+                && PetitionRules.EffectText(new PetitionEffect { Gold = 400, Intel = true }) == "+400 dinar, rapor");
         }
 
         /// <summary>Düello: kabul olasılığı örnekleri.</summary>
