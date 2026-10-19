@@ -48,6 +48,9 @@
           SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModuleOut)\bin\Win64_Shipping_Client" />
     <Copy Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')"
           SourceFiles="@(ModuleAsset)" DestinationFiles="@(ModuleAsset->'$(ModuleOut)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <!-- third_party\paketler.txt'deki modlar aynı klasöre paketlenir: launcher'da tek mod görünür (bkz. tools\bundle.ps1). -->
+    <Exec Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client') And Exists('$(MSBuildProjectDirectory)\..\third_party\paketler.txt')"
+          Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\tools\bundle.ps1&quot; -ModuleOut &quot;$(ModuleOut)&quot;" />
     <Message Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')" Importance="high" Text="Taç ve Hançer -> $(ModuleOut)" />
   </Target>
 </Project>

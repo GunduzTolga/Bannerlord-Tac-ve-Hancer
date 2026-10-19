@@ -1,6 +1,6 @@
 # Yapılacaklar
 
-Son güncelleme: 19 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna kuruldu.
+Son güncelleme: 20 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna kuruldu.
 Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye göre asker ekleme**, **yoldaş sınırını kaldır**,
 **parti sayısı sınırı**, **Entrika E0, E1 ve E2** (casus başı, casusluk, sırlar, suikast, şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları) kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
@@ -19,6 +19,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Ana menüde kırmızı "başlatılamayan bağımlılık" uyarısı **yok**
 - [ ] **Esc → Mod Seçenekleri → Taç ve Hançer** açılıyor: Kurallar, Entrika, Harita grupları; eski ayarların (CheatMenu.txt) değerleri gelmiş
 - [ ] MCM'de bir ayarı değiştir → Insert → Kurallar'da da değişmiş; Kurallar'da değiştir → MCM'de de değişmiş
+
+### Tek mod: Diplomacy, DLX Hair Layers ve Women in Calradia içimizde (yeni, 20 Ekim)
+Üçü ayrı mod değil, Taç ve Hançer'in klasörüne paketlendi (`third_party\BENIOKU.md`). Ayrı klasörleri oyundan silindi,
+launcher listesinden çıkarıldı (yedek: `Configs\LauncherData.xml.yedek-20261020-000338`). Çevrimdışı doğrulandı: Diplomacy
+yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia ayar dosyası pakettekine yönleniyor.
+- [ ] Launcher'da yalnızca **Taç ve Hançer** var (Diplomacy, DLX Hair Layers, Women in Calradia ayrıca görünmüyor); oyun açılıyor
+- [ ] Ana menüde kırmızı uyarı ya da "modül yüklenemedi" penceresi yok
+- [ ] Krallık ekranında Diplomacy'nin düğmeleri ve sekmeleri; **Mod Seçenekleri**'nde Diplomacy ayarları
+- [ ] Karakter düzenleyicide DLX saç katmanları paneli; envanterde "Hair under helmet" düğmesi
+- [ ] Yeni kampanyada Women in Calradia yoldaşları tavernalarda; **yüzleri düzgün** (doku bozuksa ekran görüntüsü at)
+- [ ] Mod Seçenekleri'nde Women in Calradia ayarları
+- [ ] Bu modlar ayrıyken alınmış bir kayıt varsa, yüklerken "eksik modül" uyarısı çıkabilir; yine de yüklenir
 
 ### P1 — Entrika ekranı, olay kartları, harita düğmesi (yeni; en çok ekran görüntüsü lazım)
 - [ ] Ana menüde açılış mesajı: "Insert: menü, Home: entrika ekranı"
