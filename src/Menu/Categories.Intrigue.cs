@@ -399,9 +399,24 @@ namespace CheatMenu.Menu
                 entries.Add(MenuEntry.Submenu("İlişkiyi bitir: " + hero.Name + "...",
                     () => MenuUI.Confirm("İlişkiyi bitir", hero.Name + " ile ilişkin bitsin mi?", () => Courtships.EndAffair(SchemeEngine.State, lover), ShowRomance)));
             }
-            foreach (Pregnancy p in state.Pregnancies)
+            foreach (Pregnancy p in state.Pregnancies.Where(p => !p.Hidden || Hero.Find(p.MotherId)?.Clan == Clan.PlayerClan))
                 entries.Add(MenuEntry.Simple(Hero.Find(p.MotherId)?.Name + " hamile: doğum " + Math.Max(0, p.DueDay - SchemeFactors.Today) + " gün sonra",
                     () => MenuUI.Info("Doğum yaklaşınca kartla haber gelir")));
+            if (Courtships.Spouse != null)
+            {
+                if (SpouseLife.Enabled)
+                {
+                    string blocked = SpouseLife.InvestigateBlocked(state);
+                    string label = "Eşini araştır (casus başı, " + SchemeFactors.Money(FidelityRules.InvestigationCost) + ", " + FidelityRules.InvestigationDays + " gün)";
+                    entries.Add(blocked == null ? MenuEntry.Simple(label, () => SpouseLife.Investigate(SchemeEngine.State))
+                        : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
+                }
+                if (state.SpouseAffair != null && state.SpouseAffair.Discovered)
+                    entries.Add(MenuEntry.Simple("Yüzleş: eşinden ilişkiyi bitirmesini iste", () => SpouseLife.Confront(SchemeEngine.State)));
+                string divorceBlocked = SpouseLife.DivorceBlocked(state);
+                entries.Add(divorceBlocked == null ? MenuEntry.Submenu("Boşa...", () => UI.ViewModels.DossierVM.ConfirmDivorce(null))
+                    : MenuEntry.Simple("Boşa - " + divorceBlocked, () => MenuUI.Error(divorceBlocked)));
+            }
             entries.Add(MenuEntry.Submenu("Kur yap...", () => PickCourtshipTarget(CourtshipMode.Lover)));
             if (Courtships.Spouse != null) entries.Add(MenuEntry.Submenu("Eşini gönder: bilgi için kur...", () => PickCourtshipTarget(CourtshipMode.Intel)));
             MenuUI.ShowList("Kur ve sevgililer", entries, ShowRomance, "Geri", ShowIntrigue,

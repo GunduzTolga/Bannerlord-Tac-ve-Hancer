@@ -96,6 +96,11 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool NightHouses { get; set; }
 
+        [SettingPropertyBool("Eşin seni aldatabilir", Order = 5, RequireRestart = false,
+            HintText = "Eşin, seninle arası bozuksa ya da uzun süre ayrı kalırsanız, kendi başına bir sevgili edinebilir; gebelik de olabilir. Casus başına araştırtırsan ortaya çıkar. Gizli ilişki ayarı da açık olmalı. Yalnızca metin.")]
+        [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
+        public bool SpouseInfidelity { get; set; } = true;
+
         // ---- Harita ----
 
         [SettingPropertyDropdown("İleri sarma hızı", Order = 0, RequireRestart = false,
@@ -176,6 +181,7 @@ namespace CheatMenu.Mcm
             PlayerCanBeTargeted = s.PlayerCanBeTargeted;
             RomanceSecrets = s.RomanceSecrets;
             NightHouses = s.NightHouses;
+            SpouseInfidelity = s.SpouseInfidelity;
             FastForward.SelectedIndex = IndexOf(ModSettings.AllowedSpeeds, s.FastForwardSpeed);
             ScreenHotkey.SelectedIndex = s.ScreenHotkey;
             MapButtonPosition.SelectedIndex = s.MapButtonPosition;
@@ -196,6 +202,7 @@ namespace CheatMenu.Mcm
             s.PlayerCanBeTargeted = PlayerCanBeTargeted;
             s.RomanceSecrets = RomanceSecrets;
             s.NightHouses = NightHouses;
+            s.SpouseInfidelity = SpouseInfidelity;
             s.SetFastForwardSpeed(At(ModSettings.AllowedSpeeds, FastForward.SelectedIndex));
             s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
             s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);

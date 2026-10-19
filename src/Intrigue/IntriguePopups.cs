@@ -81,6 +81,11 @@ namespace CheatMenu.Intrigue
                 ShowLiegeDemand(state);
                 return;
             }
+            if (state.SpouseAffair != null && state.SpouseAffair.Discovered && !state.SpouseAffair.Asked)
+            {
+                ShowSpouseAffair(state);
+                return;
+            }
             Crisis crisis = state.Crises.FirstOrDefault();
             if (crisis != null)
             {
@@ -176,6 +181,30 @@ namespace CheatMenu.Intrigue
                 + "\n\nKonuşmada oyunun kendi seçenekleri var: krallığına davet (ikna turları ve pazarlık), evlilik, görevler."
                 + (bonus > 0 ? " Hakkında bildiklerin sayesinde ikna turlarında başarı +" + bonus + "." : ""),
                 options, CardImages.Messenger, hero);
+        }
+
+        /// <summary>Eşinin gizli ilişkisi ortaya çıktı: yüzleş, görmezden gel ya da boşa.</summary>
+        private static void ShowSpouseAffair(IntrigueState state)
+        {
+            SpouseAffair affair = state.SpouseAffair;
+            Hero spouse = Hero.Find(affair.SpouseId);
+            Hero lover = Hero.Find(affair.LoverId);
+            if (spouse == null || lover == null || Courtships.Spouse != spouse)
+            {
+                affair.Asked = true;
+                return;
+            }
+            var options = new List<IntrigueEvents.Option>
+            {
+                new IntrigueEvents.Option { Label = "Yüzleş: ilişkiyi bitirmesini iste", Apply = () => SpouseLife.Confront(state) },
+                new IntrigueEvents.Option { Label = "Görmezden gel (sır elinde kalır)", Apply = () => SpouseLife.Ignore(state) },
+                new IntrigueEvents.Option
+                {
+                    Label = "Boşa (haklı: ailesi az kırılır)", DisabledHint = SpouseLife.DivorceBlocked(state),
+                    Apply = () => { SpouseLife.Ignore(state); SpouseLife.Divorce(state); },
+                },
+            };
+            ShowChoice("İHANET", "Eşin seni aldatıyor: " + lover.Name, SpouseLife.DiscoveryText(state), options, CardImages.Betrayal, lover);
         }
 
         /// <summary>Yabancı krallıkta ağ çökertildi: tazminat, inkâr ya da ret (P2.5).</summary>

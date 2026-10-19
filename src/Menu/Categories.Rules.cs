@@ -40,6 +40,8 @@ namespace CheatMenu.Menu
                     v => Rules.Change(s => s.RomanceSecrets = v, null)),
                 MenuEntry.Toggle("Gece evi işletmesi (yetişkin teması)", () => Rules.Settings.NightHouses,
                     v => Rules.Change(s => s.NightHouses = v, null)),
+                MenuEntry.Toggle("Eşin seni aldatabilir", () => Rules.Settings.SpouseInfidelity,
+                    v => Rules.Change(s => s.SpouseInfidelity = v, null)),
                 Choice("Entrika ekranı kısayolu", Indexes(ModSettings.ScreenHotkeyNames), () => Rules.Settings.ScreenHotkey,
                     v => Rules.Change(s => s.SetScreenHotkey(v), "Entrika ekranı kısayolu: " + ModSettings.ScreenHotkeyNames[v]),
                     v => ModSettings.ScreenHotkeyNames[v]),
