@@ -51,7 +51,7 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
-                MenuEntry.Submenu("Divan (serdar, hazinedar, hekim)...", ShowCouncil),
+                MenuEntry.Submenu("Divan (serdar, kâhya, hazinedar, hekim)...", ShowCouncil),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -70,7 +70,7 @@ namespace CheatMenu.Menu
                 + "Kayıt testi işareti: " + (state.SaveTestMarker ?? "yok"));
         }
 
-        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 serdar) ----
+        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 serdar, P2.15 kâhya) ----
 
         private static void ShowCouncil()
         {
@@ -78,6 +78,7 @@ namespace CheatMenu.Menu
             ShowCategory("Divan", new List<MenuEntry>
             {
                 MenuEntry.Submenu("Serdar: " + (Marshal.Current(state)?.Name.ToString() ?? "boş") + "...", ShowMarshal),
+                MenuEntry.Submenu("Kâhya: " + (Steward.Current(state)?.Name.ToString() ?? "boş") + "...", ShowSteward),
                 MenuEntry.Submenu("Hazinedar: " + (Treasury.Treasurer(state)?.Name.ToString() ?? "boş") + "...", ShowTreasury),
                 MenuEntry.Submenu("Saray hekimi: " + (Physician.Current(state)?.Name.ToString() ?? "boş") + "...", ShowPhysician),
             }, ShowCouncil, "Casus başı Entrika menüsünde. Ayrıntılı raporlar: Entrika ekranı > Divan.", ShowIntrigue);
@@ -102,6 +103,34 @@ namespace CheatMenu.Menu
                 marshal == null
                     ? "Klanından Tactics'i ve Scouting'i yüksek birini serdar yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
                     : Marshal.ReportText(state) + "\n\nOrdular, zayıf hedefler ve savunman: Entrika ekranı > Divan.",
+                ShowCouncil);
+        }
+
+        private static void ShowSteward()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero steward = Steward.Current(state);
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu(steward == null ? "Kâhya ata..." : "Kâhyayı değiştir...", () => Picker.Pick("Kâhya seç",
+                    Steward.Candidates(state).OrderByDescending(Steward.Skill).ToList(), Steward.Label,
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Kâhya", () => Steward.Assign(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowSteward);
+                    }, ShowSteward, HeroPortrait, sort: false)),
+            };
+            if (Steward.Working(state) != null)
+                foreach (TaleWorlds.CampaignSystem.Settlements.Town town in Clan.PlayerClan.Fiefs)
+                {
+                    var chosen = town;
+                    entries.Add(MenuEntry.Submenu("Yönet: " + town.Name + "...", () => UI.EventCards.ShowFief(chosen, null)));
+                }
+            if (steward != null) entries.Add(MenuEntry.Simple("Kâhyayı görevden al", () => Steward.Dismiss(SchemeEngine.State)));
+            ShowCategory("Divan: kâhya", entries, ShowSteward,
+                steward == null
+                    ? "Klanından Steward'ı yüksek birini kâhya yap: bütün şehir ve kalelerine tek bakış, uzaktan inşaat ve günlük proje, isyan ve kıtlık uyarısı; sadakate günlük katkı. Steward 30'un altındaysa yolsuzluk yapar."
+                    : Steward.ReportText(state),
                 ShowCouncil);
         }
 

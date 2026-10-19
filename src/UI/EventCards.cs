@@ -6,6 +6,7 @@ using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.CampaignSystem.Settlements.Workshops;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
 using TaleWorlds.Core;
@@ -359,6 +360,80 @@ namespace CheatMenu.UI
                 + "\n\nTahminler hazinedarın gözüyle: hata payı %" + board.Error + " (" + TreasuryRules.Confidence(board.Error) + "). "
                 + "Değişiklik ustabaşına giden mektupla olur: oyunun değiştirme bedeli + " + SchemeFactors.Money(TreasuryRules.RemoteOrderFee) + " ulak ücreti.",
                 CardImages.Treasury, treasurer, options, cancel, null);
+        }
+
+        /// <summary>Divan (P2.15): kâhyanın defterinden bir şehir ya da kale; uzaktan inşaat ve günlük proje emri.</summary>
+        public static void ShowFief(Town town, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero steward = Steward.Working(state);
+            Steward.FiefLine line = Steward.Report().FirstOrDefault(l => l.Town == town);
+            if (steward == null || line == null)
+            {
+                MenuUI.Error(Steward.Blocked(state) ?? town.Name + " artık senin değil");
+                return;
+            }
+            string blocked = Steward.OrderBlocked(state, town);
+            var cancel = new CardOption { Label = "Kapat", Apply = () => { } };
+            var options = new List<CardOption>
+            {
+                new CardOption { Label = "İnşaatı değiştir...", DisabledHint = blocked, Apply = () => MenuUI.Defer(() => ShowConstructions(town, afterwards)) },
+                new CardOption { Label = "Günlük projeyi değiştir...", DisabledHint = blocked, Apply = () => MenuUI.Defer(() => ShowDailyProjects(town, afterwards)) },
+                cancel,
+            };
+            Show("DİVAN · KÂHYA", town.Name + " (" + (town.IsCastle ? "kale" : "şehir") + ")",
+                "Sadakat " + (int)town.Loyalty + " (günde " + StewardRules.Signed(town.LoyaltyChange, Tr.Culture) + ")  ·  güvenlik " + (int)town.Security
+                + " (" + StewardRules.Signed(town.SecurityChange, Tr.Culture) + ")  ·  refah " + (int)town.Prosperity + " (" + StewardRules.Signed(town.ProsperityChange, Tr.Culture) + ")\n"
+                + "Erzak: " + (line.FoodDays == int.MaxValue ? "yeterli" : line.FoodDays + " gün") + "  ·  vergi ve köyler günde " + Treasury.Signed(line.Income)
+                + "  ·  vali: " + (town.Governor?.Name.ToString() ?? "yok") + "\n"
+                + "İnşaat: " + (line.Construction != null ? Steward.BuildingText(line.Construction, line.ConstructionDays) : "yok")
+                + "  ·  günlük proje: " + (line.Daily?.Name.ToString() ?? "yok")
+                + (line.Problems.Count > 0 ? "\n\nSorunlar: " + string.Join(", ", line.Problems) + "." : "")
+                + "\n\n" + steward.Name + ": " + line.Advice + ".\n\nEmirler ulakla gider: her biri " + SchemeFactors.Money(StewardRules.RemoteOrderFee) + ".",
+                CardImages.Steward, steward, options, cancel, null);
+        }
+
+        private static void ShowConstructions(Town town, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            string blocked = Steward.OrderBlocked(state, town);
+            List<CardOption> options = Steward.Constructions(town).Where(b => b != town.CurrentBuilding).Take(6).Select(building => new CardOption
+            {
+                Label = Steward.BuildingText(building, 0) + " (" + building.GetConstructionCost() + " iş)",
+                DisabledHint = blocked,
+                Apply = () =>
+                {
+                    Steward.StartConstruction(SchemeEngine.State, town, building);
+                    afterwards?.Invoke();
+                },
+            }).ToList();
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("DİVAN · KÂHYA", "İnşaat: " + town.Name,
+                "Şu an: " + (town.CurrentBuilding != null ? town.CurrentBuilding.Name.ToString() : "yok")
+                + ". Seçtiğin yapı kuyruğun başına geçer; yarım kalan yapının emeği kaybolmaz.",
+                CardImages.Steward, Steward.Working(state), options, cancel, null);
+        }
+
+        private static void ShowDailyProjects(Town town, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            string blocked = Steward.OrderBlocked(state, town);
+            List<CardOption> options = Steward.DailyProjects(town).Where(b => b != town.CurrentDefaultBuilding).Select(building => new CardOption
+            {
+                Label = building.Name.ToString(),
+                DisabledHint = blocked,
+                Apply = () =>
+                {
+                    Steward.SetDailyProject(SchemeEngine.State, town, building);
+                    afterwards?.Invoke();
+                },
+            }).ToList();
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("DİVAN · KÂHYA", "Günlük proje: " + town.Name,
+                "Şu an: " + (town.CurrentDefaultBuilding?.Name.ToString() ?? "yok") + ". İnşaat kuyruğu boşken işçiler günlük projeye çalışır.",
+                CardImages.Steward, Steward.Working(state), options, cancel, null);
         }
 
         /// <summary>Divan (P2.12): hazinedarın zimmeti ortaya çıktı; hesap sor.</summary>

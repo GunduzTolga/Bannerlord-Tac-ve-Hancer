@@ -148,6 +148,16 @@
     </Styles>
   </Brush>
 
+  <Brush Name="Tvh.Text.ButtonSmall" FontSize="15" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Hovered" FontColor="#FFFFFFFF" />
+      <Style Name="Pressed" FontColor="#E8C77DFF" />
+      <Style Name="Selected" FontColor="#F7D58CFF" />
+      <Style Name="Disabled" FontColor="#F2E3C6FF" TextAlphaFactor="0.4" />
+    </Styles>
+  </Brush>
+
   <Brush Name="Tvh.Text.Tab" FontSize="18" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
       <Style Name="Default" FontColor="#BBA77FFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />

@@ -6,10 +6,10 @@ using TaleWorlds.CampaignSystem;
 
 namespace CheatMenu.Intrigue
 {
-    /// <summary>Divan koltukları (casus başı, hazinedar, hekim, serdar): biri aynı anda tek koltukta oturur.</summary>
+    /// <summary>Divan koltukları (casus başı, serdar, hazinedar, hekim, kâhya): biri aynı anda tek koltukta oturur.</summary>
     public static class Council
     {
-        /// <summary>Kişinin oturduğu koltuk ("casus başın", "hazinedarın", "hekimin", "serdarın"); boşsa null.</summary>
+        /// <summary>Kişinin oturduğu koltuk ("casus başın", "hazinedarın", "hekimin", "serdarın", "kâhyan"); boşsa null.</summary>
         public static string SeatOf(IntrigueState state, Hero hero)
         {
             if (hero == null) return null;
@@ -17,6 +17,7 @@ namespace CheatMenu.Intrigue
             if (hero.StringId == state.TreasurerId) return "hazinedarın";
             if (hero.StringId == state.PhysicianId) return "hekimin";
             if (hero.StringId == state.MarshalId) return "serdarın";
+            if (hero.StringId == state.StewardId) return "kâhyan";
             return null;
         }
 

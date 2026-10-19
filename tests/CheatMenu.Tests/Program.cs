@@ -164,6 +164,7 @@ namespace CheatMenu.Tests
             TreasuryTests();
             PhysicianTests();
             MarshalTests();
+            StewardTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -377,6 +378,8 @@ namespace CheatMenu.Tests
             state.TreasurerId = "companion_1";
             state.PhysicianId = "companion_2";
             state.MarshalId = "lord_17";
+            state.StewardId = "companion_3";
+            state.StewardWarned["town_V1|isyan"] = 320;
             state.MarshalWarned["party_3|town_V1"] = 310;
             state.PhysicianWarnUntil = 300;
             state.Conceived["spouse_1"] = 275;
@@ -444,6 +447,7 @@ namespace CheatMenu.Tests
             Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
             Check("state: tail cooldown", back.TailUntil.Count == 1 && back.TailUntil["lord_16"] == 260);
             Check("state: treasurer", back.TreasurerId == "companion_1" && back.Embezzled == 450 && back.EmbezzleFound);
+            Check("state: steward", back.StewardId == "companion_3" && back.StewardWarned.Count == 1 && back.StewardWarned["town_V1|isyan"] == 320);
             Check("state: marshal", back.MarshalId == "lord_17" && back.MarshalWarned.Count == 1 && back.MarshalWarned["party_3|town_V1"] == 310);
             Check("state: physician", back.PhysicianId == "companion_2" && back.PhysicianWarnUntil == 300
                 && back.Conceived.Count == 1 && back.Conceived["spouse_1"] == 275);
@@ -691,6 +695,19 @@ namespace CheatMenu.Tests
             Check("marshal: advice", MarshalRules.Advice(1.6).Contains("barış") && MarshalRules.Advice(1.2).Contains("savunmada")
                 && MarshalRules.Advice(1.0).Contains("denk") && MarshalRules.Advice(0.7).Contains("saldırı") && MarshalRules.Advice(0.3).Contains("kalelerine"));
             Check("marshal: danger", MarshalRules.IsDangerous(1.15) && !MarshalRules.IsDangerous(1.1));
+        }
+
+        /// <summary>Divan, kâhya (P2.15): sadakat katkısı, yolsuzluk, eşiğe kalan gün, işaretli sayı.</summary>
+        private static void StewardTests()
+        {
+            Check("steward: corrupt below 30", StewardRules.IsCorrupt(29) && !StewardRules.IsCorrupt(30));
+            Check("steward: loyalty bonus", StewardRules.LoyaltyBonus(0) == -0.3f && StewardRules.LoyaltyBonus(30) == 0f
+                && Math.Abs(StewardRules.LoyaltyBonus(130) - 0.5f) < 1e-6 && StewardRules.LoyaltyBonus(230) == 1f && StewardRules.LoyaltyBonus(400) == 1f);
+            Check("steward: days until", StewardRules.DaysUntil(50, -2, 25) == 13 && StewardRules.DaysUntil(50, 0, 25) == int.MaxValue
+                && StewardRules.DaysUntil(50, 1, 25) == int.MaxValue && StewardRules.DaysUntil(20, -1, 25) == 0 && StewardRules.DaysUntil(25, -1, 25) == 0
+                && StewardRules.DaysUntil(26, -0.3f, 25) == 4);
+            Check("steward: signed", StewardRules.Signed(0.5f, Tr.Culture) == "+0,5" && StewardRules.Signed(-1.2f, Tr.Culture) == "-1,2"
+                && StewardRules.Signed(0f, Tr.Culture) == "0,0");
         }
 
         private static void PetitionTests()

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Divan sekmesi (ViewModel: CouncilVM): üstte üç koltuk (TvhCouncilSeat), altında raporlar (TvhCouncilRow). -->
+<!-- Divan sekmesi (ViewModel: CouncilVM): üstte dört koltuk (TvhCouncilSeat), altında raporlar (TvhCouncilRow). -->
 <Prefab>
   <Window>
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
       <Children>
-        <ListPanel DataSource="{Seats}" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="214" StackLayout.LayoutMethod="HorizontalLeftToRight">
+        <ListPanel DataSource="{Seats}" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="200" StackLayout.LayoutMethod="HorizontalLeftToRight">
           <ItemTemplate>
             <TvhCouncilSeat />
           </ItemTemplate>
         </ListPanel>
 
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="224">
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="210">
           <Children>
             <ScrollablePanel Id="CouncilScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CouncilClip" InnerPanel="CouncilClip\CouncilList" VerticalScrollbar="..\CouncilBar">
               <Children>

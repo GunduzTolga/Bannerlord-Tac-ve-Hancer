@@ -54,6 +54,17 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.15 — Divan: kâhya (yeni)
+- [ ] Divan'da dört koltuk yan yana sığıyor mu (SERDAR, KÂHYA, HAZİNEDAR, SARAY HEKİMİ)? Küçük düğme yazıları okunuyor mu? Ekran görüntüsü at
+- [ ] Kâhya ata (Steward, yolsuz mu, sadakat katkısı) → kart: "Şehir ve kalelerinde sadakat günde +0,5"
+- [ ] Bir şehrinin sadakatine bak (oyunun şehir ekranında açıklama): "Kâhya (ad)" satırı var mı?
+- [ ] ŞEHİR VE KALELER: sadakat, güvenlik, refah, inşaat (kalan gün), günlük proje, günlük gelir; sorunlu olan kırmızı
+- [ ] "Yönet..." → kart: durum ve öneri → "İnşaatı değiştir..." → bir yapı seç → 100 dinar düştü, şehre gitmeden inşaat değişti
+- [ ] "Günlük projeyi değiştir..." → seç → şehir ekranında yeni günlük proje
+- [ ] Sadakati düşen bir yerde (eşiğe 10 gün kala) "Kâhyan uyarıyor" kartı; erzak 5 günden azsa kıtlık uyarısı
+- [ ] Insert > Entrika > Divan > Kâhya: rapor metni, "Yönet: X"
+- [ ] Kaydet → yükle: kâhya duruyor
+
 ### P2.14 — Divan: serdar (yeni)
 - [ ] Divan'da üç koltuk yan yana sığıyor mu (SERDAR, HAZİNEDAR, SARAY HEKİMİ)? Yazılar taşıyorsa ekran görüntüsü at
 - [ ] Serdar ata (Tactics, Scouting, tahmin payı) → kart: görüş menzili, erken uyarı yüzdesi; parti başındaki biri de olabiliyor
