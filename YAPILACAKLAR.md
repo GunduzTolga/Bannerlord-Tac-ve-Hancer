@@ -53,7 +53,7 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] **Entrika başlat...** → Yeni entrika sekmesi tür ve hedef seçili açılır; başlatılamıyorsa altında kırmızı neden
 - [ ] Kendi sayfanda bölüm yok; ansiklopediyi Klan/Krallık ekranından açınca düğmeler soluk, "yalnızca haritadayken" yazıyor
 - [ ] Bölüm hiç görünmüyorsa: rgl_log'da `[CheatMenu]` ya da `UIExtender` satırlarını gönder
-- [ ] **Yeni oyun: karakter oluşturma yüz ekranından sonra çökmeden geçiyor** (19 Ekim düzeltildi: ansiklopedi bölümü oyun
+- [x] **Yeni oyun: karakter oluşturma yüz ekranından sonra çökmeden geçiyor** (19 Ekim düzeltildi ve oyunda denendi: ansiklopedi bölümü oyun
       açılışında kaydediliyor ve oyunun `CampaignUIHelper` sınıfını bozuyordu; kayıt artık kampanya başlarken yapılıyor)
 - [ ] Kampanyaya girdikten sonra ansiklopedideki Entrika bölümü hâlâ görünüyor (kayıt yeri değişti)
 
