@@ -12,28 +12,46 @@ namespace CheatMenu.Menu
     /// <summary>
     /// Ana menü ve kategoriler. Her ShowX listeyi her seferinde yeniden kurar;
     /// böylece aç/kapa etiketleri ve güncel değerler doğru görünür.
-    /// Bu dosya: kök + hileler. Categories.World.cs: Harita ve Adlandır. Categories.Editors.cs: editörler.
+    /// Bu dosya: kök, gruplar ve hileler. Categories.World.cs: Harita ve Adlandır. Categories.Editors.cs: editörler.
+    /// Categories.Intrigue.cs: Entrika.
     /// </summary>
     public static partial class Categories
     {
         public static void ShowRoot()
         {
-            MenuUI.ShowList("HİLE MENÜSÜ", new List<MenuEntry>
+            MenuUI.ShowList(ModInfo.DisplayName.ToUpperInvariant(), new List<MenuEntry>
+            {
+                MenuEntry.Submenu("Entrika", ShowIntrigue),
+                MenuEntry.Submenu("Hileler", ShowCheats),
+                MenuEntry.Submenu("Editörler", ShowEditors),
+                MenuEntry.Submenu("Klan & krallık", ShowPolitics),
+                MenuEntry.Submenu("Bilgi", ShowInfo),
+                MenuEntry.Submenu("Kurallar", ShowRules),
+            }, ShowRoot, "Kapat", null);
+        }
+
+        private static void ShowCheats()
+        {
+            ShowCategory("Hileler", new List<MenuEntry>
             {
                 MenuEntry.Submenu("Para & Ekonomi", ShowEconomy),
                 MenuEntry.Submenu("Karakter", ShowCharacter),
                 MenuEntry.Submenu("Ordu / Parti", ShowParty),
                 MenuEntry.Submenu("Savaş içi", ShowCombat),
                 MenuEntry.Submenu("Harita", ShowMap),
+            }, ShowCheats);
+        }
+
+        private static void ShowEditors()
+        {
+            ShowCategory("Editörler", new List<MenuEntry>
+            {
                 MenuEntry.Submenu("Adlandır", ShowRename),
                 MenuEntry.Submenu("Kahraman editörü", ShowHeroEditorPick),
                 MenuEntry.Submenu("İlişkiler", ShowRelationPick),
                 MenuEntry.Submenu("Yerleşim editörü", ShowSettlementPick),
                 MenuEntry.Submenu("Eşya ekle", ShowItemCategories),
-                MenuEntry.Submenu("Klan & krallık", ShowPolitics),
-                MenuEntry.Submenu("Bilgi", ShowInfo),
-                MenuEntry.Submenu("Kurallar", ShowRules),
-            }, ShowRoot, "Kapat", null);
+            }, ShowEditors);
         }
 
         private static void ShowEconomy()
@@ -48,7 +66,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Simple("+500 etki", () => CampaignCheats.AddInfluence(500)),
                 MenuEntry.Custom("Özel miktar etki...", CampaignCheats.AddInfluence),
                 MenuEntry.Simple("+100 tahıl", () => CampaignCheats.AddGrain(100)),
-            }, ShowEconomy);
+            }, ShowEconomy, back: ShowCheats);
         }
 
         private static void ShowCharacter()
@@ -61,7 +79,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Custom("Özel miktar attribute puanı...", CampaignCheats.AddAttributePoints),
                 MenuEntry.Simple("Tüm yeteneklere +25", () => CampaignCheats.AddAllSkills(25)),
                 MenuEntry.Simple("Canı doldur", CampaignCheats.HealHero),
-            }, ShowCharacter);
+            }, ShowCharacter, back: ShowCheats);
         }
 
         private static void ShowParty()
@@ -77,7 +95,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Simple("Yaralıları iyileştir", CampaignCheats.HealWounded),
                 MenuEntry.Simple("+50 moral", () => CampaignCheats.AddMorale(50)),
                 MenuEntry.Toggle("Parti hızı x2", () => CheatState.FastParty, v => CheatState.FastParty = v),
-            }, ShowParty);
+            }, ShowParty, back: ShowCheats);
         }
 
         private static void ShowTroopTiers()
@@ -122,10 +140,12 @@ namespace CheatMenu.Menu
                 MenuEntry.Toggle("Sınırsız cephane (Ordu)", () => CheatState.InfiniteAmmoArmy, v => CheatState.InfiniteAmmoArmy = v),
                 MenuEntry.Toggle("(Ordu) hilelerine müttefikleri de kat", () => CheatState.ArmyIncludesAllies,
                     v => CheatState.ArmyIncludesAllies = v),
-            }, ShowCombat);
+            }, ShowCombat, back: ShowCheats);
         }
 
-        private static void ShowCategory(string title, List<MenuEntry> entries, Action reshow, string description = "") =>
-            MenuUI.ShowList(title, entries, reshow, "Geri", ShowRoot, description);
+        /// <param name="back">"Geri" ile dönülecek menü; verilmezse ana menü.</param>
+        private static void ShowCategory(string title, List<MenuEntry> entries, Action reshow, string description = "",
+            Action back = null) =>
+            MenuUI.ShowList(title, entries, reshow, "Geri", back ?? ShowRoot, description);
     }
 }

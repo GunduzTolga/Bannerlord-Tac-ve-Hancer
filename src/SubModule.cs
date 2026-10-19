@@ -1,5 +1,6 @@
 using CheatMenu.Cheats;
 using CheatMenu.Cheats.Models;
+using CheatMenu.Intrigue;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
@@ -21,14 +22,17 @@ namespace CheatMenu
             base.OnBeforeInitialModuleScreenSetAsRoot();
             if (_loadMessageShown) return;
             _loadMessageShown = true;
-            InformationManager.DisplayMessage(new InformationMessage("[CheatMenu] yüklendi - kampanyada Insert ile aç"));
+            InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] yüklendi - kampanyada Insert ile aç"));
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
             base.OnGameStart(game, gameStarterObject);
             if (game.GameType is Campaign && gameStarterObject is CampaignGameStarter starter)
+            {
                 RuleModels.Register(starter);
+                starter.AddBehavior(new IntrigueBehavior());
+            }
         }
 
         public override void OnGameLoaded(Game game, object initializerObject)
@@ -66,7 +70,7 @@ namespace CheatMenu
             CleanSaveGuard.Tick();
 
             if (Input.IsKeyPressed(MenuKey) && !InformationManager.IsAnyInquiryActive())
-                MenuUI.SafeRun("Hile menüsü", Categories.ShowRoot);
+                MenuUI.SafeRun("Ana menü", Categories.ShowRoot);
 
             CursorTeleport.Tick();
         }

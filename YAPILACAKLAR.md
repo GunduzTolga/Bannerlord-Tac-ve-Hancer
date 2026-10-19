@@ -2,12 +2,19 @@
 
 Son güncelleme: 19 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna kuruldu.
 Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
-**Kademeye göre asker ekleme**, **yoldaş sınırını kaldır** ve **parti sayısı sınırı** kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
+Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye göre asker ekleme**, **yoldaş sınırını kaldır**,
+**parti sayısı sınırı** ve **Entrika E0** kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
 
 > ⚠️ Telefondan kod yazılıp GitHub'a gönderilebilir, ama **derleyip oyuna kurmak bilgisayar ister**
 > (Visual Studio + oyunun DLL'leri). Telefonda yapılanlar, bilgisayarda `build.ps1` çalışınca oyuna gelir.
 
 ## 1. Oyunda test et (bilgisayarda, yedekli bir kayıtta)
+
+### Entrika E0 — yeni ad, menü düzeni, kayıt testi (önemli: E1 buna dayanıyor)
+- [ ] Launcher'da mod **Taç ve Hançer** adıyla görünüyor, Türkçe harfler düzgün
+- [ ] Insert → ana menü: Entrika, Hileler, Editörler, Klan & krallık, Bilgi, Kurallar; alt menülerde **Geri** doğru gruba dönüyor
+- [ ] Entrika → **Kayıt testi: işaret bırak** → kaydet → kaydı yeniden yükle → Entrika menüsünde "Şu anki işaret: gün …" duruyor
+- [ ] ⚠️ Yedek kayıtta: Launcher'da modu **kapat** → aynı kaydı aç → kayıt açılıyor (sadece "modül eksik" uyarısı normal) → modu geri aç
 
 ### Asker ekle (kademeye göre) — yeni
 - [ ] Ordu / Parti → **Asker ekle (kademeye göre)** → kademeler (T1, T2 …) ve her birindeki asker türü sayısı görünüyor
@@ -54,15 +61,15 @@ Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 - [ ] **Berber ekranı** haritadan açılınca düzgün mü
 - [ ] Yaş değiştirdikten birkaç gün sonra yaş hâlâ doğru mu (Doğum ve Yaşlanma açıkken)
 
-Bir şey bozuksa: ekrandaki kırmızı `[CheatMenu]` mesajını aynen yaz. Çökme olursa log:
+Bir şey bozuksa: ekrandaki kırmızı `[Taç ve Hançer]` mesajını aynen yaz. Çökme olursa log:
 `C:\ProgramData\Mount and Blade II Bannerlord\logs\` içindeki en yeni `rgl_log_*.txt`.
 
 ## 2. Sıradaki büyük iş — Entrika sistemi (CK3 tarzı)
 
 Mod artık sadece hile menüsü değil, "her şeyi içeren" mod olacak. Tasarım taslağı:
 `docs/superpowers/specs/2026-10-19-entrika-design.md` (casus başı, casusluk, sırlar, suikast, kozlar, yapay zekâ entrikaları).
-- [ ] Tasarımdaki 5 açık soruyu cevapla (mod adı, menü düzeni, akraba katli, oyuncuya suikast, kaydet-yükle)
-- [ ] **E0** — menü düzeni, görünen ad, kayıt testi
+- [x] Tasarımdaki 5 açık soru cevaplandı (hepsi önerildiği gibi, ad: Taç ve Hançer)
+- [x] **E0** — menü düzeni, görünen ad, kayıt testi (kodlandı; oyunda test bekliyor)
 - [ ] **E1** — casus başı, casusluk + sırlar, suikast (aşamalar, olaylar, sonuçlar)
 - [ ] **E2** — şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları, karşı casusluk
 - [ ] **E3** — sabotaj, kışkırtma, itibar zedeleme, resimli olay kartları

@@ -13,12 +13,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="..\..\src\AmountParser.cs"><Link>AmountParser.cs</Link></Compile>
     <Compile Include="..\..\src\NameRules.cs"><Link>NameRules.cs</Link></Compile>
     <Compile Include="..\..\src\ModSettings.cs"><Link>ModSettings.cs</Link></Compile>
+    <Compile Include="..\..\src\Intrigue\Core\*.cs"><Link>Intrigue\%(Filename)%(Extension)</Link></Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

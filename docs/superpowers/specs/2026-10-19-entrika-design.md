@@ -1,7 +1,7 @@
-# Entrika Sistemi — Tasarım (taslak, onay bekliyor)
+# Entrika Sistemi — Tasarım
 
 **Tarih:** 2026-10-19 · **Oyun:** v1.4.8 + War Sails v1.2.8
-**Durum:** Taslak. Kod yok. Bölüm 13'teki sorular cevaplanınca E0'dan başlanır.
+**Durum:** Onaylandı (2026-10-19). Bölüm 13'teki sorular cevaplandı. E0 kodlandı; oyunda test bekliyor.
 
 **Kullanıcı kararları (bu konuşmada verildi):**
 - Ayrı mod yok. CheatMenu "her şeyi içeren" moda dönüşür: hileler + entrika (+ ileride başka sistemler).
@@ -421,7 +421,17 @@ O aşamada her kart için hazır prompt listesi verilecek (boyut, stil: oyunun y
 
 ---
 
-## 13. Açık sorular (kullanıcı kararı)
+## 13. Kararlar (2026-10-19, kullanıcı: "hepsi önerdiğin gibi, adı Taç ve Hançer olsun")
+
+| # | Soru | Karar |
+|---|---|---|
+| 1 | Görünen ad | **Taç ve Hançer** (iç kimlik `CheatMenu` kalır) |
+| 2 | Ana menü gruplansın mı | Evet (bölüm 2.2) |
+| 3 | Kendi klanından birine suikast | E1'de yok |
+| 4 | Yapay zekâ oyuncuya suikast yapabilsin mi | Varsayılan kapalı, ayardan açılır (E2) |
+| 5 | Tohumlu zar (kaydet-yükle sonucu değiştirmez) | Evet |
+
+Orijinal sorular:
 
 1. **Modun görünen adı ne olsun?** Öneriler: *Taç ve Hançer*, *Gölge Divanı*, *Kılıç ve Hançer*.
    İç kimlik `CheatMenu` kalır.

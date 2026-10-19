@@ -11,7 +11,7 @@ namespace CheatMenu.Cheats
     /// </summary>
     public sealed class CheatPartySpeedModel : PartySpeedModel
     {
-        private static readonly TextObject CheatText = new TextObject("CheatMenu: parti hızı x2", null);
+        private static readonly TextObject CheatText = new TextObject(ModInfo.DisplayName + ": parti hızı x2", null);
 
         public override float BaseSpeed => BaseModel.BaseSpeed;
 

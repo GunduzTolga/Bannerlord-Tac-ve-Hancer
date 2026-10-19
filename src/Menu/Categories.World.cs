@@ -22,7 +22,7 @@ namespace CheatMenu.Menu
 
             ShowCategory("Harita", entries, ShowMap,
                 "İpucu: Ctrl+Alt + Sol tık ile haritada tıkladığın yere ışınlanırsın. "
-                + "İleri sarma hızı yalnızca >> düğmesini etkiler.");
+                + "İleri sarma hızı yalnızca >> düğmesini etkiler.", ShowCheats);
         }
 
         private static string SpeedLabel(int speed) =>
@@ -75,7 +75,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Bir parti...", () => PickAndRename("Parti",
                     Lists.Parties(), Lists.PartyLabel, p => p.Name.ToString(), true, Renamer.RenameParty)),
             }, ShowRename, "Yerleşim ve partilerde adı boş bırakırsan orijinal ada döner. "
-                + "Oyun bazı olaylarda parti adını kendisi sıfırlayabilir.");
+                + "Oyun bazı olaylarda parti adını kendisi sıfırlayabilir.", ShowEditors);
         }
 
         private static string CurrentSettlementName()

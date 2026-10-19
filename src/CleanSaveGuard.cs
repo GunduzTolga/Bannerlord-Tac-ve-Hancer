@@ -9,13 +9,11 @@ using TaleWorlds.ModuleManager;
 namespace CheatMenu
 {
     /// <summary>
-    /// Başarımların açık olduğu bir kayıt CheatMenu ile yüklenirse kullanıcıyı uyarır.
+    /// Başarımların açık olduğu bir kayıt bu modla yüklenirse kullanıcıyı uyarır.
     /// Başarım kontrolünü ATLATMAZ; yalnızca yanlışlıkla temiz bir kaydı işaretlemeyi önler.
     /// </summary>
     public static class CleanSaveGuard
     {
-        private const string OwnModuleId = "CheatMenu";
-
         private static bool _pending;
         private static bool _isNewGame;
 
@@ -40,17 +38,17 @@ namespace CheatMenu
 
             if (_isNewGame)
             {
-                MenuUI.Info("CheatMenu aktif: bu kampanyada başarımlar kapalı olacak.");
+                MenuUI.Info(ModInfo.DisplayName + " aktif: bu kampanyada başarımlar kapalı olacak.");
                 return;
             }
             if (!IsSaveClean()) return;
 
             InformationManager.ShowInquiry(
                 new InquiryData(
-                    "CheatMenu - Başarım uyarısı",
+                    ModInfo.DisplayName + " - Başarım uyarısı",
                     "Bu kayıt temiz görünüyor (başarımlar açık).\n\n"
-                    + "CheatMenu aktifken KAYDEDERSEN bu kayıtta başarımlar kalıcı olarak kapanır.\n\n"
-                    + "Başarımları korumak istiyorsan kaydetmeden çık ve Launcher'da CheatMenu'yu kapat.",
+                    + ModInfo.DisplayName + " aktifken KAYDEDERSEN bu kayıtta başarımlar kalıcı olarak kapanır.\n\n"
+                    + "Başarımları korumak istiyorsan kaydetmeden çık ve Launcher'da " + ModInfo.DisplayName + " modunu kapat.",
                     true, false, "Anladım", string.Empty, () => { }, null),
                 true, false);
         }
@@ -65,7 +63,7 @@ namespace CheatMenu
             foreach (string entry in campaign.PreviouslyUsedModules)
             {
                 string id = entry.Split(MBSaveLoad.ModuleCodeSeperator)[0].Split(MBSaveLoad.ModuleVersionSeperator)[0];
-                if (id != OwnModuleId && !official.Contains(id)) return false;
+                if (id != ModInfo.Id && !official.Contains(id)) return false;
             }
             return true;
         }

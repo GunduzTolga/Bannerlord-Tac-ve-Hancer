@@ -21,7 +21,7 @@ namespace CheatMenu.Menu
             heroes.AddRange(Lists.LordsAndCompanions(true).OrderBy(h => h.Name.ToString(), StringComparer.CurrentCultureIgnoreCase));
             Picker.Pick("Kahraman editörü", heroes,
                 h => h == Hero.MainHero ? "[Ben] " + h.Name : Lists.HeroLabel(h),
-                ShowHero, ShowRoot, sort: false);
+                ShowHero, ShowEditors, sort: false);
         }
 
         private static void ShowHero(Hero hero)
@@ -88,7 +88,7 @@ namespace CheatMenu.Menu
         private static void ShowRelationPick()
         {
             Picker.Pick("İlişkiler", Lists.LordsAndCompanions(false).Concat(Lists.Notables()),
-                h => Lists.HeroLabel(h) + " [" + Relations.Get(h) + "]", ShowRelation, ShowRoot);
+                h => Lists.HeroLabel(h) + " [" + Relations.Get(h) + "]", ShowRelation, ShowEditors);
         }
 
         private static void ShowRelation(Hero hero)
@@ -109,7 +109,7 @@ namespace CheatMenu.Menu
         // ---- Yerleşim editörü ----
 
         private static void ShowSettlementPick() =>
-            Picker.Pick("Yerleşim editörü", Lists.Settlements(), Lists.SettlementLabel, ShowSettlement, ShowRoot);
+            Picker.Pick("Yerleşim editörü", Lists.Settlements(), Lists.SettlementLabel, ShowSettlement, ShowEditors);
 
         private static void ShowSettlement(Settlement s)
         {
@@ -166,7 +166,7 @@ namespace CheatMenu.Menu
             List<MenuEntry> entries = ItemSpawner.Categories
                 .Select(category => MenuEntry.Submenu(category.Label + "...", () => PickItem(category)))
                 .ToList();
-            ShowCategory("Eşya ekle", entries, ShowItemCategories);
+            ShowCategory("Eşya ekle", entries, ShowItemCategories, back: ShowEditors);
         }
 
         private static void PickItem(ItemSpawner.Category category)

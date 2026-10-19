@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using CheatMenu.Intrigue.Core;
 
 namespace CheatMenu.Tests
 {
@@ -82,6 +84,30 @@ namespace CheatMenu.Tests
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit);
+
+            // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
+            string tricky = "a\tb\nc\\d=e\r";
+            var written = new List<TextRecord>
+            {
+                new TextRecord("one").Add("k", tricky).Add("empty", ""),
+                new TextRecord("two").Add("x", "1"),
+            };
+            List<TextRecord> read = TextRecords.Parse(TextRecords.Write(written));
+            Check("records: count", read.Count == 2);
+            Check("records: escaped round trip", read.Count == 2 && read[0].Get("k") == tricky && read[0].Get("empty") == "");
+            Check("records: second kind", read.Count == 2 && read[1].Kind == "two" && read[1].Get("x") == "1");
+            Check("records: missing field -> null", read.Count == 2 && read[1].Get("nope") == null);
+            Check("records: null -> empty", TextRecords.Parse(null).Count == 0);
+            List<TextRecord> messy = TextRecords.Parse("\n\t=x\nbad\t=\tnoequals\t=y\r\nok\tk=v");
+            Check("records: garbage tolerated", messy.Count == 2 && messy[0].Fields.Count == 0 && messy[1].Get("k") == "v");
+            Check("records: trailing backslash kept", TextRecords.Parse("k\tv=a\\")[0].Get("v") == "a\\");
+
+            // IntrigueState: kayıt testi işareti gidiş-dönüş; bozuk/boş metin boş duruma döner.
+            var state = new IntrigueState { SaveTestMarker = "gün 12" };
+            Check("intrigue: marker round trip", IntrigueState.Parse(state.Write()).SaveTestMarker == "gün 12");
+            Check("intrigue: version written", state.Write().StartsWith("version\tv=" + IntrigueState.CurrentVersion));
+            Check("intrigue: null -> empty", IntrigueState.Parse(null).SaveTestMarker == null);
+            Check("intrigue: garbage -> empty", IntrigueState.Parse("çöp\\x\n\t\t").SaveTestMarker == null);
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;

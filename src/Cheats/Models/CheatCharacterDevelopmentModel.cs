@@ -14,7 +14,7 @@ namespace CheatMenu.Cheats.Models
     public sealed class CheatCharacterDevelopmentModel : CharacterDevelopmentModel
     {
         private const int NoLimitBonus = 1000;
-        private static readonly TextObject NoLimitText = new TextObject("CheatMenu: öğrenme sınırı kaldırıldı", null);
+        private static readonly TextObject NoLimitText = new TextObject(ModInfo.DisplayName + ": öğrenme sınırı kaldırıldı", null);
 
         public override int MaxAttribute => BaseModel.MaxAttribute;
         public override int MaxFocusPerSkill => BaseModel.MaxFocusPerSkill;

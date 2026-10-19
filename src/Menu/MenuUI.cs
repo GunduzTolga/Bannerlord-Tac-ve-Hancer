@@ -142,7 +142,7 @@ namespace CheatMenu.Menu
         public static void Info(string message) => Show(message, YellowColor);
 
         private static void Show(string message, Color color) =>
-            InformationManager.DisplayMessage(new InformationMessage("[CheatMenu] " + message, color));
+            InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] " + message, color));
 
         private static void OnPicked(List<InquiryElement> selected, Action reshow)
         {

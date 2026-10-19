@@ -61,7 +61,7 @@ namespace CheatMenu
         }
 
         public string Format() =>
-            "# CheatMenu ayarlari\n"
+            "# CheatMenu (Tac ve Hancer) ayarlari\n"
             + "FastForwardSpeed=" + Invariant(FastForwardSpeed) + "\n"
             + "SkillXpMultiplier=" + Invariant(SkillXpMultiplier) + "\n"
             + "TroopXpMultiplier=" + Invariant(TroopXpMultiplier) + "\n"

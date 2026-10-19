@@ -12,7 +12,7 @@ namespace CheatMenu.Cheats.Models
     /// <summary>Parti boyutu bonusu: yalnızca oyuncu partisinin asker ve esir sınırı. Diğer üyeler delege edilir.</summary>
     public sealed class CheatPartySizeLimitModel : PartySizeLimitModel
     {
-        private static readonly TextObject BonusText = new TextObject("CheatMenu: parti boyutu bonusu", null);
+        private static readonly TextObject BonusText = new TextObject(ModInfo.DisplayName + ": parti boyutu bonusu", null);
 
         public override int MinimumNumberOfVillagersAtVillagerParty => BaseModel.MinimumNumberOfVillagersAtVillagerParty;
 

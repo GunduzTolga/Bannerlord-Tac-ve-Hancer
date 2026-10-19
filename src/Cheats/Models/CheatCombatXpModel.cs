@@ -12,7 +12,7 @@ namespace CheatMenu.Cheats.Models
     /// </summary>
     public sealed class CheatCombatXpModel : CombatXpModel
     {
-        private static readonly TextObject BonusText = new TextObject("CheatMenu: asker XP çarpanı", null);
+        private static readonly TextObject BonusText = new TextObject(ModInfo.DisplayName + ": asker XP çarpanı", null);
 
         public override float CaptainRadius => BaseModel.CaptainRadius;
 
