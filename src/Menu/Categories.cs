@@ -50,6 +50,7 @@ namespace CheatMenu.Menu
             {
                 MenuEntry.Submenu("Adlandır", ShowRename),
                 MenuEntry.Submenu("Kahraman editörü", ShowHeroEditorPick),
+                MenuEntry.Submenu("Aile editörü", ShowFamilyPick),
                 MenuEntry.Submenu("İlişkiler", ShowRelationPick),
                 MenuEntry.Submenu("Yerleşim editörü", ShowSettlementPick),
                 MenuEntry.Submenu("Eşya ekle", ShowItemCategories),

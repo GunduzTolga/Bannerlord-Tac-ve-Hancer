@@ -54,6 +54,16 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.7 — Aile editörü (yeni)
+- [ ] Insert → Editörler → **Aile editörü**: önce sen, sonra klanın, sonra diğerleri; satırlarda yaş ve eş
+- [ ] Bekâr bir klan üyesi → "Evlendir..." → yalnızca uygun adaylar; seç → oyunun evlilik bildirimi, eş klana geldi
+- [ ] Evli bir kadın → "Gebelik başlat" → klan ekranında hamile; oyunun süresinde doğum
+- [ ] "Çocuk istemiyorlar" açık bir çiftte gebelik olmuyor; P2.6'daki buluşmalarda da gebelik seçeneği yok
+- [ ] Klanındaki bir çocuk → "Bir yaş büyüt" / "Yetişkinlik yaşına getir" → ertesi gün yetişkin, oyunun yetişkinlik bildirimi
+- [ ] "Yaşlanmayı dondur" açık bir kahraman bir yıl sonra aynı yaşta
+- [ ] Başka bir çifti "Boşa" → evlilikle gelen taraf ailesine döndü; kendi eşinde entrika boşanması (sonuçlarıyla)
+- [ ] Kaydet → yükle → "çocuk istemiyorlar" ve dondurma duruyor
+
 ### Eşinin gizli hayatı ve boşanma (yeni, ayar varsayılan açık)
 - [ ] Kişiler sekmesinde eşin listenin sonunda; dosyasında "Eşini araştır", "Boşa..."
 - [ ] Hile ile eşinle ilişkiyi düşür (ör. -30) ve uzun süre ayrı kal; birkaç ay sonra "Eşini araştır" (1.000, 14 gün) →
