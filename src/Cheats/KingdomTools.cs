@@ -112,7 +112,8 @@ namespace CheatMenu.Cheats
         {
             if (FactionManager.IsAtWarAgainstFaction(a, b)) throw new InvalidOperationException(a.Name + " ile " + b.Name + " zaten savaşta");
             DeclareWarAction.ApplyByDefault(a, b);
-            MenuUI.Success(a.Name + " ile " + b.Name + " artık savaşta");
+            bool pactEnded = Bundle.DiplomacyCompat.EndNonAggressionPact(a as Kingdom, b as Kingdom);
+            MenuUI.Success(a.Name + " ile " + b.Name + " artık savaşta" + (pactEnded ? " (aradaki saldırmazlık anlaşması bozuldu)" : ""));
         }
 
         public static void MakePeace(IFaction a, IFaction b)
