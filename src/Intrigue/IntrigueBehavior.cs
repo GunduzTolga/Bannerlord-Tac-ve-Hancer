@@ -36,6 +36,8 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika günlük (eşin)", SpouseLife.DailyTick);
                 MenuUI.SafeRun("Aile editörü (yaşlanma)", Cheats.FamilyEditor.DailyTick);
             });
+            CampaignEvents.WarDeclared.AddNonSerializedListener(this, (a, b, detail) =>
+                MenuUI.SafeRun("Rehine anlaşması (savaş)", () => Hostages.OnWarDeclared(a, b, detail)));
             CampaignEvents.WeeklyTickEvent.AddNonSerializedListener(this, () =>
             {
                 MenuUI.SafeRun("Entrika haftalık (yapay zekâ)", AiIntrigue.Weekly);
@@ -43,6 +45,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (diplomatik kriz)", DiplomaticCrises.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (gece evleri)", NightHouses.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (eşin)", SpouseLife.Weekly);
+                MenuUI.SafeRun("Entrika haftalık (rehineler)", Hostages.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
             });
         }

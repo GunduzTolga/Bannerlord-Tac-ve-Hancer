@@ -150,6 +150,8 @@ namespace CheatMenu.Intrigue
                 Kingdom kingdom = Kingdom.All.FirstOrDefault(k => k.StringId == pair.Key);
                 if (kingdom == null || kingdom.IsEliminated || kingdom == mine || kingdom.Leader == null) continue;
                 if (FactionManager.IsAtWarAgainstFaction(kingdom, mine)) continue;
+                // Rehineyle güvence altındaki barışta savaş meclisi toplanmaz.
+                if (state.HostageDealWith(kingdom.StringId) != null) continue;
                 int wars = Kingdom.All.Count(k => k != kingdom && !k.IsEliminated && FactionManager.IsAtWarAgainstFaction(kingdom, k));
                 if (!CrisisRules.MayProposeWar(pair.Value, kingdom.CurrentTotalStrength, mine.CurrentTotalStrength, wars)) continue;
                 if (state.Roll100() > CrisisRules.WeeklyWarChance(pair.Value)) continue;

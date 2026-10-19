@@ -34,6 +34,11 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Ulak ve görüşme (" + state.Audiences.Count(x => x.Until > SchemeFactors.Today) + " hazır)...", ShowAudiences),
                 MenuEntry.Submenu("Esirleri sorgula (" + Interrogation.Prisoners().Count + ")...", ShowPrisoners),
                 MenuEntry.Submenu("Kur ve sevgililer (" + (state.Courtships.Count + state.Lovers.Count) + ")...", ShowRomance),
+                MenuEntry.Submenu("Rehine anlaşmaları (" + state.Hostages.Count + ")...", () => Picker.Pick("Hangi krallıkla?",
+                    Kingdom.All.Where(k => !k.IsEliminated && k != Clan.PlayerClan.Kingdom && k.Leader != null).ToList(),
+                    k => k.Name + (state.HostageDealWith(k.StringId) != null ? " (anlaşma sürüyor)" : "")
+                        + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
+                    k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
