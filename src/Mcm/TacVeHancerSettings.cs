@@ -86,6 +86,11 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool PlayerCanBeTargeted { get; set; }
 
+        [SettingPropertyBool("Gizli ilişki ve gayrimeşru çocuk sırları", Order = 3, RequireRestart = false,
+            HintText = "Sahnesiz, yalnızca metin. İki taraf da yetişkin olmak zorunda. Kapalıyken casusluk ve sorgu bu sırları bulmaz; bilinenler kalır.")]
+        [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
+        public bool RomanceSecrets { get; set; } = true;
+
         // ---- Harita ----
 
         [SettingPropertyDropdown("İleri sarma hızı", Order = 0, RequireRestart = false,
@@ -164,6 +169,7 @@ namespace CheatMenu.Mcm
             IntrigueDifficulty.SelectedIndex = SchemeMath.Clamp(s.IntrigueDifficulty, 0, DifficultyNames.Length - 1);
             AiIntrigue.SelectedIndex = SchemeMath.Clamp(s.AiIntrigue, 0, AiNames.Length - 1);
             PlayerCanBeTargeted = s.PlayerCanBeTargeted;
+            RomanceSecrets = s.RomanceSecrets;
             FastForward.SelectedIndex = IndexOf(ModSettings.AllowedSpeeds, s.FastForwardSpeed);
             ScreenHotkey.SelectedIndex = s.ScreenHotkey;
             MapButtonPosition.SelectedIndex = s.MapButtonPosition;
@@ -182,6 +188,7 @@ namespace CheatMenu.Mcm
             s.SetIntrigueDifficulty(IntrigueDifficulty.SelectedIndex);
             s.SetAiIntrigue(AiIntrigue.SelectedIndex);
             s.PlayerCanBeTargeted = PlayerCanBeTargeted;
+            s.RomanceSecrets = RomanceSecrets;
             s.SetFastForwardSpeed(At(ModSettings.AllowedSpeeds, FastForward.SelectedIndex));
             s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
             s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);

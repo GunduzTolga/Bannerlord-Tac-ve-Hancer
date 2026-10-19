@@ -147,7 +147,8 @@ namespace CheatMenu.Intrigue
         {
             int today = SchemeFactors.Today;
             Secret secret = SchemeFactors.BestSecret(state, target);
-            if (secret != null) state.Secrets.Remove(secret);
+            if (secret != null)
+                foreach (Secret linked in RomanceSecrets.Linked(state, secret)) state.Secrets.Remove(linked);
             Relate(target, -20);
             state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
             Notify(state, "Şantaj tutmadı: " + target.Name,
@@ -320,23 +321,23 @@ namespace CheatMenu.Intrigue
             spymaster?.AddSkillXp(DefaultSkills.Roguery, SpySuccessXp);
 
             string secretLine;
+            Secret found = null;
             if (!target.IsLord) secretLine = "Sırlar yalnızca lordlarda aranır.";
             else if (scheme.Roll100() > SchemeMath.SecretChance(SchemeFactors.Roguery(spymaster), scheme.Phase))
                 secretLine = "Bir sır bulunamadı (belki vardır, belki yoktur).";
             else
             {
-                SecretKind? kind = FindSecret(state, scheme, target);
-                if (kind == null) secretLine = "Görünüşe göre temiz biri: kayda değer bir sırrı yok.";
+                found = FindSecret(state, scheme, target);
+                if (found == null) secretLine = "Görünüşe göre temiz biri: kayda değer bir sırrı yok.";
                 else
                 {
-                    state.Secrets.Add(new Secret { TargetId = target.StringId, Kind = kind.Value, Day = today });
-                    secretLine = "SIR BULUNDU: " + SecretRules.Name(kind.Value) + " - " + SecretRules.Description(kind.Value)
-                        + "\n(Entrika ekranı > Kişiler'den ifşa edebilir ya da şantaja çevirebilirsin.)";
+                    RomanceSecrets.Record(state, found);
+                    secretLine = SecretFoundLine(found) + "\n(Entrika ekranı > Kişiler'den ifşa edebilir ya da şantaja çevirebilirsin.)";
                 }
             }
 
             Notify(state, "Casusluk raporu: " + target.Name, ReportText(report) + "\n\n" + secretLine, target,
-                secretLine.StartsWith("SIR BULUNDU") ? CardImages.SecretFound : CardImages.Spy);
+                found == null ? CardImages.Spy : SecretImage(found));
             state.AddLog(today, "Casusluk raporu: " + target.Name);
         }
 
@@ -373,14 +374,21 @@ namespace CheatMenu.Intrigue
             + "Kişilik: " + report.Traits;
 
         /// <summary>Lordun gerçek kişiliğinden ve durumundan türeyebilecek, henüz bilinmeyen bir sır (tasarım 6.2).</summary>
-        private static SecretKind? FindSecret(IntrigueState state, Scheme scheme, Hero target) =>
+        private static Secret FindSecret(IntrigueState state, Scheme scheme, Hero target) =>
             FindSecret(state, target, scheme.Roll100, scheme.Pick);
 
+        /// <summary>"SIR BULUNDU: ad - isimli açıklama".</summary>
+        public static string SecretFoundLine(Secret secret) =>
+            "SIR BULUNDU: " + SecretRules.Name(secret.Kind) + " - " + RomanceSecrets.Describe(secret);
+
+        public static string SecretImage(Secret secret) => SecretRules.IsRomantic(secret.Kind) ? CardImages.SecretAffair : CardImages.SecretFound;
+
         /// <summary>
-        /// Hedefin gerçek kişiliğinden ve durumundan çıkan, henüz bilinmeyen bir sır; yoksa null.
+        /// Hedefin gerçek kişiliğinden ve durumundan çıkan, henüz bilinmeyen bir sır (kaydedilmemiş); yoksa null.
         /// Zarlar çağıranın tohumundan (entrika ya da sorgu): kaydı yükleyip tekrar denemek sonucu değiştirmez.
+        /// Kaydetmek için RomanceSecrets.Record (romantik sırlar iki tarafa da yazılır).
         /// </summary>
-        public static SecretKind? FindSecret(IntrigueState state, Hero target, Func<int> roll100, Func<int, int> pick)
+        public static Secret FindSecret(IntrigueState state, Hero target, Func<int> roll100, Func<int, int> pick)
         {
             var known = new HashSet<SecretKind>(state.Secrets.Where(s => s.TargetId == target.StringId).Select(s => s.Kind));
             Hero ruler = target.Clan?.Kingdom?.Leader;
@@ -397,10 +405,12 @@ namespace CheatMenu.Intrigue
             Consider(SecretKind.Cowardice, target.GetTraitLevel(DefaultTraits.Valor) <= -1);
             Consider(SecretKind.Debt, target.Gold < SecretRules.DebtGoldThreshold);
             Consider(SecretKind.Smuggling, target.GetSkillValue(DefaultSkills.Roguery) >= SecretRules.SmugglingRoguery);
-            if (target.Spouse != null && !known.Contains(SecretKind.Affair) && roll100() <= SecretRules.AffairChance)
-                candidates.Add(SecretKind.Affair);
+            RomanceSecrets.Consider(state, target, known, roll100, candidates);
+            if (candidates.Count == 0) return null;
 
-            return candidates.Count == 0 ? (SecretKind?)null : candidates[pick(candidates.Count)];
+            var secret = new Secret { TargetId = target.StringId, Kind = candidates[pick(candidates.Count)], Day = SchemeFactors.Today };
+            RomanceSecrets.Fill(state, secret, target, pick);
+            return secret;
         }
 
         // ---- Sır ifşası ----
@@ -413,7 +423,12 @@ namespace CheatMenu.Intrigue
 
             int penalty = SecretRules.ExposurePenalty(secret.Kind);
             var parts = new List<string>();
-            if (secret.Kind == SecretKind.Affair)
+            bool romance = SecretRules.IsRomantic(secret.Kind) && secret.OtherId != null;
+            if (romance)
+            {
+                parts.AddRange(RomanceSecrets.ExposeEffects(secret));
+            }
+            else if (secret.Kind == SecretKind.Affair)
             {
                 Hero spouse = target.Spouse;
                 if (spouse != null && spouse.IsAlive)
@@ -453,15 +468,18 @@ namespace CheatMenu.Intrigue
                 }
             }
 
-            secret.Exposed = true;
+            foreach (Secret linked in RomanceSecrets.Linked(state, secret)) linked.Exposed = true;
             if (state.Roll100() <= SecretRules.SourceTracedChance)
             {
                 Relate(target, -SecretRules.SourceTracedPenalty);
-                parts.Add("kaynağın sen olduğun anlaşıldı: seninle -" + SecretRules.SourceTracedPenalty);
+                Hero other = romance ? Hero.Find(secret.OtherId) : null;
+                if (other != null && other.IsAlive) Relate(other, -SecretRules.SourceTracedPenalty);
+                parts.Add("kaynağın sen olduğun anlaşıldı: " + (other != null ? "ikisiyle de" : "seninle") + " -" + SecretRules.SourceTracedPenalty);
             }
-            Notify(state, "Sır ifşa edildi: " + target.Name,
-                SecretRules.Name(secret.Kind) + " herkesin ağzında.\n\nSonuç: " + (parts.Count > 0 ? string.Join(", ", parts) : "kimse umursamadı") + ".",
-                target, CardImages.Exposed);
+            Notify(state, (romance ? "Skandal: " : "Sır ifşa edildi: ") + target.Name,
+                (romance ? RomanceSecrets.Describe(secret) + " Artık bütün saray konuşuyor." : SecretRules.Name(secret.Kind) + " herkesin ağzında.")
+                + "\n\nSonuç: " + (parts.Count > 0 ? string.Join(", ", parts) : "kimse umursamadı") + ".",
+                target, romance ? CardImages.Scandal : CardImages.Exposed);
             state.AddLog(SchemeFactors.Today, "Sır ifşa edildi: " + target.Name + " (" + SecretRules.Name(secret.Kind) + ")");
         }
 
@@ -477,7 +495,7 @@ namespace CheatMenu.Intrigue
             ChangeRelationAction.ApplyPlayerRelation(hero, delta, false, false);
         }
 
-        private static void RelateBetween(Hero a, Hero b, int delta) =>
+        internal static void RelateBetween(Hero a, Hero b, int delta) =>
             ChangeRelationAction.ApplyRelationChangeBetweenHeroes(a, b, delta, false);
 
         private static IEnumerable<Hero> Adults(Clan clan) =>

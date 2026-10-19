@@ -36,6 +36,8 @@ namespace CheatMenu.Menu
                     SchemeMath.AiSettingName),
                 MenuEntry.Toggle("Yapay zekâ senin kendine de suikast kurabilsin", () => Rules.Settings.PlayerCanBeTargeted,
                     v => Rules.Change(s => s.PlayerCanBeTargeted = v, null)),
+                MenuEntry.Toggle("Gizli ilişki ve gayrimeşru çocuk sırları", () => Rules.Settings.RomanceSecrets,
+                    v => Rules.Change(s => s.RomanceSecrets = v, null)),
                 Choice("Entrika ekranı kısayolu", Indexes(ModSettings.ScreenHotkeyNames), () => Rules.Settings.ScreenHotkey,
                     v => Rules.Change(s => s.SetScreenHotkey(v), "Entrika ekranı kısayolu: " + ModSettings.ScreenHotkeyNames[v]),
                     v => ModSettings.ScreenHotkeyNames[v]),

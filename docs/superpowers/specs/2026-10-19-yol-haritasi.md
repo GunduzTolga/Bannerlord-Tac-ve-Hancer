@@ -1,8 +1,8 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
-**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0, P1, P2.1 (esir sorgulama), P2.2 (haberci + saray istihbaratı) ve P2.3 (casus başı görevleri) kodlandı**
-(oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`, `2026-10-19-p2-haberci-saray.md`,
-`2026-10-19-p2-casus-basi-gorevleri.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0, P1, P2.1 (esir sorgulama), P2.2 (haberci + saray istihbaratı), P2.3 (casus başı görevleri) ve P2.4 (gizli ilişki
+ve gayrimeşru çocuk sırları) kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
+`2026-10-19-p2-haberci-saray.md`, `2026-10-19-p2-casus-basi-gorevleri.md`, `2026-10-19-p2-gizli-iliski.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)
@@ -87,11 +87,11 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | 1 ✅ | **Esir sorgulama** (kodlandı) | Elindeki esir lordlar boşa duruyor; sır altyapısını doğrudan besler | Sorgu: rapor, sır ve efendisi hakkında bilgi. Baskı Merhamet ve ilişki bedeli; anlaşma esiri bırakır. Sahne yok, metin var. |
 | 2 ✅ | **Haberci / mektup** (kodlandı; saray istihbaratı; ulakla uzaktan görüşme + hediye; lord kazanmak oyunun ikna sistemiyle, bilgi bonus verir) | Koz kullanmak için lordu haritada kovalamak gereksiz zahmet | Uzaktan koz harcama ve tehdit; gecikmeli cevap (birkaç gün) |
 | 3 ✅ | **Casus başı görev modu** (kodlandı) | Karşı casusluğa oyuncu kararı katar | Üç mod: karşı casusluk (sezme ↑), muhalefeti izle (krallığındaki hoşnutsuzları raporlar), söylenti yay (seçili lordun hükümdarla ilişkisi yavaşça ↓) |
-| 4 | **Gizli ilişki ve gayrimeşru çocuk sırları** (sahnesiz) | Şantajın en doğal yakıtı | İki yeni sır türü; ifşa, şantaj, meşrulaştırma kararı. İki tarafın da 18+ olması kodda zorunlu. |
+| 4 ✅ | **Gizli ilişki ve gayrimeşru çocuk sırları** (kodlandı; sahnesiz) | Şantajın en doğal yakıtı | Sevgili gerçek bir lord, sır iki tarafta; gayrimeşru çocuk; ifşa, şantaj, aldatılan eşe söyle. İki tarafın da 18+ olması kodda zorunlu ve testli. Meşrulaştırma 8. sıraya (aile ağacına dokunmamak için). |
 | 5 | **Ağ ifşasından diplomatik kriz** | Gölge ağına gerçek bir risk katmanı | Ağ çökertilirse o krallıkla ilişki düşer; ağır durumda savaş baskısı |
 | 6 | **Baştan çıkarma entrikası** (sahnesiz) | CK3'ün temel entrikalarından; ilişki, sır ve koz üretir | Aşamalar: hediye, şiir, gizli buluşma. Sonuç: ilişki ↑ ya da gizli ilişki sırrı. Yakalanırsa skandal. Yalnızca yetişkinler. |
 | 7 | **Aile editörü ekleri** | Rakip editörlerde var, bizde eksik | Evlendir/boşa, gebeliği başlat/kapat, çocuğu büyüt, yaşlanmayı dondur (Hileler/Editörler'de) |
-| 8 | **Varis seçimi ve meşrulaştırma** | Vanilla'da varis kontrolsüz; hanedan teması | Klan varisini seç; gayrimeşru çocuğu meşrulaştır (etki ve Onur bedeli) |
+| 8 | **Varis seçimi ve meşrulaştırma** | Vanilla'da varis kontrolsüz; hanedan teması | Klan varisini seç; gayrimeşru çocuğu meşrulaştır (etki ve Onur bedeli). P2.4'ten devralındı. |
 | 9 | **Saray günü** | Barış zamanı içeriği ve olay kartlarının doğal yeri | Şehir menüsünden dilekçeler ve yargılamalar; kararlar kişilik, sadakat, güvenlik ve altını etkiler |
 | 10 | **Rehine anlaşmaları** | Aile, diplomasi ve kaçırmanın kesişimi | Barış ya da ittifak teminatı. Esir değil "misafir" olarak tutulur (Harmony gerekmez). |
 

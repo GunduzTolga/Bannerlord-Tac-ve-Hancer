@@ -237,22 +237,30 @@ namespace CheatMenu.Menu
             IntrigueState state = SchemeEngine.State;
             Hero target = Hero.Find(report.TargetId);
             var entries = new List<MenuEntry>();
-            foreach (Secret secret in state.Secrets.Where(s => s.TargetId == report.TargetId))
+            foreach (Secret secret in state.Secrets.Where(s => s.TargetId == report.TargetId).ToList())
             {
                 string name = SecretRules.Name(secret.Kind);
-                bool blackmailRunning = state.FindScheme(report.TargetId)?.Kind == SchemeKind.Blackmail;
+                string described = RomanceSecrets.Describe(secret);
+                bool blackmailRunning = state.FindScheme(report.TargetId)?.Kind == SchemeKind.Blackmail || RomanceSecrets.BlackmailRunning(state, secret);
                 if (!secret.Exposed && blackmailRunning)
                 {
                     entries.Add(MenuEntry.Simple("İfşa et: " + name + " (şantaj sürerken olmaz)", () => MenuUI.Error("Önce şantajı bitir ya da iptal et")));
                     continue;
                 }
                 entries.Add(secret.Exposed
-                    ? MenuEntry.Simple("(ifşa edildi) " + name, () => MenuUI.Info(name + " zaten herkesin ağzında"))
+                    ? MenuEntry.Simple((secret.Whispered ? "(eşine söylendi) " : "(ifşa edildi) ") + name, () => MenuUI.Info(described))
                     : MenuEntry.Submenu("İfşa et: " + name + "...", () => MenuUI.Confirm("Sır ifşası: " + report.TargetName,
-                        SecretRules.Description(secret.Kind) + "\n\nİfşa edilirse hükümdarıyla (gizli ilişkide eşiyle) arası açılır. "
-                        + "%" + SecretRules.SourceTracedChance + " ihtimalle kaynağın sen olduğun anlaşılır (seninle ilişkisi -"
+                        described + "\n\n" + RomanceSecrets.ExposePreview(secret) + " "
+                        + "%" + SecretRules.SourceTracedChance + " ihtimalle kaynağın sen olduğun anlaşılır (ilişki -"
                         + SecretRules.SourceTracedPenalty + "). İfşa edilsin mi?",
                         () => SchemeOutcomes.ExposeSecret(state, secret),
+                        () => ShowReport(report))));
+                Hero betrayed = secret.Exposed ? null : RomanceSecrets.Betrayed(secret);
+                if (betrayed != null && RomanceSecrets.WhisperBlocked(state, secret) == null)
+                    entries.Add(MenuEntry.Submenu("Eşine söyle (" + betrayed.Name + "): " + name + "...", () => MenuUI.Confirm("Eşine söyle: " + betrayed.Name,
+                        described + "\n\nSaray yerine yalnızca aldatılan eşe söylenir: aldatanla ve sevgiliyle arası bozulur, sana minnettar kalır (+"
+                        + SecretRules.WhisperGratitude + "). Kayınlar ve hükümdar duymaz. Söylensin mi?",
+                        () => RomanceSecrets.Whisper(state, secret),
                         () => ShowReport(report))));
             }
             if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Blackmail) == null)
