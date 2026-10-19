@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Olay kartı seçeneği (ViewModel: CardOptionVM): metin; seçilemiyorsa altında kırmızı nedeni. -->
+<Prefab>
+  <Window>
+    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="66" MarginBottom="8" Brush="Tvh.Option" Command.Click="ExecuteChoose" IsEnabled="@IsEnabled" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+      <Children>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="4" Sprite="BlankWhiteSquare_9" Color="#C9A45EFF" />
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" MarginLeft="18" MarginRight="12" MarginTop="2" Brush="Tvh.Text.Option" Text="@Label" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" VerticalAlignment="Bottom" MarginLeft="18" MarginRight="12" MarginBottom="3" Brush="Tvh.Text.Bad" Text="@Hint" IsVisible="@HasHint" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

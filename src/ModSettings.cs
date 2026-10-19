@@ -17,6 +17,13 @@ namespace CheatMenu
         public const int DefaultSpeed = 4;
         public const int MaxPartyLimitBonus = 100;
 
+        /// <summary>Haritadaki "Entrika" düğmesinin yeri: 0 gizli, 1 sol üst, 2 üst orta, 3 sağ üst.</summary>
+        public static readonly string[] MapButtonPositionNames = { "Gizli", "Sol üst", "Üst orta", "Sağ üst" };
+        public const int DefaultMapButtonPosition = 2;
+        /// <summary>Entrika ekranı kısayolu (sıra numarasıyla saklanır; 0 = yok). Oyunun kendi harita tuşlarıyla çakışmayanlar.</summary>
+        public static readonly string[] ScreenHotkeyNames = { "Yok", "Home", "End", "PageUp", "PageDown", "U", "Y", "O", "F9", "F10" };
+        public const int DefaultScreenHotkey = 1;
+
         public int FastForwardSpeed { get; private set; } = DefaultSpeed;
         public int SkillXpMultiplier { get; private set; } = 1;
         public int TroopXpMultiplier { get; private set; } = 1;
@@ -30,6 +37,10 @@ namespace CheatMenu
         public int AiIntrigue { get; private set; } = 1;
         /// <summary>Yapay zekâ oyuncunun kendisine de suikast/kaçırma kurabilir mi (varsayılan kapalı).</summary>
         public bool PlayerCanBeTargeted { get; set; }
+        public int MapButtonPosition { get; private set; } = DefaultMapButtonPosition;
+        public int ScreenHotkey { get; private set; } = DefaultScreenHotkey;
+        /// <summary>Entrika olayları resimli kartla mı (true) yoksa oyunun düz seçim penceresiyle mi sorulsun.</summary>
+        public bool EventCards { get; set; } = true;
 
         public void SetFastForwardSpeed(int speed) => FastForwardSpeed = Allowed(AllowedSpeeds, speed, DefaultSpeed);
         public void SetSkillXpMultiplier(int value) => SkillXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
@@ -38,6 +49,9 @@ namespace CheatMenu
         public void SetIntrigueDifficulty(int value) => IntrigueDifficulty = Allowed(AllowedIntrigueDifficulties, value, 1);
         public void SetAiIntrigue(int value) => AiIntrigue = Allowed(AllowedIntrigueDifficulties, value, 1);
         public void SetPartyLimitBonus(int value) => PartyLimitBonus = value >= 0 && value <= MaxPartyLimitBonus ? value : 0;
+        public void SetMapButtonPosition(int value) =>
+            MapButtonPosition = value >= 0 && value < MapButtonPositionNames.Length ? value : DefaultMapButtonPosition;
+        public void SetScreenHotkey(int value) => ScreenHotkey = value >= 0 && value < ScreenHotkeyNames.Length ? value : DefaultScreenHotkey;
 
         /// <summary>Bilinmeyen anahtarlar, yorumlar (#) ve bozuk satırlar yok sayılır.</summary>
         public static ModSettings Parse(string text)
@@ -67,6 +81,9 @@ namespace CheatMenu
                     case "IntrigueDifficulty": if (isNumber) settings.SetIntrigueDifficulty(number); break;
                     case "AiIntrigue": if (isNumber) settings.SetAiIntrigue(number); break;
                     case "PlayerCanBeTargeted": settings.PlayerCanBeTargeted = IsTrue(value); break;
+                    case "MapButtonPosition": if (isNumber) settings.SetMapButtonPosition(number); break;
+                    case "ScreenHotkey": if (isNumber) settings.SetScreenHotkey(number); break;
+                    case "EventCards": settings.EventCards = IsTrue(value); break;
                 }
             }
             return settings;
@@ -84,7 +101,10 @@ namespace CheatMenu
             + "NoPartyLimit=" + (NoPartyLimit ? "1" : "0") + "\n"
             + "IntrigueDifficulty=" + Invariant(IntrigueDifficulty) + "\n"
             + "AiIntrigue=" + Invariant(AiIntrigue) + "\n"
-            + "PlayerCanBeTargeted=" + (PlayerCanBeTargeted ? "1" : "0") + "\n";
+            + "PlayerCanBeTargeted=" + (PlayerCanBeTargeted ? "1" : "0") + "\n"
+            + "MapButtonPosition=" + Invariant(MapButtonPosition) + "\n"
+            + "ScreenHotkey=" + Invariant(ScreenHotkey) + "\n"
+            + "EventCards=" + (EventCards ? "1" : "0") + "\n";
 
         private static int Allowed(int[] allowed, int value, int fallback) =>
             Array.IndexOf(allowed, value) >= 0 ? value : fallback;

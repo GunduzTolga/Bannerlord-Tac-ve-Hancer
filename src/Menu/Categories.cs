@@ -21,7 +21,8 @@ namespace CheatMenu.Menu
         {
             MenuUI.ShowList(ModInfo.DisplayName.ToUpperInvariant(), new List<MenuEntry>
             {
-                MenuEntry.Submenu("Entrika", ShowIntrigue),
+                MenuEntry.Submenu("Entrika ekranı", () => UI.IntrigueScreen.Open()),
+                MenuEntry.Submenu("Entrika (liste menüsü)", ShowIntrigue),
                 MenuEntry.Submenu("Hileler", ShowCheats),
                 MenuEntry.Submenu("Editörler", ShowEditors),
                 MenuEntry.Submenu("Klan & krallık", ShowPolitics),

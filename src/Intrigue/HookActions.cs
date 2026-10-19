@@ -10,7 +10,7 @@ using TaleWorlds.CampaignSystem.Roster;
 namespace CheatMenu.Intrigue
 {
     /// <summary>
-    /// Kozun kullanımları (tasarım 8.1). Hem Entrika > Kozlar menüsü hem lord diyaloğu aynı listeyi kullanır.
+    /// Kozun kullanımları (tasarım 8.1). Entrika ekranındaki kişi dosyası, Insert menüsündeki Kozlar ve lord diyaloğu aynı listeyi kullanır.
     /// Bırakma dışındaki her talep kozu harcar ve hedefle ilişkiyi düşürür.
     /// </summary>
     public static class HookActions
@@ -116,14 +116,14 @@ namespace CheatMenu.Intrigue
                 default:
                     SchemeOutcomes.Relate(target, 5);
                     state.AddLog(today, "Koz bırakıldı: " + target.Name);
-                    SchemeOutcomes.Notify(state, "Koz bırakıldı: " + target.Name, target.Name + " sana minnettar. İlişki +5.", target);
+                    SchemeOutcomes.Notify(state, "Koz bırakıldı: " + target.Name, target.Name + " sana minnettar. İlişki +5.", target, CardImages.HookUsed);
                     return;
             }
 
             SchemeOutcomes.Relate(target, -SchemeMath.HookUseRelationPenalty);
             state.AddLog(today, "Koz kullanıldı (" + target.Name + "): " + result);
             SchemeOutcomes.Notify(state, "Koz kullanıldı: " + target.Name,
-                result + ".\n\n" + target.Name + " bunu unutmayacak: ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target);
+                result + ".\n\n" + target.Name + " bunu unutmayacak: ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target, CardImages.HookUsed);
         }
 
         private static int GoldDemand(Hero target) =>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CheatMenu.Intrigue.Core;
 
 namespace CheatMenu.Tests
@@ -77,6 +78,14 @@ namespace CheatMenu.Tests
             Check("settings: ai intrigue default few", ModSettings.Parse("").AiIntrigue == SchemeMath.AiFew);
             Check("settings: ai intrigue off", ModSettings.Parse("AiIntrigue=0").AiIntrigue == SchemeMath.AiOff);
             Check("settings: player targeted default off", !ModSettings.Parse("").PlayerCanBeTargeted);
+            Check("settings: map button default top center", ModSettings.Parse("").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
+            Check("settings: map button hidden", ModSettings.Parse("MapButtonPosition=0").MapButtonPosition == 0);
+            Check("settings: map button 9 -> default", ModSettings.Parse("MapButtonPosition=9").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
+            Check("settings: hotkey default Home", ModSettings.ScreenHotkeyNames[ModSettings.Parse("").ScreenHotkey] == "Home");
+            Check("settings: hotkey none", ModSettings.Parse("ScreenHotkey=0").ScreenHotkey == 0);
+            Check("settings: hotkey 99 -> default", ModSettings.Parse("ScreenHotkey=99").ScreenHotkey == ModSettings.DefaultScreenHotkey);
+            Check("settings: event cards default on", ModSettings.Parse("").EventCards);
+            Check("settings: event cards off", !ModSettings.Parse("EventCards=0").EventCards);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -89,11 +98,15 @@ namespace CheatMenu.Tests
             full.SetIntrigueDifficulty(0);
             full.SetAiIntrigue(2);
             full.PlayerCanBeTargeted = true;
+            full.SetMapButtonPosition(3);
+            full.SetScreenHotkey(5);
+            full.EventCards = false;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
-                && back.AiIntrigue == 2 && back.PlayerCanBeTargeted);
+                && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && back.MapButtonPosition == 3 && back.ScreenHotkey == 5
+                && !back.EventCards);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -123,6 +136,7 @@ namespace CheatMenu.Tests
             IntrigueE2MathTests();
             IntrigueStateTests();
             TurkishSuffixTests();
+            CardImageTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -294,7 +308,8 @@ namespace CheatMenu.Tests
             state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true });
             state.CooldownUntil["lord_2"] = 200;
             state.AlertUntil["lord_3"] = 300;
-            state.Notices.Add(new Notice { Title = "Başlık", Text = "satır 1\nsatır 2", HeroId = "lord_1_1" });
+            state.Notices.Add(new Notice { Title = "Başlık", Text = "satır 1\nsatır 2", HeroId = "lord_1_1", Image = "sonuc_ifsa" });
+            state.Notices.Add(new Notice { Title = "Resimsiz", Text = "t" });
             state.LiegeDemand = new LiegeDemand { KingdomId = "vlandia", VictimName = "X", Gold = 10000, Influence = 100 };
             state.AddLog(12, "olay");
             state.NextPlotId = 6;
@@ -320,7 +335,9 @@ namespace CheatMenu.Tests
             Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
             Check("state: secret", back.Secrets.Count == 1 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed);
             Check("state: cooldown/alert", back.CooldownUntil["lord_2"] == 200 && back.AlertUntil["lord_3"] == 300);
-            Check("state: notice", back.Notices.Count == 1 && back.Notices[0].Text == "satır 1\nsatır 2" && back.Notices[0].HeroId == "lord_1_1");
+            Check("state: notice", back.Notices.Count == 2 && back.Notices[0].Text == "satır 1\nsatır 2" && back.Notices[0].HeroId == "lord_1_1");
+            Check("state: notice image", back.Notices.Count == 2 && back.Notices[0].Image == "sonuc_ifsa" && back.Notices[1].Image == null
+                && back.Notices[1].HeroId == null);
             Check("state: liege", back.LiegeDemand != null && back.LiegeDemand.Gold == 10000 && back.LiegeDemand.KingdomId == "vlandia");
             Check("state: log", back.Log.Count == 1 && back.Log[0].Text == "olay");
             Check("state: hook", back.Hooks.Count == 1 && back.ActiveHook("lord_4", 103) != null && back.ActiveHook("lord_4", 104) == null);
@@ -337,8 +354,9 @@ namespace CheatMenu.Tests
             Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3")
                 && back.Hooks.Count == 0 && back.FeudUntil.ContainsKey("lord_6"));
 
-            for (int i = 0; i < 30; i++) back.AddLog(i, "e" + i);
-            Check("state: log capped", back.Log.Count == IntrigueState.MaxLogEntries && back.Log[back.Log.Count - 1].Text == "e29");
+            int logged = IntrigueState.MaxLogEntries + 10;
+            for (int i = 0; i < logged; i++) back.AddLog(i, "e" + i);
+            Check("state: log capped", back.Log.Count == IntrigueState.MaxLogEntries && back.Log[back.Log.Count - 1].Text == "e" + (logged - 1));
 
             IntrigueState bad = IntrigueState.Parse("scheme\tkind=9\ttarget=x\nscheme\tkind=2\nsecret\tkind=77\ttarget=y\nmeta\tnext=-5");
             Check("state: bad records skipped", bad.Schemes.Count == 0 && bad.Secrets.Count == 0 && bad.NextSchemeId == 1);
@@ -372,6 +390,41 @@ namespace CheatMenu.Tests
         {
             inputs.CompletedPhases = phases;
             return inputs;
+        }
+
+        /// <summary>Olay kartı resim adları: benzersiz, dosya adına uygun ve docs/gorseller/olay-kartlari.md ile aynı liste.</summary>
+        private static void CardImageTests()
+        {
+            var names = new List<string>(CardImages.All());
+            Check("images: unique", new HashSet<string>(names).Count == names.Count);
+            Check("images: file-safe names", names.TrueForAll(n => n.Length > 0 && n.ToCharArray().All(c => (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')));
+            Check("images: every event has an image", Enumerable.Range(1, 10).All(id => CardImages.ForEvent(id) != null));
+            Check("images: unknown event -> null", CardImages.ForEvent(99) == null);
+            Check("images: kind mapping", CardImages.ForKind(SchemeKind.Kidnap) == CardImages.Kidnap && CardImages.ForKind(SchemeKind.Spy) == CardImages.Spy);
+            Check("images: method mapping", CardImages.ForMurderMethod(SchemeMethod.Poison) == CardImages.MurderPoison
+                && CardImages.ForMurderMethod(SchemeMethod.None) == CardImages.MurderDagger);
+
+            string doc = FindRepoFile(System.IO.Path.Combine("docs", "gorseller", "olay-kartlari.md"));
+            if (doc == null)
+            {
+                Console.WriteLine("SKIP images: docs list (file not found)");
+                return;
+            }
+            string text = System.IO.File.ReadAllText(doc);
+            List<string> documented = System.Text.RegularExpressions.Regex.Matches(text, "`([a-z0-9_]+)\\.png`")
+                .Cast<System.Text.RegularExpressions.Match>().Select(m => m.Groups[1].Value).Distinct().ToList();
+            Check("images: code names are documented", names.TrueForAll(documented.Contains));
+            Check("images: documented names are used", documented.TrueForAll(names.Contains));
+        }
+
+        private static string FindRepoFile(string relative)
+        {
+            for (var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)
+            {
+                string path = System.IO.Path.Combine(dir.FullName, relative);
+                if (System.IO.File.Exists(path)) return path;
+            }
+            return null;
         }
 
         private static void CheckChance(string label, int actual, int expected) =>

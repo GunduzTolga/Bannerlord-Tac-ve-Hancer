@@ -36,10 +36,19 @@ namespace CheatMenu.Menu
                     SchemeMath.AiSettingName),
                 MenuEntry.Toggle("Yapay zekâ senin kendine de suikast kurabilsin", () => Rules.Settings.PlayerCanBeTargeted,
                     v => Rules.Change(s => s.PlayerCanBeTargeted = v, null)),
+                Choice("Entrika ekranı kısayolu", Indexes(ModSettings.ScreenHotkeyNames), () => Rules.Settings.ScreenHotkey,
+                    v => Rules.Change(s => s.SetScreenHotkey(v), "Entrika ekranı kısayolu: " + ModSettings.ScreenHotkeyNames[v]),
+                    v => ModSettings.ScreenHotkeyNames[v]),
+                Choice("Haritadaki Entrika düğmesi", Indexes(ModSettings.MapButtonPositionNames), () => Rules.Settings.MapButtonPosition,
+                    v => Rules.Change(s => s.SetMapButtonPosition(v), "Entrika düğmesi: " + ModSettings.MapButtonPositionNames[v]),
+                    v => ModSettings.MapButtonPositionNames[v]),
+                MenuEntry.Toggle("Resimli olay kartları", () => Rules.Settings.EventCards, v => Rules.Change(s => s.EventCards = v, null)),
             }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. Aynı ayarlar açıklamalarıyla "
                 + "MCM'de de var: Esc > Mod Seçenekleri > Taç ve Hançer. "
                 + "Parti sayısı sınırı = klanının aynı anda kurabileceği parti sayısı (kaldırma açıkken ekleme yok sayılır).");
         }
+
+        private static int[] Indexes(string[] names) => Enumerable.Range(0, names.Length).ToArray();
 
         private static MenuEntry Choice(string name, int[] options, Func<int> current, Action<int> set, Func<int, string> format) =>
             MenuEntry.Submenu(name + ": " + format(current()), () => ShowChoice(name, options, current, set, format));

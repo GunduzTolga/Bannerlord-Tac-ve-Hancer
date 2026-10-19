@@ -4,6 +4,7 @@ Son güncelleme: 19 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna 
 Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye göre asker ekleme**, **yoldaş sınırını kaldır**,
 **parti sayısı sınırı**, **Entrika E0, E1 ve E2** (casus başı, casusluk, sırlar, suikast, şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları) kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
+**P1:** Entrika ekranı (Gauntlet), resimli olay kartları ve haritadaki Entrika düğmesi kodlandı. Oyunda ilk kez denenecek; ekran görüntüsü çok işe yarar.
 
 > ⚠️ Telefondan kod yazılıp GitHub'a gönderilebilir, ama **derleyip oyuna kurmak bilgisayar ister**
 > (Visual Studio + oyunun DLL'leri). Telefonda yapılanlar, bilgisayarda `build.ps1` çalışınca oyuna gelir.
@@ -18,6 +19,29 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Ana menüde kırmızı "başlatılamayan bağımlılık" uyarısı **yok**
 - [ ] **Esc → Mod Seçenekleri → Taç ve Hançer** açılıyor: Kurallar, Entrika, Harita grupları; eski ayarların (CheatMenu.txt) değerleri gelmiş
 - [ ] MCM'de bir ayarı değiştir → Insert → Kurallar'da da değişmiş; Kurallar'da değiştir → MCM'de de değişmiş
+
+### P1 — Entrika ekranı, olay kartları, harita düğmesi (yeni; en çok ekran görüntüsü lazım)
+- [ ] Ana menüde açılış mesajı: "Insert: menü, Home: entrika ekranı"
+- [ ] Haritanın üst ortasında **ENTRİKA** düğmesi var; tıklayınca ekran açılıyor ve oyun duruyor
+- [ ] **Home** ekranı açıp kapatıyor; **Esc** ve **Kapat** kapatıyor; Insert → **Entrika ekranı** da açıyor
+- [ ] Görünüm: koyu pencere, altın kenarlık, Türkçe harfler düzgün, yazılar okunur, taşan/üst üste binen yazı yok (ekran görüntüsü at)
+- [ ] Sol sütun: casus başının **portresi**, Roguery, durum, sınırlar; **Değiştir** ile seçim listesi açılıyor
+- [ ] Sekmeler tıklanınca değişiyor: Süren entrikalar, Yeni entrika, Kişiler, Gölge ağları, Sana karşı, Kronik
+- [ ] Yeni entrika: tür ve filtre düğmeleri, sayfalar; bir hedef seç → sağda özet → **Başlat** → altın düştü, "Süren entrikalar"a geçti
+- [ ] Süren entrika kartı: portre, aşama çubuğu (en az aşama çizgisiyle), kalan gün, başarı/yakalanma; **Harekete geç** → rüşvet kartı; **İptal et** → onay
+- [ ] Kişiler: rapor/sır/koz olan herkes; dosyada rapor, **İfşa et**, koz düğmeleri, **Entrika başlat** (Yeni entrika'yı o hedefle açar)
+- [ ] Gölge ağları ve Sana karşı sekmeleri; karşı hamle düğmeleri çalışıyor
+- [ ] Kronik: olaylar en yeni üstte; **Dosyaya aktar** → Belgeler\Mount and Blade II Bannerlord\Configs\TacVeHancer\Kronik_….txt
+- [ ] Olaylar, kararlar ve sonuçlar artık **resimli kart**: resim yoksa kişinin portresi; seçenekler çalışıyor; bildirimler Esc ile de kapanıyor
+- [ ] Modun `Images` klasörüne bir resim koy (ör. `olay_rusvetci_hizmetkar.png`) → o olayın kartında görünüyor
+- [ ] Ekran açıkken klavye haritaya gitmiyor (C / I / P karakter, envanter, parti ekranını açmıyor)
+- [ ] Ekran ya da kart açılamazsa çökme yerine kırmızı mesaj + liste menüsü / düz pencere geliyor. Olursa
+      `C:\ProgramData\Mount and Blade II Bannerlord\logs` içindeki en yeni `rgl_log` dosyasını gönder
+- [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst), resimli kartlar aç/kapa
+- [ ] Haritadaki düğme oyunun kendi arayüzünün üstüne biniyor mu? Biniyorsa MCM'den yerini değiştir ve hangisinin iyi olduğunu yaz
+- [ ] **Bana gönder (ansiklopedi bağlantısı için):** oyun klasöründe `Modules` altında `EncyclopediaHeroPage.xml` ve `MapBar.xml`
+      dosyalarını ara (Windows aramasıyla) ve ikisini gönder. Bunlarla lord sayfasına "bildiğin sırlar / koz / entrika başlat" bölümünü
+      ve oyunun harita çubuğuna düğmeyi doğru yere ekleyebilirim
 
 ### Entrika E0 — yeni ad, menü düzeni, kayıt testi (önemli: E1 buna dayanıyor)
 - [ ] Launcher'da mod **Taç ve Hançer** adıyla görünüyor, Türkçe harfler düzgün

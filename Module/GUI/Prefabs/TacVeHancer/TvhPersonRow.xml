@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kişi satırı (ViewModel: PersonItemVM). -->
+<Prefab>
+  <Window>
+    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" MarginBottom="6" Brush="Tvh.ListItem" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+      <Children>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="70" MarginLeft="6" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+          <Children>
+            <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+          </Children>
+        </Widget>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="110" MarginRight="10" MarginTop="6" Brush="Tvh.Text.Name" Text="@Name" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="110" MarginRight="10" MarginTop="34" Brush="Tvh.Text.Small" Text="@Affiliation" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" MarginLeft="110" MarginRight="10" MarginTop="56" Brush="Tvh.Text.Gold" Text="@TagsText" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

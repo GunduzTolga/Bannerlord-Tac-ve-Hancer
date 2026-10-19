@@ -12,6 +12,9 @@ namespace CheatMenu.Intrigue.Core
         private const string HardConsonants = "fstkçşhp";
         private static readonly CultureInfo Turkish = new CultureInfo("tr-TR");
 
+        /// <summary>Büyük/küçük harf çevirisi için (i/İ, ı/I doğru olsun).</summary>
+        public static CultureInfo Culture => Turkish;
+
         /// <summary>İlgi hâli: Derthert'in, Caladog'un, Rhagaea'nın.</summary>
         public static string Genitive(string name) => Suffix(name, (v, vowelEnd) => (vowelEnd ? "n" : "") + FourWay(v) + "n");
 

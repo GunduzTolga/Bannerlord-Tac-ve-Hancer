@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Eylem satırı (ViewModel: ActionItemVM): düğme (normal ya da tehlikeli) ve seçilemiyorsa yanında nedeni. -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46">
+      <Children>
+        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="400" SuggestedHeight="38" Brush="Tvh.Button" Command.Click="ExecuteAction" IsEnabled="@IsEnabled" IsVisible="@IsNormal" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="8" MarginRight="8" Brush="Tvh.Text.Button" Text="@Label" />
+          </Children>
+        </ButtonWidget>
+        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="400" SuggestedHeight="38" Brush="Tvh.Button.Danger" Command.Click="ExecuteAction" IsEnabled="@IsEnabled" IsVisible="@IsDanger" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="8" MarginRight="8" Brush="Tvh.Text.Button" Text="@Label" />
+          </Children>
+        </ButtonWidget>
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="414" Brush="Tvh.Text.Bad" Text="@Hint" IsVisible="@HasHint" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

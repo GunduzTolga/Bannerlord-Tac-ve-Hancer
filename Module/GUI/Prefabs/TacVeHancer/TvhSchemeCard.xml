@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Süren entrika kartı (ViewModel: SchemeItemVM). Aşama çubuğu 360 piksel: SchemeItemVM.BarWidth ile aynı olmalı.
+  Sütunlar: portre (14..182), hedef ve aşama (200..590), olasılıklar (600..1020), düğmeler (sağ).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="170" MarginBottom="10" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
+      <Children>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF">
+          <Children>
+
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="168" SuggestedHeight="128" MarginLeft="14" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="390" SuggestedHeight="20" MarginLeft="200" MarginTop="14" Brush="Tvh.Text.Caption" Text="@KindText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="390" SuggestedHeight="30" MarginLeft="200" MarginTop="34" Brush="Tvh.Text.Name" Text="@TargetName" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="390" SuggestedHeight="22" MarginLeft="200" MarginTop="64" Brush="Tvh.Text.Small" Text="@Affiliation" />
+
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="360" SuggestedHeight="10" MarginLeft="200" MarginTop="98" Sprite="BlankWhiteSquare_9" Color="#3A2D1FFF">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@PhaseBarWidth" Sprite="BlankWhiteSquare_9" Color="#C9A45EFF" />
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="2" SuggestedHeight="18" VerticalAlignment="Center" PositionXOffset="@MinMarkerOffset" Sprite="BlankWhiteSquare_9" Color="#F2E3C6FF" IsVisible="@ShowMinMarker" />
+              </Children>
+            </Widget>
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="390" SuggestedHeight="22" MarginLeft="200" MarginTop="114" Brush="Tvh.Text.Small" Text="@PhaseText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="390" SuggestedHeight="22" MarginLeft="200" MarginTop="138" Brush="Tvh.Text.Gold" Text="@TimeText" />
+
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="24" MarginLeft="610" MarginTop="30" Brush="Tvh.Text.Good" Text="@SuccessText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="24" MarginLeft="610" MarginTop="58" Brush="Tvh.Text.Bad" Text="@DiscoveryText" />
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="64" MarginLeft="610" MarginTop="90" Brush="Tvh.Text.MutedTop" Text="@TagsText" IsVisible="@HasTags" />
+
+            <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="200" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="16" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <Children>
+                <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="44" MarginBottom="8" Brush="Tvh.Button.Primary" Command.Click="ExecuteAct" IsEnabled="@CanExecute" IsVisible="@ShowExecute" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ExecuteText" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" Brush="Tvh.Button.Danger" Command.Click="ExecuteCancel" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@CancelText" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="16" MarginBottom="4" Brush="Tvh.Text.BadTop" Text="@ExecuteHint" IsVisible="@ShowExecute" />
+
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

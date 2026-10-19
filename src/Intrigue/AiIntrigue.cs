@@ -178,7 +178,7 @@ namespace CheatMenu.Intrigue
             {
                 SchemeOutcomes.Notify(state, (kidnap ? "Kaçırma" : "Suikast") + " girişimi püskürtüldü",
                     Tr.Dative(targetName) + " yönelik bir " + (kidnap ? "kaçırma" : "suikast") + " girişimi son anda boşa çıktı" + (plot.Protected ? " (tuttuğun korumalar sayesinde)" : "") + "." + who,
-                    target);
+                    target, CardImages.Caught);
                 state.AddLog(today, "Püskürtülen " + (kidnap ? "kaçırma" : "suikast") + ": " + targetName);
                 return;
             }
@@ -187,13 +187,14 @@ namespace CheatMenu.Intrigue
             {
                 TakePrisonerAction.Apply(plotter.PartyBelongedTo.Party, target);
                 SchemeOutcomes.Notify(state, targetName + " kaçırıldı!",
-                    targetName + " kaçırıldı ve şimdi " + Tr.Genitive(plotter.Name.ToString()) + " partisinde esir. Fidye ya da kurtarma senin elinde.", target);
+                    targetName + " kaçırıldı ve şimdi " + Tr.Genitive(plotter.Name.ToString()) + " partisinde esir. Fidye ya da kurtarma senin elinde.", target,
+                    CardImages.Kidnap);
                 state.AddLog(today, targetName + " kaçırıldı (" + plotter.Name + ")");
                 return;
             }
 
             KillCharacterAction.ApplyByMurder(target, null, true);
-            SchemeOutcomes.Notify(state, targetName + " öldürüldü", targetName + " bir suikaste kurban gitti." + who, null);
+            SchemeOutcomes.Notify(state, targetName + " öldürüldü", targetName + " bir suikaste kurban gitti." + who, null, CardImages.MurderDagger);
             state.AddLog(today, targetName + " suikaste kurban gitti" + (known ? " (" + plotter.Name + ")" : ""));
         }
 
@@ -231,7 +232,8 @@ namespace CheatMenu.Intrigue
             foreach (Secret secret in state.Secrets.Where(s => s.TargetId == plotter.StringId && s.Kind == SecretKind.MurderPlot)) secret.Exposed = true;
             SchemeOutcomes.Notify(state, "Entrika ifşa edildi: " + plotter.Name,
                 plotter.Name + " planından vazgeçmek zorunda kaldı; herkes ne yapmaya çalıştığını konuşuyor.\n\nSonuç: "
-                + (ruler != null && ruler != plotter ? "hükümdarı " + ruler.Name + " ile ilişkisi -20, " : "") + "seninle ilişkisi -10.", plotter);
+                + (ruler != null && ruler != plotter ? "hükümdarı " + ruler.Name + " ile ilişkisi -20, " : "") + "seninle ilişkisi -10.", plotter,
+                CardImages.Exposed);
             state.AddLog(SchemeFactors.Today, "Entrika ifşa edildi: " + plotter.Name);
         }
 

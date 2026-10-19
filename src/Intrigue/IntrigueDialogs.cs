@@ -7,7 +7,7 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Lord diyaloğuna eklenen satırlar: üzerinde kozun olan lordla "özel bir konu" açıp kozu kullanmak.
     /// Oyunun konuşma ağacına bağlanır ("hero_main_options" → bizim dallar → "lord_pretalk"). Harmony gerekmez.
-    /// Aynı işlemler Entrika > Kozlar menüsünden de yapılabilir.
+    /// Aynı işlemler Entrika ekranı > Kişiler'den de yapılabilir.
     /// </summary>
     public static class IntrigueDialogs
     {

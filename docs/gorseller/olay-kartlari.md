@@ -6,7 +6,9 @@ Bu görseller Faz P1'deki resimli olay kartlarında kullanılacak (yol haritası
 
 - **Boyut:** 1600×900 (16:9), PNG. Daha büyük üretilirse sorun yok; oyuna koyarken küçültülür.
 - **Dosya adı:** tablodaki ad (küçük harf, Türkçe karakter yok), örn. `olay_rusvetci_hizmetkar.png`.
-- **Nereye:** üretince bana gönder ya da `docs/gorseller/ham/` klasörüne koy. Oyuna hazırlama işi (kırpma, oyunun sprite paketine çevirme) benden.
+- **Nereye:** oyunda doğrudan denemek için modun klasöründe `Modules\CheatMenu\Images\` içine koy; kart bir sonraki açılışta resmi gösterir
+  (sprite paketine çevirmek gerekmez). Depoya eklenmesi için bana gönder ya da `Module/Images/` klasörüne koy.
+- **Resim yoksa:** kartta ilgili kişinin portresi görünür; hiçbir şey bozulmaz. Bu yüzden resimler tek tek, istenen sırayla eklenebilir.
 
 ## Ortak stil (her prompt'un sonuna ekle)
 

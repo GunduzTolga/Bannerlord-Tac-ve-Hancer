@@ -1,6 +1,6 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
-**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0 kodlandı** (oyunda test bekliyor). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0 ve P1 kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)
@@ -62,6 +62,19 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 **Ansiklopedi:** bir lordun sayfasında (UIExtenderEx) bildiğin sırlar, üzerindeki koz ve son rapor tarihi. Sayfadan doğrudan "entrika başlat".
 
 **Video:** şimdilik yok. Mantıklı bir yeri olmadığı sürece eklemiyoruz. Olay kartlarının resimleri hem daha uygun hem daha az yer kaplıyor.
+
+### P1 uygulama notu (kodlandı)
+
+| Karar | Neden |
+|---|---|
+| Ekran, olay kartı ve harita düğmesi **kendi Gauntlet katmanlarımız** (harita ekranına eklenir); oyunun prefab'larına yama yok | Oyun güncellemesi kendi arayüzünü değiştirse de bizimkiler bozulmaz. Harita düğmesi oyunun harita çubuğuna değil, üst kenara konur (yeri MCM'den) |
+| Fırçalar yalnızca her sürümde bulunan düz beyaz kare sprite'ını kullanır; renkler bizden. Yazı tipi adı yazılmaz, oyunun varsayılanı atanır | Sürüm değişince eksik sprite/yazı tipi yüzünden ekran boş kalmasın; Türkçe karakterler oyunun eşlemesiyle gelir |
+| Resimler çalışma anında `Module/Images` klasöründen yüklenir (PNG/JPG; sprite paketi yok) | Kullanıcı resmi klasöre atar, iş biter. Resim yoksa kartta kişinin portresi görünür |
+| Olay kartı açılamazsa (ayar kapalı, özel parça kayıtlı değil, hata) aynı seçenekler oyunun seçim penceresiyle sorulur. Ekran açılamazsa liste menüsü açılır | Arayüz sorunu oyunu durdurmasın; karar her zaman sorulabilsin |
+| Ekran açıkken oyun durur ve klavye haritaya gitmez; Esc / Kapat / kısayol kapatır | Popup'lardaki gibi güvenli kullanım |
+| Kronik 20'den **300** olaya çıktı, dosyaya aktarılır (Belgeler\...\Configs\TacVeHancer) | "Sınırsız"a yakın ama kayıt dosyası şişmez |
+| CI'da **arayüz denetimi** (`tools/GuiCheck`): parça/özellik adları oyunun referans DLL'lerine, `@bağlantı`/komutlar ViewModel'lere karşı | Oyunu açamadan yakalanabilecek arayüz hataları gönderimden önce yakalanır |
+| **Ansiklopedi ve oyunun harita çubuğu** bağlantısı ertelendi | UIExtenderEx ile eklemek için oyunun `EncyclopediaHeroPage.xml` ve `MapBar.xml` dosyalarının yapısı gerekiyor (kullanıcıdan istenecek). O zamana kadar aynı bilgiler ekranın **Kişiler** sekmesinde: rapor, sırlar, koz, entrika başlat |
 
 ---
 

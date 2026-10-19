@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Gölge ağı kartı (ViewModel: NetworkItemVM). Seviye çubuğu 240 piksel: NetworkItemVM.BarWidth ile aynı olmalı. -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="156" MarginBottom="10" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
+      <Children>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF">
+          <Children>
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="360" SuggestedHeight="32" MarginLeft="18" MarginTop="12" Brush="Tvh.Text.Name" Text="@TownName" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="360" SuggestedHeight="22" MarginLeft="18" MarginTop="44" Brush="Tvh.Text.Small" Text="@FactionText" />
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="240" SuggestedHeight="10" MarginLeft="18" MarginTop="78" Sprite="BlankWhiteSquare_9" Color="#3A2D1FFF">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@LevelBarWidth" Sprite="BlankWhiteSquare_9" Color="#C9A45EFF" />
+              </Children>
+            </Widget>
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="120" SuggestedHeight="22" MarginLeft="268" MarginTop="72" Brush="Tvh.Text.Gold" Text="@LevelText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="380" SuggestedHeight="22" MarginLeft="18" MarginTop="98" Brush="Tvh.Text.Small" Text="@UpkeepText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="380" SuggestedHeight="22" MarginLeft="18" MarginTop="122" Brush="Tvh.Text.Muted" Text="@SinceText" />
+
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="24" MarginLeft="420" MarginTop="14" Brush="Tvh.Text.Good" Text="@BonusText" />
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="104" MarginLeft="420" MarginTop="44" Brush="Tvh.Text.MutedTop" Text="@DescriptionText" />
+
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="16" Brush="Tvh.Button.Danger" Command.Click="ExecuteDisband" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@DisbandText" />
+              </Children>
+            </ButtonWidget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

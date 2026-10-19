@@ -6,6 +6,7 @@ using CheatMenu.Intrigue;
 using CheatMenu.Mcm;
 using CheatMenu.Patches;
 using CheatMenu.Menu;
+using CheatMenu.UI;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
@@ -52,7 +53,18 @@ namespace CheatMenu
             base.OnBeforeInitialModuleScreenSetAsRoot();
             if (_loadMessageShown) return;
             _loadMessageShown = true;
-            InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] yüklendi - kampanyada Insert ile aç"));
+            // Arayüz fabrikası bu noktada hazır. Kayıt olmazsa yalnızca olay kartları düz pencereye düşer; uyarı gerekmez.
+            try
+            {
+                UiStartup.RegisterWidgets();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] widget registration via UIExtenderEx failed: " + ex);
+            }
+            string hotkey = ModSettings.ScreenHotkeyNames[SettingsStore.Current.ScreenHotkey];
+            InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] yüklendi - kampanyada Insert: menü"
+                + (SettingsStore.Current.ScreenHotkey > 0 ? ", " + hotkey + ": entrika ekranı" : "")));
             if (_initErrors.Count > 0)
                 InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] başlatılamayan bağımlılık: "
                     + string.Join(", ", _initErrors) + ". Launcher'da Harmony, ButterLib, UIExtenderEx ve MCM'in kurulu ve bu modun üstünde olduğundan emin ol.",
@@ -94,6 +106,8 @@ namespace CheatMenu
         public override void OnGameEnd(Game game)
         {
             base.OnGameEnd(game);
+            IntrigueScreen.Close();
+            EventCards.CloseForGameEnd();
             CheatState.ResetAll();
         }
 
@@ -106,10 +120,16 @@ namespace CheatMenu
             MapInfo.Tick();
             MenuUI.RunDeferred();
             IntriguePopups.Tick();
+            EventCards.Tick();
+            IntrigueScreen.Tick();
+            MapButton.Tick();
             CleanSaveGuard.Tick();
 
-            if (Input.IsKeyPressed(MenuKey) && !InformationManager.IsAnyInquiryActive())
+            bool popupOpen = InformationManager.IsAnyInquiryActive() || EventCards.IsOpen;
+            if (Input.IsKeyPressed(MenuKey) && !popupOpen)
                 MenuUI.SafeRun("Ana menü", Categories.ShowRoot);
+            if (!popupOpen && UiStartup.ScreenHotkeyPressed())
+                MenuUI.SafeRun("Entrika ekranı", IntrigueScreen.Toggle);
 
             CursorTeleport.Tick();
         }

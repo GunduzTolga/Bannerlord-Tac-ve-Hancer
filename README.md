@@ -32,11 +32,13 @@ Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar I
 
 ## Kullanım
 
-- Kampanyada **Insert** → ana menü: Entrika, Hileler, Editörler, Klan & krallık, Bilgi, Kurallar.
+- Kampanyada **Home** ya da haritanın üstündeki **ENTRİKA** düğmesi → **Entrika ekranı** (kısayol ve düğmenin yeri MCM → Arayüz'den değişir).
+- Kampanyada **Insert** → ana menü: Entrika ekranı, Entrika (liste menüsü), Hileler, Editörler, Klan & krallık, Bilgi, Kurallar.
 - Haritada **Ctrl+Alt + Sol tık** → tıklanan yere ışınlanma.
 
 | Kategori | Neler var |
 |---|---|
+| **Entrika ekranı** | Tam ekran pencere: casus başı kartı; süren entrikalar (portre, aşama çubuğu, başarı/yakalanma, harekete geç); yeni entrika (tür, filtre, sayfalı hedef listesi, özet); kişiler (rapor, sırlar, koz, doğrudan entrika); gölge ağları; sana karşı entrikalar; kronik (dosyaya aktarma). Olaylar resimli kartlarla gelir |
 | **Entrika** | Casus başı; casusluk (rapor + gerçek kişilikten sırlar); şantaj ve kozlar (altın, etki, esir, klan koparma; lord diyaloğundan da); kaçırma; suikast (aşamalar, 10 olay, rüşvet, kan davası); şehirlerde gölge ağı; yapay zekânın sana kurduğu entrikalar ve karşı casusluk |
 | **Hileler →** | |
 | Para & Ekonomi | Altın, etki, tahıl |
@@ -57,17 +59,20 @@ Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar I
 
 ## Entrika — kısa kullanım
 
-1. **Entrika → Casus başı ata:** klanından Roguery'si yüksek bir yoldaş ya da aile üyesi. Entrikaların gücü ondan gelir.
-2. **Yeni entrika → Casusluk:** hedefin konumu, gücü, kişiliği ve belki bir sırrı.
+Hepsi **Entrika ekranından** (Home) yapılır; aynı işler Insert → Entrika (liste menüsü) ile popup'lardan da yapılabilir.
+
+1. **Casus başı ata** (sol sütun): klanından Roguery'si yüksek bir yoldaş ya da aile üyesi. Entrikaların gücü ondan gelir.
+2. **Yeni entrika → Casusluk:** hedefin konumu, gücü, kişiliği ve belki bir sırrı. Hedef listesi tahmini başarıya göre sıralı; seçince sağda özet ve maliyet.
    Rapor 60 gün geçerli; o hedefe suikastta +10 verir. Tanışmadığın birini de suikast listesine ekler.
 3. **Yeni entrika → Suikast:** en az 2 aşamadan sonra **Süren entrikalar → Harekete geç**.
    Bekledikçe şansın artar ama her aşamada yakalanma zarı atılır. Harekete geçerken rüşvetle +5/+10/+15.
-4. **Şantaj:** casuslukla bulduğun bir sırrı koza çevir; kozu Entrika > Kozlar'dan ya da lordla konuşurken "özel bir konu" açarak kullan.
+4. **Şantaj:** casuslukla bulduğun bir sırrı koza çevir; kozu ekranın **Kişiler** sekmesinden ya da lordla konuşurken "özel bir konu" açarak kullan.
 5. **Kaçırma:** suikast gibi işler, başarılıysa hedef partinde esir olur.
 6. **Gölge ağı:** çete lideri olan bir şehirde kasaba menüsü → "Gölgelerde iş çevir". O şehirdeki ve krallıktaki entrikalarına bonus verir.
 7. **Sana karşı entrikalar:** senden nefret eden lordlar ve kan davalılar ailene entrika kurabilir; casus başın sezerse karşı hamle seçersin
    (Kurallar'dan kapatılabilir; varsayılan "Az").
-8. Olaylar, kararlar ve sonuçlar haritada popup olarak gelir; savaştayken olanlar haritaya dönünce gösterilir.
+8. Olaylar, kararlar ve sonuçlar haritada **resimli kart** olarak gelir (resim yoksa kişinin portresi; MCM'den düz pencereye çevrilebilir).
+   Savaştayken olanlar haritaya dönünce gösterilir. Resimler modun `Images` klasörüne konur (liste: `docs/gorseller/olay-kartlari.md`).
 9. Yakalanırsan ilişki, suç puanı ve Onur kaybedersin. Bir hükümdarı öldürürsen savaş çıkabilir; kendi krallığından birini öldürürsen hükümdarın hesap sorar.
 
 Formüller, örnek hesaplar ve sonraki fazlar: `docs/superpowers/specs/2026-10-19-entrika-design.md`.
@@ -99,16 +104,20 @@ Betik önce testleri (`tests/CheatMenu.Tests`) derleyip çalıştırır, sonra m
 `<oyun klasörü>\Modules\CheatMenu` içine kopyalar. Oyun klasörü farklıysa:
 `.\build.ps1 -p:GameFolder="D:\Oyunlar\Mount & Blade II Bannerlord"`. Derlerken oyun kapalı olmalı (DLL kilitlenir).
 
-GitHub her gönderimde modu oyunsuz derler ve testleri çalıştırır (Actions sekmesi, "Derleme ve testler").
+GitHub her gönderimde modu oyunsuz derler, testleri çalıştırır ve arayüz dosyalarını denetler (Actions sekmesi, "Derleme ve testler").
+Arayüz denetimi (`tools/GuiCheck`) her Gauntlet prefab'ındaki parça ve özellik adlarını oyunun 1.4.8 referans DLL'lerine,
+`@bağlantı`ları ve komutları da modun ViewModel'lerine karşı kontrol eder; oyunu açmadan yakalanabilecek arayüz hatalarını yakalar.
 
 Ardından Launcher → Mods → **Taç ve Hançer**'i işaretle.
 
 ## Proje yapısı
 
 - `src/` — mod kodu (`Cheats/` eylemler ve oyun modelleri, `Intrigue/` entrika sistemi, `Menu/` popup menüleri,
-  `Mcm/` MCM ayar ekranı, `Patches/` Harmony yamaları)
-- `tests/` — oyunsuz çalışan birim testleri (sayı/ad doğrulama, ayar dosyası, entrika kayıt biçimi)
-- `Module/SubModule.xml` — mod manifesti
+  `UI/` Entrika ekranı, olay kartları ve harita düğmesi (Gauntlet katmanları ve ViewModel'ler), `Mcm/` MCM ayar ekranı, `Patches/` Harmony yamaları)
+- `tests/` — oyunsuz çalışan birim testleri (sayı/ad doğrulama, ayar dosyası, entrika kayıt biçimi, resim adları)
+- `tools/GuiCheck/` — arayüz dosyalarının oyunsuz denetimi (CI'da çalışır)
+- `Module/` — oyundaki modül klasörüne olduğu gibi kopyalanır: `SubModule.xml` (manifest), `GUI/Prefabs` ve `GUI/Brushes`
+  (arayüz), `Images/` (olay kartı resimleri)
 - `docs/superpowers/` — her fazın tasarım (specs) ve uygulama (plans) belgeleri; yol haritası: `specs/2026-10-19-yol-haritasi.md`
 - `docs/gorseller/` — olay kartı görsellerinin listesi ve prompt'ları
 - `.github/workflows/` — otomatik derleme ve test

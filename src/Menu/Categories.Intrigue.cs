@@ -14,6 +14,9 @@ namespace CheatMenu.Menu
     /// <summary>Entrika menüsü (tasarım 9.1) ve entrika hileleri.</summary>
     public static partial class Categories
     {
+        /// <summary>Entrika ekranı açılamazsa ya da oyuncu isterse: eski popup menüsü.</summary>
+        public static void ShowIntrigueMenu() => ShowIntrigue();
+
         private static void ShowIntrigue()
         {
             IntrigueState state = SchemeEngine.State;
@@ -185,9 +188,7 @@ namespace CheatMenu.Menu
             List<Hero> targets = SchemeFactors.Targets(state, kind).ToList();
             if (targets.Count == 0)
             {
-                MenuUI.Error(kind == SchemeKind.Spy ? "Casusluk yapılacak kimse bulunamadı"
-                    : kind == SchemeKind.Blackmail ? "Şantaj için ifşa edilmemiş bir sırrını bildiğin bir lord gerekir (önce casusluk)"
-                    : SchemeRules.Name(kind) + " için tanıştığın ya da hakkında güncel raporun olan, yeri belli bir hedef gerekir");
+                MenuUI.Error(SchemePreview.NoTargetsText(kind));
                 MenuUI.Defer(ShowNewScheme);
                 return;
             }
@@ -195,81 +196,13 @@ namespace CheatMenu.Menu
                 hero => ConfirmStart(kind, hero), ShowNewScheme);
         }
 
-        private static string TargetChoiceLabel(IntrigueState state, Hero spymaster, Hero target, SchemeKind kind)
-        {
-            SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, kind, null);
-            string chance;
-            if (kind != SchemeKind.Spy)
-            {
-                int low = SchemeMath.Success(kind, inputs);
-                inputs.CompletedPhases = SchemeRules.MaxPhases(kind);
-                chance = "%" + low + "-" + SchemeMath.Success(kind, inputs);
-            }
-            else chance = "%" + SchemeMath.SpySuccess(inputs);
-            return SchemeFactors.TargetLabel(target) + " - başarı " + chance + ", " + SchemeFactors.Money(SchemeFactors.StartCost(kind, target));
-        }
+        private static string TargetChoiceLabel(IntrigueState state, Hero spymaster, Hero target, SchemeKind kind) =>
+            SchemeFactors.TargetLabel(target) + " - başarı " + SchemePreview.ChanceText(state, spymaster, target, kind) + ", "
+            + SchemeFactors.Money(SchemeFactors.StartCost(kind, target));
 
         private static void ConfirmStart(SchemeKind kind, Hero target)
         {
-            IntrigueState state = SchemeEngine.State;
-            Hero spymaster = SchemeFactors.Spymaster(state);
-            SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, kind, null);
-            int cost = SchemeFactors.StartCost(kind, target);
-            int days = SchemeMath.PhaseDays(kind, SchemeFactors.Roguery(spymaster));
-            int today = SchemeFactors.Today;
-
-            var lines = new List<string>
-            {
-                "Hedef: " + SchemeFactors.TargetLabel(target),
-                "Maliyet: " + SchemeFactors.Money(cost) + " (sende " + SchemeFactors.Money(Hero.MainHero.Gold) + ")",
-            };
-            int min = SchemeRules.MinPhases(kind), max = SchemeRules.MaxPhases(kind);
-            if (SchemeRules.IsStrike(kind))
-            {
-                int low = SchemeMath.Success(kind, inputs);
-                inputs.CompletedPhases = max;
-                lines.Add("Aşamalar: en az " + min + ", en fazla " + max + "; her aşama yaklaşık " + days + " gün");
-                lines.Add("Başarı: " + min + " aşamada %" + low + ", " + max + " aşamada %" + SchemeMath.Success(kind, inputs)
-                    + " (harekete geçerken rüşvetle +5/+10/+15)");
-                lines.Add("Her aşamada yakalanma: %" + SchemeMath.Discovery(kind, inputs));
-                if (inputs.HasHook) lines.Add("Üzerinde kozun var: +10 başarı.");
-                if (inputs.NetworkSuccess > 0) lines.Add("Gölge ağı desteği: başarı +" + inputs.NetworkSuccess + ", yakalanma -" + inputs.NetworkDiscovery + ".");
-                lines.Add(state.HasValidReport(target.StringId, today)
-                    ? "Güncel istihbarat raporun var: +10 başarı."
-                    : "Güncel raporun yok: önce casusluk yaparsan +10 başarı.");
-                if (inputs.TargetAlerted) lines.Add("Hedef tetikte: -15 başarı.");
-                if (inputs.TargetIsPlayersCaptive) lines.Add("Hedef senin elinde: başarı +20, ama ölürse ilk senden şüphelenilir (iz bırakma ×2).");
-                lines.Add("");
-                lines.Add(kind == SchemeKind.Kidnap
-                    ? "Başarılı olursa hedef partinde esir olur. Ortaya çıkarsa: ilişki cezası, suç puanı ve Onur kaybı (suikasttan hafif); "
-                        + "hükümdarsa savaş çıkabilir."
-                    : "Ortaya çıkarsa: ağır ilişki cezası, suç puanı, Onur kaybı ve kurbanın yakınlarıyla kan davası. "
-                        + "Hedef hükümdarsa savaş çıkabilir; kendi krallığındansa hükümdarın hesap sorar.");
-            }
-            else if (kind == SchemeKind.Blackmail)
-            {
-                Secret secret = SchemeFactors.BestSecret(state, target);
-                int low = SchemeMath.BlackmailSuccess(inputs);
-                inputs.CompletedPhases = max;
-                lines.Add("Elindeki sır: " + (secret != null ? SecretRules.Name(secret.Kind) : "-"));
-                lines.Add("Aşamalar: 1-2; her aşama yaklaşık " + days + " gün (2. aşama başarı +15)");
-                lines.Add("Başarı: 1 aşamada %" + low + ", 2 aşamada %" + SchemeMath.BlackmailSuccess(inputs)
-                    + "; her aşamada yakalanma %" + SchemeMath.BlackmailDiscovery(inputs));
-                lines.Add("");
-                lines.Add("Başarılı olursa " + SchemeMath.HookDays + " gün geçerli bir koz: altın, etki, esirlerini bıraktırma, "
-                    + "krallık değiştirtme. Kullanınca ilişkiniz düşer. Tutmazsa sır yanar ve ilişki -20.");
-            }
-            else
-            {
-                lines.Add("Aşamalar: 1-2; her aşama yaklaşık " + days + " gün (2. aşama yalnızca sır bulma şansını artırır)");
-                lines.Add("Başarı: %" + SchemeMath.SpySuccess(inputs) + ", her aşamada yakalanma: %" + SchemeMath.SpyDiscovery(inputs));
-                if (!target.HasMet) lines.Add("Tanışmadınız: başarı -10.");
-                lines.Add("");
-                lines.Add("Sonuç: " + SchemeMath.ReportValidDays + " gün geçerli rapor (konum, güç, altın, ilişkiler, kişilik)"
-                    + (target.IsLord ? " ve belki bir sır." : ". Sırlar yalnızca lordlarda aranır."));
-            }
-
-            MenuUI.Confirm(SchemeRules.Name(kind) + " başlatılsın mı?", string.Join("\n", lines),
+            MenuUI.Confirm(SchemeRules.Name(kind) + " başlatılsın mı?", string.Join("\n", SchemePreview.Lines(SchemeEngine.State, kind, target)),
                 () =>
                 {
                     SchemeEngine.Start(kind, target);
@@ -510,7 +443,7 @@ namespace CheatMenu.Menu
             }, ShowIntrigueCheats, "Aç/kapa hileler oturumluktur: oyunu kapatınca kapanır.", ShowCheats);
         }
 
-        private static ImageIdentifier HeroPortrait(Hero hero) =>
+        internal static ImageIdentifier HeroPortrait(Hero hero) =>
             new CharacterImageIdentifier(CampaignUIHelper.GetCharacterCode(hero.CharacterObject, false));
     }
 }

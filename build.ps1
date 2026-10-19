@@ -13,3 +13,12 @@ if ($LASTEXITCODE -ne 0) { throw 'Testler basarisiz' }
 
 dotnet build (Join-Path $PSScriptRoot 'src\CheatMenu.csproj') -c Release -nologo -v:minimal @args
 if ($LASTEXITCODE -ne 0) { throw 'Mod derlemesi basarisiz' }
+
+# Arayüz dosyaları (Gauntlet prefab'ları) oyunun referans DLL'lerine ve ViewModel'lere karşı denetlenir.
+$packages = if ($env:NUGET_PACKAGES) { $env:NUGET_PACKAGES } else { Join-Path $env:USERPROFILE '.nuget\packages' }
+dotnet run --project (Join-Path $PSScriptRoot 'tools\GuiCheck\GuiCheck.csproj') -c Release -- `
+    (Join-Path $PSScriptRoot 'Module\GUI') (Join-Path $PSScriptRoot 'src\bin\Release\CheatMenu.dll') `
+    (Join-Path $packages 'bannerlord.referenceassemblies.core\1.4.8.119303\ref\net472') `
+    (Join-Path $packages 'bannerlord.referenceassemblies.sandbox\1.4.8.119303\ref\net472') `
+    (Join-Path $packages 'bannerlord.uiextenderex\2.13.3\lib\netstandard2.0')
+if ($LASTEXITCODE -ne 0) { throw 'Arayuz denetimi basarisiz: oyunda Entrika ekrani acilmayabilir' }

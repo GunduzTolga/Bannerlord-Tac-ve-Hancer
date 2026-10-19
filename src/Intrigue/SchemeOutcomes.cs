@@ -46,14 +46,14 @@ namespace CheatMenu.Intrigue
                 Relate(target, -penalty);
                 Notify(state, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + target.Name,
                     target.Name + " peşinde adamların olduğunu fark etti. Entrika dağıldı.\n\nSonuç: " + target.Name + " ile ilişki -" + penalty + ".",
-                    target);
+                    target, CardImages.Caught);
                 return;
             }
 
             string consequences = ApplyLightExposure(state, target, 20, scheme.FeastRisk);
             Notify(state, SchemeRules.Name(scheme.Kind) + " planı ortaya çıktı: " + target.Name,
                 Tr.Dative(target.Name.ToString()) + " karşı kurduğun plan, daha harekete geçmeden ortaya çıktı. Adamların dağıldı.\n\nSonuç: " + consequences,
-                target);
+                target, CardImages.Caught);
         }
 
         // ---- Suikast ----
@@ -77,7 +77,7 @@ namespace CheatMenu.Intrigue
             if (traced) text += "\n\nAma arkanda iz kaldı ve herkes bunun arkasında senin olduğunu biliyor.\n\nSonuç: "
                 + ApplyHeavyExposure(state, victim, scheme.FeastRisk, false);
             else text += "\n\nKimse senden şüphelenmiyor. Vicdanın ise o kadar sessiz değil (Merhamet -).";
-            Notify(state, "Suikast başarılı: " + victim.Name, text, null);
+            Notify(state, "Suikast başarılı: " + victim.Name, text, null, CardImages.ForMurderMethod(scheme.Method));
             state.AddLog(SchemeFactors.Today, "Suikast: " + victim.Name + " öldürüldü" + (traced ? " (iz kaldı)" : ""));
         }
 
@@ -99,7 +99,7 @@ namespace CheatMenu.Intrigue
                 text += "\n\nAdamların kaçmayı başardı; kimse seni suçlamıyor. Ama " + target.Name
                     + " artık tetikte (" + SchemeMath.AlertDays + " gün boyunca ona karşı başarı -15).";
             }
-            Notify(state, SchemeRules.Name(scheme.Kind) + " başarısız: " + target.Name, text, target);
+            Notify(state, SchemeRules.Name(scheme.Kind) + " başarısız: " + target.Name, text, target, CardImages.Caught);
             state.AddLog(today, SchemeRules.Name(scheme.Kind) + " başarısız: " + target.Name + (caught ? " (yakalandın)" : ""));
         }
 
@@ -120,7 +120,7 @@ namespace CheatMenu.Intrigue
             if (traced) text += "\n\nAma adamların iz bıraktı ve herkes kaçıranın sen olduğunu biliyor.\n\nSonuç: "
                 + ApplyHeavyExposure(state, victim, scheme.FeastRisk, true);
             else text += "\n\nKimin yaptığını kimse bilmiyor (Onur -).";
-            Notify(state, "Kaçırma başarılı: " + victim.Name, text, target);
+            Notify(state, "Kaçırma başarılı: " + victim.Name, text, target, CardImages.Kidnap);
             state.AddLog(SchemeFactors.Today, "Kaçırma: " + victim.Name + (traced ? " (iz kaldı)" : ""));
         }
 
@@ -135,10 +135,11 @@ namespace CheatMenu.Intrigue
             spymaster?.AddSkillXp(DefaultSkills.Roguery, SpySuccessXp);
 
             string text = target.Name + " sırrının ortaya çıkmasındansa sana boyun eğmeyi seçti. " + SchemeMath.HookDays
-                + " gün boyunca üzerinde bir kozun var.\n\nKullanmak için: Entrika > Kozlar, ya da onunla konuşup \"özel bir konu\" aç.";
+                + " gün boyunca üzerinde bir kozun var.\n\nKullanmak için: Entrika ekranı > Kişiler, ya da onunla konuşup \"özel bir konu\" aç.";
             int abandoned = state.AiPlots.RemoveAll(p => p.PlotterId == target.StringId);
             if (abandoned > 0) text += "\n\nSana karşı kurduğu entrikadan da vazgeçti.";
-            Notify(state, "Şantaj tuttu: " + target.Name, text + "\n\nSonuç: " + target.Name + " ile ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target);
+            Notify(state, "Şantaj tuttu: " + target.Name, text + "\n\nSonuç: " + target.Name + " ile ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target,
+                CardImages.Blackmail);
             state.AddLog(today, "Şantaj tuttu: " + target.Name + " üzerinde koz");
         }
 
@@ -150,7 +151,7 @@ namespace CheatMenu.Intrigue
             Relate(target, -20);
             state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
             Notify(state, "Şantaj tutmadı: " + target.Name,
-                target.Name + " tehdidine boyun eğmedi ve izleri örtbas etti; elindeki sır artık işe yaramıyor.\n\nSonuç: ilişki -20.", target);
+                target.Name + " tehdidine boyun eğmedi ve izleri örtbas etti; elindeki sır artık işe yaramıyor.\n\nSonuç: ilişki -20.", target, CardImages.Exposed);
             state.AddLog(today, "Şantaj tutmadı: " + target.Name);
         }
 
@@ -304,7 +305,7 @@ namespace CheatMenu.Intrigue
             LiegeDemand demand = state.LiegeDemand;
             state.LiegeDemand = null;
             ChangeKingdomAction.ApplyByLeaveKingdom(Clan.PlayerClan, true);
-            Notify(state, "Krallıktan ayrıldın", "Hesap vermek yerine krallıktan ayrılmayı seçtin.", null);
+            Notify(state, "Krallıktan ayrıldın", "Hesap vermek yerine krallıktan ayrılmayı seçtin.", null, CardImages.LiegeDemand);
             state.AddLog(SchemeFactors.Today, "Kan davası yüzünden krallıktan ayrıldın: " + demand.VictimName);
         }
 
@@ -330,17 +331,18 @@ namespace CheatMenu.Intrigue
                 {
                     state.Secrets.Add(new Secret { TargetId = target.StringId, Kind = kind.Value, Day = today });
                     secretLine = "SIR BULUNDU: " + SecretRules.Name(kind.Value) + " - " + SecretRules.Description(kind.Value)
-                        + "\n(Entrika > İstihbarat raporları'ndan ifşa edebilirsin.)";
+                        + "\n(Entrika ekranı > Kişiler'den ifşa edebilir ya da şantaja çevirebilirsin.)";
                 }
             }
 
-            Notify(state, "Casusluk raporu: " + target.Name, ReportText(report) + "\n\n" + secretLine, target);
+            Notify(state, "Casusluk raporu: " + target.Name, ReportText(report) + "\n\n" + secretLine, target,
+                secretLine.StartsWith("SIR BULUNDU") ? CardImages.SecretFound : CardImages.Spy);
             state.AddLog(today, "Casusluk raporu: " + target.Name);
         }
 
         public static void SpyFailed(IntrigueState state, Hero target)
         {
-            Notify(state, "Casusluk sonuçsuz: " + target.Name, "Adamların işe yarar bir şey öğrenemeden geri döndü.", target);
+            Notify(state, "Casusluk sonuçsuz: " + target.Name, "Adamların işe yarar bir şey öğrenemeden geri döndü.", target, CardImages.Spy);
             state.AddLog(SchemeFactors.Today, "Casusluk sonuçsuz: " + target.Name);
         }
 
@@ -452,14 +454,15 @@ namespace CheatMenu.Intrigue
             }
             Notify(state, "Sır ifşa edildi: " + target.Name,
                 SecretRules.Name(secret.Kind) + " herkesin ağzında.\n\nSonuç: " + (parts.Count > 0 ? string.Join(", ", parts) : "kimse umursamadı") + ".",
-                target);
+                target, CardImages.Exposed);
             state.AddLog(SchemeFactors.Today, "Sır ifşa edildi: " + target.Name + " (" + SecretRules.Name(secret.Kind) + ")");
         }
 
         // ---- Yardımcılar ----
 
-        public static void Notify(IntrigueState state, string title, string text, Hero hero) =>
-            state.Notices.Add(new Notice { Title = title, Text = text, HeroId = hero?.StringId });
+        /// <param name="image">Olay kartı resmi (CardImages); null ise kişinin portresi gösterilir.</param>
+        public static void Notify(IntrigueState state, string title, string text, Hero hero, string image = null) =>
+            state.Notices.Add(new Notice { Title = title, Text = text, HeroId = hero?.StringId, Image = image });
 
         public static void Relate(Hero hero, int delta)
         {

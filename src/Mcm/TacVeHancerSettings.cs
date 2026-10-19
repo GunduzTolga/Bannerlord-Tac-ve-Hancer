@@ -20,6 +20,7 @@ namespace CheatMenu.Mcm
         private const string RulesGroup = "Kurallar";
         private const string IntrigueGroup = "Entrika";
         private const string MapGroup = "Harita";
+        private const string UiGroup = "Arayüz";
         private const string RulesHint = " (yalnızca senin klanın/partin; kayıt dosyasına bir şey yazılmaz)";
 
         private static readonly string[] DifficultyNames = { "Kolay", "Normal", "Zor" };
@@ -92,6 +93,23 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(MapGroup, GroupOrder = 2)]
         public Dropdown<string> FastForward { get; set; } = Choices(ModSettings.AllowedSpeeds, v => v + "x");
 
+        // ---- Arayüz ----
+
+        [SettingPropertyDropdown("Entrika ekranı kısayolu", Order = 0, RequireRestart = false,
+            HintText = "Haritadayken entrika ekranını açar/kapatır. Oyunun kendi harita tuşlarıyla çakışmayanlar listelenir. Insert menüsü her zaman çalışır.")]
+        [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
+        public Dropdown<string> ScreenHotkey { get; set; } = new Dropdown<string>(ModSettings.ScreenHotkeyNames, ModSettings.DefaultScreenHotkey);
+
+        [SettingPropertyDropdown("Haritadaki Entrika düğmesi", Order = 1, RequireRestart = false,
+            HintText = "Haritanın üst kenarındaki düğmenin yeri. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
+        [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
+        public Dropdown<string> MapButtonPosition { get; set; } = new Dropdown<string>(ModSettings.MapButtonPositionNames, ModSettings.DefaultMapButtonPosition);
+
+        [SettingPropertyBool("Resimli olay kartları", Order = 2, RequireRestart = false,
+            HintText = "Entrika olayları, kararları ve sonuçları resimli kartla gösterilir (resim yoksa kişinin portresi). Kapalıyken oyunun düz seçim penceresi kullanılır.")]
+        [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
+        public bool EventCards { get; set; } = true;
+
         public TacVeHancerSettings()
         {
             CopyFrom(SettingsStore.Current);
@@ -147,6 +165,9 @@ namespace CheatMenu.Mcm
             AiIntrigue.SelectedIndex = SchemeMath.Clamp(s.AiIntrigue, 0, AiNames.Length - 1);
             PlayerCanBeTargeted = s.PlayerCanBeTargeted;
             FastForward.SelectedIndex = IndexOf(ModSettings.AllowedSpeeds, s.FastForwardSpeed);
+            ScreenHotkey.SelectedIndex = s.ScreenHotkey;
+            MapButtonPosition.SelectedIndex = s.MapButtonPosition;
+            EventCards = s.EventCards;
         }
 
         private void ApplyTo(ModSettings s)
@@ -162,6 +183,9 @@ namespace CheatMenu.Mcm
             s.SetAiIntrigue(AiIntrigue.SelectedIndex);
             s.PlayerCanBeTargeted = PlayerCanBeTargeted;
             s.SetFastForwardSpeed(At(ModSettings.AllowedSpeeds, FastForward.SelectedIndex));
+            s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
+            s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);
+            s.EventCards = EventCards;
         }
 
         private static Dropdown<string> Choices(int[] values, Func<int, string> label) =>

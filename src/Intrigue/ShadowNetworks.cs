@@ -119,7 +119,8 @@ namespace CheatMenu.Intrigue
                 if (town == null || GangLeaders(town).Count == 0)
                 {
                     state.Networks.Remove(network);
-                    SchemeOutcomes.Notify(state, "Gölge ağı dağıldı", (town != null ? Tr.Locative(town.Name.ToString()) + " " : "") + "artık güvenebileceğin bir çete yok.", null);
+                    SchemeOutcomes.Notify(state, "Gölge ağı dağıldı", (town != null ? Tr.Locative(town.Name.ToString()) + " " : "") + "artık güvenebileceğin bir çete yok.", null,
+                        CardImages.ShadowNetwork);
                     continue;
                 }
                 if (state.Roll100() > SchemeMath.NetworkExposeChance(network.Level)) continue;
@@ -128,7 +129,8 @@ namespace CheatMenu.Intrigue
                 if (owner != null && owner.Clan != Clan.PlayerClan) SchemeOutcomes.Relate(owner, -10);
                 SchemeOutcomes.Notify(state, "Gölge ağın çökertildi: " + town.Name,
                     Tr.Genitive(town.Name.ToString()) + " muhafızları ağını ortaya çıkardı; muhbirlerin dağıldı."
-                    + (owner != null && owner.Clan != Clan.PlayerClan ? "\n\nSonuç: şehrin sahibi " + owner.Name + " ile ilişki -10." : ""), owner);
+                    + (owner != null && owner.Clan != Clan.PlayerClan ? "\n\nSonuç: şehrin sahibi " + owner.Name + " ile ilişki -10." : ""), owner,
+                    CardImages.ShadowNetwork);
                 state.AddLog(today, Tr.Locative(town.Name.ToString()) + " gölge ağı çökertildi");
             }
 
@@ -142,7 +144,8 @@ namespace CheatMenu.Intrigue
             foreach (ShadowNetwork network in state.Networks.ToList())
                 if (--network.Level <= 0) state.Networks.Remove(network);
             SchemeOutcomes.Notify(state, "Muhbirlerin parasız kaldı",
-                "Gölge ağlarının haftalık bakımını (" + SchemeFactors.Money(upkeep) + ") ödeyemedin; her ağ bir seviye zayıfladı.", null);
+                "Gölge ağlarının haftalık bakımını (" + SchemeFactors.Money(upkeep) + ") ödeyemedin; her ağ bir seviye zayıfladı.", null,
+                CardImages.ShadowNetwork);
             state.AddLog(today, "Ağların bakımı ödenemedi; ağlar zayıfladı");
         }
     }

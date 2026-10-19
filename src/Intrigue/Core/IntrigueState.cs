@@ -66,12 +66,13 @@ namespace CheatMenu.Intrigue.Core
         public bool Exposed;
     }
 
-    /// <summary>Haritaya dönünce gösterilecek bilgi popup'ı. HeroId varsa portresi görünür.</summary>
+    /// <summary>Haritaya dönünce gösterilecek bilgi kartı. HeroId varsa portresi, Image varsa resmi (Module/Images) görünür.</summary>
     public sealed class Notice
     {
         public string Title;
         public string Text;
         public string HeroId;
+        public string Image;
     }
 
     /// <summary>"Hükümdar hesap soruyor" kararı (tasarım 5.5).</summary>
@@ -133,7 +134,8 @@ namespace CheatMenu.Intrigue.Core
     public sealed class IntrigueState
     {
         public const int CurrentVersion = 1;
-        public const int MaxLogEntries = 20;
+        /// <summary>Kronik: kayıt dosyası şişmesin diye en yeni bu kadar olay tutulur (P1: 20'den yükseltildi).</summary>
+        public const int MaxLogEntries = 300;
 
         public string SpymasterId;
         public int NextSchemeId = 1;
@@ -231,7 +233,8 @@ namespace CheatMenu.Intrigue.Core
 
             foreach (KeyValuePair<string, int> p in CooldownUntil) records.Add(new TextRecord("cooldown").Add("target", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in AlertUntil) records.Add(new TextRecord("alert").Add("target", p.Key).Add("until", I(p.Value)));
-            foreach (Notice n in Notices) records.Add(new TextRecord("notice").Add("title", n.Title).Add("text", n.Text).Add("hero", n.HeroId));
+            foreach (Notice n in Notices)
+                records.Add(new TextRecord("notice").Add("title", n.Title).Add("text", n.Text).Add("hero", n.HeroId).Add("img", n.Image));
 
             if (LiegeDemand != null)
                 records.Add(new TextRecord("liege")
@@ -298,7 +301,10 @@ namespace CheatMenu.Intrigue.Core
                         if (Empty(r.Get("target")) != null) state.AlertUntil[r.Get("target")] = Int(r, "until");
                         break;
                     case "notice":
-                        state.Notices.Add(new Notice { Title = r.Get("title") ?? "", Text = r.Get("text") ?? "", HeroId = Empty(r.Get("hero")) });
+                        state.Notices.Add(new Notice
+                        {
+                            Title = r.Get("title") ?? "", Text = r.Get("text") ?? "", HeroId = Empty(r.Get("hero")), Image = Empty(r.Get("img")),
+                        });
                         break;
                     case "liege":
                         if (Empty(r.Get("kingdom")) == null) break;

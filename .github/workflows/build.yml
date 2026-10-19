@@ -18,11 +18,19 @@ jobs:
         run: dotnet build src/CheatMenu.csproj -c Release -nologo
       - name: Testler
         run: dotnet run --project tests/CheatMenu.Tests/CheatMenu.Tests.csproj -c Release -f net8.0
-      # Paket oyunun Modules klasörüne doğrudan kopyalanacak yapıda: CheatMenu/SubModule.xml + CheatMenu/bin/Win64_Shipping_Client/...
+      # Gauntlet prefab'ları oyunun referans DLL'lerine ve ViewModel'lere karşı (parça, özellik, bağlantı, fırça adları).
+      - name: Arayüz denetimi
+        run: |
+          P=~/.nuget/packages
+          dotnet run --project tools/GuiCheck/GuiCheck.csproj -c Release -- Module/GUI src/bin/Release/CheatMenu.dll \
+            $P/bannerlord.referenceassemblies.core/1.4.8.119303/ref/net472 \
+            $P/bannerlord.referenceassemblies.sandbox/1.4.8.119303/ref/net472 \
+            $P/bannerlord.uiextenderex/2.13.3/lib/netstandard2.0
+      # Paket oyunun Modules klasörüne doğrudan kopyalanacak yapıda: CheatMenu/SubModule.xml, GUI/, Images/, bin/Win64_Shipping_Client/...
       - name: Kurulum paketi
         run: |
           mkdir -p package/CheatMenu/bin/Win64_Shipping_Client
-          cp Module/SubModule.xml package/CheatMenu/
+          cp -r Module/. package/CheatMenu/
           cp src/bin/Release/CheatMenu.dll src/bin/Release/CheatMenu.pdb package/CheatMenu/bin/Win64_Shipping_Client/
       - uses: actions/upload-artifact@v4
         with:

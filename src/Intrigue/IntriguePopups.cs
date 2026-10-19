@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
+using CheatMenu.UI;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameState;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
@@ -15,7 +16,8 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Entrika popup'ları (tasarım 9.2). Kuyruk yok: her karede durumdaki bekleyen bildirim ve kararlara bakılır,
     /// yalnızca haritadayken ve başka popup açık değilken sıradaki gösterilir. Durum kayda yazıldığı için
-    /// kaydet-yükle sonrası da sorulur. Popup açıkken oyun durur.
+    /// kaydet-yükle sonrası da sorulur. Popup açıkken oyun durur. P1: hepsi resimli olay kartıyla (UI.EventCards)
+    /// gösterilir; kart açılamazsa oyunun seçim penceresine düşer.
     /// </summary>
     public static class IntriguePopups
     {
@@ -53,12 +55,12 @@ namespace CheatMenu.Intrigue
         {
             if (_open)
             {
-                if (InformationManager.IsAnyInquiryActive()) _lastSeenActive = Environment.TickCount;
+                if (InformationManager.IsAnyInquiryActive() || EventCards.IsOpen) _lastSeenActive = Environment.TickCount;
                 else if (Environment.TickCount - _lastSeenActive > StaleOpenMs) _open = false;
                 return;
             }
             if (!(Game.Current?.GameStateManager?.ActiveState is MapState)) return;
-            if (InformationManager.IsAnyInquiryActive() || MenuUI.HasPending) return;
+            if (InformationManager.IsAnyInquiryActive() || EventCards.IsOpen || MenuUI.HasPending) return;
             if (Campaign.Current?.ConversationManager?.IsConversationInProgress == true) return;
             IntrigueState state = IntrigueBehavior.Current?.State;
             if (state == null) return;
@@ -107,6 +109,9 @@ namespace CheatMenu.Intrigue
             }
 
             MarkOpen();
+            var ok = new EventCards.CardOption { Label = "Tamam", Apply = () => { } };
+            if (EventCards.TryShow("BİLDİRİM", notice.Title, notice.Text, notice.Image, hero, new List<EventCards.CardOption> { ok }, ok, Done))
+                return;
             if (hero == null)
             {
                 InformationManager.ShowInquiry(
@@ -148,10 +153,10 @@ namespace CheatMenu.Intrigue
                 },
                 new IntrigueEvents.Option { Label = "Krallıktan ayrıl", Apply = () => SchemeOutcomes.LeaveOverMurder(state) },
             };
-            ShowChoice("Hükümdar hesap soruyor",
+            ShowChoice("HESAP", "Hükümdar hesap soruyor",
                 ruler?.Name + ", " + Tr.Genitive(demand.VictimName) + (demand.Kidnap ? " kaçırılmasının" : " ölümünün")
                     + " arkasında senin olduğunu öğrendi ve hesap soruyor.",
-                options);
+                options, CardImages.LiegeDemand, ruler);
         }
 
         private static void ShowPlotDetected(IntrigueState state, AiPlot plot)
@@ -174,14 +179,14 @@ namespace CheatMenu.Intrigue
                 };
             }
             string what = plot.Kind == SchemeKind.Kidnap ? "kaçırmak" : "öldürmek";
-            ShowChoice("Sana karşı entrika sezildi",
+            ShowChoice("KARŞI CASUSLUK", "Sana karşı entrika sezildi",
                 "Casus başın kötü haberlerle geldi: " + plotter.Name + " (" + SchemeFactors.Affiliation(plotter) + "), "
                 + (target == Hero.MainHero ? "seni" : Tr.Accusative(target.Name.ToString())) + " " + what + " için adam tutmuş.\n\n"
                 + "Hakkında rapor ve \"suikast planı\" sırrı artık elinde (şantajla koza çevirebilirsin; koz alırsan planından vazgeçer).",
-                options);
+                options, CardImages.PlotDetected, plotter);
         }
 
-        /// <summary>Sezilen bir entrikaya karşı seçenekler; Entrika > Sana karşı entrikalar menüsü de bunu kullanır.</summary>
+        /// <summary>Sezilen bir entrikaya karşı seçenekler; Entrika ekranındaki "Sana karşı" sekmesi ve Insert menüsü de bunu kullanır.</summary>
         public static List<IntrigueEvents.Option> PlotOptions(IntrigueState state, AiPlot plot) => new List<IntrigueEvents.Option>
         {
             new IntrigueEvents.Option { Label = "İfşa et: plan biter, entrikacının hükümdarıyla arası açılır", Apply = () => AiIntrigue.ExposePlot(state, plot) },
@@ -197,7 +202,7 @@ namespace CheatMenu.Intrigue
                 DisabledHint = AiIntrigue.CounterMurderBlocked(state, plot),
                 Apply = () => AiIntrigue.CounterMurder(state, plot),
             },
-            new IntrigueEvents.Option { Label = "Şimdilik bekle (Entrika > Sana karşı entrikalar)", Apply = () => { } },
+            new IntrigueEvents.Option { Label = "Şimdilik bekle (Entrika ekranı > Sana karşı)", Apply = () => { } },
         };
 
         private static void ShowEvent(IntrigueState state, Scheme scheme)
@@ -217,7 +222,9 @@ namespace CheatMenu.Intrigue
                     apply();
                 };
             }
-            ShowChoice(title, text, options);
+            Hero target = Hero.Find(scheme.TargetId);
+            ShowChoice(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · OLAY", title, text, options,
+                CardImages.ForEvent(scheme.PendingEvent), target);
         }
 
         private static void ShowSpyChoice(IntrigueState state, Scheme scheme)
@@ -249,14 +256,15 @@ namespace CheatMenu.Intrigue
                     Apply = () => SchemeEngine.ChooseContinuation(scheme, true),
                 },
             };
+            string caption = SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · KARAR";
             if (blackmail)
-                ShowChoice("Şantaj (" + target.Name + "): deliller hazır",
+                ShowChoice(caption, "Şantaj (" + target.Name + "): deliller hazır",
                     "Adamların " + Tr.Genitive(target.Name.ToString()) + " sırrını kanıtlayacak kadar delil topladı. Şimdi mi yüzüne vurursun, "
-                    + "yoksa biraz daha mı beklersin?", options);
+                    + "yoksa biraz daha mı beklersin?", options, CardImages.Blackmail, target);
             else
-                ShowChoice("Casusluk (" + target.Name + "): ilk bilgiler geldi",
+                ShowChoice(caption, "Casusluk (" + target.Name + "): ilk bilgiler geldi",
                     "Adamların " + target.Name + " hakkında rapor yazacak kadar bilgi topladı. Şimdi mi alırsın, yoksa sırlarını mı kurcalasınlar?",
-                    options);
+                    options, CardImages.Spy, target);
         }
 
         private static void ShowExecuteAsk(Scheme scheme)
@@ -276,7 +284,7 @@ namespace CheatMenu.Intrigue
                     Apply = () => SchemeEngine.Execute(scheme, choice.Level),
                 })
                 .ToList();
-            options.Add(new IntrigueEvents.Option { Label = "Sonra karar ver (Entrika > Süren entrikalar)", Apply = () => { } });
+            options.Add(new IntrigueEvents.Option { Label = "Sonra karar ver (Entrika ekranı > Süren entrikalar)", Apply = () => { } });
             foreach (IntrigueEvents.Option option in options)
             {
                 Action apply = option.Apply;
@@ -286,28 +294,19 @@ namespace CheatMenu.Intrigue
                     apply();
                 };
             }
-            ShowChoice(SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): plan hazır",
-                "Hazırlıklar tamamlandı; daha fazla beklemek bir şey kazandırmaz. Ne zaman vuracağına sen karar ver.", options);
+            ShowChoice(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · PLAN HAZIR", SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): plan hazır",
+                "Hazırlıklar tamamlandı; daha fazla beklemek bir şey kazandırmaz. Ne zaman vuracağına sen karar ver.", options,
+                CardImages.ForKind(scheme.Kind), target);
         }
 
-        /// <summary>Zorunlu seçim: kapatma düğmesi yok; seçilemeyen seçenekler ipucuyla gri görünür.</summary>
-        private static void ShowChoice(string title, string text, List<IntrigueEvents.Option> options)
+        /// <summary>Zorunlu seçim (kapatma yok); seçilemeyen seçenekler ipucuyla gri görünür. Resimli kart, olmazsa seçim penceresi.</summary>
+        private static void ShowChoice(string caption, string title, string text, List<IntrigueEvents.Option> options, string image, Hero hero)
         {
-            List<InquiryElement> elements = options
-                .Select(o => new InquiryElement(o, o.Label, null, o.DisabledHint == null, o.DisabledHint ?? string.Empty))
+            List<EventCards.CardOption> cardOptions = options
+                .Select(o => new EventCards.CardOption { Label = o.Label, DisabledHint = o.DisabledHint, Apply = o.Apply })
                 .ToList();
-
             MarkOpen();
-            MBInformationManager.ShowMultiSelectionInquiry(
-                new MultiSelectionInquiryData(title, text, elements, false, 1, 1, "Seç", string.Empty,
-                    selected =>
-                    {
-                        _open = false;
-                        if (selected != null && selected.Count > 0 && selected[0].Identifier is IntrigueEvents.Option option)
-                            MenuUI.SafeRun(title, option.Apply);
-                    },
-                    _ => _open = false),
-                true, false);
+            EventCards.Show(caption, title, text, image, hero, cardOptions, null, () => _open = false);
         }
 
         private static void MarkOpen()

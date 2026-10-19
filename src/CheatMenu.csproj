@@ -30,7 +30,14 @@
     <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox" Version="$(GameVersion)" PrivateAssets="all" IncludeAssets="compile" />
     <PackageReference Include="Lib.Harmony.Ref" Version="2.4.2" PrivateAssets="all" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.MCM" Version="5.13.1" PrivateAssets="all" IncludeAssets="compile" />
+    <!-- SubModule.xml'deki en düşük sürüm; yalnızca 2.13 ve 3.x'te ortak API kullanılır. -->
+    <PackageReference Include="Bannerlord.UIExtenderEx" Version="2.13.3" PrivateAssets="all" IncludeAssets="compile" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Module klasörü (SubModule.xml, GUI prefab/fırçaları, resimler) oyundaki modül klasörüne olduğu gibi kopyalanır. -->
+  <ItemGroup>
+    <ModuleAsset Include="$(MSBuildProjectDirectory)\..\Module\**\*.*" />
   </ItemGroup>
 
   <Target Name="DeployToGame" AfterTargets="Build">
@@ -38,9 +45,9 @@
              Text="Oyun klasörü bulunamadı ($(GameFolder)); mod kopyalanmadı. -p:GameFolder=... ile belirt." />
     <MakeDir Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')" Directories="$(ModuleOut)\bin\Win64_Shipping_Client" />
     <Copy Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')"
-          SourceFiles="$(MSBuildProjectDirectory)\..\Module\SubModule.xml" DestinationFolder="$(ModuleOut)" />
-    <Copy Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')"
           SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModuleOut)\bin\Win64_Shipping_Client" />
+    <Copy Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')"
+          SourceFiles="@(ModuleAsset)" DestinationFiles="@(ModuleAsset->'$(ModuleOut)\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Message Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')" Importance="high" Text="Taç ve Hançer -> $(ModuleOut)" />
   </Target>
 </Project>
