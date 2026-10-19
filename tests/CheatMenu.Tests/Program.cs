@@ -81,6 +81,8 @@ namespace CheatMenu.Tests
             Check("settings: map button default top center", ModSettings.Parse("").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
             Check("settings: map button hidden", ModSettings.Parse("MapButtonPosition=0").MapButtonPosition == 0);
             Check("settings: map button 9 -> default", ModSettings.Parse("MapButtonPosition=9").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
+            Check("settings: map button in the game's map bar", ModSettings.Parse("MapButtonPosition=4").MapButtonPosition == ModSettings.MapBarButtonPosition
+                && ModSettings.MapButtonPositionNames[ModSettings.MapBarButtonPosition] == "Harita çubuğunda");
             Check("settings: hotkey default Home", ModSettings.ScreenHotkeyNames[ModSettings.Parse("").ScreenHotkey] == "Home");
             Check("settings: hotkey none", ModSettings.Parse("ScreenHotkey=0").ScreenHotkey == 0);
             Check("settings: hotkey 99 -> default", ModSettings.Parse("ScreenHotkey=99").ScreenHotkey == ModSettings.DefaultScreenHotkey);
