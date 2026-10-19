@@ -665,7 +665,13 @@ namespace CheatMenu.Tests
             List<string> documented = System.Text.RegularExpressions.Regex.Matches(text, "`([a-z0-9_]+)\\.png`")
                 .Cast<System.Text.RegularExpressions.Match>().Select(m => m.Groups[1].Value).Distinct().ToList();
             Check("images: code names are documented", names.TrueForAll(documented.Contains));
-            Check("images: documented names are used", documented.TrueForAll(names.Contains));
+            Check("images: documented names are used (or their variants)", documented.TrueForAll(n => CardImages.BaseOf(n) != null));
+            Check("images: every card has variant prompts", names.TrueForAll(n => documented.Contains(CardImages.Variant(n, 2)) && documented.Contains(CardImages.Variant(n, 3))));
+            Check("images: variant names", CardImages.Variant("sonuc_kur", 1) == "sonuc_kur" && CardImages.Variant("sonuc_kur", 3) == "sonuc_kur_3"
+                && CardImages.Variants("tur_santaj").Count() == CardImages.MaxVariants);
+            Check("images: base of variant", CardImages.BaseOf("sonuc_kur_3") == "sonuc_kur" && CardImages.BaseOf("sonuc_kur") == "sonuc_kur"
+                && CardImages.BaseOf("sonuc_kur_9") == null && CardImages.BaseOf("sonuc_kur_1") == null && CardImages.BaseOf("yok_2") == null
+                && CardImages.BaseOf("sonuc_kur_02") == null);
         }
 
         private static string FindRepoFile(string relative)

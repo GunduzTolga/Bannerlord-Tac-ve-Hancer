@@ -15,8 +15,9 @@ namespace CheatMenu.UI.ViewModels
             Caption = caption ?? "";
             Title = title ?? "";
             Text = text ?? "";
-            HasImage = TvhImages.Get(image) != null;
-            ImageName = HasImage ? image : "";
+            string chosen = TvhImages.PickVariant(image);
+            HasImage = TvhImages.Get(chosen) != null;
+            ImageName = HasImage ? chosen : "";
             HasPortrait = !HasImage && hero != null;
             Portrait = PortraitOf(HasPortrait ? hero : null);
             HeroName = !HasImage && hero != null ? hero.Name.ToString() : "";

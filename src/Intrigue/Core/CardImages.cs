@@ -62,6 +62,29 @@ namespace CheatMenu.Intrigue.Core
             { 10, "olay_cete_teklifi" },
         };
 
+        /// <summary>Bir karta en fazla bu kadar resim sürümü: ad, ad_2 ... ad_5. Oyun var olanlardan rastgele birini gösterir.</summary>
+        public const int MaxVariants = 5;
+
+        public static string Variant(string name, int index) => index <= 1 ? name : name + "_" + index;
+
+        public static IEnumerable<string> Variants(string name)
+        {
+            for (int i = 1; i <= MaxVariants; i++) yield return Variant(name, i);
+        }
+
+        /// <summary>Dosya adının ait olduğu kart resmi ("sonuc_kur_3" → "sonuc_kur"); kodda kullanılmayan bir adsa null.</summary>
+        public static string BaseOf(string file)
+        {
+            var names = new HashSet<string>(All());
+            if (names.Contains(file)) return file;
+            int underscore = file.LastIndexOf('_');
+            if (underscore <= 0 || !int.TryParse(file.Substring(underscore + 1), out int index) || index < 2 || index > MaxVariants
+                || file.Substring(underscore + 1) != index.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                return null;
+            string name = file.Substring(0, underscore);
+            return names.Contains(name) ? name : null;
+        }
+
         public static string ForEvent(int eventId) => Events.TryGetValue(eventId, out string name) ? name : null;
 
         public static string ForKind(SchemeKind kind) =>
