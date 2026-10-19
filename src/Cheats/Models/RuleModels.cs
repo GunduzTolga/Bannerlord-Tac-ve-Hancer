@@ -17,6 +17,8 @@ namespace CheatMenu.Cheats.Models
             starter.AddModel<PartySizeLimitModel>(new CheatPartySizeLimitModel());
             starter.AddModel<CharacterDevelopmentModel>(new CheatCharacterDevelopmentModel());
             starter.AddModel<ClanTierModel>(new CheatClanTierModel());
+            // Herkesi biç: savaşta öldürücü kılıç darbesi arkadakine geçer (ayar kapalıyken önceki modelin aynısı).
+            starter.AddModel<TaleWorlds.MountAndBlade.ComponentInterfaces.AgentApplyDamageModel>(new CutThroughDamageModel());
         }
     }
 }

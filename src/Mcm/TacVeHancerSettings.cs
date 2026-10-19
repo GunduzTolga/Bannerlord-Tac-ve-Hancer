@@ -69,6 +69,12 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(RulesGroup, GroupOrder = 0)]
         public bool NoPartyLimit { get; set; }
 
+        [SettingPropertyDropdown("Herkesi biç", Order = 7, RequireRestart = false,
+            HintText = "Öldürücü kılıç darbesi düşmanın içinden geçer, hızının %70'iyle arkadakini de vurur. Dost askerde ve kalkanda durur; "
+                + "tekme, yumruk ve mızrak dürtmesi sayılmaz. Yalnızca ben: yalnızca senin darbelerin. Herkes: savaştaki herkes." + RulesHint)]
+        [SettingPropertyGroup(RulesGroup, GroupOrder = 0)]
+        public Dropdown<string> CutThrough { get; set; } = new Dropdown<string>(CutThroughRules.ModeNames, CutThroughRules.DefaultMode);
+
         // ---- Entrika ----
 
         [SettingPropertyDropdown("Entrika zorluğu", Order = 0, RequireRestart = false,
@@ -199,6 +205,7 @@ namespace CheatMenu.Mcm
             ScreenHotkey.SelectedIndex = s.ScreenHotkey;
             MapButtonPosition.SelectedIndex = s.MapButtonPosition;
             EventCards = s.EventCards;
+            CutThrough.SelectedIndex = s.CutThrough;
         }
 
         private void ApplyTo(ModSettings s)
@@ -221,6 +228,7 @@ namespace CheatMenu.Mcm
             s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
             s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);
             s.EventCards = EventCards;
+            s.SetCutThrough(CutThrough.SelectedIndex);
         }
 
         private static Dropdown<string> Choices(int[] values, Func<int, string> label) =>
