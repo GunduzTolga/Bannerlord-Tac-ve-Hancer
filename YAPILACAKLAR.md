@@ -35,6 +35,9 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Regard and Standing** (20 Ekim'de eklendi; lordlar arası gizli ilişkilerin sahibi o, bizim casus başımız onun gerçek
       ilişkilerini buluyor): Mod Seçenekleri'nde "Regard and Standing" sayfası; turnuva davet mektupları; klanındaki bir evlilik onay
       istiyor. Gizli ilişki denemeleri: `docs\superpowers\specs\2026-10-20-regardstanding-iliskiler.md` sonundaki liste
+- [ ] **Extra Complexion** (20 Ekim'de eklendi): karakter düzenleyicide yara, makyaj, dövme ve savaş boyası seçenekleri; DLX saç
+      katmanları paneliyle **üst üste binmiyor mu** (ikisi de düzenleyiciye panel ekliyor; ekran görüntüsü at). Women in Calradia
+      yoldaşlarının yüzleri hâlâ düzgün (iki modun ten ayarları tek dosyada birleşti)
 - [ ] Bu modlar ayrıyken alınmış bir kayıt varsa, yüklerken "eksik modül" uyarısı çıkabilir; yine de yüklenir
 - [ ] Yeni oyun: karakter oluşturma çökmeden geçiyor (eski çökmenin nedeni bulundu: lord sayfasının `Refresh` metodu; Diplomacy
       ve DLX Hair'in açılışta yamaladığı 37 metodun hiçbiri o tetiği taşımıyor)
