@@ -3,15 +3,16 @@ using System.Linq;
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Conversation;
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Settlements;
 
 namespace CheatMenu.Intrigue
 {
     /// <summary>
-    /// Haberciler (P2.2, tasarım: docs/superpowers/specs/2026-10-19-p2-haberci-saray.md). Uzaktaki lorda koz talebi mektupla gider;
-    /// mesafeye göre birkaç gün sonra varır ve o gün sonuçlanır. Yüz yüzeyken (aynı yerleşim ya da çok yakın) koz hemen kullanılır.
-    /// Lordu kendi tarafına çekmek oyunun kendi ikna konuşmasıyla yapılır (bilgi ona bonus verir: IntriguePersuasionModel).
+    /// Haberciler (P2.2, tasarım: docs/superpowers/specs/2026-10-19-p2-haberci-saray.md). Uzaktaki lorda iki tür mektup gider:
+    /// koz talebi ve görüşme daveti (isteğe bağlı hediyeyle). Mesafeye göre birkaç gün sonra varır. Görüşmeyi kabul eden lordla
+    /// haritadan konuşma penceresi açılır: lordu bulmaya gitmeden oyunun kendi ikna konuşması (krallığa davet vb.) yapılır.
     /// </summary>
     public static class Messengers
     {
@@ -74,6 +75,99 @@ namespace CheatMenu.Intrigue
             return " (haberciyle " + days + " gün, " + SchemeFactors.Money(LetterRules.MessengerCost(days)) + ")";
         }
 
+        // ---- Görüşme daveti (ulak) ----
+
+        /// <summary>Ulağı kabul etmiş, görüşmeye hazır lord; yoksa null.</summary>
+        public static Audience AudienceWith(IntrigueState state, Hero hero) =>
+            state.Audiences.FirstOrDefault(a => a.HeroId == hero.StringId && a.Until > SchemeFactors.Today);
+
+        /// <summary>null: bu lorda ulak gönderilebilir; değilse neden.</summary>
+        public static string AudienceBlocked(IntrigueState state, Hero target)
+        {
+            if (target == null || !target.IsAlive) return "Hayatta değil";
+            if (!target.IsLord || target.Clan == Clan.PlayerClan) return "Yalnızca başka klanların lordlarına";
+            if (target.IsPrisoner) return "Esir: ulağı kabul edemez";
+            if (AudienceWith(state, target) != null) return "Zaten seninle görüşmeye hazır: Görüş";
+            return CannotSend(state, target);
+        }
+
+        /// <summary>Hediye bu lorda şimdi ilişki getirir mi (30 günde bir).</summary>
+        public static bool GiftCounts(IntrigueState state, Hero target) =>
+            !(state.GiftUntil.TryGetValue(target.StringId, out int until) && SchemeFactors.Today < until);
+
+        public static void SendAudience(IntrigueState state, Hero target, int gift)
+        {
+            string blocked = AudienceBlocked(state, target);
+            if (blocked == null && gift > 0 && !SchemeFactors.CanAfford(LetterRules.MessengerCost(TravelDays(target)) + gift))
+                blocked = "Yeterli altının yok";
+            if (blocked != null) throw new InvalidOperationException(blocked);
+            SchemeFactors.Pay(gift);
+            Send(state, target, LetterKind.Audience, gift);
+        }
+
+        /// <summary>Görüşmeye hazır lordla haritadan konuşma penceresini açar.</summary>
+        public static void OpenAudience(IntrigueState state, Hero hero)
+        {
+            Audience audience = AudienceWith(state, hero) ?? throw new InvalidOperationException(hero.Name + " şu an görüşmeye hazır değil");
+            if (!hero.IsAlive) throw new InvalidOperationException("Hayatta değil");
+            if (hero.IsPrisoner) throw new InvalidOperationException(hero.Name + " şu an esir");
+            if (Campaign.Current.ConversationManager?.IsConversationInProgress == true) throw new InvalidOperationException("Başka bir konuşma sürüyor");
+            state.Audiences.Remove(audience);
+            UI.IntrigueScreen.Close();
+            CampaignMapConversation.OpenConversation(
+                new ConversationCharacterData(CharacterObject.PlayerCharacter, PartyBase.MainParty),
+                new ConversationCharacterData(hero.CharacterObject, hero.PartyBelongedTo?.Party));
+        }
+
+        private static void ResolveAudience(IntrigueState state, Letter letter, Hero target)
+        {
+            int gift = letter.Use;
+            int today = SchemeFactors.Today;
+            // Esirken ya da savaşın ortasındayken ulak bekler; çok uzarsa vazgeçer.
+            if (target.IsPrisoner || SchemeFactors.InBattle(target))
+            {
+                if (today - letter.SentDay < LetterRules.MaxLetterDelayDays)
+                {
+                    letter.ArriveDay = today + 1;
+                    state.Letters.Add(letter);
+                    return;
+                }
+                Refund(gift);
+                SchemeOutcomes.Notify(state, "Ulak geri döndü: " + target.Name,
+                    "Ulağın " + target.Name + " ile görüşemedi" + (target.IsPrisoner ? " (esir)" : " (savaşta)") + "."
+                    + (gift > 0 ? " Hediyen geri geldi." : ""), target, CardImages.Messenger);
+                return;
+            }
+            if (Hero.MainHero.GetRelation(target) <= LetterRules.AudienceRefuseRelation)
+            {
+                Refund(gift);
+                SchemeOutcomes.Notify(state, "Ulak geri çevrildi: " + target.Name,
+                    target.Name + " seninle görüşmeyi reddetti; aranız buna fazla kötü." + (gift > 0 ? " Hediyeni de geri yolladı." : ""),
+                    target, CardImages.Messenger);
+                state.AddLog(today, "Ulak geri çevrildi: " + target.Name);
+                return;
+            }
+            int relation = 0;
+            if (gift > 0)
+            {
+                target.ChangeHeroGold(gift);
+                if (GiftCounts(state, target))
+                {
+                    relation = LetterRules.GiftRelation(gift);
+                    SchemeOutcomes.Relate(target, relation);
+                    state.GiftUntil[target.StringId] = today + LetterRules.GiftCooldownDays;
+                }
+            }
+            state.Audiences.RemoveAll(a => a.HeroId == target.StringId);
+            state.Audiences.Add(new Audience { HeroId = target.StringId, Until = today + LetterRules.AudienceWaitDays, Relation = relation });
+            state.AddLog(today, "Ulak kabul edildi: " + target.Name + (gift > 0 ? " (hediye " + SchemeFactors.Money(gift) + ")" : ""));
+        }
+
+        private static void Refund(int gift)
+        {
+            if (gift > 0) Hero.MainHero.ChangeHeroGold(gift);
+        }
+
         // ---- Gönderme ve varış ----
 
         private static void Send(IntrigueState state, Hero target, LetterKind kind, int use)
@@ -85,7 +179,7 @@ namespace CheatMenu.Intrigue
             {
                 Id = state.NextLetterId++, Kind = kind, TargetId = target.StringId, Use = use, SentDay = today, ArriveDay = today + days,
             });
-            const string what = "koz talebi";
+            string what = kind == LetterKind.Audience ? "görüşme daveti" : "koz talebi";
             state.AddLog(today, "Haberci yola çıktı (" + what + "): " + target.Name + ", " + days + " gün");
             MenuUI.Success("Haberci yola çıktı: " + target.Name + " (" + what + "), yaklaşık " + days + " gün");
         }
@@ -115,11 +209,13 @@ namespace CheatMenu.Intrigue
             Hero target = Hero.Find(letter.TargetId);
             if (target == null || !target.IsAlive)
             {
-                SchemeOutcomes.Notify(state, "Haberci geri döndü", "Mektubun sahibine ulaşamadı: " + (target?.Name.ToString() ?? "alıcı") + " artık hayatta değil.",
-                    null, CardImages.Messenger);
+                if (letter.Kind == LetterKind.Audience) Refund(letter.Use);
+                SchemeOutcomes.Notify(state, "Haberci geri döndü", "Mektubun sahibine ulaşamadı: " + (target?.Name.ToString() ?? "alıcı") + " artık hayatta değil."
+                    + (letter.Kind == LetterKind.Audience && letter.Use > 0 ? " Hediyen geri geldi." : ""), null, CardImages.Messenger);
                 return;
             }
-            ResolveHookDemand(state, letter, target);
+            if (letter.Kind == LetterKind.Audience) ResolveAudience(state, letter, target);
+            else ResolveHookDemand(state, letter, target);
         }
 
         private static void ResolveHookDemand(IntrigueState state, Letter letter, Hero target)

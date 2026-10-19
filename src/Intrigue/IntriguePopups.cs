@@ -70,6 +70,12 @@ namespace CheatMenu.Intrigue
                 ShowNotice(state, state.Notices[0]);
                 return;
             }
+            Audience audience = state.Audiences.FirstOrDefault(a => !a.Asked && a.Until > SchemeFactors.Today);
+            if (audience != null)
+            {
+                ShowAudience(state, audience);
+                return;
+            }
             if (state.LiegeDemand != null)
             {
                 ShowLiegeDemand(state);
@@ -126,6 +132,44 @@ namespace CheatMenu.Intrigue
                 new MultiSelectionInquiryData(notice.Title, notice.Text, new List<InquiryElement> { portrait },
                     true, 0, 1, "Tamam", "Kapat", _ => Done(), _ => Done()),
                 true, false);
+        }
+
+        /// <summary>Ulak döndü: lord görüşmeye hazır. Şimdi konuşma penceresi açılır ya da sonra Entrika ekranından.</summary>
+        private static void ShowAudience(IntrigueState state, Audience audience)
+        {
+            Hero hero = Hero.Find(audience.HeroId);
+            if (hero == null || !hero.IsAlive)
+            {
+                state.Audiences.Remove(audience);
+                return;
+            }
+            int days = Math.Max(1, audience.Until - SchemeFactors.Today);
+            var options = new List<IntrigueEvents.Option>
+            {
+                new IntrigueEvents.Option
+                {
+                    Label = "Şimdi görüş: konuşma penceresi açılır", DisabledHint = hero.IsPrisoner ? "Şu an esir" : null,
+                    Apply = () => Messengers.OpenAudience(state, hero),
+                },
+                new IntrigueEvents.Option { Label = "Sonra: " + days + " gün içinde Entrika ekranı > Saray ya da Kişiler'den", Apply = () => { } },
+                new IntrigueEvents.Option { Label = "Görüşmeyi iptal et", Apply = () => state.Audiences.Remove(audience) },
+            };
+            foreach (IntrigueEvents.Option option in options)
+            {
+                Action apply = option.Apply;
+                option.Apply = () =>
+                {
+                    audience.Asked = true;
+                    apply();
+                };
+            }
+            int bonus = IntriguePersuasionModel.Bonus(hero);
+            ShowChoice("ULAK", "Ulak döndü: " + hero.Name,
+                hero.Name + " (" + SchemeFactors.Affiliation(hero) + ") ulağını kabul etti ve seni dinlemeye hazır."
+                + (audience.Relation > 0 ? " Hediyen ulaştı: ilişki +" + audience.Relation + "." : "")
+                + "\n\nKonuşmada oyunun kendi seçenekleri var: krallığına davet (ikna turları ve pazarlık), evlilik, görevler."
+                + (bonus > 0 ? " Hakkında bildiklerin sayesinde ikna turlarında başarı +" + bonus + "." : ""),
+                options, CardImages.Messenger, hero);
         }
 
         private static void ShowLiegeDemand(IntrigueState state)

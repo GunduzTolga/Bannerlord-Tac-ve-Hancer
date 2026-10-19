@@ -115,6 +115,39 @@ namespace CheatMenu.UI
                 kidnap ? CardImages.Kidnap : CardImages.Murder, target, options, cancel, null);
         }
 
+        /// <summary>Ulak gönder (P2.2): görüşme daveti, hediye seçimi.</summary>
+        public static void ShowAudienceSend(Hero hero, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            int days = Messengers.TravelDays(hero);
+            int cost = LetterRules.MessengerCost(days);
+            bool counts = Messengers.GiftCounts(state, hero);
+            string blocked = Messengers.AudienceBlocked(state, hero);
+            List<CardOption> options = LetterRules.GiftOptions
+                .Select(gift => new CardOption
+                {
+                    Label = gift == 0
+                        ? "Hediyesiz ulak: " + SchemeFactors.Money(cost)
+                        : "Hediye " + SchemeFactors.Money(gift) + ": ilişki +" + (counts ? LetterRules.GiftRelation(gift) : 0)
+                            + ", toplam " + SchemeFactors.Money(cost + gift),
+                    DisabledHint = blocked ?? (SchemeFactors.CanAfford(cost + gift) ? null : "Yeterli altının yok"),
+                    Apply = () =>
+                    {
+                        Messengers.SendAudience(SchemeEngine.State, hero, gift);
+                        afterwards?.Invoke();
+                    },
+                })
+                .ToList();
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("ULAK", "Ulak gönder: " + hero.Name,
+                "Ulağın yaklaşık " + days + " gün sonra " + Tr.Dative(hero.Name.ToString()) + " varır. Kabul ederse onunla haritadan konuşabilirsin: "
+                + "lordu bulmaya gitmeden krallığına davet edebilir (oyunun ikna turları), evlilik ya da görev konuşabilirsin.\n\n"
+                + "Sana çok düşmansa (ilişki " + LetterRules.AudienceRefuseRelation + " ya da kötü) geri çevirir ve hediyeni geri yollar."
+                + (counts ? "" : "\n\nSon hediyenden beri " + LetterRules.GiftCooldownDays + " gün geçmedi: bu kez hediye ilişki getirmez."),
+                CardImages.Messenger, hero, options, cancel, null);
+        }
+
         /// <summary>Casus başı görevi seçimi (P2.3). Söylenti seçilirse ardından hedef listesi açılır.</summary>
         public static void ShowMissionChoice(Action afterwards)
         {
