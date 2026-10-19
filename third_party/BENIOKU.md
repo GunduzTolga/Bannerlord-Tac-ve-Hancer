@@ -27,5 +27,9 @@ Bunun yaması `src\Bundle\BundleShim.cs`'dedir; modun kök klasöründeki dosyal
 | Diplomacy | `Bannerlord.Diplomacy` | BUTR yükleyicisi oyunun sürümüne uygun DLL'i kendisi seçer. |
 | DLX Hair Layers | `HairAddons` | Dosyalarını DLL'in yanından bulur. |
 | Women in Calradia | `WomeninCalradia` | Ayar dosyası `Bundled\WomeninCalradia\config.xml`. |
+| AutoTrader | `AutoTrader` | Ayarları ve günlüğü Belgeler\...\Configs'te; oyun 1.4.6 için derlenmiş, 1.4.8'de bütün çağrıları karşılık buluyor. |
 
-Hot Butter pakete girmez: genelevin yetişkin içerik taşımayan mekanikleri onun fikirlerinden kendi kodumuzla yazıldı.
+Pakete girmeyenler:
+- **Hot Butter:** genelevin yetişkin içerik taşımayan mekanikleri onun fikirlerinden kendi kodumuzla yazıldı.
+- **Dramalord** ve **Family Control:** yetişkin içerikli modlar. İlişki, gebelik, yüzleşme ve boşanma gibi yetişkin içerik taşımayan
+  kısımları bizde zaten var (gizli ilişki, sevgili, eşin gizli hayatı, aile editörü).
