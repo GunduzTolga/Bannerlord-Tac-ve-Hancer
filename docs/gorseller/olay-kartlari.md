@@ -49,7 +49,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
 ## Kontrol listesi
 
-`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 9/64 tamamlandı** — 8 adet `★` öncelikli + 1 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
+`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 22/64 tamamlandı** — 21 adet `★` öncelikli + 1 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
 
 | # | Dosya | Nerede görünür | Öncelik | Durum |
 |---|---|---|---|---|
@@ -64,21 +64,21 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 9 | `sonuc_yakalandi.png` | Ajan yakalandı, girişim başarısız | ★ | ✅ |
 | 10 | `sonuc_ifsa.png` | Sır ifşası, şantaj tutmadı | ★ | ✅ |
 | 11 | `sonuc_hukumdar_hesap.png` | Hükümdar hesap soruyor | | ⏳ |
-| 12 | `sonuc_entrika_sezildi.png` | Sana karşı entrika sezildi, korundun | ★ | ⏳ |
+| 12 | `sonuc_entrika_sezildi.png` | Sana karşı entrika sezildi, korundun | ★ | ✅ |
 | 13 | `yer_golge_agi.png` | Şehir menüsü > Gölgelerde iş çevir | | ⏳ |
 | 14 | `sonuc_koz.png` | Koz kullanıldı | | ⏳ |
 | 15 | `olay_rusvetci_hizmetkar.png` | Olay: rüşvetçi hizmetkâr | ★ | ✅ |
 | 16 | `olay_ajan_yakalandi.png` | Olay: ajan yakalandı | ★ | ✅ |
-| 17 | `olay_zehir_hancer.png` | Olay: zehir mi, hançer mi? | ★ | ⏳ |
-| 18 | `olay_hedef_yola_cikti.png` | Olay: hedef yer değiştirdi | ★ | ⏳ |
-| 19 | `olay_rakip_suikastci.png` | Olay: rakip suikastçı | ★ | ⏳ |
-| 20 | `olay_muhafiz_degisimi.png` | Olay: muhafız değişimi | ★ | ⏳ |
-| 21 | `olay_vicdan_azabi.png` | Olay: vicdan azabı | ★ | ⏳ |
-| 22 | `olay_supheli_tuccar.png` | Olay: şüpheli tüccar | ★ | ⏳ |
-| 23 | `olay_ziyafet.png` | Olay: ziyafet daveti | ★ | ⏳ |
-| 24 | `olay_cete_teklifi.png` | Olay: çete liderinin teklifi | ★ | ⏳ |
-| 25 | `sonuc_sorgu.png` | Esir sorgusu (P2.1) | ★ | ⏳ |
-| 26 | `sonuc_haberci.png` | Haberci sonucu, ulak döndü, görüşme (P2.2) | ★ | ⏳ |
+| 17 | `olay_zehir_hancer.png` | Olay: zehir mi, hançer mi? | ★ | ✅ |
+| 18 | `olay_hedef_yola_cikti.png` | Olay: hedef yer değiştirdi | ★ | ✅ |
+| 19 | `olay_rakip_suikastci.png` | Olay: rakip suikastçı | ★ | ✅ |
+| 20 | `olay_muhafiz_degisimi.png` | Olay: muhafız değişimi | ★ | ✅ |
+| 21 | `olay_vicdan_azabi.png` | Olay: vicdan azabı | ★ | ✅ |
+| 22 | `olay_supheli_tuccar.png` | Olay: şüpheli tüccar | ★ | ✅ |
+| 23 | `olay_ziyafet.png` | Olay: ziyafet daveti | ★ | ✅ |
+| 24 | `olay_cete_teklifi.png` | Olay: çete liderinin teklifi | ★ | ✅ |
+| 25 | `sonuc_sorgu.png` | Esir sorgusu (P2.1) | ★ | ✅ |
+| 26 | `sonuc_haberci.png` | Haberci sonucu, ulak döndü, görüşme (P2.2) | ★ | ✅ |
 | 27 | `sonuc_gizli_bulusma.png` | Gizli ilişki ya da gayrimeşru çocuk sırrı bulundu (P2.4) | | ✅ |
 | 28 | `sonuc_skandal.png` | Gizli ilişki ya da gayrimeşru çocuk ifşa edildi (P2.4) | | ⏳ |
 | 29 | `sonuc_fisilti.png` | Aldatılan eşe söylendi (P2.4) | | ⏳ |
@@ -90,9 +90,9 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 35 | `sonuc_dogum.png` | Kurdan ya da sevgiliden doğan çocuk (P2.6) | | ⏳ |
 | 36 | `sonuc_aldatma.png` | Eşinin gizli ilişkisi ortaya çıktı, yüzleşme | | ⏳ |
 | 37 | `sonuc_bosanma.png` | Boşanma | | ⏳ |
-| 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ | ⏳ |
+| 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ | ✅ |
 | 39 | `sonuc_mesrulastirma.png` | Gayrimeşru çocuk meşrulaştırıldı (P2.8) | | ⏳ |
-| 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ | ⏳ |
+| 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ | ✅ |
 | 41 | `sonuc_rehine.png` | Rehine anlaşması: gönderme, değişim, dönüş, bozulan barış (P2.10) | | ⏳ |
 | 42 | `olay_takip.png` | Kendin takip et: gündüz sahneleri ve takip raporu (P2.11) | ★ | ⏳ |
 | 43 | `olay_takip_gece.png` | Kendin takip et: gece sahneleri (P2.11) | ★ | ⏳ |
