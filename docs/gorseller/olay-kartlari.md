@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **35 olay kartı resmi**. Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **37 olay kartı resmi**. Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -83,6 +83,8 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 33 | `sonuc_hizmet_yemini.png` | Esir hizmetine katıldı (bağlılık yemini) | |
 | 34 | `sonuc_kur.png` | Kur: başlangıç, ret, eşin reddi, eşinin bilgi görevi (P2.6) | |
 | 35 | `sonuc_dogum.png` | Kurdan ya da sevgiliden doğan çocuk (P2.6) | |
+| 36 | `sonuc_aldatma.png` | Eşinin gizli ilişkisi ortaya çıktı, yüzleşme | |
+| 37 | `sonuc_bosanma.png` | Boşanma | |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -242,6 +244,18 @@ A fully clothed young noblewoman in an embroidered dress reading a folded letter
 
 ```
 A tired but smiling noble mother resting in a canopied bed in a warm hearth-lit chamber, a midwife placing a swaddled newborn in her arms, a wooden cradle and a basin nearby, tapestries on the stone walls, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**36 · `sonuc_aldatma.png`** — eşin seni aldatıyor
+
+```
+A grim lord standing alone in a dark castle chamber at night, holding a crumpled intercepted love letter with a broken wax seal, a hooded spymaster waiting silently by the door with a candle, an empty chair by the cold hearth, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**37 · `sonuc_bosanma.png`** — boşanma
+
+```
+A noble spouse in a travel cloak leaving a castle courtyard at dawn with a small retinue and a loaded packhorse, looking back once at the keep, a lord watching from a high window, a family banner being taken down, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)

@@ -54,6 +54,20 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### Eşinin gizli hayatı ve boşanma (yeni, ayar varsayılan açık)
+- [ ] Kişiler sekmesinde eşin listenin sonunda; dosyasında "Eşini araştır", "Boşa..."
+- [ ] Hile ile eşinle ilişkiyi düşür (ör. -30) ve uzun süre ayrı kal; birkaç ay sonra "Eşini araştır" (1.000, 14 gün) →
+      "Süren"de araştırma satırı → "Eşin seni aldatıyor: X" kartı (sevgili, süre, varsa çocuklar)
+- [ ] Kişiler'de sevgili X için "Gizli ilişki" sırrı; eşinden doğan çocuk varsa "Gayrimeşru çocuk ... resmî babası sensin"
+- [ ] **Yüzleş:** bazen bitiriyor (ilişki -10), bazen bitirmiyor (-20)
+- [ ] Hiçbir şey yokken araştırma: "kayda değer bir şey bulunamadı"; bazen eşin fark edip kırılıyor
+- [ ] **Boşa:** onayda sonuçlar; eşin ailesinin klanına döndü, partinden ayrıldı; klan ekranında artık eşin yok; çocuklar kaldı;
+      oyunun kendi evlilik seçenekleri yeniden açık
+- [ ] Eşin hamileyken "Boşa" kapalı ("doğumdan sonra")
+- [ ] Casus başı karşı casusluk görevindeyken ilişki kendiliğinden ortaya çıkabiliyor
+- [ ] MCM > Entrika > "Eşin seni aldatabilir" kapalıyken araştırma seçeneği yok, ilişki başlamıyor; boşanma yine açık
+- [ ] Kaydet → yükle → ilişki, araştırma ve gizli gebelik aynı
+
 ### P2.6 — Kur, sevgili, eşini bilgi için göndermek, gebelik (yeni)
 - [ ] Kişiler ya da Saray'da başka klandan karşı cinsten bir yetişkin lord: "Kur yap..." → kart (başarı, yakalanma) → başla, 500 dinar
 - [ ] "Süren" sekmesinde "KUR, SEVGİLİLER, GEBELİKLER": aşama adı, kalan gün; 21 gün sonra "Sevgilin oldu" ya da "Kur tutmadı" kartı

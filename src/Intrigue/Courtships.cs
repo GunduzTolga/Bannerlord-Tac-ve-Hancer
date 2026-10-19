@@ -306,7 +306,8 @@ namespace CheatMenu.Intrigue
         // ---- Gebelik ve doğum ----
 
         /// <summary>Yakınlıktan gebelik zarı; olduysa kart satırı, olmadıysa null.</summary>
-        private static string TryConceive(IntrigueState state, Hero a, Hero b, bool careful)
+        /// <param name="hidden">Eşinin gizli ilişkisinden: gerçek baba öğrenilene kadar kartlarda ve kronikte görünmez.</param>
+        internal static string TryConceive(IntrigueState state, Hero a, Hero b, bool careful, bool hidden = false)
         {
             if (!MayConceive(state, a, b)) return null;
             if (state.Roll100() > RomanceRules.PregnancyChanceFor(careful)) return null;
@@ -314,7 +315,8 @@ namespace CheatMenu.Intrigue
             Hero father = a.IsFemale ? b : a;
             int days = Math.Max(1, (int)Math.Round(Campaign.Current.Models.PregnancyModel.PregnancyDurationInDays));
             mother.IsPregnant = true;
-            state.Pregnancies.Add(new Pregnancy { MotherId = mother.StringId, FatherId = father.StringId, DueDay = SchemeFactors.Today + days });
+            state.Pregnancies.Add(new Pregnancy { MotherId = mother.StringId, FatherId = father.StringId, DueDay = SchemeFactors.Today + days, Hidden = hidden });
+            if (hidden) return null;
             state.AddLog(SchemeFactors.Today, mother.Name + " hamile (gerçek baba: " + father.Name + ")");
             return mother.Name + " hamile kaldı; doğum yaklaşık " + days + " gün sonra.";
         }
@@ -330,8 +332,11 @@ namespace CheatMenu.Intrigue
             Hero official = husband != null && husband != father ? husband : father;
             bool female = state.Roll100() <= (int)Math.Round(Campaign.Current.Models.PregnancyModel.DeliveringFemaleOffspringProbability * 100f);
             Hero child = HeroCreator.DeliverOffSpring(mother, official, female);
-            bool ours = mother.Clan == Clan.PlayerClan || official.Clan == Clan.PlayerClan || (father == Hero.MainHero && husband == null);
+            // Gizli gebelikte çocuk annesinin klanında kalır (eşinin sevgilisinin çocuğu senin klanına kendiliğinden gelmez).
+            bool ours = pregnancy.Hidden ? mother.Clan == Clan.PlayerClan
+                : mother.Clan == Clan.PlayerClan || official.Clan == Clan.PlayerClan || (father == Hero.MainHero && husband == null);
             if (ours && child.Clan != Clan.PlayerClan) child.Clan = Clan.PlayerClan;
+            else if (!ours && pregnancy.Hidden && mother.Clan != null && child.Clan != mother.Clan) child.Clan = mother.Clan;
             try
             {
                 // Oyunun kendi doğum olayı: kayıt defteri, bildirimler ve doğumu dinleyen diğer sistemler.
@@ -340,6 +345,16 @@ namespace CheatMenu.Intrigue
             catch (Exception ex)
             {
                 TaleWorlds.Library.Debug.Print("[CheatMenu] OnGivenBirth failed: " + ex);
+            }
+
+            if (pregnancy.Hidden && state.SpouseAffair?.Discovered != true)
+            {
+                // Gerçek baba sır: eşinin ilişkisi ortaya çıkınca söylenir (SpouseLife.Discover).
+                SpouseLife.OnHiddenBirth(state, child);
+                if (mother.Clan == Clan.PlayerClan)
+                    SchemeOutcomes.Notify(state, "Doğum: " + child.Name, mother.Name + " bir " + (female ? "kız" : "oğlan") + " doğurdu: " + child.Name
+                        + ". Çocuk senin klanında büyüyecek.", child, CardImages.Birth);
+                return;
             }
 
             string secretLine = "";
@@ -394,9 +409,17 @@ namespace CheatMenu.Intrigue
                 yield return ("Sevgilin: " + hero?.Name + (l.Public ? " (herkes biliyor)" : ""),
                     today >= l.NextMeetingDay ? "buluşmaya hazır" : "buluşma " + (l.NextMeetingDay - today) + " gün sonra");
             }
+            if (state.SpouseWatchUntil > today)
+                yield return ("Casus başın eşini araştırıyor", (state.SpouseWatchUntil - today) + " gün kaldı");
             foreach (Pregnancy p in state.Pregnancies)
-                yield return (Hero.Find(p.MotherId)?.Name + " hamile (gerçek baba: " + Hero.Find(p.FatherId)?.Name + ")",
+            {
+                Hero mother = Hero.Find(p.MotherId);
+                // Gizli gebelik: eşinse sıradan bir gebelik gibi görünür, başkasıysa hiç görünmez.
+                bool secret = p.Hidden && state.SpouseAffair?.Discovered != true;
+                if (secret && mother?.Clan != Clan.PlayerClan) continue;
+                yield return (mother?.Name + " hamile" + (secret ? "" : " (gerçek baba: " + Hero.Find(p.FatherId)?.Name + ")"),
                     "doğum " + Math.Max(0, p.DueDay - today) + " gün sonra");
+            }
         }
     }
 }

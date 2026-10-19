@@ -45,6 +45,8 @@ namespace CheatMenu
         public bool RomanceSecrets { get; set; } = true;
         /// <summary>Gece evi (genelev) işletmesi: yetişkin teması, metin olarak. Varsayılan kapalı.</summary>
         public bool NightHouses { get; set; }
+        /// <summary>Eşin kendi başına sevgili edinebilir (araştırınca ortaya çıkar). Varsayılan açık; gizli ilişki ayarıyla birlikte çalışır.</summary>
+        public bool SpouseInfidelity { get; set; } = true;
 
         public void SetFastForwardSpeed(int speed) => FastForwardSpeed = Allowed(AllowedSpeeds, speed, DefaultSpeed);
         public void SetSkillXpMultiplier(int value) => SkillXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
@@ -90,6 +92,7 @@ namespace CheatMenu
                     case "EventCards": settings.EventCards = IsTrue(value); break;
                     case "RomanceSecrets": settings.RomanceSecrets = IsTrue(value); break;
                     case "NightHouses": settings.NightHouses = IsTrue(value); break;
+                    case "SpouseInfidelity": settings.SpouseInfidelity = IsTrue(value); break;
                 }
             }
             return settings;
@@ -112,7 +115,8 @@ namespace CheatMenu
             + "ScreenHotkey=" + Invariant(ScreenHotkey) + "\n"
             + "EventCards=" + (EventCards ? "1" : "0") + "\n"
             + "RomanceSecrets=" + (RomanceSecrets ? "1" : "0") + "\n"
-            + "NightHouses=" + (NightHouses ? "1" : "0") + "\n";
+            + "NightHouses=" + (NightHouses ? "1" : "0") + "\n"
+            + "SpouseInfidelity=" + (SpouseInfidelity ? "1" : "0") + "\n";
 
         private static int Allowed(int[] allowed, int value, int fallback) =>
             Array.IndexOf(allowed, value) >= 0 ? value : fallback;

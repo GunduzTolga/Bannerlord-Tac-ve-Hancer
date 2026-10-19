@@ -55,6 +55,9 @@ namespace CheatMenu.UI.ViewModels
             foreach (IntelReport report in state.Reports) Note(report.TargetId, report.Day);
             foreach (Secret secret in state.Secrets) Note(secret.TargetId, secret.Day);
             foreach (Hook hook in state.Hooks.Where(h => h.Until > today)) Note(hook.TargetId, hook.Day);
+            // Eşin her zaman listede (en sonda): araştırma, yüzleşme ve boşanma onun dosyasından.
+            Hero spouse = Courtships.Spouse;
+            if (spouse != null && !lastSeen.ContainsKey(spouse.StringId)) lastSeen[spouse.StringId] = int.MinValue;
 
             List<Hero> heroes = lastSeen.OrderByDescending(p => p.Value)
                 .Select(p => Hero.Find(p.Key)).Where(h => h != null).ToList();
@@ -226,6 +229,11 @@ namespace CheatMenu.UI.ViewModels
                 }
             }
 
+            if (hero.IsAlive && hero == Courtships.Spouse)
+            {
+                foreach (ActionItemVM action in SpouseActions(state)) StartActions.Add(action);
+                return;
+            }
             if (hero.IsAlive)
                 foreach (SchemeKind kind in new[] { SchemeKind.Spy, SchemeKind.Blackmail, SchemeKind.Kidnap, SchemeKind.Murder })
                 {
@@ -252,6 +260,45 @@ namespace CheatMenu.UI.ViewModels
                             _changed();
                         }));
             }
+        }
+
+        /// <summary>Eşin için: araştır, yüzleş, boşa.</summary>
+        private IEnumerable<ActionItemVM> SpouseActions(IntrigueState state)
+        {
+            if (SpouseLife.Enabled)
+                yield return new ActionItemVM("Eşini araştır (casus başı, " + SchemeFactors.Money(FidelityRules.InvestigationCost) + ", "
+                    + FidelityRules.InvestigationDays + " gün)", SpouseLife.InvestigateBlocked(state), () =>
+                    {
+                        SpouseLife.Investigate(SchemeEngine.State);
+                        _changed();
+                    });
+            if (state.SpouseAffair != null && state.SpouseAffair.Discovered)
+                yield return new ActionItemVM("Yüzleş: ilişkiyi bitirmesini iste", null, () =>
+                {
+                    SpouseLife.Confront(SchemeEngine.State);
+                    _changed();
+                });
+            yield return new ActionItemVM("Boşa...", SpouseLife.DivorceBlocked(state), () => ConfirmDivorce(_changed), true);
+        }
+
+        internal static void ConfirmDivorce(Action changed)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero spouse = Courtships.Spouse;
+            if (spouse == null) return;
+            bool justified = SpouseLife.Justified(state);
+            Clan home = SpouseLife.HomeClan(spouse);
+            MenuUI.Confirm("Boşanma: " + spouse.Name,
+                (justified ? "Aldatıldığın biliniyor: boşanman haklı sayılır." : "Ortada bilinen bir suç yok: saray bunu haksız bir boşama sayar.")
+                + "\n\n" + spouse.Name + " ile ilişki -" + FidelityRules.DivorceRelation + "; ailesinin lideriyle -" + FidelityRules.DivorceFamilyPenalty(justified)
+                + (justified ? "" : "; krallığındaki onurlu klan liderleriyle -" + FidelityRules.DivorceHonorablePenalty) + ". "
+                + (home != null ? spouse.Name + " " + home.Name + " klanına döner." : "Dönecek ailesi yok: klanında kalır ama eşin olmaz.")
+                + " Çocuklar senin klanında kalır; sonra yeniden evlenebilirsin. Boşansın mı?",
+                () =>
+                {
+                    SpouseLife.Divorce(SchemeEngine.State);
+                    changed?.Invoke();
+                }, null);
         }
 
         public void ExecuteDeleteReport()

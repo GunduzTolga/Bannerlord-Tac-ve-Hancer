@@ -146,7 +146,7 @@ namespace CheatMenu.UI.ViewModels
             List<Interrogation.Prisoner> prisoners = Interrogation.Prisoners();
             Tabs[TabPeople].Name = "Kişiler (" + people + ")";
             Tabs[TabPrisoners].Name = "Esirler (" + prisoners.Count + ")";
-            Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count + state.Courtships.Count + state.Pregnancies.Count) + ")";
+            Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count + Courtships.Rows(state).Count()) + ")";
             Tabs[TabNetworks].Name = "Ağlar (" + state.Networks.Count + ")";
             Tabs[TabPlots].Name = "Sana karşı (" + detected + ")";
             foreach (TabVM tab in Tabs) tab.IsSelected = tab.Index == _tab;

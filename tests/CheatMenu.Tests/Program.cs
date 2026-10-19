@@ -90,6 +90,8 @@ namespace CheatMenu.Tests
             Check("settings: romance secrets off", !ModSettings.Parse("RomanceSecrets=0").RomanceSecrets);
             Check("settings: night houses default off", !ModSettings.Parse("").NightHouses);
             Check("settings: night houses on", ModSettings.Parse("NightHouses=1").NightHouses);
+            Check("settings: spouse infidelity default on", ModSettings.Parse("").SpouseInfidelity);
+            Check("settings: spouse infidelity off", !ModSettings.Parse("SpouseInfidelity=0").SpouseInfidelity);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -107,12 +109,13 @@ namespace CheatMenu.Tests
             full.EventCards = false;
             full.RomanceSecrets = false;
             full.NightHouses = true;
+            full.SpouseInfidelity = false;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
                 && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && back.MapButtonPosition == 3 && back.ScreenHotkey == 5
-                && !back.EventCards && !back.RomanceSecrets && back.NightHouses);
+                && !back.EventCards && !back.RomanceSecrets && back.NightHouses && !back.SpouseInfidelity);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -150,6 +153,7 @@ namespace CheatMenu.Tests
             HouseTests();
             RecruitTests();
             CourtshipTests();
+            FidelityTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -350,6 +354,11 @@ namespace CheatMenu.Tests
                 DaysIntoStage = 3, StartDay = 150, Careful = true });
             state.Lovers.Add(new Lover { HeroId = "lord_9", Since = 160, NextMeetingDay = 174, Public = true });
             state.Pregnancies.Add(new Pregnancy { MotherId = "lord_9", FatherId = "main_hero", DueDay = 196 });
+            state.Pregnancies.Add(new Pregnancy { MotherId = "spouse_1", FatherId = "lord_11", DueDay = 230, Hidden = true });
+            state.SpouseAffair = new SpouseAffair { SpouseId = "spouse_1", LoverId = "lord_11", Since = 120, NextMeetingDay = 190, Discovered = true,
+                How = "Casus başın buldu.", ChildIds = { "child_1", "child_2" } };
+            state.SpouseWatchUntil = 205;
+            state.SpouseApartWeeks = 3;
             state.RomanceUntil["lord_10"] = 220;
             state.NextCourtshipId = 5;
             state.Houses.Add(new House { TownId = "town_V1", Staff = 5, Share = HouseShare.Fair, Since = 120 });
@@ -394,8 +403,12 @@ namespace CheatMenu.Tests
                 && ct.Mode == CourtshipMode.Intel && ct.Stage == 2 && ct.DaysIntoStage == 3 && ct.StartDay == 150 && ct.Careful && back.NextCourtshipId == 5);
             Check("state: lover", back.Lovers.Count == 1 && back.LoverOf("lord_9") != null && back.Lovers[0].Since == 160
                 && back.Lovers[0].NextMeetingDay == 174 && back.Lovers[0].Public);
-            Check("state: pregnancy", back.Pregnancies.Count == 1 && back.Pregnancies[0].MotherId == "lord_9" && back.Pregnancies[0].FatherId == "main_hero"
-                && back.Pregnancies[0].DueDay == 196);
+            Check("state: pregnancy", back.Pregnancies.Count == 2 && back.Pregnancies[0].MotherId == "lord_9" && back.Pregnancies[0].FatherId == "main_hero"
+                && back.Pregnancies[0].DueDay == 196 && !back.Pregnancies[0].Hidden && back.Pregnancies[1].Hidden);
+            SpouseAffair sa = back.SpouseAffair;
+            Check("state: spouse affair", sa != null && sa.SpouseId == "spouse_1" && sa.LoverId == "lord_11" && sa.Since == 120 && sa.NextMeetingDay == 190
+                && sa.Discovered && !sa.Asked && sa.How == "Casus başın buldu." && sa.ChildIds.Count == 2 && sa.ChildIds[1] == "child_2");
+            Check("state: spouse watch", back.SpouseWatchUntil == 205 && back.SpouseApartWeeks == 3);
             Check("state: romance cooldown", back.RomanceUntil["lord_10"] == 220);
             Check("state: recruit cooldown", back.RecruitUntil.Count == 1 && back.RecruitUntil["lord_7"] == 210);
             Check("state: house", back.Houses.Count == 1 && back.HouseIn("town_V1") != null && back.Houses[0].Staff == 5
@@ -489,6 +502,22 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Eşinin gizli hayatı ve boşanma: tasarımdaki örnekler.</summary>
+        private static void FidelityTests()
+        {
+            CheckChance("fidelity: happy marriage never strays", FidelityRules.WeeklyAffairChance(50, -2, 20), 0);
+            CheckChance("fidelity: lukewarm", FidelityRules.WeeklyAffairChance(20, 0, 0), 1);
+            CheckChance("fidelity: cold, dishonorable, lonely", FidelityRules.WeeklyAffairChance(-20, -1, 8), 8);
+            CheckChance("fidelity: honorable resists", FidelityRules.WeeklyAffairChance(40, 1, 0), 0);
+            CheckChance("fidelity: lonely adds", FidelityRules.WeeklyAffairChance(30, 0, 8), 3);
+            CheckChance("fidelity: find base", FidelityRules.InvestigationFindChance(0), 40);
+            CheckChance("fidelity: find skilled", FidelityRules.InvestigationFindChance(160), 80);
+            CheckChance("fidelity: find cap", FidelityRules.InvestigationFindChance(600), 95);
+            CheckChance("fidelity: confront loving honorable", FidelityRules.ConfrontEndChance(40, 1), 80);
+            CheckChance("fidelity: confront cold", FidelityRules.ConfrontEndChance(-60, -1), 10);
+            Check("fidelity: divorce family penalty", FidelityRules.DivorceFamilyPenalty(true) == 5 && FidelityRules.DivorceFamilyPenalty(false) == 20);
         }
 
         /// <summary>Kur, sevgili ve gebelik (P2.6): tasarımdaki örnekler ve 18+ sınırı.</summary>

@@ -176,6 +176,23 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Gerçek baba.</summary>
         public string FatherId;
         public int DueDay;
+        /// <summary>Eşinin gizli ilişkisinden: gerçek baba sen öğrenene kadar gizli.</summary>
+        public bool Hidden;
+    }
+
+    /// <summary>Eşinin gizli ilişkisi (yapay zekâ kendi başlatır). Discovered: öğrendin; Asked: kararı soruldu.</summary>
+    public sealed class SpouseAffair
+    {
+        public string SpouseId;
+        public string LoverId;
+        public int Since;
+        public int NextMeetingDay;
+        public bool Discovered;
+        public bool Asked;
+        /// <summary>Nasıl ortaya çıktı (kartta yazılır).</summary>
+        public string How;
+        /// <summary>Bu ilişkiden doğan çocuklar (öğrenince ortaya çıkar).</summary>
+        public List<string> ChildIds = new List<string>();
     }
 
     /// <summary>Gölge ağı olan bir şehirdeki gece evi. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
@@ -265,6 +282,11 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Kuru reddeden hedef ya da teklifi reddeden eş → yeniden sorulabileceği gün.</summary>
         public Dictionary<string, int> RomanceUntil = new Dictionary<string, int>();
         public int NextCourtshipId = 1;
+        public SpouseAffair SpouseAffair;
+        /// <summary>Casus başının eşini araştırması bu gün biter (0: araştırma yok).</summary>
+        public int SpouseWatchUntil;
+        /// <summary>Eşinle kaç haftadır ayrısınız (ayrı partide, ayrı yerde).</summary>
+        public int SpouseApartWeeks;
 
         public Lover LoverOf(string heroId) => Lovers.FirstOrDefault(l => l.HeroId == heroId);
 
@@ -392,7 +414,13 @@ namespace CheatMenu.Intrigue.Core
             foreach (Lover l in Lovers)
                 records.Add(new TextRecord("lover").Add("hero", l.HeroId).Add("since", I(l.Since)).Add("next", I(l.NextMeetingDay)).Add("public", B(l.Public)));
             foreach (Pregnancy p in Pregnancies)
-                records.Add(new TextRecord("pregnancy").Add("mother", p.MotherId).Add("father", p.FatherId).Add("due", I(p.DueDay)));
+                records.Add(new TextRecord("pregnancy").Add("mother", p.MotherId).Add("father", p.FatherId).Add("due", I(p.DueDay)).Add("hidden", B(p.Hidden)));
+            if (SpouseAffair != null)
+                records.Add(new TextRecord("spouseaffair").Add("spouse", SpouseAffair.SpouseId).Add("lover", SpouseAffair.LoverId)
+                    .Add("since", I(SpouseAffair.Since)).Add("next", I(SpouseAffair.NextMeetingDay)).Add("discovered", B(SpouseAffair.Discovered))
+                    .Add("asked", B(SpouseAffair.Asked)).Add("how", SpouseAffair.How).Add("children", string.Join(";", SpouseAffair.ChildIds)));
+            if (SpouseWatchUntil > 0 || SpouseApartWeeks > 0)
+                records.Add(new TextRecord("spouse").Add("watch", I(SpouseWatchUntil)).Add("apart", I(SpouseApartWeeks)));
             foreach (KeyValuePair<string, int> p in RomanceUntil) records.Add(new TextRecord("romancecd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (House h in Houses)
                 records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since)));
@@ -535,7 +563,20 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "pregnancy":
                         if (Empty(r.Get("mother")) == null || Empty(r.Get("father")) == null) break;
-                        state.Pregnancies.Add(new Pregnancy { MotherId = r.Get("mother"), FatherId = r.Get("father"), DueDay = Int(r, "due") });
+                        state.Pregnancies.Add(new Pregnancy { MotherId = r.Get("mother"), FatherId = r.Get("father"), DueDay = Int(r, "due"), Hidden = Bool(r, "hidden") });
+                        break;
+                    case "spouseaffair":
+                        if (Empty(r.Get("spouse")) == null || Empty(r.Get("lover")) == null) break;
+                        state.SpouseAffair = new SpouseAffair
+                        {
+                            SpouseId = r.Get("spouse"), LoverId = r.Get("lover"), Since = Int(r, "since"), NextMeetingDay = Int(r, "next"),
+                            Discovered = Bool(r, "discovered"), Asked = Bool(r, "asked"), How = Empty(r.Get("how")),
+                            ChildIds = (r.Get("children") ?? "").Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                        };
+                        break;
+                    case "spouse":
+                        state.SpouseWatchUntil = Math.Max(0, Int(r, "watch"));
+                        state.SpouseApartWeeks = Math.Max(0, Int(r, "apart"));
                         break;
                     case "romancecd":
                         if (Empty(r.Get("hero")) != null) state.RomanceUntil[r.Get("hero")] = Int(r, "until");
