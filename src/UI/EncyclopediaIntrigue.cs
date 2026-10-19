@@ -24,7 +24,10 @@ namespace CheatMenu.UI
     {
         private static UIExtender _extender;
 
-        /// <summary>SubModule yüklenirken bir kez (prefab'lar yüklenmeden önce).</summary>
+        /// <summary>
+        /// İlk kampanya başlarken bir kez (SubModule.OnGameStart). Oyun açılışında çağrılmamalı: kayıt sayfanın ViewModel'ini
+        /// derletir, o da oyun metinlerini isteyen CampaignUIHelper'ı başlatır; metinler yüklü değilse sınıf oturum boyunca bozulur.
+        /// </summary>
         public static void Register()
         {
             if (_extender != null) return;

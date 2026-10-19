@@ -53,6 +53,9 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] **Entrika başlat...** → Yeni entrika sekmesi tür ve hedef seçili açılır; başlatılamıyorsa altında kırmızı neden
 - [ ] Kendi sayfanda bölüm yok; ansiklopediyi Klan/Krallık ekranından açınca düğmeler soluk, "yalnızca haritadayken" yazıyor
 - [ ] Bölüm hiç görünmüyorsa: rgl_log'da `[CheatMenu]` ya da `UIExtender` satırlarını gönder
+- [ ] **Yeni oyun: karakter oluşturma yüz ekranından sonra çökmeden geçiyor** (19 Ekim düzeltildi: ansiklopedi bölümü oyun
+      açılışında kaydediliyor ve oyunun `CampaignUIHelper` sınıfını bozuyordu; kayıt artık kampanya başlarken yapılıyor)
+- [ ] Kampanyaya girdikten sonra ansiklopedideki Entrika bölümü hâlâ görünüyor (kayıt yeri değişti)
 
 ### P2.3 — Casus başı görevleri (yeni)
 - [ ] Sol sütunda "Görev: Boşta" ve **Görev...** düğmesi → kart: Karşı casusluk / Muhalefeti izle / Söylenti yay... / Boşta
@@ -354,8 +357,9 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] **Berber ekranı** haritadan açılınca düzgün mü
 - [ ] Yaş değiştirdikten birkaç gün sonra yaş hâlâ doğru mu (Doğum ve Yaşlanma açıkken)
 
-Bir şey bozuksa: ekrandaki kırmızı `[Taç ve Hançer]` mesajını aynen yaz. Çökme olursa log:
-`C:\ProgramData\Mount and Blade II Bannerlord\logs\` içindeki en yeni `rgl_log_*.txt`.
+Bir şey bozuksa: ekrandaki kırmızı `[Taç ve Hançer]` mesajını aynen yaz. Çökme olursa Claude'a "çöktü" demen yeter; mod
+çökmenin tam çağrı zincirini `Belgeler\Mount and Blade II Bannerlord\Configs\TacVeHancer\cokme_<tarih>.txt` dosyasına yazar,
+oyunun kendi günlüğü `C:\ProgramData\Mount and Blade II Bannerlord\logs\` içindeki en yeni `rgl_log_*.txt`.
 
 ## 2. Sıradaki büyük iş — Entrika sistemi (CK3 tarzı)
 

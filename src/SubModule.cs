@@ -31,7 +31,7 @@ namespace CheatMenu
             // Lambda: bağımlılığın türleri bu metot derlenirken değil, try içindeki çağrıda yüklensin.
             SafeInit("Harmony", () => HarmonyPatches.Apply());
             SafeInit("MCM", () => TacVeHancerSettings.Initialize());
-            SafeInit("UIExtenderEx", () => EncyclopediaIntrigue.Register());
+            // Ansiklopedi bölümü (UIExtenderEx) burada değil, kampanya başlarken kaydedilir: bkz. OnGameStart.
         }
 
         /// <summary>
@@ -89,6 +89,25 @@ namespace CheatMenu
                 starter.AddModel<HeroDeathProbabilityCalculationModel>(new Cheats.Models.PhysicianDeathModel());
                 // Divan, kâhya: klanının yerleşimlerinde günlük sadakate kâhyanın satırı.
                 starter.AddModel<SettlementLoyaltyModel>(new Cheats.Models.StewardLoyaltyModel());
+                // Oyun açılışında değil burada: kayıt, oyunun ansiklopedi kodunu derletir ve bu, oyun metinlerini isteyen
+                // CampaignUIHelper'ın başlangıcını çalıştırır. Metinler ancak bir oyun başlayınca yüklüdür; açılışta yapılan
+                // kayıt CampaignUIHelper'ı bozuyor, karakter oluşturma çöküyordu.
+                LateInit("ansiklopedi bölümü (UIExtenderEx)", () => EncyclopediaIntrigue.Register());
+            }
+        }
+
+        /// <summary>Kampanya açılırken başlatılan kısımlar: tutmazsa oyun sürer, oyuncu kırmızı mesajla öğrenir.</summary>
+        private static void LateInit(string what, Action init)
+        {
+            try
+            {
+                init();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] " + what + " init failed: " + ex);
+                InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] başlatılamadı: " + what,
+                    Color.FromUint(0xFFFF6B6B)));
             }
         }
 
