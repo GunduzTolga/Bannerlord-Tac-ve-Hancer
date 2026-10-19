@@ -30,6 +30,7 @@ namespace CheatMenu
             // Lambda: bağımlılığın türleri bu metot derlenirken değil, try içindeki çağrıda yüklensin.
             SafeInit("Harmony", () => HarmonyPatches.Apply());
             SafeInit("MCM", () => TacVeHancerSettings.Initialize());
+            SafeInit("UIExtenderEx", () => EncyclopediaIntrigue.Register());
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [x] **.NET SDK 8** kuruldu (8.0.426, 19 Ekim). Alternatif: GitHub → Actions → **TacVeHancer** paketi → `CheatMenu` klasörünü `Modules`'e kopyala
 - [x] Workshop'tan **Harmony 2.4.2, ButterLib 2.12.0, UIExtenderEx 3.0.3, MCM 5.12.3** kurulu ve Launcher'da işaretli
       (sıra: Harmony → ButterLib → UIExtenderEx → MCM → … → Taç ve Hançer). MCM şartı 5.12.3'e indirildi; kullanılan API o sürümde var
-- [x] `build.ps1` çalışıyor: 417 test geçti, arayüz denetimi geçti (24 prefab), mod oyun klasörüne kopyalandı; 621 tip bağımlılıklarla yükleniyor
+- [x] `build.ps1` çalışıyor: 418 test geçti, arayüz denetimi geçti (24 prefab), mod oyun klasörüne kopyalandı; 634 tip bağımlılıklarla yükleniyor
 - [ ] Ana menüde kırmızı "başlatılamayan bağımlılık" uyarısı **yok**
 - [ ] **Esc → Mod Seçenekleri → Taç ve Hançer** açılıyor: Kurallar, Entrika, Harita grupları; eski ayarların (CheatMenu.txt) değerleri gelmiş
 - [ ] MCM'de bir ayarı değiştir → Insert → Kurallar'da da değişmiş; Kurallar'da değiştir → MCM'de de değişmiş
@@ -37,11 +37,22 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Ekran açıkken klavye haritaya gitmiyor (C / I / P karakter, envanter, parti ekranını açmıyor)
 - [ ] Ekran ya da kart açılamazsa çökme yerine kırmızı mesaj + liste menüsü / düz pencere geliyor. Olursa
       `C:\ProgramData\Mount and Blade II Bannerlord\logs` içindeki en yeni `rgl_log` dosyasını gönder
-- [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst), resimli kartlar aç/kapa
+- [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst / Harita çubuğunda), resimli kartlar aç/kapa
 - [ ] Haritadaki düğme oyunun kendi arayüzünün üstüne biniyor mu? Biniyorsa MCM'den yerini değiştir ve hangisinin iyi olduğunu yaz
-- [ ] **Ansiklopedi bağlantısı ve harita çubuğu düğmesi:** gereken dosyalar PC'de bulundu, bu iş PC'deki oturumda yapılmalı
-      (oyun dosyası olduğu için repoya konmadı): `Modules\SandBox\GUI\Prefabs\Encyclopedia\EncyclopediaSubPages\EncyclopediaHeroPage.xml`,
-      `Modules\SandBox\GUI\Prefabs\Map\MapBar.xml` (fırçalar: `Modules\SandBox\GUI\Brushes\MapBar.xml`)
+- [x] **Ansiklopedi bağlantısı ve harita çubuğu düğmesi** PC'de yapıldı (19 Ekim); denemesi aşağıda
+
+### Harita çubuğu düğmesi ve ansiklopedideki Entrika bölümü (yeni, PC'de yapıldı)
+- [ ] MCM → Arayüz → düğme yeri: **Harita çubuğunda** seç → kaydı yeniden yükle → oyunun sol alttaki harita çubuğunda
+      (Klan ile Krallık arasında) hançer simgeli Entrika düğmesi var; üst ortadaki düğme görünmüyor
+- [ ] Çubuktaki düğmenin üstüne gelince "Entrika" ipucu; harekete hazır suikast/kaçırma ya da sezilen entrika varsa rozet
+- [ ] Tıklayınca Entrika ekranı açılıyor; konuşma sırasında çubuktaki düğme soluk ve nedeni yazıyor
+- [ ] Simge boş/bozuk görünüyorsa ekran görüntüsü at (çubuğa eklenemezse eski düğme üst ortada çıkar, mod bozulmaz)
+- [ ] Ansiklopedide bir lordun sayfası: "Müttefikler" başlığının üstünde **Entrika** bölümü; bildiklerin
+      (rapor kaç gün önce, sırlar, koz, süren entrika, hükümdarıyla arası). Başlığa tıklayınca diğerleri gibi katlanıyor
+- [ ] **Dosyasını aç** (yalnızca hakkında bir şey biliyorsan açık) → ansiklopedi kapanır, Entrika ekranı Kişiler'de o kişiyle açılır
+- [ ] **Entrika başlat...** → Yeni entrika sekmesi tür ve hedef seçili açılır; başlatılamıyorsa altında kırmızı neden
+- [ ] Kendi sayfanda bölüm yok; ansiklopediyi Klan/Krallık ekranından açınca düğmeler soluk, "yalnızca haritadayken" yazıyor
+- [ ] Bölüm hiç görünmüyorsa: rgl_log'da `[CheatMenu]` ya da `UIExtender` satırlarını gönder
 
 ### P2.3 — Casus başı görevleri (yeni)
 - [ ] Sol sütunda "Görev: Boşta" ve **Görev...** düğmesi → kart: Karşı casusluk / Muhalefeti izle / Söylenti yay... / Boşta

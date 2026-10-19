@@ -1,5 +1,6 @@
 using System;
 using CheatMenu.Intrigue;
+using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
 using SandBox.View.Map;
@@ -64,6 +65,22 @@ namespace CheatMenu.UI
             _wasBusy = false;
             Escape.Reset();
             TimePause.Acquire(PauseOwner);
+        }
+
+        /// <summary>
+        /// Ansiklopedideki lord sayfasından: ansiklopedi kapanır, ekran o kişiye odaklı açılır
+        /// (kind null: Kişiler sekmesinde dosyası; değilse Yeni entrika sekmesinde o tür ve hedef seçili).
+        /// </summary>
+        public static void OpenOn(Hero hero, SchemeKind? kind)
+        {
+            MapEncyclopediaView encyclopedia = MapScreen.Instance?.EncyclopediaScreenManager;
+            if (encyclopedia != null && encyclopedia.IsEncyclopediaOpen) encyclopedia.CloseEncyclopedia();
+            // Bir sonraki karede: ansiklopedi katmanı tamamen kapansın, klavye odağı yeni ekrana geçsin.
+            MenuUI.Defer(() =>
+            {
+                Open(kind == null ? IntrigueScreenVM.TabPeople : IntrigueScreenVM.TabNew);
+                if (hero != null && Layer.DataSource is IntrigueScreenVM vm) vm.FocusOn(hero, kind);
+            });
         }
 
         public static void Close()
