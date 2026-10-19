@@ -7,28 +7,32 @@ using TaleWorlds.ScreenSystem;
 namespace CheatMenu.UI
 {
     /// <summary>
-    /// Harita ekranına (MapScreen) eklenen bir Gauntlet katmanı ve içindeki tek "movie" (prefab + ViewModel).
-    /// Harita ekranı kapanır ya da yenisi açılırsa (kayıt yükleme) katman ölü sayılır; IsAlive false döner.
+    /// Bir ekrana (varsayılan: harita, MapScreen) eklenen Gauntlet katmanı ve içindeki tek "movie" (prefab + ViewModel).
+    /// Haritadaysa: harita ekranı kapanır ya da yenisi açılırsa (kayıt yükleme) katman ölü sayılır. Başka bir ekrandaysa
+    /// (Klan ekranındaki Entrika sekmesinden açılan olay kartı): o ekran kapanınca.
     /// </summary>
     public sealed class MovieLayer
     {
         private GauntletLayer _layer;
         private GauntletMovieIdentifier _movie;
         private ScreenBase _screen;
+        private bool _onMap;
         private bool _focused;
 
         public ViewModel DataSource { get; private set; }
 
         public bool IsOpen => _layer != null;
 
-        /// <summary>Açık ve hâlâ şu anki harita ekranına bağlı mı.</summary>
-        public bool IsAlive => _layer != null && _screen != null && _screen == MapScreen.Instance && !_layer.IsFinalized;
+        /// <summary>Açık ve bağlı olduğu ekran hâlâ duruyor mu (haritadaysa: şu anki harita ekranı mı).</summary>
+        public bool IsAlive => _layer != null && _screen != null && !_layer.IsFinalized
+            && (_onMap ? _screen == MapScreen.Instance : !_screen.IsFinalized);
 
         /// <param name="modal">true: alttaki her şeyi (harita, tuşlar) engeller ve odağı alır. false: yalnızca üstüne tıklanınca fare olayını alır.</param>
-        public bool Open(string movieName, ViewModel dataSource, int order, bool modal)
+        /// <param name="host">null: harita ekranı.</param>
+        public bool Open(string movieName, ViewModel dataSource, int order, bool modal, ScreenBase host = null)
         {
             Close();
-            ScreenBase screen = MapScreen.Instance;
+            ScreenBase screen = host ?? MapScreen.Instance;
             if (screen == null) return false;
             var layer = new GauntletLayer("TacVeHancer_" + movieName, order);
             bool added = false;
@@ -65,6 +69,7 @@ namespace CheatMenu.UI
             }
             _layer = layer;
             _screen = screen;
+            _onMap = host == null;
             DataSource = dataSource;
             return true;
         }

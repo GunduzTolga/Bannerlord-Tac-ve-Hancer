@@ -37,21 +37,36 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Ekran açıkken klavye haritaya gitmiyor (C / I / P karakter, envanter, parti ekranını açmıyor)
 - [ ] Ekran ya da kart açılamazsa çökme yerine kırmızı mesaj + liste menüsü / düz pencere geliyor. Olursa
       `C:\ProgramData\Mount and Blade II Bannerlord\logs` içindeki en yeni `rgl_log` dosyasını gönder
-- [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst / Harita çubuğunda), resimli kartlar aç/kapa
-- [ ] Haritadaki düğme oyunun kendi arayüzünün üstüne biniyor mu? Biniyorsa MCM'den yerini değiştir ve hangisinin iyi olduğunu yaz
+- [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst / Harita çubuğunda — varsayılan), resimli kartlar aç/kapa
 - [x] **Ansiklopedi bağlantısı ve harita çubuğu düğmesi** PC'de yapıldı (19 Ekim); denemesi aşağıda
 
-### Harita çubuğu düğmesi ve ansiklopedideki Entrika bölümü (yeni, PC'de yapıldı)
-- [ ] MCM → Arayüz → düğme yeri: **Harita çubuğunda** seç → kaydı yeniden yükle → oyunun sol alttaki harita çubuğunda
-      (Klan ile Krallık arasında) hançer simgeli Entrika düğmesi var; üst ortadaki düğme görünmüyor
+### Entrika artık Klan ekranının bir sekmesi (yeni, 19 Ekim; en çok ekran görüntüsü lazım)
+Entrika ayrı bir pencere değil: **Klan ekranında Birlikler ile Tımarlar arasında "Entrika" sekmesi** (Diplomacy modunun Krallık
+ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun kendisi; düğmeler, sekmeler ve kartlar oyunun dokularıyla.
+- [ ] Klan ekranı (L): sekmeler Üyeler · Birlikler · **Entrika** · Tımarlar · Diğer; beşi üst şeride sığıyor, yazılar taşmıyor
+- [ ] Entrika sekmesine tıkla: sağdaki "Mali Durum" kutusu gizleniyor; solda casus başı kutusu (oyunun pencere çerçevesi), sağda alt sekmeler
+- [ ] Başka sekmeye geç (Üyeler vb.) → bizim panel kapanıyor, oyunun paneli geliyor; geri dönünce kaldığın alt sekme duruyor
+- [ ] Düğmeler oyunun pencere düğmeleri gibi; seçili alt sekme altın; kartlar ve satırlar taş dokulu (harita olaylarının seçenekleri gibi)
+- [ ] Türkçe harfler (ş, ğ, ı, İ) başlık yazı tipinde (Galahad) düzgün mü
+- [ ] Sekmeden bir olay kartı açılınca (ör. Harekete geç → rüşvet kartı) kart Klan ekranının üstünde görünüyor
+- [ ] Düello ya da sahnede takip seçilince Klan ekranı kapanıyor, sahne haritadan açılıyor
+- [ ] "Bitti" ya da Esc Klan ekranını kapatıyor
+- [ ] Casus başı / divan koltuğu seçerken listede **yoldaşların portreleri** var (eskiden yalnızca ad vardı)
+- [ ] Ayarlar tek seferlik taşındı: düğme yeri "Üst orta" idiyse artık "Harita çubuğunda" (MCM'de de öyle görünüyor)
+- [ ] Sekme görünmüyorsa ya da bozuksa: Home yine çalışır, ekran görüntüsü at
+
+### Harita çubuğu düğmesi ve ansiklopedideki Entrika bölümü (PC'de yapıldı)
+- [ ] Oyunun sol alttaki harita çubuğunda (Klan ile Krallık arasında) hançer simgeli Entrika düğmesi var (artık varsayılan);
+      üst ortadaki eski düğme yok. Tıklayınca Klan ekranı **Entrika sekmesinde** açılıyor
+- [ ] **Home** de Klan ekranını Entrika sekmesinde açıyor, tekrar basınca kapatıyor; Insert → Entrika ekranı da aynı
 - [ ] Çubuktaki düğmenin üstüne gelince "Entrika" ipucu; harekete hazır suikast/kaçırma ya da sezilen entrika varsa rozet
-- [ ] Tıklayınca Entrika ekranı açılıyor; konuşma sırasında çubuktaki düğme soluk ve nedeni yazıyor
+- [ ] Konuşma sırasında çubuktaki düğme soluk ve nedeni yazıyor
 - [ ] Simge boş/bozuk görünüyorsa ekran görüntüsü at (çubuğa eklenemezse eski düğme üst ortada çıkar, mod bozulmaz)
 - [ ] Ansiklopedide bir lordun sayfası: "Müttefikler" başlığının üstünde **Entrika** bölümü; bildiklerin
       (rapor kaç gün önce, sırlar, koz, süren entrika, hükümdarıyla arası). Başlığa tıklayınca diğerleri gibi katlanıyor
-- [ ] **Dosyasını aç** (yalnızca hakkında bir şey biliyorsan açık) → ansiklopedi kapanır, Entrika ekranı Kişiler'de o kişiyle açılır
-- [ ] **Entrika başlat...** → Yeni entrika sekmesi tür ve hedef seçili açılır; başlatılamıyorsa altında kırmızı neden
-- [ ] Kendi sayfanda bölüm yok; ansiklopediyi Klan/Krallık ekranından açınca düğmeler soluk, "yalnızca haritadayken" yazıyor
+- [ ] **Dosyasını aç** (yalnızca hakkında bir şey biliyorsan açık) → ansiklopedi kapanır, Klan ekranı Entrika sekmesinde, Kişiler'de o kişiyle
+- [ ] **Entrika başlat...** → Yeni entrika alt sekmesi tür ve hedef seçili açılır; başlatılamıyorsa altında kırmızı neden
+- [ ] Kendi sayfanda bölüm yok
 - [ ] Bölüm hiç görünmüyorsa: rgl_log'da `[CheatMenu]` ya da `UIExtender` satırlarını gönder
 - [x] **Yeni oyun: karakter oluşturma yüz ekranından sonra çökmeden geçiyor** (19 Ekim düzeltildi ve oyunda denendi: ansiklopedi bölümü oyun
       açılışında kaydediliyor ve oyunun `CampaignUIHelper` sınıfını bozuyordu; kayıt artık kampanya başlarken yapılıyor)

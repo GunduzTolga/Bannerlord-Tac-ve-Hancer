@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Entrika ekranı (ViewModel: CheatMenu.UI.ViewModels.IntrigueScreenVM).
-  Pencere 1680x940 (oyun 1920x1080'e göre ölçekler). Sol: casus başı. Sağ: sekmeler ve sekmenin paneli.
-  Liste deseni: ScrollablePanel > ClipRect (ClipContents) > ListPanel (CoverChildren) + yanında ScrollbarWidget.
+  Yedek ayrı Entrika ekranı (ViewModel: CheatMenu.UI.ViewModels.IntrigueScreenVM). Normalde Entrika, Klan ekranının bir
+  sekmesidir (ClanIntrigueTab); bu ekran yalnızca UIExtenderEx kaydı tutmazsa açılır. İçerik TvhIntriguePanel ile aynı.
+  Pencere 1680x940 (oyun 1920x1080'e göre ölçekler).
 -->
 <Prefab>
   <Window>
@@ -12,317 +12,40 @@
         <!-- Karartma: alttaki haritaya tıklanmasın -->
         <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Backdrop" DoNotPassEventsToChildren="true" />
 
-        <!-- Pencere: 2 piksellik altın kenarlık -->
-        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1680" SuggestedHeight="940" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+        <!-- Pencere: oyunun açılır pencere tuvali ve çerçevesi -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1680" SuggestedHeight="940" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="StdAssets\Popup\canvas">
           <Children>
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#15110DFF">
+
+            <!-- ===== Başlık ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="84" VerticalAlignment="Top">
               <Children>
-
-                <!-- ===== Başlık ===== -->
-                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="84" VerticalAlignment="Top">
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="500" SuggestedHeight="52" MarginLeft="34" MarginTop="14" Brush="Tvh.Text.Title" Text="@TitleText" />
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="30" StackLayout.LayoutMethod="HorizontalLeftToRight">
                   <Children>
-                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="500" SuggestedHeight="52" MarginLeft="34" MarginTop="8" Brush="Tvh.Text.Title" Text="@TitleText" />
-                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1100" SuggestedHeight="24" MarginLeft="36" MarginTop="54" Brush="Tvh.Text.Subtitle" Text="@SubtitleText" />
-                    <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="26" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="44" MarginRight="14" Brush="Tvh.Button" Command.Click="ExecuteClassicMenu" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
-                        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="170" SuggestedHeight="40" MarginRight="14" Brush="Tvh.Button" Command.Click="ExecuteClassicMenu" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                          <Children>
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ClassicMenuText" />
-                          </Children>
-                        </ButtonWidget>
-                        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="40" Brush="Tvh.Button.Danger" Command.Click="ExecuteClose" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                          <Children>
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@CloseText" />
-                          </Children>
-                        </ButtonWidget>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ClassicMenuText" />
                       </Children>
-                    </ListPanel>
+                    </ButtonWidget>
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="160" SuggestedHeight="44" Brush="Tvh.Button.Primary" Command.Click="ExecuteClose" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@CloseText" />
+                      </Children>
+                    </ButtonWidget>
                   </Children>
-                </Widget>
-                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1" VerticalAlignment="Top" MarginTop="84" MarginLeft="22" MarginRight="22" Sprite="BlankWhiteSquare_9" Color="#5A4630FF" />
-
-                <!-- ===== Gövde ===== -->
-                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="98" MarginBottom="42" MarginLeft="22" MarginRight="22">
-                  <Children>
-
-                    <!-- ===== Sol sütun: casus başı ===== -->
-                    <Widget DataSource="{Spymaster}" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="330" HorizontalAlignment="Left" Sprite="BlankWhiteSquare_9" Color="#1D1712FF">
-                      <Children>
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="18" MarginTop="14" Brush="Tvh.Text.Section" Text="CASUS BAŞI" />
-
-                        <!-- Casus başı var -->
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasSpymaster">
-                          <Children>
-                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="294" SuggestedHeight="222" HorizontalAlignment="Center" MarginTop="46" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
-                              <Children>
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
-                                  <Children>
-                                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
-                                  </Children>
-                                </Widget>
-                              </Children>
-                            </Widget>
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="18" MarginRight="18" MarginTop="280" Brush="Tvh.Text.Name" Text="@Name" />
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="18" MarginRight="18" MarginTop="316" Brush="Tvh.Text.Gold" Text="@SkillText" />
-                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" MarginLeft="18" MarginRight="18" MarginTop="346" Brush="Tvh.Text.SmallTop" Text="@StatusText" />
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="18" MarginRight="18" MarginTop="396" Brush="Tvh.Text.Small" Text="@LimitsText" />
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="18" MarginRight="18" MarginTop="424" Brush="Tvh.Text.Muted" Text="@IntelText" />
-                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" MarginLeft="18" MarginRight="18" MarginTop="456" Brush="Tvh.Text.SmallTop" Text="@MissionText" />
-
-                            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Bottom" MarginLeft="18" MarginRight="18" MarginBottom="18" StackLayout.LayoutMethod="VerticalTopToBottom">
-                              <Children>
-                                <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginBottom="10" Brush="Tvh.Button.Primary" Command.Click="ExecuteMission" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                                  <Children>
-                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@MissionButtonText" />
-                                  </Children>
-                                </ButtonWidget>
-                                <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginBottom="10" Brush="Tvh.Button" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                                  <Children>
-                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ChangeText" />
-                                  </Children>
-                                </ButtonWidget>
-                                <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" Brush="Tvh.Button.Danger" Command.Click="ExecuteDismiss" IsEnabled="@CanDismiss" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                                  <Children>
-                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@DismissText" />
-                                  </Children>
-                                </ButtonWidget>
-                              </Children>
-                            </ListPanel>
-                          </Children>
-                        </Widget>
-
-                        <!-- Casus başı yok -->
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasNoSpymaster">
-                          <Children>
-                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="220" MarginLeft="18" MarginRight="18" MarginTop="56" Brush="Tvh.Text.Body" Text="@EmptyText" />
-                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" VerticalAlignment="Bottom" MarginLeft="18" MarginRight="18" MarginBottom="18" Brush="Tvh.Button.Primary" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                              <Children>
-                                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@AssignText" />
-                              </Children>
-                            </ButtonWidget>
-                          </Children>
-                        </Widget>
-
-                        <!-- Sol sütunun kenarlığı -->
-                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="1" HorizontalAlignment="Right" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" />
-                      </Children>
-                    </Widget>
-
-                    <!-- ===== Sağ: sekmeler ve paneller ===== -->
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="350">
-                      <Children>
-                        <ListPanel DataSource="{Tabs}" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                          <ItemTemplate>
-                            <TvhTab />
-                          </ItemTemplate>
-                        </ListPanel>
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1" MarginTop="46" Sprite="BlankWhiteSquare_9" Color="#5A4630FF" />
-
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="60">
-                          <Children>
-
-                            <!-- ===== Süren entrikalar ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsSchemesTab">
-                              <Children>
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@SchemesEmptyText" IsVisible="@HasNothingRunning" />
-                                <ScrollablePanel Id="SchemesScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="SchemesClip" InnerPanel="SchemesClip\SchemesInner" VerticalScrollbar="..\SchemesBar">
-                                  <Children>
-                                    <Widget Id="SchemesClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
-                                      <Children>
-                                        <ListPanel Id="SchemesInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                          <Children>
-                                            <ListPanel DataSource="{Schemes}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                              <ItemTemplate>
-                                                <TvhSchemeCard />
-                                              </ItemTemplate>
-                                            </ListPanel>
-                                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="6" Brush="Tvh.Text.Section" Text="@LettersHeader" IsVisible="@HasLetters" />
-                                            <ListPanel DataSource="{Letters}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                              <ItemTemplate>
-                                                <TvhLetterRow />
-                                              </ItemTemplate>
-                                            </ListPanel>
-                                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="6" Brush="Tvh.Text.Section" Text="@RomancesHeader" IsVisible="@HasRomances" />
-                                            <ListPanel DataSource="{Romances}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                              <ItemTemplate>
-                                                <TvhLetterRow />
-                                              </ItemTemplate>
-                                            </ListPanel>
-                                          </Children>
-                                        </ListPanel>
-                                      </Children>
-                                    </Widget>
-                                  </Children>
-                                </ScrollablePanel>
-                                <ScrollbarWidget Id="SchemesBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="SchemesHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                                  <Children>
-                                    <Widget Id="SchemesHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                                  </Children>
-                                </ScrollbarWidget>
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Yeni entrika ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsNewTab">
-                              <Children>
-                                <TvhNewSchemePanel DataSource="{NewScheme}" />
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Kişiler ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsPeopleTab">
-                              <Children>
-                                <TvhPeoplePanel DataSource="{People}" />
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Esirler ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsPrisonersTab">
-                              <Children>
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" Brush="Tvh.Text.SmallTop" Text="@PrisonersInfoText" />
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="70" Brush="Tvh.Text.BodyCenter" Text="Elinde esir bir kahraman yok." IsVisible="@HasNoPrisoners" />
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="70">
-                                  <Children>
-                                    <ScrollablePanel Id="PrisonersScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="PrisonersClip" InnerPanel="PrisonersClip\PrisonersList" VerticalScrollbar="..\PrisonersBar">
-                                      <Children>
-                                        <Widget Id="PrisonersClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
-                                          <Children>
-                                            <ListPanel Id="PrisonersList" DataSource="{Prisoners}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                              <ItemTemplate>
-                                                <TvhPrisonerCard />
-                                              </ItemTemplate>
-                                            </ListPanel>
-                                          </Children>
-                                        </Widget>
-                                      </Children>
-                                    </ScrollablePanel>
-                                    <ScrollbarWidget Id="PrisonersBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="PrisonersHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                                      <Children>
-                                        <Widget Id="PrisonersHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                                      </Children>
-                                    </ScrollbarWidget>
-                                  </Children>
-                                </Widget>
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Saray ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsCourtTab">
-                              <Children>
-                                <TvhCourtPanel DataSource="{Court}" />
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Divan ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsCouncilTab">
-                              <Children>
-                                <TvhCouncilPanel DataSource="{Council}" />
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Gölge ağları ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsNetworksTab">
-                              <Children>
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" Brush="Tvh.Text.SmallTop" Text="@NetworksInfoText" />
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="70" Brush="Tvh.Text.BodyCenter" Text="Henüz bir gölge ağın yok." IsVisible="@HasNoNetworks" />
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="70">
-                                  <Children>
-                                    <ScrollablePanel Id="NetworksScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="NetworksClip" InnerPanel="NetworksClip\NetworksList" VerticalScrollbar="..\NetworksBar">
-                                      <Children>
-                                        <Widget Id="NetworksClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
-                                          <Children>
-                                            <ListPanel Id="NetworksList" DataSource="{Networks}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                              <ItemTemplate>
-                                                <TvhNetworkCard />
-                                              </ItemTemplate>
-                                            </ListPanel>
-                                          </Children>
-                                        </Widget>
-                                      </Children>
-                                    </ScrollablePanel>
-                                    <ScrollbarWidget Id="NetworksBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="NetworksHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                                      <Children>
-                                        <Widget Id="NetworksHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                                      </Children>
-                                    </ScrollbarWidget>
-                                  </Children>
-                                </Widget>
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Sana karşı ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsPlotsTab">
-                              <Children>
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@PlotsEmptyText" IsVisible="@HasNoPlots" />
-                                <ScrollablePanel Id="PlotsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="PlotsClip" InnerPanel="PlotsClip\PlotsList" VerticalScrollbar="..\PlotsBar">
-                                  <Children>
-                                    <Widget Id="PlotsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
-                                      <Children>
-                                        <ListPanel Id="PlotsList" DataSource="{Plots}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                          <ItemTemplate>
-                                            <TvhPlotCard />
-                                          </ItemTemplate>
-                                        </ListPanel>
-                                      </Children>
-                                    </Widget>
-                                  </Children>
-                                </ScrollablePanel>
-                                <ScrollbarWidget Id="PlotsBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="PlotsHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                                  <Children>
-                                    <Widget Id="PlotsHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                                  </Children>
-                                </ScrollbarWidget>
-                              </Children>
-                            </Widget>
-
-                            <!-- ===== Kronik ===== -->
-                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsLogTab">
-                              <Children>
-                                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="800" SuggestedHeight="40" Brush="Tvh.Text.Small" Text="@LogInfoText" />
-                                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="40" HorizontalAlignment="Right" MarginRight="16" Brush="Tvh.Button" Command.Click="ExecuteExportLog" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
-                                  <Children>
-                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ExportText" />
-                                  </Children>
-                                </ButtonWidget>
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="54" Brush="Tvh.Text.BodyCenter" Text="Henüz bir şey olmadı." IsVisible="@HasNoLog" />
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="54">
-                                  <Children>
-                                    <ScrollablePanel Id="LogScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="LogClip" InnerPanel="LogClip\LogList" VerticalScrollbar="..\LogBar">
-                                      <Children>
-                                        <Widget Id="LogClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
-                                          <Children>
-                                            <ListPanel Id="LogList" DataSource="{Log}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                              <ItemTemplate>
-                                                <TvhLogRow />
-                                              </ItemTemplate>
-                                            </ListPanel>
-                                          </Children>
-                                        </Widget>
-                                      </Children>
-                                    </ScrollablePanel>
-                                    <ScrollbarWidget Id="LogBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="LogHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                                      <Children>
-                                        <Widget Id="LogHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                                      </Children>
-                                    </ScrollbarWidget>
-                                  </Children>
-                                </Widget>
-                              </Children>
-                            </Widget>
-
-                          </Children>
-                        </Widget>
-                      </Children>
-                    </Widget>
-
-                  </Children>
-                </Widget>
-
-                <!-- ===== Alt satır: son durum ===== -->
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" VerticalAlignment="Bottom" MarginLeft="26" MarginRight="26" MarginBottom="8" Brush="Tvh.Text.Muted" Text="@StatusText" />
-
+                </ListPanel>
               </Children>
             </Widget>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="23" VerticalAlignment="Top" MarginTop="76" MarginLeft="22" MarginRight="22" Sprite="StdAssets\Popup\divider" DoNotAcceptEvents="true" />
+
+            <!-- ===== Gövde ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="104" MarginBottom="20" MarginLeft="28" MarginRight="28">
+              <Children>
+                <TvhIntriguePanel />
+              </Children>
+            </Widget>
+
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Frame" DoNotAcceptEvents="true" />
           </Children>
         </Widget>
 

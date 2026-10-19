@@ -78,7 +78,14 @@ namespace CheatMenu.Tests
             Check("settings: ai intrigue default few", ModSettings.Parse("").AiIntrigue == SchemeMath.AiFew);
             Check("settings: ai intrigue off", ModSettings.Parse("AiIntrigue=0").AiIntrigue == SchemeMath.AiOff);
             Check("settings: player targeted default off", !ModSettings.Parse("").PlayerCanBeTargeted);
-            Check("settings: map button default top center", ModSettings.Parse("").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
+            Check("settings: map button default is the game's map bar", ModSettings.Parse("").MapButtonPosition == ModSettings.MapBarButtonPosition
+                && ModSettings.DefaultMapButtonPosition == ModSettings.MapBarButtonPosition);
+            ModSettings oldTopCenter = ModSettings.Parse("MapButtonPosition=2\nScreenHotkey=1");
+            Check("settings: old file's top center moves to the map bar once", oldTopCenter.MapButtonPosition == ModSettings.MapBarButtonPosition && oldTopCenter.Migrated);
+            Check("settings: old file's other choice stays", ModSettings.Parse("MapButtonPosition=3").MapButtonPosition == 3 && !ModSettings.Parse("MapButtonPosition=3").Migrated);
+            ModSettings newTopCenter = ModSettings.Parse("SettingsVersion=2\nMapButtonPosition=2");
+            Check("settings: top center chosen after the move stays", newTopCenter.MapButtonPosition == 2 && !newTopCenter.Migrated);
+            Check("settings: saved file carries the version", ModSettings.Parse(newTopCenter.Format()).MapButtonPosition == 2);
             Check("settings: map button hidden", ModSettings.Parse("MapButtonPosition=0").MapButtonPosition == 0);
             Check("settings: map button 9 -> default", ModSettings.Parse("MapButtonPosition=9").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
             Check("settings: map button in the game's map bar", ModSettings.Parse("MapButtonPosition=4").MapButtonPosition == ModSettings.MapBarButtonPosition

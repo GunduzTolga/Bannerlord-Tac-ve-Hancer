@@ -16,25 +16,27 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI
 {
     /// <summary>
-    /// Ansiklopedideki lord sayfasına "Entrika" bölümü (UIExtenderEx): hakkında bildiklerin (rapor, sırlar, koz,
-    /// süren entrika) ve iki düğme: dosyasını aç, entrika başlat. Düğmeler ansiklopediyi kapatıp Entrika ekranını
+    /// UIExtenderEx kaydı. Bu dosyada ayrıca ansiklopedideki lord sayfasına "Entrika" bölümü: hakkında bildiklerin (rapor,
+    /// sırlar, koz, süren entrika) ve iki düğme: dosyasını aç, entrika başlat. Düğmeler ansiklopediyi kapatıp Entrika'yı
     /// o kişiye odaklı açar. Oyun yaması sayfayı değiştirirse bölüm görünmez; başka bir şey bozulmaz.
     /// </summary>
-    public static class EncyclopediaIntrigue
+    public static class UiExtensions
     {
         private static UIExtender _extender;
 
         /// <summary>
-        /// İlk kampanya başlarken bir kez (SubModule.OnGameStart). Oyun açılışında çağrılmamalı: kayıt sayfanın ViewModel'ini
+        /// Modun bütün UIExtenderEx eklerini (ansiklopedi bölümü, Klan ekranındaki Entrika sekmesi) kaydeder.
+        /// İlk kampanya başlarken bir kez (SubModule.OnGameStart). Oyun açılışında çağrılmamalı: kayıt sayfaların ViewModel'ini
         /// derletir, o da oyun metinlerini isteyen CampaignUIHelper'ı başlatır; metinler yüklü değilse sınıf oturum boyunca bozulur.
         /// </summary>
         public static void Register()
         {
             if (_extender != null) return;
             UIExtender extender = UIExtender.Create(ModInfo.Id);
-            extender.Register(typeof(EncyclopediaIntrigue).Assembly);
+            extender.Register(typeof(UiExtensions).Assembly);
             extender.Enable();
             _extender = extender;
+            ClanIntrigueTab.Registered = true;
         }
     }
 

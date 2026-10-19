@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Taç ve Hançer arayüz fırçaları. Hepsi "Tvh." ile başlar.
-  - Yalnızca oyunun her sürümünde bulunan düz beyaz kare sprite'ı (BlankWhiteSquare_9) kullanılır; renkler buradan verilir.
-    Böylece oyun güncellemesinde bir sprite adı değişse bile ekran bozulmaz.
-  - Yazı tipi adı yazılmaz: TvhUi.PrepareBrushes boş kalanlara oyunun varsayılan yazı tipini atar (Türkçe karakterler dahil).
+  - Görünüş oyunun kendi parçalarından: açılır pencere düğmeleri (button_default_9, done_button_9), 1.4'teki harita olaylarının
+    taş dokulu seçenek kartları (rounded_canvas_9 + rounded_frame_9 + stone_texture_continuous), oyunun kaydırma çubuğu.
+  - Yalnızca HER ZAMAN YÜKLÜ kategorilerdeki sprite'lar (ui_group1, ui_textures): başka bir ekranın kategorisindeki sprite
+    (ör. Klan ekranının ui_clan'ı) o ekran kapalıyken boş çizilir. İzinli liste tools/GuiCheck'te; oyun klasörü varsa
+    denetim her birinin oyunda bulunduğunu ve kategorisini doğrular.
+  - Başlık, düğme ve sekme yazıları oyunun başlık yazı tipi Galahad (oyunun Klan ekranıyla aynı); düz metinde yazı tipi
+    yazılmaz, TvhUi.PrepareBrushes oyunun varsayılanını atar. Türkçe harf eşlemesini oyun kendisi yapar.
   - Renk biçimi #RRGGBBAA.
 -->
 <Brushes>
 
   <!-- ===================== Yazılar ===================== -->
 
-  <Brush Name="Tvh.Text.Title" FontSize="44" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.Title" Font="Galahad" FontSize="44" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#E8C77DFF" TextOutlineColor="#000000FF" TextOutlineAmount="0.2" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#E4C59BFF" TextOutlineColor="#000000FF" TextOutlineAmount="0.3" TextGlowRadius="0" TextBlur="0" TextShadowOffset="1" TextShadowAngle="60" />
+    </Styles>
+  </Brush>
+
+  <!-- Paneldeki başlık: oyunun açılır pencere başlığı gibi (Popup.Title.Text), ortalı. -->
+  <Brush Name="Tvh.Text.PanelTitle" Font="Galahad" FontSize="30" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#E4C59BFF" TextOutlineColor="#000000FF" TextOutlineAmount="0.01" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
@@ -22,21 +33,21 @@
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.Section" FontSize="17" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.Section" Font="Galahad" FontSize="22" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#C9A45EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#DDC3A1FF" TextOutlineAmount="0.01" TextGlowRadius="0" TextBlur="0.3" />
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.Name" FontSize="24" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.Name" Font="Galahad" FontSize="25" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineAmount="0.1" TextGlowRadius="0" TextBlur="0" TextShadowOffset="1" TextShadowAngle="60" />
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.NameCenter" FontSize="24" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.NameCenter" Font="Galahad" FontSize="25" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineAmount="0.1" TextGlowRadius="0" TextBlur="0" TextShadowOffset="1" TextShadowAngle="60" />
     </Styles>
   </Brush>
 
@@ -48,73 +59,79 @@
 
   <Brush Name="Tvh.Text.BodyCenter" FontSize="21" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#C2B08EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#C9B696FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.Small" FontSize="17" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#C2B08EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#C9B696FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.SmallTop" FontSize="17" TextHorizontalAlignment="Left" TextVerticalAlignment="Top">
     <Styles>
-      <Style Name="Default" FontColor="#C2B08EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#C9B696FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.Muted" FontSize="16" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#8F8068FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#9C8B70FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+    </Styles>
+  </Brush>
+
+  <Brush Name="Tvh.Text.MutedRight" FontSize="16" TextHorizontalAlignment="Right" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#9C8B70FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.MutedTop" FontSize="16" TextHorizontalAlignment="Left" TextVerticalAlignment="Top">
     <Styles>
-      <Style Name="Default" FontColor="#8F8068FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#9C8B70FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.Good" FontSize="18" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#9CCB7EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#9BC65EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.GoodRight" FontSize="18" TextHorizontalAlignment="Right" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#9CCB7EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#9BC65EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.Bad" FontSize="16" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#E07A6AFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#E0835FFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.BadTop" FontSize="16" TextHorizontalAlignment="Left" TextVerticalAlignment="Top">
     <Styles>
-      <Style Name="Default" FontColor="#E07A6AFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#E0835FFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.Gold" FontSize="18" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#E8C77DFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#E4C59BFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.BadRight" FontSize="18" TextHorizontalAlignment="Right" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#E07A6AFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#E0835FFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.GoldRight" FontSize="18" TextHorizontalAlignment="Right" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#E8C77DFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#E4C59BFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
@@ -124,64 +141,65 @@
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.CardTitle" FontSize="34" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.CardTitle" Font="Galahad" FontSize="38" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineColor="#000000FF" TextOutlineAmount="0.15" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineColor="#000000FF" TextOutlineAmount="0.15" TextGlowRadius="0" TextBlur="0" TextShadowOffset="1" TextShadowAngle="60" />
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.Placeholder" FontSize="40" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.Placeholder" Font="Galahad" FontSize="44" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
       <Style Name="Default" FontColor="#5C4C36FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
     </Styles>
   </Brush>
 
-  <!-- Düğme yazıları: düğme "UpdateChildrenStates" ile durumunu yazıya da geçirir. -->
+  <!-- Düğme yazıları (oyunun düğme yazısı gibi Galahad): düğme "UpdateChildrenStates" ile durumunu yazıya da geçirir. -->
 
-  <Brush Name="Tvh.Text.Button" FontSize="19" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.Button" Font="Galahad" FontSize="22" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
       <Style Name="Hovered" FontColor="#FFFFFFFF" />
-      <Style Name="Pressed" FontColor="#E8C77DFF" />
-      <Style Name="Selected" FontColor="#F7D58CFF" />
-      <Style Name="Disabled" FontColor="#F2E3C6FF" TextAlphaFactor="0.4" />
+      <Style Name="Pressed" FontColor="#E4C59BFF" />
+      <Style Name="Selected" FontColor="#FEDBA6FF" />
+      <Style Name="Disabled" FontColor="#F4E1C4FF" TextAlphaFactor="0.45" />
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.ButtonSmall" FontSize="15" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.ButtonSmall" Font="Galahad" FontSize="18" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
       <Style Name="Hovered" FontColor="#FFFFFFFF" />
-      <Style Name="Pressed" FontColor="#E8C77DFF" />
-      <Style Name="Selected" FontColor="#F7D58CFF" />
-      <Style Name="Disabled" FontColor="#F2E3C6FF" TextAlphaFactor="0.4" />
+      <Style Name="Pressed" FontColor="#E4C59BFF" />
+      <Style Name="Selected" FontColor="#FEDBA6FF" />
+      <Style Name="Disabled" FontColor="#F4E1C4FF" TextAlphaFactor="0.45" />
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.Tab" FontSize="18" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+  <!-- Sekme yazısı: oyunun Klan ekranı sekmeleri gibi (Clan.TabControl.Text), daha küçük. -->
+  <Brush Name="Tvh.Text.Tab" Font="Galahad" FontSize="21" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#BBA77FFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
-      <Style Name="Hovered" FontColor="#F2E3C6FF" />
-      <Style Name="Pressed" FontColor="#F2E3C6FF" />
-      <Style Name="Selected" FontColor="#F7D58CFF" />
-      <Style Name="Disabled" FontColor="#BBA77FFF" TextAlphaFactor="0.4" />
+      <Style Name="Default" FontColor="#C9B696FF" TextOutlineAmount="0.1" TextGlowRadius="0" TextBlur="0" TextShadowOffset="1" TextShadowAngle="60" />
+      <Style Name="Hovered" FontColor="#F4E1C4FF" />
+      <Style Name="Pressed" FontColor="#F4E1C4FF" />
+      <Style Name="Selected" FontColor="#FEDBA6FF" />
+      <Style Name="Disabled" FontColor="#C9B696FF" TextAlphaFactor="0.45" />
     </Styles>
   </Brush>
 
   <Brush Name="Tvh.Text.Option" FontSize="19" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#F2E3C6FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
       <Style Name="Hovered" FontColor="#FFFFFFFF" />
-      <Style Name="Pressed" FontColor="#E8C77DFF" />
-      <Style Name="Disabled" FontColor="#F2E3C6FF" TextAlphaFactor="0.4" />
+      <Style Name="Pressed" FontColor="#E4C59BFF" />
+      <Style Name="Disabled" FontColor="#F4E1C4FF" TextAlphaFactor="0.45" />
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.MapButton" FontSize="18" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+  <Brush Name="Tvh.Text.MapButton" Font="Galahad" FontSize="20" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
     <Styles>
-      <Style Name="Default" FontColor="#E8C77DFF" TextOutlineColor="#000000FF" TextOutlineAmount="0.2" TextGlowRadius="0" TextBlur="0" />
-      <Style Name="Hovered" FontColor="#FFF1CCFF" />
-      <Style Name="Pressed" FontColor="#C9A45EFF" />
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineColor="#000000FF" TextOutlineAmount="0.2" TextGlowRadius="0" TextBlur="0" />
+      <Style Name="Hovered" FontColor="#FFFFFFFF" />
+      <Style Name="Pressed" FontColor="#E4C59BFF" />
     </Styles>
   </Brush>
 
@@ -191,9 +209,9 @@
     </Styles>
   </Brush>
 
-  <!-- ===================== Zeminler ve düğmeler ===================== -->
+  <!-- ===================== Zeminler ===================== -->
 
-  <!-- Tam ekran karartma: alttaki haritaya tıklanmasın. -->
+  <!-- Tam ekran karartma: alttaki haritaya tıklanmasın (yedek ayrı ekran ve olay kartı). -->
   <Brush Name="Tvh.Backdrop">
     <Layers>
       <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.74" />
@@ -206,54 +224,73 @@
     </Styles>
   </Brush>
 
-  <!-- Kenarlık katmanı (Frame) 1 piksel taşar; dolgu (Default) üstüne çizilir. -->
-  <Brush Name="Tvh.Button">
+  <!-- Kart (süren entrika, esir, ağ, sana karşı): harita olayı seçeneği gibi taş dokulu, yuvarlak köşeli. -->
+  <Brush Name="Tvh.Card">
     <Layers>
-      <BrushLayer Name="Frame" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" ExtendLeft="1" ExtendRight="1" ExtendTop="1" ExtendBottom="1" />
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#3A2D1FFF" />
+      <BrushLayer Name="Default" Sprite="rounded_canvas_9" Color="#4B2D19FF" ColorFactor="0.45" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#593F26FF" ColorFactor="1.1" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
     </Layers>
     <Styles>
       <Style Name="Default" />
-      <Style Name="Hovered">
-        <BrushLayer Name="Frame" Color="#C9A45EFF" />
-        <BrushLayer Name="Default" ColorFactor="1.35" />
-      </Style>
-      <Style Name="Pressed">
-        <BrushLayer Name="Default" ColorFactor="0.8" />
-      </Style>
-      <Style Name="Selected">
-        <BrushLayer Name="Frame" Color="#E8C77DFF" />
-        <BrushLayer Name="Default" ColorFactor="1.5" />
-      </Style>
-      <Style Name="Disabled">
-        <BrushLayer Name="Frame" AlphaFactor="0.35" />
-        <BrushLayer Name="Default" AlphaFactor="0.45" />
-      </Style>
     </Styles>
-    <SoundProperties>
-      <EventSounds>
-        <EventSound EventName="Click" Audio="default" />
-      </EventSounds>
-    </SoundProperties>
   </Brush>
 
-  <Brush Name="Tvh.Button.Primary">
+  <!-- Kaydırma çubuğu: ince koyu yol, oyunun tutamacı. -->
+  <Brush Name="Tvh.Scrollbar">
     <Layers>
-      <BrushLayer Name="Frame" Sprite="BlankWhiteSquare_9" Color="#C9A45EFF" ExtendLeft="1" ExtendRight="1" ExtendTop="1" ExtendBottom="1" />
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#7A2E22FF" />
+      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.35" />
     </Layers>
     <Styles>
       <Style Name="Default" />
+      <Style Name="Hovered" />
+      <Style Name="Pressed" />
+      <Style Name="Disabled" />
+    </Styles>
+  </Brush>
+
+  <Brush Name="Tvh.Scrollbar.Handle">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="Scrollbar.Vertical.Handle" ExtendTop="2" ExtendBottom="2" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="1.1" />
+      </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Frame" Color="#F2D48CFF" />
         <BrushLayer Name="Default" ColorFactor="1.3" />
       </Style>
       <Style Name="Pressed">
-        <BrushLayer Name="Default" ColorFactor="0.8" />
+        <BrushLayer Name="Default" ColorFactor="1.5" />
       </Style>
       <Style Name="Disabled">
-        <BrushLayer Name="Frame" AlphaFactor="0.35" />
-        <BrushLayer Name="Default" AlphaFactor="0.4" />
+        <BrushLayer Name="Default" ColorFactor="0.4" />
+      </Style>
+    </Styles>
+  </Brush>
+
+  <!-- ===================== Düğmeler ===================== -->
+  <!-- Oyunun açılır pencere düğmeleri (Popup.Button.Base), dokuz parçalı: her genişlikte bozulmaz (en az 96 piksel). -->
+
+  <Brush Name="Tvh.Button">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="button_default_9" IsHidden="true" />
+      <BrushLayer Name="Hovered" Sprite="button_default_hover_9" IsHidden="true" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Hovered" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Default" ColorFactor="1.4" Color="#FFC349FF" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.8" IsHidden="false" HorizontalFlip="true" />
       </Style>
     </Styles>
     <SoundProperties>
@@ -263,23 +300,51 @@
     </SoundProperties>
   </Brush>
 
+  <!-- Ana eylem: oyunun "Tamam" düğmesi (Popup.Done.Button.NineGrid). -->
+  <Brush Name="Tvh.Button.Primary">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="done_button_9" IsHidden="true" />
+      <BrushLayer Name="Hovered" Sprite="done_button_hover_9" IsHidden="true" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Hovered" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default" ColorFactor="0.5" SaturationFactor="-50" AlphaFactor="0.8" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+    </Styles>
+    <SoundProperties>
+      <EventSounds>
+        <EventSound EventName="Click" Audio="default" />
+      </EventSounds>
+    </SoundProperties>
+  </Brush>
+
+  <!-- Tehlikeli eylem (suikast, boşa, görevden al): aynı düğme kızıla boyanmış. -->
   <Brush Name="Tvh.Button.Danger">
     <Layers>
-      <BrushLayer Name="Frame" Sprite="BlankWhiteSquare_9" Color="#9A4436FF" ExtendLeft="1" ExtendRight="1" ExtendTop="1" ExtendBottom="1" />
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#4A1E19FF" />
+      <BrushLayer Name="Default" Sprite="button_default_9" Color="#E89282FF" IsHidden="true" />
+      <BrushLayer Name="Hovered" Sprite="button_default_hover_9" Color="#F0A090FF" IsHidden="true" />
     </Layers>
     <Styles>
-      <Style Name="Default" />
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="1.0" IsHidden="false" HorizontalFlip="true" />
+      </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Frame" Color="#D06A55FF" />
-        <BrushLayer Name="Default" ColorFactor="1.4" />
+        <BrushLayer Name="Hovered" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
       </Style>
       <Style Name="Pressed">
-        <BrushLayer Name="Default" ColorFactor="0.8" />
+        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
       </Style>
       <Style Name="Disabled">
-        <BrushLayer Name="Frame" AlphaFactor="0.35" />
-        <BrushLayer Name="Default" AlphaFactor="0.4" />
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.8" IsHidden="false" HorizontalFlip="true" />
       </Style>
     </Styles>
     <SoundProperties>
@@ -289,24 +354,84 @@
     </SoundProperties>
   </Brush>
 
-  <!-- Sekme: seçiliyken koyu zemin; altındaki altın çizgi prefab'da. -->
+  <!-- Küçük düğme (96 pikselden dar): taş dokulu yuvarlak köşeli kutu, her boyutta bozulmaz. -->
+  <Brush Name="Tvh.Button.Small">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="rounded_canvas_9" Color="#4B2D19FF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#8C6D3FFF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="0.7" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default" ColorFactor="0.9" />
+        <BrushLayer Name="Frame" ColorFactor="1.4" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default" ColorFactor="0.6" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.7" />
+        <BrushLayer Name="Frame" AlphaFactor="0.5" />
+      </Style>
+    </Styles>
+    <SoundProperties>
+      <EventSounds>
+        <EventSound EventName="Click" Audio="default" />
+      </EventSounds>
+    </SoundProperties>
+  </Brush>
+
+  <Brush Name="Tvh.Button.SmallDanger">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="rounded_canvas_9" Color="#6A2418FF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#B0503EFF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="0.7" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default" ColorFactor="0.95" />
+        <BrushLayer Name="Frame" ColorFactor="1.3" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default" ColorFactor="0.6" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.7" />
+        <BrushLayer Name="Frame" AlphaFactor="0.5" />
+      </Style>
+    </Styles>
+    <SoundProperties>
+      <EventSounds>
+        <EventSound EventName="Click" Audio="default" />
+      </EventSounds>
+    </SoundProperties>
+  </Brush>
+
+  <!-- Sekme ve filtre: oyunun açılır pencere düğmesi, sönük; seçiliyken oyunun sekmeleri gibi altın (#FFC349). -->
   <Brush Name="Tvh.Tab">
     <Layers>
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#2E2418FF" AlphaFactor="0.25" />
+      <BrushLayer Name="Default" Sprite="button_default_9" IsHidden="true" />
+      <BrushLayer Name="Hovered" Sprite="button_default_hover_9" IsHidden="true" />
     </Layers>
     <Styles>
-      <Style Name="Default" />
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="0.8" AlphaFactor="0.85" IsHidden="false" HorizontalFlip="true" />
+      </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Default" AlphaFactor="0.7" />
+        <BrushLayer Name="Hovered" ColorFactor="1.0" IsHidden="false" HorizontalFlip="true" />
       </Style>
       <Style Name="Pressed">
-        <BrushLayer Name="Default" AlphaFactor="0.9" />
+        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
       </Style>
       <Style Name="Selected">
-        <BrushLayer Name="Default" AlphaFactor="1" ColorFactor="1.2" />
+        <BrushLayer Name="Hovered" ColorFactor="1.6" Color="#FFC349FF" IsHidden="false" HorizontalFlip="true" />
       </Style>
       <Style Name="Disabled">
-        <BrushLayer Name="Default" AlphaFactor="0.1" />
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.6" IsHidden="false" HorizontalFlip="true" />
       </Style>
     </Styles>
     <SoundProperties>
@@ -316,27 +441,31 @@
     </SoundProperties>
   </Brush>
 
-  <!-- Listedeki seçilebilir satır (hedef, kişi). -->
-  <Brush Name="Tvh.ListItem">
+  <!-- Listedeki seçilebilir satır (hedef, kişi): harita olayı seçeneği; seçiliyken çerçeve altın. -->
+  <Brush Name="Tvh.ListItem" TransitionDuration="0.085">
     <Layers>
-      <BrushLayer Name="Frame" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" ExtendLeft="1" ExtendRight="1" ExtendTop="1" ExtendBottom="1" />
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#211A14FF" />
+      <BrushLayer Name="Default" Sprite="rounded_canvas_9" Color="#4B2D19FF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#593F26FF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
     </Layers>
     <Styles>
-      <Style Name="Default" />
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="0.5" />
+      </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Frame" Color="#8C6D3FFF" />
-        <BrushLayer Name="Default" ColorFactor="1.35" />
+        <BrushLayer Name="Default" ColorFactor="0.7" />
+        <BrushLayer Name="Frame" ColorFactor="1.3" />
       </Style>
       <Style Name="Pressed">
+        <BrushLayer Name="Default" ColorFactor="0.5" />
+        <BrushLayer Name="Frame" ColorFactor="0.8" />
+      </Style>
+      <Style Name="Selected">
         <BrushLayer Name="Default" ColorFactor="0.9" />
-      </Style>
-      <Style Name="Selected">
-        <BrushLayer Name="Frame" Color="#C9A45EFF" />
-        <BrushLayer Name="Default" Color="#3A2D1FFF" />
+        <BrushLayer Name="Frame" Color="#FFC349FF" ColorFactor="1.2" />
       </Style>
       <Style Name="Disabled">
-        <BrushLayer Name="Default" AlphaFactor="0.5" />
+        <BrushLayer Name="Default" ColorFactor="0.4" AlphaFactor="0.7" />
+        <BrushLayer Name="Frame" ColorFactor="0.7" />
       </Style>
     </Styles>
     <SoundProperties>
@@ -346,24 +475,27 @@
     </SoundProperties>
   </Brush>
 
-  <!-- Olay kartındaki seçenek. -->
-  <Brush Name="Tvh.Option">
+  <!-- Olay kartındaki seçenek: oyunun harita olayı seçeneğinin aynısı (Map.Incident.Option.Tuple). -->
+  <Brush Name="Tvh.Option" TransitionDuration="0.085">
     <Layers>
-      <BrushLayer Name="Frame" Sprite="BlankWhiteSquare_9" Color="#6B5335FF" ExtendLeft="1" ExtendRight="1" ExtendTop="1" ExtendBottom="1" />
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#2A2118FF" />
+      <BrushLayer Name="Default" Sprite="rounded_canvas_9" Color="#4B2D19FF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#593F26FF" OverlayMethod="CoverWithTexture" OverlaySprite="stone_texture_continuous" />
     </Layers>
     <Styles>
-      <Style Name="Default" />
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="0.6" />
+      </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Frame" Color="#E8C77DFF" />
-        <BrushLayer Name="Default" Color="#4A3926FF" />
+        <BrushLayer Name="Default" ColorFactor="0.75" />
+        <BrushLayer Name="Frame" ColorFactor="1.2" />
       </Style>
       <Style Name="Pressed">
-        <BrushLayer Name="Default" Color="#5A4630FF" />
+        <BrushLayer Name="Default" ColorFactor="0.6" />
+        <BrushLayer Name="Frame" ColorFactor="0.8" />
       </Style>
       <Style Name="Disabled">
-        <BrushLayer Name="Frame" AlphaFactor="0.35" />
-        <BrushLayer Name="Default" AlphaFactor="0.5" />
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.8" />
+        <BrushLayer Name="Frame" ColorFactor="0.7" />
       </Style>
     </Styles>
     <SoundProperties>
@@ -373,20 +505,21 @@
     </SoundProperties>
   </Brush>
 
-  <!-- Haritadaki "Entrika" düğmesi. -->
+  <!-- Haritadaki yedek "Entrika" düğmesi (oyunun çubuğuna eklenemezse üst ortada). -->
   <Brush Name="Tvh.MapButton">
     <Layers>
-      <BrushLayer Name="Frame" Sprite="BlankWhiteSquare_9" Color="#C9A45EFF" ExtendLeft="1" ExtendRight="1" ExtendTop="1" ExtendBottom="1" />
-      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" Color="#1A140FFF" AlphaFactor="0.92" />
+      <BrushLayer Name="Default" Sprite="button_default_9" IsHidden="true" />
+      <BrushLayer Name="Hovered" Sprite="button_default_hover_9" IsHidden="true" />
     </Layers>
     <Styles>
-      <Style Name="Default" />
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
+      </Style>
       <Style Name="Hovered">
-        <BrushLayer Name="Frame" Color="#F2D48CFF" />
-        <BrushLayer Name="Default" Color="#3A2D1FFF" />
+        <BrushLayer Name="Hovered" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
       </Style>
       <Style Name="Pressed">
-        <BrushLayer Name="Default" Color="#4A3926FF" />
+        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
       </Style>
     </Styles>
     <SoundProperties>

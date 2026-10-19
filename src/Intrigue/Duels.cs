@@ -94,8 +94,9 @@ namespace CheatMenu.Intrigue
             string scene = town.LocationComplex.GetScene("arena", town.Town.GetWallLevel());
             state.AddLog(Today, "Düello (" + DuelRules.ReasonName(reason) + "): " + target.Name + ", " + town.Name + " arenası");
             UI.IntrigueScreen.Close();
-            SandBoxMissions.OpenArenaDuelMission(scene, arena, target.CharacterObject, false, false,
-                winner => MenuUI.SafeRun("Düello sonucu", () => Ended(target, reason, winner)), DuelRules.AgentHealth, "");
+            // Klan ekranındaki sekmeden geldiyse ekran önce kapanır; arena haritadan açılır.
+            UI.ClanIntrigueTab.WhenOnMap(() => SandBoxMissions.OpenArenaDuelMission(scene, arena, target.CharacterObject, false, false,
+                winner => MenuUI.SafeRun("Düello sonucu", () => Ended(target, reason, winner)), DuelRules.AgentHealth, ""));
         }
 
         private static void Refused(IntrigueState state, Hero target, DuelReason reason)

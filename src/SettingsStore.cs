@@ -38,11 +38,29 @@ namespace CheatMenu
             }
         }
 
+        /// <summary>Bu oturumda eski dosyadan taşıma yapıldıysa bir kez true döner (MCM eski değeri geri yazmasın).</summary>
+        public static bool ConsumeMigration()
+        {
+            if (_current == null || !_migrationPending) return false;
+            _migrationPending = false;
+            return true;
+        }
+
+        private static bool _migrationPending;
+
         private static ModSettings Load()
         {
             try
             {
-                return File.Exists(FilePath) ? ModSettings.Parse(File.ReadAllText(FilePath)) : new ModSettings();
+                if (!File.Exists(FilePath)) return new ModSettings();
+                ModSettings settings = ModSettings.Parse(File.ReadAllText(FilePath));
+                if (settings.Migrated)
+                {
+                    // Olaysız yazılır: Load, MCM ayar sınıfı kurulurken çağrılabilir; Saved onu yeniden tetiklemesin.
+                    _migrationPending = true;
+                    File.WriteAllText(FilePath, settings.Format());
+                }
+                return settings;
             }
             catch (Exception ex)
             {

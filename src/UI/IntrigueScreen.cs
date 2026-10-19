@@ -33,12 +33,21 @@ namespace CheatMenu.UI
         public static void Toggle()
         {
             if (IsOpen) Close();
+            else if (ClanIntrigueTab.Registered) ClanIntrigueTab.Toggle();
             else Open();
         }
 
+        /// <summary>
+        /// Entrika'yı açar: Klan ekranındaki sekmede (UIExtenderEx kaydı tuttuysa) ya da bu ayrı ekranda (yedek).
+        /// </summary>
         /// <param name="tab">-1: en son açık sekme.</param>
         public static void Open(int tab = -1)
         {
+            if (ClanIntrigueTab.Registered)
+            {
+                ClanIntrigueTab.Open(tab >= 0 ? vm => vm.SelectTab(tab) : (Action<IntrigueScreenVM>)null);
+                return;
+            }
             if (IsOpen) return;
             string reason = CannotOpenReason();
             if (reason != null)
@@ -78,6 +87,12 @@ namespace CheatMenu.UI
             // Bir sonraki karede: ansiklopedi katmanı tamamen kapansın, klavye odağı yeni ekrana geçsin.
             MenuUI.Defer(() =>
             {
+                if (ClanIntrigueTab.Registered)
+                {
+                    if (hero != null) ClanIntrigueTab.Open(vm => vm.FocusOn(hero, kind));
+                    else ClanIntrigueTab.Open();
+                    return;
+                }
                 Open(kind == null ? IntrigueScreenVM.TabPeople : IntrigueScreenVM.TabNew);
                 if (hero != null && Layer.DataSource is IntrigueScreenVM vm) vm.FocusOn(hero, kind);
             });
@@ -126,9 +141,10 @@ namespace CheatMenu.UI
             }
         }
 
-        /// <summary>null: ekran açılabilir.</summary>
+        /// <summary>null: Entrika açılabilir (sekmeyse haritada ya da Klan ekranında; ayrı ekransa yalnızca haritada).</summary>
         public static string CannotOpenReason()
         {
+            if (ClanIntrigueTab.Registered && !IsOpen) return ClanIntrigueTab.CannotOpenReason();
             if (Campaign.Current == null || IntrigueBehavior.Current == null) return "Entrika yalnızca kampanyada";
             if (!(Game.Current?.GameStateManager?.ActiveState is MapState)) return "Entrika ekranı yalnızca haritadayken açılır";
             if (MapScreen.Instance == null) return "Harita ekranı hazır değil";
