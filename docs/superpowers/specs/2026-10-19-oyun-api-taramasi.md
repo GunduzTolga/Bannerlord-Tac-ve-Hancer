@@ -19,7 +19,7 @@ açabilir.
 | API | Oyunda ne için | Bizde ne olabilir |
 |---|---|---|
 | `OpenArenaDuelMission(scene, location, duelCharacter, civilian, horses, onDuelEnd(kazanan), health, levels)` | Arenada düello (görevlerde) | **Düello:** bir lorda meydan oku. Eşinin sevgilisi, kan davalın, sana hakaret eden. Kazanan döner: onur, ilişki, sır kapanır ya da açılır. |
-| `OpenTownCenterShadowATargetMission(...)` | Bir hedefi şehirde gizlice takip etme | **Casusluğu kendin yap:** casusluk entrikasında "kendin takip et" seçeneği. Başarırsan aşama ya da rapor hemen gelir. |
+| `OpenTownCenterShadowATargetMission(...)` | Bir hedefi şehirde gizlice takip etme | **Casusluğu kendin yap (✅ P2.11):** hedefle aynı şehirde "kendin takip et"; rapor, sır şansı, süren casusluk bir aşama ilerler. Görev sonuç bildirmediği için asıl sistem kartlarla; bu görev deneysel ayarla açılır, mod uzaklığı kendi ölçer. |
 | `OpenDisguiseMission(scene, willSetUpContact, from, levels)` | Kılık değiştirip düşman şehre girme | **Kılık değiştir:** düşman şehirde gölge ağı kurmak ya da çete lideriyle buluşmak için gizlice gir. |
 | `OpenPrisonBreakMission(scene, location, prisoner)` | Zindandan yoldaş kurtarma | **Zindan baskını:** esir düşmüş ailenden birini kurtar ya da kaçırma entrikasını kendin bitir. |
 | `OpenAlleyFightMission(..., playerTroops, rivalTroops)` | Ara sokak çatışması | **Çete savaşı:** gölge ağının olduğu şehirde rakip çeteyle sokak kavgası; kazanırsan ağ güçlenir. |
@@ -70,7 +70,8 @@ kaçırma görevi bunun üzerine kurulabilir. En zor ve en riskli olanı bu, ç�
 1. **Düello:** en az risk, en çok etki. Aldatma, kan davası ve hakaret için gerçek bir çözüm.
 2. **Oyunun 3B sahneleri:** doğum ve düğün. Ucuz, görsel olarak büyük fark.
 3. **Evlat edinme ve varis:** P2.8'in temeli.
-4. **Casusluğu kendin yap:** takip görevi ve kılık değiştirme.
+4. **Casusluğu kendin yap:** ✅ P2.11 (kartlı takip; takip görevi deneysel). Kılık değiştirip düşman şehre girmek oyunda zaten var
+   (şehir kapısında "kılık değiştir"), yenisi eklenmedi.
 5. **Zindan baskını** ve **çete savaşı.**
 6. **Manastıra çekilme.**
 7. **Gizlilikle suikast:** en zoru.

@@ -306,6 +306,8 @@ namespace CheatMenu.Intrigue.Core
         public HashSet<string> AgeFrozen = new HashSet<string>();
         /// <summary>Düello → aynı kişiye yeniden meydan okunabileceği gün.</summary>
         public Dictionary<string, int> DuelUntil = new Dictionary<string, int>();
+        /// <summary>Kendin takip et (P2.11) → aynı kişiyi yeniden takip edebileceğin gün.</summary>
+        public Dictionary<string, int> TailUntil = new Dictionary<string, int>();
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
@@ -365,6 +367,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in RecruitUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RecruitUntil.Remove(id);
             foreach (string id in RomanceUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RomanceUntil.Remove(id);
             foreach (string id in DuelUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DuelUntil.Remove(id);
+            foreach (string id in TailUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) TailUntil.Remove(id);
             foreach (string id in CourtDayUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CourtDayUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
@@ -447,6 +450,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("asked", B(SpouseAffair.Asked)).Add("how", SpouseAffair.How).Add("children", string.Join(";", SpouseAffair.ChildIds)));
             foreach (string id in NoChildren) records.Add(new TextRecord("nochild").Add("hero", id));
             foreach (KeyValuePair<string, int> p in DuelUntil) records.Add(new TextRecord("duelcd").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in TailUntil) records.Add(new TextRecord("tailcd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (HostageDeal h in Hostages)
                 records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
                     .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
@@ -620,6 +624,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "duelcd":
                         if (Empty(r.Get("hero")) != null) state.DuelUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "tailcd":
+                        if (Empty(r.Get("hero")) != null) state.TailUntil[r.Get("hero")] = Int(r, "until");
                         break;
                     case "nochild":
                         if (Empty(r.Get("hero")) != null) state.NoChildren.Add(r.Get("hero"));

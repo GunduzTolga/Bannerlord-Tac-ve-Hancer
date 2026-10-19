@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **41 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **43 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -89,6 +89,8 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 39 | `sonuc_mesrulastirma.png` | Gayrimeşru çocuk meşrulaştırıldı (P2.8) | |
 | 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ |
 | 41 | `sonuc_rehine.png` | Rehine anlaşması: gönderme, değişim, dönüş, bozulan barış (P2.10) | |
+| 42 | `olay_takip.png` | Kendin takip et: gündüz sahneleri ve takip raporu (P2.11) | ★ |
+| 43 | `olay_takip_gece.png` | Kendin takip et: gece sahneleri (P2.11) | ★ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -284,6 +286,18 @@ A lord seated on a carved wooden chair at the end of a torch-lit great hall hold
 
 ```
 A young noble in travel clothes being formally welcomed at the gate of a foreign castle by its ruler, two escorts with banners of different colors behind them, servants carrying a small chest, respectful and ceremonial mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**42 · `olay_takip.png`** — kendin takip et (gündüz)
+
+```
+A hooded figure in a plain wool cloak following a richly dressed lord and two guards through a crowded town market at midday, keeping a careful distance behind a fruit stall, townsfolk bustling between them, the lord unaware, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**43 · `olay_takip_gece.png`** — kendin takip et (gece)
+
+```
+A cloaked figure pressed against a stone wall in the shadow of a narrow torch-lit alley at night, watching a noble and a lantern-bearing servant enter a tavern door further down the street, moonlight on wet cobblestones, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -766,4 +780,24 @@ Two noble youths crossing paths on a bridge between two armed escorts during a f
 
 ```
 A young guest noble learning swordsmanship in the courtyard of a foreign castle under the eye of the host lord, children of the house watching, banners on the walls, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_takip_2.png`** · `olay_takip_3.png` — kendin takip et (gündüz)
+
+```
+An Aserai spy in a plain robe pretending to examine pottery at a sunlit souk stall while glancing sideways at a passing emir and his guards, faded cloth awnings overhead, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Vlandian townsman half hidden behind a pillar of a church porch, watching a knight in a fur-trimmed cloak whisper to a priest in the town square, pigeons on the cobbles, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_takip_gece_2.png`** · `olay_takip_gece_3.png` — kendin takip et (gece)
+
+```
+A Sturgian spy crouching on a snowy wooden rooftop at night, watching through a lit window as a boyar counts coins with his steward, smoke rising from the chimneys, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Imperial agent listening at the closed back-room door of a candlelit inn at night, the silhouette of a hooded stranger visible through the gap, the innkeeper pointedly looking away, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

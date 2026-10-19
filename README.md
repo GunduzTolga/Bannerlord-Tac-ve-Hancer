@@ -38,6 +38,7 @@ Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar I
 
 | Kategori | Neler var |
 |---|---|
+| **Kendin takip et** | Bir lordla aynı şehirdeyken onu bizzat takip et: üç resimli sahne, şüphe çubuğu (beceri, gece ve gölge ağı yardım eder), fark edilince kaç / rol yap / sustur; rapor, sır şansı, süren casusluğa bir aşama. Oyunun 3B takip görevi deneysel ayarla |
 | **Rehine anlaşmaları** | Barıştaki bir krallığa teminat olarak aileden birini "misafir" gönder ya da değişim yap: yakınlaşma, gerilim düşer; barış bozulursa misafirler esir |
 | **Saray günü** | Kendi şehrinde ya da kalende "Divan kur": üç dilekçe (toprak davası, hırsız, vergi, salgın, kıtlık, yakalanan casus...); kararlar sadakat, güvenlik, refah, erzak, eşraf ve kişiliği etkiler |
 | **Aile editörü** | Editörler'de: evlendir (oyunun kurallarıyla), boşa, gebelik başlat, "çocuk istemiyorlar", çocuğu büyüt, yaşlanmayı dondur; gayrimeşru çocuğunu meşrulaştır; klanı devret (çekil, varisinle devam et) |

@@ -25,6 +25,7 @@ namespace CheatMenu.Intrigue
                 if (State.Seed == 0) State.Seed = MBRandom.RandomInt() | 1;
                 ShadowNetworks.RegisterMenus(starter);
                 CourtDays.RegisterMenus(starter);
+                Tailing.RegisterMenus(starter);
                 IntrigueDialogs.Register(starter);
             });
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, () =>
