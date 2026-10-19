@@ -15,30 +15,30 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Divan sekmesi: üstte koltuklar (serdar P2.14, hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
+    /// Divan sekmesi: üstte koltuklar (serdar P2.14, kâhya P2.15, hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
     /// tahminler ve ömür riskleri koltuk sahibinin gözüyle (becerisine göre hata payı). Casus başı sol sütunda kalır.
     /// </summary>
     public sealed class CouncilVM : TvhViewModel
     {
         private readonly Action _changed;
-        private readonly CouncilSeatVM _marshal, _treasurer, _physician;
+        private readonly CouncilSeatVM _marshal, _steward, _treasurer, _physician;
 
         public CouncilVM(Action changed)
         {
             _changed = changed;
             _marshal = new CouncilSeatVM("SERDAR",
-                "Tactics'i ve Scouting'i yüksek birini ata: savaş meclisi (düşmanın gücü, orduları, zayıf kaleleri, savunman) ve şehrine ya da "
-                + "köyüne yürüyen ordulara erken uyarı. Sahadayken de çalışır. Tactics düşükse sayıları yanlış tahmin eder.",
+                "Tactics ve Scouting: düşmanın gücü, orduları, zayıf kaleleri; sana yürüyen ordulara erken uyarı. Sahada da çalışır.",
                 AssignMarshal, () => Dismiss("Serdar", Marshal.Dismiss), null);
+            _steward = new CouncilSeatVM("KÂHYA",
+                "Steward: bütün şehir ve kalelerin, uzaktan inşaat emri, isyan ve kıtlık uyarısı; sadakate günlük katkı. Düşükse yolsuzluk yapar.",
+                AssignSteward, () => Dismiss("Kâhya", Steward.Dismiss), null);
             _treasurer = new CouncilSeatVM("HAZİNEDAR",
-                "Trade'i yüksek birini ata: gelirler, kervanların sefer defteri, atölye önerileri, ticaret fırsatları. Trade düşükse tahminleri "
-                + "yanlış olabilir; onuru düşükse kasadan çalabilir.",
+                "Trade: gelirler, kervan seferleri, atölye önerisi, ticaret fırsatları. Düşükse yanılır; onuru düşükse kasadan çalar.",
                 AssignTreasurer, () => Dismiss("Hazinedar", Treasury.Dismiss), () => EventCards.ShowReckoning(_changed));
             _physician = new CouncilSeatVM("SARAY HEKİMİ",
-                "Medicine'i yüksek birini ata: klanında doğumda ve yaşlılıktan ölümü azaltır, suikastte kurbanı kurtarabilir, eşinin gizli "
-                + "gebeliğini fark eder. Medicine 30'un altındaysa şarlatandır: tedavisi zarar verir.",
+                "Medicine: doğumda ve yaşlılıktan ölümü azaltır, suikastte kurtarabilir, gizli gebeliği fark eder. 30'un altı şarlatan.",
                 AssignPhysician, () => Dismiss("Hekim", Physician.Dismiss), null);
-            Seats = new MBBindingList<CouncilSeatVM> { _marshal, _treasurer, _physician };
+            Seats = new MBBindingList<CouncilSeatVM> { _marshal, _steward, _treasurer, _physician };
             Rows = new MBBindingList<CouncilRowVM>();
         }
 
@@ -49,11 +49,13 @@ namespace CheatMenu.UI.ViewModels
         {
             Clear(Rows);
             RefreshMarshalSeat(state);
+            RefreshStewardSeat(state);
             RefreshTreasurerSeat(state);
             RefreshPhysicianSeat(state);
-            if (Marshal.Current(state) == null && Treasury.Treasurer(state) == null && Physician.Current(state) == null)
+            if (Marshal.Current(state) == null && Steward.Current(state) == null && Treasury.Treasurer(state) == null && Physician.Current(state) == null)
                 Rows.Add(CouncilRowVM.Note("Divanda koltuklar boş. Yukarıdan klanından birini ata; raporları burada görünür."));
             if (Marshal.Working(state) is Hero marshal) AddWar(state, marshal);
+            if (Steward.Working(state) != null) AddFiefs();
             if (Physician.Working(state) != null) AddHealth(state);
             if (Treasury.Blocked(state) == null)
             {
@@ -78,6 +80,19 @@ namespace CheatMenu.UI.ViewModels
                 Marshal.Blocked(state) ?? (marshal.PartyBelongedTo?.LeaderHero == marshal ? "Görevde (sahada)" : "Görevde"), false);
         }
 
+        private void RefreshStewardSeat(IntrigueState state)
+        {
+            Hero steward = Steward.Current(state);
+            if (steward == null)
+            {
+                _steward.Show(null, "", "", "", false);
+                return;
+            }
+            int skill = Steward.Skill(steward);
+            _steward.Show(steward, "Steward " + skill + (StewardRules.IsCorrupt(skill) ? " (yolsuz)" : ""), Steward.DetailText(steward),
+                Steward.Blocked(state) ?? "Görevde", false);
+        }
+
         private void RefreshTreasurerSeat(IntrigueState state)
         {
             Hero treasurer = Treasury.Treasurer(state);
@@ -89,12 +104,12 @@ namespace CheatMenu.UI.ViewModels
             int error = Treasury.Error(treasurer);
             string blocked = Treasury.Blocked(state);
             _treasurer.Show(treasurer,
-                "Trade " + Treasury.Trade(treasurer) + "  ·  Hesapçı " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Calculating))
-                + "  ·  Onur " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Honor)),
+                "Trade " + Treasury.Trade(treasurer) + "  ·  Hesapçı " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Calculating)),
                 "Tahmin payı %" + error + " (" + TreasuryRules.Confidence(error) + ")",
                 state.EmbezzleFound ? "Zimmet ortaya çıktı: " + SchemeFactors.Money(state.Embezzled) + ". Hesabını sor."
-                    : blocked ?? (treasurer.GetTraitLevel(DefaultTraits.Honor) < 0 ? "Görevde. Onuru düşük: kasadan çalabilir." : "Görevde"),
-                state.EmbezzleFound, "Hesap sor...");
+                    : blocked ?? (treasurer.GetTraitLevel(DefaultTraits.Honor) < 0 ? "Görevde. Onuru düşük (" + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Honor))
+                        + "): kasadan çalabilir." : "Görevde"),
+                state.EmbezzleFound, "Hesap sor");
         }
 
         private void RefreshPhysicianSeat(IntrigueState state)
@@ -183,6 +198,26 @@ namespace CheatMenu.UI.ViewModels
         {
             Campaign.Current.VisualTrackerManager.RegisterObject(settlement);
             MenuUI.Success(settlement.Name + " haritada işaretlendi");
+        }
+
+        // ---- Kâhya ----
+
+        private void AddFiefs()
+        {
+            List<Steward.FiefLine> fiefs = Steward.Report();
+            Rows.Add(CouncilRowVM.Header("ŞEHİR VE KALELER (kâhyanın defteri)"));
+            if (fiefs.Count == 0) Rows.Add(CouncilRowVM.Note("Şehrin ya da kalen yok."));
+            foreach (Steward.FiefLine fief in fiefs)
+            {
+                Town town = fief.Town;
+                string text = town.Name + " (" + (town.IsCastle ? "kale" : "şehir") + ") · sadakat " + (int)town.Loyalty + " ("
+                    + StewardRules.Signed(town.LoyaltyChange, Tr.Culture) + ") · güvenlik " + (int)town.Security + " · refah " + (int)town.Prosperity
+                    + "\nİnşaat: " + (fief.Construction != null ? Steward.BuildingText(fief.Construction, fief.ConstructionDays) : "yok")
+                    + " · proje: " + (fief.Daily?.Name.ToString() ?? "yok") + (fief.Problems.Count > 0 ? " · " + string.Join(", ", fief.Problems) : "");
+                Town chosen = town;
+                Rows.Add(new CouncilRowVM(text, "günde " + Treasury.Signed(fief.Income), fief.Danger, "Yönet...", null,
+                    () => EventCards.ShowFief(chosen, _changed)));
+            }
         }
 
         // ---- Hekim ----
@@ -316,6 +351,18 @@ namespace CheatMenu.UI.ViewModels
                 null, hero => Categories.HeroPortrait(hero), sort: false);
         }
 
+        private void AssignSteward()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Picker.Pick("Kâhya seç", Steward.Candidates(state).OrderByDescending(Steward.Skill).ToList(), Steward.Label,
+                hero => Run("Kâhya", () =>
+                {
+                    Steward.Assign(SchemeEngine.State, hero);
+                    _changed();
+                }),
+                null, hero => Categories.HeroPortrait(hero), sort: false);
+        }
+
         private void AssignPhysician()
         {
             IntrigueState state = SchemeEngine.State;
@@ -332,6 +379,7 @@ namespace CheatMenu.UI.ViewModels
         {
             base.OnFinalize();
             _marshal.OnFinalize();
+            _steward.OnFinalize();
             _treasurer.OnFinalize();
             _physician.OnFinalize();
             Clear(Rows);

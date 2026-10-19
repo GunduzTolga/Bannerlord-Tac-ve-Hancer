@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **48 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **49 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -96,6 +96,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 46 | `sonuc_hekim.png` | Divan: saray hekiminin uyarısı, sağlık (P2.13) | |
 | 47 | `sonuc_panzehir.png` | Hekim suikast kurbanını kurtardı (P2.13) | |
 | 48 | `sonuc_serdar.png` | Divan: serdarın erken uyarısı, düşman ordusu yürüyor (P2.14) | ★ |
+| 49 | `sonuc_kahya.png` | Divan: kâhyanın uyarısı (isyan, kıtlık) ve uzaktan inşaat emri (P2.15) | ★ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -333,6 +334,12 @@ A court physician kneeling beside a pale wounded noble on a bed in a candlelit b
 
 ```
 A grizzled marshal in mail and a fur-lined cloak leaning over a large map table in a torch-lit war room, wooden army tokens pushed toward a castle, a dusty scout delivering news at his side, the lord listening grimly, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**49 · `sonuc_kahya.png`** — kâhya (şehir yönetimi)
+
+```
+A steward in a modest wool robe with a ring of keys at his belt presenting a wax tablet of accounts to a lord on a castle balcony overlooking a busy town, masons raising a new stone building below, grain carts at the gate, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -885,4 +892,14 @@ A lone Khuzait rider galloping at dusk toward a hilltop castle with beacon fires
 
 ```
 A Vlandian marshal on the battlements at dawn pointing out over the plain toward the campfires of a besieging host, the garrison captain and archers beside him, smoke rising, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_kahya_2.png`** · `sonuc_kahya_3.png` — kâhya
+
+```
+An angry crowd of townsfolk with torches and tools gathering before a town hall at dusk, a worried steward on the steps trying to calm them, guards forming a line, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Imperial steward inspecting half-empty granaries with a scribe counting sacks by lamplight, a few thin townsfolk waiting outside the door with baskets, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

@@ -85,6 +85,8 @@ namespace CheatMenu
                 starter.AddModel<PregnancyModel>(new Cheats.Models.FamilyPregnancyModel());
                 // Divan, hekim: klanında yaşlılıktan ölüm hekimin Medicine'ine göre azalır.
                 starter.AddModel<HeroDeathProbabilityCalculationModel>(new Cheats.Models.PhysicianDeathModel());
+                // Divan, kâhya: klanının yerleşimlerinde günlük sadakate kâhyanın satırı.
+                starter.AddModel<SettlementLoyaltyModel>(new Cheats.Models.StewardLoyaltyModel());
             }
         }
 
