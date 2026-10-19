@@ -9,7 +9,8 @@
 #  - Resmi ortadan 16:9 kirpar, 1600x900'e kucultur, JPG (kalite 92) kaydeder.
 #  - Oyunun Modules\CheatMenu\Images klasorune ve depodaki Module\Images klasorune koyar.
 #    Ayni addaki eski .png/.jpeg silinir: oyun once .png'ye bakar, eskisi kalirsa yenisi gorunmez.
-#  - Sonunda 49 kartin kacinin bittigini ve eksik oncelikli (*) kartlari yazar.
+#  - Sonunda 49 kartin kacinin bittigini ve eksik oncelikli (*) kartlari yazar; listedeki Durum sutununu
+#    (hazir / bekliyor) ve "Durum: X/49" satirini oyundaki klasore gore gunceller.
 param(
     [string]$Kaynak = (Join-Path ([Environment]::GetFolderPath('Desktop')) 'TVH Resimler'),
     [string]$OyunKlasoru = 'C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord',
@@ -21,13 +22,19 @@ param(
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
-# ---- Gecerli adlar: listedeki tablo satirlari "| 1 | `tur_casusluk.png` | ... | * |" ----
-$listFile = Join-Path $PSScriptRoot '..\docs\gorseller\olay-kartlari.md'
+# ---- Gecerli adlar: listedeki tablo satirlari "| 1 | `tur_casusluk.png` | nerede | * | durum |" ----
+# Sutunlar sirayla: no, dosya, nerede, oncelik (bossa normal kart), durum (sonradan eklendi; olmayabilir).
+$listFile = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\docs\gorseller\olay-kartlari.md'))
+function Get-Cells([string]$line) { return @($line.Trim().Trim('|').Split('|') | ForEach-Object { $_.Trim() }) }
+function Get-CardName([string[]]$cells) {
+    if ($cells.Count -ge 4 -and $cells[0] -match '^\d+$' -and $cells[1] -match '^`([a-z0-9_]+)\.png`$') { return $Matches[1] }
+    return $null
+}
 $cards = @()
 foreach ($line in Get-Content -LiteralPath $listFile -Encoding UTF8) {
-    if ($line -match '^\|\s*\d+\s*\|\s*`([a-z0-9_]+)\.png`\s*\|.*\|\s*(\S*)\s*\|\s*$') {
-        $cards += [pscustomobject]@{ Name = $Matches[1]; Star = ($Matches[2] -ne '') }
-    }
+    $cells = Get-Cells $line
+    $cardName = Get-CardName $cells
+    if ($cardName) { $cards += [pscustomobject]@{ Name = $cardName; Star = ($cells[3] -ne '') } }
 }
 if ($cards.Count -eq 0) { throw "Listede kart bulunamadi: $listFile" }
 $baseNames = $cards | ForEach-Object { $_.Name }
@@ -140,6 +147,30 @@ if (Test-Path -LiteralPath $check) {
 $finished = @($cards | Where-Object { $have.ContainsKey($_.Name) })
 $variants = @($have.Keys | Where-Object { $_ -match '_[2-5]$' -and $valid.Contains($_) })
 $missingStar = @($cards | Where-Object { $_.Star -and -not $have.ContainsKey($_.Name) } | ForEach-Object { $_.Name })
+
+# ---- Listeyi guncelle: Durum sutunu ve "Durum: X/49 tamamlandi" satiri ----
+# Bu betik ANSI okunabilsin diye Turkce harfler ve isaretler karakter koduyla yazildi.
+$markDone = [string][char]0x2705; $markWaiting = [string][char]0x23F3
+$dotlessI = [char]0x0131; $dash = [char]0x2014; $starChar = [char]0x2605; $oUmlaut = [char]0x00F6
+$oldText = [IO.File]::ReadAllText($listFile, [Text.Encoding]::UTF8)
+$newline = if ($oldText.Contains("`r`n")) { "`r`n" } else { "`n" }
+$lines = $oldText -split "`r?`n"
+for ($i = 0; $i -lt $lines.Count; $i++) {
+    $cells = Get-Cells $lines[$i]
+    $cardName = Get-CardName $cells
+    if (-not $cardName -or $cells.Count -lt 5) { continue }
+    $mark = if ($have.ContainsKey($cardName)) { $markDone } else { $markWaiting }
+    $lines[$i] = $lines[$i] -replace '\|[^|]*\|\s*$', "| $mark |"
+}
+$starDone = @($finished | Where-Object { $_.Star }).Count
+$summary = "**Durum: $($finished.Count)/$($cards.Count) tamamland$dotlessI** $dash $starDone adet ``$starChar`` ${oUmlaut}ncelikli + " +
+           "$($finished.Count - $starDone) adet normal kart"
+$summaryPattern = "\*\*Durum: \d+/\d+ tamamland$dotlessI\*\* $dash \d+ adet ``$starChar`` ${oUmlaut}ncelikli \+ \d+ adet normal kart"
+$newText = [regex]::Replace(($lines -join $newline), $summaryPattern, { param($m) $summary })
+if ($newText -ne $oldText) {
+    [IO.File]::WriteAllText($listFile, $newText, (New-Object System.Text.UTF8Encoding $false))
+    Write-Host "Liste guncellendi: $listFile"
+}
 
 Write-Host ''
 Write-Host "Aktarilan: $done, atlanan: $skipped"
