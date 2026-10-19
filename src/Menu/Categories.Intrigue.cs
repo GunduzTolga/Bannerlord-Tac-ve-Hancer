@@ -650,7 +650,7 @@ namespace CheatMenu.Menu
             if (network != null && NightHouses.Enabled) AddHouseEntries(state, town, inTown, entries);
             if (network != null)
                 entries.Add(MenuEntry.Submenu("Ağı dağıt...", () => MenuUI.Confirm("Ağı dağıt",
-                    "Harcanan para geri gelmez." + (state.HouseIn(town.StringId) != null ? " Gece evi de kapanır." : "") + " Dağıtılsın mı?",
+                    "Harcanan para geri gelmez." + (state.HouseIn(town.StringId) != null ? " Genelev de kapanır." : "") + " Dağıtılsın mı?",
                     () => ShadowNetworks.Disband(state, town), () => ShowShadowTown(town, inTown))));
             if (entries.Count == 0) entries.Add(MenuEntry.Simple("Ağ kurmak için bu şehre git", () => { }));
 
@@ -658,7 +658,7 @@ namespace CheatMenu.Menu
                 inTown ? (Action)null : ShowNetworks, ShadowNetworks.Describe(state, town));
         }
 
-        /// <summary>Gece evi: açmak ve çalışan almak şehirdeyken; payı değiştirmek ve kapatmak uzaktan da.</summary>
+        /// <summary>Genelev: açmak ve çalışan almak şehirdeyken; payı değiştirmek ve kapatmak uzaktan da.</summary>
         private static void AddHouseEntries(IntrigueState state, Settlement town, bool inTown, List<MenuEntry> entries)
         {
             House house = state.HouseIn(town.StringId);
@@ -666,7 +666,7 @@ namespace CheatMenu.Menu
             {
                 if (!inTown) return;
                 string blocked = NightHouses.OpenBlocked(state, town);
-                string label = "Gece evi aç (" + SchemeFactors.Money(HouseRules.OpenCost) + ", " + HouseRules.StartStaff + " gönüllü çalışan)";
+                string label = "Genelev aç (" + SchemeFactors.Money(HouseRules.OpenCost) + ", " + HouseRules.StartStaff + " gönüllü çalışan)";
                 entries.Add(blocked == null
                     ? MenuEntry.Simple(label, () => NightHouses.Open(state, town))
                     : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
@@ -687,7 +687,7 @@ namespace CheatMenu.Menu
                     + (HouseRules.LeaveChance(share) > 0 ? " (ayrılma %" + HouseRules.LeaveChance(share) + "/hafta)" : " (kimse ayrılmaz, daha çok haber)"),
                     () => NightHouses.SetShare(state, town, share)));
             }
-            entries.Add(MenuEntry.Submenu("Gece evini kapat...", () => MenuUI.Confirm("Gece evini kapat", "Açılış parası geri gelmez. Kapatılsın mı?",
+            entries.Add(MenuEntry.Submenu("Genelevi kapat...", () => MenuUI.Confirm("Genelevi kapat", "Açılış parası geri gelmez. Kapatılsın mı?",
                 () => NightHouses.Close(state, town), () => ShowShadowTown(town, inTown))));
         }
 

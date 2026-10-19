@@ -218,17 +218,30 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Insert → Entrika → **Kur ve sevgililer**: kur yap / eşini gönder listesi, buluşma, bitir
 - [ ] Kaydet → yükle → kur, sevgili, gebelik aynı
 
-### Gece evi işletmesi (yeni, varsayılan kapalı)
-- [ ] MCM > Entrika > **Gece evi işletmesi** aç
-- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Gece evi aç (4.000, 2 gönüllü çalışan)" → açıldı; menü açıklamasında gece evi satırı
+### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı eklendi)
+- [ ] MCM > Entrika > **Genelev (yetişkin teması)** aç
+- [ ] Herhangi bir şehirde kasaba menüsü > **Genelevine uğra** → resimli kart: sade oda (150), en iyi oda (400), askerlerine bir gece, Ayrıl
+- [ ] Geceyi geçir → "kapı ardından kapanıyor" kartı (içerisi anlatılmıyor); para düştü; aynı gün ikinci kez gri ("Bu gece zaten...")
+- [ ] Birkaç gece sonra: bazen "yan odada X konuşuldu" (Kişiler'de X'in raporu), bazen hastalık, evliysen bazen "eşin duydu" (ilişki -10)
+- [ ] Hastayken: can %70'in üstüne çıkmıyor; kartta "şehrin hekimine görün (500)" → 3 gün sonra "İyileştin" kartı
+- [ ] Saray hekimin varsa hastalık daha çabuk geçiyor (kartta gün sayısı ve hekimin adı)
+- [ ] Askerlerine bir gece ısmarla → "Askerlerin gecesi" kartı; parti morali +12; 7 gün gri
+- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Genelev aç (4.000, 2 gönüllü çalışan)" → açıldı; menü açıklamasında genelev satırı; o şehirde gece yarı fiyat
 - [ ] "Çalışan al" sınırı ağ seviyesine göre (4/6/8); pay seçenekleri (adil/standart/düşük) ayrılma oranlarıyla yazıyor
-- [ ] Bir hafta sonra "Gece evlerinden haftalık gelir" mesajı; altın arttı; kronikte kayıt
-- [ ] Bir süre sonra "Gece evinde duyulanlar: Lord" kartı; Kişiler'de o lordun güncel raporu (bazen sır)
+- [ ] Bir hafta sonra "Genelevlerden haftalık gelir" mesajı; altın arttı; kronikte kayıt
+- [ ] Bir süre sonra "Genelevde duyulanlar: Lord" kartı (yeni resim); Kişiler'de o lordun güncel raporu (bazen sır)
 - [ ] Düşük payda birkaç hafta: "ayrılanlar" kartı, çalışan sayısı düştü
-- [ ] Entrika ekranı > Ağlar: şehrin kartında gece evi satırı
-- [ ] Ağı dağıt → gece evi de kapandı
-- [ ] Ayarı kapat → menüde gece evi seçenekleri yok, haftalık gelir gelmiyor
-- [ ] Kaydet → yükle → ev, çalışan sayısı ve pay aynı
+- [ ] Entrika > Ağlar: şehrin kartında genelev satırı
+- [ ] Ağı dağıt → genelev de kapandı
+- [ ] Ayarı kapat → kasaba menüsünde "Genelevine uğra" ve işletme seçenekleri yok, haftalık gelir gelmiyor
+- [ ] Kaydet → yükle → ev, çalışan sayısı, pay, hastalık ve bekleme süreleri aynı
+- [ ] Resimler (32, 50–54) `TVH Resimler`'e konup "aktar" denince kartlarda görünüyor
+
+### Herkesi biç ve doğum sahnesi (yeni, 19 Ekim)
+- [ ] MCM > Kurallar > **Herkesi biç**: varsayılan "Yalnızca ben"; savaşta düşmanı öldüren kılıç savuruşu arkadakine geçiyor
+- [ ] Kalkanda, dost askerde ve öldürmeyen vuruşta kılıç duruyor; mızrak dürtmesi, tekme ve yumruk geçmiyor
+- [ ] "Herkes" seçince düşmanlar da (ve askerlerin) biçebiliyor; "Kapalı" seçince oyun eskisi gibi
+- [ ] Başka klandan sevgilin senden doğum yapınca oyunun 3B doğum sahnesi, ardından bizim doğum kartı (üst üste binmiyor)
 
 ### P2.5 — Ağ ifşasından diplomatik kriz (yeni)
 - [ ] Hile ya da sabırla barışta olduğun bir krallığın şehrinde gölge ağı kur; çökertilince tek kart: "Diplomatik kriz: Krallık"
