@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CheatMenu.Cheats;
+using TaleWorlds.CampaignSystem;
 // Oyunun konsol hileleri de TaleWorlds.CampaignSystem.CampaignCheats adında; onlar kayda "hile kullanıldı"
 // işareti koyar. Burada her zaman bizim sınıfımız kullanılsın.
 using CampaignCheats = CheatMenu.Cheats.CampaignCheats;
@@ -66,6 +68,7 @@ namespace CheatMenu.Menu
         {
             ShowCategory("Ordu / Parti", new List<MenuEntry>
             {
+                MenuEntry.Submenu("Asker ekle (kademeye göre)...", ShowTroopTiers),
                 MenuEntry.Simple("+10 temel kültür askeri", () => CampaignCheats.AddBasicTroops(10)),
                 MenuEntry.Simple("+50 temel kültür askeri", () => CampaignCheats.AddBasicTroops(50)),
                 MenuEntry.Custom("Özel sayıda temel asker...", CampaignCheats.AddBasicTroops),
@@ -75,6 +78,34 @@ namespace CheatMenu.Menu
                 MenuEntry.Simple("+50 moral", () => CampaignCheats.AddMorale(50)),
                 MenuEntry.Toggle("Parti hızı x2", () => CheatState.FastParty, v => CheatState.FastParty = v),
             }, ShowParty);
+        }
+
+        private static void ShowTroopTiers()
+        {
+            List<CharacterObject> troops = TroopSpawner.All().ToList();
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu("Tüm kademeler (" + troops.Count + " asker türü) - isimle ara...", () => PickTroop(null)),
+            };
+            entries.AddRange(troops
+                .GroupBy(troop => troop.Tier)
+                .OrderBy(group => group.Key)
+                .Select(group => MenuEntry.Submenu(TroopSpawner.TierLabel(group.Key) + " - " + group.Count() + " asker türü...",
+                    () => PickTroop(group.Key))));
+
+            MenuUI.ShowList("Asker ekle", entries, ShowTroopTiers, "Geri", ShowParty,
+                "Kademe yükseldikçe asker güçlenir. Kültür askerleri, paralı askerler ve haydutlar dahil. "
+                + "Parti sınırını aşmak oyunda cezaya yol açar (sınırı artırmak için: Kurallar > Parti boyutu bonusu).");
+        }
+
+        private static void PickTroop(int? tier)
+        {
+            Picker.Pick(tier.HasValue ? TroopSpawner.TierLabel(tier.Value) : "Tüm askerler",
+                tier.HasValue ? TroopSpawner.OfTier(tier.Value) : TroopSpawner.All(),
+                tier.HasValue ? TroopSpawner.Label : TroopSpawner.LabelWithTier,
+                troop => MenuUI.AskNumberInRange(troop.Name + " - adet", 1, 9999, 10,
+                    count => CampaignCheats.AddTroops(troop, count), () => PickTroop(tier)),
+                ShowTroopTiers);
         }
 
         private static void ShowCombat()

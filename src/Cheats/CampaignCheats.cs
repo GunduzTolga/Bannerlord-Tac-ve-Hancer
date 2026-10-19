@@ -125,7 +125,7 @@ namespace CheatMenu.Cheats
             MenuUI.Success("Moral " + Signed(amount) + " (şu an " + MyParty.Morale.ToString("0") + ")");
         }
 
-        private static void AddTroops(CharacterObject troop, int count)
+        public static void AddTroops(CharacterObject troop, int count)
         {
             if (troop == null) throw new InvalidOperationException("Kültürünün bu tür askeri yok");
             if (count <= 0) throw new InvalidOperationException("Asker sayısı pozitif olmalı");
