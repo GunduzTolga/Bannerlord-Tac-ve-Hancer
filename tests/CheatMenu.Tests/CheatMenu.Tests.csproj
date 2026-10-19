@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Oyunsuz birim testleri: yalnızca saf dosyalar (TaleWorlds referansı yok) derlenir.
+    net472: Windows'ta build.ps1 çalıştırır. net8.0: GitHub'daki otomatik derleme (Linux) çalıştırır.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
+    <LangVersion>9.0</LangVersion>
+    <RootNamespace>CheatMenu.Tests</RootNamespace>
+    <AssemblyName>CheatMenu.Tests</AssemblyName>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\src\AmountParser.cs" Link="AmountParser.cs" />
+    <Compile Include="..\..\src\NameRules.cs" Link="NameRules.cs" />
+    <Compile Include="..\..\src\ModSettings.cs" Link="ModSettings.cs" />
+    <Compile Include="..\..\src\Intrigue\Core\*.cs" Link="Intrigue\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

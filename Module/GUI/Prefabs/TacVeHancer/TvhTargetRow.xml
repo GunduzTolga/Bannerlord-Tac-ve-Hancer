@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hedef satırı (ViewModel: TargetItemVM): portre, ad, bağlılık, etiketler; sağda başarı ve maliyet. -->
+<Prefab>
+  <Window>
+    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" MarginBottom="6" Brush="Tvh.ListItem" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+      <Children>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="92" SuggestedHeight="70" MarginLeft="6" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+          <Children>
+            <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+          </Children>
+        </Widget>
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="330" SuggestedHeight="28" MarginLeft="110" MarginTop="6" Brush="Tvh.Text.Name" Text="@Name" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="330" SuggestedHeight="22" MarginLeft="110" MarginTop="34" Brush="Tvh.Text.Small" Text="@Affiliation" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="330" SuggestedHeight="20" MarginLeft="110" MarginTop="56" Brush="Tvh.Text.Muted" Text="@TagsText" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="26" HorizontalAlignment="Right" MarginRight="14" MarginTop="12" Brush="Tvh.Text.GoodRight" Text="@ChanceText" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="26" HorizontalAlignment="Right" MarginRight="14" MarginTop="42" Brush="Tvh.Text.GoldRight" Text="@CostText" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

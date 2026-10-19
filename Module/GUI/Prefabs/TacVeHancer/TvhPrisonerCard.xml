@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Esir kartı (ViewModel: PrisonerItemVM): portre, nerede tutulduğu, sorguya etkili özellikleri, olasılıklar, Sorgula. -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="140" MarginBottom="10" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
+      <Children>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF">
+          <Children>
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="148" SuggestedHeight="112" MarginLeft="14" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="30" MarginLeft="180" MarginTop="12" Brush="Tvh.Text.Name" Text="@Name" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="22" MarginLeft="180" MarginTop="42" Brush="Tvh.Text.Small" Text="@Affiliation" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="22" MarginLeft="180" MarginTop="66" Brush="Tvh.Text.Gold" Text="@WhereText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="22" MarginLeft="180" MarginTop="90" Brush="Tvh.Text.Muted" Text="@TraitsText" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="20" MarginLeft="180" MarginTop="112" Brush="Tvh.Text.Muted" Text="@IntelText" />
+
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="330" SuggestedHeight="24" MarginLeft="760" MarginTop="40" Brush="Tvh.Text.Good" Text="@ChanceText" />
+
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="44" HorizontalAlignment="Right" MarginRight="16" MarginTop="30" Brush="Tvh.Button.Primary" Command.Click="ExecuteInterrogate" IsEnabled="@CanInterrogate" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@InterrogateText" />
+              </Children>
+            </ButtonWidget>
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="44" HorizontalAlignment="Right" MarginRight="16" MarginTop="82" Brush="Tvh.Text.BadTop" Text="@Hint" />
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

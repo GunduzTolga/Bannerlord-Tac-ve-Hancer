@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+	<Name value="Taç ve Hançer"/>
+	<Id value="CheatMenu"/>
+	<Version value="v1.3.0"/>
+	<SingleplayerModule value="true"/>
+	<MultiplayerModule value="false"/>
+	<DefaultModule value="false"/>
+	<ModuleCategory value="Singleplayer"/>
+	<ModuleType value="Community"/>
+	<!-- Harmony, ButterLib, UIExtenderEx ve MCM: Nexus'tan ya da Steam Workshop'tan kurulur, Launcher'da bu modun üstünde olmalı. -->
+	<DependedModules>
+		<DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2" Optional="false"/>
+		<DependedModule Id="Bannerlord.ButterLib" DependentVersion="v2.11.1" Optional="false"/>
+		<DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v2.13.3" Optional="false"/>
+		<DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.13.1" Optional="false"/>
+		<DependedModule Id="Native" DependentVersion="v1.4.8" Optional="false"/>
+		<DependedModule Id="SandBoxCore" DependentVersion="v1.4.8" Optional="false"/>
+		<DependedModule Id="Sandbox" DependentVersion="v1.4.8" Optional="false"/>
+	</DependedModules>
+	<!-- BUTR launcher / BLSE için yükleme sırası -->
+	<DependedModuleMetadatas>
+		<DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis"/>
+		<DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis"/>
+		<DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis"/>
+		<DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis"/>
+		<DependedModuleMetadata id="Native" order="LoadBeforeThis"/>
+		<DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis"/>
+		<DependedModuleMetadata id="Sandbox" order="LoadBeforeThis"/>
+	</DependedModuleMetadatas>
+	<Xmls>
+	</Xmls>
+	<SubModules>
+		<SubModule>
+			<Name value="CheatMenu"/>
+			<DLLName value="CheatMenu.dll"/>
+			<SubModuleClassType value="CheatMenu.SubModule"/>
+			<Tags>
+				<Tag key="DedicatedServerType" value="none"/>
+			</Tags>
+		</SubModule>
+	</SubModules>
+</Module>

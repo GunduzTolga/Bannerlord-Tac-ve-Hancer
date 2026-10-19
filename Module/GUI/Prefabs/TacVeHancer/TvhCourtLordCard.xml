@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Saraydaki klan lideri (ViewModel: CourtLordItemVM). Hoşnutsuzsa hava yazısı kırmızı. Altında eylemler (izle, söylenti, casusluk). -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="8">
+      <Children>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" />
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF" />
+        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="104" SuggestedHeight="78" MarginLeft="12" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                  </Children>
+                </Widget>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="28" MarginLeft="132" MarginTop="10" Brush="Tvh.Text.Name" Text="@Name" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="22" MarginLeft="132" MarginTop="40" Brush="Tvh.Text.Small" Text="@ClanText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="20" MarginLeft="132" MarginTop="66" Brush="Tvh.Text.Muted" Text="@TagsText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="26" MarginLeft="580" MarginTop="18" Brush="Tvh.Text.Bad" Text="@MoodText" IsVisible="@IsDiscontent" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="26" MarginLeft="580" MarginTop="18" Brush="Tvh.Text.Gold" Text="@MoodText" IsVisible="@IsNotDiscontent" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="460" SuggestedHeight="24" MarginLeft="580" MarginTop="50" Brush="Tvh.Text.Small" Text="@YouText" />
+              </Children>
+            </Widget>
+            <ListPanel DataSource="{Actions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="132" MarginRight="12" MarginBottom="8" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <ItemTemplate>
+                <TvhActionRow />
+              </ItemTemplate>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

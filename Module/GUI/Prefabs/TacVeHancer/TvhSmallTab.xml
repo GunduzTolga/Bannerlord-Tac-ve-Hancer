@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Küçük sekme: entrika türü ve hedef filtresi (ViewModel: TabVM). -->
+<Prefab>
+  <Window>
+    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="38" MarginRight="6" Brush="Tvh.Button" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Text.Button" Text="@Name" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

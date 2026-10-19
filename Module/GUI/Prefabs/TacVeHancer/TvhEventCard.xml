@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Resimli olay kartı (ViewModel: EventCardVM). 1540x700: solda 960x540 resim (16:9; yoksa kişinin portresi),
+  sağda metin (kaydırmalı) ve seçenekler. Seçenek alanı en fazla 5 seçenek (5 x 74 piksel) için ayrılmış.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Backdrop" DoNotPassEventsToChildren="true" />
+
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1540" SuggestedHeight="700" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#15110DFF">
+              <Children>
+
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1000" SuggestedHeight="22" MarginLeft="24" MarginTop="16" Brush="Tvh.Text.Caption" Text="@Caption" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1480" SuggestedHeight="42" MarginLeft="24" MarginTop="36" Brush="Tvh.Text.CardTitle" Text="@Title" />
+
+                <!-- Resim alanı -->
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="964" SuggestedHeight="544" MarginLeft="22" MarginTop="96" Sprite="BlankWhiteSquare_9" Color="#5A4630FF">
+                  <Children>
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                      <Children>
+                        <TvhImageWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageName="@ImageName" IsVisible="@HasImage" />
+
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasPortrait">
+                          <Children>
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="424" SuggestedHeight="320" HorizontalAlignment="Center" MarginTop="70" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#15110DFF">
+                                  <Children>
+                                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                                  </Children>
+                                </Widget>
+                              </Children>
+                            </Widget>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" VerticalAlignment="Bottom" MarginBottom="80" Brush="Tvh.Text.NameCenter" Text="@HeroName" />
+                          </Children>
+                        </Widget>
+
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Placeholder" Text="@PlaceholderText" IsVisible="@HasNoVisual" />
+                      </Children>
+                    </Widget>
+                  </Children>
+                </Widget>
+
+                <!-- Metin ve seçenekler -->
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="506" SuggestedHeight="580" MarginLeft="1008" MarginTop="96">
+                  <Children>
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginBottom="@TextBottomMargin">
+                      <Children>
+                        <ScrollablePanel Id="CardTextScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="CardTextClip" InnerPanel="CardTextClip\CardTextInner" VerticalScrollbar="..\CardTextBar">
+                          <Children>
+                            <Widget Id="CardTextClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                              <Children>
+                                <ListPanel Id="CardTextInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                  <Children>
+                                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="Tvh.Text.Body" Text="@Text" />
+                                  </Children>
+                                </ListPanel>
+                              </Children>
+                            </Widget>
+                          </Children>
+                        </ScrollablePanel>
+                        <ScrollbarWidget Id="CardTextBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CardTextHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
+                          <Children>
+                            <Widget Id="CardTextHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
+                          </Children>
+                        </ScrollbarWidget>
+                      </Children>
+                    </Widget>
+
+                    <ListPanel DataSource="{Options}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Bottom" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <ItemTemplate>
+                        <TvhCardOption />
+                      </ItemTemplate>
+                    </ListPanel>
+                  </Children>
+                </Widget>
+
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  "Saray" paneli (ViewModel: CourtVM): krallık seçici, hükümdar, bilgi kaynağı, kendi tarafına çekme açıklaması ve klan liderleri
+  (hükümdarıyla ilişkisi bildiğin kadarıyla, seninle ilişkisi, ikna bonusu; haritada izle, söylenti yay, casusluk).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.BodyCenter" Text="@NoKingdomText" IsVisible="@HasNoKingdom" />
+
+        <!-- Krallık seçici -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" IsVisible="@HasKingdom">
+          <Children>
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="38" Brush="Tvh.Button" Command.Click="ExecutePrevKingdom" IsEnabled="@CanSwitch" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@PrevText" />
+              </Children>
+            </ButtonWidget>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="160" MarginRight="176" Brush="Tvh.Text.NameCenter" Text="@KingdomName" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="38" HorizontalAlignment="Right" MarginRight="16" Brush="Tvh.Button" Command.Click="ExecuteNextKingdom" IsEnabled="@CanSwitch" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@NextText" />
+              </Children>
+            </ButtonWidget>
+          </Children>
+        </Widget>
+
+        <!-- Hükümdar ve bilgi kaynağı -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="104" MarginTop="50" MarginRight="16" Sprite="BlankWhiteSquare_9" Color="#1D1712FF" IsVisible="@HasKingdom">
+          <Children>
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="116" SuggestedHeight="88" MarginLeft="10" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{RulerPortrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="142" MarginRight="12" MarginTop="8" Brush="Tvh.Text.Name" Text="@RulerName" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="142" MarginRight="12" MarginTop="36" Brush="Tvh.Text.Gold" Text="@RulerLine" />
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="142" MarginRight="12" MarginTop="60" Brush="Tvh.Text.MutedTop" Text="@SourceText" />
+          </Children>
+        </Widget>
+
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="64" MarginTop="160" MarginRight="16" Brush="Tvh.Text.SmallTop" Text="@GuideText" IsVisible="@HasKingdom" />
+
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="230" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoLords" />
+
+        <!-- Klan liderleri -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="230" IsVisible="@HasKingdom">
+          <Children>
+            <ScrollablePanel Id="CourtScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CourtClip" InnerPanel="CourtClip\CourtList" VerticalScrollbar="..\CourtBar">
+              <Children>
+                <Widget Id="CourtClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                  <Children>
+                    <ListPanel Id="CourtList" DataSource="{Lords}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <ItemTemplate>
+                        <TvhCourtLordCard />
+                      </ItemTemplate>
+                    </ListPanel>
+                  </Children>
+                </Widget>
+              </Children>
+            </ScrollablePanel>
+            <ScrollbarWidget Id="CourtBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CourtHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
+              <Children>
+                <Widget Id="CourtHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
+              </Children>
+            </ScrollbarWidget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

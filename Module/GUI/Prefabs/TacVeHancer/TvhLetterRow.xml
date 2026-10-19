@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Yoldaki haberci (ViewModel: LetterItemVM). -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#1D1712FF">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="14" MarginRight="260" Brush="Tvh.Text.Small" Text="@Text" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="240" HorizontalAlignment="Right" MarginRight="14" Brush="Tvh.Text.GoldRight" Text="@DaysText" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

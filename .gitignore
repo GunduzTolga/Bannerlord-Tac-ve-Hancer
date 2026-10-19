@@ -1,0 +1,8 @@
+# Derleme çıktıları
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
