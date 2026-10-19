@@ -134,6 +134,7 @@ namespace CheatMenu.UI.ViewModels
 
             Actions = new MBBindingList<ActionItemVM>();
             Actions.Add(LordActions.Audience(state, lord, changed));
+            foreach (ActionItemVM action in LordActions.Romance(state, lord, changed)) Actions.Add(action);
             Actions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
             {
                 string missing = Intrigue.Court.Track(lord);
@@ -174,6 +175,35 @@ namespace CheatMenu.UI.ViewModels
     /// <summary>Saray ve kişi dosyasında ortak lord eylemleri.</summary>
     internal static class LordActions
     {
+        /// <summary>Kur ve sevgili (P2.6): sevgilinse buluşma ve bitirme; kur sürüyorsa bırakma; değilse kur yap ve eşini gönder.</summary>
+        public static IEnumerable<ActionItemVM> Romance(IntrigueState state, Hero lord, Action changed)
+        {
+            if (!Courtships.Enabled) yield break;
+            Lover lover = state.LoverOf(lord.StringId);
+            if (lover != null)
+            {
+                yield return new ActionItemVM("Gizli buluşma...", Courtships.MeetBlocked(state, lover), () => EventCards.ShowMeeting(lord, changed));
+                yield return new ActionItemVM("İlişkiyi bitir", null, () => Menu.MenuUI.Confirm("İlişkiyi bitir", lord.Name + " ile ilişkin bitsin mi? (ilişki -"
+                    + RomanceRules.EndRelation + ")", () => { Courtships.EndAffair(SchemeEngine.State, lover); changed?.Invoke(); }, null), true);
+                yield break;
+            }
+            Courtship running = state.Courtships.FirstOrDefault(c => c.TargetId == lord.StringId);
+            if (running != null)
+            {
+                yield return new ActionItemVM("Kuru bırak (" + RomanceRules.StageName(running.Stage).ToLower(Tr.Culture) + ")", null, () =>
+                {
+                    Courtships.Cancel(SchemeEngine.State, running);
+                    changed?.Invoke();
+                }, true);
+                yield break;
+            }
+            yield return new ActionItemVM("Kur yap...", Courtships.StartBlocked(state, lord, CourtshipMode.Lover),
+                () => EventCards.ShowCourtshipStart(lord, CourtshipMode.Lover, changed));
+            if (Courtships.Spouse != null)
+                yield return new ActionItemVM("Eşini gönder: bilgi için kur...", Courtships.StartBlocked(state, lord, CourtshipMode.Intel),
+                    () => EventCards.ShowCourtshipStart(lord, CourtshipMode.Intel, changed));
+        }
+
         /// <summary>Görüşmeye hazırsa "Görüş", değilse "Ulak gönder".</summary>
         public static ActionItemVM Audience(IntrigueState state, Hero lord, Action changed)
         {
@@ -186,6 +216,19 @@ namespace CheatMenu.UI.ViewModels
                 pending != null ? "Ona giden bir ulak yolda (" + Math.Max(0, pending.ArriveDay - SchemeFactors.Today) + " gün)" : Messengers.AudienceBlocked(state, lord),
                 () => EventCards.ShowAudienceSend(lord, changed));
         }
+    }
+
+    /// <summary>Kur, sevgili ya da gebelik satırı ("Süren" sekmesinde, haberci satırıyla aynı görünüm).</summary>
+    public sealed class RomanceRowVM : TvhViewModel
+    {
+        public RomanceRowVM(string text, string days)
+        {
+            Text = text;
+            DaysText = days;
+        }
+
+        [DataSourceProperty] public string Text { get; }
+        [DataSourceProperty] public string DaysText { get; }
     }
 
     /// <summary>Yoldaki haberci satırı ("Süren" sekmesinde).</summary>

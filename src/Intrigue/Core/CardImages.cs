@@ -38,6 +38,10 @@ namespace CheatMenu.Intrigue.Core
         public const string NightHouse = "yer_gece_evi";
         /// <summary>Esir hizmetine katıldı: bağlılık yemini.</summary>
         public const string Oath = "sonuc_hizmet_yemini";
+        /// <summary>Kur: hediyeler, şiirler, mektuplar (P2.6).</summary>
+        public const string Courtship = "sonuc_kur";
+        /// <summary>Kurdan ya da sevgiliden doğan çocuk (P2.6).</summary>
+        public const string Birth = "sonuc_dogum";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -69,7 +73,7 @@ namespace CheatMenu.Intrigue.Core
                      {
                          Spy, SecretFound, Blackmail, Murder, MurderPoison, MurderDagger, MurderAccident, Kidnap, Caught, Exposed,
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
-                         Crisis, WarCouncil, NightHouse, Oath,
+                         Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

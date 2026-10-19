@@ -24,6 +24,7 @@ namespace CheatMenu.UI.ViewModels
         private bool _dirty;
         private string _subtitle = "", _status = "";
         private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isCourtTab, _isNetworksTab, _isPlotsTab, _isLogTab;
+        private bool _hasRomances;
         private bool _hasNothingRunning, _hasLetters, _hasNoPrisoners, _hasNoNetworks, _hasNoPlots, _hasNoLog;
 
         public IntrigueScreenVM(Action close, int tab)
@@ -35,6 +36,7 @@ namespace CheatMenu.UI.ViewModels
             for (int i = 0; i < names.Length; i++) Tabs.Add(new TabVM(i, names[i], t => SelectTab(t.Index)));
             Schemes = new MBBindingList<SchemeItemVM>();
             Letters = new MBBindingList<LetterItemVM>();
+            Romances = new MBBindingList<RomanceRowVM>();
             Court = new CourtVM(MarkDirty, StartSchemeOn);
             NewScheme = new NewSchemeVM(() =>
             {
@@ -77,6 +79,9 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool HasLetters { get => _hasLetters; set => Set(ref _hasLetters, value, nameof(HasLetters)); }
         [DataSourceProperty] public bool HasNothingRunning { get => _hasNothingRunning; set => Set(ref _hasNothingRunning, value, nameof(HasNothingRunning)); }
         [DataSourceProperty] public string LettersHeader => "YOLDAKİ HABERCİLER";
+        [DataSourceProperty] public MBBindingList<RomanceRowVM> Romances { get; }
+        [DataSourceProperty] public bool HasRomances { get => _hasRomances; set => Set(ref _hasRomances, value, nameof(HasRomances)); }
+        [DataSourceProperty] public string RomancesHeader => "KUR, SEVGİLİLER, GEBELİKLER";
         [DataSourceProperty] public string SchemesEmptyText =>
             "Süren bir entrika ya da yolda bir haberci yok.\n\n\"Yeni entrika\" sekmesinden casusluk, şantaj, kaçırma ya da suikast başlatabilirsin.";
         [DataSourceProperty] public CourtVM Court { get; }
@@ -141,7 +146,7 @@ namespace CheatMenu.UI.ViewModels
             List<Interrogation.Prisoner> prisoners = Interrogation.Prisoners();
             Tabs[TabPeople].Name = "Kişiler (" + people + ")";
             Tabs[TabPrisoners].Name = "Esirler (" + prisoners.Count + ")";
-            Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count) + ")";
+            Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count + state.Courtships.Count + state.Pregnancies.Count) + ")";
             Tabs[TabNetworks].Name = "Ağlar (" + state.Networks.Count + ")";
             Tabs[TabPlots].Name = "Sana karşı (" + detected + ")";
             foreach (TabVM tab in Tabs) tab.IsSelected = tab.Index == _tab;
@@ -157,6 +162,7 @@ namespace CheatMenu.UI.ViewModels
             // Yalnızca görünen sekme kurulur: portreler pahalı.
             Clear(Schemes);
             Letters.Clear();
+            Romances.Clear();
             Clear(Prisoners);
             Clear(Networks);
             Clear(Plots);
@@ -167,7 +173,9 @@ namespace CheatMenu.UI.ViewModels
                     foreach (Scheme scheme in state.Schemes) Schemes.Add(new SchemeItemVM(state, scheme, MarkDirty));
                     foreach (Letter letter in state.Letters.OrderBy(l => l.ArriveDay)) Letters.Add(new LetterItemVM(letter));
                     HasLetters = Letters.Count > 0;
-                    HasNothingRunning = Schemes.Count == 0 && Letters.Count == 0;
+                    foreach ((string text, string days) in Courtships.Rows(state)) Romances.Add(new RomanceRowVM(text, days));
+                    HasRomances = Romances.Count > 0;
+                    HasNothingRunning = Schemes.Count == 0 && Letters.Count == 0 && Romances.Count == 0;
                     break;
                 case TabCourt:
                     Court.Refresh(state);

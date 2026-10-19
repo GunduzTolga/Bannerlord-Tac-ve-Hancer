@@ -142,6 +142,12 @@
                                                 <TvhLetterRow />
                                               </ItemTemplate>
                                             </ListPanel>
+                                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="6" Brush="Tvh.Text.Section" Text="@RomancesHeader" IsVisible="@HasRomances" />
+                                            <ListPanel DataSource="{Romances}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                              <ItemTemplate>
+                                                <TvhLetterRow />
+                                              </ItemTemplate>
+                                            </ListPanel>
                                           </Children>
                                         </ListPanel>
                                       </Children>
