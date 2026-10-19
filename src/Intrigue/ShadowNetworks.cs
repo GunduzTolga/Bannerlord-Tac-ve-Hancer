@@ -101,6 +101,9 @@ namespace CheatMenu.Intrigue
                 "Etkisi: bu şehirdeki hedeflere başarı +5/+10/+15 ve yakalanma -2/-4/-6 (seviyeye göre); "
                     + "aynı krallıktaki diğer hedeflere bunların yarısı.",
                 "Yapay zekâ her hafta ağı bulup dağıtabilir (seviye başına %" + SchemeMath.NetworkExposeChance(1) + ").",
+                "Yabancı bir krallıkta çökertilirse diplomatik kriz: o krallıkta suç puanı (seviye başına +" + CrisisRules.CrimePerLevel
+                    + ") ve hükümdar hesap sorar (tazminat, inkâr ya da ret). Gerilim " + CrisisRules.WarThreshold
+                    + "'ı aşarsa savaş meclisi toplanabilir.",
             };
             return string.Join("\n", lines);
         }
@@ -126,12 +129,16 @@ namespace CheatMenu.Intrigue
                 if (state.Roll100() > SchemeMath.NetworkExposeChance(network.Level)) continue;
                 state.Networks.Remove(network);
                 Hero owner = town.OwnerClan?.Leader;
-                if (owner != null && owner.Clan != Clan.PlayerClan) SchemeOutcomes.Relate(owner, -10);
+                bool penalized = owner != null && owner.Clan != Clan.PlayerClan;
+                if (penalized) SchemeOutcomes.Relate(owner, -10);
+                state.AddLog(today, Tr.Locative(town.Name.ToString()) + " gölge ağı çökertildi");
+                // Yabancı krallıkta: diplomatik kriz kartı her şeyi anlatır (P2.5).
+                if (DiplomaticCrises.OnNetworkExposed(state, town, network.Level, penalized ? owner : null, out string ownKingdomLine)) continue;
                 SchemeOutcomes.Notify(state, "Gölge ağın çökertildi: " + town.Name,
                     Tr.Genitive(town.Name.ToString()) + " muhafızları ağını ortaya çıkardı; muhbirlerin dağıldı."
-                    + (owner != null && owner.Clan != Clan.PlayerClan ? "\n\nSonuç: şehrin sahibi " + owner.Name + " ile ilişki -10." : ""), owner,
+                    + (penalized ? "\n\nSonuç: şehrin sahibi " + owner.Name + " ile ilişki -10." : "")
+                    + (ownKingdomLine != null ? "\n\n" + ownKingdomLine : ""), owner,
                     CardImages.ShadowNetwork);
-                state.AddLog(today, Tr.Locative(town.Name.ToString()) + " gölge ağı çökertildi");
             }
 
             int upkeep = state.Networks.Sum(n => SchemeMath.NetworkUpkeep(n.Level));
