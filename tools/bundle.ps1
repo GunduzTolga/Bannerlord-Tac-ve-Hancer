@@ -199,17 +199,15 @@ function Merge-Mbproj($doc, $other, [string]$rel) {
     }
 }
 
-foreach ($key in $mergeSources.Keys) {
-    $sources = $mergeSources[$key]
-    $rel = $written[$key]
+function Merge-Group($sources, [string]$rel, [string]$kind) {
     if ($sources.Count -eq 1) {
         Copy-IfChanged $sources[0] $rel
-        continue
+        return
     }
     $doc = Load-Xml $sources[0]
     for ($i = 1; $i -lt $sources.Count; $i++) {
         $other = (Load-Xml $sources[$i]).DocumentElement
-        switch ($mergeKind[$key]) {
+        switch ($kind) {
             'language' { Merge-LanguageData $doc $other $rel }
             'xslt'     { Merge-Xslt $doc $other $rel }
             'skins'    { Merge-Children $doc $other $rel }
@@ -217,6 +215,31 @@ foreach ($key in $mergeSources.Keys) {
         }
     }
     Save-Xml $doc (Join-Path $ModuleOut $rel)
+}
+
+foreach ($key in @($mergeSources.Keys)) {
+    $sources = $mergeSources[$key]
+    $rel = $written[$key]
+    if ($mergeKind[$key] -eq 'language') {
+        # Mods may name the same folder's language differently (e.g. SP: "Espanol" and "Espanol (LA)"). One file per
+        # language id: the first stays in place, the others go to a subfolder. The game finds language_data.xml in any
+        # subfolder of ModuleData\Languages, and xml_path stays relative to Languages, so the string files are not moved.
+        $groups = [ordered]@{}
+        foreach ($s in $sources) {
+            $id = (Load-Xml $s).DocumentElement.GetAttribute('id')
+            if (-not $groups.Contains($id)) { $groups[$id] = New-Object System.Collections.ArrayList }
+            [void]$groups[$id].Add($s)
+        }
+        $n = 0
+        foreach ($id in $groups.Keys) {
+            $groupRel = if ($n -eq 0) { $rel } else { Join-Path (Split-Path -Parent $rel) "dil-$n\language_data.xml" }
+            $written[$groupRel.ToLowerInvariant()] = $groupRel
+            Merge-Group $groups[$id] $groupRel 'language'
+            $n++
+        }
+        continue
+    }
+    Merge-Group $sources $rel $mergeKind[$key]
 }
 
 # --- SubModule.xml

@@ -38,6 +38,19 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Extra Complexion** (20 Ekim'de eklendi): karakter düzenleyicide yara, makyaj, dövme ve savaş boyası seçenekleri; DLX saç
       katmanları paneliyle **üst üste binmiyor mu** (ikisi de düzenleyiciye panel ekliyor; ekran görüntüsü at). Women in Calradia
       yoldaşlarının yüzleri hâlâ düzgün (iki modun ten ayarları tek dosyada birleşti)
+- [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
+      yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
+
+### Karar bekleyen modlar (20 Ekim'de incelendi, eklenmedi)
+- **Convivium: Living Feasts:** lordlar salonda gerçekten toplanıyor, yapay zekâ da ziyafet veriyor; ziyafette ikna, askerlere
+  ziyafet, turnuva. Ama kur/özel sahne, gebelik/babalık ve onur düellosu kısımları bizim kur, gebelik ve düello sistemlerimizle
+  aynı işi yapıyor (gizli ilişkiler de RegardStanding'de). Önerim: eklenirse bu dört kısım kapalı başlasın (onun Mod Seçenekleri'nde
+  ayrı ayrı anahtarları var). İki teknik iş: kendi MCM kopyası (farklı sürüm) pakete alınmamalı; arayüz eklentisini
+  `GetModuleFullPath("ConviviumFeasts")` ile arıyor, BundleShim'e genel bir "paketlenen modun klasörü = bizimki" yönlendirmesi gerekir.
+- **Diplomacy & Intrigue (DiplomacyIntrigue 0.4.0):** büyük bir diplomasi + entrika sistemi (antlaşmalar, vasallık, barış masası,
+  savaş yorgunluğu, iç savaş, saray, istihbarat, suikast). Hem Diplomacy'nin (paketli) hem bizim entrikamızın işini yapıyor; ikisiyle
+  birlikte açılırsa aynı şeyi iki-üç sistem yönetir. Karar: Diplomacy mi kalsın, D&I mı gelsin (o zaman çakışan entrika kısımları
+  bizde kalmalı), yoksa yalnızca iyi fikirleri (vasallık, barış masası) bizim koda mı alınsın?
 - [ ] Bu modlar ayrıyken alınmış bir kayıt varsa, yüklerken "eksik modül" uyarısı çıkabilir; yine de yüklenir
 - [ ] Yeni oyun: karakter oluşturma çökmeden geçiyor (eski çökmenin nedeni bulundu: lord sayfasının `Refresh` metodu; Diplomacy
       ve DLX Hair'in açılışta yamaladığı 37 metodun hiçbiri o tetiği taşımıyor)
