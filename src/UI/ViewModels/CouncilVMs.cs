@@ -15,17 +15,21 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Divan sekmesi: üstte koltuklar (hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
+    /// Divan sekmesi: üstte koltuklar (serdar P2.14, hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
     /// tahminler ve ömür riskleri koltuk sahibinin gözüyle (becerisine göre hata payı). Casus başı sol sütunda kalır.
     /// </summary>
     public sealed class CouncilVM : TvhViewModel
     {
         private readonly Action _changed;
-        private readonly CouncilSeatVM _treasurer, _physician;
+        private readonly CouncilSeatVM _marshal, _treasurer, _physician;
 
         public CouncilVM(Action changed)
         {
             _changed = changed;
+            _marshal = new CouncilSeatVM("SERDAR",
+                "Tactics'i ve Scouting'i yüksek birini ata: savaş meclisi (düşmanın gücü, orduları, zayıf kaleleri, savunman) ve şehrine ya da "
+                + "köyüne yürüyen ordulara erken uyarı. Sahadayken de çalışır. Tactics düşükse sayıları yanlış tahmin eder.",
+                AssignMarshal, () => Dismiss("Serdar", Marshal.Dismiss), null);
             _treasurer = new CouncilSeatVM("HAZİNEDAR",
                 "Trade'i yüksek birini ata: gelirler, kervanların sefer defteri, atölye önerileri, ticaret fırsatları. Trade düşükse tahminleri "
                 + "yanlış olabilir; onuru düşükse kasadan çalabilir.",
@@ -34,7 +38,7 @@ namespace CheatMenu.UI.ViewModels
                 "Medicine'i yüksek birini ata: klanında doğumda ve yaşlılıktan ölümü azaltır, suikastte kurbanı kurtarabilir, eşinin gizli "
                 + "gebeliğini fark eder. Medicine 30'un altındaysa şarlatandır: tedavisi zarar verir.",
                 AssignPhysician, () => Dismiss("Hekim", Physician.Dismiss), null);
-            Seats = new MBBindingList<CouncilSeatVM> { _treasurer, _physician };
+            Seats = new MBBindingList<CouncilSeatVM> { _marshal, _treasurer, _physician };
             Rows = new MBBindingList<CouncilRowVM>();
         }
 
@@ -44,10 +48,12 @@ namespace CheatMenu.UI.ViewModels
         public void Refresh(IntrigueState state)
         {
             Clear(Rows);
+            RefreshMarshalSeat(state);
             RefreshTreasurerSeat(state);
             RefreshPhysicianSeat(state);
-            if (Treasury.Treasurer(state) == null && Physician.Current(state) == null)
+            if (Marshal.Current(state) == null && Treasury.Treasurer(state) == null && Physician.Current(state) == null)
                 Rows.Add(CouncilRowVM.Note("Divanda koltuklar boş. Yukarıdan klanından birini ata; raporları burada görünür."));
+            if (Marshal.Working(state) is Hero marshal) AddWar(state, marshal);
             if (Physician.Working(state) != null) AddHealth(state);
             if (Treasury.Blocked(state) == null)
             {
@@ -58,6 +64,18 @@ namespace CheatMenu.UI.ViewModels
                 AddRoutes(state);
                 AddOpportunities(board);
             }
+        }
+
+        private void RefreshMarshalSeat(IntrigueState state)
+        {
+            Hero marshal = Marshal.Current(state);
+            if (marshal == null)
+            {
+                _marshal.Show(null, "", "", "", false);
+                return;
+            }
+            _marshal.Show(marshal, "Tactics " + Marshal.Tactics(marshal) + "  ·  Scouting " + Marshal.Scouting(marshal), Marshal.DetailText(marshal),
+                Marshal.Blocked(state) ?? (marshal.PartyBelongedTo?.LeaderHero == marshal ? "Görevde (sahada)" : "Görevde"), false);
         }
 
         private void RefreshTreasurerSeat(IntrigueState state)
@@ -92,6 +110,79 @@ namespace CheatMenu.UI.ViewModels
                 "Medicine " + medicine + (PhysicianRules.IsQuack(medicine) ? " (şarlatan)" : "") + "  ·  tahmin payı %" + PhysicianRules.ErrorPercent(medicine),
                 Physician.ProtectionText(physician),
                 Physician.Blocked(state) ?? "Görevde", false);
+        }
+
+        // ---- Serdar ----
+
+        private void AddWar(IntrigueState state, Hero marshal)
+        {
+            List<Marshal.WarLine> wars = Marshal.Wars(state, marshal);
+            Rows.Add(CouncilRowVM.Header("SAVAŞ MECLİSİ (serdarın gözüyle)"));
+            if (wars.Count == 0) Rows.Add(CouncilRowVM.Note("Kimseyle savaşta değilsin."));
+            foreach (Marshal.WarLine war in wars)
+                Rows.Add(new CouncilRowVM(war.Kingdom.Name + " ile savaş · güç: onlar ~" + war.Theirs + ", biz " + war.Ours + " · " + war.Armies + " ordu"
+                    + "\nSerdar: " + MarshalRules.Advice(war.Ratio), "oran " + war.Ratio.ToString("0.0", Tr.Culture),
+                    MarshalRules.IsDangerous(war.Ratio), null, null, null));
+
+            List<Marshal.FortLine> own = Marshal.OwnDefense(state, marshal);
+            if (own.Count > 0)
+            {
+                Rows.Add(CouncilRowVM.Header("SAVUNMAN"));
+                foreach (Marshal.FortLine fort in own)
+                {
+                    bool low = fort.FoodDays < MarshalRules.LowFoodDays;
+                    bool danger = fort.Settlement.IsUnderSiege || fort.Threats.Count > 0 || low;
+                    string second = fort.Settlement.IsUnderSiege ? "Kuşatma altında!"
+                        : fort.Threats.Count > 0 ? "Tehdit: " + string.Join("; ", fort.Threats)
+                        : low ? "Erzak azalıyor: kuşatmaya dayanamaz" : "Sakin";
+                    Settlement shown = fort.Settlement;
+                    Rows.Add(new CouncilRowVM(FortText(fort, true) + "\n" + second, "savunma " + fort.Defense, danger,
+                        "Haritada göster", null, () => Track(shown)));
+                }
+            }
+
+            if (wars.Count == 0) return;
+            List<Marshal.ArmyLine> armies = Marshal.Armies(state, marshal);
+            Rows.Add(CouncilRowVM.Header("DÜŞMAN ORDULARI (görüş " + (int)MarshalRules.KnownRange(Marshal.Scouting(marshal)) + ")"));
+            if (armies.Count == 0) Rows.Add(CouncilRowVM.Note("Serdarın görüş menzilinde düşman ordusu ya da büyük bir lord partisi yok."));
+            foreach (Marshal.ArmyLine army in armies.Take(10))
+            {
+                bool ours = army.Target != null && army.Target.OwnerClan == Clan.PlayerClan;
+                string text = army.Name + " (" + army.Party.MapFaction?.Name + ") · ~" + army.Men + " kişi" + (army.Near != null ? " · " + army.Near.Name + " yakınında" : "")
+                    + "\n" + (army.Target != null ? Marshal.Goal(army) + " gidiyor" + (ours ? " (senin!)" : "") + ", " + MarshalRules.TravelText(army.HoursToTarget)
+                        : "Hedefi belli değil");
+                MobileParty tracked = army.Party;
+                Rows.Add(new CouncilRowVM(text, "sana " + MarshalRules.TravelText(MarshalRules.TravelHours(army.Distance, army.Party.Speed)), ours,
+                    "Haritada izle", null, () =>
+                    {
+                        Campaign.Current.VisualTrackerManager.RegisterObject(tracked);
+                        MenuUI.Success(tracked.Name + " haritada izleniyor");
+                    }));
+            }
+
+            List<Marshal.FortLine> targets = Marshal.WeakTargets(state, marshal, 5);
+            Rows.Add(CouncilRowVM.Header("ZAYIF HEDEFLER (kuşatma için)"));
+            if (targets.Count == 0) Rows.Add(CouncilRowVM.Note("Serdarın görüş menzilinde düşman şehri ya da kalesi yok."));
+            foreach (Marshal.FortLine fort in targets)
+            {
+                Settlement shown = fort.Settlement;
+                Rows.Add(new CouncilRowVM(FortText(fort, false) + "\n" + fort.Settlement.MapFaction?.Name
+                        + (fort.Settlement.IsUnderSiege ? " · zaten kuşatma altında" : "") + " · sana " + MarshalRules.TravelText(MarshalRules.TravelHours(fort.Distance, MobileParty.MainParty.Speed)),
+                    "savunma ~" + fort.Defense, false, "Haritada göster", null, () => Track(shown)));
+            }
+        }
+
+        private static string FortText(Marshal.FortLine fort, bool exact)
+        {
+            string approx = exact ? "" : "~";
+            return fort.Settlement.Name + " (" + (fort.Settlement.IsCastle ? "kale" : "şehir") + ") · garnizon " + approx + fort.Garrison + ", milis "
+                + approx + fort.Militia + " · sur " + fort.Wall + " · erzak " + (fort.FoodDays == int.MaxValue ? "yeterli" : approx + fort.FoodDays + " gün");
+        }
+
+        private static void Track(Settlement settlement)
+        {
+            Campaign.Current.VisualTrackerManager.RegisterObject(settlement);
+            MenuUI.Success(settlement.Name + " haritada işaretlendi");
         }
 
         // ---- Hekim ----
@@ -213,6 +304,18 @@ namespace CheatMenu.UI.ViewModels
                 null, hero => Categories.HeroPortrait(hero), sort: false);
         }
 
+        private void AssignMarshal()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Picker.Pick("Serdar seç", Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
+                hero => Run("Serdar", () =>
+                {
+                    Marshal.Assign(SchemeEngine.State, hero);
+                    _changed();
+                }),
+                null, hero => Categories.HeroPortrait(hero), sort: false);
+        }
+
         private void AssignPhysician()
         {
             IntrigueState state = SchemeEngine.State;
@@ -228,6 +331,7 @@ namespace CheatMenu.UI.ViewModels
         public override void OnFinalize()
         {
             base.OnFinalize();
+            _marshal.OnFinalize();
             _treasurer.OnFinalize();
             _physician.OnFinalize();
             Clear(Rows);

@@ -38,6 +38,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika günlük (eşin)", SpouseLife.DailyTick);
                 MenuUI.SafeRun("Aile editörü (yaşlanma)", Cheats.FamilyEditor.DailyTick);
                 MenuUI.SafeRun("Divan günlük (kervan defteri)", Treasury.DailyTick);
+                MenuUI.SafeRun("Divan günlük (serdarın uyarıları)", Marshal.Daily);
             });
             CampaignEvents.OnGivenBirthEvent.AddNonSerializedListener(this, (mother, children, stillborn) =>
                 MenuUI.SafeRun("Hekim (doğum)", () => Physician.OnGivenBirth(mother)));
@@ -60,6 +61,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hazinedar)", Treasury.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hekim)", Physician.Weekly);
+                MenuUI.SafeRun("Divan haftalık (serdar)", Marshal.Weekly);
             });
         }
 

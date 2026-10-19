@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Divanda bir koltuk (ViewModel: CouncilSeatVM). Boşsa açıklama ve "Ata"; doluysa portre, beceri, ayrıntı, durum ve düğmeler. -->
+<!--
+  Divanda bir koltuk (ViewModel: CouncilSeatVM). Üç kart yan yana sığar (3 x 426 piksel). Boşsa açıklama ve "Ata"; doluysa portre, ad,
+  beceri, durum, ayrıntı ve altta düğmeler.
+-->
 <Prefab>
   <Window>
-    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="630" SuggestedHeight="170" MarginRight="10" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="418" SuggestedHeight="214" MarginRight="8" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
       <Children>
         <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF">
           <Children>
-            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="22" MarginLeft="14" MarginTop="8" Brush="Tvh.Text.Section" Text="@Header" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="14" MarginRight="14" MarginTop="8" Brush="Tvh.Text.Section" Text="@Header" />
 
             <!-- Boş koltuk -->
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsEmpty">
               <Children>
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="110" MarginLeft="14" MarginRight="190" MarginTop="38" Brush="Tvh.Text.MutedTop" Text="@EmptyText" />
-                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="160" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="14" Brush="Tvh.Button.Primary" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="126" MarginLeft="14" MarginRight="14" MarginTop="34" Brush="Tvh.Text.MutedTop" Text="@EmptyText" />
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="36" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginBottom="12" Brush="Tvh.Button.Primary" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                   <Children>
                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@AssignText" />
                   </Children>
@@ -23,7 +26,7 @@
             <!-- Dolu koltuk -->
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasPerson">
               <Children>
-                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="130" SuggestedHeight="100" MarginLeft="14" MarginTop="38" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="96" SuggestedHeight="80" MarginLeft="14" MarginTop="34" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
                   <Children>
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
                       <Children>
@@ -32,24 +35,24 @@
                     </Widget>
                   </Children>
                 </Widget>
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="156" MarginRight="186" MarginTop="34" Brush="Tvh.Text.Name" Text="@Name" />
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="156" MarginRight="186" MarginTop="64" Brush="Tvh.Text.Small" Text="@SkillText" />
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="156" MarginRight="186" MarginTop="88" Brush="Tvh.Text.SmallTop" Text="@DetailText" />
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" MarginLeft="156" MarginRight="186" MarginTop="128" Brush="Tvh.Text.MutedTop" Text="@StatusText" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginLeft="122" MarginRight="12" MarginTop="32" Brush="Tvh.Text.Name" Text="@Name" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="122" MarginRight="12" MarginTop="60" Brush="Tvh.Text.Small" Text="@SkillText" />
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginLeft="122" MarginRight="12" MarginTop="84" Brush="Tvh.Text.MutedTop" Text="@StatusText" />
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="42" MarginLeft="14" MarginRight="12" MarginTop="120" Brush="Tvh.Text.SmallTop" Text="@DetailText" />
 
-                <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="160" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="14" StackLayout.LayoutMethod="VerticalTopToBottom">
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="34" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="12" MarginBottom="10" StackLayout.LayoutMethod="HorizontalLeftToRight">
                   <Children>
-                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" MarginBottom="8" Brush="Tvh.Button.Danger" Command.Click="ExecuteSpecial" IsVisible="@HasSpecial" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="124" SuggestedHeight="34" MarginRight="6" Brush="Tvh.Button.Danger" Command.Click="ExecuteSpecial" IsVisible="@HasSpecial" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@SpecialText" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" MarginBottom="8" Brush="Tvh.Button" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="124" SuggestedHeight="34" MarginRight="6" Brush="Tvh.Button" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ChangeText" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" Brush="Tvh.Button.Danger" Command.Click="ExecuteDismiss" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="124" SuggestedHeight="34" Brush="Tvh.Button.Danger" Command.Click="ExecuteDismiss" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
                       <Children>
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@DismissText" />
                       </Children>
