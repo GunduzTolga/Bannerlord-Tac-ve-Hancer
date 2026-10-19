@@ -38,8 +38,13 @@
                 </Widget>
               </Children>
             </Widget>
-            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="142" MarginRight="12" MarginTop="8" Brush="Tvh.Text.Name" Text="@RulerName" />
-            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="142" MarginRight="12" MarginTop="36" Brush="Tvh.Text.Gold" Text="@RulerLine" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="142" MarginRight="250" MarginTop="8" Brush="Tvh.Text.Name" Text="@RulerName" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="142" MarginRight="250" MarginTop="36" Brush="Tvh.Text.Gold" Text="@RulerLine" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="230" SuggestedHeight="36" HorizontalAlignment="Right" MarginRight="12" MarginTop="10" Brush="Tvh.Button" Command.Click="ExecuteHostage" IsEnabled="@CanHostage" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@HostageText" />
+              </Children>
+            </ButtonWidget>
             <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="142" MarginRight="12" MarginTop="60" Brush="Tvh.Text.MutedTop" Text="@SourceText" />
           </Children>
         </Widget>

@@ -6,7 +6,9 @@ using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.ViewModelCollection;
 using TaleWorlds.Core;
+using TaleWorlds.Core.ImageIdentifiers;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
@@ -198,6 +200,67 @@ namespace CheatMenu.UI
                   + " Onurlu bir eş büyük ihtimalle reddeder; reddederse sana kırılır.";
             Show("KUR", (mode == CourtshipMode.Lover ? "Kur yap: " : "Eşini gönder: ") + target.Name,
                 text + "\n\nYalnızca yetişkinler; olanlar metinle anlatılır, sahne yok.", CardImages.Courtship, target, options, cancel, null);
+        }
+
+        /// <summary>Rehine anlaşması kartı (P2.10): gönder, değiş ya da erken bitir.</summary>
+        public static void ShowHostage(Kingdom kingdom, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            HostageDeal deal = state.HostageDealWith(kingdom.StringId);
+            var options = new List<CardOption>();
+            string text;
+            if (deal != null)
+            {
+                text = Hostages.StatusLine(state, kingdom) + "\n\nAnlaşma sürerken misafirler ev sahipleriyle yakınlaşır ve bu krallığın savaş meclisi casus "
+                    + "skandalları için toplanmaz. Barışı bozan taraf misafirini esir olarak kaybeder.";
+                options.Add(new CardOption
+                {
+                    Label = "Anlaşmayı erken bitir (" + kingdom.Leader.Name + " ile -" + HostageRules.EarlyEndPenalty + ")",
+                    Apply = () => { Hostages.EndEarly(SchemeEngine.State, deal); afterwards?.Invoke(); },
+                });
+            }
+            else
+            {
+                string blocked = Hostages.Blocked(state, kingdom);
+                string exchangeBlocked = Hostages.ExchangeBlocked(state, kingdom);
+                bool anyone = Hostages.OurCandidates(state).Count > 0;
+                Hero theirs = Hostages.TheirCandidate(state, kingdom);
+                text = "Barışın teminatı olarak klanından birini " + kingdom.Leader.Name + " sarayına misafir (esir değil) olarak gönderebilirsin; karşılıklı "
+                    + "değişimde onların hanedanından biri de senin yanına gelir" + (theirs != null ? " (büyük ihtimalle " + theirs.Name + ")" : "") + ".\n\n"
+                    + "Bir yıl sürer. Misafirler ev sahipleriyle yakınlaşır, casus gerilimi düşer ve bu krallığın savaş meclisi skandallar için toplanmaz. "
+                    + "Barış bozulursa misafirler esir düşer; bozan sensen hükümdar ve onurlu lordlar seni affetmez.";
+                options.Add(new CardOption
+                {
+                    Label = "Rehine gönder (tek taraflı, ilişki +" + HostageRules.GiveRulerRelation + ")...",
+                    DisabledHint = blocked ?? (anyone ? null : "Gönderecek kimse yok"),
+                    Apply = () => MenuUI.Defer(() => PickHostage(kingdom, false, afterwards)),
+                });
+                options.Add(new CardOption
+                {
+                    Label = "Rehine değişimi teklif et (kabul %" + Hostages.ExchangeChance(state, kingdom) + ")...",
+                    DisabledHint = exchangeBlocked ?? (anyone ? null : "Gönderecek kimse yok"),
+                    Apply = () => MenuUI.Defer(() => PickHostage(kingdom, true, afterwards)),
+                });
+            }
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("REHİNE", "Rehine anlaşması: " + kingdom.Name, text, CardImages.Hostage, kingdom.Leader, options, cancel, null);
+        }
+
+        private static void PickHostage(Kingdom kingdom, bool exchange, Action afterwards)
+        {
+            Picker.Pick(exchange ? "Değişimde kimi göndereceksin?" : "Kimi rehine göndereceksin?", Hostages.OurCandidates(SchemeEngine.State),
+                h => h.Name + ", " + (int)h.Age + " yaş" + (h.Father == Hero.MainHero || h.Mother == Hero.MainHero ? " (çocuğun)" : ""),
+                h =>
+                {
+                    MenuUI.SafeRun("Rehine", () =>
+                    {
+                        if (exchange) Hostages.ProposeExchange(SchemeEngine.State, kingdom, h);
+                        else Hostages.Give(SchemeEngine.State, kingdom, h);
+                    });
+                    afterwards?.Invoke();
+                },
+                () => { }, h => new CharacterImageIdentifier(CampaignUIHelper.GetCharacterCode(h.CharacterObject, false)), sort: false);
         }
 
         /// <summary>Düello: meydan okuma kartı.</summary>

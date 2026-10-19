@@ -156,6 +156,7 @@ namespace CheatMenu.Tests
             FidelityTests();
             DuelTests();
             PetitionTests();
+            HostageTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -365,6 +366,8 @@ namespace CheatMenu.Tests
             state.NoChildren.Add("lord_12");
             state.DuelUntil["lord_14"] = 240;
             state.CourtDayUntil["town_V1"] = 250;
+            state.Hostages.Add(new HostageDeal { KingdomId = "vlandia", GivenId = "child_3", HeldId = "lord_15", Since = 100, Until = 184, Fostered = 6 });
+            state.Hostages.Add(new HostageDeal { KingdomId = "sturgia", GivenId = "child_4", Since = 120, Until = 204 });
             state.AgeFrozen.Add("main_hero");
             state.AgeFrozen.Add("lord_13");
             state.SpouseApartWeeks = 3;
@@ -417,6 +420,9 @@ namespace CheatMenu.Tests
             SpouseAffair sa = back.SpouseAffair;
             Check("state: spouse affair", sa != null && sa.SpouseId == "spouse_1" && sa.LoverId == "lord_11" && sa.Since == 120 && sa.NextMeetingDay == 190
                 && sa.Discovered && !sa.Asked && sa.How == "Casus başın buldu." && sa.ChildIds.Count == 2 && sa.ChildIds[1] == "child_2");
+            Check("state: hostages", back.Hostages.Count == 2 && back.HostageDealWith("vlandia")?.HeldId == "lord_15"
+                && back.HostageDealWith("vlandia").Fostered == 6 && back.HostageDealWith("vlandia").Until == 184
+                && back.HostageDealWith("sturgia")?.HeldId == null && back.HostageDealWith("sturgia").GivenId == "child_4" && back.HostageDealWith("x") == null);
             Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
             Check("state: duel cooldown", back.DuelUntil.Count == 1 && back.DuelUntil["lord_14"] == 240);
             Check("state: family editor", back.NoChildren.SetEquals(new[] { "lord_12" }) && back.AgeFrozen.SetEquals(new[] { "main_hero", "lord_13" }));
@@ -514,6 +520,17 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Rehine anlaşmaları: kabul ve yakınlaşma.</summary>
+        private static void HostageTests()
+        {
+            CheckChance("hostage: neutral, equal", HostageRules.ExchangeAcceptChance(0, 0, 500f, 500f), 40);
+            CheckChance("hostage: friendly ruler, we are stronger", HostageRules.ExchangeAcceptChance(40, 0, 300f, 600f), 80);
+            CheckChance("hostage: tense and they are stronger", HostageRules.ExchangeAcceptChance(0, 60, 900f, 400f), 5);
+            CheckChance("hostage: cap", HostageRules.ExchangeAcceptChance(100, 0, 100f, 900f), 90);
+            Check("hostage: foster gain capped", HostageRules.FosterGain(0) == 2 && HostageRules.FosterGain(29) == 1 && HostageRules.FosterGain(30) == 0);
+            Check("hostage: one year", HostageRules.DurationDays == 84);
         }
 
         /// <summary>Saray günü: dilekçe verisi ve çekiliş.</summary>

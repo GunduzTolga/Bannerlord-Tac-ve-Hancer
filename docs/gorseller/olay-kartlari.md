@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **40 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **41 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -88,6 +88,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ |
 | 39 | `sonuc_mesrulastirma.png` | Gayrimeşru çocuk meşrulaştırıldı (P2.8) | |
 | 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ |
+| 41 | `sonuc_rehine.png` | Rehine anlaşması: gönderme, değişim, dönüş, bozulan barış (P2.10) | |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -277,6 +278,12 @@ A lord standing in a crowded great hall with his hand on the shoulder of a young
 
 ```
 A lord seated on a carved wooden chair at the end of a torch-lit great hall holding court, a line of petitioners waiting, a kneeling merchant presenting a scroll, a scribe at a small desk taking notes, guards by the pillars, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**41 · `sonuc_rehine.png`** — rehine anlaşması (misafir soylu)
+
+```
+A young noble in travel clothes being formally welcomed at the gate of a foreign castle by its ruler, two escorts with banners of different colors behind them, servants carrying a small chest, respectful and ceremonial mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -749,4 +756,14 @@ An open-air court under a large tree in a castle courtyard, a lady on a wooden d
 
 ```
 An Aserai ruler on cushions in a shaded arcade hearing petitions, a veiled widow with two children before him, a guard and a scribe nearby, sunlight through carved screens, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_rehine_2.png`** · `sonuc_rehine_3.png` — rehine anlaşması
+
+```
+Two noble youths crossing paths on a bridge between two armed escorts during a formal exchange at dawn, envoys of two realms watching from either bank, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A young guest noble learning swordsmanship in the courtyard of a foreign castle under the eye of the host lord, children of the house watching, banners on the walls, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

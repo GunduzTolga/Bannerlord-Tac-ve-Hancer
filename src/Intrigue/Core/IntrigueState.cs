@@ -145,6 +145,20 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Rehine anlaşması (P2.10): verdiğin ve/veya tuttuğun misafir. Biri null olabilir (tek taraflı teminat).</summary>
+    public sealed class HostageDeal
+    {
+        public string KingdomId;
+        /// <summary>Senin klanından, onların sarayında.</summary>
+        public string GivenId;
+        /// <summary>Onların klanından, senin yanında.</summary>
+        public string HeldId;
+        public int Since;
+        public int Until;
+        /// <summary>Misafirlerin şimdiye kadar kazandığı yakınlık.</summary>
+        public int Fostered;
+    }
+
     /// <summary>Süren bir kur (P2.6): sen ya da eşin, hedefe üç aşamada.</summary>
     public sealed class Courtship
     {
@@ -294,6 +308,9 @@ namespace CheatMenu.Intrigue.Core
         public Dictionary<string, int> DuelUntil = new Dictionary<string, int>();
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
+        public List<HostageDeal> Hostages = new List<HostageDeal>();
+
+        public HostageDeal HostageDealWith(string kingdomId) => Hostages.FirstOrDefault(h => h.KingdomId == kingdomId);
 
         public Lover LoverOf(string heroId) => Lovers.FirstOrDefault(l => l.HeroId == heroId);
 
@@ -430,6 +447,9 @@ namespace CheatMenu.Intrigue.Core
                     .Add("asked", B(SpouseAffair.Asked)).Add("how", SpouseAffair.How).Add("children", string.Join(";", SpouseAffair.ChildIds)));
             foreach (string id in NoChildren) records.Add(new TextRecord("nochild").Add("hero", id));
             foreach (KeyValuePair<string, int> p in DuelUntil) records.Add(new TextRecord("duelcd").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (HostageDeal h in Hostages)
+                records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
+                    .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
             foreach (KeyValuePair<string, int> p in CourtDayUntil) records.Add(new TextRecord("courtday").Add("place", p.Key).Add("until", I(p.Value)));
             foreach (string id in AgeFrozen) records.Add(new TextRecord("frozen").Add("hero", id));
             if (SpouseWatchUntil > 0 || SpouseApartWeeks > 0)
@@ -586,6 +606,14 @@ namespace CheatMenu.Intrigue.Core
                             Discovered = Bool(r, "discovered"), Asked = Bool(r, "asked"), How = Empty(r.Get("how")),
                             ChildIds = (r.Get("children") ?? "").Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                         };
+                        break;
+                    case "hostage":
+                        if (Empty(r.Get("kingdom")) == null || (Empty(r.Get("given")) == null && Empty(r.Get("held")) == null)) break;
+                        state.Hostages.Add(new HostageDeal
+                        {
+                            KingdomId = r.Get("kingdom"), GivenId = Empty(r.Get("given")), HeldId = Empty(r.Get("held")),
+                            Since = Int(r, "since"), Until = Int(r, "until"), Fostered = Int(r, "fostered"),
+                        });
                         break;
                     case "courtday":
                         if (Empty(r.Get("place")) != null) state.CourtDayUntil[r.Get("place")] = Int(r, "until");

@@ -49,6 +49,16 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string RulerLine { get => _rulerLine; set => Set(ref _rulerLine, value, nameof(RulerLine)); }
         [DataSourceProperty] public string SourceText { get => _sourceText; set => Set(ref _sourceText, value, nameof(SourceText)); }
         [DataSourceProperty] public string GuideText => Intrigue.Court.RecruitGuide;
+        [DataSourceProperty] public string HostageText { get => _hostageText; set => Set(ref _hostageText, value, nameof(HostageText)); }
+        [DataSourceProperty] public bool CanHostage { get => _canHostage; set => Set(ref _canHostage, value, nameof(CanHostage)); }
+        private string _hostageText = "";
+        private bool _canHostage;
+        private Kingdom _kingdom;
+
+        public void ExecuteHostage()
+        {
+            if (_kingdom != null && CanHostage) EventCards.ShowHostage(_kingdom, _changed);
+        }
         [DataSourceProperty] public string PrevText => "« Önceki";
         [DataSourceProperty] public string NextText => "Sonraki »";
         [DataSourceProperty] public string EmptyText => "Bu krallıkta hükümdardan başka klan lideri yok.";
@@ -78,6 +88,11 @@ namespace CheatMenu.UI.ViewModels
                 + "  ·  krallığın gücü " + ((int)kingdom.CurrentTotalStrength).ToString("N0")
                 + (Clan.PlayerClan.Kingdom != null && kingdom != Clan.PlayerClan.Kingdom ? " (seninki " + ((int)ours).ToString("N0") + ")" : "");
             SourceText = Court.SourceText(state, kingdom) + DiplomaticCrises.TensionLine(state, kingdom);
+            string hostage = Hostages.StatusLine(state, kingdom);
+            if (hostage.Length > 0) SourceText += "\n" + hostage;
+            _kingdom = kingdom;
+            CanHostage = kingdom != Clan.PlayerClan.Kingdom;
+            HostageText = state.HostageDealWith(kingdom.StringId) != null ? "Rehine anlaşması (sürüyor)..." : "Rehine anlaşması...";
 
             // Önce bilinen hoşnutsuzlar (en kötüsü en üstte), sonra söylentiler, en sonda bilinmeyenler.
             IEnumerable<Hero> ordered = Court.ClanLeaders(kingdom)

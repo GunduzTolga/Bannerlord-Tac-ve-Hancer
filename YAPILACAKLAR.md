@@ -54,6 +54,16 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.10 — Rehine anlaşmaları (yeni; hükümdar ya da bağımsız klan lideri olmalısın)
+- [ ] Entrika ekranı > Saray > barışta olduğun bir krallık > "Rehine anlaşması..." → kart
+- [ ] "Rehine gönder" → klanından birini seç → kart; kişi o krallığın hanedan şehrinde; hükümdarla +15; Saray'da durum satırı
+- [ ] "Rehine değişimi teklif et" (bir şehrin/kalen varken) → kabul ederse onların biri senin şehrinde; reddederse kart
+- [ ] Haftalar geçtikçe misafirin ev sahibiyle ilişkisi artıyor; misafir başka yere gitmiyor
+- [ ] "Süren" sekmesinde rehine satırı ve kalan gün
+- [ ] Hile ile o krallığa savaş ilan et → "Yeminini bozdun" kartı; senin misafirin onların zindanında, onlarınki senin esirin
+- [ ] Bir yıl sonra "Rehineler döndü"; erken bitirince hükümdarla -15
+- [ ] Vasalken düğme kapalı ("Yalnızca hükümdar ya da bağımsız klan lideri")
+
 ### P2.9 — Saray günü (yeni)
 - [ ] Kendi şehrinde → şehir menüsünde "Divan kur (saray günü)" → üç kart ("DİVAN 1/3"...); dilekçe sahibinin portresi
 - [ ] Seçenek düğmelerinde sonuçlar yazıyor; parası yetmeyen seçenek kapalı

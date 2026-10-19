@@ -411,6 +411,12 @@ namespace CheatMenu.Intrigue
                 yield return ("Sevgilin: " + hero?.Name + (l.Public ? " (herkes biliyor)" : ""),
                     today >= l.NextMeetingDay ? "buluşmaya hazır" : "buluşma " + (l.NextMeetingDay - today) + " gün sonra");
             }
+            foreach (HostageDeal deal in state.Hostages)
+            {
+                Kingdom kingdom = Hostages.KingdomOf(deal);
+                if (kingdom != null) yield return (Hostages.StatusLine(state, kingdom).Replace("Rehine anlaşması:", "Rehine (" + kingdom.Name + "):"),
+                    Math.Max(0, deal.Until - today) + " gün kaldı");
+            }
             if (state.SpouseWatchUntil > today)
                 yield return ("Casus başın eşini araştırıyor", (state.SpouseWatchUntil - today) + " gün kaldı");
             foreach (Pregnancy p in state.Pregnancies)
