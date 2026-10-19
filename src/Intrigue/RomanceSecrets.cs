@@ -29,7 +29,7 @@ namespace CheatMenu.Intrigue
             List<Hero> all = Hero.AllAliveHeroes
                 .Where(h => h != target && h != target.Spouse && h != Hero.MainHero && h.IsLord && !h.IsChild && !h.IsDisabled
                     && h.IsFemale != target.IsFemale && h.Clan != null && h.Clan != Clan.PlayerClan
-                    && SecretRules.CanBeLovers(Age(target), Age(h)) && !Kin(target, h))
+                    && SecretRules.CanBeLovers(Age(target), Age(h)) && !IsKin(target, h))
                 .OrderBy(h => h.StringId, StringComparer.Ordinal)
                 .ToList();
             Kingdom kingdom = target.Clan?.Kingdom;
@@ -132,11 +132,11 @@ namespace CheatMenu.Intrigue
             }
             Hero child = Hero.Find(secret.ChildId ?? "");
             if (target == null || child == null) return SecretRules.Description(secret.Kind);
-            string official = child.Father?.Name.ToString() ?? "resmî babası";
+            string official = child.Father == Hero.MainHero ? "resmî babası sensin."
+                : "resmî babası " + (child.Father?.Name.ToString() ?? "başkası") + " bunu bilmiyor.";
             if (target.IsFemale)
-                return (child.IsFemale ? "Kızı " : "Oğlu ") + Tr.Genitive(child.Name.ToString()) + " gerçek babası " + other
-                    + "; resmî babası " + official + " bunu bilmiyor.";
-            return Tr.Genitive(other) + " çocuğu " + child.Name + " aslında ondan; resmî babası " + official + " bunu bilmiyor.";
+                return (child.IsFemale ? "Kızı " : "Oğlu ") + Tr.Genitive(child.Name.ToString()) + " gerçek babası " + other + "; " + official;
+            return Tr.Genitive(other) + " çocuğu " + child.Name + " aslında ondan; " + official;
         }
 
         /// <summary>İfşa onayında sonuçların özeti.</summary>
@@ -266,7 +266,7 @@ namespace CheatMenu.Intrigue
         }
 
         /// <summary>Kan bağı ya da üvey/kayın-ebeveyn bağı (iki yönde).</summary>
-        private static bool Kin(Hero a, Hero b) => KinOneWay(a, b) || KinOneWay(b, a);
+        public static bool IsKin(Hero a, Hero b) => KinOneWay(a, b) || KinOneWay(b, a);
 
         private static bool KinOneWay(Hero a, Hero b)
         {

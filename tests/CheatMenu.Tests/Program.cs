@@ -149,6 +149,7 @@ namespace CheatMenu.Tests
             CrisisTests();
             HouseTests();
             RecruitTests();
+            CourtshipTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -345,6 +346,12 @@ namespace CheatMenu.Tests
             state.Tension["vlandia"] = 55;
             state.Tension["empire"] = 0;
             state.RecruitUntil["lord_7"] = 210;
+            state.Courtships.Add(new Courtship { Id = 4, TargetId = "lord_8", AgentId = "main_hero_spouse", Mode = CourtshipMode.Intel, Stage = 2,
+                DaysIntoStage = 3, StartDay = 150, Careful = true });
+            state.Lovers.Add(new Lover { HeroId = "lord_9", Since = 160, NextMeetingDay = 174, Public = true });
+            state.Pregnancies.Add(new Pregnancy { MotherId = "lord_9", FatherId = "main_hero", DueDay = 196 });
+            state.RomanceUntil["lord_10"] = 220;
+            state.NextCourtshipId = 5;
             state.Houses.Add(new House { TownId = "town_V1", Staff = 5, Share = HouseShare.Fair, Since = 120 });
             state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
@@ -382,6 +389,14 @@ namespace CheatMenu.Tests
             Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
             Check("state: audiences", back.Audiences.Count == 2 && back.Audiences[0].Relation == 3 && back.Audiences[0].Asked
                 && !back.Audiences[1].Asked && back.GiftUntil["lord_13"] == 248);
+            Courtship ct = back.Courtships.Count == 1 ? back.Courtships[0] : null;
+            Check("state: courtship", ct != null && ct.Id == 4 && ct.TargetId == "lord_8" && ct.AgentId == "main_hero_spouse"
+                && ct.Mode == CourtshipMode.Intel && ct.Stage == 2 && ct.DaysIntoStage == 3 && ct.StartDay == 150 && ct.Careful && back.NextCourtshipId == 5);
+            Check("state: lover", back.Lovers.Count == 1 && back.LoverOf("lord_9") != null && back.Lovers[0].Since == 160
+                && back.Lovers[0].NextMeetingDay == 174 && back.Lovers[0].Public);
+            Check("state: pregnancy", back.Pregnancies.Count == 1 && back.Pregnancies[0].MotherId == "lord_9" && back.Pregnancies[0].FatherId == "main_hero"
+                && back.Pregnancies[0].DueDay == 196);
+            Check("state: romance cooldown", back.RomanceUntil["lord_10"] == 220);
             Check("state: recruit cooldown", back.RecruitUntil.Count == 1 && back.RecruitUntil["lord_7"] == 210);
             Check("state: house", back.Houses.Count == 1 && back.HouseIn("town_V1") != null && back.Houses[0].Staff == 5
                 && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null);
@@ -474,6 +489,29 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Kur, sevgili ve gebelik (P2.6): tasarımdaki örnekler ve 18+ sınırı.</summary>
+        private static void CourtshipTests()
+        {
+            const int normal = SchemeMath.NormalDifficulty;
+            CheckChance("court: charming, attractive, unmarried", RomanceRules.SuccessChance(100, 0, 60, 0, false, normal), 50);
+            CheckChance("court: honorable and married", RomanceRules.SuccessChance(100, 0, 60, 2, true, normal), 24);
+            CheckChance("court: floor", RomanceRules.SuccessChance(0, -60, 0, 2, true, SchemeMath.HardDifficulty), 5);
+            CheckChance("court: cap", RomanceRules.SuccessChance(300, 100, 100, -2, false, SchemeMath.EasyDifficulty), 85);
+            CheckChance("court: discovery unmarried", RomanceRules.DiscoveryChance(0, false, normal), 6);
+            CheckChance("court: discovery married", RomanceRules.DiscoveryChance(100, true, normal), 10);
+            CheckChance("court: discovery floor", RomanceRules.DiscoveryChance(600, false, SchemeMath.EasyDifficulty), 2);
+            CheckChance("court: spouse agrees, loyal and pragmatic", RomanceRules.SpouseAgreeChance(40, 0, 1, 0), 60);
+            CheckChance("court: honorable spouse refuses", RomanceRules.SpouseAgreeChance(40, 2, 0, 0), 20);
+            CheckChance("court: meeting both married", RomanceRules.MeetingDiscovery(0, 2), 12);
+            CheckChance("court: meeting skilled", RomanceRules.MeetingDiscovery(300, 0), 2);
+            Check("court: careful lowers pregnancy", RomanceRules.PregnancyChanceFor(true) < RomanceRules.PregnancyChanceFor(false)
+                && RomanceRules.PregnancyChanceFor(true) == 4 && RomanceRules.PregnancyChanceFor(false) == 15);
+            Check("court: mothers are adults", Enumerable.Range(0, 18).All(age => !RomanceRules.CanConceive(age))
+                && RomanceRules.CanConceive(18) && RomanceRules.CanConceive(45) && !RomanceRules.CanConceive(46));
+            Check("court: stages", RomanceRules.StageName(0) == "Hediye ve iltifat" && RomanceRules.StageName(2) == "Gizli buluşma"
+                && RomanceRules.DaysLeft(0, 0) == 21 && RomanceRules.DaysLeft(2, 3) == 4 && RomanceRules.DaysLeft(3, 0) == 0);
         }
 
         /// <summary>Esiri hizmetine davet: tasarımdaki örnekler.</summary>

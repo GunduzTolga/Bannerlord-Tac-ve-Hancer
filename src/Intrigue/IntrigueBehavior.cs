@@ -31,6 +31,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika günlük", SchemeEngine.DailyTick);
                 MenuUI.SafeRun("Entrika günlük (yapay zekâ)", AiIntrigue.Daily);
                 MenuUI.SafeRun("Entrika günlük (haberciler)", Messengers.DailyTick);
+                MenuUI.SafeRun("Entrika günlük (kur ve gebelik)", Courtships.DailyTick);
             });
             CampaignEvents.WeeklyTickEvent.AddNonSerializedListener(this, () =>
             {

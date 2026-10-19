@@ -1,9 +1,9 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
 **Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0, P1, P2.1 (esir sorgulama), P2.2 (haberci + saray istihbaratı), P2.3 (casus başı görevleri), P2.4 (gizli ilişki
-ve gayrimeşru çocuk sırları) P2.5 (ağ ifşasından diplomatik kriz) ve gece evi işletmesi kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
+ve gayrimeşru çocuk sırları) P2.5 (ağ ifşasından diplomatik kriz), gece evi işletmesi, esiri hizmete davet ve P2.6 (kur, sevgili, gebelik) kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
 `2026-10-19-p2-haberci-saray.md`, `2026-10-19-p2-casus-basi-gorevleri.md`, `2026-10-19-p2-gizli-iliski.md`,
-`2026-10-19-p2-diplomatik-kriz.md`, `2026-10-19-p2-gece-evi.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+`2026-10-19-p2-diplomatik-kriz.md`, `2026-10-19-p2-gece-evi.md`, `2026-10-19-p2-sevgili.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)
@@ -91,7 +91,7 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | 4 ✅ | **Gizli ilişki ve gayrimeşru çocuk sırları** (kodlandı; sahnesiz) | Şantajın en doğal yakıtı | Sevgili gerçek bir lord, sır iki tarafta; gayrimeşru çocuk; ifşa, şantaj, aldatılan eşe söyle. İki tarafın da 18+ olması kodda zorunlu ve testli. Meşrulaştırma 8. sıraya (aile ağacına dokunmamak için). |
 | 5 ✅ | **Ağ ifşasından diplomatik kriz** (kodlandı) | Gölge ağına gerçek bir risk katmanı | Yabancı krallıkta ağ çökerse oyunun suç puanı, hükümdar hesap sorar (tazminat / inkâr / ret), gerilim birikir; 60'ı aşarsa o krallık oyunun kendi savaş kararını oylar |
 | 5b ✅ | **Gece evi işletmesi** (kodlandı; kullanıcı isteği; varsayılan kapalı) | Gölge ağına bağlı bir bilgi kaynağı: müşteriler konuşur. Atölyelerin kopyası değil | Gölge ağı olan şehirde açılır; isimsiz, gönüllü ve ücretli çalışanlar (pay düşükse ayrılırlar); haftalık gelir, lordlar hakkında rapor ve sır; kendi şehrinde dedikodu, başka şehirde baskın |
-| 6 | **Baştan çıkarma entrikası ve sevgili** (sahnesiz) | CK3'ün temel entrikalarından; ilişki, sır ve koz üretir. Kullanıcı isteği: "sevgililik olsun, ondan çocuk yapabilelim" | Aşamalar: hediye, şiir, gizli buluşma. Sonuç: karşılıklı rızayla sevgili olursunuz. Gizli buluşmalarda gebelik ihtimali; "tedbirli ol" seçeneği ihtimali düşürür. Doğan çocuk gayrimeşru (8. sırada meşrulaştırılabilir). Yakalanırsa skandal: ilişki P2.4 sırrı olur. Yalnızca yetişkinler, metin olarak, kapı kapanır. |
+| 6 ✅ | **Kur, sevgili, eşini bilgi için göndermek, gebelik** (kodlandı; sahnesiz) | CK3'ün temel entrikalarından; ilişki, sır ve koz üretir. Kullanıcı isteği: "sevgililik olsun, ondan çocuk yapabilelim"; "eşini bilgi almak için gönder, gerisi ikisinin kararı" | Üç aşamalı kur (hediye, şiir, gizli buluşma), oyunun çekicilik modeliyle. Sen kur yaparsan sevgilin olur: gizli buluşmalar, "tedbirli ol" seçeneği, gebelik. Eşin (kendi kabulüyle) bilgi için kur yapar: rapor, sır, ikisinin kararıyla yakınlık ve gebelik. Doğum oyunun kendi işlemiyle; resmî baba farklıysa sır olur. Yakalanırsa skandal. Yalnızca yetişkinler. |
 | 7 | **Aile editörü ekleri** | Rakip editörlerde var, bizde eksik | Evlendir/boşa, gebeliği başlat/kapat, çocuğu büyüt, yaşlanmayı dondur (Hileler/Editörler'de) |
 | 8 | **Varis seçimi ve meşrulaştırma** | Vanilla'da varis kontrolsüz; hanedan teması | Klan varisini seç; gayrimeşru çocuğu meşrulaştır (etki ve Onur bedeli). P2.4'ten devralındı. |
 | 9 | **Saray günü** | Barış zamanı içeriği ve olay kartlarının doğal yeri | Şehir menüsünden dilekçeler ve yargılamalar; kararlar kişilik, sadakat, güvenlik ve altını etkiler |
@@ -113,7 +113,7 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 
 | Yapılır (sahnesiz, yalnızca metin) | Yapılmaz |
 |---|---|
-| Baştan çıkarma entrikası, gizli sevgili ve gayrimeşru çocuk sırları, gebelik kontrolü (editör), meşrulaştırma; gece evi işletmesi (isimsiz, gönüllü ve ücretli yetişkin çalışanlar, varsayılan kapalı) | Açık cinsel sahne, animasyon ya da çıplaklık; çok eşlilik ve harem; cariyelik; esirleri, eşleri, aileyi ya da herhangi bir kahramanı başkalarına "hizmet" ettirmek; çalışanları zorlamak ya da tutmak; rızasız her şey; reşit olmayanları içeren her şey |
+| Baştan çıkarma entrikası, gizli sevgili ve gayrimeşru çocuk sırları, gebelik kontrolü (editör), meşrulaştırma; eşin kendi kabulüyle bilgi için kur yapması; gece evi işletmesi (isimsiz, gönüllü ve ücretli yetişkin çalışanlar, varsayılan kapalı) | Açık cinsel sahne, animasyon ya da çıplaklık; çok eşlilik ve harem; cariyelik; esirleri, eşleri, aileyi ya da herhangi bir kahramanı başkalarına "hizmet" ettirmek; çalışanları zorlamak ya da tutmak; rızasız her şey; reşit olmayanları içeren her şey |
 
 - Romantizm, gebelik ve baştan çıkarma ile ilgili her işlemde iki tarafın da yetişkin olması kodda kontrol edilir; testlerde de denetlenir.
 - Han/taverna işletmesi istenirse cinsel olmayan bir gelir ve muhbir kaynağı olarak tasarlanabilir.

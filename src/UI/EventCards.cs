@@ -148,6 +148,93 @@ namespace CheatMenu.UI
                 CardImages.Messenger, hero, options, cancel, null);
         }
 
+        /// <summary>Kur başlat (P2.6): sen ya da eşin. Eşin için önce onun kabulü gerekir.</summary>
+        public static void ShowCourtshipStart(Hero target, CourtshipMode mode, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero agent = Courtships.AgentFor(mode);
+            string blocked = Courtships.StartBlocked(state, target, mode);
+            if (agent == null)
+            {
+                MenuUI.Error(blocked ?? "Kur yapacak kimse yok");
+                return;
+            }
+            int chance = Courtships.Chance(agent, target);
+            int discovery = Courtships.Discovery(agent, target);
+            bool mayConceive = Courtships.MayConceive(state, agent, target);
+            var options = new List<CardOption>();
+            if (mode == CourtshipMode.Lover)
+            {
+                options.Add(new CardOption
+                {
+                    Label = "Kur yapmaya başla (" + SchemeFactors.Money(RomanceRules.GiftCost) + ", başarı %" + chance + ")", DisabledHint = blocked,
+                    Apply = () => { Courtships.Start(SchemeEngine.State, target, mode, false); afterwards?.Invoke(); },
+                });
+            }
+            else
+            {
+                options.Add(new CardOption
+                {
+                    Label = "Eşine teklif et (kabul %" + Courtships.SpouseAgreeChance(agent, target) + ")", DisabledHint = blocked,
+                    Apply = () => { Courtships.Start(SchemeEngine.State, target, mode, false); afterwards?.Invoke(); },
+                });
+                if (mayConceive)
+                    options.Add(new CardOption
+                    {
+                        Label = "Teklif et, tedbirli olsunlar (gebelik %" + RomanceRules.CarefulPregnancyChance + ")", DisabledHint = blocked,
+                        Apply = () => { Courtships.Start(SchemeEngine.State, target, mode, true); afterwards?.Invoke(); },
+                    });
+            }
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            string text = mode == CourtshipMode.Lover
+                ? "Üç aşama, her biri " + RomanceRules.StageDays + " gün: hediye ve iltifat, şiir ve mektuplar, gizli buluşma. Sonunda "
+                  + target.Name + " sevgilin olur (%" + chance + ") ya da seni geri çevirir. Her aşamada %" + discovery + " ihtimalle dedikodu olur."
+                  + (Courtships.Spouse != null ? " Eşin duyarsa sana kırılır." : "")
+                : agent.Name + ", kendi isteğiyle kabul ederse, " + target.Name + " ile vakit geçirip bilgi toplar: sonunda güncel rapor, "
+                  + "%" + RomanceRules.IntelSecretChance + " ihtimalle bir sır. Aralarında ne olacağı ikisinin kararı (%" + chance + "). "
+                  + "Her aşamada %" + discovery + " ihtimalle yakalanır; o zaman " + target.Name + " seni casusluğa göndermekle suçlar."
+                  + (mayConceive ? " Yakınlık olursa gebelik ihtimali var (tedbirsiz %" + RomanceRules.PregnancyChance + ")." : "")
+                  + " Onurlu bir eş büyük ihtimalle reddeder; reddederse sana kırılır.";
+            Show("KUR", (mode == CourtshipMode.Lover ? "Kur yap: " : "Eşini gönder: ") + target.Name,
+                text + "\n\nYalnızca yetişkinler; olanlar metinle anlatılır, sahne yok.", CardImages.Courtship, target, options, cancel, null);
+        }
+
+        /// <summary>Sevgilinle gizli buluşma (P2.6).</summary>
+        public static void ShowMeeting(Hero lover, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Lover record = state.LoverOf(lover.StringId);
+            if (record == null)
+            {
+                MenuUI.Error(lover.Name + " sevgilin değil");
+                return;
+            }
+            string blocked = Courtships.MeetBlocked(state, record);
+            bool mayConceive = Courtships.MayConceive(state, Hero.MainHero, lover);
+            var options = new List<CardOption>
+            {
+                new CardOption
+                {
+                    Label = "Buluş" + (mayConceive ? " (gebelik %" + RomanceRules.PregnancyChance + ")" : ""), DisabledHint = blocked,
+                    Apply = () => { Courtships.Meet(SchemeEngine.State, record, false); afterwards?.Invoke(); },
+                },
+            };
+            if (mayConceive)
+                options.Add(new CardOption
+                {
+                    Label = "Buluş, tedbirli ol (gebelik %" + RomanceRules.CarefulPregnancyChance + ")", DisabledHint = blocked,
+                    Apply = () => { Courtships.Meet(SchemeEngine.State, record, true); afterwards?.Invoke(); },
+                });
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("SEVGİLİ", "Gizli buluşma: " + lover.Name,
+                "İlişki +" + RomanceRules.MeetingRelation + "." + (record.Public ? " İlişkiniz zaten biliniyor."
+                    : " %" + Courtships.MeetingDiscovery(lover) + " ihtimalle görülürsünüz: eşler kırılır, dedikodu yayılır.")
+                + " Bir sonraki buluşma " + RomanceRules.MeetingCooldownDays + " gün sonra.\n\nOlanlar ikinizin arasında kalır; sahne yok.",
+                CardImages.SecretAffair, lover, options, cancel, null);
+        }
+
         /// <summary>Casus başı görevi seçimi (P2.3). Söylenti seçilirse ardından hedef listesi açılır.</summary>
         public static void ShowMissionChoice(Action afterwards)
         {

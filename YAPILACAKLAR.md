@@ -54,6 +54,19 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.6 — Kur, sevgili, eşini bilgi için göndermek, gebelik (yeni)
+- [ ] Kişiler ya da Saray'da başka klandan karşı cinsten bir yetişkin lord: "Kur yap..." → kart (başarı, yakalanma) → başla, 500 dinar
+- [ ] "Süren" sekmesinde "KUR, SEVGİLİLER, GEBELİKLER": aşama adı, kalan gün; 21 gün sonra "Sevgilin oldu" ya da "Kur tutmadı" kartı
+- [ ] Sevgili: "Gizli buluşma..." kartı (gebelik %15 / tedbirli %4, yakalanma); buluşunca ilişki +5; 14 gün bekleme
+- [ ] Birkaç buluşma sonra (ya da şansla) "X hamile kaldı" → Süren'de doğuma kalan gün → "Doğum" kartı; çocuk klan ekranında
+- [ ] Görülme: "herkes biliyor", eşin ve sevgilinin eşiyle ilişkiler düştü
+- [ ] Evliysen: "Eşini gönder: bilgi için kur..." → kart (eşinin kabul ihtimali) → onurlu eş çoğu zaman reddediyor (ilişki -10)
+- [ ] Eşin kabul ederse 21 gün sonra "Eşinin görevi bitti": rapor, bazen sır; bazen "yakınlık oldu" (hedef evliyse sırrı oluyor)
+- [ ] Eşin hamile kalırsa doğumda resmî baba sen, gerçek baba hedef; hedef için gayrimeşru çocuk sırrı Kişiler'de
+- [ ] Oyunun Doğum ve Ölüm ayarı kapalıyken gebelik seçenekleri yok
+- [ ] Insert → Entrika → **Kur ve sevgililer**: kur yap / eşini gönder listesi, buluşma, bitir
+- [ ] Kaydet → yükle → kur, sevgili, gebelik aynı
+
 ### Gece evi işletmesi (yeni, varsayılan kapalı)
 - [ ] MCM > Entrika > **Gece evi işletmesi** aç
 - [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Gece evi aç (4.000, 2 gönüllü çalışan)" → açıldı; menü açıklamasında gece evi satırı

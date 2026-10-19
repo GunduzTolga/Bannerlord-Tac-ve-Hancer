@@ -33,6 +33,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Kozlar (" + state.Hooks.Count(h => h.Until > SchemeFactors.Today) + ")...", ShowHooks),
                 MenuEntry.Submenu("Ulak ve görüşme (" + state.Audiences.Count(x => x.Until > SchemeFactors.Today) + " hazır)...", ShowAudiences),
                 MenuEntry.Submenu("Esirleri sorgula (" + Interrogation.Prisoners().Count + ")...", ShowPrisoners),
+                MenuEntry.Submenu("Kur ve sevgililer (" + (state.Courtships.Count + state.Lovers.Count) + ")...", ShowRomance),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
@@ -369,6 +370,63 @@ namespace CheatMenu.Menu
                 h => h.Name + " - " + SchemeFactors.Affiliation(h) + ", ilişki " + Hero.MainHero.GetRelation(h)
                     + (Messengers.AudienceBlocked(state, h) is string why ? "  [" + why + "]" : ""),
                 h => UI.EventCards.ShowAudienceSend(h, null), ShowAudiences, HeroPortrait);
+        }
+
+        // ---- Kur ve sevgililer (P2.6) ----
+
+        private static void ShowRomance()
+        {
+            IntrigueState state = SchemeEngine.State;
+            if (!Courtships.Enabled)
+            {
+                MenuUI.Info("Kurallar'dan kapalı: \"Gizli ilişki ve gayrimeşru çocuk sırları\" ayarı");
+                MenuUI.Defer(ShowIntrigue);
+                return;
+            }
+            var entries = new List<MenuEntry>();
+            foreach (Courtship c in state.Courtships.ToList())
+            {
+                Hero target = Hero.Find(c.TargetId);
+                entries.Add(MenuEntry.Submenu("Kuru bırak: " + target?.Name + " (" + RomanceRules.StageName(c.Stage) + ")",
+                    () => MenuUI.Confirm("Kuru bırak", "Harcanan hediyeler geri gelmez. Bırakılsın mı?", () => Courtships.Cancel(SchemeEngine.State, c), ShowRomance)));
+            }
+            foreach (Lover lover in state.Lovers.ToList())
+            {
+                Hero hero = Hero.Find(lover.HeroId);
+                if (hero == null) continue;
+                string blocked = Courtships.MeetBlocked(state, lover);
+                entries.Add(MenuEntry.Simple("Gizli buluşma: " + hero.Name + (blocked != null ? " [" + blocked + "]" : ""), () => UI.EventCards.ShowMeeting(hero, null)));
+                entries.Add(MenuEntry.Submenu("İlişkiyi bitir: " + hero.Name + "...",
+                    () => MenuUI.Confirm("İlişkiyi bitir", hero.Name + " ile ilişkin bitsin mi?", () => Courtships.EndAffair(SchemeEngine.State, lover), ShowRomance)));
+            }
+            foreach (Pregnancy p in state.Pregnancies)
+                entries.Add(MenuEntry.Simple(Hero.Find(p.MotherId)?.Name + " hamile: doğum " + Math.Max(0, p.DueDay - SchemeFactors.Today) + " gün sonra",
+                    () => MenuUI.Info("Doğum yaklaşınca kartla haber gelir")));
+            entries.Add(MenuEntry.Submenu("Kur yap...", () => PickCourtshipTarget(CourtshipMode.Lover)));
+            if (Courtships.Spouse != null) entries.Add(MenuEntry.Submenu("Eşini gönder: bilgi için kur...", () => PickCourtshipTarget(CourtshipMode.Intel)));
+            MenuUI.ShowList("Kur ve sevgililer", entries, ShowRomance, "Geri", ShowIntrigue,
+                "Kur üç aşamada (" + RomanceRules.StageCount * RomanceRules.StageDays + " gün) tutar ya da tutmaz. Eşin, kabul ederse, bilgi için kur yapar. "
+                + "Yalnızca yetişkinler; olanlar metinle anlatılır, sahne yok.");
+        }
+
+        private static void PickCourtshipTarget(CourtshipMode mode)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero agent = Courtships.AgentFor(mode);
+            if (agent == null)
+            {
+                MenuUI.Error("Klanında hayatta bir eşin yok");
+                MenuUI.Defer(ShowRomance);
+                return;
+            }
+            List<Hero> lords = Hero.AllAliveHeroes
+                .Where(h => h.IsLord && !h.IsChild && h.Clan != null && h.Clan != Clan.PlayerClan && h.IsFemale != agent.IsFemale
+                    && SecretRules.IsAdult(RomanceSecrets.Age(h)))
+                .ToList();
+            Picker.Pick(mode == CourtshipMode.Lover ? "Kime kur yapacaksın?" : "Eşin kime kur yapsın?", lords,
+                h => h.Name + " - " + SchemeFactors.Affiliation(h) + ", " + RomanceSecrets.Age(h) + " yaş"
+                    + (Courtships.StartBlocked(state, h, mode) is string why ? "  [" + why + "]" : "  (%" + Courtships.Chance(agent, h) + ")"),
+                h => UI.EventCards.ShowCourtshipStart(h, mode, null), ShowRomance, HeroPortrait);
         }
 
         // ---- Esir sorgusu ----

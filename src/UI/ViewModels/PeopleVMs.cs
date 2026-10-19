@@ -236,6 +236,7 @@ namespace CheatMenu.UI.ViewModels
             if (hero.IsAlive && hero.IsLord && hero.Clan != Clan.PlayerClan)
             {
                 StartActions.Add(LordActions.Audience(state, hero, _changed));
+                foreach (ActionItemVM action in LordActions.Romance(state, hero, _changed)) StartActions.Add(action);
                 StartActions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
                 {
                     string missing = Intrigue.Court.Track(hero);

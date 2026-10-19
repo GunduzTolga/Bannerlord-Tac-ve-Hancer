@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **33 olay kartı resmi**. Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **35 olay kartı resmi**. Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -34,7 +34,7 @@ Kartlar oyunun yükleme ekranlarıyla yan yana duracak; aynı dünyadan görünm
 - Yüzler genel ve isimsiz olsun (belirli bir oyun karakterine benzemesin): kart her lord için kullanılacak.
 - Çok kişi varsa en fazla 3–4 figür; sahne okunur kalsın.
 - Kan, yara, çıplaklık yok. Ölüm ima edilir (devrik kadeh, söndürülmüş mum), gösterilmez.
-- Gizli ilişki resimlerinde (27–29) figürler tamamen giyinik; yalnızca gizlilik ve skandal anlatılır, yakınlık gösterilmez.
+- Gizli ilişki ve kur resimlerinde (27–29, 34) figürler tamamen giyinik; yalnızca gizlilik, kur ve skandal anlatılır, yakınlık gösterilmez.
 
 Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
@@ -81,6 +81,8 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 31 | `sonuc_savas_meclisi.png` | Casus skandalları yüzünden savaş meclisi toplandı (P2.5) | |
 | 32 | `yer_gece_evi.png` | Gece evi: müşterilerden duyulanlar, ayrılanlar, baskın, dedikodu | |
 | 33 | `sonuc_hizmet_yemini.png` | Esir hizmetine katıldı (bağlılık yemini) | |
+| 34 | `sonuc_kur.png` | Kur: başlangıç, ret, eşin reddi, eşinin bilgi görevi (P2.6) | |
+| 35 | `sonuc_dogum.png` | Kurdan ya da sevgiliden doğan çocuk (P2.6) | |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -228,6 +230,18 @@ A two-story timber-framed house on a narrow medieval town street at night, warm 
 
 ```
 A formerly captive young noble in travel-worn clothes kneeling in a torch-lit hall and placing their hands between the hands of a seated lord in a gesture of fealty, unlocked iron shackles lying on the stone floor beside them, a few retainers watching, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**34 · `sonuc_kur.png`** — kur (hediye, şiir, mektup)
+
+```
+A fully clothed young noblewoman in an embroidered dress reading a folded letter beside a stone window in a castle garden, a small carved wooden gift box and a single red rose resting on the sill, a richly dressed nobleman waiting respectfully at a distance under an arch, warm late afternoon light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**35 · `sonuc_dogum.png`** — doğum
+
+```
+A tired but smiling noble mother resting in a canopied bed in a warm hearth-lit chamber, a midwife placing a swaddled newborn in her arms, a wooden cradle and a basin nearby, tapestries on the stone walls, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)

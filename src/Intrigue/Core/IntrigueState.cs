@@ -145,6 +145,39 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Süren bir kur (P2.6): sen ya da eşin, hedefe üç aşamada.</summary>
+    public sealed class Courtship
+    {
+        public int Id;
+        public string TargetId;
+        /// <summary>Kur yapan: sen ya da eşin.</summary>
+        public string AgentId;
+        public CourtshipMode Mode;
+        public int Stage;
+        public int DaysIntoStage;
+        public int StartDay;
+        /// <summary>Tedbirli olsunlar: gebelik olasılığı düşük.</summary>
+        public bool Careful;
+    }
+
+    /// <summary>Sevgilin (P2.6). Public: ilişki duyuldu.</summary>
+    public sealed class Lover
+    {
+        public string HeroId;
+        public int Since;
+        public int NextMeetingDay;
+        public bool Public;
+    }
+
+    /// <summary>Kurdan ya da sevgiliden gebelik (oyunun kendi gebeliği yalnızca eşten olur; bu ayrı izlenir).</summary>
+    public sealed class Pregnancy
+    {
+        public string MotherId;
+        /// <summary>Gerçek baba.</summary>
+        public string FatherId;
+        public int DueDay;
+    }
+
     /// <summary>Gölge ağı olan bir şehirdeki gece evi. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
     public sealed class House
     {
@@ -226,6 +259,14 @@ namespace CheatMenu.Intrigue.Core
         public Dictionary<string, int> Tension = new Dictionary<string, int>();
         public List<Crisis> Crises = new List<Crisis>();
         public List<House> Houses = new List<House>();
+        public List<Courtship> Courtships = new List<Courtship>();
+        public List<Lover> Lovers = new List<Lover>();
+        public List<Pregnancy> Pregnancies = new List<Pregnancy>();
+        /// <summary>Kuru reddeden hedef ya da teklifi reddeden eş → yeniden sorulabileceği gün.</summary>
+        public Dictionary<string, int> RomanceUntil = new Dictionary<string, int>();
+        public int NextCourtshipId = 1;
+
+        public Lover LoverOf(string heroId) => Lovers.FirstOrDefault(l => l.HeroId == heroId);
 
         public House HouseIn(string townId) => Houses.FirstOrDefault(h => h.TownId == townId);
 
@@ -276,6 +317,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
             foreach (string id in InterrogatedUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) InterrogatedUntil.Remove(id);
             foreach (string id in RecruitUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RecruitUntil.Remove(id);
+            foreach (string id in RomanceUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RomanceUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
             Hooks.RemoveAll(h => h.Until <= today);
@@ -289,7 +331,7 @@ namespace CheatMenu.Intrigue.Core
             {
                 new TextRecord("version").Add("v", I(CurrentVersion)),
                 new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
-                    .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId))
+                    .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)).Add("nextcourt", I(NextCourtshipId))
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
@@ -344,6 +386,14 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in RecruitUntil) records.Add(new TextRecord("recruit").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in Tension.Where(p => p.Value > 0))
                 records.Add(new TextRecord("tension").Add("kingdom", p.Key).Add("value", I(p.Value)));
+            foreach (Courtship c in Courtships)
+                records.Add(new TextRecord("court").Add("id", I(c.Id)).Add("target", c.TargetId).Add("agent", c.AgentId).Add("mode", I((int)c.Mode))
+                    .Add("stage", I(c.Stage)).Add("days", I(c.DaysIntoStage)).Add("start", I(c.StartDay)).Add("careful", B(c.Careful)));
+            foreach (Lover l in Lovers)
+                records.Add(new TextRecord("lover").Add("hero", l.HeroId).Add("since", I(l.Since)).Add("next", I(l.NextMeetingDay)).Add("public", B(l.Public)));
+            foreach (Pregnancy p in Pregnancies)
+                records.Add(new TextRecord("pregnancy").Add("mother", p.MotherId).Add("father", p.FatherId).Add("due", I(p.DueDay)));
+            foreach (KeyValuePair<string, int> p in RomanceUntil) records.Add(new TextRecord("romancecd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (House h in Houses)
                 records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since)));
             foreach (Crisis c in Crises)
@@ -370,6 +420,7 @@ namespace CheatMenu.Intrigue.Core
                         state.Rolls = Int(r, "rolls");
                         state.NextPlotId = Math.Max(1, Int(r, "nextplot"));
                         state.NextLetterId = Math.Max(1, Int(r, "nextletter"));
+                        state.NextCourtshipId = Math.Max(1, Int(r, "nextcourt"));
                         int mission = Int(r, "mission");
                         state.Mission = Enum.IsDefined(typeof(SpymasterMission), mission) ? (SpymasterMission)mission : SpymasterMission.None;
                         state.RumorTargetId = Empty(r.Get("rumor"));
@@ -467,6 +518,27 @@ namespace CheatMenu.Intrigue.Core
                     case "tension":
                         if (Empty(r.Get("kingdom")) != null)
                             state.Tension[r.Get("kingdom")] = SchemeMath.Clamp(Int(r, "value"), 0, CrisisRules.MaxTension);
+                        break;
+                    case "court":
+                        int courtMode = Int(r, "mode");
+                        if (Empty(r.Get("target")) == null || Empty(r.Get("agent")) == null || !Enum.IsDefined(typeof(CourtshipMode), courtMode)) break;
+                        state.Courtships.Add(new Courtship
+                        {
+                            Id = Int(r, "id"), TargetId = r.Get("target"), AgentId = r.Get("agent"), Mode = (CourtshipMode)courtMode,
+                            Stage = SchemeMath.Clamp(Int(r, "stage"), 0, RomanceRules.StageCount), DaysIntoStage = Math.Max(0, Int(r, "days")),
+                            StartDay = Int(r, "start"), Careful = Bool(r, "careful"),
+                        });
+                        break;
+                    case "lover":
+                        if (Empty(r.Get("hero")) == null || state.LoverOf(r.Get("hero")) != null) break;
+                        state.Lovers.Add(new Lover { HeroId = r.Get("hero"), Since = Int(r, "since"), NextMeetingDay = Int(r, "next"), Public = Bool(r, "public") });
+                        break;
+                    case "pregnancy":
+                        if (Empty(r.Get("mother")) == null || Empty(r.Get("father")) == null) break;
+                        state.Pregnancies.Add(new Pregnancy { MotherId = r.Get("mother"), FatherId = r.Get("father"), DueDay = Int(r, "due") });
+                        break;
+                    case "romancecd":
+                        if (Empty(r.Get("hero")) != null) state.RomanceUntil[r.Get("hero")] = Int(r, "until");
                         break;
                     case "house":
                         int share = Int(r, "share");
