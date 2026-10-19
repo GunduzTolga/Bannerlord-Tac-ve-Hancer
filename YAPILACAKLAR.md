@@ -54,6 +54,15 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.9 — Saray günü (yeni)
+- [ ] Kendi şehrinde → şehir menüsünde "Divan kur (saray günü)" → üç kart ("DİVAN 1/3"...); dilekçe sahibinin portresi
+- [ ] Seçenek düğmelerinde sonuçlar yazıyor; parası yetmeyen seçenek kapalı
+- [ ] Seçince şehir ekranında sadakat/güvenlik/refah/erzak değişti; kişilik özelliğine küçük puan (oyunun bildirimi)
+- [ ] Sonda "Divan dağıldı" özeti
+- [ ] "Yakalanan casus" → "Sorgula" → Kişiler'de bir yabancı lordun raporu
+- [ ] Kalede de çalışıyor (şehir işleri çıkmıyor); başkasının şehrinde seçenek yok
+- [ ] Hemen tekrar: düğme kapalı, "N gün sonra"
+
 ### P2.8 — Varis ve meşrulaştırma (yeni)
 - [ ] Sevgilinden (annesi evli) doğan çocuk: Editörler > Aile editörü > [Ben] > "Gayrimeşru çocuğunu meşrulaştır" → bedel (etki ya da altın)
 - [ ] Onay → çocuk klan ekranında; "Meşrulaştırma" kartı; resmî babası ve annesiyle ilişkiler düştü; sır "ifşa edildi"

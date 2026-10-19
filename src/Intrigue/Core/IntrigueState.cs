@@ -292,6 +292,8 @@ namespace CheatMenu.Intrigue.Core
         public HashSet<string> AgeFrozen = new HashSet<string>();
         /// <summary>Düello → aynı kişiye yeniden meydan okunabileceği gün.</summary>
         public Dictionary<string, int> DuelUntil = new Dictionary<string, int>();
+        /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
+        public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
 
         public Lover LoverOf(string heroId) => Lovers.FirstOrDefault(l => l.HeroId == heroId);
 
@@ -346,6 +348,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in RecruitUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RecruitUntil.Remove(id);
             foreach (string id in RomanceUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RomanceUntil.Remove(id);
             foreach (string id in DuelUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DuelUntil.Remove(id);
+            foreach (string id in CourtDayUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CourtDayUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
             Hooks.RemoveAll(h => h.Until <= today);
@@ -427,6 +430,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("asked", B(SpouseAffair.Asked)).Add("how", SpouseAffair.How).Add("children", string.Join(";", SpouseAffair.ChildIds)));
             foreach (string id in NoChildren) records.Add(new TextRecord("nochild").Add("hero", id));
             foreach (KeyValuePair<string, int> p in DuelUntil) records.Add(new TextRecord("duelcd").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in CourtDayUntil) records.Add(new TextRecord("courtday").Add("place", p.Key).Add("until", I(p.Value)));
             foreach (string id in AgeFrozen) records.Add(new TextRecord("frozen").Add("hero", id));
             if (SpouseWatchUntil > 0 || SpouseApartWeeks > 0)
                 records.Add(new TextRecord("spouse").Add("watch", I(SpouseWatchUntil)).Add("apart", I(SpouseApartWeeks)));
@@ -582,6 +586,9 @@ namespace CheatMenu.Intrigue.Core
                             Discovered = Bool(r, "discovered"), Asked = Bool(r, "asked"), How = Empty(r.Get("how")),
                             ChildIds = (r.Get("children") ?? "").Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                         };
+                        break;
+                    case "courtday":
+                        if (Empty(r.Get("place")) != null) state.CourtDayUntil[r.Get("place")] = Int(r, "until");
                         break;
                     case "duelcd":
                         if (Empty(r.Get("hero")) != null) state.DuelUntil[r.Get("hero")] = Int(r, "until");

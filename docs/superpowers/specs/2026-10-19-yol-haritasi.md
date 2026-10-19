@@ -1,9 +1,9 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
 **Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0, P1, P2.1 (esir sorgulama), P2.2 (haberci + saray istihbaratı), P2.3 (casus başı görevleri), P2.4 (gizli ilişki
-ve gayrimeşru çocuk sırları) P2.5 (ağ ifşasından diplomatik kriz), gece evi işletmesi, esiri hizmete davet, P2.6 (kur, sevgili, gebelik), eşinin gizli hayatı / boşanma P2.7 (aile editörü), düello ve P2.8 (varis ve meşrulaştırma) kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
+ve gayrimeşru çocuk sırları) P2.5 (ağ ifşasından diplomatik kriz), gece evi işletmesi, esiri hizmete davet, P2.6 (kur, sevgili, gebelik), eşinin gizli hayatı / boşanma P2.7 (aile editörü), düello, P2.8 (varis ve meşrulaştırma) ve P2.9 (saray günü) kodlandı** (oyunda test bekliyor; P1 uygulama notu bölüm 3'ün sonunda; tasarımlar `2026-10-19-p2-esir-sorgulama.md`,
 `2026-10-19-p2-haberci-saray.md`, `2026-10-19-p2-casus-basi-gorevleri.md`, `2026-10-19-p2-gizli-iliski.md`,
-`2026-10-19-p2-diplomatik-kriz.md`, `2026-10-19-p2-gece-evi.md`, `2026-10-19-p2-sevgili.md`, `2026-10-19-p2-esin-gizli-hayati.md`, `2026-10-19-p2-aile-editoru.md`, `2026-10-19-duello.md`, `2026-10-19-p2-varis.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+`2026-10-19-p2-diplomatik-kriz.md`, `2026-10-19-p2-gece-evi.md`, `2026-10-19-p2-sevgili.md`, `2026-10-19-p2-esin-gizli-hayati.md`, `2026-10-19-p2-aile-editoru.md`, `2026-10-19-duello.md`, `2026-10-19-p2-varis.md`, `2026-10-19-p2-saray-gunu.md`; resimler `docs/gorseller/olay-kartlari.md`). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)
@@ -95,7 +95,7 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | 6b ✅ | **Eşinin gizli hayatı ve boşanma** (kodlandı; kullanıcı isteği; ayar varsayılan açık) | CK3'te eş de aldatabilir; araştırmak ve boşamak oyunda yok | Eşin, araları bozuksa ya da uzun süre ayrı kalırsanız sevgili edinebilir, gebelik gizli kalır; casus başı araştırır ya da karşı casusluk bulur; yüzleş / görmezden gel / boşa; boşanan eş ailesinin klanına döner |
 | 7 ✅ | **Aile editörü ekleri** (kodlandı) | Rakip editörlerde var, bizde eksik | Evlendir (oyunun uygunluk kontrolüyle) / boşa, gebelik başlat (oyunun gebeliği), "çocuk istemiyorlar", çocuğu büyüt, yaşlanmayı dondur (Editörler > Aile editörü) |
 | 8 ✅ | **Varis ve meşrulaştırma** (kodlandı) | Hanedan teması; oyun varisi yalnızca ölünce soruyor | Gayrimeşru çocuğu meşrulaştır (etki ya da altın; babalık açığa çıkar; oyunun evlat edinme işlemi). Klanı devret: oyunun emeklilik işlemiyle istediğin zaman çekil, varisinle devam et. |
-| 9 | **Saray günü** | Barış zamanı içeriği ve olay kartlarının doğal yeri | Şehir menüsünden dilekçeler ve yargılamalar; kararlar kişilik, sadakat, güvenlik ve altını etkiler |
+| 9 ✅ | **Saray günü** (kodlandı) | Barış zamanı içeriği ve olay kartlarının doğal yeri | Kendi şehrinde/kalende "Divan kur": 12 dilekçeden 3'ü, dilekçe sahibi gerçek eşraf; kararlar sadakat, güvenlik, refah, erzak, altın, eşraf ilişkisi ve kişiliği etkiler; casus dilekçesi rapor verir |
 | 10 | **Rehine anlaşmaları** | Aile, diplomasi ve kaçırmanın kesişimi | Barış ya da ittifak teminatı. Esir değil "misafir" olarak tutulur (Harmony gerekmez). |
 
 **Oyun API taramasından adaylar** (`2026-10-19-oyun-api-taramasi.md`): düello (✅ kodlandı), oyunun 3B sahneleri (doğum, düğün), evlat edinme ve

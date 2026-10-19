@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **39 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **40 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -87,6 +87,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 37 | `sonuc_bosanma.png` | Boşanma | |
 | 38 | `sonuc_duello.png` | Düello: meydan okuma, ret, sonuç | ★ |
 | 39 | `sonuc_mesrulastirma.png` | Gayrimeşru çocuk meşrulaştırıldı (P2.8) | |
+| 40 | `yer_saray_gunu.png` | Saray günü: divan ve dilekçeler (P2.9) | ★ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -270,6 +271,12 @@ Two noblemen in mail and padded gambesons facing each other with swords and roun
 
 ```
 A lord standing in a crowded great hall with his hand on the shoulder of a young boy in new noble clothes, a scribe reading aloud from a sealed charter, courtiers whispering, the clan banner behind them, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**40 · `yer_saray_gunu.png`** — saray günü (divan)
+
+```
+A lord seated on a carved wooden chair at the end of a torch-lit great hall holding court, a line of petitioners waiting, a kneeling merchant presenting a scroll, a scribe at a small desk taking notes, guards by the pillars, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -732,4 +739,14 @@ A priest writing a child's name into a large family register in a candlelit chap
 
 ```
 A young noble kneeling to receive a family signet ring from a seated lord in a castle solar, an older noblewoman looking away in shame by the window, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`yer_saray_gunu_2.png`** · `yer_saray_gunu_3.png` — saray günü (divan)
+
+```
+An open-air court under a large tree in a castle courtyard, a lady on a wooden dais listening to two arguing villagers holding a boundary stone, onlookers gathered around, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Aserai ruler on cushions in a shaded arcade hearing petitions, a veiled widow with two children before him, a guard and a scribe nearby, sunlight through carved screens, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
