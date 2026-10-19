@@ -57,7 +57,17 @@ Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 Bir şey bozuksa: ekrandaki kırmızı `[CheatMenu]` mesajını aynen yaz. Çökme olursa log:
 `C:\ProgramData\Mount and Blade II Bannerlord\logs\` içindeki en yeni `rgl_log_*.txt`.
 
-## 2. Sıradaki büyük iş — Faz 4
+## 2. Sıradaki büyük iş — Entrika sistemi (CK3 tarzı)
+
+Mod artık sadece hile menüsü değil, "her şeyi içeren" mod olacak. Tasarım taslağı:
+`docs/superpowers/specs/2026-10-19-entrika-design.md` (casus başı, casusluk, sırlar, suikast, kozlar, yapay zekâ entrikaları).
+- [ ] Tasarımdaki 5 açık soruyu cevapla (mod adı, menü düzeni, akraba katli, oyuncuya suikast, kaydet-yükle)
+- [ ] **E0** — menü düzeni, görünen ad, kayıt testi
+- [ ] **E1** — casus başı, casusluk + sırlar, suikast (aşamalar, olaylar, sonuçlar)
+- [ ] **E2** — şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları, karşı casusluk
+- [ ] **E3** — sabotaj, kışkırtma, itibar zedeleme, resimli olay kartları
+
+## 3. Sonraki büyük iş — Faz 4
 
 Rapor bunları v1.5 kararlı sürüme çıkana kadar bekletmeyi öneriyordu (v1.5 şu an beta). İstersen beklemeden başlarız.
 - [ ] **Yoldaş / başka kahraman görünümü** (yüz editörü) — orta-zor
@@ -66,18 +76,18 @@ Rapor bunları v1.5 kararlı sürüme çıkana kadar bekletmeyi öneriyordu (v1.
 - [ ] **War Sails araçları** — gemi ve figürhed verme
 - [ ] **Tek panelli editör merkezi** — popup yerine sekmeli tek ekran (en büyük iş)
 
-## 3. Ertelenen küçük işler
+## 4. Ertelenen küçük işler
 - [ ] Savaş hilelerini **belirli klan/krallığa** uygulama (şu an: ben / ordum / müttefikler)
 - [ ] **İttifak kurma** (önce oyunun ittifak API'si doğrulanmalı)
 - [ ] **Tek perk silme** (şu an sadece ekleme var)
 - [ ] **Toplu ilişki** değişikliği (ör. bir klanın tamamıyla)
 - [ ] Askerlerin **günlük eğitim XP'si** çarpanı
 
-## 4. Repo ile ilgili kararlar
+## 5. Repo ile ilgili kararlar
 - [ ] **Lisans** eklensin mi? (şu an yok = tüm hakları saklı; açık yapacaksan MIT önerilir)
 - [ ] Repo **private** kalsın mı, herkese açık mı olsun?
 
-## 5. v1.5 kararlı sürüm çıkınca
+## 6. v1.5 kararlı sürüm çıkınca
 - [ ] Tüm fazları yeniden derle ve test et (oyun güncellemesi API'leri değiştirebilir)
 - [ ] v1.5'in yerli olarak getirdiği özelliklerle çakışma var mı bak (başlangıç seçenekleri, klan partisi anahtarları)
 
