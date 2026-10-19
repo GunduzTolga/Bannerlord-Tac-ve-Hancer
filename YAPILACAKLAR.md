@@ -125,6 +125,10 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Efendisi hakkında rapor alınan, tanışmadığın lord **Yeni entrika > Suikast** listesinde çıkıyor
 - [ ] Insert → Entrika (liste menüsü) → **Esirleri sorgula** da çalışıyor
 - [ ] Kart açıkken oyun duruyor (gün ilerlemiyor); Esc ile kapanan kartta oyunun kaçış menüsü açılmıyor
+- [ ] **Hizmetine davet:** evli olmayan, klan lideri olmayan bir esir → "Esirle konuş..." → "Hizmetine davet et (%N)"
+- [ ] Kabul: kart (yemin); esir partinde ve klan ekranında, ona parti/vali görevi verilebiliyor; eski klan lideriyle ilişkin düştü
+- [ ] Ret: esir partinde kalıyor; tekrar denemek "N gün sonra yeniden" diyor; oyunun fidye teklifleri gelmeye devam ediyor
+- [ ] Klan lideri ve evli esirde seçenek kapalı, nedeni yazıyor
 
 ### Entrika E0 — yeni ad, menü düzeni, kayıt testi (önemli: E1 buna dayanıyor)
 - [ ] Launcher'da mod **Taç ve Hançer** adıyla görünüyor, Türkçe harfler düzgün

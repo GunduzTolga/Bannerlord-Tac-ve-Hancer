@@ -213,6 +213,8 @@ namespace CheatMenu.Intrigue.Core
         // P2.1
         /// <summary>Esir sorgusu: kahraman → yeniden sorgulanabileceği gün.</summary>
         public Dictionary<string, int> InterrogatedUntil = new Dictionary<string, int>();
+        /// <summary>Hizmet teklifini reddeden esir → yeniden teklif edilebileceği gün.</summary>
+        public Dictionary<string, int> RecruitUntil = new Dictionary<string, int>();
 
         // P2.2
         public List<Letter> Letters = new List<Letter>();
@@ -273,6 +275,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in AlertUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) AlertUntil.Remove(id);
             foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
             foreach (string id in InterrogatedUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) InterrogatedUntil.Remove(id);
+            foreach (string id in RecruitUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) RecruitUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
             Hooks.RemoveAll(h => h.Until <= today);
@@ -338,6 +341,7 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("audience").Add("hero", a.HeroId).Add("until", I(a.Until)).Add("relation", I(a.Relation))
                     .Add("asked", B(a.Asked)));
             foreach (KeyValuePair<string, int> p in GiftUntil) records.Add(new TextRecord("gift").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in RecruitUntil) records.Add(new TextRecord("recruit").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in Tension.Where(p => p.Value > 0))
                 records.Add(new TextRecord("tension").Add("kingdom", p.Key).Add("value", I(p.Value)));
             foreach (House h in Houses)
@@ -456,6 +460,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "gift":
                         if (Empty(r.Get("hero")) != null) state.GiftUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "recruit":
+                        if (Empty(r.Get("hero")) != null) state.RecruitUntil[r.Get("hero")] = Int(r, "until");
                         break;
                     case "tension":
                         if (Empty(r.Get("kingdom")) != null)

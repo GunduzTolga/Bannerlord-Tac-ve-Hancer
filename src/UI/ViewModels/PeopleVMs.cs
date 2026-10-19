@@ -355,10 +355,14 @@ namespace CheatMenu.UI.ViewModels
                 + "  ·  Hesapçı " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Calculating))
                 + "  ·  Cesaret " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Valor))
                 + "  ·  Onur " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Honor));
+            string recruitBlocked = Recruitment.Blocked(state, prisoner);
             ChanceText = "Konuştur %" + Interrogation.Chance(state, hero, InterrogationMethod.Talk)
                 + "  ·  Baskı %" + Interrogation.Chance(state, hero, InterrogationMethod.Pressure)
-                + "  ·  Anlaşma %" + Interrogation.Chance(state, hero, InterrogationMethod.Deal);
-            Hint = Interrogation.BlockedReason(state, prisoner) ?? "";
+                + "  ·  Anlaşma %" + Interrogation.Chance(state, hero, InterrogationMethod.Deal)
+                + (recruitBlocked == null ? "  ·  Hizmet %" + Recruitment.Chance(hero) : "");
+            string interrogateBlocked = Interrogation.BlockedReason(state, prisoner);
+            // Kart açılabilir: sorgu ya da hizmet teklifinden biri mümkünse. Engel notu ikisi de kapalıysa görünür.
+            Hint = interrogateBlocked != null && recruitBlocked != null ? interrogateBlocked : "";
             IntelText = state.HasValidReport(hero.StringId, SchemeFactors.Today) ? "Güncel raporun var" : "";
         }
 
@@ -371,7 +375,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string IntelText { get; }
         [DataSourceProperty] public string Hint { get; }
         [DataSourceProperty] public bool CanInterrogate => Hint.Length == 0;
-        [DataSourceProperty] public string InterrogateText => "Sorgula...";
+        [DataSourceProperty] public string InterrogateText => "Esirle konuş...";
 
         public void ExecuteInterrogate()
         {
