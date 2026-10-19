@@ -136,5 +136,6 @@ suikast. Alevli ok (War Sails) kullanıcının DLC dosyaları gelince.
 2. **P0:** altyapı ve MCM ayarları.
 3. **P1:** Entrika ekranı ve olay kartları (resimler kullanıcıdan).
 4. **P2:** yukarıdaki sırayla, her biri ayrı tasarım notu ve testle.
-5. **E3** (entrika tasarımındaki): sabotaj ve kışkırtma P2 sırasına göre yeniden değerlendirilir.
-   Sabotaj Fourberie'de de var, kendi farkımızı bulmadan eklenmez.
+5. ✅ **E3** (entrika tasarımındaki): sabotaj ve kışkırtma (kodlandı, 20 Ekim; tasarım: `2026-10-20-e3-sabotaj-kiskirtma.md`).
+   Sabotaj Fourberie'de de var; bizim farkımız: kuşatmayla zamanlama, kışkırtmada gölge ağı şartı, vali karşı casusluğu, oyunun kendi
+   isyan denetimi, casus gerilimi ve yerleşime özgü olay kartları. İtibar zedeleme ayrıca yapılmadı ("Söylenti yay" görevi).

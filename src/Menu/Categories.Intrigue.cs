@@ -222,11 +222,17 @@ namespace CheatMenu.Menu
         }
 
         private static string SchemeLine(Scheme scheme) =>
-            SchemeRules.Name(scheme.Kind) + ": " + Hero.Find(scheme.TargetId)?.Name + " - aşama " + scheme.Phase + "/"
+            SchemeRules.Name(scheme.Kind) + ": " + SchemeEngine.TargetName(scheme)
+            + (scheme.Kind == SchemeKind.Sabotage ? " (" + SettlementSchemeRules.MethodName(scheme.Method) + ")" : "") + " - aşama " + scheme.Phase + "/"
             + SchemeRules.MaxPhases(scheme.Kind) + (SchemeEngine.IsWaiting(scheme) ? "  [karar bekliyor]" : "");
 
         private static void ShowScheme(Scheme scheme)
         {
+            if (SchemeRules.TargetsSettlement(scheme.Kind))
+            {
+                ShowSettlementScheme(scheme);
+                return;
+            }
             IntrigueState state = SchemeEngine.State;
             Hero target = Hero.Find(scheme.TargetId);
             if (!state.Schemes.Contains(scheme) || target == null)
@@ -278,13 +284,61 @@ namespace CheatMenu.Menu
                 string.Join("\n", lines));
         }
 
+        /// <summary>Sabotaj ya da kışkırtma (E3): ayrıntı, harekete geç, iptal.</summary>
+        private static void ShowSettlementScheme(Scheme scheme)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Settlement place = SettlementSchemes.Find(scheme);
+            if (!state.Schemes.Contains(scheme) || place?.Town == null)
+            {
+                MenuUI.Defer(ShowSchemes);
+                return;
+            }
+            Hero spymaster = SchemeFactors.Spymaster(state);
+            SettlementSchemeInputs inputs = SettlementSchemes.Inputs(state, spymaster, place, scheme.Kind, scheme);
+            SettlementSchemeInputs atMax = SettlementSchemes.Inputs(state, spymaster, place, scheme.Kind, scheme);
+            int max = SchemeRules.MaxPhases(scheme.Kind);
+            atMax.CompletedPhases = Math.Max(scheme.Phase, max);
+
+            var lines = new List<string> { "Hedef: " + SettlementSchemes.TargetLabel(place) };
+            if (scheme.Kind == SchemeKind.Sabotage)
+                lines.Add("Vurulacak: " + SettlementSchemeRules.MethodName(scheme.Method) + " (" + SettlementSchemeRules.MethodEffect(scheme.Method) + ")");
+            lines.Add("Aşama: " + scheme.Phase + "/" + max + " (en az " + SchemeRules.MinPhases(scheme.Kind) + ")"
+                + (SchemeEngine.IsWaiting(scheme) ? " - plan hazır" : " - sonraki aşamaya " + (scheme.PhaseDays - scheme.DaysIntoPhase) + " gün"));
+            lines.Add("Başarı şu an: %" + SettlementSchemeRules.Success(scheme.Kind, inputs) + " (" + max + ". aşamada %"
+                + SettlementSchemeRules.Success(scheme.Kind, atMax) + "; harekete geçerken rüşvetle +5/+10/+15)");
+            lines.Add("Her aşamada yakalanma: %" + SettlementSchemeRules.Discovery(scheme.Kind, inputs));
+            string tags = SettlementSchemes.Tags(state, place);
+            if (tags.Length > 0) lines.Add(tags);
+            if (spymaster == null) lines.Add("DURDU: casus başın yok");
+            else if (SchemeFactors.SpymasterBusyReason(spymaster) != null)
+                lines.Add("DURDU: casus başın şu an " + SchemeFactors.SpymasterBusyReason(spymaster));
+
+            string blocked = SchemeEngine.CannotExecuteReason(scheme);
+            var entries = new List<MenuEntry>
+            {
+                blocked == null
+                    ? MenuEntry.Submenu("Harekete geç...", () => ShowExecute(scheme))
+                    : MenuEntry.Simple("Harekete geç (" + blocked + ")", () => MenuUI.Error(blocked)),
+                MenuEntry.Submenu("İptal et...", () => MenuUI.Confirm("Entrikayı iptal et", "Harcanan para geri gelmez. İptal edilsin mi?",
+                    () =>
+                    {
+                        SchemeEngine.Cancel(scheme);
+                        MenuUI.Defer(ShowIntrigue);
+                    },
+                    () => ShowSettlementScheme(scheme))),
+            };
+            MenuUI.ShowList(SchemeRules.Name(scheme.Kind) + ": " + place.Name, entries, () => ShowSettlementScheme(scheme), "Geri", ShowSchemes,
+                string.Join("\n", lines));
+        }
+
         private static void ShowExecute(Scheme scheme)
         {
             List<MenuEntry> entries = SchemeEngine.BribeChoices(scheme)
                 .Select(choice => MenuEntry.Submenu(choice.Label + (choice.Affordable ? "" : "  (yetersiz altın)"), () =>
                 {
                     bool done = false;
-                    MenuUI.SafeRun("Suikast", () =>
+                    MenuUI.SafeRun(SchemeRules.Name(scheme.Kind), () =>
                     {
                         SchemeEngine.Execute(scheme, choice.Level);
                         done = true;
@@ -293,7 +347,7 @@ namespace CheatMenu.Menu
                     if (!done) MenuUI.Defer(() => ShowExecute(scheme));
                 }))
                 .ToList();
-            MenuUI.ShowList("Harekete geç: " + Hero.Find(scheme.TargetId)?.Name, entries, () => ShowExecute(scheme), "Geri",
+            MenuUI.ShowList("Harekete geç: " + SchemeEngine.TargetName(scheme), entries, () => ShowExecute(scheme), "Geri",
                 () => ShowScheme(scheme), "Rüşvet başarıyı artırır ama geri gelmez. Zar şimdi atılacak.");
         }
 
@@ -317,6 +371,10 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Şantaj: bildiğin bir sırrı koza çevir (1-2 aşama, orta risk)...", () => PickSchemeTarget(SchemeKind.Blackmail)),
                 MenuEntry.Submenu("Kaçırma: hedefi esir al (2-4 aşama, çok yüksek risk)...", () => PickSchemeTarget(SchemeKind.Kidnap)),
                 MenuEntry.Submenu("Suikast: hedefi öldür (2-5 aşama, çok yüksek risk)...", () => PickSchemeTarget(SchemeKind.Murder)),
+                MenuEntry.Submenu("Sabotaj: kuşatacağın yerleşimin ambarı, garnizonu ya da surları (1-3 aşama, orta risk)...",
+                    () => PickSettlementTarget(SchemeKind.Sabotage)),
+                MenuEntry.Submenu("Kışkırtma: şehri sahibine karşı ayaklandır (2-4 aşama, orta risk; gölge ağı gerekir)...",
+                    () => PickSettlementTarget(SchemeKind.Incite)),
             }, ShowNewScheme, "Geri", ShowIntrigue,
                 "Casusluk raporu, o hedefe suikast ve kaçırmada +10 başarı verir ve tanışmadığın birini de listeye ekler. "
                 + "Şantaj için önce casuslukla bir sır bulmalısın.");
@@ -350,6 +408,51 @@ namespace CheatMenu.Menu
                     MenuUI.Defer(ShowIntrigue);
                 },
                 () => PickSchemeTarget(kind));
+        }
+
+        private static void PickSettlementTarget(SchemeKind kind)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero spymaster = SchemeFactors.Spymaster(state);
+            List<Settlement> targets = SettlementSchemes.Targets(state, kind).OrderBy(s => s.Name.ToString()).ToList();
+            if (targets.Count == 0)
+            {
+                MenuUI.Error(SettlementSchemes.NoTargetsText(kind));
+                MenuUI.Defer(ShowNewScheme);
+                return;
+            }
+            Picker.Pick(SchemeRules.Name(kind) + " - hedef seç", targets,
+                s => SettlementSchemes.TargetLabel(s) + " - başarı " + SettlementSchemes.ChanceText(state, spymaster, s, kind) + ", "
+                    + SchemeFactors.Money(SettlementSchemes.StartCost(kind, s)),
+                s =>
+                {
+                    if (kind == SchemeKind.Sabotage) PickSabotageMethod(s);
+                    else ConfirmSettlementStart(kind, s, SchemeMethod.None);
+                },
+                ShowNewScheme);
+        }
+
+        private static void PickSabotageMethod(Settlement target)
+        {
+            MenuUI.ShowList("Sabotaj: " + target.Name + " - neyi vuracaksın?",
+                SettlementSchemes.SabotageMethods
+                    .Select(method => MenuEntry.Submenu(SettlementSchemes.MethodLabel(method) + "...",
+                        () => ConfirmSettlementStart(SchemeKind.Sabotage, target, method)))
+                    .ToList(),
+                () => PickSabotageMethod(target), "Geri", () => PickSettlementTarget(SchemeKind.Sabotage),
+                "Vurmak için " + target.Name + " kuşatılırken orada olmalısın; hazırlık şimdi başlar.");
+        }
+
+        private static void ConfirmSettlementStart(SchemeKind kind, Settlement target, SchemeMethod method)
+        {
+            MenuUI.Confirm(SchemeRules.Name(kind) + " başlatılsın mı?",
+                string.Join("\n", SettlementSchemes.PreviewLines(SchemeEngine.State, kind, target)),
+                () =>
+                {
+                    SchemeEngine.Start(kind, target, method);
+                    MenuUI.Defer(ShowIntrigue);
+                },
+                () => PickSettlementTarget(kind));
         }
 
         // ---- Raporlar ve sırlar ----
@@ -748,7 +851,7 @@ namespace CheatMenu.Menu
             {
                 MenuEntry.Simple("Süren entrikaların aşamalarını tamamla", SchemeEngine.CompleteAllPhases),
                 MenuEntry.Toggle("Asla fark edilme", () => CheatState.IntrigueNeverDiscovered, v => CheatState.IntrigueNeverDiscovered = v),
-                MenuEntry.Toggle("Suikast ve casusluk her zaman başarılı", () => CheatState.IntrigueAlwaysSucceed,
+                MenuEntry.Toggle("Entrikalar her zaman başarılı (suikast, casusluk, sabotaj, kışkırtma)", () => CheatState.IntrigueAlwaysSucceed,
                     v => CheatState.IntrigueAlwaysSucceed = v),
             }, ShowIntrigueCheats, "Aç/kapa hileler oturumluktur: oyunu kapatınca kapanır.", ShowCheats);
         }

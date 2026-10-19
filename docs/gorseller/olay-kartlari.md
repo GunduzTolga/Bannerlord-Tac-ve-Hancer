@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **54 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **64 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -49,7 +49,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
 ## Kontrol listesi
 
-`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 9/54 tamamlandı** — 8 adet `★` öncelikli + 1 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
+`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 9/64 tamamlandı** — 8 adet `★` öncelikli + 1 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
 
 | # | Dosya | Nerede görünür | Öncelik | Durum |
 |---|---|---|---|---|
@@ -107,6 +107,16 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 52 | `sonuc_genelev_dedikodu.png` | Genelevde duyulanlar; kendi genelevinin dedikodusu | | ⏳ |
 | 53 | `olay_genelev_baskin.png` | Genelev baskını (başka birinin şehrinde) | | ⏳ |
 | 54 | `sonuc_hastalik.png` | Hastalık ve tedavisi (şehrin hekimi, saray hekimi) | | ⏳ |
+| 55 | `tur_sabotaj.png` | Sabotaj aşamaları, hazırlık ve "harekete geç" (E3) | ★ | ⏳ |
+| 56 | `tur_kiskirtma.png` | Kışkırtma aşamaları ve "harekete geç" (E3) | ★ | ⏳ |
+| 57 | `sonuc_sabotaj_ambar.png` | Sabotaj tuttu: ambar yandı, erzak gitti (E3) | | ⏳ |
+| 58 | `sonuc_sabotaj_garnizon.png` | Sabotaj tuttu: kuyular bozuldu, garnizon hasta (E3) | | ⏳ |
+| 59 | `sonuc_sabotaj_sur.png` | Sabotaj tuttu: sur zayıfladı ya da çöktü, gedik (E3) | | ⏳ |
+| 60 | `sonuc_isyan.png` | Kışkırtma tuttu: halk ayaklandı, belki oyunun kendi isyanı (E3) | ★ | ⏳ |
+| 61 | `olay_rusvetci_nobetci.png` | Olay: rüşvetçi nöbetçi (sabotaj ve kışkırtma, E3) | | ⏳ |
+| 62 | `olay_elebasi_yakalandi.png` | Olay: elebaşı yakalandı (kışkırtma, E3) | | ⏳ |
+| 63 | `olay_kacakci_tuneli.png` | Olay: kaçakçı tüneli (sabotaj, E3) | | ⏳ |
+| 64 | `olay_ekmek_kuyrugu.png` | Olay: ekmek kuyruğu (kışkırtma, E3) | | ⏳ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -382,6 +392,68 @@ Town guards with torches and spears bursting through the door of a lantern-lit t
 
 ```
 A feverish nobleman lying in bed under heavy blankets in a stone chamber, pale and sweating, while an elderly physician in dark robes examines him and a servant holds a bowl of steaming herbs, candlelight, everyone clothed, somber mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+### E3: sabotaj ve kışkırtma
+
+**55 · `tur_sabotaj.png`** — sabotaj
+
+```
+A cloaked saboteur crouching in the shadow of a besieged town's inner wall at night, a coil of rope and a small clay oil flask at his feet, distant siege campfires glowing beyond the battlements, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**56 · `tur_kiskirtma.png`** — kışkırtma
+
+```
+A fiery agitator in a patched cloak standing on a market cart addressing an angry crowd of townsfolk in a medieval town square at dusk, raised fists and torches, a few guards watching warily from a distance, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**57 · `sonuc_sabotaj_ambar.png`** — ambar yandı
+
+```
+A large timber granary burning at night inside town walls, townsfolk forming a bucket chain, sacks of grain spilling into the mud, orange flames lighting the rising smoke, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**58 · `sonuc_sabotaj_garnizon.png`** — garnizon hasta
+
+```
+Soldiers in padded gambesons slumped and sick around a stone well in a castle courtyard at dawn, a physician sniffing a bucket of murky water, an officer covering his mouth with his sleeve, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**59 · `sonuc_sabotaj_sur.png`** — sur çöktü
+
+```
+A section of a town's stone curtain wall collapsing into a cloud of dust at dawn, besieging soldiers in mail cheering in the distance, defenders scrambling along the parapet, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**60 · `sonuc_isyan.png`** — halk ayaklandı
+
+```
+An uprising in a medieval town square, townsfolk with clubs and pitchforks pushing back a thin line of guards before the keep gate, the lord's banner torn down, torches and smoke, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**61 · `olay_rusvetci_nobetci.png`** — rüşvetçi nöbetçi
+
+```
+A town gate guard in a padded jacket holding out an open palm in a torchlit gatehouse at night, a cloaked stranger dropping a coin into it, the heavy gate half open behind them, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**62 · `olay_elebasi_yakalandi.png`** — elebaşı yakalandı
+
+```
+Town guards hauling a shouting agitator down from a market cart in a crowded square, townsfolk stepping back, a fallen torch on the cobblestones, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**63 · `olay_kacakci_tuneli.png`** — kaçakçı tüneli
+
+```
+A weathered smuggler holding a lantern at the mouth of a hidden stone tunnel beneath a town wall, beckoning a cloaked figure inside, crates and wine barrels stacked nearby, damp and dark, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**64 · `olay_ekmek_kuyrugu.png`** — ekmek kuyruğu
+
+```
+A long angry line of poor townsfolk with empty baskets outside a bakery at dawn, the baker shaking his head in the doorway, empty bread racks behind him, cold mist, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -994,4 +1066,104 @@ A court physician in a cluttered apothecary grinding herbs with a mortar and pes
 
 ```
 A nobleman recovering in a sunny courtyard wrapped in a cloak, sipping a steaming cup handed to him by a physician, color returning to his face, morning light, everyone clothed, hopeful mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`tur_sabotaj_2.png`** · `tur_sabotaj_3.png` — sabotaj
+
+```
+Two hooded figures in Sturgian wool cloaks slipping through a narrow postern door in a timber palisade at night, one carrying a shuttered lantern, snow on the ground, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Aserai saboteur in dark robes lowering himself by rope into a stone cistern inside a desert fortress at night, a guard's torch passing far above on the walls, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`tur_kiskirtma_2.png`** · `tur_kiskirtma_3.png` — kışkırtma
+
+```
+Imperial townsfolk gathered in a dim tavern cellar around a speaker holding up a crudely painted plain cloth banner, candles and clay cups on the barrels, conspiratorial mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Battanian crowd of farmers and townswomen around a village well listening to a hooded agitator, pitchforks and staves in hand, overcast sky, tense murmuring mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_sabotaj_ambar_2.png`** · `sonuc_sabotaj_ambar_3.png` — ambar yandı
+
+```
+A Khuzait steppe fortress storehouse with felt-covered grain bales on fire at night, guards running with water skins, embers swirling in the wind, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Vlandian castle undercroft filled with smoke, a quartermaster staring in despair at charred grain sacks and broken barrels by lantern light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_sabotaj_garnizon_2.png`** · `sonuc_sabotaj_garnizon_3.png` — garnizon hasta
+
+```
+An Imperial garrison barracks at night, several soldiers lying ill on straw pallets under blankets while a worried sergeant holds up a lantern, a water jug knocked over on the floor, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Sturgian fortress kitchen, a cook pouring a cauldron of spoiled water into a drain while pale soldiers wait in line with empty cups, grey morning light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_sabotaj_sur_2.png`** · `sonuc_sabotaj_sur_3.png` — sur çöktü
+
+```
+A sappers' tunnel beneath a castle wall lit by torches, timber props cracking and smoldering, rubble falling from the ceiling, a single fleeing silhouette in the distance, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Aserai desert fortress with a fresh breach in its mudbrick wall, dust settling, defenders with spears rushing to fill the gap, the sun rising behind the tents of a siege camp, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_isyan_2.png`** · `sonuc_isyan_3.png` — halk ayaklandı
+
+```
+Battanian townsfolk throwing open a town's wooden gate at night to a cheering crowd, the lord's banner trampled in the mud, torchlight, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+Angry Imperial citizens storming a town council hall, overturned benches, a frightened magistrate slipping out through a side door, candlelight, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_rusvetci_nobetci_2.png`** · `olay_rusvetci_nobetci_3.png` — rüşvetçi nöbetçi
+
+```
+A Khuzait fortress sentry on a wooden watchtower leaning down to take a small purse from a hooded rider below, moonlight, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Vlandian castle postern, a bored guard pretending to look away while two cloaked figures slip past with a covered basket, lantern light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_elebasi_yakalandi_2.png`** · `olay_elebasi_yakalandi_3.png` — elebaşı yakalandı
+
+```
+A bound agitator sitting on a bench in a town guardhouse at night, a stern guard captain questioning him by candlelight, a confiscated cudgel on the table, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+Aserai market guards leading a defiant prisoner in chains through a bazaar while merchants watch in silence, harsh afternoon light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_kacakci_tuneli_2.png`** · `olay_kacakci_tuneli_3.png` — kaçakçı tüneli
+
+```
+Sturgian river smugglers under a wooden pier at night showing a hooded buyer a dark culvert that leads under the fortress walls, fog on the water, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+Inside an old stone water conduit lit by a single torch, a smuggler pointing the way forward to two cloaked men, water trickling along the channel, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_ekmek_kuyrugu_2.png`** · `olay_ekmek_kuyrugu_3.png` — ekmek kuyruğu
+
+```
+A Battanian millhouse where farmers argue with a steward over a nearly empty grain sack, overcast sky, tense mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Aserai bazaar, an angry crowd haggling at a nearly empty bread stall, a merchant raising his hands, dust and harsh light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

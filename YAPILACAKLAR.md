@@ -43,6 +43,27 @@ lord sayfasında ikimiz de bölüm ekliyoruz, ayrı yerlere. Klan ekranı (biz) 
 düzenleyici, envanter ve 3B görünüme dokunuyor. Women in Calradia oyunun kendi gebelik sistemini kullanıyor, yaş eşyası yaşı en az 19'da
 tutuyor. Tek boşluk saldırmazlık anlaşmasıydı: savaş ilanında bitmiyordu, artık bizim taraf bitiriyor (`src\Bundle\DiplomacyCompat.cs`).
 
+### E3 — Sabotaj ve kışkırtma (yeni, 20 Ekim)
+İlk kez bir **yerleşimi** hedefleyen entrikalar (tasarım: `docs/superpowers/specs/2026-10-20-e3-sabotaj-kiskirtma.md`). Kolay deneme:
+Entrika hilelerinden "Süren entrikaların aşamalarını tamamla" ve "Entrikalar her zaman başarılı" (bir yedek kayıtta).
+- [ ] Entrika > Yeni entrika: **Sabotaj** ve **Kışkırtma** sekmeleri var; altı sekme tek satıra sığıyor, yazılar taşmıyor (ekran görüntüsü at)
+- [ ] Sabotaj sekmesinde liste şehir ve kaleler: sahibinin portresi, başarı, bedel, etiketler (gölge ağı, sadakat, kuşatıyorsun, tetikte).
+      Filtreler: Hepsi · Düşmanlar · Gölge ağı olanlar · Kuşattığın · Şehirler
+- [ ] **Sabotaj hazırla...** → "neyi vuracaksın" kartı: Erzak ambarı / Garnizon / Surlar → altın düştü, "Süren"de kart (yerleşim + "Hedef: ...")
+- [ ] Kuşatmadan **Harekete geç** gri: "Sabotaj ancak X kuşatılırken yapılır". O yeri kuşatınca açılıyor; plan hazırsa kuşatırken
+      "plan hazır" kartı kendiliğinden çıkıyor
+- [ ] Ambar: kuşatmada erzak %70 düştü (yerleşim ekranında). Garnizon: asker sayısı ~%20 azaldı. Surlar: kuşatma ekranında surlar yarıda,
+      çok hasarlı bölüm çöktü
+- [ ] Kışkırtma sekmesi yalnızca **gölge ağın olan** başka krallık şehirlerini listeliyor; ağ yoksa liste boş ve nedeni yazıyor
+- [ ] Kışkırtmanın her aşamasında o şehrin sadakati 3 düşüyor (mesajda yazıyor)
+- [ ] Şehrin içindeyken Harekete geç gri ("önce şehirden çık"); dışarıdayken vurunca sadakat -20, güvenlik -10; sadakat isyan eşiğinin
+      altındaysa ve milis güçlüyse şehir **oyunun kendi isyanıyla** ayaklanıyor (harita: yeni isyancı klan)
+- [ ] Olaylar: rüşvetçi nöbetçi, elebaşı yakalandı, kaçakçı tüneli (kuşatıyorsan "hemen vur"), ekmek kuyruğu
+- [ ] Barıştaki bir krallıkta ortaya çıkınca: sahibiyle ilişki cezası, suç puanı ve Entrika > Saray'da casus gerilimi arttı
+- [ ] Yerleşimi ele geçirince entrika "artık senin krallığının" diye kendiliğinden kapanıyor
+- [ ] Insert → Entrika → Yeni entrika: Sabotaj ve Kışkırtma; süren entrika ayrıntısı ve Harekete geç çalışıyor
+- [ ] Kaydet → yükle: süren sabotaj/kışkırtma (aşama, seçim, olay) duruyor
+
 ### P1 — Entrika ekranı, olay kartları, harita düğmesi (yeni; en çok ekran görüntüsü lazım)
 - [ ] Ana menüde açılış mesajı: "Insert: menü, Home: entrika ekranı"
 - [ ] Haritanın üst ortasında **ENTRİKA** düğmesi var; tıklayınca ekran açılıyor ve oyun duruyor

@@ -227,6 +227,7 @@ namespace CheatMenu.Intrigue
         /// <returns>Olay artık gösterilemiyorsa (hedef ya da casus başı yok) false.</returns>
         public static bool TryDescribe(IntrigueState state, Scheme scheme, out string title, out string text, out List<Option> options)
         {
+            if (SchemeRules.TargetsSettlement(scheme.Kind)) return SettlementSchemes.TryDescribeEvent(state, scheme, out title, out text, out options);
             title = text = null;
             options = null;
             EventDef def = Events.FirstOrDefault(e => e.Id == scheme.PendingEvent);

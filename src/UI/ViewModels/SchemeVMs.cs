@@ -5,6 +5,7 @@ using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core.ViewModelCollection.ImageIdentifiers;
 using TaleWorlds.Library;
 
@@ -118,27 +119,45 @@ namespace CheatMenu.UI.ViewModels
         {
             _scheme = scheme;
             _changed = changed;
-            Hero target = Hero.Find(scheme.TargetId);
+            bool onSettlement = SchemeRules.TargetsSettlement(scheme.Kind);
+            Hero target = onSettlement ? null : Hero.Find(scheme.TargetId);
+            Settlement place = onSettlement ? SettlementSchemes.Find(scheme) : null;
             Hero spymaster = SchemeFactors.Spymaster(state);
             int min = SchemeRules.MinPhases(scheme.Kind), max = SchemeRules.MaxPhases(scheme.Kind);
 
-            Portrait = PortraitOf(target);
-            TargetName = target?.Name.ToString() ?? "?";
+            Portrait = PortraitOf(SchemeEngine.PortraitHero(scheme));
+            TargetName = SchemeEngine.TargetName(scheme);
             KindText = SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture);
-            Affiliation = target != null ? SchemeFactors.Affiliation(target) : "";
+            Affiliation = target != null ? SchemeFactors.Affiliation(target) : place != null ? SettlementSchemes.Affiliation(place) : "";
             PhaseText = "Aşama " + scheme.Phase + "/" + max + (SchemeRules.IsStrike(scheme.Kind) ? "  (en az " + min + ")" : "");
             PhaseBarWidth = BarWidth * Math.Min(scheme.Phase, max) / max;
             MinMarkerOffset = BarWidth * min / max - 1f;
             ShowMinMarker = SchemeRules.IsStrike(scheme.Kind);
 
-            if (target == null) TimeText = "Hedef bulunamadı";
+            if (target == null && place?.Town == null) TimeText = "Hedef bulunamadı";
             else if (spymaster == null) TimeText = "Durdu: casus başın yok";
             else if (SchemeFactors.SpymasterBusyReason(spymaster) != null) TimeText = "Durdu: casus başın " + SchemeFactors.SpymasterBusyReason(spymaster);
             else if (scheme.PendingEvent > 0 || scheme.AwaitingChoice) TimeText = "Kararını bekliyor";
-            else if (SchemeEngine.IsWaiting(scheme)) TimeText = "Plan hazır: ne zaman vuracağın sana kalmış";
+            else if (SchemeEngine.IsWaiting(scheme))
+                TimeText = scheme.Kind == SchemeKind.Sabotage ? "Plan hazır: " + place.Name + " kuşatılınca vurabilirsin" : "Plan hazır: ne zaman vuracağın sana kalmış";
             else TimeText = "Sonraki aşamaya " + Math.Max(1, scheme.PhaseDays - scheme.DaysIntoPhase) + " gün";
 
-            if (target != null)
+            if (place?.Town != null)
+            {
+                SettlementSchemeInputs inputs = SettlementSchemes.Inputs(state, spymaster, place, scheme.Kind, scheme);
+                int success = SettlementSchemeRules.Success(scheme.Kind, inputs);
+                if (scheme.Phase < max)
+                {
+                    SettlementSchemeInputs atMax = SettlementSchemes.Inputs(state, spymaster, place, scheme.Kind, scheme);
+                    atMax.CompletedPhases = max;
+                    SuccessText = "Başarı %" + success + "  (" + max + ". aşamada %" + SettlementSchemeRules.Success(scheme.Kind, atMax) + ")";
+                }
+                else SuccessText = "Başarı %" + success;
+                DiscoveryText = "Her aşamada yakalanma %" + SettlementSchemeRules.Discovery(scheme.Kind, inputs);
+                string tags = scheme.Kind == SchemeKind.Sabotage ? "Hedef: " + SettlementSchemeRules.MethodName(scheme.Method) + "   " : "";
+                TagsText = (tags + SettlementSchemes.Tags(state, place)).Trim();
+            }
+            else if (target != null)
             {
                 SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme);
                 int success = SchemeMath.Success(scheme.Kind, inputs);

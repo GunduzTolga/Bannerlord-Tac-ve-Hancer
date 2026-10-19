@@ -340,9 +340,8 @@ namespace CheatMenu.Intrigue
                     apply();
                 };
             }
-            Hero target = Hero.Find(scheme.TargetId);
             ShowChoice(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · OLAY", title, text, options,
-                CardImages.ForEvent(scheme.PendingEvent), target);
+                CardImages.ForEvent(scheme.PendingEvent), SchemeEngine.PortraitHero(scheme));
         }
 
         private static void ShowSpyChoice(IntrigueState state, Scheme scheme)
@@ -387,12 +386,12 @@ namespace CheatMenu.Intrigue
 
         private static void ShowExecuteAsk(Scheme scheme)
         {
-            Hero target = Hero.Find(scheme.TargetId);
-            if (target == null || !target.IsAlive)
+            if (SchemeEngine.GoneReason(SchemeEngine.State, scheme) != null)
             {
                 scheme.AskedToExecute = true;
                 return;
             }
+            string name = SchemeEngine.TargetName(scheme);
             string blocked = SchemeEngine.CannotExecuteReason(scheme);
             var options = SchemeEngine.BribeChoices(scheme)
                 .Select(choice => new IntrigueEvents.Option
@@ -412,9 +411,13 @@ namespace CheatMenu.Intrigue
                     apply();
                 };
             }
-            ShowChoice(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · PLAN HAZIR", SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): plan hazır",
-                "Hazırlıklar tamamlandı; daha fazla beklemek bir şey kazandırmaz. Ne zaman vuracağına sen karar ver.", options,
-                CardImages.ForKind(scheme.Kind), target);
+            string body = scheme.Kind == SchemeKind.Sabotage
+                ? "Adamların " + Tr.Locative(name) + " içeride ve hazır; şimdi " + SettlementSchemeRules.MethodName(scheme.Method) + " vurulabilir."
+                : scheme.Kind == SchemeKind.Incite
+                    ? "Elebaşların " + Tr.Locative(name) + " hazır; işaretini bekliyorlar."
+                    : "Hazırlıklar tamamlandı; daha fazla beklemek bir şey kazandırmaz. Ne zaman vuracağına sen karar ver.";
+            ShowChoice(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · PLAN HAZIR", SchemeRules.Name(scheme.Kind) + " (" + name + "): plan hazır",
+                body, options, CardImages.ForKind(scheme.Kind), SchemeEngine.PortraitHero(scheme));
         }
 
         /// <summary>Zorunlu seçim (kapatma yok); seçilemeyen seçenekler ipucuyla gri görünür. Resimli kart, olmazsa seçim penceresi.</summary>

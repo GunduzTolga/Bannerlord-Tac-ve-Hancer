@@ -11,6 +11,10 @@ namespace CheatMenu.Intrigue.Core
         Poison = 1,
         Dagger = 2,
         Accident = 3,
+        // Sabotajın hedefi (E3)
+        SabotageFood = 4,
+        SabotageGarrison = 5,
+        SabotageWalls = 6,
     }
 
     /// <summary>Sürmekte olan bir entrika.</summary>

@@ -97,6 +97,9 @@ namespace CheatMenu.Intrigue
         {
             switch (kind)
             {
+                case SchemeKind.Sabotage:
+                case SchemeKind.Incite:
+                    return SettlementSchemes.KindDescription(kind);
                 case SchemeKind.Spy:
                     return "Rapor ve sır: 1-2 aşama, düşük risk. Rapor, o hedefe suikast ve kaçırmada +10 başarı verir "
                         + "ve tanışmadığın birini de hedef listesine ekler.";
@@ -111,7 +114,8 @@ namespace CheatMenu.Intrigue
 
         /// <summary>Hiç hedef yoksa neden.</summary>
         public static string NoTargetsText(SchemeKind kind) =>
-            kind == SchemeKind.Spy ? "Casusluk yapılacak kimse bulunamadı."
+            SchemeRules.TargetsSettlement(kind) ? SettlementSchemes.NoTargetsText(kind)
+            : kind == SchemeKind.Spy ? "Casusluk yapılacak kimse bulunamadı."
             : kind == SchemeKind.Blackmail ? "Şantaj için ifşa edilmemiş bir sırrını bildiğin bir lord gerekir (önce casusluk)."
             : SchemeRules.Name(kind) + " için tanıştığın ya da hakkında güncel raporun olan, yeri belli bir hedef gerekir.";
     }

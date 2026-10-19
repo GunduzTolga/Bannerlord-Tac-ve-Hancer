@@ -4,6 +4,7 @@ using System.Linq;
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
 
 namespace CheatMenu.Intrigue
@@ -81,6 +82,55 @@ namespace CheatMenu.Intrigue
             MenuUI.Success(SchemeRules.Name(kind) + " başladı: " + target.Name + " (" + SchemeFactors.Money(cost) + ")");
         }
 
+        /// <summary>Yerleşim entrikası (E3). Sabotajda neyin vurulacağı başlarken seçilir.</summary>
+        public static void Start(SchemeKind kind, Settlement target, SchemeMethod method = SchemeMethod.None)
+        {
+            IntrigueState state = State;
+            if (!SchemeRules.TargetsSettlement(kind)) throw new InvalidOperationException(SchemeRules.Name(kind) + " bir kişiyi hedefler");
+            string reason = CannotStartReason(state) ?? SettlementSchemes.BlockedReason(state, target, kind);
+            if (reason != null) throw new InvalidOperationException(reason);
+            if (kind == SchemeKind.Sabotage && !SettlementSchemeRules.IsSabotageMethod(method)) method = SettlementSchemeRules.DefaultSabotageMethod;
+
+            Hero spymaster = SchemeFactors.Spymaster(state);
+            int cost = SettlementSchemes.StartCost(kind, target);
+            SchemeFactors.Pay(cost);
+
+            int today = SchemeFactors.Today;
+            state.Schemes.Add(new Scheme
+            {
+                Id = state.NextSchemeId++,
+                Kind = kind,
+                TargetId = target.StringId,
+                StartDay = today,
+                PhaseDays = SchemeMath.PhaseDays(kind, SchemeFactors.Roguery(spymaster)),
+                StartCost = cost,
+                Seed = MBRandom.RandomInt(),
+                Method = kind == SchemeKind.Sabotage ? method : SchemeMethod.None,
+            });
+            string what = SchemeRules.Name(kind) + " başladı: " + target.Name
+                + (kind == SchemeKind.Sabotage ? " (" + SettlementSchemeRules.MethodName(method) + ")" : "");
+            state.AddLog(today, what);
+            MenuUI.Success(what + " - " + SchemeFactors.Money(cost));
+        }
+
+        // ---- Hedefin adı ve yüzü (kişi ya da yerleşim) ----
+
+        /// <summary>Kartlarda ve listelerde: kişinin ya da yerleşimin adı; bulunamazsa "?".</summary>
+        public static string TargetName(Scheme scheme) =>
+            SchemeRules.TargetsSettlement(scheme.Kind)
+                ? SettlementSchemes.Find(scheme)?.Name.ToString() ?? "?"
+                : Hero.Find(scheme.TargetId)?.Name.ToString() ?? "?";
+
+        /// <summary>Kartta gösterilecek yüz: hedef kişi; yerleşimde vali ya da sahibi.</summary>
+        public static Hero PortraitHero(Scheme scheme) =>
+            SchemeRules.TargetsSettlement(scheme.Kind) ? SettlementSchemes.PortraitHero(SettlementSchemes.Find(scheme)) : Hero.Find(scheme.TargetId);
+
+        /// <summary>Hedef hâlâ geçerli mi; değilse neden (entrika o zaman sona erer).</summary>
+        public static string GoneReason(IntrigueState state, Scheme scheme) =>
+            SchemeRules.TargetsSettlement(scheme.Kind)
+                ? SettlementSchemes.GoneReason(state, scheme, SettlementSchemes.Find(scheme))
+                : TargetGoneReason(Hero.Find(scheme.TargetId));
+
         // ---- Günlük ilerleme ----
 
         public static void DailyTick()
@@ -92,16 +142,49 @@ namespace CheatMenu.Intrigue
             Hero spymaster = CheckSpymaster(state);
             foreach (Scheme scheme in state.Schemes.ToList())
             {
-                Hero target = Hero.Find(scheme.TargetId);
-                string gone = TargetGoneReason(target);
+                string gone = GoneReason(state, scheme);
                 if (gone != null)
                 {
-                    Close(state, scheme, SchemeRules.Name(scheme.Kind) + " sona erdi: " + gone, target);
+                    Close(state, scheme, SchemeRules.Name(scheme.Kind) + " sona erdi: " + gone, PortraitHero(scheme));
                     continue;
                 }
                 if (spymaster == null || SchemeFactors.SpymasterBusyReason(spymaster) != null || IsWaiting(scheme)) continue;
-                if (++scheme.DaysIntoPhase >= scheme.PhaseDays) CompletePhase(state, scheme, spymaster, target, false);
+                if (++scheme.DaysIntoPhase >= scheme.PhaseDays) Advance(state, scheme, spymaster, false);
             }
+        }
+
+        /// <summary>Bir aşamayı bitirir (kişi ya da yerleşim). Entrika sürüyorsa true.</summary>
+        private static bool Advance(IntrigueState state, Scheme scheme, Hero spymaster, bool cheat) =>
+            SchemeRules.TargetsSettlement(scheme.Kind)
+                ? CompleteSettlementPhase(state, scheme, spymaster, SettlementSchemes.Find(scheme), cheat)
+                : CompletePhase(state, scheme, spymaster, Hero.Find(scheme.TargetId), cheat);
+
+        /// <summary>Yerleşim entrikasında aşama sonu (E3): yakalanma zarı, aşama etkisi, olay. Hep "harekete geç" türüdür.</summary>
+        private static bool CompleteSettlementPhase(IntrigueState state, Scheme scheme, Hero spymaster, Settlement target, bool cheat)
+        {
+            if (!cheat && !CheatState.IntrigueNeverDiscovered && scheme.Roll100() <= SettlementSchemes.Discovery(state, scheme, target))
+            {
+                SettlementSchemes.Discovered(state, scheme, target);
+                return false;
+            }
+
+            scheme.Phase++;
+            scheme.DaysIntoPhase = 0;
+            scheme.PhaseDays = SchemeMath.PhaseDays(scheme.Kind, SchemeFactors.Roguery(spymaster));
+            spymaster.AddSkillXp(DefaultSkills.Roguery, PhaseXp);
+
+            int min = SchemeRules.MinPhases(scheme.Kind), max = SchemeRules.MaxPhases(scheme.Kind);
+            string effect = SettlementSchemes.OnPhaseCompleted(scheme, target);
+            string ready = scheme.Kind == SchemeKind.Sabotage ? " - plan hazır; " + target.Name + " kuşatılınca sorulacak"
+                : " - plan hazır; şehir müsait olunca sorulacak";
+            MenuUI.Info(SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): aşama " + scheme.Phase + "/" + max + " tamamlandı"
+                + (effect != null ? ", " + effect : "")
+                + (scheme.Phase >= max ? ready : scheme.Phase == min ? " - artık harekete geçebilirsin" : ""));
+            if (scheme.Phase >= max) scheme.AskedToExecute = false;
+
+            if (!cheat && scheme.Phase < max && scheme.Roll100() <= EventChance)
+                scheme.PendingEvent = SettlementSchemes.PickEvent(scheme, target, spymaster);
+            return true;
         }
 
         /// <summary>Oyuncudan karar bekliyor mu (o zaman sayaç durur).</summary>
@@ -236,10 +319,12 @@ namespace CheatMenu.Intrigue
         public static List<BribeChoice> BribeChoices(Scheme scheme)
         {
             IntrigueState state = State;
-            Hero target = Hero.Find(scheme.TargetId);
+            bool settlement = SchemeRules.TargetsSettlement(scheme.Kind);
+            Hero target = settlement ? null : Hero.Find(scheme.TargetId);
+            Settlement place = settlement ? SettlementSchemes.Find(scheme) : null;
             Hero spymaster = SchemeFactors.Spymaster(state);
             var choices = new List<BribeChoice>();
-            if (target == null) return choices;
+            if (settlement ? place?.Town == null : target == null) return choices;
             for (int level = 0; level <= SchemeMath.MaxBribeLevel; level++)
             {
                 int cost = SchemeMath.BribeCost(scheme.StartCost, level);
@@ -247,7 +332,9 @@ namespace CheatMenu.Intrigue
                 {
                     Level = level,
                     Cost = cost,
-                    Chance = SchemeMath.Success(scheme.Kind, SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme, level)),
+                    Chance = settlement
+                        ? SettlementSchemes.Success(state, scheme, place, level)
+                        : SchemeMath.Success(scheme.Kind, SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme, level)),
                     Affordable = SchemeFactors.CanAfford(cost),
                 });
             }
@@ -257,7 +344,7 @@ namespace CheatMenu.Intrigue
         /// <summary>null: harekete geçilebilir; değilse neden.</summary>
         public static string CannotExecuteReason(Scheme scheme, bool ignoreMinPhases = false)
         {
-            if (!SchemeRules.IsStrike(scheme.Kind)) return "Yalnızca suikast ve kaçırmada harekete geçilir";
+            if (!SchemeRules.IsStrike(scheme.Kind)) return "Yalnızca suikast, kaçırma, sabotaj ve kışkırtmada harekete geçilir";
             if (!State.Schemes.Contains(scheme)) return "Bu entrika artık sürmüyor";
             if (Hero.MainHero.IsPrisoner) return "Esirken harekete geçemezsin";
             if (!ignoreMinPhases && scheme.Phase < SchemeRules.MinPhases(scheme.Kind))
@@ -266,8 +353,10 @@ namespace CheatMenu.Intrigue
             if (spymaster == null) return "Casus başın yok";
             string busy = SchemeFactors.SpymasterBusyReason(spymaster);
             if (busy != null) return "Casus başın şu an " + busy;
+            string gone = GoneReason(State, scheme);
+            if (gone != null) return gone;
+            if (SchemeRules.TargetsSettlement(scheme.Kind)) return SettlementSchemes.CannotExecuteReason(scheme, SettlementSchemes.Find(scheme));
             Hero target = Hero.Find(scheme.TargetId);
-            if (TargetGoneReason(target) != null) return TargetGoneReason(target);
             if (SchemeFactors.InBattle(target)) return target.Name + " şu an bir savaşın ya da kuşatmanın içinde; bitince tekrar dene";
             if (scheme.Kind == SchemeKind.Kidnap && target.IsPrisoner) return target.Name + " zaten birinin esiri";
             return null;
@@ -285,6 +374,11 @@ namespace CheatMenu.Intrigue
             SchemeFactors.Pay(SchemeMath.BribeCost(scheme.StartCost, bribeLevel));
 
             scheme.EventSuccess += extraSuccess;
+            if (SchemeRules.TargetsSettlement(scheme.Kind))
+            {
+                SettlementSchemes.Execute(state, scheme, spymaster, SettlementSchemes.Find(scheme), bribeLevel);
+                return;
+            }
             SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme, bribeLevel);
             int chance = CheatState.IntrigueAlwaysSucceed ? 100 : SchemeMath.Success(scheme.Kind, inputs);
             int discovery = SchemeMath.Discovery(scheme.Kind, inputs);
@@ -305,9 +399,8 @@ namespace CheatMenu.Intrigue
         public static void Cancel(Scheme scheme)
         {
             IntrigueState state = State;
-            Hero target = Hero.Find(scheme.TargetId);
             state.Schemes.Remove(scheme);
-            state.AddLog(SchemeFactors.Today, SchemeRules.Name(scheme.Kind) + " iptal edildi: " + target?.Name);
+            state.AddLog(SchemeFactors.Today, SchemeRules.Name(scheme.Kind) + " iptal edildi: " + TargetName(scheme));
             MenuUI.Success(SchemeRules.Name(scheme.Kind) + " iptal edildi (harcanan para geri gelmez)");
         }
 
@@ -330,12 +423,11 @@ namespace CheatMenu.Intrigue
 
             foreach (Scheme scheme in state.Schemes.ToList())
             {
-                Hero target = Hero.Find(scheme.TargetId);
-                if (TargetGoneReason(target) != null) continue;
+                if (GoneReason(state, scheme) != null) continue;
                 while (true)
                 {
                     scheme.AwaitingChoice = false;
-                    if (IsWaiting(scheme) || !CompletePhase(state, scheme, spymaster, target, true)) break;
+                    if (IsWaiting(scheme) || !Advance(state, scheme, spymaster, true)) break;
                 }
             }
             MenuUI.Success("Entrikaların aşamaları tamamlandı");

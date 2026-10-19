@@ -87,6 +87,8 @@ Bedeli, bazı hilelere bir tık daha fazla gerekmesi (bkz. soru 2).
 Lordu kendi krallığına çekmek için ayrı bir "ayartma" entrikası **yok**. Oyunun kendi ikna sistemi zaten var.
 Bunun yerine koz (E2) ve itibar zedeleme (E3) o sistemi besler.
 
+**Durum (20 Ekim):** sabotaj ve kışkırtma kodlandı, ayrıntılar `2026-10-20-e3-sabotaj-kiskirtma.md`'de (sabotajda aşama 1–3, kışkırtmada 2–4). İtibar zedeleme ayrı bir entrika olmadı: casus başının "Söylenti yay" görevi bu işi yapıyor.
+
 ---
 
 ## 5. Suikast (E1) — ayrıntılı
