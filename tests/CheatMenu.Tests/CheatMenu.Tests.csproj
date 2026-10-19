@@ -22,6 +22,7 @@
     <Compile Include="..\..\src\AmountParser.cs" Link="AmountParser.cs" />
     <Compile Include="..\..\src\NameRules.cs" Link="NameRules.cs" />
     <Compile Include="..\..\src\ModSettings.cs" Link="ModSettings.cs" />
+    <Compile Include="..\..\src\CutThroughRules.cs" Link="CutThroughRules.cs" />
     <Compile Include="..\..\src\Intrigue\Core\*.cs" Link="Intrigue\%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

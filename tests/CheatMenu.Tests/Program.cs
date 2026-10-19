@@ -90,6 +90,23 @@ namespace CheatMenu.Tests
             Check("settings: map button 9 -> default", ModSettings.Parse("MapButtonPosition=9").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
             Check("settings: map button in the game's map bar", ModSettings.Parse("MapButtonPosition=4").MapButtonPosition == ModSettings.MapBarButtonPosition
                 && ModSettings.MapButtonPositionNames[ModSettings.MapBarButtonPosition] == "Harita çubuğunda");
+            Check("settings: cut through default player only", ModSettings.Parse("").CutThrough == CutThroughRules.PlayerOnly);
+            Check("settings: cut through everyone", ModSettings.Parse("CutThrough=2").CutThrough == CutThroughRules.Everyone);
+            Check("settings: cut through 9 -> default", ModSettings.Parse("CutThrough=9").CutThrough == CutThroughRules.DefaultMode);
+            Check("settings: cut through round trip", ModSettings.Parse(ModSettings.Parse("CutThrough=0").Format()).CutThrough == CutThroughRules.Off);
+            // ShouldCut(mode, isPlayer, isEnemy, isFatal, isSwing, hasWeapon, isAlternative, hitShield)
+            Check("cut through: player's fatal swing cuts", CutThroughRules.ShouldCut(CutThroughRules.PlayerOnly, true, true, true, true, true, false, false));
+            Check("cut through: off never cuts", !CutThroughRules.ShouldCut(CutThroughRules.Off, true, true, true, true, true, false, false));
+            Check("cut through: player only skips others", !CutThroughRules.ShouldCut(CutThroughRules.PlayerOnly, false, true, true, true, true, false, false)
+                && CutThroughRules.ShouldCut(CutThroughRules.Everyone, false, true, true, true, true, false, false));
+            Check("cut through: stops on friends, shields, survivors", !CutThroughRules.ShouldCut(CutThroughRules.Everyone, true, false, true, true, true, false, false)
+                && !CutThroughRules.ShouldCut(CutThroughRules.Everyone, true, true, true, true, true, false, true)
+                && !CutThroughRules.ShouldCut(CutThroughRules.Everyone, true, true, false, true, true, false, false));
+            Check("cut through: no thrusts, fists or kicks", !CutThroughRules.ShouldCut(CutThroughRules.Everyone, true, true, true, false, true, false, false)
+                && !CutThroughRules.ShouldCut(CutThroughRules.Everyone, true, true, true, true, false, false, false)
+                && !CutThroughRules.ShouldCut(CutThroughRules.Everyone, true, true, true, true, true, true, false));
+            Check("cut through: keeps 70% of the swing, never less than the game", Math.Abs(CutThroughRules.RemainingMomentum(10f, 1f) - 7f) < 0.001f
+                && CutThroughRules.RemainingMomentum(10f, 8f) == 8f);
             Check("settings: hotkey default Home", ModSettings.ScreenHotkeyNames[ModSettings.Parse("").ScreenHotkey] == "Home");
             Check("settings: hotkey none", ModSettings.Parse("ScreenHotkey=0").ScreenHotkey == 0);
             Check("settings: hotkey 99 -> default", ModSettings.Parse("ScreenHotkey=99").ScreenHotkey == ModSettings.DefaultScreenHotkey);

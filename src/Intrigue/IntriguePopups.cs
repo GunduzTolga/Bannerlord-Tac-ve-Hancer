@@ -60,7 +60,7 @@ namespace CheatMenu.Intrigue
                 return;
             }
             if (!(Game.Current?.GameStateManager?.ActiveState is MapState)) return;
-            if (InformationManager.IsAnyInquiryActive() || EventCards.IsOpen || MenuUI.HasPending) return;
+            if (InformationManager.IsAnyInquiryActive() || EventCards.IsOpen || MenuUI.HasPending || Scenes.IsShowing) return;
             if (Campaign.Current?.ConversationManager?.IsConversationInProgress == true) return;
             IntrigueState state = IntrigueBehavior.Current?.State;
             if (state == null) return;

@@ -64,6 +64,11 @@ namespace CheatMenu
         public bool SpouseInfidelity { get; set; } = true;
         /// <summary>Kendin takip et (P2.11): kartlar yerine oyunun şehirde gizli takip görevini aç. Deneysel, varsayılan kapalı.</summary>
         public bool TailInScene { get; set; }
+        /// <summary>Herkesi biç: öldürücü kılıç darbesi arkadakine geçer (CutThroughRules: 0 kapalı, 1 yalnızca ben, 2 herkes).</summary>
+        public int CutThrough { get; private set; } = CutThroughRules.DefaultMode;
+
+        public void SetCutThrough(int value) =>
+            CutThrough = value >= 0 && value < CutThroughRules.ModeNames.Length ? value : CutThroughRules.DefaultMode;
 
         public void SetFastForwardSpeed(int speed) => FastForwardSpeed = Allowed(AllowedSpeeds, speed, DefaultSpeed);
         public void SetSkillXpMultiplier(int value) => SkillXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
@@ -112,6 +117,7 @@ namespace CheatMenu
                     case "NightHouses": settings.NightHouses = IsTrue(value); break;
                     case "SpouseInfidelity": settings.SpouseInfidelity = IsTrue(value); break;
                     case "TailInScene": settings.TailInScene = IsTrue(value); break;
+                    case "CutThrough": if (isNumber) settings.SetCutThrough(number); break;
                     case "SettingsVersion": if (isNumber) version = number; break;
                 }
             }
@@ -143,7 +149,8 @@ namespace CheatMenu
             + "RomanceSecrets=" + (RomanceSecrets ? "1" : "0") + "\n"
             + "NightHouses=" + (NightHouses ? "1" : "0") + "\n"
             + "SpouseInfidelity=" + (SpouseInfidelity ? "1" : "0") + "\n"
-            + "TailInScene=" + (TailInScene ? "1" : "0") + "\n";
+            + "TailInScene=" + (TailInScene ? "1" : "0") + "\n"
+            + "CutThrough=" + Invariant(CutThrough) + "\n";
 
         private static int Allowed(int[] allowed, int value, int fallback) =>
             Array.IndexOf(allowed, value) >= 0 ? value : fallback;

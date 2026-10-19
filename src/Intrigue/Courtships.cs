@@ -347,6 +347,8 @@ namespace CheatMenu.Intrigue
             {
                 TaleWorlds.Library.Debug.Print("[CheatMenu] OnGivenBirth failed: " + ex);
             }
+            // Oyun doğum sahnesini yalnızca anne senin klanındaysa gösterir; başka klandaki sevgilinden olan çocuğun için biz.
+            if (father == Hero.MainHero && !mother.IsHumanPlayerCharacter && mother.Clan != Clan.PlayerClan) Scenes.NewBorn(father, mother);
 
             if (pregnancy.Hidden && state.SpouseAffair?.Discovered != true)
             {
