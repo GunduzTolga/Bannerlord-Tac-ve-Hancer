@@ -18,11 +18,13 @@ jobs:
         run: dotnet build src/CheatMenu.csproj -c Release -nologo
       - name: Testler
         run: dotnet run --project tests/CheatMenu.Tests/CheatMenu.Tests.csproj -c Release -f net8.0
-      - name: DLL
-        uses: actions/upload-artifact@v4
+      # Paket oyunun Modules klasörüne doğrudan kopyalanacak yapıda: CheatMenu/SubModule.xml + CheatMenu/bin/Win64_Shipping_Client/...
+      - name: Kurulum paketi
+        run: |
+          mkdir -p package/CheatMenu/bin/Win64_Shipping_Client
+          cp Module/SubModule.xml package/CheatMenu/
+          cp src/bin/Release/CheatMenu.dll src/bin/Release/CheatMenu.pdb package/CheatMenu/bin/Win64_Shipping_Client/
+      - uses: actions/upload-artifact@v4
         with:
           name: TacVeHancer
-          path: |
-            Module/SubModule.xml
-            src/bin/Release/CheatMenu.dll
-            src/bin/Release/CheatMenu.pdb
+          path: package/

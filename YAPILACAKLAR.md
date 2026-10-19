@@ -11,7 +11,8 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 ## 1. Oyunda test et (bilgisayarda, yedekli bir kayıtta)
 
 ### Önce: kurulum ve derleme (P0 altyapısı — yeni)
-- [ ] **.NET SDK 8+** kurulu: PowerShell'de `dotnet --version` (yoksa `winget install Microsoft.DotNet.SDK.8`)
+- [ ] Ya derle (**.NET SDK 8+** gerekir: `dotnet --version`, yoksa `winget install Microsoft.DotNet.SDK.8`) ya da **derlemeden kur**:
+      GitHub → Actions → son yeşil çalıştırma → **TacVeHancer** paketi → içindeki `CheatMenu` klasörünü `Modules`'e kopyala
 - [ ] Nexus/Workshop'tan **Harmony, ButterLib, UIExtenderEx, MCM** kurulu; Launcher'da sıra Harmony → ButterLib → UIExtenderEx → MCM → … → Taç ve Hançer
 - [ ] `build.ps1` çalışıyor (ilk seferde NuGet paketleri iner), testler geçiyor, mod oyun klasörüne kopyalanıyor
 - [ ] Ana menüde kırmızı "başlatılamayan bağımlılık" uyarısı **yok**

@@ -25,6 +25,9 @@ Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar
 Launcher → Mods sırası: **Harmony → ButterLib → UIExtenderEx → MCM → (oyunun kendi modülleri) → Taç ve Hançer**.
 Launcher eksik ya da yanlış sırada olanı uyarı olarak gösterir. Bir bağımlılık başlatılamazsa mod yine açılır ama ana menüde kırmızı bir uyarı çıkar.
 
+**Derlemeden kurmak:** GitHub → Actions → son yeşil "Derleme ve testler" çalıştırması → en alttaki **TacVeHancer** paketini indir,
+içindeki `CheatMenu` klasörünü `<oyun klasörü>\Modules\` içine kopyala (eskisinin üzerine yaz). .NET SDK gerekmez.
+
 Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar Insert → Kurallar'da da var; ikisi birbirini günceller.
 
 ## Kullanım
