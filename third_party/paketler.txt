@@ -3,3 +3,4 @@
 Bannerlord.Diplomacy
 HairAddons
 WomeninCalradia
+AutoTrader
