@@ -48,6 +48,8 @@ namespace CheatMenu.Intrigue.Core
         public const string Divorce = "sonuc_bosanma";
         /// <summary>Düello: meydan okuma ve sonuç.</summary>
         public const string Duel = "sonuc_duello";
+        /// <summary>Gayrimeşru çocuk meşrulaştırıldı (P2.8).</summary>
+        public const string Legitimize = "sonuc_mesrulastirma";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -102,7 +104,7 @@ namespace CheatMenu.Intrigue.Core
                      {
                          Spy, SecretFound, Blackmail, Murder, MurderPoison, MurderDagger, MurderAccident, Kidnap, Caught, Exposed,
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
-                         Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel,
+                         Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;
