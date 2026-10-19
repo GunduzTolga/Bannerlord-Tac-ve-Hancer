@@ -64,6 +64,12 @@ namespace CheatMenu.Intrigue.Core
         public SecretKind Kind;
         public int Day;
         public bool Exposed;
+        /// <summary>Gizli ilişkinin öbür tarafı (P2.4); eski kayıtlarda ya da diğer sırlarda null.</summary>
+        public string OtherId;
+        /// <summary>Gayrimeşru çocuk sırrında çocuk.</summary>
+        public string ChildId;
+        /// <summary>Herkese değil, yalnızca aldatılan eşe söylendi (Exposed da true: sır kullanıldı).</summary>
+        public bool Whispered;
     }
 
     /// <summary>Haritaya dönünce gösterilecek bilgi kartı. HeroId varsa portresi, Image varsa resmi (Module/Images) görünür.</summary>
@@ -272,7 +278,8 @@ namespace CheatMenu.Intrigue.Core
 
             foreach (Secret s in Secrets)
                 records.Add(new TextRecord("secret")
-                    .Add("target", s.TargetId).Add("kind", I((int)s.Kind)).Add("day", I(s.Day)).Add("exposed", B(s.Exposed)));
+                    .Add("target", s.TargetId).Add("kind", I((int)s.Kind)).Add("day", I(s.Day)).Add("exposed", B(s.Exposed))
+                    .Add("other", s.OtherId).Add("child", s.ChildId).Add("whisper", B(s.Whispered)));
 
             foreach (KeyValuePair<string, int> p in CooldownUntil) records.Add(new TextRecord("cooldown").Add("target", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in AlertUntil) records.Add(new TextRecord("alert").Add("target", p.Key).Add("until", I(p.Value)));
@@ -348,6 +355,7 @@ namespace CheatMenu.Intrigue.Core
                         state.Secrets.Add(new Secret
                         {
                             TargetId = r.Get("target"), Kind = (SecretKind)kind, Day = Int(r, "day"), Exposed = Bool(r, "exposed"),
+                            OtherId = Empty(r.Get("other")), ChildId = Empty(r.Get("child")), Whispered = Bool(r, "whisper"),
                         });
                         break;
                     case "cooldown":

@@ -86,6 +86,8 @@ namespace CheatMenu.Tests
             Check("settings: hotkey 99 -> default", ModSettings.Parse("ScreenHotkey=99").ScreenHotkey == ModSettings.DefaultScreenHotkey);
             Check("settings: event cards default on", ModSettings.Parse("").EventCards);
             Check("settings: event cards off", !ModSettings.Parse("EventCards=0").EventCards);
+            Check("settings: romance secrets default on", ModSettings.Parse("").RomanceSecrets);
+            Check("settings: romance secrets off", !ModSettings.Parse("RomanceSecrets=0").RomanceSecrets);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -101,12 +103,13 @@ namespace CheatMenu.Tests
             full.SetMapButtonPosition(3);
             full.SetScreenHotkey(5);
             full.EventCards = false;
+            full.RomanceSecrets = false;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
                 && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && back.MapButtonPosition == 3 && back.ScreenHotkey == 5
-                && !back.EventCards);
+                && !back.EventCards && !back.RomanceSecrets);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -139,6 +142,7 @@ namespace CheatMenu.Tests
             CardImageTests();
             InterrogationTests();
             LetterTests();
+            RomanceTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -308,6 +312,7 @@ namespace CheatMenu.Tests
                 Gold = "~20.000", Relations = "hükümdar: 10\tsen: -5", Traits = "Onur +1",
             });
             state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true });
+            state.Secrets.Add(new Secret { TargetId = "lord_4", Kind = SecretKind.Bastard, Day = 30, OtherId = "lord_5", ChildId = "lord_6", Exposed = true, Whispered = true });
             state.CooldownUntil["lord_2"] = 200;
             state.AlertUntil["lord_3"] = 300;
             state.Notices.Add(new Notice { Title = "Başlık", Text = "satır 1\nsatır 2", HeroId = "lord_1_1", Image = "sonuc_ifsa" });
@@ -346,7 +351,10 @@ namespace CheatMenu.Tests
                 && s.FeastRisk && s.PendingEvent == 5 && !s.AwaitingChoice && s.AskedToExecute);
             IntelReport r = back.Reports.Count == 1 ? back.Reports[0] : null;
             Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
-            Check("state: secret", back.Secrets.Count == 1 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed);
+            Check("state: secret", back.Secrets.Count == 2 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed
+                && back.Secrets[0].OtherId == null && back.Secrets[0].ChildId == null && !back.Secrets[0].Whispered);
+            Check("state: romance secret", back.Secrets.Count == 2 && back.Secrets[1].Kind == SecretKind.Bastard && back.Secrets[1].OtherId == "lord_5"
+                && back.Secrets[1].ChildId == "lord_6" && back.Secrets[1].Whispered && back.Secrets[1].Exposed);
             Check("state: cooldown/alert", back.CooldownUntil["lord_2"] == 200 && back.AlertUntil["lord_3"] == 300);
             Check("state: notice", back.Notices.Count == 2 && back.Notices[0].Text == "satır 1\nsatır 2" && back.Notices[0].HeroId == "lord_1_1");
             Check("state: notice image", back.Notices.Count == 2 && back.Notices[0].Image == "sonuc_ifsa" && back.Notices[1].Image == null
@@ -449,6 +457,25 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Gizli ilişki ve gayrimeşru çocuk (P2.4): 18+ kuralı kodda zorunlu, sınırlar burada denetlenir.</summary>
+        private static void RomanceTests()
+        {
+            Check("romance: adult is 18", SecretRules.MinAdultAge == 18 && SecretRules.IsAdult(18) && !SecretRules.IsAdult(17));
+            Check("romance: lovers both adult", SecretRules.CanBeLovers(18, 25) && !SecretRules.CanBeLovers(17, 25) && !SecretRules.CanBeLovers(30, 16));
+            Check("romance: lovers never minors, any gap", Enumerable.Range(0, 18).All(minor =>
+                Enumerable.Range(0, 90).All(other => !SecretRules.CanBeLovers(minor, other) && !SecretRules.CanBeLovers(other, minor))));
+            Check("romance: plausible age gap", SecretRules.CanBeLovers(30, 50) && !SecretRules.CanBeLovers(25, 46));
+            Check("romance: parent adult at conception", SecretRules.MinParentAgeAtBirth == 19
+                && SecretRules.CouldBeParent(19, 0) && !SecretRules.CouldBeParent(18, 0) && SecretRules.CouldBeParent(40, 21) && !SecretRules.CouldBeParent(36, 18));
+            Check("romance: parent age covers every child age", Enumerable.Range(0, 60).All(child =>
+                Enumerable.Range(0, 100).All(parent => SecretRules.CouldBeParent(parent, child) == (parent - child >= 19))));
+            Check("romance: negative child age rejected", !SecretRules.CouldBeParent(40, -1));
+            Check("romance: kinds", SecretRules.IsRomantic(SecretKind.Affair) && SecretRules.IsRomantic(SecretKind.Bastard)
+                && !SecretRules.IsRomantic(SecretKind.Bribery) && !SecretRules.IsRomantic(SecretKind.MurderPlot));
+            Check("romance: bastard is the heaviest scandal", SecretRules.ExposurePenalty(SecretKind.Bastard) > SecretRules.ExposurePenalty(SecretKind.Affair)
+                && SecretRules.Name(SecretKind.Bastard) == "Gayrimeşru çocuk");
         }
 
         /// <summary>Esir sorgulama formülleri (P2.1): örnek hesaplar ve sınırlar.</summary>

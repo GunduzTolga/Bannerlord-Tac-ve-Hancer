@@ -38,7 +38,7 @@ Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar I
 
 | Kategori | Neler var |
 |---|---|
-| **Entrika ekranı** | Tam ekran pencere: casus başı kartı; süren entrikalar (portre, aşama çubuğu, başarı/yakalanma, harekete geç); yeni entrika (tür, filtre, sayfalı hedef listesi, özet); kişiler (rapor, sırlar, koz, doğrudan entrika); esirler (sorgu: konuştur, baskı, anlaşma); saray (lordların hükümdarlarıyla ilişkisi, bildiğin kadarıyla; haritada izle; bilgi oyunun ikna konuşmalarına bonus verir); casus başı görevleri (karşı casusluk, muhalefeti izle, söylenti yay); haberciyle uzaktan koz; ulakla uzaktan görüşme (hediye ilişkiyi artırır, lordu bulmaya gitmeden konuşma penceresi açılır); gölge ağları; sana karşı entrikalar; kronik (dosyaya aktarma). Olaylar resimli kartlarla gelir |
+| **Entrika ekranı** | Tam ekran pencere: casus başı kartı; süren entrikalar (portre, aşama çubuğu, başarı/yakalanma, harekete geç); yeni entrika (tür, filtre, sayfalı hedef listesi, özet); kişiler (rapor, sırlar, koz, doğrudan entrika; gizli ilişki ve gayrimeşru çocuk sırları sahnesiz, iki taraf da 18+, ifşa et ya da aldatılan eşe söyle); esirler (sorgu: konuştur, baskı, anlaşma); saray (lordların hükümdarlarıyla ilişkisi, bildiğin kadarıyla; haritada izle; bilgi oyunun ikna konuşmalarına bonus verir); casus başı görevleri (karşı casusluk, muhalefeti izle, söylenti yay); haberciyle uzaktan koz; ulakla uzaktan görüşme (hediye ilişkiyi artırır, lordu bulmaya gitmeden konuşma penceresi açılır); gölge ağları; sana karşı entrikalar; kronik (dosyaya aktarma). Olaylar resimli kartlarla gelir |
 | **Entrika** | Casus başı; casusluk (rapor + gerçek kişilikten sırlar); şantaj ve kozlar (altın, etki, esir, klan koparma; lord diyaloğundan da); kaçırma; suikast (aşamalar, 10 olay, rüşvet, kan davası); şehirlerde gölge ağı; yapay zekânın sana kurduğu entrikalar ve karşı casusluk |
 | **Hileler →** | |
 | Para & Ekonomi | Altın, etki, tahıl |
@@ -119,6 +119,6 @@ Ardından Launcher → Mods → **Taç ve Hançer**'i işaretle.
 - `Module/` — oyundaki modül klasörüne olduğu gibi kopyalanır: `SubModule.xml` (manifest), `GUI/Prefabs` ve `GUI/Brushes`
   (arayüz), `Images/` (olay kartı resimleri)
 - `docs/superpowers/` — her fazın tasarım (specs) ve uygulama (plans) belgeleri; yol haritası: `specs/2026-10-19-yol-haritasi.md`
-- `docs/gorseller/` — olay kartı görsellerinin listesi ve prompt'ları
+- `docs/gorseller/olay-kartlari.md` — üretilecek bütün resimler: dosya adları, nerede göründükleri ve kopyalamaya hazır prompt'lar
 - `.github/workflows/` — otomatik derleme ve test
 - `reports/`, `research_notes/` — Bannerlord eksiklikleri ve mod fırsatları araştırması

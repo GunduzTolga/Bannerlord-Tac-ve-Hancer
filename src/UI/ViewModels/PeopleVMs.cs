@@ -276,35 +276,63 @@ namespace CheatMenu.UI.ViewModels
     public sealed class SecretItemVM : TvhViewModel
     {
         private readonly Secret _secret;
+        private readonly string _betrayedName;
 
         public SecretItemVM(IntrigueState state, Secret secret, bool blackmailRunning)
         {
             _secret = secret;
+            blackmailRunning = blackmailRunning || RomanceSecrets.BlackmailRunning(state, secret);
             Name = SecretRules.Name(secret.Kind);
-            Description = SecretRules.Description(secret.Kind);
-            StateText = secret.Exposed ? "İfşa edildi: artık herkes biliyor" : "Yalnızca sen biliyorsun (gün " + secret.Day + ")";
-            ExposeHint = secret.Exposed ? "Zaten ifşa edildi" : blackmailRunning ? "Şantaj sürerken ifşa edilemez" : "";
-            CanExpose = ExposeHint.Length == 0;
+            Description = RomanceSecrets.Describe(secret);
+            StateText = secret.Whispered ? "Aldatılan eşe söylendi; saray bilmiyor"
+                : secret.Exposed ? "İfşa edildi: artık herkes biliyor" : "Yalnızca sen biliyorsun (gün " + secret.Day + ")";
+            string exposeHint = secret.Exposed ? "" : blackmailRunning ? "Şantaj sürerken ifşa edilemez" : "";
+            CanExpose = !secret.Exposed && exposeHint.Length == 0;
+            HasWhisper = SecretRules.IsRomantic(secret.Kind) && secret.OtherId != null;
+            Hero betrayed = HasWhisper ? RomanceSecrets.Betrayed(secret) : null;
+            string whisperHint = HasWhisper && !secret.Exposed ? RomanceSecrets.WhisperBlocked(state, secret) ?? "" : "";
+            CanWhisper = HasWhisper && !secret.Exposed && whisperHint.Length == 0;
+            ExposeHint = exposeHint.Length > 0 ? exposeHint : whisperHint;
+            _betrayedName = betrayed?.Name.ToString() ?? "";
         }
 
         [DataSourceProperty] public string Name { get; }
         [DataSourceProperty] public string Description { get; }
         [DataSourceProperty] public string StateText { get; }
         [DataSourceProperty] public bool CanExpose { get; }
+        /// <summary>Düğmelerin altındaki kırmızı not (ifşa ya da eşe söyleme neden olmuyor).</summary>
         [DataSourceProperty] public string ExposeHint { get; }
         [DataSourceProperty] public string ExposeText => "İfşa et";
         [DataSourceProperty] public bool IsExposed => _secret.Exposed;
+        /// <summary>Gizli ilişki ve gayrimeşru çocukta ikinci düğme: aldatılan eşe gizlice söyle (P2.4).</summary>
+        [DataSourceProperty] public bool HasWhisper { get; }
+        [DataSourceProperty] public bool CanWhisper { get; }
+        [DataSourceProperty] public string WhisperText => "Eşine söyle";
 
         public void ExecuteExpose()
         {
             if (!CanExpose) return;
             IntrigueState state = SchemeEngine.State;
             Secret secret = _secret;
-            MenuUI.Confirm("Sır ifşası: " + Hero.Find(secret.TargetId)?.Name,
-                SecretRules.Description(secret.Kind) + "\n\nİfşa edilirse hükümdarıyla (gizli ilişkide eşiyle) arası açılır. %"
-                + SecretRules.SourceTracedChance + " ihtimalle kaynağın sen olduğun anlaşılır (seninle ilişkisi -"
+            MenuUI.Confirm((SecretRules.IsRomantic(secret.Kind) ? "Skandal: " : "Sır ifşası: ") + Hero.Find(secret.TargetId)?.Name,
+                RomanceSecrets.Describe(secret) + "\n\n" + RomanceSecrets.ExposePreview(secret) + " %"
+                + SecretRules.SourceTracedChance + " ihtimalle kaynağın sen olduğun anlaşılır (ilişki -"
                 + SecretRules.SourceTracedPenalty + "). İfşa edilsin mi?",
                 () => SchemeOutcomes.ExposeSecret(state, secret), null);
+        }
+
+        public void ExecuteWhisper()
+        {
+            if (!CanWhisper) return;
+            IntrigueState state = SchemeEngine.State;
+            Secret secret = _secret;
+            int penalty = SecretRules.ExposurePenalty(secret.Kind);
+            MenuUI.Confirm("Eşine söyle: " + _betrayedName,
+                RomanceSecrets.Describe(secret) + "\n\nSaray yerine yalnızca aldatılan eşe, " + _betrayedName + " ile baş başa söylenir. "
+                + "Aldatanla arası -" + penalty + ", sevgiliyle de bozulur; sana minnettar kalır (+" + SecretRules.WhisperGratitude + "). "
+                + "Kayınlar ve hükümdar duymaz. %" + SecretRules.SourceTracedChance + " ihtimalle aldatan, söyleyenin sen olduğunu öğrenir (-"
+                + SecretRules.SourceTracedPenalty + "). Sır kullanılmış olur. Söylensin mi?",
+                () => RomanceSecrets.Whisper(state, secret), null);
         }
     }
 

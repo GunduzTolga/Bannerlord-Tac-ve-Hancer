@@ -54,6 +54,19 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.4 — Gizli ilişki ve gayrimeşru çocuk sırları (yeni)
+- [ ] Evli lordlara casusluk/sorgu → bir süre sonra "SIR BULUNDU: Gizli ilişki - X ile evli olduğu hâlde Y ile..." (resim: gizli buluşma)
+- [ ] Kişiler sekmesinde sevgili Y de görünüyor, onda da aynı sır var; ikisine de **Şantaj** başlatılabiliyor
+- [ ] Sevgili gerçekçi: yetişkin, yaşları yakın, akrabası değil, çoğunlukla aynı krallıktan; senin klanından hiç kimse değil
+- [ ] Aynı lorda tekrar casusluk → bazen "Gayrimeşru çocuk - Kızı/Oğlu Z'nin gerçek babası Y; resmî babası W bunu bilmiyor"
+- [ ] **İfşa et** → "Skandal" kartı: eşler, kayın, (çocukta) resmî babayla ilişkiler düşüyor; iki kişide de sır "ifşa edildi"
+- [ ] **Eşine söyle** → kart: aldatılan eş sana +10, aldatanla arası düştü; kayın ve hükümdar etkilenmedi; sır "eşine söylendi"
+- [ ] Şantaj sürerken iki taraf için de İfşa et / Eşine söyle kapalı (kırmızı not)
+- [ ] Ansiklopedide çocuğun aile ağacı değişmedi
+- [ ] MCM > Entrika > **Gizli ilişki ve gayrimeşru çocuk sırları** kapat → yeni casuslukta bu sırlar çıkmıyor; bilinenler duruyor
+- [ ] Insert → Entrika → İstihbarat raporları → lord → "Eşine söyle (X): ..." çalışıyor
+- [ ] Sır bulunduktan sonra kaydet → yükle → sevgili ve çocuk aynı
+
 ### P2.2 — Haberci, saray istihbaratı, ikna bonusu (yeni)
 - [ ] Entrika ekranı → **Saray**: « Önceki / Sonraki » ile krallıklar; hükümdar portresi, güç karşılaştırması, bilgi kaynağı yazısı
 - [ ] Raporun olan lordda "Hükümdarıyla: hoşnutsuz (-24)" gibi tam sayı; gölge ağın olan krallıkta "(söylenti)"; diğerlerinde "bilinmiyor"

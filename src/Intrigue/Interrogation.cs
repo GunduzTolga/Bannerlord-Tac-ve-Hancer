@@ -132,10 +132,10 @@ namespace CheatMenu.Intrigue
         {
             if (!hero.IsLord) return "Sırlar yalnızca lordlarda aranır.";
             if (state.Roll100() > InterrogationRules.SecretChance(method, roguery)) return "Bir sırrını ağzından kaçırmadı.";
-            SecretKind? kind = SchemeOutcomes.FindSecret(state, hero, state.Roll100, count => SchemeRandom.Pick(state.Seed, ref state.Rolls, count));
-            if (kind == null) return "Anlattıklarına bakılırsa kayda değer bir sırrı yok.";
-            state.Secrets.Add(new Secret { TargetId = hero.StringId, Kind = kind.Value, Day = SchemeFactors.Today });
-            return "SIR BULUNDU: " + SecretRules.Name(kind.Value) + " - " + SecretRules.Description(kind.Value);
+            Secret secret = SchemeOutcomes.FindSecret(state, hero, state.Roll100, count => SchemeRandom.Pick(state.Seed, ref state.Rolls, count));
+            if (secret == null) return "Anlattıklarına bakılırsa kayda değer bir sırrı yok.";
+            RomanceSecrets.Record(state, secret);
+            return SchemeOutcomes.SecretFoundLine(secret);
         }
 
         /// <summary>Efendisi (klan lideri, o kendisiyse hükümdarı) hakkında konuştuysa onun raporu.</summary>
