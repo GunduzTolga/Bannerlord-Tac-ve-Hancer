@@ -16,7 +16,7 @@ Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar
 
 | Kategori | Neler var |
 |---|---|
-| **Entrika** | Casus başı; casusluk (60 gün geçerli rapor + lordun gerçek kişiliğinden çıkan sırlar, ifşa); suikast (2–5 aşama, 10 seçimli olay, rüşvet, ağır sonuçlar) |
+| **Entrika** | Casus başı; casusluk (rapor + gerçek kişilikten sırlar); şantaj ve kozlar (altın, etki, esir, klan koparma; lord diyaloğundan da); kaçırma; suikast (aşamalar, 10 olay, rüşvet, kan davası); şehirlerde gölge ağı; yapay zekânın sana kurduğu entrikalar ve karşı casusluk |
 | **Hileler →** | |
 | Para & Ekonomi | Altın, etki, tahıl |
 | Karakter | Odak/attribute puanı, yetenekler, can |
@@ -41,8 +41,13 @@ Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar
    Rapor 60 gün geçerli; o hedefe suikastta +10 verir. Tanışmadığın birini de suikast listesine ekler.
 3. **Yeni entrika → Suikast:** en az 2 aşamadan sonra **Süren entrikalar → Harekete geç**.
    Bekledikçe şansın artar ama her aşamada yakalanma zarı atılır. Harekete geçerken rüşvetle +5/+10/+15.
-4. Olaylar, kararlar ve sonuçlar haritada popup olarak gelir; savaştayken olanlar haritaya dönünce gösterilir.
-5. Yakalanırsan ilişki, suç puanı ve Onur kaybedersin. Bir hükümdarı öldürürsen savaş çıkabilir; kendi krallığından birini öldürürsen hükümdarın hesap sorar.
+4. **Şantaj:** casuslukla bulduğun bir sırrı koza çevir; kozu Entrika > Kozlar'dan ya da lordla konuşurken "özel bir konu" açarak kullan.
+5. **Kaçırma:** suikast gibi işler, başarılıysa hedef partinde esir olur.
+6. **Gölge ağı:** çete lideri olan bir şehirde kasaba menüsü → "Gölgelerde iş çevir". O şehirdeki ve krallıktaki entrikalarına bonus verir.
+7. **Sana karşı entrikalar:** senden nefret eden lordlar ve kan davalılar ailene entrika kurabilir; casus başın sezerse karşı hamle seçersin
+   (Kurallar'dan kapatılabilir; varsayılan "Az").
+8. Olaylar, kararlar ve sonuçlar haritada popup olarak gelir; savaştayken olanlar haritaya dönünce gösterilir.
+9. Yakalanırsan ilişki, suç puanı ve Onur kaybedersin. Bir hükümdarı öldürürsen savaş çıkabilir; kendi krallığından birini öldürürsen hükümdarın hesap sorar.
 
 Formüller, örnek hesaplar ve sonraki fazlar: `docs/superpowers/specs/2026-10-19-entrika-design.md`.
 

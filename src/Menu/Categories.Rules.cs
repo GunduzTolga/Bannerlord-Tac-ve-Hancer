@@ -31,6 +31,11 @@ namespace CheatMenu.Menu
                 Choice("Entrika zorluğu", ModSettings.AllowedIntrigueDifficulties, () => Rules.Settings.IntrigueDifficulty,
                     v => Rules.Change(s => s.SetIntrigueDifficulty(v), "Entrika zorluğu: " + SchemeMath.DifficultyName(v)),
                     SchemeMath.DifficultyName),
+                Choice("Yapay zekâ sana entrika kursun", ModSettings.AllowedIntrigueDifficulties, () => Rules.Settings.AiIntrigue,
+                    v => Rules.Change(s => s.SetAiIntrigue(v), "Yapay zekâ entrikaları: " + SchemeMath.AiSettingName(v)),
+                    SchemeMath.AiSettingName),
+                MenuEntry.Toggle("Yapay zekâ senin kendine de suikast kurabilsin", () => Rules.Settings.PlayerCanBeTargeted,
+                    v => Rules.Change(s => s.PlayerCanBeTargeted = v, null)),
             }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. "
                 + "Parti sayısı sınırı = klanının aynı anda kurabileceği parti sayısı (kaldırma açıkken ekleme yok sayılır).");
         }

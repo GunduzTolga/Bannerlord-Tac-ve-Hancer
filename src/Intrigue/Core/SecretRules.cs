@@ -11,6 +11,8 @@ namespace CheatMenu.Intrigue.Core
         Debt = 6,
         Smuggling = 7,
         Affair = 8,
+        /// <summary>Oyuncunun klanına karşı suikast planladığı ortaya çıktı (karşı casusluktan).</summary>
+        MurderPlot = 9,
     }
 
     public static class SecretRules
@@ -39,6 +41,7 @@ namespace CheatMenu.Intrigue.Core
                 case SecretKind.Debt: return "Ağır borç";
                 case SecretKind.Smuggling: return "Kaçakçılık bağlantısı";
                 case SecretKind.Affair: return "Gizli ilişki";
+                case SecretKind.MurderPlot: return "Suikast planı";
                 default: return "Bilinmeyen sır";
             }
         }
@@ -55,6 +58,7 @@ namespace CheatMenu.Intrigue.Core
                 case SecretKind.Debt: return "Boğazına kadar borçta; alacaklıları kapısında.";
                 case SecretKind.Smuggling: return "Kaçakçı çeteleriyle iş tutuyor.";
                 case SecretKind.Affair: return "Eşinden gizli bir ilişkisi var.";
+                case SecretKind.MurderPlot: return "Senin ailene karşı bir suikast planladı.";
                 default: return "";
             }
         }
@@ -72,6 +76,7 @@ namespace CheatMenu.Intrigue.Core
                 case SecretKind.Debt: return 10;
                 case SecretKind.Smuggling: return 15;
                 case SecretKind.Affair: return 30;
+                case SecretKind.MurderPlot: return 40;
                 default: return 0;
             }
         }

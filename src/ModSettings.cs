@@ -26,12 +26,17 @@ namespace CheatMenu
         public int PartyLimitBonus { get; private set; }
         public bool NoPartyLimit { get; set; }
         public int IntrigueDifficulty { get; private set; } = 1;
+        /// <summary>Yapay zekâ entrikaları: 0 Kapalı, 1 Az, 2 Normal (Intrigue.Core.SchemeMath.AiOff/AiFew/AiNormal).</summary>
+        public int AiIntrigue { get; private set; } = 1;
+        /// <summary>Yapay zekâ oyuncunun kendisine de suikast/kaçırma kurabilir mi (varsayılan kapalı).</summary>
+        public bool PlayerCanBeTargeted { get; set; }
 
         public void SetFastForwardSpeed(int speed) => FastForwardSpeed = Allowed(AllowedSpeeds, speed, DefaultSpeed);
         public void SetSkillXpMultiplier(int value) => SkillXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
         public void SetTroopXpMultiplier(int value) => TroopXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
         public void SetPartySizeBonus(int value) => PartySizeBonus = Allowed(AllowedPartySizeBonuses, value, 0);
         public void SetIntrigueDifficulty(int value) => IntrigueDifficulty = Allowed(AllowedIntrigueDifficulties, value, 1);
+        public void SetAiIntrigue(int value) => AiIntrigue = Allowed(AllowedIntrigueDifficulties, value, 1);
         public void SetPartyLimitBonus(int value) => PartyLimitBonus = value >= 0 && value <= MaxPartyLimitBonus ? value : 0;
 
         /// <summary>Bilinmeyen anahtarlar, yorumlar (#) ve bozuk satırlar yok sayılır.</summary>
@@ -60,6 +65,8 @@ namespace CheatMenu
                     case "PartyLimitBonus": if (isNumber) settings.SetPartyLimitBonus(number); break;
                     case "NoPartyLimit": settings.NoPartyLimit = IsTrue(value); break;
                     case "IntrigueDifficulty": if (isNumber) settings.SetIntrigueDifficulty(number); break;
+                    case "AiIntrigue": if (isNumber) settings.SetAiIntrigue(number); break;
+                    case "PlayerCanBeTargeted": settings.PlayerCanBeTargeted = IsTrue(value); break;
                 }
             }
             return settings;
@@ -75,7 +82,9 @@ namespace CheatMenu
             + "NoCompanionLimit=" + (NoCompanionLimit ? "1" : "0") + "\n"
             + "PartyLimitBonus=" + Invariant(PartyLimitBonus) + "\n"
             + "NoPartyLimit=" + (NoPartyLimit ? "1" : "0") + "\n"
-            + "IntrigueDifficulty=" + Invariant(IntrigueDifficulty) + "\n";
+            + "IntrigueDifficulty=" + Invariant(IntrigueDifficulty) + "\n"
+            + "AiIntrigue=" + Invariant(AiIntrigue) + "\n"
+            + "PlayerCanBeTargeted=" + (PlayerCanBeTargeted ? "1" : "0") + "\n";
 
         private static int Allowed(int[] allowed, int value, int fallback) =>
             Array.IndexOf(allowed, value) >= 0 ? value : fallback;

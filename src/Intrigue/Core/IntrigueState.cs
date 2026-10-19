@@ -38,7 +38,7 @@ namespace CheatMenu.Intrigue.Core
 
         // Oyuncudan karar bekleyen durumlar (popup'lar buradan üretilir; kayda yazıldığı için yüklemeden sonra da sorulur)
         public int PendingEvent;
-        public bool AwaitingSpyChoice;
+        public bool AwaitingChoice;
         public bool AskedToExecute;
 
         public int Roll100() => SchemeRandom.Roll100(Seed, ref Rolls);
@@ -81,12 +81,49 @@ namespace CheatMenu.Intrigue.Core
         public string VictimName;
         public int Gold;
         public int Influence;
+        /// <summary>Ölüm değil kaçırma yüzünden mi.</summary>
+        public bool Kidnap;
     }
 
     public sealed class LogEntry
     {
         public int Day;
         public string Text;
+    }
+
+    /// <summary>Şantajla kazanılan koz (CK3 "hook"): süresi dolana ya da harcanana kadar geçerli.</summary>
+    public sealed class Hook
+    {
+        public string TargetId;
+        public int Day;
+        public int Until;
+    }
+
+    /// <summary>Yapay zekânın oyuncu klanından birine kurduğu entrika (tasarım 8.4).</summary>
+    public sealed class AiPlot
+    {
+        public int Id;
+        public string PlotterId;
+        public string TargetId;
+        public SchemeKind Kind;
+        public int StartDay;
+        public int ResolveDay;
+        public int Seed;
+        public int Rolls;
+        /// <summary>Casus başın sezdi mi; sezildiyse oyuncuya bir kez sorulur (Asked).</summary>
+        public bool Detected;
+        public bool Asked;
+        public bool Protected;
+
+        public int Roll100() => SchemeRandom.Roll100(Seed, ref Rolls);
+    }
+
+    /// <summary>Bir şehirde çete lideri üzerinden kurulan muhbir ağı (tasarım 8.3).</summary>
+    public sealed class ShadowNetwork
+    {
+        public string SettlementId;
+        public int Level;
+        public int Since;
     }
 
     /// <summary>
@@ -112,6 +149,14 @@ namespace CheatMenu.Intrigue.Core
         public LiegeDemand LiegeDemand;
         public List<LogEntry> Log = new List<LogEntry>();
 
+        // E2
+        public List<Hook> Hooks = new List<Hook>();
+        public List<AiPlot> AiPlots = new List<AiPlot>();
+        public int NextPlotId = 1;
+        public List<ShadowNetwork> Networks = new List<ShadowNetwork>();
+        /// <summary>Kan davası: kahraman → bitiş günü. Bu süre boyunca nefret eşiğine bakılmadan entrika adayıdır.</summary>
+        public Dictionary<string, int> FeudUntil = new Dictionary<string, int>();
+
         /// <summary>E0 kayıt testi: oyuncunun bıraktığı işaret; kaydet-yükle sonrası durmalı.</summary>
         public string SaveTestMarker { get; set; }
 
@@ -121,6 +166,12 @@ namespace CheatMenu.Intrigue.Core
 
         public bool IsOnCooldown(string targetId, int today) => CooldownUntil.TryGetValue(targetId, out int until) && today < until;
         public bool IsAlerted(string targetId, int today) => AlertUntil.TryGetValue(targetId, out int until) && today < until;
+        public bool HasFeud(string heroId, int today) => FeudUntil.TryGetValue(heroId, out int until) && today < until;
+
+        /// <summary>Hedef üzerindeki geçerli koz; yoksa null.</summary>
+        public Hook ActiveHook(string targetId, int today) => Hooks.FirstOrDefault(h => h.TargetId == targetId && today < h.Until);
+
+        public ShadowNetwork Network(string settlementId) => Networks.FirstOrDefault(n => n.SettlementId == settlementId);
 
         /// <summary>Hedef hakkındaki en yeni rapor; geçerlilik süresine bakmaz.</summary>
         public IntelReport LatestReport(string targetId) =>
@@ -143,6 +194,8 @@ namespace CheatMenu.Intrigue.Core
         {
             foreach (string id in CooldownUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CooldownUntil.Remove(id);
             foreach (string id in AlertUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) AlertUntil.Remove(id);
+            foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
+            Hooks.RemoveAll(h => h.Until <= today);
         }
 
         // ---- Metin biçimi ----
@@ -152,7 +205,8 @@ namespace CheatMenu.Intrigue.Core
             var records = new List<TextRecord>
             {
                 new TextRecord("version").Add("v", I(CurrentVersion)),
-                new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls)),
+                new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
+                    .Add("nextplot", I(NextPlotId)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -164,7 +218,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("evs", I(s.EventSuccess)).Add("evd", I(s.EventDiscovery))
                     .Add("used", string.Join(",", s.UsedEvents.Select(I))).Add("method", I((int)s.Method))
                     .Add("feast", B(s.FeastRisk))
-                    .Add("pending", I(s.PendingEvent)).Add("spychoice", B(s.AwaitingSpyChoice)).Add("asked", B(s.AskedToExecute)));
+                    .Add("pending", I(s.PendingEvent)).Add("spychoice", B(s.AwaitingChoice)).Add("asked", B(s.AskedToExecute)));
 
             foreach (IntelReport r in Reports)
                 records.Add(new TextRecord("report")
@@ -182,9 +236,19 @@ namespace CheatMenu.Intrigue.Core
             if (LiegeDemand != null)
                 records.Add(new TextRecord("liege")
                     .Add("kingdom", LiegeDemand.KingdomId).Add("victim", LiegeDemand.VictimName)
-                    .Add("gold", I(LiegeDemand.Gold)).Add("influence", I(LiegeDemand.Influence)));
+                    .Add("gold", I(LiegeDemand.Gold)).Add("influence", I(LiegeDemand.Influence)).Add("kidnap", B(LiegeDemand.Kidnap)));
 
             foreach (LogEntry e in Log) records.Add(new TextRecord("log").Add("day", I(e.Day)).Add("text", e.Text));
+
+            foreach (Hook h in Hooks) records.Add(new TextRecord("hook").Add("target", h.TargetId).Add("day", I(h.Day)).Add("until", I(h.Until)));
+            foreach (AiPlot p in AiPlots)
+                records.Add(new TextRecord("aiplot")
+                    .Add("id", I(p.Id)).Add("plotter", p.PlotterId).Add("target", p.TargetId).Add("kind", I((int)p.Kind))
+                    .Add("start", I(p.StartDay)).Add("resolve", I(p.ResolveDay)).Add("seed", I(p.Seed)).Add("rolls", I(p.Rolls))
+                    .Add("detected", B(p.Detected)).Add("asked", B(p.Asked)).Add("protected", B(p.Protected)));
+            foreach (ShadowNetwork n in Networks)
+                records.Add(new TextRecord("network").Add("settlement", n.SettlementId).Add("level", I(n.Level)).Add("since", I(n.Since)));
+            foreach (KeyValuePair<string, int> p in FeudUntil) records.Add(new TextRecord("feud").Add("hero", p.Key).Add("until", I(p.Value)));
             return TextRecords.Write(records);
         }
 
@@ -201,6 +265,7 @@ namespace CheatMenu.Intrigue.Core
                         state.NextSchemeId = Math.Max(1, Int(r, "next"));
                         state.Seed = Int(r, "seed");
                         state.Rolls = Int(r, "rolls");
+                        state.NextPlotId = Math.Max(1, Int(r, "nextplot"));
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");
@@ -240,11 +305,37 @@ namespace CheatMenu.Intrigue.Core
                         state.LiegeDemand = new LiegeDemand
                         {
                             KingdomId = r.Get("kingdom"), VictimName = r.Get("victim") ?? "",
-                            Gold = Int(r, "gold"), Influence = Int(r, "influence"),
+                            Gold = Int(r, "gold"), Influence = Int(r, "influence"), Kidnap = Bool(r, "kidnap"),
                         };
                         break;
                     case "log":
                         state.Log.Add(new LogEntry { Day = Int(r, "day"), Text = r.Get("text") ?? "" });
+                        break;
+                    case "hook":
+                        if (Empty(r.Get("target")) != null)
+                            state.Hooks.Add(new Hook { TargetId = r.Get("target"), Day = Int(r, "day"), Until = Int(r, "until") });
+                        break;
+                    case "aiplot":
+                        int plotKind = Int(r, "kind");
+                        if (Empty(r.Get("plotter")) == null || Empty(r.Get("target")) == null || !Enum.IsDefined(typeof(SchemeKind), plotKind)) break;
+                        state.AiPlots.Add(new AiPlot
+                        {
+                            Id = Int(r, "id"), PlotterId = r.Get("plotter"), TargetId = r.Get("target"), Kind = (SchemeKind)plotKind,
+                            StartDay = Int(r, "start"), ResolveDay = Int(r, "resolve"), Seed = Int(r, "seed"), Rolls = Int(r, "rolls"),
+                            Detected = Bool(r, "detected"), Asked = Bool(r, "asked"), Protected = Bool(r, "protected"),
+                        });
+                        break;
+                    case "network":
+                        if (Empty(r.Get("settlement")) == null) break;
+                        state.Networks.Add(new ShadowNetwork
+                        {
+                            SettlementId = r.Get("settlement"),
+                            Level = SchemeMath.Clamp(Int(r, "level"), 1, SchemeMath.MaxNetworkLevel),
+                            Since = Int(r, "since"),
+                        });
+                        break;
+                    case "feud":
+                        if (Empty(r.Get("hero")) != null) state.FeudUntil[r.Get("hero")] = Int(r, "until");
                         break;
                 }
             }
@@ -277,7 +368,7 @@ namespace CheatMenu.Intrigue.Core
                 Method = Enum.IsDefined(typeof(SchemeMethod), method) ? (SchemeMethod)method : SchemeMethod.None,
                 FeastRisk = Bool(r, "feast"),
                 PendingEvent = Math.Max(0, Int(r, "pending")),
-                AwaitingSpyChoice = Bool(r, "spychoice"),
+                AwaitingChoice = Bool(r, "spychoice"),
                 AskedToExecute = Bool(r, "asked"),
             };
         }

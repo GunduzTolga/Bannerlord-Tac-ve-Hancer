@@ -3,7 +3,7 @@
 Son güncelleme: 19 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna kuruldu.
 Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye göre asker ekleme**, **yoldaş sınırını kaldır**,
-**parti sayısı sınırı**, **Entrika E0** ve **Entrika E1** (casus başı, casusluk, sırlar, suikast) kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
+**parti sayısı sınırı**, **Entrika E0, E1 ve E2** (casus başı, casusluk, sırlar, suikast, şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları) kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
 
 > ⚠️ Telefondan kod yazılıp GitHub'a gönderilebilir, ama **derleyip oyuna kurmak bilgisayar ister**
 > (Visual Studio + oyunun DLL'leri). Telefonda yapılanlar, bilgisayarda `build.ps1` çalışınca oyuna gelir.
@@ -30,6 +30,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Kurallar → **Entrika zorluğu** Kolay/Zor → onay ekranındaki yüzdeler değişiyor
 - [ ] Hileler → **Entrika hileleri**: aşamaları tamamla, asla fark edilme, her zaman başarılı
 - [ ] Popup'lar kapanıyor mu (portreli bildirimde **Tamam** çalışmazsa **Kapat** var)? Türkçe ekler doğru mu (Caladog'un, Sargot'ta)?
+
+### Entrika E2 — şantaj, kaçırma, gölge ağı, yapay zekâ entrikaları
+- [ ] Casusluktan sır bulunan bir lorda Yeni entrika → **Şantaj** → "şimdi tehdit et / delil topla" popup'ı → koz kazanıldı
+- [ ] Entrika → **Kozlar** → altın / etki / esir bıraktırma / krallık değiştirtme seçenekleri; birini kullan → sonuç popup'ı
+- [ ] Kozun olduğu lordla **konuş** → "Seninle özel bir konuyu konuşmamız gerek..." satırı görünüyor, seçenekler çalışıyor
+- [ ] Yeni entrika → **Kaçırma** → harekete geç → başarılıysa hedef partinde **esir** (parti ekranında görünüyor)
+- [ ] Çete lideri olan bir şehirde kasaba menüsünde **"Gölgelerde iş çevir"** → ağ kur → Entrika > Gölge ağları'nda görünüyor
+- [ ] O şehirdeki bir hedefe entrika onay ekranında "Gölge ağı desteği" satırı çıkıyor
+- [ ] Bir hafta geçince ağ bakımı altından düşüyor
+- [ ] (Uzun oyun) Senden nefret eden bir lord ailene entrika kurdu → **"Sana karşı entrika sezildi"** popup'ı → ifşa / koruma / karşı suikast
+- [ ] Kurallar → **Yapay zekâ sana entrika kursun** Kapalı/Az/Normal; **kendine de suikast** varsayılan kapalı
+- [ ] Ortaya çıkan bir cinayetten sonra **kan davası** notu sonuç popup'ında görünüyor
 
 ### Asker ekle (kademeye göre) — yeni
 - [ ] Ordu / Parti → **Asker ekle (kademeye göre)** → kademeler (T1, T2 …) ve her birindeki asker türü sayısı görünüyor
@@ -86,7 +98,7 @@ Mod artık sadece hile menüsü değil, "her şeyi içeren" mod olacak. Tasarım
 - [x] Tasarımdaki 5 açık soru cevaplandı (hepsi önerildiği gibi, ad: Taç ve Hançer)
 - [x] **E0** — menü düzeni, görünen ad, kayıt testi (kodlandı; oyunda test bekliyor)
 - [x] **E1** — casus başı, casusluk + sırlar, suikast (aşamalar, olaylar, sonuçlar) (kodlandı; oyunda test bekliyor)
-- [ ] **E2** — şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları, karşı casusluk
+- [x] **E2** — şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları, karşı casusluk (kodlandı; oyunda test bekliyor)
 - [ ] **E3** — sabotaj, kışkırtma, itibar zedeleme, resimli olay kartları
 
 ## 3. Sonraki büyük iş — Faz 4

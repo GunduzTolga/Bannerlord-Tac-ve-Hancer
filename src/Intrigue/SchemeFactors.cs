@@ -5,6 +5,7 @@ using CheatMenu.Intrigue.Core;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.Party;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core;
 
 namespace CheatMenu.Intrigue
@@ -47,18 +48,35 @@ namespace CheatMenu.Intrigue
 
         /// <summary>
         /// null: bu türde hedef olabilir. Casusluk: yetişkin lord ve gezginler (eşrafın sırrı ve gezisi yok).
-        /// Suikast: tanıştığın ya da geçerli raporun olan, yeri belli lord, gezgin ve eşraf.
+        /// Şantaj: ifşa edilmemiş bir sırrını bildiğin, üzerinde kozun olmayan lord.
+        /// Suikast: tanıştığın ya da geçerli raporun olan, yeri belli lord, gezgin ve eşraf. Kaçırma: aynısı, eşraf ve esirler hariç.
         /// </summary>
         public static string BlockedReason(IntrigueState state, Hero h, SchemeKind kind)
         {
             string basic = TargetBlockedReason(state, h);
             if (basic != null) return basic;
-            if (kind == SchemeKind.Spy) return h.IsLord || h.IsWanderer ? null : "casusluk yalnızca lord ve gezginlere yapılır";
-            if (!h.IsLord && !h.IsWanderer && !h.IsNotable) return "bu kişi suikast hedefi olamaz";
+            switch (kind)
+            {
+                case SchemeKind.Spy:
+                    return h.IsLord || h.IsWanderer ? null : "casusluk yalnızca lord ve gezginlere yapılır";
+                case SchemeKind.Blackmail:
+                    if (!h.IsLord) return "şantaj yalnızca lordlara yapılır";
+                    if (BestSecret(state, h) == null) return "elinde onun ifşa edilmemiş bir sırrı yok (önce casusluk)";
+                    if (state.ActiveHook(h.StringId, Today) != null) return "zaten üzerinde bir kozun var";
+                    return null;
+            }
+            if (kind == SchemeKind.Kidnap ? !h.IsLord && !h.IsWanderer : !h.IsLord && !h.IsWanderer && !h.IsNotable)
+                return "bu kişi " + SchemeRules.Name(kind).ToLower(new System.Globalization.CultureInfo("tr-TR")) + " hedefi olamaz";
+            if (kind == SchemeKind.Kidnap && h.IsPrisoner) return "hedef zaten birinin esiri";
             if (!h.HasMet && !state.HasValidReport(h.StringId, Today)) return "tanışmadığın biri için güncel istihbarat raporu gerekir";
             if (h.IsFugitive || !IsLocatable(h)) return "hedefin yeri belli değil";
             return null;
         }
+
+        /// <summary>Hedefin ifşa edilmemiş en ağır sırrı (şantajın gücü buna bağlı); yoksa null.</summary>
+        public static Secret BestSecret(IntrigueState state, Hero h) =>
+            state.Secrets.Where(s => s.TargetId == h.StringId && !s.Exposed)
+                .OrderByDescending(s => SecretRules.ExposurePenalty(s.Kind)).FirstOrDefault();
 
         /// <summary>null: hedef olabilir (türden bağımsız temel kurallar). Değilse neden.</summary>
         public static string TargetBlockedReason(IntrigueState state, Hero h)
@@ -102,6 +120,8 @@ namespace CheatMenu.Intrigue
             int bribeLevel = 0)
         {
             int today = Today;
+            NetworkBonus(state, target, out int networkSuccess, out int networkDiscovery);
+            Secret secret = kind == SchemeKind.Blackmail ? BestSecret(state, target) : null;
             return new SchemeInputs
             {
                 Roguery = Roguery(spymaster),
@@ -123,10 +143,36 @@ namespace CheatMenu.Intrigue
                 TargetIsPlayersCaptive = IsPlayersCaptive(target),
                 TargetAlerted = state.IsAlerted(target.StringId, today),
                 HasMet = target.HasMet,
+                NetworkSuccess = networkSuccess,
+                NetworkDiscovery = networkDiscovery,
+                HasHook = state.ActiveHook(target.StringId, today) != null,
+                SecretSeverity = secret != null ? SecretRules.ExposurePenalty(secret.Kind) : 0,
             };
         }
 
         public static int TargetTier(Hero target) => target.Clan?.Tier ?? 0;
+
+        // ---- Gölge ağı ----
+
+        /// <summary>Hedefin şu an bulunduğu yerleşim (parti içindeyse partinin, esirse zindanın); yoksa null.</summary>
+        public static Settlement TargetSettlement(Hero h) =>
+            h.CurrentSettlement ?? h.PartyBelongedTo?.CurrentSettlement ?? (h.IsPrisoner ? h.PartyBelongedToAsPrisoner?.Settlement : null);
+
+        /// <summary>Hedefe en çok yarayan gölge ağının bonusu: aynı şehirdeyse tam, aynı krallıktaysa yarısı.</summary>
+        public static void NetworkBonus(IntrigueState state, Hero target, out int success, out int discovery)
+        {
+            success = discovery = 0;
+            Settlement where = TargetSettlement(target);
+            foreach (ShadowNetwork network in state.Networks)
+            {
+                Settlement town = Settlement.Find(network.SettlementId);
+                if (town == null) continue;
+                bool sameTown = where == town;
+                if (!sameTown && (town.MapFaction == null || town.MapFaction != target.MapFaction)) continue;
+                success = Math.Max(success, SchemeMath.NetworkSuccess(network.Level, sameTown));
+                discovery = Math.Max(discovery, SchemeMath.NetworkDiscovery(network.Level, sameTown));
+            }
+        }
 
         public static int StartCost(SchemeKind kind, Hero target) =>
             SchemeMath.StartCost(kind, TargetTier(target), target.IsClanLeader, target.IsKingdomLeader);

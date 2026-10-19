@@ -1,6 +1,7 @@
 using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 
 namespace CheatMenu.Intrigue
 {
@@ -18,7 +19,23 @@ namespace CheatMenu.Intrigue
 
         public override void RegisterEvents()
         {
-            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, () => MenuUI.SafeRun("Entrika günlük", SchemeEngine.DailyTick));
+            CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, starter =>
+            {
+                // Genel zar tohumu (yapay zekâ entrikaları, ifşa zarları): her kampanyada farklı, sonra kayıtla sabit.
+                if (State.Seed == 0) State.Seed = MBRandom.RandomInt() | 1;
+                ShadowNetworks.RegisterMenus(starter);
+                IntrigueDialogs.Register(starter);
+            });
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, () =>
+            {
+                MenuUI.SafeRun("Entrika günlük", SchemeEngine.DailyTick);
+                MenuUI.SafeRun("Entrika günlük (yapay zekâ)", AiIntrigue.Daily);
+            });
+            CampaignEvents.WeeklyTickEvent.AddNonSerializedListener(this, () =>
+            {
+                MenuUI.SafeRun("Entrika haftalık (yapay zekâ)", AiIntrigue.Weekly);
+                MenuUI.SafeRun("Entrika haftalık (gölge ağları)", ShadowNetworks.Weekly);
+            });
         }
 
         public override void SyncData(IDataStore dataStore)

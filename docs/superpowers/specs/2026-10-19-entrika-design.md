@@ -1,8 +1,8 @@
 # Entrika Sistemi — Tasarım
 
 **Tarih:** 2026-10-19 · **Oyun:** v1.4.8 + War Sails v1.2.8
-**Durum:** Onaylandı (2026-10-19). Bölüm 13'teki sorular cevaplandı. E0 ve E1 kodlandı; oyunda test bekliyor.
-Uygulama sırasında verilen küçük kararlar bölüm 14'te.
+**Durum:** Onaylandı (2026-10-19). Bölüm 13'teki sorular cevaplandı. E0, E1 ve E2 kodlandı; oyunda test bekliyor.
+Uygulama sırasında verilen küçük kararlar bölüm 14'te (E1) ve 15'te (E2).
 
 **Kullanıcı kararları (bu konuşmada verildi):**
 - Ayrı mod yok. CheatMenu "her şeyi içeren" moda dönüşür: hileler + entrika (+ ileride başka sistemler).
@@ -459,4 +459,84 @@ Orijinal sorular:
 - **Hükümdar hedefin sırrı:** hükümdarın hükümdarı yok. İfşa cezası, krallığındaki klan liderleriyle ilişkisine yarım olarak uygulanır.
   Krallığı olmayan bir lordda bu ceza klanındakilere uygulanır.
 - **Kayıt testi işareti** (E0) oyunda doğrulanana kadar Entrika menüsünde duruyor.
+
+---
+
+## 15. E2 uygulaması (2026-10-19)
+
+Harmony gerekmedi:
+- Kasaba menüsü `CampaignGameStarter.AddGameMenuOption("town", …)` ile eklendi.
+- Lord diyaloğu `AddPlayerLine/AddDialogLine` ile eklendi (bağlantı: "hero_main_options" → bizim dallar → "lord_pretalk").
+
+### 15.1 Şantaj ve koz
+- **Koşul:** ifşa edilmemiş bir sırrını bildiğin, üzerinde kozun olmayan bir lord.
+- **Aşamalar:** 1–2. 1. aşamadan sonra "şimdi tehdit et / bir aşama daha delil topla" sorulur.
+- **Başarı:** 40 + Roguery ÷ 5 − hedefin Roguery'si ÷ 10 − kademe × 2 − (hükümdar 10) + sırrın ağırlığı ÷ 2 + (2. aşama 15)
+  + olaylar + ağ ÷ 2. Sınır %15–90.
+- **Keşif / aşama:** 8 − Roguery ÷ 40 + hedefin Roguery'si ÷ 40 − ağ ÷ 2. Sınır %2–30.
+- **Maliyet:** 300 + 200 × kademe.
+- **Başarı:** 84 gün geçerli koz. Hedefle ilişki −10. Varsa sana karşı entrikasından vazgeçer.
+- **Başarısızlık:** sır yanar (listeden silinir), ilişki −20, 120 gün bekleme.
+- **Koz kullanımları** (Entrika > Kozlar ya da diyalog): kullanmak kozu harcar ve ilişkiyi −10 düşürür.
+
+  | Kullanım | Koşul |
+  |---|---|
+  | Altın | Hedefin altınının %20'si, en az 500 |
+  | Etki | 50; yalnızca klan liderinden |
+  | Esirleri bıraktırma | Hedefin partisinde ya da klan yerleşimlerinde tutulan, senin klanından/krallığından kahramanlar |
+  | Krallığını bırakıp benimkine katılma | Sen bir krallıktaysan; 200 etki |
+  | Krallığından ayrılma | — |
+  | Kozu bırakma | İlişki +5 |
+- Kozun olan hedefe suikast ve kaçırmada +10.
+
+### 15.2 Kaçırma
+- **Hedefler:** suikastla aynı (eşraf ve esirler hariç). Aşamalar 2–4.
+- **Başarı:** suikast formülü −5; tavan %80, hükümdar için %60. Fırsat bonusu en fazla 2 aşama (+12).
+- **Keşif:** suikast +3. **Maliyet:** suikastın ×0,8.
+- **Başarı:** hedef ana partinin esir listesine geçer (`TakePrisonerAction`). Fidyeyi oyunun kendi sistemi halleder. Onur −20 XP.
+- **İz bırakırsa:**
+  - klanla −35, krallığıyla −15, onurlu lordlarla −5
+  - suç puanı +40, Onur −80
+  - hükümdarsa savaş; aynı krallıktaysan hükümdar yarım kan bedeli ister
+  - kan davası yok
+- **Olaylar:** "zehir mi hançer mi" ve "rakip suikastçı" yalnızca suikastta çıkar; diğerleri kaçırmada da çıkar.
+
+### 15.3 Kan davası
+- Ortaya çıkan bir cinayetten sonra kurbanın yaşayan yetişkin eşi, çocukları, annesi, babası ve kardeşleri 168 gün (2 yıl) boyunca kan davalıdır.
+- Kan davalılar sana olan ilişkilerine bakılmadan entrika adayıdır ve seçilme ağırlıkları +4'tür.
+
+### 15.4 Yapay zekâ entrikaları ve karşı casusluk
+- **Ayarlar** (Kurallar): "Yapay zekâ sana entrika kursun" Kapalı / **Az** (varsayılan) / Normal; "Yapay zekâ senin kendine de suikast kurabilsin" (varsayılan kapalı).
+- **Adaylar:**
+  - seninle ilişkisi ≤ −40 olan klan liderleri ve kan davalılar
+  - esir olanlar, üzerinde kozun olanlar ve zaten entrika kuranlar hariç
+- **Haftalık yeni entrika olasılığı:** aday başına Az %3, Normal %6 (en fazla %25). Aynı anda Az 1, Normal 2 entrika.
+- **Seçim ağırlığı:** 2, kan davası +4, Hesapçı +2, Onurlu −1 (en az 1).
+- **Hedef:** klanının yetişkinleri (ayar açıksa sen de). Entrikacının partisi varsa %30 kaçırma, değilse suikast.
+- **Süre:** 14–35 gün.
+- **Sonuç zarı:** oyuncunun formülü, yapay zekânın gözünden: tüm aşamalar, raporlu, ajan klanındaki en yüksek Roguery'li kahraman.
+  Oyuncunun zorluk ayarı tersine işler (Kolay'da yapay zekâ −10). Koruma tutulduysa −25.
+- **Sezme:** haftalık %20 + casus başının Roguery'si ÷ 5 (en fazla %90; casus başı yoksa %5).
+  - Sezilince entrikacı hakkında rapor ve "suikast planı" sırrı (ağırlık 40) eline geçer; bir popup sorar.
+  - Seçenekler: ifşa et (plan biter, entrikacının hükümdarıyla −20, seninle −10) / koruma tut (2.000 dinar, −25) / karşı suikast (+10) / bekle.
+- **Sonuçtan sonra kim yaptığı:** sezilmediyse başarıda %40, başarısızlıkta %50 olasılıkla öğrenilir (rapor + sır).
+
+### 15.5 Gölge ağı
+- **Nerede:** çete lideri olan şehirlerde kasaba menüsündeki "Gölgelerde iş çevir".
+- **Kurma ve güçlendirme:**
+
+  | Seviye | Maliyet | Çete lideriyle ilişki |
+  |---|---|---|
+  | 1 | 3.000 | ≥ 0 |
+  | 2 | 6.000 | ≥ 10 |
+  | 3 | 12.000 | ≥ 20 |
+
+  Çete liderine hediye: 1.000 dinar karşılığı ilişki +5.
+- **En fazla ağ:** 1 + casus başının Roguery'si ÷ 75.
+- **Bonus** (en iyi ağ):
+  - aynı şehirdeki hedefe başarı +5/+10/+15, keşif −2/−4/−6
+  - aynı krallıktaki diğer hedeflere yarısı
+- **Haftalık:**
+  - bakım 150 × seviye; ödenemezse her ağ bir seviye düşer
+  - seviye × %2 olasılıkla yapay zekâ ağı bulup dağıtır (şehrin sahibiyle −10)
 

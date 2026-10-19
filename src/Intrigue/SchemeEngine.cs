@@ -105,8 +105,8 @@ namespace CheatMenu.Intrigue
 
         /// <summary>Oyuncudan karar bekliyor mu (o zaman sayaç durur).</summary>
         public static bool IsWaiting(Scheme scheme) =>
-            scheme.PendingEvent > 0 || scheme.AwaitingSpyChoice
-            || (scheme.Kind == SchemeKind.Murder && scheme.Phase >= SchemeRules.MaxPhases(scheme.Kind));
+            scheme.PendingEvent > 0 || scheme.AwaitingChoice
+            || (SchemeRules.IsStrike(scheme.Kind) && scheme.Phase >= SchemeRules.MaxPhases(scheme.Kind));
 
         private static Hero CheckSpymaster(IntrigueState state)
         {
@@ -149,18 +149,18 @@ namespace CheatMenu.Intrigue
             spymaster.AddSkillXp(DefaultSkills.Roguery, PhaseXp);
 
             int min = SchemeRules.MinPhases(scheme.Kind), max = SchemeRules.MaxPhases(scheme.Kind);
-            if (scheme.Kind == SchemeKind.Spy)
+            if (!SchemeRules.IsStrike(scheme.Kind))
             {
                 if (scheme.Phase >= max)
                 {
-                    ResolveSpy(state, scheme, spymaster, target);
+                    Resolve(state, scheme, spymaster, target);
                     return false;
                 }
-                scheme.AwaitingSpyChoice = true;
+                scheme.AwaitingChoice = true;
             }
             else
             {
-                MenuUI.Info("Suikast (" + target.Name + "): aşama " + scheme.Phase + "/" + max + " tamamlandı"
+                MenuUI.Info(SchemeRules.Name(scheme.Kind) + " (" + target.Name + "): aşama " + scheme.Phase + "/" + max + " tamamlandı"
                     + (scheme.Phase == min ? " - artık harekete geçebilirsin (Entrika menüsü)" : ""));
                 if (scheme.Phase >= max) scheme.AskedToExecute = false;
             }
@@ -170,29 +170,34 @@ namespace CheatMenu.Intrigue
             return true;
         }
 
-        // ---- Casusluk ----
+        // ---- Casusluk ve şantaj: son aşamada kendiliğinden sonuçlanır ----
 
-        /// <param name="keepDigging">true: bir aşama daha sır ara; false: raporu şimdi al.</param>
-        public static void ChooseSpyContinuation(Scheme scheme, bool keepDigging)
+        /// <param name="keepGoing">true: bir aşama daha (casuslukta sır şansı +20, şantajda başarı +15); false: şimdi sonuçlandır.</param>
+        public static void ChooseContinuation(Scheme scheme, bool keepGoing)
         {
             IntrigueState state = State;
-            scheme.AwaitingSpyChoice = false;
-            if (keepDigging) return;
+            scheme.AwaitingChoice = false;
+            if (keepGoing) return;
             Hero target = Hero.Find(scheme.TargetId);
             if (TargetGoneReason(target) != null) return;
-            ResolveSpy(state, scheme, SchemeFactors.Spymaster(state), target);
+            Resolve(state, scheme, SchemeFactors.Spymaster(state), target);
         }
 
-        private static void ResolveSpy(IntrigueState state, Scheme scheme, Hero spymaster, Hero target)
+        private static void Resolve(IntrigueState state, Scheme scheme, Hero spymaster, Hero target)
         {
             state.Schemes.Remove(scheme);
             SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme);
-            int chance = CheatState.IntrigueAlwaysSucceed ? 100 : SchemeMath.SpySuccess(inputs);
-            if (scheme.Roll100() <= chance) SchemeOutcomes.SpySucceeded(state, scheme, spymaster, target);
+            bool success = scheme.Roll100() <= (CheatState.IntrigueAlwaysSucceed ? 100 : SchemeMath.Success(scheme.Kind, inputs));
+            if (scheme.Kind == SchemeKind.Blackmail)
+            {
+                if (success) SchemeOutcomes.BlackmailSucceeded(state, scheme, spymaster, target);
+                else SchemeOutcomes.BlackmailFailed(state, target);
+            }
+            else if (success) SchemeOutcomes.SpySucceeded(state, scheme, spymaster, target);
             else SchemeOutcomes.SpyFailed(state, target);
         }
 
-        // ---- Suikast: harekete geç ----
+        // ---- Suikast ve kaçırma: harekete geç ----
 
         public sealed class BribeChoice
         {
@@ -220,7 +225,7 @@ namespace CheatMenu.Intrigue
                 {
                     Level = level,
                     Cost = cost,
-                    Chance = SchemeMath.MurderSuccess(SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme, level)),
+                    Chance = SchemeMath.Success(scheme.Kind, SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme, level)),
                     Affordable = SchemeFactors.CanAfford(cost),
                 });
             }
@@ -230,7 +235,7 @@ namespace CheatMenu.Intrigue
         /// <summary>null: harekete geçilebilir; değilse neden.</summary>
         public static string CannotExecuteReason(Scheme scheme, bool ignoreMinPhases = false)
         {
-            if (scheme.Kind != SchemeKind.Murder) return "Yalnızca suikastta harekete geçilir";
+            if (!SchemeRules.IsStrike(scheme.Kind)) return "Yalnızca suikast ve kaçırmada harekete geçilir";
             if (!ignoreMinPhases && scheme.Phase < SchemeRules.MinPhases(scheme.Kind))
                 return "En az " + SchemeRules.MinPhases(scheme.Kind) + " aşama tamamlanmalı";
             Hero spymaster = SchemeFactors.Spymaster(State);
@@ -240,6 +245,7 @@ namespace CheatMenu.Intrigue
             Hero target = Hero.Find(scheme.TargetId);
             if (TargetGoneReason(target) != null) return TargetGoneReason(target);
             if (SchemeFactors.InBattle(target)) return target.Name + " şu an bir savaşın ya da kuşatmanın içinde; bitince tekrar dene";
+            if (scheme.Kind == SchemeKind.Kidnap && target.IsPrisoner) return target.Name + " zaten birinin esiri";
             return null;
         }
 
@@ -256,13 +262,18 @@ namespace CheatMenu.Intrigue
 
             scheme.EventSuccess += extraSuccess;
             SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme, bribeLevel);
-            int chance = CheatState.IntrigueAlwaysSucceed ? 100 : SchemeMath.MurderSuccess(inputs);
+            int chance = CheatState.IntrigueAlwaysSucceed ? 100 : SchemeMath.Success(scheme.Kind, inputs);
+            int discovery = SchemeMath.Discovery(scheme.Kind, inputs);
             state.Schemes.Remove(scheme);
 
-            if (scheme.Roll100() <= chance)
-                SchemeOutcomes.MurderSucceeded(state, scheme, spymaster, target, SchemeMath.MurderDiscovery(inputs), inputs.TargetIsPlayersCaptive);
-            else
-                SchemeOutcomes.MurderFailed(state, scheme, spymaster, target, inputs.Roguery);
+            bool success = scheme.Roll100() <= chance;
+            if (scheme.Kind == SchemeKind.Kidnap)
+            {
+                if (success) SchemeOutcomes.KidnapSucceeded(state, scheme, spymaster, target, discovery);
+                else SchemeOutcomes.StrikeFailed(state, scheme, spymaster, target, inputs.Roguery);
+            }
+            else if (success) SchemeOutcomes.MurderSucceeded(state, scheme, spymaster, target, discovery, inputs.TargetIsPlayersCaptive);
+            else SchemeOutcomes.StrikeFailed(state, scheme, spymaster, target, inputs.Roguery);
         }
 
         // ---- İptal ve kapanış ----
@@ -299,7 +310,7 @@ namespace CheatMenu.Intrigue
                 if (TargetGoneReason(target) != null) continue;
                 while (true)
                 {
-                    scheme.AwaitingSpyChoice = false;
+                    scheme.AwaitingChoice = false;
                     if (IsWaiting(scheme) || !CompletePhase(state, scheme, spymaster, target, true)) break;
                 }
             }

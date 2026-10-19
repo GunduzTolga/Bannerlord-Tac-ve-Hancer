@@ -6,14 +6,29 @@ namespace CheatMenu.Intrigue.Core
     {
         Spy = 1,
         Murder = 2,
+        Blackmail = 3,
+        Kidnap = 4,
     }
 
     /// <summary>Türlere göre sabit kurallar (tasarım bölüm 4).</summary>
     public static class SchemeRules
     {
-        public static int MinPhases(SchemeKind kind) => kind == SchemeKind.Murder ? 2 : 1;
-        public static int MaxPhases(SchemeKind kind) => kind == SchemeKind.Murder ? 5 : 2;
-        public static string Name(SchemeKind kind) => kind == SchemeKind.Murder ? "Suikast" : "Casusluk";
+        public static int MinPhases(SchemeKind kind) => IsStrike(kind) ? 2 : 1;
+        public static int MaxPhases(SchemeKind kind) => kind == SchemeKind.Murder ? 5 : kind == SchemeKind.Kidnap ? 4 : 2;
+
+        /// <summary>Oyuncunun seçtiği anda zarı atılan ("harekete geç") türler; diğerleri son aşamada kendiliğinden sonuçlanır.</summary>
+        public static bool IsStrike(SchemeKind kind) => kind == SchemeKind.Murder || kind == SchemeKind.Kidnap;
+
+        public static string Name(SchemeKind kind)
+        {
+            switch (kind)
+            {
+                case SchemeKind.Murder: return "Suikast";
+                case SchemeKind.Blackmail: return "Şantaj";
+                case SchemeKind.Kidnap: return "Kaçırma";
+                default: return "Casusluk";
+            }
+        }
     }
 
     /// <summary>Bir hesap için gereken her şey, düz sayı olarak. Oyun katmanı (SchemeFactors) doldurur.</summary>
@@ -42,6 +57,12 @@ namespace CheatMenu.Intrigue.Core
         public bool TargetIsPlayersCaptive;
         public bool TargetAlerted;
         public bool HasMet = true;
+
+        // E2
+        public int NetworkSuccess;
+        public int NetworkDiscovery;
+        public bool HasHook;
+        public int SecretSeverity;
     }
 
     /// <summary>
@@ -62,13 +83,19 @@ namespace CheatMenu.Intrigue.Core
         private static readonly int[] BribeSuccess = { 0, 5, 10, 15 };
         private static readonly double[] BribeCostFactor = { 0, 0.5, 1, 2 };
 
-        public static int MurderSuccess(SchemeInputs i)
-        {
-            double value = 10
+        public static int MurderSuccess(SchemeInputs i) =>
+            Clamp(Round(StrikeValue(SchemeKind.Murder, i)), 5, i.TargetIsRuler ? 70 : 85);
+
+        /// <summary>Kaçırma: suikastla aynı etkenler, 5 puan daha zor, daha düşük tavan.</summary>
+        public static int KidnapSuccess(SchemeInputs i) =>
+            Clamp(Round(StrikeValue(SchemeKind.Kidnap, i) - 5), 5, i.TargetIsRuler ? 60 : 80);
+
+        private static double StrikeValue(SchemeKind kind, SchemeInputs i) =>
+            10
                 + Math.Min(i.Roguery / 10.0, 30)
                 + i.Calculating * 3
                 + (i.HasReport ? 10 : 0)
-                + Opportunity(SchemeKind.Murder, i.CompletedPhases)
+                + Opportunity(kind, i.CompletedPhases)
                 + Clamp(i.EventSuccess, -15, 15)
                 + BribeSuccess[Clamp(i.BribeLevel, 0, MaxBribeLevel)]
                 - Math.Min(i.TargetRoguery / 20.0, 15)
@@ -80,20 +107,50 @@ namespace CheatMenu.Intrigue.Core
                 - (i.TargetInArmy ? 10 : 0)
                 + (i.TargetIsPlayersCaptive ? 20 : 0)
                 - (i.TargetAlerted ? 15 : 0)
+                + Math.Min(i.NetworkSuccess, 15)
+                + (i.HasHook ? 10 : 0)
                 + DifficultySuccess(i.Difficulty);
-            return Clamp(Round(value), 5, i.TargetIsRuler ? 70 : 85);
-        }
 
         /// <summary>Her aşama sonunda entrikanın ortaya çıkma olasılığı.</summary>
-        public static int MurderDiscovery(SchemeInputs i)
-        {
-            double value = 12
+        public static int MurderDiscovery(SchemeInputs i) => Clamp(Round(StrikeDiscoveryValue(i)), 2, 40);
+
+        /// <summary>Kaçırma suikasttan daha gürültülü: +3.</summary>
+        public static int KidnapDiscovery(SchemeInputs i) => Clamp(Round(StrikeDiscoveryValue(i) + 3), 2, 40);
+
+        private static double StrikeDiscoveryValue(SchemeInputs i) =>
+            12
                 - Math.Min(i.Roguery / 25.0, 12)
                 + Math.Min(i.TargetRoguery / 30.0, 10)
                 + Math.Max(i.TargetCalculating, 0) * 2
                 + i.EventDiscovery
+                - Math.Min(i.NetworkDiscovery, 6)
                 + DifficultyDiscovery(i.Difficulty);
-            return Clamp(Round(value), 2, 40);
+
+        /// <summary>Şantaj: elindeki sır ne kadar ağırsa (ifşa cezası) o kadar etkili; 2. aşama +15.</summary>
+        public static int BlackmailSuccess(SchemeInputs i)
+        {
+            double value = 40
+                + i.Roguery / 5.0
+                - i.TargetRoguery / 10.0
+                - i.TargetClanTier * 2
+                - (i.TargetIsRuler ? 10 : 0)
+                + i.SecretSeverity / 2.0
+                + Opportunity(SchemeKind.Blackmail, i.CompletedPhases)
+                + Clamp(i.EventSuccess, -15, 15)
+                + i.NetworkSuccess / 2.0
+                + DifficultySuccess(i.Difficulty);
+            return Clamp(Round(value), 15, 90);
+        }
+
+        public static int BlackmailDiscovery(SchemeInputs i)
+        {
+            double value = 8
+                - i.Roguery / 40.0
+                + i.TargetRoguery / 40.0
+                + i.EventDiscovery
+                - i.NetworkDiscovery / 2.0
+                + DifficultyDiscovery(i.Difficulty);
+            return Clamp(Round(value), 2, 30);
         }
 
         public static int SpySuccess(SchemeInputs i)
@@ -105,6 +162,7 @@ namespace CheatMenu.Intrigue.Core
                 - (i.TargetIsRuler ? 10 : 0)
                 - (i.HasMet ? 0 : 10)
                 + Clamp(i.EventSuccess, -15, 15)
+                + i.NetworkSuccess / 2.0
                 + DifficultySuccess(i.Difficulty);
             return Clamp(Round(value), 20, 95);
         }
@@ -115,22 +173,56 @@ namespace CheatMenu.Intrigue.Core
                 - i.Roguery / 50.0
                 + i.TargetRoguery / 40.0
                 + i.EventDiscovery
+                - i.NetworkDiscovery / 2.0
                 + DifficultyDiscovery(i.Difficulty);
             return Clamp(Round(value), 1, 25);
         }
 
-        public static int Success(SchemeKind kind, SchemeInputs i) => kind == SchemeKind.Murder ? MurderSuccess(i) : SpySuccess(i);
-        public static int Discovery(SchemeKind kind, SchemeInputs i) => kind == SchemeKind.Murder ? MurderDiscovery(i) : SpyDiscovery(i);
+        public static int Success(SchemeKind kind, SchemeInputs i)
+        {
+            switch (kind)
+            {
+                case SchemeKind.Murder: return MurderSuccess(i);
+                case SchemeKind.Kidnap: return KidnapSuccess(i);
+                case SchemeKind.Blackmail: return BlackmailSuccess(i);
+                default: return SpySuccess(i);
+            }
+        }
 
-        /// <summary>Zorunlu aşamalardan sonra beklenen her aşamanın başarıya katkısı (yalnızca suikast; en fazla 3 aşama).</summary>
-        public static int Opportunity(SchemeKind kind, int completedPhases) =>
-            kind == SchemeKind.Murder ? 6 * Clamp(completedPhases - SchemeRules.MinPhases(kind), 0, 3) : 0;
+        public static int Discovery(SchemeKind kind, SchemeInputs i)
+        {
+            switch (kind)
+            {
+                case SchemeKind.Murder: return MurderDiscovery(i);
+                case SchemeKind.Kidnap: return KidnapDiscovery(i);
+                case SchemeKind.Blackmail: return BlackmailDiscovery(i);
+                default: return SpyDiscovery(i);
+            }
+        }
+
+        /// <summary>
+        /// Zorunlu aşamalardan sonra beklenen her aşamanın başarıya katkısı: suikastta +6 (en fazla 3 aşama),
+        /// kaçırmada +6 (en fazla 2), şantajda 2. aşama +15, casuslukta yok (2. aşama sır şansını artırır).
+        /// </summary>
+        public static int Opportunity(SchemeKind kind, int completedPhases)
+        {
+            int extra = completedPhases - SchemeRules.MinPhases(kind);
+            switch (kind)
+            {
+                case SchemeKind.Murder: return 6 * Clamp(extra, 0, 3);
+                case SchemeKind.Kidnap: return 6 * Clamp(extra, 0, 2);
+                case SchemeKind.Blackmail: return 15 * Clamp(extra, 0, 1);
+                default: return 0;
+            }
+        }
 
         public static int StartCost(SchemeKind kind, int targetClanTier, bool isClanLeader, bool isRuler)
         {
             if (kind == SchemeKind.Spy) return 500 + 250 * targetClanTier;
+            if (kind == SchemeKind.Blackmail) return 300 + 200 * targetClanTier;
             int cost = 1000 + 750 * targetClanTier + (isClanLeader ? 1000 : 0);
-            return isRuler ? cost * 2 : cost;
+            if (isRuler) cost *= 2;
+            return kind == SchemeKind.Kidnap ? Round(cost * 0.8) : cost;
         }
 
         public static int BribeCost(int startCost, int level) =>
@@ -140,7 +232,7 @@ namespace CheatMenu.Intrigue.Core
 
         /// <summary>Bir aşamanın gün sayısı: casus başı ustalaştıkça kısalır.</summary>
         public static int PhaseDays(SchemeKind kind, int roguery) =>
-            kind == SchemeKind.Murder
+            SchemeRules.IsStrike(kind)
                 ? Math.Max(4, (int)Math.Ceiling(7 - roguery / 60.0))
                 : Math.Max(3, (int)Math.Ceiling(5 - roguery / 100.0));
 
@@ -165,6 +257,53 @@ namespace CheatMenu.Intrigue.Core
 
         public static int BloodPriceGold(int victimClanTier) => 5000 * Math.Max(1, victimClanTier);
         public const int BloodPriceInfluence = 100;
+
+        // ---- Gölge ağı (E2) ----
+
+        public const int MaxNetworkLevel = 3;
+
+        /// <summary>Ağın olduğu şehirdeki hedefe tam bonus, aynı krallıktaki diğer hedeflere yarısı.</summary>
+        public static int NetworkSuccess(int level, bool sameTown) => sameTown ? 5 * level : 5 * level / 2;
+        public static int NetworkDiscovery(int level, bool sameTown) => sameTown ? 2 * level : level;
+        public static int NetworkCost(int level) => level <= 1 ? 3000 : level == 2 ? 6000 : 12000;
+        public static int NetworkUpkeep(int level) => 150 * level;
+        public static int NetworkRelationRequired(int level) => (level - 1) * 10;
+        public static int MaxNetworks(int roguery) => 1 + roguery / 75;
+        /// <summary>Haftalık: yapay zekânın karşı casusluğu ağı bulup dağıtır.</summary>
+        public static int NetworkExposeChance(int level) => 2 * level;
+
+        // ---- Kozlar (E2) ----
+
+        public const int HookDays = 84;
+        public const int HookGoldPercent = 20;
+        public const int HookInfluence = 50;
+        public const int DefectionInfluenceCost = 200;
+        public const int HookUseRelationPenalty = 10;
+
+        // ---- Yapay zekâ entrikaları (E2) ----
+
+        public const int AiOff = 0;
+        public const int AiFew = 1;
+        public const int AiNormal = 2;
+        public const int HatredThreshold = -40;
+        public const int FeudDays = 168;
+        public const int ProtectionBonus = 25;
+        public const int ProtectionCost = 2000;
+        public const int AiPlotMinDays = 14;
+        public const int AiPlotExtraDays = 21;
+
+        /// <summary>Haftalık yeni yapay zekâ entrikası olasılığı: entrikacı adayı başına Az %3, Normal %6, en fazla %25.</summary>
+        public static int AiPlotWeeklyChance(int candidates, int setting) =>
+            setting == AiOff ? 0 : Math.Min(25, candidates * (setting == AiNormal ? 6 : 3));
+
+        public static int AiMaxPlots(int setting) => setting == AiNormal ? 2 : setting == AiFew ? 1 : 0;
+
+        /// <summary>Haftalık: casus başın sana karşı süren bir entrikayı sezme olasılığı.</summary>
+        public static int DetectionChance(bool hasSpymaster, int roguery) =>
+            hasSpymaster ? Math.Min(90, Round(20 + roguery / 5.0)) : 5;
+
+        public static string AiSettingName(int setting) =>
+            setting == AiOff ? "Kapalı" : setting == AiNormal ? "Normal" : "Az";
 
         public static string DifficultyName(int difficulty) =>
             difficulty == EasyDifficulty ? "Kolay" : difficulty == HardDifficulty ? "Zor" : "Normal";

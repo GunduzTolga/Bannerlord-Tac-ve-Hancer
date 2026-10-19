@@ -74,6 +74,9 @@ namespace CheatMenu.Tests
             Check("settings: intrigue difficulty default normal", ModSettings.Parse("").IntrigueDifficulty == SchemeMath.NormalDifficulty);
             Check("settings: intrigue difficulty hard", ModSettings.Parse("IntrigueDifficulty=2").IntrigueDifficulty == SchemeMath.HardDifficulty);
             Check("settings: intrigue difficulty 7 -> normal", ModSettings.Parse("IntrigueDifficulty=7").IntrigueDifficulty == 1);
+            Check("settings: ai intrigue default few", ModSettings.Parse("").AiIntrigue == SchemeMath.AiFew);
+            Check("settings: ai intrigue off", ModSettings.Parse("AiIntrigue=0").AiIntrigue == SchemeMath.AiOff);
+            Check("settings: player targeted default off", !ModSettings.Parse("").PlayerCanBeTargeted);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -84,10 +87,13 @@ namespace CheatMenu.Tests
             full.SetPartyLimitBonus(4);
             full.NoPartyLimit = true;
             full.SetIntrigueDifficulty(0);
+            full.SetAiIntrigue(2);
+            full.PlayerCanBeTargeted = true;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
-                && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0);
+                && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
+                && back.AiIntrigue == 2 && back.PlayerCanBeTargeted);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -114,6 +120,7 @@ namespace CheatMenu.Tests
             Check("intrigue: garbage -> empty", IntrigueState.Parse("çöp\\x\n\t\t").SaveTestMarker == null);
 
             IntrigueMathTests();
+            IntrigueE2MathTests();
             IntrigueStateTests();
             TurkishSuffixTests();
 
@@ -211,6 +218,65 @@ namespace CheatMenu.Tests
             Check("dice ~30% <= 30 (" + low + ")", low > 2700 && low < 3300);
         }
 
+        private static void IntrigueE2MathTests()
+        {
+            // Kaçırma = suikast -5, kaçırmanın keşfi = suikast +3 (tasarım 15)
+            SchemeInputs mid = new SchemeInputs
+            {
+                Roguery = 120, Calculating = 1, HasReport = true, CompletedPhases = 4,
+                TargetRoguery = 60, TargetClanTier = 4, TargetIsClanLeader = true,
+            };
+            CheckChance("kidnap mid 4 phases", SchemeMath.KidnapSuccess(mid), SchemeMath.MurderSuccess(Phases(Copy(mid), 4)) - 5);
+            CheckChance("kidnap discovery mid", SchemeMath.KidnapDiscovery(mid), SchemeMath.MurderDiscovery(mid) + 3);
+            CheckChance("kidnap opportunity capped at 2 phases", SchemeMath.Opportunity(SchemeKind.Kidnap, 9), 12);
+            SchemeInputs ruler = new SchemeInputs { Roguery = 300, Calculating = 2, HasReport = true, CompletedPhases = 4, EventSuccess = 15,
+                BribeLevel = 3, NetworkSuccess = 15, HasHook = true, TargetIsRuler = true, Difficulty = SchemeMath.EasyDifficulty };
+            CheckChance("kidnap ruler cap 60", SchemeMath.KidnapSuccess(ruler), 60);
+
+            // Ağ ve koz suikasta eklenir
+            SchemeInputs plain = new SchemeInputs { Roguery = 100, TargetClanTier = 3 };
+            int baseChance = SchemeMath.MurderSuccess(plain);
+            plain.NetworkSuccess = 15;
+            plain.HasHook = true;
+            CheckChance("network + hook +25", SchemeMath.MurderSuccess(plain), baseChance + 25);
+            plain.NetworkDiscovery = 6;
+            CheckChance("network discovery -6", SchemeMath.MurderDiscovery(plain), SchemeMath.MurderDiscovery(new SchemeInputs { Roguery = 100, TargetClanTier = 3 }) - 6);
+
+            // Şantaj: 40 + R/5 - TR/10 - kademe*2 - hükümdar 10 + sır/2 (+15 2. aşamada)
+            SchemeInputs blackmail = new SchemeInputs { Roguery = 50, TargetRoguery = 40, TargetClanTier = 3, SecretSeverity = 30, CompletedPhases = 1 };
+            CheckChance("blackmail 1 phase", SchemeMath.BlackmailSuccess(blackmail), 55);
+            blackmail.CompletedPhases = 2;
+            CheckChance("blackmail 2 phases", SchemeMath.BlackmailSuccess(blackmail), 70);
+            CheckChance("blackmail discovery", SchemeMath.BlackmailDiscovery(blackmail), 8);
+            CheckChance("blackmail floor 15", SchemeMath.BlackmailSuccess(new SchemeInputs { TargetRoguery = 300, TargetClanTier = 6,
+                TargetIsRuler = true, Difficulty = SchemeMath.HardDifficulty }), 15);
+
+            Check("costs E2", SchemeMath.StartCost(SchemeKind.Blackmail, 3, true, false) == 900
+                && SchemeMath.StartCost(SchemeKind.Kidnap, 2, false, false) == 2000
+                && SchemeMath.StartCost(SchemeKind.Kidnap, 6, true, true) == 10400);
+            Check("phases E2", SchemeRules.MinPhases(SchemeKind.Kidnap) == 2 && SchemeRules.MaxPhases(SchemeKind.Kidnap) == 4
+                && SchemeRules.MinPhases(SchemeKind.Blackmail) == 1 && SchemeRules.MaxPhases(SchemeKind.Blackmail) == 2
+                && SchemeRules.IsStrike(SchemeKind.Kidnap) && !SchemeRules.IsStrike(SchemeKind.Blackmail));
+
+            // Gölge ağı
+            Check("network bonus", SchemeMath.NetworkSuccess(3, true) == 15 && SchemeMath.NetworkSuccess(3, false) == 7
+                && SchemeMath.NetworkDiscovery(2, true) == 4 && SchemeMath.NetworkDiscovery(2, false) == 2);
+            Check("network cost/relation", SchemeMath.NetworkCost(1) == 3000 && SchemeMath.NetworkCost(3) == 12000
+                && SchemeMath.NetworkRelationRequired(1) == 0 && SchemeMath.NetworkRelationRequired(3) == 20);
+            Check("max networks", SchemeMath.MaxNetworks(0) == 1 && SchemeMath.MaxNetworks(150) == 3);
+
+            // Yapay zekâ
+            Check("ai weekly chance", SchemeMath.AiPlotWeeklyChance(3, SchemeMath.AiFew) == 9 && SchemeMath.AiPlotWeeklyChance(3, SchemeMath.AiNormal) == 18
+                && SchemeMath.AiPlotWeeklyChance(10, SchemeMath.AiNormal) == 25 && SchemeMath.AiPlotWeeklyChance(5, SchemeMath.AiOff) == 0);
+            Check("ai max plots", SchemeMath.AiMaxPlots(SchemeMath.AiOff) == 0 && SchemeMath.AiMaxPlots(SchemeMath.AiFew) == 1
+                && SchemeMath.AiMaxPlots(SchemeMath.AiNormal) == 2);
+            Check("detection", SchemeMath.DetectionChance(false, 300) == 5 && SchemeMath.DetectionChance(true, 0) == 20
+                && SchemeMath.DetectionChance(true, 100) == 40 && SchemeMath.DetectionChance(true, 400) == 90);
+        }
+
+        private static SchemeInputs Copy(SchemeInputs i) => (SchemeInputs)typeof(SchemeInputs)
+            .GetMethod("MemberwiseClone", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(i, null);
+
         private static void IntrigueStateTests()
         {
             var state = new IntrigueState { SpymasterId = "spc_x", NextSchemeId = 4, Seed = 99, Rolls = 3, SaveTestMarker = "gün 5" };
@@ -231,6 +297,15 @@ namespace CheatMenu.Tests
             state.Notices.Add(new Notice { Title = "Başlık", Text = "satır 1\nsatır 2", HeroId = "lord_1_1" });
             state.LiegeDemand = new LiegeDemand { KingdomId = "vlandia", VictimName = "X", Gold = 10000, Influence = 100 };
             state.AddLog(12, "olay");
+            state.NextPlotId = 6;
+            state.Hooks.Add(new Hook { TargetId = "lord_4", Day = 20, Until = 104 });
+            state.AiPlots.Add(new AiPlot
+            {
+                Id = 5, PlotterId = "lord_5", TargetId = "spc_wife", Kind = SchemeKind.Kidnap, StartDay = 30, ResolveDay = 55,
+                Seed = 77, Rolls = 2, Detected = true, Asked = false, Protected = true,
+            });
+            state.Networks.Add(new ShadowNetwork { SettlementId = "town_V1", Level = 2, Since = 40 });
+            state.FeudUntil["lord_6"] = 400;
 
             IntrigueState back = IntrigueState.Parse(state.Write());
             Scheme s = back.Schemes.Count == 1 ? back.Schemes[0] : null;
@@ -240,7 +315,7 @@ namespace CheatMenu.Tests
                 && s.StartDay == 10 && s.Phase == 2 && s.DaysIntoPhase == 3 && s.PhaseDays == 6 && s.StartCost == 2500
                 && s.Seed == -12345 && s.Rolls == 7 && s.EventSuccess == 8 && s.EventDiscovery == -3
                 && s.UsedEvents.Count == 2 && s.UsedEvents[1] == 3 && s.Method == SchemeMethod.Dagger
-                && s.FeastRisk && s.PendingEvent == 5 && !s.AwaitingSpyChoice && s.AskedToExecute);
+                && s.FeastRisk && s.PendingEvent == 5 && !s.AwaitingChoice && s.AskedToExecute);
             IntelReport r = back.Reports.Count == 1 ? back.Reports[0] : null;
             Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
             Check("state: secret", back.Secrets.Count == 1 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed);
@@ -248,11 +323,19 @@ namespace CheatMenu.Tests
             Check("state: notice", back.Notices.Count == 1 && back.Notices[0].Text == "satır 1\nsatır 2" && back.Notices[0].HeroId == "lord_1_1");
             Check("state: liege", back.LiegeDemand != null && back.LiegeDemand.Gold == 10000 && back.LiegeDemand.KingdomId == "vlandia");
             Check("state: log", back.Log.Count == 1 && back.Log[0].Text == "olay");
+            Check("state: hook", back.Hooks.Count == 1 && back.ActiveHook("lord_4", 103) != null && back.ActiveHook("lord_4", 104) == null);
+            AiPlot plot = back.AiPlots.Count == 1 ? back.AiPlots[0] : null;
+            Check("state: ai plot", plot != null && plot.Id == 5 && plot.PlotterId == "lord_5" && plot.TargetId == "spc_wife"
+                && plot.Kind == SchemeKind.Kidnap && plot.StartDay == 30 && plot.ResolveDay == 55 && plot.Seed == 77 && plot.Rolls == 2
+                && plot.Detected && !plot.Asked && plot.Protected && back.NextPlotId == 6);
+            Check("state: network", back.Network("town_V1") != null && back.Network("town_V1").Level == 2 && back.Network("town_V1").Since == 40);
+            Check("state: feud", back.HasFeud("lord_6", 399) && !back.HasFeud("lord_6", 400));
 
             Check("state: report valid at 72", back.HasValidReport("lord_1_1", 72) && !back.HasValidReport("lord_1_1", 73));
             Check("state: cooldown", back.IsOnCooldown("lord_2", 199) && !back.IsOnCooldown("lord_2", 200));
             back.RemoveExpired(250);
-            Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3"));
+            Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3")
+                && back.Hooks.Count == 0 && back.FeudUntil.ContainsKey("lord_6"));
 
             for (int i = 0; i < 30; i++) back.AddLog(i, "e" + i);
             Check("state: log capped", back.Log.Count == IntrigueState.MaxLogEntries && back.Log[back.Log.Count - 1].Text == "e29");

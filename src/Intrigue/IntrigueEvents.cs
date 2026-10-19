@@ -75,7 +75,7 @@ namespace CheatMenu.Intrigue
             new EventDef
             {
                 Id = 3, Title = "Zehir mi, hançer mi?",
-                Condition = c => c.Scheme.Method == SchemeMethod.None,
+                Condition = c => c.Scheme.Kind == SchemeKind.Murder && c.Scheme.Method == SchemeMethod.None,
                 Text = c => c.Spymaster.Name + " yöntemi soruyor: " + c.Name + " nasıl ölecek?",
                 Options = c => new List<Option>
                 {
@@ -117,6 +117,7 @@ namespace CheatMenu.Intrigue
             new EventDef
             {
                 Id = 5, Title = "Rakip suikastçı",
+                Condition = c => c.Scheme.Kind == SchemeKind.Murder,
                 Text = c => "Başka birinin de " + Tr.Genitive(c.Name) + " ölümünü istediği ortaya çıktı. Onun adamları da aynı kapıların etrafında dolaşıyor.",
                 Options = c => new List<Option>
                 {
@@ -152,7 +153,8 @@ namespace CheatMenu.Intrigue
             {
                 Id = 7, Title = "Vicdan azabı",
                 Condition = c => c.Spymaster.GetTraitLevel(DefaultTraits.Mercy) >= 1,
-                Text = c => c.Spymaster.Name + " bu işten rahatsız: \"" + Tr.Accusative(c.Name) + " gerçekten öldürmek zorunda mıyız?\"",
+                Text = c => c.Spymaster.Name + " bu işten rahatsız: \"" + Tr.Accusative(c.Name) + " gerçekten " + (c.Scheme.Kind == SchemeKind.Kidnap ? "kaçırmak" : "öldürmek")
+                    + " zorunda mıyız?\"",
                 Options = c =>
                 {
                     int chance = SchemeMath.PersuadeChance(Hero.MainHero.GetSkillValue(DefaultSkills.Charm));
@@ -214,7 +216,7 @@ namespace CheatMenu.Intrigue
         {
             var context = new Context { Scheme = scheme, Target = target, Spymaster = spymaster };
             List<EventDef> eligible = Events
-                .Where(e => (scheme.Kind == SchemeKind.Murder || e.ForSpy) && !scheme.UsedEvents.Contains(e.Id) && e.Condition(context))
+                .Where(e => (SchemeRules.IsStrike(scheme.Kind) || e.ForSpy) && !scheme.UsedEvents.Contains(e.Id) && e.Condition(context))
                 .ToList();
             if (eligible.Count == 0) return 0;
             EventDef picked = eligible[scheme.Pick(eligible.Count)];

@@ -4,6 +4,7 @@ using System.Linq;
 using CheatMenu.Intrigue;
 using CheatMenu.Intrigue.Core;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
 using TaleWorlds.Core.ImageIdentifiers;
 using TaleWorlds.Library;
@@ -26,6 +27,10 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Süren entrikalar (" + state.Schemes.Count + "/" + max + ")...", ShowSchemes),
                 MenuEntry.Submenu("Yeni entrika...", ShowNewScheme),
                 MenuEntry.Submenu("İstihbarat raporları (" + state.Reports.Count + ")...", ShowReports),
+                MenuEntry.Submenu("Kozlar (" + state.Hooks.Count(h => h.Until > SchemeFactors.Today) + ")...", ShowHooks),
+                MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
+                    ShowNetworks),
+                MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
                 MenuEntry.Submenu("Geçmiş...", ShowIntrigueLog),
             };
             if (spymaster != null) entries.Add(MenuEntry.Simple("Casus başını görevden al", SchemeEngine.DismissSpymaster));
@@ -92,23 +97,24 @@ namespace CheatMenu.Menu
             var lines = new List<string> { "Hedef: " + SchemeFactors.TargetLabel(target) };
             lines.Add("Aşama: " + scheme.Phase + "/" + max + " (en az " + SchemeRules.MinPhases(scheme.Kind) + ")"
                 + (SchemeEngine.IsWaiting(scheme) ? " - karar bekliyor" : " - sonraki aşamaya " + (scheme.PhaseDays - scheme.DaysIntoPhase) + " gün"));
-            if (scheme.Kind == SchemeKind.Murder)
+            if (SchemeRules.IsStrike(scheme.Kind))
             {
                 var atMax = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme);
                 atMax.CompletedPhases = Math.Max(scheme.Phase, max);
-                lines.Add("Başarı şu an: %" + SchemeMath.MurderSuccess(inputs) + " (" + max + ". aşamada %" + SchemeMath.MurderSuccess(atMax)
-                    + "; harekete geçerken rüşvetle +5/+10/+15)");
+                lines.Add("Başarı şu an: %" + SchemeMath.Success(scheme.Kind, inputs) + " (" + max + ". aşamada %"
+                    + SchemeMath.Success(scheme.Kind, atMax) + "; harekete geçerken rüşvetle +5/+10/+15)");
                 if (scheme.Method != SchemeMethod.None) lines.Add("Yöntem: " + MethodName(scheme.Method));
                 if (scheme.FeastRisk) lines.Add("Ziyafette vurulacak: ortaya çıkarsa cezalar 1,5 kat");
             }
-            else lines.Add("Başarı: %" + SchemeMath.SpySuccess(inputs));
+            else lines.Add("Başarı: %" + SchemeMath.Success(scheme.Kind, inputs));
+            if (inputs.NetworkSuccess > 0) lines.Add("Gölge ağı desteği: başarı +" + inputs.NetworkSuccess + ", yakalanma -" + inputs.NetworkDiscovery);
             lines.Add("Her aşamada yakalanma: %" + SchemeMath.Discovery(scheme.Kind, inputs));
             if (spymaster == null) lines.Add("DURDU: casus başın yok");
             else if (SchemeFactors.SpymasterBusyReason(spymaster) != null)
                 lines.Add("DURDU: casus başın şu an " + SchemeFactors.SpymasterBusyReason(spymaster));
 
             var entries = new List<MenuEntry>();
-            if (scheme.Kind == SchemeKind.Murder)
+            if (SchemeRules.IsStrike(scheme.Kind))
             {
                 string blocked = SchemeEngine.CannotExecuteReason(scheme);
                 entries.Add(blocked == null
@@ -164,9 +170,12 @@ namespace CheatMenu.Menu
             MenuUI.ShowList("Yeni entrika", new List<MenuEntry>
             {
                 MenuEntry.Submenu("Casusluk: rapor ve sır (1-2 aşama, düşük risk)...", () => PickSchemeTarget(SchemeKind.Spy)),
+                MenuEntry.Submenu("Şantaj: bildiğin bir sırrı koza çevir (1-2 aşama, orta risk)...", () => PickSchemeTarget(SchemeKind.Blackmail)),
+                MenuEntry.Submenu("Kaçırma: hedefi esir al (2-4 aşama, çok yüksek risk)...", () => PickSchemeTarget(SchemeKind.Kidnap)),
                 MenuEntry.Submenu("Suikast: hedefi öldür (2-5 aşama, çok yüksek risk)...", () => PickSchemeTarget(SchemeKind.Murder)),
             }, ShowNewScheme, "Geri", ShowIntrigue,
-                "Casusluk raporu, o hedefe suikastta +10 başarı verir ve tanışmadığın birini de suikast listesine ekler.");
+                "Casusluk raporu, o hedefe suikast ve kaçırmada +10 başarı verir ve tanışmadığın birini de listeye ekler. "
+                + "Şantaj için önce casuslukla bir sır bulmalısın.");
         }
 
         private static void PickSchemeTarget(SchemeKind kind)
@@ -176,9 +185,9 @@ namespace CheatMenu.Menu
             List<Hero> targets = SchemeFactors.Targets(state, kind).ToList();
             if (targets.Count == 0)
             {
-                MenuUI.Error(kind == SchemeKind.Murder
-                    ? "Suikast için tanıştığın ya da hakkında güncel raporun olan, yeri belli bir hedef gerekir"
-                    : "Casusluk yapılacak kimse bulunamadı");
+                MenuUI.Error(kind == SchemeKind.Spy ? "Casusluk yapılacak kimse bulunamadı"
+                    : kind == SchemeKind.Blackmail ? "Şantaj için ifşa edilmemiş bir sırrını bildiğin bir lord gerekir (önce casusluk)"
+                    : SchemeRules.Name(kind) + " için tanıştığın ya da hakkında güncel raporun olan, yeri belli bir hedef gerekir");
                 MenuUI.Defer(ShowNewScheme);
                 return;
             }
@@ -190,11 +199,11 @@ namespace CheatMenu.Menu
         {
             SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, kind, null);
             string chance;
-            if (kind == SchemeKind.Murder)
+            if (kind != SchemeKind.Spy)
             {
-                int low = SchemeMath.MurderSuccess(inputs);
+                int low = SchemeMath.Success(kind, inputs);
                 inputs.CompletedPhases = SchemeRules.MaxPhases(kind);
-                chance = "%" + low + "-" + SchemeMath.MurderSuccess(inputs);
+                chance = "%" + low + "-" + SchemeMath.Success(kind, inputs);
             }
             else chance = "%" + SchemeMath.SpySuccess(inputs);
             return SchemeFactors.TargetLabel(target) + " - başarı " + chance + ", " + SchemeFactors.Money(SchemeFactors.StartCost(kind, target));
@@ -214,22 +223,41 @@ namespace CheatMenu.Menu
                 "Hedef: " + SchemeFactors.TargetLabel(target),
                 "Maliyet: " + SchemeFactors.Money(cost) + " (sende " + SchemeFactors.Money(Hero.MainHero.Gold) + ")",
             };
-            if (kind == SchemeKind.Murder)
+            int min = SchemeRules.MinPhases(kind), max = SchemeRules.MaxPhases(kind);
+            if (SchemeRules.IsStrike(kind))
             {
-                int low = SchemeMath.MurderSuccess(inputs);
-                inputs.CompletedPhases = SchemeRules.MaxPhases(kind);
-                lines.Add("Aşamalar: en az 2, en fazla 5; her aşama yaklaşık " + days + " gün");
-                lines.Add("Başarı: 2 aşamada %" + low + ", 5 aşamada %" + SchemeMath.MurderSuccess(inputs)
+                int low = SchemeMath.Success(kind, inputs);
+                inputs.CompletedPhases = max;
+                lines.Add("Aşamalar: en az " + min + ", en fazla " + max + "; her aşama yaklaşık " + days + " gün");
+                lines.Add("Başarı: " + min + " aşamada %" + low + ", " + max + " aşamada %" + SchemeMath.Success(kind, inputs)
                     + " (harekete geçerken rüşvetle +5/+10/+15)");
-                lines.Add("Her aşamada yakalanma: %" + SchemeMath.MurderDiscovery(inputs));
+                lines.Add("Her aşamada yakalanma: %" + SchemeMath.Discovery(kind, inputs));
+                if (inputs.HasHook) lines.Add("Üzerinde kozun var: +10 başarı.");
+                if (inputs.NetworkSuccess > 0) lines.Add("Gölge ağı desteği: başarı +" + inputs.NetworkSuccess + ", yakalanma -" + inputs.NetworkDiscovery + ".");
                 lines.Add(state.HasValidReport(target.StringId, today)
                     ? "Güncel istihbarat raporun var: +10 başarı."
                     : "Güncel raporun yok: önce casusluk yaparsan +10 başarı.");
                 if (inputs.TargetAlerted) lines.Add("Hedef tetikte: -15 başarı.");
                 if (inputs.TargetIsPlayersCaptive) lines.Add("Hedef senin elinde: başarı +20, ama ölürse ilk senden şüphelenilir (iz bırakma ×2).");
                 lines.Add("");
-                lines.Add("Ortaya çıkarsa: ağır ilişki cezası, suç puanı ve Onur kaybı. Hedef hükümdarsa savaş çıkabilir; "
-                    + "kendi krallığındansa hükümdarın hesap sorar.");
+                lines.Add(kind == SchemeKind.Kidnap
+                    ? "Başarılı olursa hedef partinde esir olur. Ortaya çıkarsa: ilişki cezası, suç puanı ve Onur kaybı (suikasttan hafif); "
+                        + "hükümdarsa savaş çıkabilir."
+                    : "Ortaya çıkarsa: ağır ilişki cezası, suç puanı, Onur kaybı ve kurbanın yakınlarıyla kan davası. "
+                        + "Hedef hükümdarsa savaş çıkabilir; kendi krallığındansa hükümdarın hesap sorar.");
+            }
+            else if (kind == SchemeKind.Blackmail)
+            {
+                Secret secret = SchemeFactors.BestSecret(state, target);
+                int low = SchemeMath.BlackmailSuccess(inputs);
+                inputs.CompletedPhases = max;
+                lines.Add("Elindeki sır: " + (secret != null ? SecretRules.Name(secret.Kind) : "-"));
+                lines.Add("Aşamalar: 1-2; her aşama yaklaşık " + days + " gün (2. aşama başarı +15)");
+                lines.Add("Başarı: 1 aşamada %" + low + ", 2 aşamada %" + SchemeMath.BlackmailSuccess(inputs)
+                    + "; her aşamada yakalanma %" + SchemeMath.BlackmailDiscovery(inputs));
+                lines.Add("");
+                lines.Add("Başarılı olursa " + SchemeMath.HookDays + " gün geçerli bir koz: altın, etki, esirlerini bıraktırma, "
+                    + "krallık değiştirtme. Kullanınca ilişkiniz düşer. Tutmazsa sır yanar ve ilişki -20.");
             }
             else
             {
@@ -285,18 +313,12 @@ namespace CheatMenu.Menu
                         () => SchemeOutcomes.ExposeSecret(state, secret),
                         () => ShowReport(report))));
             }
+            if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Blackmail) == null)
+                entries.Add(MenuEntry.Submenu("Bu sırla şantaj başlat...", () => StartFromReport(report, SchemeKind.Blackmail)));
             if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Murder) == null)
-                entries.Add(MenuEntry.Submenu("Bu hedefe suikast başlat...", () =>
-                {
-                    string reason = SchemeEngine.CannotStartReason(state);
-                    if (reason != null)
-                    {
-                        MenuUI.Error(reason);
-                        MenuUI.Defer(() => ShowReport(report));
-                        return;
-                    }
-                    ConfirmStart(SchemeKind.Murder, target);
-                }));
+                entries.Add(MenuEntry.Submenu("Bu hedefe suikast başlat...", () => StartFromReport(report, SchemeKind.Murder)));
+            if (target != null && SchemeFactors.BlockedReason(state, target, SchemeKind.Kidnap) == null)
+                entries.Add(MenuEntry.Submenu("Bu hedefi kaçırt...", () => StartFromReport(report, SchemeKind.Kidnap)));
             entries.Add(MenuEntry.Simple("Raporu sil", () =>
             {
                 state.Reports.Remove(report);
@@ -307,6 +329,155 @@ namespace CheatMenu.Menu
             MenuUI.ShowList("Rapor: " + report.TargetName, entries,
                 () => { if (state.Reports.Contains(report)) ShowReport(report); else ShowReports(); },
                 "Geri", ShowReports, SchemeOutcomes.ReportText(report) + secretsNote);
+        }
+
+        private static void StartFromReport(IntelReport report, SchemeKind kind)
+        {
+            string reason = SchemeEngine.CannotStartReason(SchemeEngine.State);
+            Hero target = Hero.Find(report.TargetId);
+            if (reason != null || target == null)
+            {
+                MenuUI.Error(reason ?? "Hedef bulunamadı");
+                MenuUI.Defer(() => ShowReport(report));
+                return;
+            }
+            ConfirmStart(kind, target);
+        }
+
+        // ---- Kozlar ----
+
+        private static void ShowHooks()
+        {
+            IntrigueState state = SchemeEngine.State;
+            int today = SchemeFactors.Today;
+            List<Hook> hooks = state.Hooks.Where(h => h.Until > today && Hero.Find(h.TargetId)?.IsAlive == true).ToList();
+            if (hooks.Count == 0)
+            {
+                MenuUI.Info("Kimse üzerinde kozun yok. Önce casuslukla bir sır bul, sonra şantaj yap.");
+                MenuUI.Defer(ShowIntrigue);
+                return;
+            }
+            Picker.Pick("Kozlar", hooks, h => SchemeFactors.TargetLabel(Hero.Find(h.TargetId)) + " - " + (h.Until - today) + " gün kaldı",
+                ShowHook, ShowIntrigue, h => HeroPortrait(Hero.Find(h.TargetId)), sort: false);
+        }
+
+        private static void ShowHook(Hook hook)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero target = Hero.Find(hook.TargetId);
+            if (target == null || !state.Hooks.Contains(hook))
+            {
+                MenuUI.Defer(ShowHooks);
+                return;
+            }
+            List<MenuEntry> entries = HookActions.Options(target)
+                .Select(option => option.Blocked == null
+                    ? MenuEntry.Submenu(option.Label, () =>
+                    {
+                        // Başarılıysa menü kapalı kalır: sonuç popup'ı hemen görünsün.
+                        bool done = false;
+                        MenuUI.SafeRun("Koz", () =>
+                        {
+                            HookActions.Apply(state, target, option.Use);
+                            done = true;
+                        });
+                        if (!done) MenuUI.Defer(() => ShowHook(hook));
+                    })
+                    : MenuEntry.Simple(option.Label + " (" + option.Blocked + ")", () => MenuUI.Error(option.Blocked)))
+                .ToList();
+            MenuUI.ShowList("Koz: " + target.Name, entries, () => ShowHook(hook), "Geri", ShowHooks,
+                (hook.Until - SchemeFactors.Today) + " gün geçerli. Bırakma dışındaki her talep kozu harcar ve ilişkiyi -"
+                + SchemeMath.HookUseRelationPenalty + " düşürür. Aynı şeyleri onunla konuşurken \"özel bir konu\" açarak da yapabilirsin.");
+        }
+
+        // ---- Gölge ağları ----
+
+        private static void ShowNetworks()
+        {
+            IntrigueState state = SchemeEngine.State;
+            if (state.Networks.Count == 0)
+            {
+                MenuUI.Info("Gölge ağın yok. Çete lideri olan bir şehre git: kasaba menüsünde \"Gölgelerde iş çevir\".");
+                MenuUI.Defer(ShowIntrigue);
+                return;
+            }
+            Picker.Pick("Gölge ağları", state.Networks.ToList(),
+                n => Settlement.Find(n.SettlementId)?.Name + " - seviye " + n.Level + ", haftalık " + SchemeFactors.Money(SchemeMath.NetworkUpkeep(n.Level)),
+                n =>
+                {
+                    Settlement town = Settlement.Find(n.SettlementId);
+                    if (town != null) ShowShadowTown(town, false);
+                    else MenuUI.Defer(ShowNetworks);
+                },
+                ShowIntrigue, sort: false);
+        }
+
+        /// <param name="inTown">Şehirdeyken kurulup güçlendirilir; uzaktan yalnızca bakılır ve dağıtılır.</param>
+        public static void ShowShadowTown(Settlement town, bool inTown)
+        {
+            IntrigueState state = SchemeEngine.State;
+            ShadowNetwork network = state.Network(town.StringId);
+            var entries = new List<MenuEntry>();
+            if (inTown)
+            {
+                int level = (network?.Level ?? 0) + 1;
+                if (level <= SchemeMath.MaxNetworkLevel)
+                {
+                    string blocked = ShadowNetworks.UpgradeBlocked(state, town);
+                    string label = (network == null ? "Ağ kur" : "Ağı güçlendir: seviye " + level) + " (" + SchemeFactors.Money(SchemeMath.NetworkCost(level))
+                        + ", çete lideriyle ilişki en az " + SchemeMath.NetworkRelationRequired(level) + ")";
+                    entries.Add(blocked == null
+                        ? MenuEntry.Simple(label, () => ShadowNetworks.Upgrade(state, town))
+                        : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
+                }
+                entries.Add(MenuEntry.Simple("Çete liderine hediye gönder (" + SchemeFactors.Money(ShadowNetworks.GiftCost) + ", ilişki +"
+                    + ShadowNetworks.GiftRelation + ")", () => ShadowNetworks.Gift(town)));
+            }
+            if (network != null)
+                entries.Add(MenuEntry.Submenu("Ağı dağıt...", () => MenuUI.Confirm("Ağı dağıt", "Harcanan para geri gelmez. Dağıtılsın mı?",
+                    () => ShadowNetworks.Disband(state, town), () => ShowShadowTown(town, inTown))));
+            if (entries.Count == 0) entries.Add(MenuEntry.Simple("Ağ kurmak için bu şehre git", () => { }));
+
+            MenuUI.ShowList("Gölgeler: " + town.Name, entries, () => ShowShadowTown(town, inTown), inTown ? "Kapat" : "Geri",
+                inTown ? (Action)null : ShowNetworks, ShadowNetworks.Describe(state, town));
+        }
+
+        // ---- Sana karşı entrikalar ----
+
+        private static void ShowPlotsAgainstMe()
+        {
+            IntrigueState state = SchemeEngine.State;
+            List<AiPlot> known = state.AiPlots.Where(p => p.Detected).ToList();
+            if (known.Count == 0)
+            {
+                MenuUI.Info("Sezdiğin bir entrika yok. Casus başının Roguery'si yüksekse sana karşı kurulanları daha kolay sezer.");
+                MenuUI.Defer(ShowIntrigue);
+                return;
+            }
+            List<MenuEntry> entries = known.Select(plot => MenuEntry.Submenu(AiIntrigue.PlotLine(plot), () => ShowPlot(plot))).ToList();
+            MenuUI.ShowList("Sana karşı entrikalar", entries, ShowPlotsAgainstMe, "Geri", ShowIntrigue,
+                "Yalnızca casus başının sezdikleri görünür. Yapay zekâ entrikaları Kurallar'dan kapatılabilir ya da azaltılabilir.");
+        }
+
+        private static void ShowPlot(AiPlot plot)
+        {
+            IntrigueState state = SchemeEngine.State;
+            if (!state.AiPlots.Contains(plot))
+            {
+                MenuUI.Defer(ShowPlotsAgainstMe);
+                return;
+            }
+            List<MenuEntry> entries = IntriguePopups.PlotOptions(state, plot)
+                .Where(o => !o.Label.StartsWith("Şimdilik"))
+                .Select(o => o.DisabledHint == null
+                    ? MenuEntry.Submenu(o.Label, () =>
+                    {
+                        MenuUI.SafeRun("Karşı hamle", o.Apply);
+                        MenuUI.Defer(ShowPlotsAgainstMe);
+                    })
+                    : MenuEntry.Simple(o.Label + " (" + o.DisabledHint + ")", () => MenuUI.Error(o.DisabledHint)))
+                .ToList();
+            MenuUI.ShowList(AiIntrigue.PlotLine(plot), entries, () => ShowPlot(plot), "Geri", ShowPlotsAgainstMe);
         }
 
         private static void ShowIntrigueLog()

@@ -6,6 +6,7 @@ using CheatMenu.Intrigue.Core;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
+using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.Core;
 
 namespace CheatMenu.Intrigue
@@ -17,7 +18,8 @@ namespace CheatMenu.Intrigue
     public static class SchemeOutcomes
     {
         private const int MurderSuccessXp = 1500;
-        private const int MurderFailXp = 300;
+        private const int KidnapSuccessXp = 1000;
+        private const int StrikeFailXp = 300;
         private const int SpySuccessXp = 400;
 
         // Kişilik XP'si (oyunda denenince ayarlanacak)
@@ -26,6 +28,8 @@ namespace CheatMenu.Intrigue
         private const int HonorOnLightExposure = -40;
         private const int HonorOnHeavyExposure = -150;
         private const int MercyOnHeavyExposure = -100;
+        private const int HonorOnKidnap = -20;
+        private const int HonorOnKidnapExposure = -80;
 
         // ---- Aşama sırasında yakalanma ----
 
@@ -36,17 +40,18 @@ namespace CheatMenu.Intrigue
             state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
             state.AddLog(today, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + target.Name);
 
-            if (scheme.Kind == SchemeKind.Spy)
+            if (!SchemeRules.IsStrike(scheme.Kind))
             {
-                Relate(target, -10);
-                Notify(state, "Casusluk ortaya çıktı: " + target.Name,
-                    target.Name + " peşinde adamların olduğunu fark etti. Entrika dağıldı.\n\nSonuç: " + target.Name + " ile ilişki -10.",
+                int penalty = scheme.Kind == SchemeKind.Blackmail ? 15 : 10;
+                Relate(target, -penalty);
+                Notify(state, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + target.Name,
+                    target.Name + " peşinde adamların olduğunu fark etti. Entrika dağıldı.\n\nSonuç: " + target.Name + " ile ilişki -" + penalty + ".",
                     target);
                 return;
             }
 
             string consequences = ApplyLightExposure(state, target, 20, scheme.FeastRisk);
-            Notify(state, "Suikast planı ortaya çıktı: " + target.Name,
+            Notify(state, SchemeRules.Name(scheme.Kind) + " planı ortaya çıktı: " + target.Name,
                 Tr.Dative(target.Name.ToString()) + " karşı kurduğun plan, daha harekete geçmeden ortaya çıktı. Adamların dağıldı.\n\nSonuç: " + consequences,
                 target);
         }
@@ -65,30 +70,83 @@ namespace CheatMenu.Intrigue
 
             string text = victim.Name + " " + MethodText(scheme.Method) + ".";
             if (traced) text += "\n\nAma arkanda iz kaldı ve herkes bunun arkasında senin olduğunu biliyor.\n\nSonuç: "
-                + ApplyHeavyExposure(state, victim, scheme.FeastRisk);
+                + ApplyHeavyExposure(state, victim, scheme.FeastRisk, false);
             else text += "\n\nKimse senden şüphelenmiyor. Vicdanın ise o kadar sessiz değil (Merhamet -).";
             Notify(state, "Suikast başarılı: " + victim.Name, text, null);
             state.AddLog(SchemeFactors.Today, "Suikast: " + victim.Name + " öldürüldü" + (traced ? " (iz kaldı)" : ""));
         }
 
-        public static void MurderFailed(IntrigueState state, Scheme scheme, Hero spymaster, Hero target, int roguery)
+        /// <summary>Suikast ya da kaçırma tutmadı: hedef kurtuldu (suikastta yaralı), adamların yakalanmış olabilir.</summary>
+        public static void StrikeFailed(IntrigueState state, Scheme scheme, Hero spymaster, Hero target, int roguery)
         {
             int today = SchemeFactors.Today;
-            target.HitPoints = Math.Max(1, target.MaxHitPoints / 5);
-            spymaster?.AddSkillXp(DefaultSkills.Roguery, MurderFailXp);
+            bool murder = scheme.Kind == SchemeKind.Murder;
+            if (murder) target.HitPoints = Math.Max(1, target.MaxHitPoints / 5);
+            spymaster?.AddSkillXp(DefaultSkills.Roguery, StrikeFailXp);
             state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
 
             bool caught = !CheatState.IntrigueNeverDiscovered && scheme.Roll100() <= SchemeMath.CaughtOnFailureChance(roguery);
-            string text = target.Name + " saldırıdan yaralı kurtuldu.";
-            if (caught) text += "\n\nSuikastçı yakalandı ve konuştu.\n\nSonuç: " + ApplyLightExposure(state, target, 30, scheme.FeastRisk);
+            string text = murder ? target.Name + " saldırıdan yaralı kurtuldu." : target.Name + " kaçırılmaktan son anda kurtuldu.";
+            if (caught) text += "\n\nAdamlarından biri yakalandı ve konuştu.\n\nSonuç: " + ApplyLightExposure(state, target, 30, scheme.FeastRisk);
             else
             {
                 state.AlertUntil[target.StringId] = today + SchemeMath.AlertDays;
-                text += "\n\nSuikastçı kaçmayı başardı; kimse seni suçlamıyor. Ama " + target.Name
+                text += "\n\nAdamların kaçmayı başardı; kimse seni suçlamıyor. Ama " + target.Name
                     + " artık tetikte (" + SchemeMath.AlertDays + " gün boyunca ona karşı başarı -15).";
             }
-            Notify(state, "Suikast başarısız: " + target.Name, text, target);
-            state.AddLog(today, "Suikast başarısız: " + target.Name + (caught ? " (yakalandın)" : ""));
+            Notify(state, SchemeRules.Name(scheme.Kind) + " başarısız: " + target.Name, text, target);
+            state.AddLog(today, SchemeRules.Name(scheme.Kind) + " başarısız: " + target.Name + (caught ? " (yakalandın)" : ""));
+        }
+
+        // ---- Kaçırma ----
+
+        public static void KidnapSucceeded(IntrigueState state, Scheme scheme, Hero spymaster, Hero target, int discovery)
+        {
+            int trace = SchemeMath.TraceChance(discovery, false, false);
+            bool traced = !CheatState.IntrigueNeverDiscovered && scheme.Roll100() <= trace;
+            Victim victim = Victim.Of(target);
+
+            TakePrisonerAction.Apply(PartyBase.MainParty, target);
+            spymaster?.AddSkillXp(DefaultSkills.Roguery, KidnapSuccessXp);
+            TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Honor, HonorOnKidnap);
+
+            string text = victim.Name + " gece yarısı çuvala konup kaçırıldı; şimdi partindeki esirler arasında. "
+                + "Fidye isteyebilir, serbest bırakabilir ya da elinde tutabilirsin.";
+            if (traced) text += "\n\nAma adamların iz bıraktı ve herkes kaçıranın sen olduğunu biliyor.\n\nSonuç: "
+                + ApplyHeavyExposure(state, victim, scheme.FeastRisk, true);
+            else text += "\n\nKimin yaptığını kimse bilmiyor (Onur -).";
+            Notify(state, "Kaçırma başarılı: " + victim.Name, text, target);
+            state.AddLog(SchemeFactors.Today, "Kaçırma: " + victim.Name + (traced ? " (iz kaldı)" : ""));
+        }
+
+        // ---- Şantaj ----
+
+        public static void BlackmailSucceeded(IntrigueState state, Scheme scheme, Hero spymaster, Hero target)
+        {
+            int today = SchemeFactors.Today;
+            state.Hooks.RemoveAll(h => h.TargetId == target.StringId);
+            state.Hooks.Add(new Hook { TargetId = target.StringId, Day = today, Until = today + SchemeMath.HookDays });
+            Relate(target, -SchemeMath.HookUseRelationPenalty);
+            spymaster?.AddSkillXp(DefaultSkills.Roguery, SpySuccessXp);
+
+            string text = target.Name + " sırrının ortaya çıkmasındansa sana boyun eğmeyi seçti. " + SchemeMath.HookDays
+                + " gün boyunca üzerinde bir kozun var.\n\nKullanmak için: Entrika > Kozlar, ya da onunla konuşup \"özel bir konu\" aç.";
+            int abandoned = state.AiPlots.RemoveAll(p => p.PlotterId == target.StringId);
+            if (abandoned > 0) text += "\n\nSana karşı kurduğu entrikadan da vazgeçti.";
+            Notify(state, "Şantaj tuttu: " + target.Name, text + "\n\nSonuç: " + target.Name + " ile ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target);
+            state.AddLog(today, "Şantaj tuttu: " + target.Name + " üzerinde koz");
+        }
+
+        public static void BlackmailFailed(IntrigueState state, Hero target)
+        {
+            int today = SchemeFactors.Today;
+            Secret secret = SchemeFactors.BestSecret(state, target);
+            if (secret != null) state.Secrets.Remove(secret);
+            Relate(target, -20);
+            state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
+            Notify(state, "Şantaj tutmadı: " + target.Name,
+                target.Name + " tehdidine boyun eğmedi ve izleri örtbas etti; elindeki sır artık işe yaramıyor.\n\nSonuç: ilişki -20.", target);
+            state.AddLog(today, "Şantaj tutmadı: " + target.Name);
         }
 
         private static string MethodText(SchemeMethod method)
@@ -128,32 +186,45 @@ namespace CheatMenu.Intrigue
             return string.Join(", ", parts) + ".";
         }
 
-        /// <summary>Cinayet ortaya çıktı (tasarım 5.5 "ağır ifşa").</summary>
-        private static string ApplyHeavyExposure(IntrigueState state, Victim victim, bool feast)
+        /// <summary>Cinayet ya da kaçırma ortaya çıktı (tasarım 5.5 "ağır ifşa"; kaçırmada cezalar daha hafif, kan davası yok).</summary>
+        private static string ApplyHeavyExposure(IntrigueState state, Victim victim, bool feast, bool kidnap)
         {
             var parts = new List<string>();
-            int clanPenalty = Scale(50, feast);
+            int clanPenalty = Scale(kidnap ? 35 : 50, feast);
             foreach (Hero hero in victim.ClanAdults.Where(h => h.IsAlive)) Relate(hero, -clanPenalty);
             if (victim.ClanAdults.Count > 0) parts.Add(victim.ClanName + " klanıyla ilişki -" + clanPenalty);
 
             Kingdom mine = Clan.PlayerClan.Kingdom;
             if (victim.Kingdom != null)
             {
-                int kingdomPenalty = Scale(20, feast);
+                int kingdomPenalty = Scale(kidnap ? 15 : 20, feast);
                 foreach (Hero leader in ClanLeaders(victim.Kingdom).Where(l => l.Clan != victim.Clan)) Relate(leader, -kingdomPenalty);
                 parts.Add(victim.Kingdom.Name + " lordlarıyla -" + kingdomPenalty);
             }
             if (mine != null)
             {
-                int honorPenalty = Scale(10, feast);
+                int honorPenalty = Scale(kidnap ? 5 : 10, feast);
                 foreach (Hero leader in ClanLeaders(mine).Where(l => l.Clan != victim.Clan && l.GetTraitLevel(DefaultTraits.Honor) >= 1))
                     Relate(leader, -honorPenalty);
                 parts.Add("krallığındaki onurlu lordlarla -" + honorPenalty);
             }
-            if (AddCrime(victim.Faction, 60)) parts.Add(victim.Faction.Name + " krallığında suç puanı +60");
-            TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Honor, HonorOnHeavyExposure);
-            TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Mercy, MercyOnHeavyExposure);
-            parts.Add("Onur ve Merhamet --");
+            int crime = kidnap ? 40 : 60;
+            if (AddCrime(victim.Faction, crime)) parts.Add(victim.Faction.Name + " krallığında suç puanı +" + crime);
+            if (kidnap)
+            {
+                TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Honor, HonorOnKidnapExposure);
+                parts.Add("Onur --");
+            }
+            else
+            {
+                TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Honor, HonorOnHeavyExposure);
+                TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Mercy, MercyOnHeavyExposure);
+                parts.Add("Onur ve Merhamet --");
+                int today = SchemeFactors.Today;
+                foreach (Hero relative in victim.Relatives) state.FeudUntil[relative.StringId] = today + SchemeMath.FeudDays;
+                if (victim.Relatives.Count > 0)
+                    parts.Add("kan davası: " + victim.Relatives.Count + " yakını " + SchemeMath.FeudDays / 84 + " yıl boyunca intikam peşinde");
+            }
 
             if (victim.IsRuler && victim.Kingdom != null && victim.Kingdom != mine && (mine == null || Hero.MainHero.IsKingdomLeader))
             {
@@ -177,8 +248,9 @@ namespace CheatMenu.Intrigue
                     {
                         KingdomId = mine.StringId,
                         VictimName = victim.Name,
-                        Gold = SchemeMath.BloodPriceGold(victim.Tier),
+                        Gold = SchemeMath.BloodPriceGold(victim.Tier) / (kidnap ? 2 : 1),
                         Influence = SchemeMath.BloodPriceInfluence,
+                        Kidnap = kidnap,
                     };
                     parts.Add("hükümdarın hesap soracak");
                 }
@@ -420,6 +492,8 @@ namespace CheatMenu.Intrigue
             public IFaction Faction;
             public bool IsRuler;
             public int Tier;
+            /// <summary>Kan davası adayları: yetişkin eş, çocuklar, anne, baba, kardeşler (oyuncu klanı hariç).</summary>
+            public List<Hero> Relatives;
 
             public static Victim Of(Hero hero) => new Victim
             {
@@ -431,6 +505,9 @@ namespace CheatMenu.Intrigue
                 Faction = hero.MapFaction,
                 IsRuler = hero.IsKingdomLeader,
                 Tier = SchemeFactors.TargetTier(hero),
+                Relatives = new[] { hero.Spouse, hero.Father, hero.Mother }.Concat(hero.Children).Concat(hero.Siblings)
+                    .Where(h => h != null && h.IsAlive && !h.IsChild && h.Clan != Clan.PlayerClan && h != Hero.MainHero)
+                    .Distinct().ToList(),
             };
         }
     }

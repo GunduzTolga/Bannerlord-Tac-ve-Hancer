@@ -69,13 +69,19 @@ namespace CheatMenu.Intrigue
                 ShowLiegeDemand(state);
                 return;
             }
+            AiPlot plot = state.AiPlots.FirstOrDefault(p => p.Detected && !p.Asked);
+            if (plot != null)
+            {
+                ShowPlotDetected(state, plot);
+                return;
+            }
             Scheme next = state.Schemes.FirstOrDefault(s => s.PendingEvent > 0);
             if (next != null)
             {
                 ShowEvent(state, next);
                 return;
             }
-            next = state.Schemes.FirstOrDefault(s => s.AwaitingSpyChoice);
+            next = state.Schemes.FirstOrDefault(s => s.AwaitingChoice);
             if (next != null)
             {
                 ShowSpyChoice(state, next);
@@ -138,9 +144,56 @@ namespace CheatMenu.Intrigue
                 new IntrigueEvents.Option { Label = "Krallıktan ayrıl", Apply = () => SchemeOutcomes.LeaveOverMurder(state) },
             };
             ShowChoice("Hükümdar hesap soruyor",
-                ruler?.Name + ", " + Tr.Genitive(demand.VictimName) + " ölümünün arkasında senin olduğunu öğrendi ve hesap soruyor.",
+                ruler?.Name + ", " + Tr.Genitive(demand.VictimName) + (demand.Kidnap ? " kaçırılmasının" : " ölümünün")
+                    + " arkasında senin olduğunu öğrendi ve hesap soruyor.",
                 options);
         }
+
+        private static void ShowPlotDetected(IntrigueState state, AiPlot plot)
+        {
+            Hero plotter = Hero.Find(plot.PlotterId);
+            Hero target = Hero.Find(plot.TargetId);
+            if (plotter == null || target == null)
+            {
+                plot.Asked = true;
+                return;
+            }
+            var options = PlotOptions(state, plot);
+            foreach (IntrigueEvents.Option option in options)
+            {
+                Action apply = option.Apply;
+                option.Apply = () =>
+                {
+                    plot.Asked = true;
+                    apply();
+                };
+            }
+            string what = plot.Kind == SchemeKind.Kidnap ? "kaçırmak" : "öldürmek";
+            ShowChoice("Sana karşı entrika sezildi",
+                "Casus başın kötü haberlerle geldi: " + plotter.Name + " (" + SchemeFactors.Affiliation(plotter) + "), "
+                + (target == Hero.MainHero ? "seni" : Tr.Accusative(target.Name.ToString())) + " " + what + " için adam tutmuş.\n\n"
+                + "Hakkında rapor ve \"suikast planı\" sırrı artık elinde (şantajla koza çevirebilirsin; koz alırsan planından vazgeçer).",
+                options);
+        }
+
+        /// <summary>Sezilen bir entrikaya karşı seçenekler; Entrika > Sana karşı entrikalar menüsü de bunu kullanır.</summary>
+        public static List<IntrigueEvents.Option> PlotOptions(IntrigueState state, AiPlot plot) => new List<IntrigueEvents.Option>
+        {
+            new IntrigueEvents.Option { Label = "İfşa et: plan biter, entrikacının hükümdarıyla arası açılır", Apply = () => AiIntrigue.ExposePlot(state, plot) },
+            new IntrigueEvents.Option
+            {
+                Label = "Koruma tut (" + SchemeFactors.Money(SchemeMath.ProtectionCost) + "): başarı şansı -" + SchemeMath.ProtectionBonus,
+                DisabledHint = plot.Protected ? "Zaten koruma tuttun" : SchemeFactors.CanAfford(SchemeMath.ProtectionCost) ? null : "Yeterli altının yok",
+                Apply = () => AiIntrigue.Protect(state, plot),
+            },
+            new IntrigueEvents.Option
+            {
+                Label = "Karşı suikast başlat (+10 başarı)",
+                DisabledHint = AiIntrigue.CounterMurderBlocked(state, plot),
+                Apply = () => AiIntrigue.CounterMurder(state, plot),
+            },
+            new IntrigueEvents.Option { Label = "Şimdilik bekle (Entrika > Sana karşı entrikalar)", Apply = () => { } },
+        };
 
         private static void ShowEvent(IntrigueState state, Scheme scheme)
         {
@@ -167,28 +220,38 @@ namespace CheatMenu.Intrigue
             Hero target = Hero.Find(scheme.TargetId);
             if (target == null || !target.IsAlive)
             {
-                scheme.AwaitingSpyChoice = false;
+                scheme.AwaitingChoice = false;
                 return;
             }
             Hero spymaster = SchemeFactors.Spymaster(state);
             SchemeInputs inputs = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme);
+            SchemeInputs next = SchemeFactors.Inputs(state, spymaster, target, scheme.Kind, scheme);
+            next.CompletedPhases++;
+            bool blackmail = scheme.Kind == SchemeKind.Blackmail;
+            string risk = scheme.PhaseDays + " gün, yakalanma %" + SchemeMath.Discovery(scheme.Kind, inputs);
             var options = new List<IntrigueEvents.Option>
             {
                 new IntrigueEvents.Option
                 {
-                    Label = "Raporu al (başarı %" + SchemeMath.SpySuccess(inputs) + ")",
-                    Apply = () => SchemeEngine.ChooseSpyContinuation(scheme, false),
+                    Label = (blackmail ? "Şimdi tehdit et" : "Raporu al") + " (başarı %" + SchemeMath.Success(scheme.Kind, inputs) + ")",
+                    Apply = () => SchemeEngine.ChooseContinuation(scheme, false),
                 },
                 new IntrigueEvents.Option
                 {
-                    Label = "Bir aşama daha sır ara: sır bulma şansı +20, " + scheme.PhaseDays + " gün, yakalanma %"
-                        + SchemeMath.SpyDiscovery(inputs),
-                    Apply = () => SchemeEngine.ChooseSpyContinuation(scheme, true),
+                    Label = blackmail
+                        ? "Bir aşama daha delil topla: başarı %" + SchemeMath.Success(scheme.Kind, next) + " olur, " + risk
+                        : "Bir aşama daha sır ara: sır bulma şansı +20, " + risk,
+                    Apply = () => SchemeEngine.ChooseContinuation(scheme, true),
                 },
             };
-            ShowChoice("Casusluk (" + target.Name + "): ilk bilgiler geldi",
-                "Adamların " + target.Name + " hakkında rapor yazacak kadar bilgi topladı. Şimdi mi alırsın, yoksa sırlarını mı kurcalasınlar?",
-                options);
+            if (blackmail)
+                ShowChoice("Şantaj (" + target.Name + "): deliller hazır",
+                    "Adamların " + Tr.Genitive(target.Name.ToString()) + " sırrını kanıtlayacak kadar delil topladı. Şimdi mi yüzüne vurursun, "
+                    + "yoksa biraz daha mı beklersin?", options);
+            else
+                ShowChoice("Casusluk (" + target.Name + "): ilk bilgiler geldi",
+                    "Adamların " + target.Name + " hakkında rapor yazacak kadar bilgi topladı. Şimdi mi alırsın, yoksa sırlarını mı kurcalasınlar?",
+                    options);
         }
 
         private static void ShowExecuteAsk(Scheme scheme)
