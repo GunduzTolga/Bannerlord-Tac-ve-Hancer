@@ -85,7 +85,7 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | Sıra | Özellik | Neden mantıklı | Oyundaki etkisi |
 |---|---|---|---|
 | 1 ✅ | **Esir sorgulama** (kodlandı) | Elindeki esir lordlar boşa duruyor; sır altyapısını doğrudan besler | Sorgu: rapor, sır ve efendisi hakkında bilgi. Baskı Merhamet ve ilişki bedeli; anlaşma esiri bırakır. Sahne yok, metin var. |
-| 2 ✅ | **Haberci / mektup** (kodlandı; saray istihbaratı; lord kazanmak oyunun ikna sistemiyle, bilgi bonus verir) | Koz kullanmak için lordu haritada kovalamak gereksiz zahmet | Uzaktan koz harcama ve tehdit; gecikmeli cevap (birkaç gün) |
+| 2 ✅ | **Haberci / mektup** (kodlandı; saray istihbaratı; ulakla uzaktan görüşme + hediye; lord kazanmak oyunun ikna sistemiyle, bilgi bonus verir) | Koz kullanmak için lordu haritada kovalamak gereksiz zahmet | Uzaktan koz harcama ve tehdit; gecikmeli cevap (birkaç gün) |
 | 3 ✅ | **Casus başı görev modu** (kodlandı) | Karşı casusluğa oyuncu kararı katar | Üç mod: karşı casusluk (sezme ↑), muhalefeti izle (krallığındaki hoşnutsuzları raporlar), söylenti yay (seçili lordun hükümdarla ilişkisi yavaşça ↓) |
 | 4 | **Gizli ilişki ve gayrimeşru çocuk sırları** (sahnesiz) | Şantajın en doğal yakıtı | İki yeni sır türü; ifşa, şantaj, meşrulaştırma kararı. İki tarafın da 18+ olması kodda zorunlu. |
 | 5 | **Ağ ifşasından diplomatik kriz** | Gölge ağına gerçek bir risk katmanı | Ağ çökertilirse o krallıkla ilişki düşer; ağır durumda savaş baskısı |

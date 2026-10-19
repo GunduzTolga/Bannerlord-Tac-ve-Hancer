@@ -133,6 +133,7 @@ namespace CheatMenu.UI.ViewModels
             TagsText = string.Join("  ·  ", tags);
 
             Actions = new MBBindingList<ActionItemVM>();
+            Actions.Add(LordActions.Audience(state, lord, changed));
             Actions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
             {
                 string missing = Intrigue.Court.Track(lord);
@@ -170,13 +171,33 @@ namespace CheatMenu.UI.ViewModels
         }
     }
 
+    /// <summary>Saray ve kişi dosyasında ortak lord eylemleri.</summary>
+    internal static class LordActions
+    {
+        /// <summary>Görüşmeye hazırsa "Görüş", değilse "Ulak gönder".</summary>
+        public static ActionItemVM Audience(IntrigueState state, Hero lord, Action changed)
+        {
+            Audience audience = Messengers.AudienceWith(state, lord);
+            if (audience != null)
+                return new ActionItemVM("Görüş: konuşma penceresi (ulak bekliyor, " + Math.Max(1, audience.Until - SchemeFactors.Today) + " gün)",
+                    lord.IsPrisoner ? "Şu an esir" : null, () => Menu.MenuUI.Defer(() => Menu.MenuUI.SafeRun("Görüşme", () => Messengers.OpenAudience(SchemeEngine.State, lord))));
+            Letter pending = Messengers.PendingTo(state, lord);
+            return new ActionItemVM("Ulak gönder: görüşme + hediye...",
+                pending != null ? "Ona giden bir ulak yolda (" + Math.Max(0, pending.ArriveDay - SchemeFactors.Today) + " gün)" : Messengers.AudienceBlocked(state, lord),
+                () => EventCards.ShowAudienceSend(lord, changed));
+        }
+    }
+
     /// <summary>Yoldaki haberci satırı ("Süren" sekmesinde).</summary>
     public sealed class LetterItemVM : TvhViewModel
     {
         public LetterItemVM(Letter letter)
         {
             Hero target = Hero.Find(letter.TargetId);
-            Text = "Koz talebi (" + HookUseName((HookActions.Use)letter.Use) + "): " + (target?.Name.ToString() ?? letter.TargetId);
+            string name = target?.Name.ToString() ?? letter.TargetId;
+            Text = letter.Kind == LetterKind.Audience
+                ? "Görüşme daveti" + (letter.Use > 0 ? " (hediye " + SchemeFactors.Money(letter.Use) + ")" : "") + ": " + name
+                : "Koz talebi (" + HookUseName((HookActions.Use)letter.Use) + "): " + name;
             int left = Math.Max(0, letter.ArriveDay - SchemeFactors.Today);
             DaysText = left == 0 ? "bugün varıyor" : left + " gün sonra varır";
         }

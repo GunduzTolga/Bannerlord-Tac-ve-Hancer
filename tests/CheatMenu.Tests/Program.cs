@@ -327,7 +327,11 @@ namespace CheatMenu.Tests
             state.InterrogatedUntil["lord_8"] = 300;
             state.Letters.Add(new Letter { Id = 4, Kind = LetterKind.HookDemand, TargetId = "lord_9", Use = 1, SentDay = 100, ArriveDay = 104 });
             state.Letters.Add(new Letter { Id = 5, Kind = LetterKind.HookDemand, TargetId = "lord_10", Use = 2, SentDay = 101, ArriveDay = 103 });
-            state.NextLetterId = 6;
+            state.NextLetterId = 7;
+            state.Audiences.Add(new Audience { HeroId = "lord_13", Until = 245, Relation = 3, Asked = true });
+            state.Audiences.Add(new Audience { HeroId = "lord_14", Until = 260 });
+            state.GiftUntil["lord_13"] = 248;
+            state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
             state.Mission = SpymasterMission.SpreadRumors;
             state.RumorTargetId = "lord_12";
 
@@ -357,10 +361,13 @@ namespace CheatMenu.Tests
             Check("state: network", back.Network("town_V1") != null && back.Network("town_V1").Level == 2 && back.Network("town_V1").Since == 40);
             Check("state: feud", back.HasFeud("lord_6", 399) && !back.HasFeud("lord_6", 400));
             Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
-            Check("state: letters", back.Letters.Count == 2 && back.NextLetterId == 6 && back.Letters[0].Kind == LetterKind.HookDemand
+            Check("state: audiences", back.Audiences.Count == 2 && back.Audiences[0].Relation == 3 && back.Audiences[0].Asked
+                && !back.Audiences[1].Asked && back.GiftUntil["lord_13"] == 248);
+            Check("state: audience letter", back.Letters.Count == 3 && back.Letters[2].Kind == LetterKind.Audience && back.Letters[2].Use == 3000);
+            Check("state: letters", back.Letters.Count == 3 && back.NextLetterId == 7 && back.Letters[0].Kind == LetterKind.HookDemand
                 && back.Letters[0].ArriveDay == 104 && back.Letters[1].Use == 2 && back.Letters[1].TargetId == "lord_10");
             Check("state: mission", back.Mission == SpymasterMission.SpreadRumors && back.RumorTargetId == "lord_12");
-            Check("state: unknown letter kind dropped", IntrigueState.Parse("letter\tid=1\tkind=2\ttarget=x\tarrive=5").Letters.Count == 0);
+            Check("state: unknown letter kind dropped", IntrigueState.Parse("letter\tid=1\tkind=9\ttarget=x\tarrive=5").Letters.Count == 0);
             Check("state: mission default", IntrigueState.Parse("").Mission == SpymasterMission.None);
 
             Check("state: report valid at 72", back.HasValidReport("lord_1_1", 72) && !back.HasValidReport("lord_1_1", 73));
@@ -369,7 +376,8 @@ namespace CheatMenu.Tests
             Check("state: expired removed", !back.CooldownUntil.ContainsKey("lord_2") && back.AlertUntil.ContainsKey("lord_3")
                 && back.Hooks.Count == 0 && back.FeudUntil.ContainsKey("lord_6")
                 && !back.InterrogatedUntil.ContainsKey("lord_7") && back.InterrogatedUntil.ContainsKey("lord_8")
-                && back.Letters.Count == 2);
+                && back.Letters.Count == 3 && back.Audiences.Count == 1 && back.Audiences[0].HeroId == "lord_14"
+                && !back.GiftUntil.ContainsKey("lord_13"));
 
             int logged = IntrigueState.MaxLogEntries + 10;
             for (int i = 0; i < logged; i++) back.AddLog(i, "e" + i);
@@ -418,6 +426,12 @@ namespace CheatMenu.Tests
             CheckChance("letter: travel 151", LetterRules.TravelDays(151), 3);
             CheckChance("letter: travel capped", LetterRules.TravelDays(5000), LetterRules.MaxTravelDays);
             CheckChance("letter: messenger cost", LetterRules.MessengerCost(2), 100);
+            CheckChance("gift: none", LetterRules.GiftRelation(0), 0);
+            CheckChance("gift: 1000", LetterRules.GiftRelation(1000), 2);
+            CheckChance("gift: 3000", LetterRules.GiftRelation(3000), 3);
+            CheckChance("gift: 6000", LetterRules.GiftRelation(6000), 5);
+            CheckChance("gift: tiny still 1", LetterRules.GiftRelation(10), 1);
+            CheckChance("gift: cap", LetterRules.GiftRelation(1000000), 10);
             CheckChance("persuasion: nothing known", LetterRules.PersuasionBonus(false, false), 0);
             CheckChance("persuasion: report", LetterRules.PersuasionBonus(true, false), 10);
             CheckChance("persuasion: report and secret", LetterRules.PersuasionBonus(true, true), 15);

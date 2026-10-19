@@ -66,6 +66,16 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Aynı lorda yan yana: koz düğmeleri haberci yazısız, hemen çalışıyor
 - [ ] Kişi dosyasında "Hükümdarı X ile: ..." satırı, Haritada izle ve Söylenti yay düğmeleri
 - [ ] Haberci yoldayken kaydet → yükle → haberci hâlâ yolda, aynı gün varıyor
+- [ ] **Ulak:** Saray'da uzak bir lord → "Ulak gönder: görüşme + hediye..." → kart: hediyesiz / 1.000 / 3.000 / 6.000 (ilişki ve toplam
+      bedel yazıyor) → seç: altın düştü, "Yoldaki haberciler"de "Görüşme daveti (hediye …)"
+- [ ] Ulak varınca kart: "Ulak döndü: X" (hediye ilişkisi yazıyor) → **Şimdi görüş** → lordla konuşma penceresi açılıyor, lord
+      uzakta olduğu hâlde; krallığa davet (ikna turları) çalışıyor; konuşma bitince harita normal
+- [ ] Aynı kartta **Sonra** → Saray'da ve kişi dosyasında "Görüş: konuşma penceresi (N gün)" düğmesi; 5 gün sonra kayboluyor
+- [ ] Aynı lorda 30 gün içinde ikinci hediye: kart "bu kez hediye ilişki getirmez" diyor, ilişki +0
+- [ ] İlişkisi −30'dan kötü bir lord: ulak geri çevriliyor, hediye geri geliyor
+- [ ] ⚠️ Savaştığın krallığın bir lorduyla ulak görüşmesi: konuşmada saldırı/teslim seçenekleri çıkıyor mu, seçince çökme var mı?
+      (varsa ekran görüntüsü)
+- [ ] Insert → Entrika (liste menüsü) → **Ulak ve görüşme**: hazır görüşmeler ve "Ulak gönder..." listesi çalışıyor
 
 ### P2.1 — Esir sorgulama (yeni)
 - [ ] Bir lordu esir al → Entrika ekranı → **Esirler** sekmesi: portre, "Partinde", ilişki/Hesapçı/Cesaret/Onur, üç yöntemin olasılığı

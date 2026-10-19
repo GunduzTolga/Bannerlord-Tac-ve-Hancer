@@ -139,6 +139,17 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Ulağı kabul eden ve görüşmeye hazır lord (P2.2): süresi dolana kadar konuşma penceresi açılabilir.</summary>
+    public sealed class Audience
+    {
+        public string HeroId;
+        public int Until;
+        /// <summary>Hediyenin getirdiği ilişki (kartta gösterilir).</summary>
+        public int Relation;
+        /// <summary>"Ulak döndü" kartı gösterildi mi.</summary>
+        public bool Asked;
+    }
+
     /// <summary>
     /// Entrika sisteminin kayda yazılan tüm durumu. Saf veri: oyun nesnesi tutmaz, kahramanlar StringId ile anılır.
     /// Metne TextRecords ile yazılır; okurken bozuk ya da eksik kayıtlar atlanır, asla istisna atmaz.
@@ -178,6 +189,9 @@ namespace CheatMenu.Intrigue.Core
         // P2.2
         public List<Letter> Letters = new List<Letter>();
         public int NextLetterId = 1;
+        public List<Audience> Audiences = new List<Audience>();
+        /// <summary>Hediye: kahraman → hediyeden yeniden ilişki gelebileceği gün.</summary>
+        public Dictionary<string, int> GiftUntil = new Dictionary<string, int>();
 
         // P2.3
         public SpymasterMission Mission;
@@ -223,6 +237,8 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in AlertUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) AlertUntil.Remove(id);
             foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
             foreach (string id in InterrogatedUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) InterrogatedUntil.Remove(id);
+            foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
+            Audiences.RemoveAll(a => a.Until <= today);
             Hooks.RemoveAll(h => h.Until <= today);
         }
 
@@ -281,6 +297,10 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in FeudUntil) records.Add(new TextRecord("feud").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in InterrogatedUntil)
                 records.Add(new TextRecord("interrogated").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (Audience a in Audiences)
+                records.Add(new TextRecord("audience").Add("hero", a.HeroId).Add("until", I(a.Until)).Add("relation", I(a.Relation))
+                    .Add("asked", B(a.Asked)));
+            foreach (KeyValuePair<string, int> p in GiftUntil) records.Add(new TextRecord("gift").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (Letter l in Letters)
                 records.Add(new TextRecord("letter").Add("id", I(l.Id)).Add("kind", I((int)l.Kind)).Add("target", l.TargetId)
                     .Add("use", I(l.Use)).Add("sent", I(l.SentDay)).Add("arrive", I(l.ArriveDay)));
@@ -381,6 +401,16 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "interrogated":
                         if (Empty(r.Get("hero")) != null) state.InterrogatedUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "audience":
+                        if (Empty(r.Get("hero")) == null) break;
+                        state.Audiences.Add(new Audience
+                        {
+                            HeroId = r.Get("hero"), Until = Int(r, "until"), Relation = Int(r, "relation"), Asked = Bool(r, "asked"),
+                        });
+                        break;
+                    case "gift":
+                        if (Empty(r.Get("hero")) != null) state.GiftUntil[r.Get("hero")] = Int(r, "until");
                         break;
                     case "letter":
                         int letterKind = Int(r, "kind");

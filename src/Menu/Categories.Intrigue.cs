@@ -31,6 +31,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Yeni entrika...", ShowNewScheme),
                 MenuEntry.Submenu("İstihbarat raporları (" + state.Reports.Count + ")...", ShowReports),
                 MenuEntry.Submenu("Kozlar (" + state.Hooks.Count(h => h.Until > SchemeFactors.Today) + ")...", ShowHooks),
+                MenuEntry.Submenu("Ulak ve görüşme (" + state.Audiences.Count(x => x.Until > SchemeFactors.Today) + " hazır)...", ShowAudiences),
                 MenuEntry.Submenu("Esirleri sorgula (" + Interrogation.Prisoners().Count + ")...", ShowPrisoners),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
@@ -329,6 +330,37 @@ namespace CheatMenu.Menu
             MenuUI.ShowList("Koz: " + target.Name, entries, () => ShowHook(hook), "Geri", ShowHooks,
                 (hook.Until - SchemeFactors.Today) + " gün geçerli. Bırakma dışındaki her talep kozu harcar ve ilişkiyi -"
                 + SchemeMath.HookUseRelationPenalty + " düşürür. Aynı şeyleri onunla konuşurken \"özel bir konu\" açarak da yapabilirsin.");
+        }
+
+        // ---- Ulak ve görüşme (P2.2) ----
+
+        private static void ShowAudiences()
+        {
+            IntrigueState state = SchemeEngine.State;
+            var entries = new List<MenuEntry>();
+            foreach (Audience audience in state.Audiences.Where(x => x.Until > SchemeFactors.Today).ToList())
+            {
+                Hero hero = Hero.Find(audience.HeroId);
+                if (hero == null) continue;
+                entries.Add(MenuEntry.Simple("Görüş: " + hero.Name + " (" + (audience.Until - SchemeFactors.Today) + " gün bekler)",
+                    () => MenuUI.SafeRun("Görüşme", () => Messengers.OpenAudience(SchemeEngine.State, hero))));
+            }
+            entries.Add(MenuEntry.Submenu("Ulak gönder (görüşme daveti + hediye)...", PickAudienceTarget));
+            MenuUI.ShowList("Ulak ve görüşme", entries, ShowAudiences, "Geri", ShowIntrigue,
+                "Uzaktaki bir klan liderine ulak gönder: kabul ederse lordu bulmaya gitmeden onunla konuşursun (krallığına davet, evlilik, "
+                + "görevler: oyunun kendi seçenekleri). Hediye ilişkiyi artırır (" + LetterRules.GiftCooldownDays + " günde bir).");
+        }
+
+        private static void PickAudienceTarget()
+        {
+            IntrigueState state = SchemeEngine.State;
+            List<Hero> leaders = Hero.AllAliveHeroes
+                .Where(h => h.IsLord && h.Clan != null && h.Clan != Clan.PlayerClan && h.Clan.Leader == h && !h.Clan.IsEliminated)
+                .ToList();
+            Picker.Pick("Ulak gönder", leaders,
+                h => h.Name + " - " + SchemeFactors.Affiliation(h) + ", ilişki " + Hero.MainHero.GetRelation(h)
+                    + (Messengers.AudienceBlocked(state, h) is string why ? "  [" + why + "]" : ""),
+                h => UI.EventCards.ShowAudienceSend(h, null), ShowAudiences, HeroPortrait);
         }
 
         // ---- Esir sorgusu ----

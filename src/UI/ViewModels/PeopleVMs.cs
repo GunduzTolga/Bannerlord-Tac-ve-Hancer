@@ -235,6 +235,7 @@ namespace CheatMenu.UI.ViewModels
                 }
             if (hero.IsAlive && hero.IsLord && hero.Clan != Clan.PlayerClan)
             {
+                StartActions.Add(LordActions.Audience(state, hero, _changed));
                 StartActions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
                 {
                     string missing = Intrigue.Court.Track(hero);
