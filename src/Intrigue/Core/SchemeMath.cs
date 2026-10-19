@@ -8,16 +8,36 @@ namespace CheatMenu.Intrigue.Core
         Murder = 2,
         Blackmail = 3,
         Kidnap = 4,
+        /// <summary>E3: kuşattığın yerleşimin erzakı, garnizonu ya da surları. Hedef bir yerleşim.</summary>
+        Sabotage = 5,
+        /// <summary>E3: şehrin sadakatini düşürür, oyunun kendi isyanına iter. Hedef bir şehir.</summary>
+        Incite = 6,
     }
 
     /// <summary>Türlere göre sabit kurallar (tasarım bölüm 4).</summary>
     public static class SchemeRules
     {
-        public static int MinPhases(SchemeKind kind) => IsStrike(kind) ? 2 : 1;
-        public static int MaxPhases(SchemeKind kind) => kind == SchemeKind.Murder ? 5 : kind == SchemeKind.Kidnap ? 4 : 2;
+        public static int MinPhases(SchemeKind kind) =>
+            kind == SchemeKind.Sabotage ? 1 : kind == SchemeKind.Incite || IsStrike(kind) ? 2 : 1;
+
+        public static int MaxPhases(SchemeKind kind)
+        {
+            switch (kind)
+            {
+                case SchemeKind.Murder: return 5;
+                case SchemeKind.Kidnap:
+                case SchemeKind.Incite: return 4;
+                case SchemeKind.Sabotage: return 3;
+                default: return 2;
+            }
+        }
 
         /// <summary>Oyuncunun seçtiği anda zarı atılan ("harekete geç") türler; diğerleri son aşamada kendiliğinden sonuçlanır.</summary>
-        public static bool IsStrike(SchemeKind kind) => kind == SchemeKind.Murder || kind == SchemeKind.Kidnap;
+        public static bool IsStrike(SchemeKind kind) =>
+            kind == SchemeKind.Murder || kind == SchemeKind.Kidnap || TargetsSettlement(kind);
+
+        /// <summary>Hedefi bir kişi değil yerleşim olan türler (E3): Scheme.TargetId yerleşimin kimliğidir.</summary>
+        public static bool TargetsSettlement(SchemeKind kind) => kind == SchemeKind.Sabotage || kind == SchemeKind.Incite;
 
         public static string Name(SchemeKind kind)
         {
@@ -26,6 +46,8 @@ namespace CheatMenu.Intrigue.Core
                 case SchemeKind.Murder: return "Suikast";
                 case SchemeKind.Blackmail: return "Şantaj";
                 case SchemeKind.Kidnap: return "Kaçırma";
+                case SchemeKind.Sabotage: return "Sabotaj";
+                case SchemeKind.Incite: return "Kışkırtma";
                 default: return "Casusluk";
             }
         }

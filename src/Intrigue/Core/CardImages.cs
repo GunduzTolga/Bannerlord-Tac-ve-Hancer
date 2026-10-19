@@ -79,6 +79,15 @@ namespace CheatMenu.Intrigue.Core
         public const string Marshal = "sonuc_serdar";
         /// <summary>Divan: kâhyanın uyarısı ve uzaktan emir (P2.15).</summary>
         public const string Steward = "sonuc_kahya";
+        /// <summary>E3: sabotaj ve kışkırtma aşamaları.</summary>
+        public const string Sabotage = "tur_sabotaj";
+        public const string Incite = "tur_kiskirtma";
+        /// <summary>Sabotaj tuttu: ambar yandı, kuyular bozuldu, sur çöktü.</summary>
+        public const string SabotageFood = "sonuc_sabotaj_ambar";
+        public const string SabotageGarrison = "sonuc_sabotaj_garnizon";
+        public const string SabotageWalls = "sonuc_sabotaj_sur";
+        /// <summary>Kışkırtma tuttu: halk meydanda, belki oyunun kendi isyanı.</summary>
+        public const string Uprising = "sonuc_isyan";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -93,6 +102,11 @@ namespace CheatMenu.Intrigue.Core
             { 8, "olay_supheli_tuccar" },
             { 9, "olay_ziyafet" },
             { 10, "olay_cete_teklifi" },
+            // E3: yerleşim entrikalarının olayları (SettlementSchemes)
+            { 101, "olay_rusvetci_nobetci" },
+            { 102, "olay_elebasi_yakalandi" },
+            { 103, "olay_kacakci_tuneli" },
+            { 104, "olay_ekmek_kuyrugu" },
         };
 
         /// <summary>Bir karta en fazla bu kadar resim sürümü: ad, ad_2 ... ad_5. Oyun var olanlardan rastgele birini gösterir.</summary>
@@ -120,8 +134,21 @@ namespace CheatMenu.Intrigue.Core
 
         public static string ForEvent(int eventId) => Events.TryGetValue(eventId, out string name) ? name : null;
 
-        public static string ForKind(SchemeKind kind) =>
-            kind == SchemeKind.Spy ? Spy : kind == SchemeKind.Blackmail ? Blackmail : kind == SchemeKind.Kidnap ? Kidnap : Murder;
+        public static string ForKind(SchemeKind kind)
+        {
+            switch (kind)
+            {
+                case SchemeKind.Spy: return Spy;
+                case SchemeKind.Blackmail: return Blackmail;
+                case SchemeKind.Kidnap: return Kidnap;
+                case SchemeKind.Sabotage: return Sabotage;
+                case SchemeKind.Incite: return Incite;
+                default: return Murder;
+            }
+        }
+
+        public static string ForSabotage(SchemeMethod method) =>
+            method == SchemeMethod.SabotageGarrison ? SabotageGarrison : method == SchemeMethod.SabotageWalls ? SabotageWalls : SabotageFood;
 
         public static string ForMurderMethod(SchemeMethod method) =>
             method == SchemeMethod.Poison ? MurderPoison : method == SchemeMethod.Accident ? MurderAccident : MurderDagger;
@@ -136,6 +163,7 @@ namespace CheatMenu.Intrigue.Core
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
                          Tail, TailNight, Treasury, Embezzle, Physician, Antidote, Marshal, Steward,
                          BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, Illness,
+                         Sabotage, Incite, SabotageFood, SabotageGarrison, SabotageWalls, Uprising,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

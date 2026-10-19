@@ -172,6 +172,7 @@ namespace CheatMenu.Tests
 
             IntrigueMathTests();
             IntrigueE2MathTests();
+            SettlementSchemeTests();
             IntrigueStateTests();
             TurkishSuffixTests();
             CardImageTests();
@@ -937,7 +938,13 @@ namespace CheatMenu.Tests
             Check("images: unique", new HashSet<string>(names).Count == names.Count);
             Check("images: file-safe names", names.TrueForAll(n => n.Length > 0 && n.ToCharArray().All(c => (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')));
             Check("images: every event has an image", Enumerable.Range(1, 10).All(id => CardImages.ForEvent(id) != null));
+            Check("images: every E3 event has an image", Enumerable.Range(101, 4).All(id => CardImages.ForEvent(id) != null));
             Check("images: unknown event -> null", CardImages.ForEvent(99) == null);
+            Check("images: E3 kind mapping", CardImages.ForKind(SchemeKind.Sabotage) == CardImages.Sabotage
+                && CardImages.ForKind(SchemeKind.Incite) == CardImages.Incite);
+            Check("images: sabotage mapping", CardImages.ForSabotage(SchemeMethod.SabotageWalls) == CardImages.SabotageWalls
+                && CardImages.ForSabotage(SchemeMethod.SabotageGarrison) == CardImages.SabotageGarrison
+                && CardImages.ForSabotage(SchemeMethod.None) == CardImages.SabotageFood);
             Check("images: kind mapping", CardImages.ForKind(SchemeKind.Kidnap) == CardImages.Kidnap && CardImages.ForKind(SchemeKind.Spy) == CardImages.Spy);
             Check("images: method mapping", CardImages.ForMurderMethod(SchemeMethod.Poison) == CardImages.MurderPoison
                 && CardImages.ForMurderMethod(SchemeMethod.None) == CardImages.MurderDagger);
@@ -969,6 +976,102 @@ namespace CheatMenu.Tests
                 if (System.IO.File.Exists(path)) return path;
             }
             return null;
+        }
+
+        /// <summary>E3: sabotaj ve kışkırtma (docs/superpowers/specs/2026-10-20-e3-sabotaj-kiskirtma.md).</summary>
+        private static void SettlementSchemeTests()
+        {
+            Check("E3 phases", SchemeRules.MinPhases(SchemeKind.Sabotage) == 1 && SchemeRules.MaxPhases(SchemeKind.Sabotage) == 3
+                && SchemeRules.MinPhases(SchemeKind.Incite) == 2 && SchemeRules.MaxPhases(SchemeKind.Incite) == 4
+                && SchemeRules.MinPhases(SchemeKind.Murder) == 2 && SchemeRules.MaxPhases(SchemeKind.Murder) == 5);
+            Check("E3 strike and settlement kinds", SchemeRules.IsStrike(SchemeKind.Sabotage) && SchemeRules.IsStrike(SchemeKind.Incite)
+                && SchemeRules.TargetsSettlement(SchemeKind.Sabotage) && SchemeRules.TargetsSettlement(SchemeKind.Incite)
+                && !SchemeRules.TargetsSettlement(SchemeKind.Murder) && !SchemeRules.TargetsSettlement(SchemeKind.Spy)
+                && !SchemeRules.IsStrike(SchemeKind.Spy));
+            Check("E3 names", SchemeRules.Name(SchemeKind.Sabotage) == "Sabotaj" && SchemeRules.Name(SchemeKind.Incite) == "Kışkırtma");
+
+            // Sabotaj: 20 + R/8 (≤30) + Hesapçı*3 + 8/ek aşama (≤16) + olay + rüşvet + ağ*5 - güvenlik/5 - vali R/20 (≤10) - kale 5 - tetikte 15
+            var sab = new SettlementSchemeInputs { CompletedPhases = 1 };
+            CheckChance("sabotage base", SettlementSchemeRules.SabotageSuccess(sab), 20);
+            sab.Roguery = 80;
+            CheckChance("sabotage roguery +10", SettlementSchemeRules.SabotageSuccess(sab), 30);
+            sab.CompletedPhases = 9;
+            CheckChance("sabotage phases capped +16", SettlementSchemeRules.SabotageSuccess(sab), 46);
+            sab.NetworkLevel = 2;
+            CheckChance("sabotage network +10", SettlementSchemeRules.SabotageSuccess(sab), 56);
+            sab.Security = 50;
+            sab.GovernorRoguery = 100;
+            CheckChance("sabotage security -10, governor -5", SettlementSchemeRules.SabotageSuccess(sab), 41);
+            sab.IsCastle = true;
+            sab.Alerted = true;
+            CheckChance("sabotage castle -5, alerted -15", SettlementSchemeRules.SabotageSuccess(sab), 21);
+            CheckChance("sabotage floor 5", SettlementSchemeRules.SabotageSuccess(new SettlementSchemeInputs
+                { Security = 100, GovernorRoguery = 300, IsCastle = true, Alerted = true, Difficulty = SchemeMath.HardDifficulty }), 5);
+            CheckChance("sabotage cap 85", SettlementSchemeRules.SabotageSuccess(new SettlementSchemeInputs
+                { Roguery = 300, Calculating = 2, CompletedPhases = 3, EventSuccess = 15, BribeLevel = 3, NetworkLevel = 3,
+                  Difficulty = SchemeMath.EasyDifficulty }), 85);
+            CheckChance("sabotage bribe +15", SettlementSchemeRules.SabotageSuccess(new SettlementSchemeInputs { CompletedPhases = 1, BribeLevel = 3 }), 35);
+
+            // Yakalanma: 10 - R/25 (≤8) + güvenlik/20 + vali R/30 (≤6) + olay - ağ*2
+            CheckChance("sabotage discovery base", SettlementSchemeRules.SabotageDiscovery(new SettlementSchemeInputs()), 10);
+            CheckChance("sabotage discovery roguery, security", SettlementSchemeRules.SabotageDiscovery(new SettlementSchemeInputs
+                { Roguery = 100, Security = 60 }), 9);
+            CheckChance("sabotage discovery floor 2", SettlementSchemeRules.SabotageDiscovery(new SettlementSchemeInputs
+                { Roguery = 300, NetworkLevel = 3 }), 2);
+
+            // Kışkırtma: 25 + R/8 (≤25) + Hesapçı*2 + 6/ek aşama (≤12) + ağ*5 + (50 - sadakat)/2 - güvenlik/6 - vali R/20 (≤10)
+            var inc = new SettlementSchemeInputs { CompletedPhases = 2, Loyalty = 50 };
+            CheckChance("incite base", SettlementSchemeRules.InciteSuccess(inc), 25);
+            inc.Loyalty = 0;
+            CheckChance("incite low loyalty +25", SettlementSchemeRules.InciteSuccess(inc), 50);
+            inc.CompletedPhases = 9;
+            CheckChance("incite phases capped +12", SettlementSchemeRules.InciteSuccess(inc), 62);
+            inc.Security = 60;
+            CheckChance("incite security -10", SettlementSchemeRules.InciteSuccess(inc), 52);
+            CheckChance("incite loyal town floor 5", SettlementSchemeRules.InciteSuccess(new SettlementSchemeInputs
+                { CompletedPhases = 2, Loyalty = 100, Security = 60 }), 5);
+            CheckChance("incite discovery base", SettlementSchemeRules.InciteDiscovery(new SettlementSchemeInputs()), 12);
+            CheckChance("incite discovery security +2", SettlementSchemeRules.InciteDiscovery(new SettlementSchemeInputs { Security = 30 }), 14);
+            CheckChance("incite discovery floor 3", SettlementSchemeRules.InciteDiscovery(new SettlementSchemeInputs { Roguery = 300, NetworkLevel = 3 }), 3);
+            Check("E3 dispatch", SettlementSchemeRules.Success(SchemeKind.Incite, inc) == SettlementSchemeRules.InciteSuccess(inc)
+                && SettlementSchemeRules.Discovery(SchemeKind.Sabotage, sab) == SettlementSchemeRules.SabotageDiscovery(sab));
+
+            Check("E3 costs", SettlementSchemeRules.StartCost(SchemeKind.Sabotage, false) == 1500
+                && SettlementSchemeRules.StartCost(SchemeKind.Sabotage, true) == 1000
+                && SettlementSchemeRules.StartCost(SchemeKind.Incite, false) == 2500);
+            Check("E3 network and castle rules", SettlementSchemeRules.NeedsNetwork(SchemeKind.Incite) && !SettlementSchemeRules.NeedsNetwork(SchemeKind.Sabotage)
+                && SettlementSchemeRules.AllowsCastle(SchemeKind.Sabotage) && !SettlementSchemeRules.AllowsCastle(SchemeKind.Incite));
+            CheckChance("E3 trace", SettlementSchemeRules.TraceChance(10), 20);
+
+            // Etkiler
+            Check("sabotage food 70% gone", Math.Abs(SettlementSchemeRules.FoodAfterSabotage(1000f) - 300f) < 0.01f
+                && SettlementSchemeRules.FoodAfterSabotage(-5f) == 0f);
+            Check("sabotage garrison 20%", SettlementSchemeRules.GarrisonLoss(100) == 20 && SettlementSchemeRules.GarrisonLoss(3) == 1
+                && SettlementSchemeRules.GarrisonLoss(0) == 0 && SettlementSchemeRules.GarrisonLoss(12) == 2);
+            Check("sabotage walls halved", Math.Abs(SettlementSchemeRules.WallAfterSabotage(1f) - 0.5f) < 0.001f
+                && Math.Abs(SettlementSchemeRules.WallAfterSabotage(0.4f) - 0.2f) < 0.001f
+                && Math.Abs(SettlementSchemeRules.WallAfterSabotage(1.5f) - 0.5f) < 0.001f
+                && SettlementSchemeRules.WallAfterSabotage(0.15f) == 0f && SettlementSchemeRules.WallAfterSabotage(0f) == 0f);
+            Check("incite loyalty bounds", SettlementSchemeRules.LoyaltyAfter(10f, -SettlementSchemeRules.LoyaltyOnSuccess) == 0f
+                && SettlementSchemeRules.LoyaltyAfter(98f, SettlementSchemeRules.LoyaltyOnFailure) == 100f
+                && SettlementSchemeRules.LoyaltyAfter(40f, -SettlementSchemeRules.LoyaltyPerPhase) == 37f);
+            Check("sabotage methods", SettlementSchemeRules.IsSabotageMethod(SchemeMethod.SabotageWalls)
+                && !SettlementSchemeRules.IsSabotageMethod(SchemeMethod.Poison)
+                && SettlementSchemeRules.MethodName(SchemeMethod.SabotageFood) == "erzak ambarı"
+                && SettlementSchemeRules.DefaultSabotageMethod == SchemeMethod.SabotageFood);
+
+            // Kayıt: tür 5/6, yerleşim kimliği ve sabotaj seçimi geri gelir
+            var state = new IntrigueState();
+            state.Schemes.Add(new Scheme { Id = 1, Kind = SchemeKind.Sabotage, TargetId = "castle_V2", Phase = 2, PhaseDays = 5,
+                StartCost = 1000, Method = SchemeMethod.SabotageWalls, Seed = 7, UsedEvents = { 101, 103 } });
+            state.Schemes.Add(new Scheme { Id = 2, Kind = SchemeKind.Incite, TargetId = "town_A1", Phase = 3, PhaseDays = 6,
+                StartCost = 2500, PendingEvent = 104, AskedToExecute = true });
+            IntrigueState back = IntrigueState.Parse(state.Write());
+            Scheme sabBack = back.Schemes.FirstOrDefault(x => x.Id == 1), incBack = back.Schemes.FirstOrDefault(x => x.Id == 2);
+            Check("E3 save: sabotage", sabBack != null && sabBack.Kind == SchemeKind.Sabotage && sabBack.TargetId == "castle_V2"
+                && sabBack.Method == SchemeMethod.SabotageWalls && sabBack.Phase == 2 && sabBack.UsedEvents.SequenceEqual(new[] { 101, 103 }));
+            Check("E3 save: incite", incBack != null && incBack.Kind == SchemeKind.Incite && incBack.TargetId == "town_A1"
+                && incBack.PendingEvent == 104 && incBack.AskedToExecute && incBack.StartCost == 2500);
         }
 
         private static void CheckChance(string label, int actual, int expected) =>

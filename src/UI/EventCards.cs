@@ -99,8 +99,8 @@ namespace CheatMenu.UI
         /// <summary>Suikast ya da kaçırmada "harekete geç": rüşvet seçimi kartı (Entrika ekranından).</summary>
         public static void ShowExecuteChoice(Scheme scheme, Action afterwards)
         {
-            Hero target = Hero.Find(scheme.TargetId);
-            if (target == null) return;
+            if (SchemeEngine.GoneReason(SchemeEngine.State, scheme) != null) return;
+            string name = SchemeEngine.TargetName(scheme);
             string blocked = SchemeEngine.CannotExecuteReason(scheme);
             List<CardOption> options = SchemeEngine.BribeChoices(scheme)
                 .Select(choice => new CardOption
@@ -116,12 +116,12 @@ namespace CheatMenu.UI
                 .ToList();
             var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
             options.Add(cancel);
-            bool kidnap = scheme.Kind == SchemeKind.Kidnap;
-            Show(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · KARAR", "Harekete geç: " + target.Name,
+            Show(SchemeRules.Name(scheme.Kind).ToUpper(Tr.Culture) + " · KARAR", "Harekete geç: " + name,
                 "Aşama " + scheme.Phase + "/" + SchemeRules.MaxPhases(scheme.Kind) + " tamamlandı. "
+                + (scheme.Kind == SchemeKind.Sabotage ? "Hedef: " + SettlementSchemeRules.MethodName(scheme.Method) + ". " : "")
                 + (scheme.Phase < SchemeRules.MaxPhases(scheme.Kind) ? "Beklersen başarı artar, ama her aşamada yakalanma riski var.\n\n" : "\n\n")
                 + "Rüşvet başarıyı artırır ama geri gelmez. Zar şimdi atılacak.",
-                kidnap ? CardImages.Kidnap : CardImages.Murder, target, options, cancel, null);
+                CardImages.ForKind(scheme.Kind), SchemeEngine.PortraitHero(scheme), options, cancel, null);
         }
 
         /// <summary>Ulak gönder (P2.2): görüşme daveti, hediye seçimi.</summary>
@@ -207,6 +207,34 @@ namespace CheatMenu.UI
                   + " Onurlu bir eş büyük ihtimalle reddeder; reddederse sana kırılır.";
             Show("KUR", (mode == CourtshipMode.Lover ? "Kur yap: " : "Eşini gönder: ") + target.Name,
                 text + "\n\nYalnızca yetişkinler; olanlar metinle anlatılır, sahne yok.", CardImages.Courtship, target, options, cancel, null);
+        }
+
+        /// <summary>Sabotaj başlarken neyin vurulacağı (E3): ambar, garnizon ya da surlar.</summary>
+        public static void ShowSabotageStart(Settlement target, Action started)
+        {
+            IntrigueState state = SchemeEngine.State;
+            int cost = SettlementSchemes.StartCost(SchemeKind.Sabotage, target);
+            string blocked = SchemeEngine.CannotStartReason(state) ?? SettlementSchemes.BlockedReason(state, target, SchemeKind.Sabotage)
+                ?? (SchemeFactors.CanAfford(cost) ? null : "Yeterli altının yok");
+            List<CardOption> options = SettlementSchemes.SabotageMethods
+                .Select(method => new CardOption
+                {
+                    Label = SettlementSchemes.MethodLabel(method),
+                    DisabledHint = blocked,
+                    Apply = () =>
+                    {
+                        SchemeEngine.Start(SchemeKind.Sabotage, target, method);
+                        started?.Invoke();
+                    },
+                })
+                .ToList();
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            options.Add(cancel);
+            Show("SABOTAJ", "Sabotaj: " + target.Name,
+                "Adamların " + Tr.Locative(target.Name.ToString()) + " neyi vuracak? Hazırlık şimdi başlar (" + SchemeFactors.Money(cost)
+                + "); vurmak için " + target.Name + " kuşatılırken orada olmalısın.\n\n"
+                + string.Join("\n", SettlementSchemes.PreviewLines(state, SchemeKind.Sabotage, target).Skip(1).Take(4)),
+                CardImages.Sabotage, SettlementSchemes.PortraitHero(target), options, cancel, null);
         }
 
         /// <summary>Rehine anlaşması kartı (P2.10): gönder, değiş ya da erken bitir.</summary>

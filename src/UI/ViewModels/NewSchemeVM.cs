@@ -4,6 +4,7 @@ using System.Linq;
 using CheatMenu.Intrigue;
 using CheatMenu.Intrigue.Core;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Core.ViewModelCollection.ImageIdentifiers;
 using TaleWorlds.Library;
 
@@ -12,19 +13,24 @@ namespace CheatMenu.UI.ViewModels
     /// <summary>
     /// "Yeni entrika" paneli: tür sekmeleri, filtreler, sayfalı hedef listesi (portre, tahmini başarı, maliyet),
     /// sağda seçili hedefin özeti ve Başlat. Sayılar SchemePreview'dan gelir (Insert menüsüyle aynı).
+    /// Sabotaj ve kışkırtmada (E3) hedefler yerleşimdir: liste, filtreler ve özet ona göre değişir.
     /// </summary>
     public sealed class NewSchemeVM : TvhViewModel
     {
         private const int PageSize = 24;
-        private static readonly SchemeKind[] KindOrder = { SchemeKind.Spy, SchemeKind.Blackmail, SchemeKind.Kidnap, SchemeKind.Murder };
-        private static readonly string[] FilterNames = { "Hepsi", "Düşmanlar", "Krallığım", "Raporlular", "Tanıdıklar" };
+        private static readonly SchemeKind[] KindOrder =
+            { SchemeKind.Spy, SchemeKind.Blackmail, SchemeKind.Kidnap, SchemeKind.Murder, SchemeKind.Sabotage, SchemeKind.Incite };
+        private static readonly string[] HeroFilterNames = { "Hepsi", "Düşmanlar", "Krallığım", "Raporlular", "Tanıdıklar" };
+        private static readonly string[] PlaceFilterNames = { "Hepsi", "Düşmanlar", "Gölge ağı olanlar", "Kuşattığın", "Şehirler" };
 
         private readonly Action _started;
         private SchemeKind _kind = SchemeKind.Spy;
         private int _filter;
         private int _page;
         private List<Hero> _all = new List<Hero>();
+        private List<Settlement> _places = new List<Settlement>();
         private Hero _selected;
+        private Settlement _selectedPlace;
 
         private string _kindDescription = "";
         private string _blockedText = "";
@@ -41,10 +47,13 @@ namespace CheatMenu.UI.ViewModels
             Kinds = new MBBindingList<TabVM>();
             for (int i = 0; i < KindOrder.Length; i++) Kinds.Add(new TabVM(i, SchemeRules.Name(KindOrder[i]), OnKind));
             Filters = new MBBindingList<TabVM>();
-            for (int i = 0; i < FilterNames.Length; i++) Filters.Add(new TabVM(i, FilterNames[i], OnFilter));
+            for (int i = 0; i < HeroFilterNames.Length; i++) Filters.Add(new TabVM(i, HeroFilterNames[i], OnFilter));
             Targets = new MBBindingList<TargetItemVM>();
             _selectedPortrait = PortraitOf(null);
         }
+
+        private bool PlaceMode => SchemeRules.TargetsSettlement(_kind);
+        private int Count => PlaceMode ? _places.Count : _all.Count;
 
         [DataSourceProperty] public MBBindingList<TabVM> Kinds { get; }
         [DataSourceProperty] public MBBindingList<TabVM> Filters { get; }
@@ -73,7 +82,7 @@ namespace CheatMenu.UI.ViewModels
         /// <summary>Kişi dosyasından ya da raporlardan doğrudan: türü ve hedefi seçili açar.</summary>
         public void Preselect(SchemeKind kind, Hero target)
         {
-            _kind = kind;
+            SetKind(kind);
             _filter = 0;
             _page = 0;
             _selected = target;
@@ -96,17 +105,31 @@ namespace CheatMenu.UI.ViewModels
             if (rebuild)
             {
                 Hero spymaster = SchemeFactors.Spymaster(state);
-                var ranked = new List<KeyValuePair<Hero, int>>();
-                foreach (Hero hero in SchemeFactors.Targets(state, _kind).Where(PassesFilter))
+                if (PlaceMode)
                 {
-                    SchemePreview.SuccessRange(state, spymaster, hero, _kind, out int low, out _);
-                    ranked.Add(new KeyValuePair<Hero, int>(hero, low));
+                    var ranked = new List<KeyValuePair<Settlement, int>>();
+                    foreach (Settlement place in SettlementSchemes.Targets(state, _kind).Where(PassesPlaceFilter))
+                    {
+                        SettlementSchemes.SuccessRange(state, spymaster, place, _kind, out int low, out _);
+                        ranked.Add(new KeyValuePair<Settlement, int>(place, low));
+                    }
+                    _places = ranked.OrderByDescending(p => p.Value).ThenBy(p => p.Key.Name.ToString()).Select(p => p.Key).ToList();
                 }
-                _all = ranked.OrderByDescending(p => p.Value).ThenBy(p => p.Key.Name.ToString()).Select(p => p.Key).ToList();
-                int pages = Math.Max(1, (_all.Count + PageSize - 1) / PageSize);
+                else
+                {
+                    var ranked = new List<KeyValuePair<Hero, int>>();
+                    foreach (Hero hero in SchemeFactors.Targets(state, _kind).Where(PassesFilter))
+                    {
+                        SchemePreview.SuccessRange(state, spymaster, hero, _kind, out int low, out _);
+                        ranked.Add(new KeyValuePair<Hero, int>(hero, low));
+                    }
+                    _all = ranked.OrderByDescending(p => p.Value).ThenBy(p => p.Key.Name.ToString()).Select(p => p.Key).ToList();
+                }
+                int pages = Math.Max(1, (Count + PageSize - 1) / PageSize);
                 _page = Math.Min(_page, pages - 1);
             }
-            if (_selected != null && SchemeFactors.BlockedReason(state, _selected, _kind) != null) _selected = null;
+            if (_selected != null && (PlaceMode || SchemeFactors.BlockedReason(state, _selected, _kind) != null)) _selected = null;
+            if (_selectedPlace != null && (!PlaceMode || SettlementSchemes.BlockedReason(state, _selectedPlace, _kind) != null)) _selectedPlace = null;
             FillPage();
             RefreshSummary(state);
         }
@@ -116,20 +139,24 @@ namespace CheatMenu.UI.ViewModels
             IntrigueState state = SchemeEngine.State;
             Hero spymaster = SchemeFactors.Spymaster(state);
             Clear(Targets);
-            foreach (Hero hero in _all.Skip(_page * PageSize).Take(PageSize))
-                Targets.Add(new TargetItemVM(state, spymaster, hero, _kind, hero == _selected, OnTarget));
-            int pages = Math.Max(1, (_all.Count + PageSize - 1) / PageSize);
-            PageText = "Sayfa " + (_page + 1) + "/" + pages + "  ·  " + _all.Count + " hedef";
+            if (PlaceMode)
+                foreach (Settlement place in _places.Skip(_page * PageSize).Take(PageSize))
+                    Targets.Add(new TargetItemVM(state, spymaster, place, _kind, place == _selectedPlace, OnTarget));
+            else
+                foreach (Hero hero in _all.Skip(_page * PageSize).Take(PageSize))
+                    Targets.Add(new TargetItemVM(state, spymaster, hero, _kind, hero == _selected, OnTarget));
+            int pages = Math.Max(1, (Count + PageSize - 1) / PageSize);
+            PageText = "Sayfa " + (_page + 1) + "/" + pages + "  ·  " + Count + " hedef";
             CanPrev = _page > 0;
             CanNext = _page < pages - 1;
-            HasNoTargets = _all.Count == 0;
+            HasNoTargets = Count == 0;
             EmptyText = _filter == 0 ? SchemePreview.NoTargetsText(_kind) : "Bu filtreye uyan hedef yok.";
         }
 
         private void RefreshSummary(IntrigueState state)
         {
             _selectedPortrait?.OnFinalize();
-            if (_selected == null)
+            if (_selected == null && _selectedPlace == null)
             {
                 HasSelection = false;
                 SelectedPortrait = PortraitOf(null);
@@ -138,12 +165,24 @@ namespace CheatMenu.UI.ViewModels
                 return;
             }
             HasSelection = true;
-            SelectedPortrait = PortraitOf(_selected);
-            SelectedName = _selected.Name.ToString();
-            SelectedAffiliation = SchemeFactors.Affiliation(_selected);
-            SummaryText = string.Join("\n", SchemePreview.Lines(state, _kind, _selected));
-            int cost = SchemeFactors.StartCost(_kind, _selected);
-            StartText = SchemeRules.Name(_kind) + " başlat (" + SchemeFactors.Money(cost) + ")";
+            int cost;
+            if (_selectedPlace != null)
+            {
+                SelectedPortrait = PortraitOf(SettlementSchemes.PortraitHero(_selectedPlace));
+                SelectedName = _selectedPlace.Name.ToString();
+                SelectedAffiliation = SettlementSchemes.Affiliation(_selectedPlace);
+                SummaryText = string.Join("\n", SettlementSchemes.PreviewLines(state, _kind, _selectedPlace));
+                cost = SettlementSchemes.StartCost(_kind, _selectedPlace);
+            }
+            else
+            {
+                SelectedPortrait = PortraitOf(_selected);
+                SelectedName = _selected.Name.ToString();
+                SelectedAffiliation = SchemeFactors.Affiliation(_selected);
+                SummaryText = string.Join("\n", SchemePreview.Lines(state, _kind, _selected));
+                cost = SchemeFactors.StartCost(_kind, _selected);
+            }
+            StartText = (_kind == SchemeKind.Sabotage ? "Sabotaj hazırla..." : SchemeRules.Name(_kind) + " başlat") + " (" + SchemeFactors.Money(cost) + ")";
             string blocked = SchemeEngine.CannotStartReason(state)
                 ?? (SchemeFactors.CanAfford(cost) ? null : "Yeterli altının yok");
             CanStart = blocked == null;
@@ -164,9 +203,35 @@ namespace CheatMenu.UI.ViewModels
             }
         }
 
+        private bool PassesPlaceFilter(Settlement place)
+        {
+            IFaction mine = Hero.MainHero.MapFaction;
+            switch (_filter)
+            {
+                case 1: return mine != null && place.MapFaction != null && mine.IsAtWarWith(place.MapFaction);
+                case 2: return SettlementSchemes.NetworkLevel(SchemeEngine.State, place) > 0;
+                case 3: return SettlementSchemes.IsBesiegedByPlayer(place);
+                case 4: return place.IsTown;
+                default: return true;
+            }
+        }
+
+        /// <summary>Tür değişince hedef türü (kişi/yerleşim) değiştiyse filtre adları ve seçim sıfırlanır.</summary>
+        private void SetKind(SchemeKind kind)
+        {
+            bool wasPlace = PlaceMode;
+            _kind = kind;
+            if (wasPlace == PlaceMode) return;
+            string[] names = PlaceMode ? PlaceFilterNames : HeroFilterNames;
+            for (int i = 0; i < Filters.Count && i < names.Length; i++) Filters[i].Name = names[i];
+            _filter = 0;
+            _selected = null;
+            _selectedPlace = null;
+        }
+
         private void OnKind(TabVM tab)
         {
-            _kind = KindOrder[tab.Index];
+            SetKind(KindOrder[tab.Index]);
             _page = 0;
             Refresh(SchemeEngine.State, true);
         }
@@ -181,6 +246,7 @@ namespace CheatMenu.UI.ViewModels
         private void OnTarget(TargetItemVM item)
         {
             _selected = item.Hero;
+            _selectedPlace = item.Settlement;
             foreach (TargetItemVM target in Targets) target.IsSelected = target == item;
             RefreshSummary(SchemeEngine.State);
         }
@@ -201,18 +267,43 @@ namespace CheatMenu.UI.ViewModels
 
         public void ExecuteStart()
         {
-            if (_selected == null || !CanStart) return;
-            Hero target = _selected;
+            if (!CanStart) return;
             SchemeKind kind = _kind;
+            if (_selectedPlace != null)
+            {
+                Settlement place = _selectedPlace;
+                if (kind == SchemeKind.Sabotage)
+                {
+                    // Neyin vurulacağı kartta seçilir; kart başlatınca ekran "Süren entrikalar"a geçer.
+                    EventCards.ShowSabotageStart(place, () =>
+                    {
+                        _selectedPlace = null;
+                        _started();
+                    });
+                    return;
+                }
+                if (!TryStart(kind, () => SchemeEngine.Start(kind, place))) return;
+                _selectedPlace = null;
+                _started();
+                return;
+            }
+            if (_selected == null) return;
+            Hero target = _selected;
+            if (!TryStart(kind, () => SchemeEngine.Start(kind, target))) return;
+            _selected = null;
+            _started();
+        }
+
+        /// <returns>Başladıysa true (hata mesajı Run içinde gösterilir).</returns>
+        private static bool TryStart(SchemeKind kind, Action start)
+        {
             bool started = false;
             Run(SchemeRules.Name(kind), () =>
             {
-                SchemeEngine.Start(kind, target);
+                start();
                 started = true;
             });
-            if (!started) return;
-            _selected = null;
-            _started();
+            return started;
         }
 
         public override void OnFinalize()
@@ -223,7 +314,7 @@ namespace CheatMenu.UI.ViewModels
         }
     }
 
-    /// <summary>Hedef listesindeki satır.</summary>
+    /// <summary>Hedef listesindeki satır: bir kişi ya da (sabotaj, kışkırtma) bir yerleşim.</summary>
     public sealed class TargetItemVM : TvhViewModel
     {
         private readonly Action<TargetItemVM> _onSelect;
@@ -249,7 +340,21 @@ namespace CheatMenu.UI.ViewModels
             TagsText = string.Join(" · ", tags);
         }
 
+        public TargetItemVM(IntrigueState state, Hero spymaster, Settlement place, SchemeKind kind, bool selected, Action<TargetItemVM> onSelect)
+        {
+            Settlement = place;
+            _onSelect = onSelect;
+            _isSelected = selected;
+            Portrait = PortraitOf(SettlementSchemes.PortraitHero(place));
+            Name = place.Name.ToString();
+            Affiliation = SettlementSchemes.Affiliation(place);
+            ChanceText = "Başarı " + SettlementSchemes.ChanceText(state, spymaster, place, kind);
+            CostText = SchemeFactors.Money(SettlementSchemes.StartCost(kind, place));
+            TagsText = SettlementSchemes.Tags(state, place);
+        }
+
         public Hero Hero { get; }
+        public Settlement Settlement { get; }
 
         [DataSourceProperty] public ImageIdentifierVM Portrait { get; }
         [DataSourceProperty] public string Name { get; }
