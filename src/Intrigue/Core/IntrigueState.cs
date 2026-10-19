@@ -209,7 +209,7 @@ namespace CheatMenu.Intrigue.Core
         public List<string> ChildIds = new List<string>();
     }
 
-    /// <summary>Gölge ağı olan bir şehirdeki gece evi. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
+    /// <summary>Gölge ağı olan bir şehirdeki genelev. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
     public sealed class House
     {
         public string TownId;
@@ -338,6 +338,17 @@ namespace CheatMenu.Intrigue.Core
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
 
+        // Genelev (müşteri olarak) ve hastalık
+        /// <summary>Genelevde yeniden gece geçirilebileceği gün (günde bir kez).</summary>
+        public int BrothelVisitUntil;
+        /// <summary>Askerlere yeniden bir gece ısmarlanabileceği gün.</summary>
+        public int TroopNightUntil;
+        /// <summary>Hastalık: başladığı gün ve kendiliğinden geçeceği gün (0: hasta değil). Tedavi bitişi öne çeker.</summary>
+        public int IllnessSince;
+        public int IllnessUntil;
+
+        public bool IsIll(int today) => IllnessUntil > today;
+
         public HostageDeal HostageDealWith(string kingdomId) => Hostages.FirstOrDefault(h => h.KingdomId == kingdomId);
 
         public Lover LoverOf(string heroId) => Lovers.FirstOrDefault(l => l.HeroId == heroId);
@@ -413,7 +424,9 @@ namespace CheatMenu.Intrigue.Core
                     .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)).Add("nextcourt", I(NextCourtshipId))
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId)
                     .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
-                    .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId).Add("steward", StewardId),
+                    .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId).Add("steward", StewardId)
+                    .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil))
+                    .Add("illsince", I(IllnessSince)).Add("illuntil", I(IllnessUntil)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -535,6 +548,10 @@ namespace CheatMenu.Intrigue.Core
                         state.PhysicianWarnUntil = Int(r, "physicianwarn");
                         state.MarshalId = Empty(r.Get("marshal"));
                         state.StewardId = Empty(r.Get("steward"));
+                        state.BrothelVisitUntil = Int(r, "brothelvisit");
+                        state.TroopNightUntil = Int(r, "troopnight");
+                        state.IllnessSince = Int(r, "illsince");
+                        state.IllnessUntil = Math.Max(0, Int(r, "illuntil"));
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");

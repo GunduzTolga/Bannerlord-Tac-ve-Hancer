@@ -12,7 +12,7 @@ using TaleWorlds.CampaignSystem.Settlements;
 namespace CheatMenu.Intrigue
 {
     /// <summary>
-    /// Gece evi (genelev) işletmesi (tasarım: docs/superpowers/specs/2026-10-19-p2-gece-evi.md). Gölge ağın olan şehirde çete lideri
+    /// Genelev işletmesi (tasarım: docs/superpowers/specs/2026-10-19-p2-genelev.md). Gölge ağın olan şehirde çete lideri
     /// üzerinden açılır. Çalışanlar isimsiz, gönüllü ve ücretli yetişkinlerdir (yalnızca sayı): pay düşükse ayrılırlar. Haftalık gelir
     /// ve müşterilerden duyulanlar (rapor, bazen sır) getirir. Yalnızca metin; ayardan açılır (varsayılan kapalı).
     /// </summary>
@@ -20,12 +20,12 @@ namespace CheatMenu.Intrigue
     {
         public static bool Enabled => SettingsStore.Current.NightHouses;
 
-        /// <summary>null: bu şehirde gece evi açılabilir; değilse neden.</summary>
+        /// <summary>null: bu şehirde genelev açılabilir; değilse neden.</summary>
         public static string OpenBlocked(IntrigueState state, Settlement town)
         {
             if (!Enabled) return "Kurallar'dan (MCM > Entrika) açılmalı";
             if (town == null || !town.IsTown) return "Yalnızca şehirlerde";
-            if (state.HouseIn(town.StringId) != null) return "Burada zaten bir gece evin var";
+            if (state.HouseIn(town.StringId) != null) return "Burada zaten bir genelevin var";
             if (state.Network(town.StringId) == null) return "Önce burada bir gölge ağı kur (çete lideri işletir)";
             return SchemeFactors.CanAfford(HouseRules.OpenCost) ? null : "Yeterli altının yok (" + SchemeFactors.Money(HouseRules.OpenCost) + ")";
         }
@@ -36,8 +36,8 @@ namespace CheatMenu.Intrigue
             if (blocked != null) throw new InvalidOperationException(blocked);
             SchemeFactors.Pay(HouseRules.OpenCost);
             state.Houses.Add(new House { TownId = town.StringId, Staff = HouseRules.StartStaff, Share = HouseShare.Standard, Since = SchemeFactors.Today });
-            state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " gece evi açıldı");
-            MenuUI.Success(Tr.Locative(town.Name.ToString()) + " gece evi açıldı: " + HouseRules.StartStaff + " çalışan");
+            state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " genelev açıldı");
+            MenuUI.Success(Tr.Locative(town.Name.ToString()) + " genelev açıldı: " + HouseRules.StartStaff + " çalışan");
         }
 
         public static int MaxStaff(IntrigueState state, Settlement town) => HouseRules.MaxStaff(state.Network(town.StringId)?.Level ?? 1);
@@ -45,7 +45,7 @@ namespace CheatMenu.Intrigue
         public static string HireBlocked(IntrigueState state, Settlement town)
         {
             House house = state.HouseIn(town.StringId);
-            if (house == null) return "Burada gece evin yok";
+            if (house == null) return "Burada genelevin yok";
             if (house.Staff >= MaxStaff(state, town)) return "Ağın bu kadarını gizleyebilir (en fazla " + MaxStaff(state, town) + "; ağı güçlendir)";
             return SchemeFactors.CanAfford(HouseRules.HireCost) ? null : "Yeterli altının yok";
         }
@@ -63,29 +63,29 @@ namespace CheatMenu.Intrigue
 
         public static void SetShare(IntrigueState state, Settlement town, HouseShare share)
         {
-            House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada gece evin yok");
+            House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada genelevin yok");
             house.Share = share;
             MenuUI.Success("Çalışanların payı: " + HouseRules.ShareName(share));
         }
 
         public static void Close(IntrigueState state, Settlement town)
         {
-            House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada gece evin yok");
+            House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada genelevin yok");
             state.Houses.Remove(house);
-            state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " gece evi kapatıldı");
-            MenuUI.Success(Tr.Locative(town.Name.ToString()) + " gece evi kapatıldı");
+            state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " genelev kapatıldı");
+            MenuUI.Success(Tr.Locative(town.Name.ToString()) + " genelev kapatıldı");
         }
 
-        /// <summary>Ağ çöker ya da dağılırsa gece evi de kapanır (çete işletiyordu).</summary>
+        /// <summary>Ağ çöker ya da dağılırsa genelev de kapanır (çete işletiyordu).</summary>
         public static void OnNetworkLost(IntrigueState state, string townId) => state.Houses.RemoveAll(h => h.TownId == townId);
 
         /// <summary>Şehrin gölge ağı açıklamasına eklenen satır.</summary>
         public static string DescribeLine(IntrigueState state, Settlement town)
         {
             House house = state.HouseIn(town.StringId);
-            if (house == null) return Enabled ? "Gece evi: yok (" + SchemeFactors.Money(HouseRules.OpenCost) + " ile açılır)." : null;
+            if (house == null) return Enabled ? "Genelev: yok (" + SchemeFactors.Money(HouseRules.OpenCost) + " ile açılır)." : null;
             float prosperity = town.Town?.Prosperity ?? 0f;
-            return "Gece evi: " + house.Staff + "/" + MaxStaff(state, town) + " çalışan, payları " + HouseRules.ShareName(house.Share)
+            return "Genelev: " + house.Staff + "/" + MaxStaff(state, town) + " çalışan, payları " + HouseRules.ShareName(house.Share)
                 + ", haftalık sana ~" + SchemeFactors.Money(HouseRules.WeeklyNet(house.Staff, prosperity, house.Share))
                 + ", müşterilerden haber %" + HouseRules.IntelChance(house.Staff, house.Share)
                 + (Enabled ? "" : " (Kurallar'dan kapalı: çalışmıyor)") + ".";
@@ -119,8 +119,8 @@ namespace CheatMenu.Intrigue
             if (income > 0)
             {
                 Hero.MainHero.ChangeHeroGold(income);
-                state.AddLog(today, "Gece evleri: haftalık +" + SchemeFactors.Money(income));
-                MenuUI.Success("Gece evlerinden haftalık gelir: " + SchemeFactors.Money(income));
+                state.AddLog(today, "Genelevler: haftalık +" + SchemeFactors.Money(income));
+                MenuUI.Success("Genelevlerden haftalık gelir: " + SchemeFactors.Money(income));
             }
         }
 
@@ -134,7 +134,7 @@ namespace CheatMenu.Intrigue
                 if (state.Roll100() <= chance) left++;
             if (left == 0) return;
             house.Staff = Math.Max(0, house.Staff - left);
-            SchemeOutcomes.Notify(state, "Gece evinden ayrılanlar: " + town.Name,
+            SchemeOutcomes.Notify(state, "Genelevden ayrılanlar: " + town.Name,
                 left + " çalışan payını az bulup ayrıldı; kalan " + house.Staff + ". Pay artarsa kimse ayrılmaz.", null, CardImages.NightHouse);
         }
 
@@ -151,10 +151,10 @@ namespace CheatMenu.Intrigue
                         .Select(c => c.Leader).ToList();
                 foreach (Hero leader in honorable) SchemeOutcomes.Relate(leader, -HouseRules.ScandalPenalty);
                 SchemeOutcomes.Notify(state, "Dedikodu: " + town.Name,
-                    Tr.Locative(town.Name.ToString()) + " gece evinin sana ait olduğu duyuldu. Senin şehrin, senin kuralın; ev açık kalıyor."
+                    Tr.Locative(town.Name.ToString()) + " genelevin sana ait olduğu duyuldu. Senin şehrin, senin kuralın; ev açık kalıyor."
                     + (honorable.Count > 0 ? "\n\nSonuç: onurlu " + honorable.Count + " klan lideriyle ilişki -" + HouseRules.ScandalPenalty + "." : ""),
-                    null, CardImages.NightHouse);
-                state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " gece evi dedikodusu");
+                    null, CardImages.BrothelGossip);
+                state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " genelev dedikodusu");
                 return;
             }
             state.Houses.Remove(house);
@@ -172,22 +172,37 @@ namespace CheatMenu.Intrigue
                 parts.Add(theirs.Name + " suç puanı +" + HouseRules.RaidCrime);
             }
             SchemeOutcomes.Notify(state, "Baskın: " + town.Name,
-                "Muhafızlar " + Tr.Locative(town.Name.ToString()) + " gece evine baskın yaptı; izler sana çıktı.\n\nSonuç: " + string.Join(", ", parts) + ".",
-                lord, CardImages.NightHouse);
-            state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " gece evine baskın");
+                "Muhafızlar " + Tr.Locative(town.Name.ToString()) + " geneleve baskın yaptı; izler sana çıktı.\n\nSonuç: " + string.Join(", ", parts) + ".",
+                lord, CardImages.BrothelRaid);
+            state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " geneleve baskın");
         }
 
         /// <summary>Müşteriler konuştu: şehirdeki bir lord hakkında rapor, bazen bir sır.</summary>
         private static void Intel(IntrigueState state, Settlement town)
         {
-            List<Hero> lords = LordsIn(town);
-            if (lords.Count == 0) return;
-            Hero target = lords[SchemeRandom.Pick(state.Seed, ref state.Rolls, lords.Count)];
+            Hero target = Overhear(state, town, out string secretLine);
+            if (target == null) return;
             int today = SchemeFactors.Today;
-            IntelReport report = SchemeOutcomes.CreateReport(target, today);
+            SchemeOutcomes.Notify(state, "Genelevde duyulanlar: " + target.Name,
+                Tr.Locative(town.Name.ToString()) + " genelevde " + target.Name + " hakkında konuşuldu; çalışanların duyduklarını sana iletti. "
+                + "Hakkında güncel bir raporun var." + secretLine,
+                target, CardImages.BrothelGossip);
+            state.AddLog(today, "Genelev raporu: " + target.Name);
+        }
+
+        /// <summary>
+        /// Genelevde konuşulanlar: şehirdeki bir yabancı lord hakkında güncel rapor yazılır, bazen bir sırrı da (secretLine dolar).
+        /// Şehirde lord yoksa null. İşletmenin haftalık haberi ve müşteri olarak geçirilen gece bunu kullanır.
+        /// </summary>
+        internal static Hero Overhear(IntrigueState state, Settlement town, out string secretLine)
+        {
+            secretLine = "";
+            List<Hero> lords = LordsIn(town);
+            if (lords.Count == 0) return null;
+            Hero target = lords[SchemeRandom.Pick(state.Seed, ref state.Rolls, lords.Count)];
+            IntelReport report = SchemeOutcomes.CreateReport(target, SchemeFactors.Today);
             state.Reports.RemoveAll(r => r.TargetId == target.StringId);
             state.Reports.Add(report);
-            string secretLine = "";
             if (state.Roll100() <= HouseRules.SecretChance)
             {
                 Secret secret = SchemeOutcomes.FindSecret(state, target, state.Roll100, count => SchemeRandom.Pick(state.Seed, ref state.Rolls, count));
@@ -197,11 +212,7 @@ namespace CheatMenu.Intrigue
                     secretLine = "\n\n" + SchemeOutcomes.SecretFoundLine(secret);
                 }
             }
-            SchemeOutcomes.Notify(state, "Gece evinde duyulanlar: " + target.Name,
-                Tr.Locative(town.Name.ToString()) + " gece evinde " + target.Name + " hakkında konuşuldu; çalışanların duyduklarını sana iletti. "
-                + "Hakkında güncel bir raporun var." + secretLine,
-                target, CardImages.NightHouse);
-            state.AddLog(today, "Gece evi raporu: " + target.Name);
+            return target;
         }
 
         /// <summary>Şehirdeki (partisiyle ya da partisiz) yabancı lordlar; sıralı (tohumlu seçim kayıttan bağımsız olsun).</summary>

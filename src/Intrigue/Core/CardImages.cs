@@ -34,8 +34,18 @@ namespace CheatMenu.Intrigue.Core
         public const string Crisis = "sonuc_diplomatik_kriz";
         /// <summary>Casus skandalları yüzünden savaş meclisi toplandı (P2.5).</summary>
         public const string WarCouncil = "sonuc_savas_meclisi";
-        /// <summary>Gece evi: müşterilerden duyulanlar, baskın, skandal.</summary>
-        public const string NightHouse = "yer_gece_evi";
+        /// <summary>Genelev: müşterilerden duyulanlar, baskın, skandal.</summary>
+        public const string NightHouse = "yer_genelev";
+        /// <summary>Genelev: müşteri olarak bir gece (perde iner).</summary>
+        public const string BrothelNight = "olay_genelev_gece";
+        /// <summary>Genelev: askerlere bir gece ısmarlamak.</summary>
+        public const string BrothelTroops = "olay_genelev_askerler";
+        /// <summary>Genelevde duyulanlar ve dedikodu.</summary>
+        public const string BrothelGossip = "sonuc_genelev_dedikodu";
+        /// <summary>Genelev baskını.</summary>
+        public const string BrothelRaid = "olay_genelev_baskin";
+        /// <summary>Hastalık ve tedavisi.</summary>
+        public const string Illness = "sonuc_hastalik";
         /// <summary>Esir hizmetine katıldı: bağlılık yemini.</summary>
         public const string Oath = "sonuc_hizmet_yemini";
         /// <summary>Kur: hediyeler, şiirler, mektuplar (P2.6).</summary>
@@ -125,6 +135,7 @@ namespace CheatMenu.Intrigue.Core
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
                          Tail, TailNight, Treasury, Embezzle, Physician, Antidote, Marshal, Steward,
+                         BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, Illness,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

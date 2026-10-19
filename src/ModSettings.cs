@@ -58,7 +58,7 @@ namespace CheatMenu
         public bool EventCards { get; set; } = true;
         /// <summary>Gizli ilişki ve gayrimeşru çocuk sırları (P2.4, sahnesiz). Kapalıyken bu sırlar bulunmaz.</summary>
         public bool RomanceSecrets { get; set; } = true;
-        /// <summary>Gece evi (genelev) işletmesi: yetişkin teması, metin olarak. Varsayılan kapalı.</summary>
+        /// <summary>Genelev işletmesi: yetişkin teması, metin olarak. Varsayılan kapalı.</summary>
         public bool NightHouses { get; set; }
         /// <summary>Eşin kendi başına sevgili edinebilir (araştırınca ortaya çıkar). Varsayılan açık; gizli ilişki ayarıyla birlikte çalışır.</summary>
         public bool SpouseInfidelity { get; set; } = true;

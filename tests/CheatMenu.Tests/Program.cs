@@ -824,7 +824,7 @@ namespace CheatMenu.Tests
             CheckChance("recruit: hard", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, SchemeMath.HardDifficulty), 10);
         }
 
-        /// <summary>Gece evi: tasarımdaki sayılar.</summary>
+        /// <summary>Genelev: tasarımdaki sayılar.</summary>
         private static void HouseTests()
         {
             Check("house: max staff by network level", HouseRules.MaxStaff(1) == 4 && HouseRules.MaxStaff(3) == 8 && HouseRules.MaxStaff(9) == 8);
@@ -837,6 +837,24 @@ namespace CheatMenu.Tests
                 && HouseRules.LeaveChance(HouseShare.Fair) == 0);
             Check("house: intel chance", HouseRules.IntelChance(4, HouseShare.Standard) == 20 && HouseRules.IntelChance(4, HouseShare.Fair) == 30
                 && HouseRules.IntelChance(20, HouseShare.Fair) == 60 && HouseRules.IntelChance(0, HouseShare.Fair) == 0);
+
+            // Müşteri olarak (genelev ziyareti), askerlerin gecesi, hastalık
+            Check("brothel: visit cost, half in your own house", HouseRules.VisitCost(false, false) == 150 && HouseRules.VisitCost(true, false) == 400
+                && HouseRules.VisitCost(true, true) == 200 && HouseRules.VisitCost(false, true) == 75);
+            Check("brothel: the fine room hears more and risks less", HouseRules.VisitIntelChance(true) > HouseRules.VisitIntelChance(false)
+                && HouseRules.VisitIllnessChance(true) < HouseRules.VisitIllnessChance(false));
+            Check("brothel: spouse hears more when near", HouseRules.SpouseHearsNearChance > HouseRules.SpouseHearsChance && HouseRules.SpouseHearsPenalty > 0);
+            Check("brothel: troop night cost", HouseRules.TroopNightCost(0) == 100 && HouseRules.TroopNightCost(10) == 100 && HouseRules.TroopNightCost(120) == 360);
+            Check("illness: health cap", HouseRules.HealthCap(100) == 70 && HouseRules.HealthCap(1) == 1);
+            Check("illness: physician cure days by Medicine", HouseRules.PhysicianCureDays(0) == 15 && HouseRules.PhysicianCureDays(100) == 10
+                && HouseRules.PhysicianCureDays(300) == 3 && HouseRules.PhysicianCureDays(-5) == 15);
+            Check("illness: end without and with a physician", HouseRules.IllnessEnd(10, 40, -1) == 40 && HouseRules.IllnessEnd(10, 40, 200) == 15
+                && HouseRules.IllnessEnd(10, 12, 0) == 12 && HouseRules.IllnessEnd(0, 0, 200) == 0);
+            var ill = new IntrigueState { BrothelVisitUntil = 31, TroopNightUntil = 37, IllnessSince = 30, IllnessUntil = 60 };
+            IntrigueState illBack = IntrigueState.Parse(ill.Write());
+            Check("brothel: visit, troop night and illness are saved", illBack.BrothelVisitUntil == 31 && illBack.TroopNightUntil == 37
+                && illBack.IllnessSince == 30 && illBack.IllnessUntil == 60 && illBack.IsIll(59) && !illBack.IsIll(60));
+            Check("brothel: old saves load healthy", !IntrigueState.Parse(new IntrigueState().Write()).IsIll(0) && IntrigueState.Parse("").IllnessUntil == 0);
         }
 
         /// <summary>Ağ ifşasından diplomatik kriz (P2.5): tasarımdaki sayılar.</summary>

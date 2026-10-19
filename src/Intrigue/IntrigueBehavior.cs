@@ -26,6 +26,7 @@ namespace CheatMenu.Intrigue
                 ShadowNetworks.RegisterMenus(starter);
                 CourtDays.RegisterMenus(starter);
                 Tailing.RegisterMenus(starter);
+                Brothels.RegisterMenus(starter);
                 Treasury.ResetCache();
                 IntrigueDialogs.Register(starter);
             });
@@ -40,6 +41,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Divan günlük (kervan defteri)", Treasury.DailyTick);
                 MenuUI.SafeRun("Divan günlük (serdarın uyarıları)", Marshal.Daily);
                 MenuUI.SafeRun("Divan günlük (kâhyanın uyarıları)", Steward.Daily);
+                MenuUI.SafeRun("Genelev günlük (hastalık)", Brothels.Daily);
             });
             CampaignEvents.OnGivenBirthEvent.AddNonSerializedListener(this, (mother, children, stillborn) =>
                 MenuUI.SafeRun("Hekim (doğum)", () => Physician.OnGivenBirth(mother)));
@@ -56,7 +58,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (yapay zekâ)", AiIntrigue.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (gölge ağları)", ShadowNetworks.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (diplomatik kriz)", DiplomaticCrises.Weekly);
-                MenuUI.SafeRun("Entrika haftalık (gece evleri)", NightHouses.Weekly);
+                MenuUI.SafeRun("Entrika haftalık (genelevler)", NightHouses.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (eşin)", SpouseLife.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (rehineler)", Hostages.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
