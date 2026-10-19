@@ -76,6 +76,7 @@ namespace CheatMenu.Intrigue
         {
             ShadowNetwork network = state.Network(town.StringId) ?? throw new InvalidOperationException("Bu şehirde ağın yok");
             state.Networks.Remove(network);
+            NightHouses.OnNetworkLost(state, town.StringId);
             state.AddLog(SchemeFactors.Today, Tr.Locative(town.Name.ToString()) + " gölge ağı dağıtıldı");
             MenuUI.Success(Tr.Locative(town.Name.ToString()) + " gölge ağı dağıtıldı");
         }
@@ -105,6 +106,8 @@ namespace CheatMenu.Intrigue
                     + ") ve hükümdar hesap sorar (tazminat, inkâr ya da ret). Gerilim " + CrisisRules.WarThreshold
                     + "'ı aşarsa savaş meclisi toplanabilir.",
             };
+            string house = NightHouses.DescribeLine(state, town);
+            if (house != null) lines.Add(house);
             return string.Join("\n", lines);
         }
 
@@ -122,12 +125,14 @@ namespace CheatMenu.Intrigue
                 if (town == null || GangLeaders(town).Count == 0)
                 {
                     state.Networks.Remove(network);
+                    NightHouses.OnNetworkLost(state, network.SettlementId);
                     SchemeOutcomes.Notify(state, "Gölge ağı dağıldı", (town != null ? Tr.Locative(town.Name.ToString()) + " " : "") + "artık güvenebileceğin bir çete yok.", null,
                         CardImages.ShadowNetwork);
                     continue;
                 }
                 if (state.Roll100() > SchemeMath.NetworkExposeChance(network.Level)) continue;
                 state.Networks.Remove(network);
+                NightHouses.OnNetworkLost(state, network.SettlementId);
                 Hero owner = town.OwnerClan?.Leader;
                 bool penalized = owner != null && owner.Clan != Clan.PlayerClan;
                 if (penalized) SchemeOutcomes.Relate(owner, -10);
@@ -149,7 +154,11 @@ namespace CheatMenu.Intrigue
                 return;
             }
             foreach (ShadowNetwork network in state.Networks.ToList())
-                if (--network.Level <= 0) state.Networks.Remove(network);
+                if (--network.Level <= 0)
+                {
+                    state.Networks.Remove(network);
+                    NightHouses.OnNetworkLost(state, network.SettlementId);
+                }
             SchemeOutcomes.Notify(state, "Muhbirlerin parasız kaldı",
                 "Gölge ağlarının haftalık bakımını (" + SchemeFactors.Money(upkeep) + ") ödeyemedin; her ağ bir seviye zayıfladı.", null,
                 CardImages.ShadowNetwork);

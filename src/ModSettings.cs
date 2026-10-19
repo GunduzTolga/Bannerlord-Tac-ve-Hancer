@@ -43,6 +43,8 @@ namespace CheatMenu
         public bool EventCards { get; set; } = true;
         /// <summary>Gizli ilişki ve gayrimeşru çocuk sırları (P2.4, sahnesiz). Kapalıyken bu sırlar bulunmaz.</summary>
         public bool RomanceSecrets { get; set; } = true;
+        /// <summary>Gece evi (genelev) işletmesi: yetişkin teması, metin olarak. Varsayılan kapalı.</summary>
+        public bool NightHouses { get; set; }
 
         public void SetFastForwardSpeed(int speed) => FastForwardSpeed = Allowed(AllowedSpeeds, speed, DefaultSpeed);
         public void SetSkillXpMultiplier(int value) => SkillXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
@@ -87,6 +89,7 @@ namespace CheatMenu
                     case "ScreenHotkey": if (isNumber) settings.SetScreenHotkey(number); break;
                     case "EventCards": settings.EventCards = IsTrue(value); break;
                     case "RomanceSecrets": settings.RomanceSecrets = IsTrue(value); break;
+                    case "NightHouses": settings.NightHouses = IsTrue(value); break;
                 }
             }
             return settings;
@@ -108,7 +111,8 @@ namespace CheatMenu
             + "MapButtonPosition=" + Invariant(MapButtonPosition) + "\n"
             + "ScreenHotkey=" + Invariant(ScreenHotkey) + "\n"
             + "EventCards=" + (EventCards ? "1" : "0") + "\n"
-            + "RomanceSecrets=" + (RomanceSecrets ? "1" : "0") + "\n";
+            + "RomanceSecrets=" + (RomanceSecrets ? "1" : "0") + "\n"
+            + "NightHouses=" + (NightHouses ? "1" : "0") + "\n";
 
         private static int Allowed(int[] allowed, int value, int fallback) =>
             Array.IndexOf(allowed, value) >= 0 ? value : fallback;

@@ -145,6 +145,15 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Gölge ağı olan bir şehirdeki gece evi. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
+    public sealed class House
+    {
+        public string TownId;
+        public int Staff;
+        public HouseShare Share = HouseShare.Standard;
+        public int Since;
+    }
+
     /// <summary>Yabancı bir krallıkta gölge ağı çökertildi; hükümdarı hesap soruyor (P2.5). Cevaplanana kadar kartla sorulur.</summary>
     public sealed class Crisis
     {
@@ -214,6 +223,9 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Casus skandallarından krallıklarla gerilim, 0-100 (P2.5).</summary>
         public Dictionary<string, int> Tension = new Dictionary<string, int>();
         public List<Crisis> Crises = new List<Crisis>();
+        public List<House> Houses = new List<House>();
+
+        public House HouseIn(string townId) => Houses.FirstOrDefault(h => h.TownId == townId);
 
         public int TensionWith(string kingdomId) => kingdomId != null && Tension.TryGetValue(kingdomId, out int t) ? t : 0;
 
@@ -328,6 +340,8 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in GiftUntil) records.Add(new TextRecord("gift").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in Tension.Where(p => p.Value > 0))
                 records.Add(new TextRecord("tension").Add("kingdom", p.Key).Add("value", I(p.Value)));
+            foreach (House h in Houses)
+                records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since)));
             foreach (Crisis c in Crises)
                 records.Add(new TextRecord("crisis").Add("kingdom", c.KingdomId).Add("town", c.TownId).Add("level", I(c.Level))
                     .Add("day", I(c.Day)).Add("crime", I(c.Crime)).Add("owner", c.OwnerId));
@@ -446,6 +460,15 @@ namespace CheatMenu.Intrigue.Core
                     case "tension":
                         if (Empty(r.Get("kingdom")) != null)
                             state.Tension[r.Get("kingdom")] = SchemeMath.Clamp(Int(r, "value"), 0, CrisisRules.MaxTension);
+                        break;
+                    case "house":
+                        int share = Int(r, "share");
+                        if (Empty(r.Get("town")) == null || state.HouseIn(r.Get("town")) != null) break;
+                        state.Houses.Add(new House
+                        {
+                            TownId = r.Get("town"), Staff = SchemeMath.Clamp(Int(r, "staff"), 0, HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel)),
+                            Share = Enum.IsDefined(typeof(HouseShare), share) ? (HouseShare)share : HouseShare.Standard, Since = Int(r, "since"),
+                        });
                         break;
                     case "crisis":
                         if (Empty(r.Get("kingdom")) == null) break;

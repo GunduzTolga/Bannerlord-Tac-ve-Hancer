@@ -37,6 +37,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (yapay zekâ)", AiIntrigue.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (gölge ağları)", ShadowNetworks.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (diplomatik kriz)", DiplomaticCrises.Weekly);
+                MenuUI.SafeRun("Entrika haftalık (gece evleri)", NightHouses.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
             });
         }

@@ -431,13 +431,48 @@ namespace CheatMenu.Menu
                 entries.Add(MenuEntry.Simple("Çete liderine hediye gönder (" + SchemeFactors.Money(ShadowNetworks.GiftCost) + ", ilişki +"
                     + ShadowNetworks.GiftRelation + ")", () => ShadowNetworks.Gift(town)));
             }
+            if (network != null && NightHouses.Enabled) AddHouseEntries(state, town, inTown, entries);
             if (network != null)
-                entries.Add(MenuEntry.Submenu("Ağı dağıt...", () => MenuUI.Confirm("Ağı dağıt", "Harcanan para geri gelmez. Dağıtılsın mı?",
+                entries.Add(MenuEntry.Submenu("Ağı dağıt...", () => MenuUI.Confirm("Ağı dağıt",
+                    "Harcanan para geri gelmez." + (state.HouseIn(town.StringId) != null ? " Gece evi de kapanır." : "") + " Dağıtılsın mı?",
                     () => ShadowNetworks.Disband(state, town), () => ShowShadowTown(town, inTown))));
             if (entries.Count == 0) entries.Add(MenuEntry.Simple("Ağ kurmak için bu şehre git", () => { }));
 
             MenuUI.ShowList("Gölgeler: " + town.Name, entries, () => ShowShadowTown(town, inTown), inTown ? "Kapat" : "Geri",
                 inTown ? (Action)null : ShowNetworks, ShadowNetworks.Describe(state, town));
+        }
+
+        /// <summary>Gece evi: açmak ve çalışan almak şehirdeyken; payı değiştirmek ve kapatmak uzaktan da.</summary>
+        private static void AddHouseEntries(IntrigueState state, Settlement town, bool inTown, List<MenuEntry> entries)
+        {
+            House house = state.HouseIn(town.StringId);
+            if (house == null)
+            {
+                if (!inTown) return;
+                string blocked = NightHouses.OpenBlocked(state, town);
+                string label = "Gece evi aç (" + SchemeFactors.Money(HouseRules.OpenCost) + ", " + HouseRules.StartStaff + " gönüllü çalışan)";
+                entries.Add(blocked == null
+                    ? MenuEntry.Simple(label, () => NightHouses.Open(state, town))
+                    : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
+                return;
+            }
+            if (inTown)
+            {
+                string blocked = NightHouses.HireBlocked(state, town);
+                string label = "Çalışan al (" + SchemeFactors.Money(HouseRules.HireCost) + "; " + house.Staff + "/" + NightHouses.MaxStaff(state, town) + ")";
+                entries.Add(blocked == null
+                    ? MenuEntry.Simple(label, () => NightHouses.Hire(state, town))
+                    : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
+            }
+            foreach (HouseShare share in new[] { HouseShare.Fair, HouseShare.Standard, HouseShare.Low })
+            {
+                if (share == house.Share) continue;
+                entries.Add(MenuEntry.Simple("Çalışanların payı: " + HouseRules.ShareName(share)
+                    + (HouseRules.LeaveChance(share) > 0 ? " (ayrılma %" + HouseRules.LeaveChance(share) + "/hafta)" : " (kimse ayrılmaz, daha çok haber)"),
+                    () => NightHouses.SetShare(state, town, share)));
+            }
+            entries.Add(MenuEntry.Submenu("Gece evini kapat...", () => MenuUI.Confirm("Gece evini kapat", "Açılış parası geri gelmez. Kapatılsın mı?",
+                () => NightHouses.Close(state, town), () => ShowShadowTown(town, inTown))));
         }
 
         // ---- Sana karşı entrikalar ----

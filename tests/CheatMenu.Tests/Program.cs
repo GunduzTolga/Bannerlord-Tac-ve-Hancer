@@ -88,6 +88,8 @@ namespace CheatMenu.Tests
             Check("settings: event cards off", !ModSettings.Parse("EventCards=0").EventCards);
             Check("settings: romance secrets default on", ModSettings.Parse("").RomanceSecrets);
             Check("settings: romance secrets off", !ModSettings.Parse("RomanceSecrets=0").RomanceSecrets);
+            Check("settings: night houses default off", !ModSettings.Parse("").NightHouses);
+            Check("settings: night houses on", ModSettings.Parse("NightHouses=1").NightHouses);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -104,12 +106,13 @@ namespace CheatMenu.Tests
             full.SetScreenHotkey(5);
             full.EventCards = false;
             full.RomanceSecrets = false;
+            full.NightHouses = true;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
                 && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && back.MapButtonPosition == 3 && back.ScreenHotkey == 5
-                && !back.EventCards && !back.RomanceSecrets);
+                && !back.EventCards && !back.RomanceSecrets && back.NightHouses);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -144,6 +147,7 @@ namespace CheatMenu.Tests
             LetterTests();
             RomanceTests();
             CrisisTests();
+            HouseTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -339,6 +343,7 @@ namespace CheatMenu.Tests
             state.GiftUntil["lord_13"] = 248;
             state.Tension["vlandia"] = 55;
             state.Tension["empire"] = 0;
+            state.Houses.Add(new House { TownId = "town_V1", Staff = 5, Share = HouseShare.Fair, Since = 120 });
             state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
             state.Mission = SpymasterMission.SpreadRumors;
@@ -375,6 +380,8 @@ namespace CheatMenu.Tests
             Check("state: interrogated", back.InterrogatedUntil.Count == 2 && back.InterrogatedUntil["lord_7"] == 230);
             Check("state: audiences", back.Audiences.Count == 2 && back.Audiences[0].Relation == 3 && back.Audiences[0].Asked
                 && !back.Audiences[1].Asked && back.GiftUntil["lord_13"] == 248);
+            Check("state: house", back.Houses.Count == 1 && back.HouseIn("town_V1") != null && back.Houses[0].Staff == 5
+                && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null);
             Check("state: tension", back.TensionWith("vlandia") == 55 && !back.Tension.ContainsKey("empire") && back.TensionWith("nope") == 0);
             Check("state: crisis", back.Crises.Count == 1 && back.Crises[0].KingdomId == "vlandia" && back.Crises[0].TownId == "town_V1"
                 && back.Crises[0].Level == 2 && back.Crises[0].Day == 140 && back.Crises[0].Crime == 30 && back.Crises[0].OwnerId == "lord_4_1");
@@ -464,6 +471,21 @@ namespace CheatMenu.Tests
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
+        }
+
+        /// <summary>Gece evi: tasarımdaki sayılar.</summary>
+        private static void HouseTests()
+        {
+            Check("house: max staff by network level", HouseRules.MaxStaff(1) == 4 && HouseRules.MaxStaff(3) == 8 && HouseRules.MaxStaff(9) == 8);
+            Check("house: shares", HouseRules.SharePercent(HouseShare.Low) == 25 && HouseRules.SharePercent(HouseShare.Standard) == 40
+                && HouseRules.SharePercent(HouseShare.Fair) == 60);
+            Check("house: gross", HouseRules.WeeklyGross(4, 5000f) == 360 && HouseRules.WeeklyGross(0, 5000f) == 0 && HouseRules.WeeklyGross(2, -50f) == 80);
+            Check("house: net by share", HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard) == 216 && HouseRules.WeeklyNet(4, 5000f, HouseShare.Fair) == 144
+                && HouseRules.WeeklyNet(4, 5000f, HouseShare.Low) == 270);
+            Check("house: workers leave only when underpaid", HouseRules.LeaveChance(HouseShare.Low) == 15 && HouseRules.LeaveChance(HouseShare.Standard) == 5
+                && HouseRules.LeaveChance(HouseShare.Fair) == 0);
+            Check("house: intel chance", HouseRules.IntelChance(4, HouseShare.Standard) == 20 && HouseRules.IntelChance(4, HouseShare.Fair) == 30
+                && HouseRules.IntelChance(20, HouseShare.Fair) == 60 && HouseRules.IntelChance(0, HouseShare.Fair) == 0);
         }
 
         /// <summary>Ağ ifşasından diplomatik kriz (P2.5): tasarımdaki sayılar.</summary>
