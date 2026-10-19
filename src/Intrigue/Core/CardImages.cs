@@ -23,6 +23,7 @@ namespace CheatMenu.Intrigue.Core
         public const string ShadowNetwork = "yer_golge_agi";
         public const string HookUsed = "sonuc_koz";
         public const string Interrogation = "sonuc_sorgu";
+        public const string Messenger = "sonuc_haberci";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -53,7 +54,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string name in new[]
                      {
                          Spy, SecretFound, Blackmail, Murder, MurderPoison, MurderDagger, MurderAccident, Kidnap, Caught, Exposed,
-                         LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation,
+                         LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

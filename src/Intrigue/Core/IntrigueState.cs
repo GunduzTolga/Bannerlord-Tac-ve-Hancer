@@ -127,6 +127,18 @@ namespace CheatMenu.Intrigue.Core
         public int Since;
     }
 
+    /// <summary>Yoldaki mektup (P2.2): varış gününde sonuçlanır.</summary>
+    public sealed class Letter
+    {
+        public int Id;
+        public LetterKind Kind;
+        public string TargetId;
+        /// <summary>Koz talebinde HookActions.Use değeri.</summary>
+        public int Use;
+        public int SentDay;
+        public int ArriveDay;
+    }
+
     /// <summary>
     /// Entrika sisteminin kayda yazılan tüm durumu. Saf veri: oyun nesnesi tutmaz, kahramanlar StringId ile anılır.
     /// Metne TextRecords ile yazılır; okurken bozuk ya da eksik kayıtlar atlanır, asla istisna atmaz.
@@ -162,6 +174,12 @@ namespace CheatMenu.Intrigue.Core
         // P2.1
         /// <summary>Esir sorgusu: kahraman → yeniden sorgulanabileceği gün.</summary>
         public Dictionary<string, int> InterrogatedUntil = new Dictionary<string, int>();
+
+        // P2.2
+        public List<Letter> Letters = new List<Letter>();
+        public int NextLetterId = 1;
+        /// <summary>Taraf değiştirme daveti reddedildi: kahraman → yeniden davet edilebileceği gün.</summary>
+        public Dictionary<string, int> DefectionUntil = new Dictionary<string, int>();
 
         /// <summary>E0 kayıt testi: oyuncunun bıraktığı işaret; kaydet-yükle sonrası durmalı.</summary>
         public string SaveTestMarker { get; set; }
@@ -202,6 +220,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in AlertUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) AlertUntil.Remove(id);
             foreach (string id in FeudUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) FeudUntil.Remove(id);
             foreach (string id in InterrogatedUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) InterrogatedUntil.Remove(id);
+            foreach (string id in DefectionUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DefectionUntil.Remove(id);
             Hooks.RemoveAll(h => h.Until <= today);
         }
 
@@ -213,7 +232,7 @@ namespace CheatMenu.Intrigue.Core
             {
                 new TextRecord("version").Add("v", I(CurrentVersion)),
                 new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
-                    .Add("nextplot", I(NextPlotId)),
+                    .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -259,6 +278,11 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in FeudUntil) records.Add(new TextRecord("feud").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in InterrogatedUntil)
                 records.Add(new TextRecord("interrogated").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (Letter l in Letters)
+                records.Add(new TextRecord("letter").Add("id", I(l.Id)).Add("kind", I((int)l.Kind)).Add("target", l.TargetId)
+                    .Add("use", I(l.Use)).Add("sent", I(l.SentDay)).Add("arrive", I(l.ArriveDay)));
+            foreach (KeyValuePair<string, int> p in DefectionUntil)
+                records.Add(new TextRecord("defection").Add("hero", p.Key).Add("until", I(p.Value)));
             return TextRecords.Write(records);
         }
 
@@ -276,6 +300,7 @@ namespace CheatMenu.Intrigue.Core
                         state.Seed = Int(r, "seed");
                         state.Rolls = Int(r, "rolls");
                         state.NextPlotId = Math.Max(1, Int(r, "nextplot"));
+                        state.NextLetterId = Math.Max(1, Int(r, "nextletter"));
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");
@@ -352,6 +377,18 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "interrogated":
                         if (Empty(r.Get("hero")) != null) state.InterrogatedUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "letter":
+                        int letterKind = Int(r, "kind");
+                        if (Empty(r.Get("target")) == null || !Enum.IsDefined(typeof(LetterKind), letterKind)) break;
+                        state.Letters.Add(new Letter
+                        {
+                            Id = Int(r, "id"), Kind = (LetterKind)letterKind, TargetId = r.Get("target"), Use = Int(r, "use"),
+                            SentDay = Int(r, "sent"), ArriveDay = Int(r, "arrive"),
+                        });
+                        break;
+                    case "defection":
+                        if (Empty(r.Get("hero")) != null) state.DefectionUntil[r.Get("hero")] = Int(r, "until");
                         break;
                 }
             }

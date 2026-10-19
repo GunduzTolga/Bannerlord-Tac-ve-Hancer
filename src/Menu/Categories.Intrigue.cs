@@ -312,13 +312,13 @@ namespace CheatMenu.Menu
             }
             List<MenuEntry> entries = HookActions.Options(target)
                 .Select(option => option.Blocked == null
-                    ? MenuEntry.Submenu(option.Label, () =>
+                    ? MenuEntry.Submenu(option.Label + Messengers.HookRouteText(target, option.Use), () =>
                     {
                         // Başarılıysa menü kapalı kalır: sonuç popup'ı hemen görünsün.
                         bool done = false;
                         MenuUI.SafeRun("Koz", () =>
                         {
-                            HookActions.Apply(state, target, option.Use);
+                            Messengers.UseHook(state, target, option.Use);
                             done = true;
                         });
                         if (!done) MenuUI.Defer(() => ShowHook(hook));

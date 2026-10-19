@@ -129,6 +129,9 @@ namespace CheatMenu.Intrigue
         private static int GoldDemand(Hero target) =>
             Math.Min(target.Gold, Math.Max(500, target.Gold * SchemeMath.HookGoldPercent / 100));
 
+        /// <summary>null: bu lordun klanı senin krallığına geçebilir (koz ya da davet mektubu); değilse neden.</summary>
+        public static string DefectionBlocked(Hero target) => DefectBlocked(target, Clan.PlayerClan.Kingdom, target.Clan?.Kingdom);
+
         private static string DefectBlocked(Hero target, Kingdom mine, Kingdom theirs)
         {
             if (mine == null) return "Önce bir krallıkta olmalısın";

@@ -118,15 +118,25 @@
                             <!-- ===== Süren entrikalar ===== -->
                             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsSchemesTab">
                               <Children>
-                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@SchemesEmptyText" IsVisible="@HasNoSchemes" />
-                                <ScrollablePanel Id="SchemesScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="SchemesClip" InnerPanel="SchemesClip\SchemesList" VerticalScrollbar="..\SchemesBar">
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@SchemesEmptyText" IsVisible="@HasNothingRunning" />
+                                <ScrollablePanel Id="SchemesScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="SchemesClip" InnerPanel="SchemesClip\SchemesInner" VerticalScrollbar="..\SchemesBar">
                                   <Children>
                                     <Widget Id="SchemesClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                                       <Children>
-                                        <ListPanel Id="SchemesList" DataSource="{Schemes}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                                          <ItemTemplate>
-                                            <TvhSchemeCard />
-                                          </ItemTemplate>
+                                        <ListPanel Id="SchemesInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                          <Children>
+                                            <ListPanel DataSource="{Schemes}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                              <ItemTemplate>
+                                                <TvhSchemeCard />
+                                              </ItemTemplate>
+                                            </ListPanel>
+                                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="6" Brush="Tvh.Text.Section" Text="@LettersHeader" IsVisible="@HasLetters" />
+                                            <ListPanel DataSource="{Letters}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                              <ItemTemplate>
+                                                <TvhLetterRow />
+                                              </ItemTemplate>
+                                            </ListPanel>
+                                          </Children>
                                         </ListPanel>
                                       </Children>
                                     </Widget>
@@ -181,6 +191,13 @@
                                     </ScrollbarWidget>
                                   </Children>
                                 </Widget>
+                              </Children>
+                            </Widget>
+
+                            <!-- ===== Saray ===== -->
+                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsCourtTab">
+                              <Children>
+                                <TvhCourtPanel DataSource="{Court}" />
                               </Children>
                             </Widget>
 

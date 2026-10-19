@@ -2,7 +2,7 @@
 <!-- Sekme ya da filtre düğmesi (ViewModel: TabVM). Seçiliyken altında altın çizgi. -->
 <Prefab>
   <Window>
-    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="176" SuggestedHeight="46" MarginRight="4" Brush="Tvh.Tab" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="156" SuggestedHeight="46" MarginRight="4" Brush="Tvh.Tab" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
       <Children>
         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="6" MarginRight="6" Brush="Tvh.Text.Tab" Text="@Name" />
         <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="3" VerticalAlignment="Bottom" Sprite="BlankWhiteSquare_9" Color="#E8C77DFF" IsVisible="@IsSelected" />

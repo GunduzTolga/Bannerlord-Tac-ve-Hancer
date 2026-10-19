@@ -131,7 +131,7 @@ namespace CheatMenu.UI.ViewModels
         private Hero _hero;
         private ImageIdentifierVM _portrait;
         private bool _hasPerson, _hasReport, _hasSecrets, _hasHook;
-        private string _name = "", _affiliation = "", _relationText = "", _reportTitle = "", _reportText = "", _hookText = "";
+        private string _name = "", _affiliation = "", _relationText = "", _reportTitle = "", _reportText = "", _hookText = "", _courtText = "";
 
         public DossierVM(Action changed, Action<SchemeKind, Hero> startScheme)
         {
@@ -148,6 +148,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string Name { get => _name; set => Set(ref _name, value, nameof(Name)); }
         [DataSourceProperty] public string Affiliation { get => _affiliation; set => Set(ref _affiliation, value, nameof(Affiliation)); }
         [DataSourceProperty] public string RelationText { get => _relationText; set => Set(ref _relationText, value, nameof(RelationText)); }
+        [DataSourceProperty] public string CourtText { get => _courtText; set => Set(ref _courtText, value, nameof(CourtText)); }
         [DataSourceProperty] public bool HasReport { get => _hasReport; set => Set(ref _hasReport, value, nameof(HasReport)); }
         [DataSourceProperty] public string ReportTitle { get => _reportTitle; set => Set(ref _reportTitle, value, nameof(ReportTitle)); }
         [DataSourceProperty] public string ReportText { get => _reportText; set => Set(ref _reportText, value, nameof(ReportText)); }
@@ -178,13 +179,16 @@ namespace CheatMenu.UI.ViewModels
             HasPerson = hero != null;
             if (hero == null)
             {
-                Name = Affiliation = RelationText = ReportTitle = ReportText = HookText = "";
+                Name = Affiliation = RelationText = ReportTitle = ReportText = HookText = CourtText = "";
                 HasReport = HasSecrets = HasHook = false;
                 return;
             }
             Name = hero.Name.ToString();
             Affiliation = SchemeFactors.Affiliation(hero);
             RelationText = hero.IsAlive ? "Seninle ilişkisi: " + SchemeFactors.Signed(Hero.MainHero.GetRelation(hero)) : "Hayatta değil";
+            CourtText = hero.IsAlive && hero.Clan?.Kingdom != null && hero.Clan.Kingdom.Leader != hero
+                ? "Hükümdarı " + hero.Clan.Kingdom.Leader.Name + " ile: " + Intrigue.Court.MoodText(state, hero)
+                : "";
 
             IntelReport report = state.LatestReport(hero.StringId);
             HasReport = report != null;
@@ -204,14 +208,19 @@ namespace CheatMenu.UI.ViewModels
             HasHook = hook != null && hero.IsAlive;
             if (HasHook)
             {
+                Letter pending = Messengers.PendingTo(state, hero);
                 HookText = (hook.Until - today) + " gün daha geçerli. Bırakma dışındaki her talep kozu harcar ve ilişkiyi -"
-                    + SchemeMath.HookUseRelationPenalty + " düşürür.";
+                    + SchemeMath.HookUseRelationPenalty + " düşürür. "
+                    + (Messengers.IsFaceToFace(hero) ? "Yüz yüzesiniz: talep hemen olur." : "Uzakta: talep haberciyle gider, cevap varınca gelir.")
+                    + (pending != null ? "\nOna giden bir haberci yolda (" + Math.Max(0, pending.ArriveDay - today) + " gün)." : "");
                 foreach (Intrigue.HookActions.Option option in Intrigue.HookActions.Options(hero))
                 {
                     Intrigue.HookActions.Use use = option.Use;
-                    HookActions.Add(new ActionItemVM(option.Label, option.Blocked, () =>
+                    string blocked = option.Blocked
+                        ?? (use != Intrigue.HookActions.Use.Release && pending != null ? "Ona giden bir haberci zaten yolda" : null);
+                    HookActions.Add(new ActionItemVM(option.Label + Messengers.HookRouteText(hero, use), blocked, () =>
                     {
-                        Intrigue.HookActions.Apply(SchemeEngine.State, hero, use);
+                        Messengers.UseHook(SchemeEngine.State, hero, use);
                         _changed();
                     }));
                 }
@@ -224,6 +233,17 @@ namespace CheatMenu.UI.ViewModels
                     SchemeKind chosen = kind;
                     StartActions.Add(new ActionItemVM(SchemeRules.Name(kind) + "...", blocked, () => _startScheme(chosen, hero), kind == SchemeKind.Murder));
                 }
+            if (hero.IsAlive && hero.IsClanLeader && hero.Clan?.Kingdom != null && hero.Clan.Kingdom != Clan.PlayerClan.Kingdom)
+            {
+                int days = Messengers.TravelDays(hero);
+                int cost = LetterRules.MessengerCost(days) + LetterRules.DefectionGift(SchemeFactors.TargetTier(hero));
+                StartActions.Add(new ActionItemVM("Davet mektubu: şans " + Messengers.DefectionChanceText(state, hero) + ", "
+                    + SchemeFactors.Money(cost) + ", " + days + " gün", Messengers.DefectionBlocked(state, hero), () =>
+                    {
+                        Messengers.SendDefection(SchemeEngine.State, hero);
+                        _changed();
+                    }));
+            }
         }
 
         public void ExecuteDeleteReport()

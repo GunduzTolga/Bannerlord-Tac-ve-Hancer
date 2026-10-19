@@ -17,23 +17,25 @@ namespace CheatMenu.UI.ViewModels
     /// </summary>
     public sealed class IntrigueScreenVM : TvhViewModel
     {
-        public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabNetworks = 4, TabPlots = 5, TabLog = 6;
+        public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabCourt = 4, TabNetworks = 5, TabPlots = 6, TabLog = 7;
 
         private readonly Action _close;
         private int _tab;
         private bool _dirty;
         private string _subtitle = "", _status = "";
-        private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isNetworksTab, _isPlotsTab, _isLogTab;
-        private bool _hasNoSchemes, _hasNoPrisoners, _hasNoNetworks, _hasNoPlots, _hasNoLog;
+        private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isCourtTab, _isNetworksTab, _isPlotsTab, _isLogTab;
+        private bool _hasNothingRunning, _hasLetters, _hasNoPrisoners, _hasNoNetworks, _hasNoPlots, _hasNoLog;
 
         public IntrigueScreenVM(Action close, int tab)
         {
             _close = close;
             Spymaster = new SpymasterVM(MarkDirty);
             Tabs = new MBBindingList<TabVM>();
-            string[] names = { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Gölge ağları", "Sana karşı", "Kronik" };
+            string[] names = { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Ağlar", "Sana karşı", "Kronik" };
             for (int i = 0; i < names.Length; i++) Tabs.Add(new TabVM(i, names[i], t => SelectTab(t.Index)));
             Schemes = new MBBindingList<SchemeItemVM>();
+            Letters = new MBBindingList<LetterItemVM>();
+            Court = new CourtVM(MarkDirty, StartSchemeOn);
             NewScheme = new NewSchemeVM(() =>
             {
                 _tab = TabSchemes;
@@ -63,6 +65,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool IsNewTab { get => _isNewTab; set => Set(ref _isNewTab, value, nameof(IsNewTab)); }
         [DataSourceProperty] public bool IsPeopleTab { get => _isPeopleTab; set => Set(ref _isPeopleTab, value, nameof(IsPeopleTab)); }
         [DataSourceProperty] public bool IsPrisonersTab { get => _isPrisonersTab; set => Set(ref _isPrisonersTab, value, nameof(IsPrisonersTab)); }
+        [DataSourceProperty] public bool IsCourtTab { get => _isCourtTab; set => Set(ref _isCourtTab, value, nameof(IsCourtTab)); }
         [DataSourceProperty] public bool IsNetworksTab { get => _isNetworksTab; set => Set(ref _isNetworksTab, value, nameof(IsNetworksTab)); }
         [DataSourceProperty] public bool IsPlotsTab { get => _isPlotsTab; set => Set(ref _isPlotsTab, value, nameof(IsPlotsTab)); }
         [DataSourceProperty] public bool IsLogTab { get => _isLogTab; set => Set(ref _isLogTab, value, nameof(IsLogTab)); }
@@ -70,9 +73,13 @@ namespace CheatMenu.UI.ViewModels
         // ---- Süren entrikalar ----
 
         [DataSourceProperty] public MBBindingList<SchemeItemVM> Schemes { get; }
-        [DataSourceProperty] public bool HasNoSchemes { get => _hasNoSchemes; set => Set(ref _hasNoSchemes, value, nameof(HasNoSchemes)); }
+        [DataSourceProperty] public MBBindingList<LetterItemVM> Letters { get; }
+        [DataSourceProperty] public bool HasLetters { get => _hasLetters; set => Set(ref _hasLetters, value, nameof(HasLetters)); }
+        [DataSourceProperty] public bool HasNothingRunning { get => _hasNothingRunning; set => Set(ref _hasNothingRunning, value, nameof(HasNothingRunning)); }
+        [DataSourceProperty] public string LettersHeader => "YOLDAKİ HABERCİLER";
         [DataSourceProperty] public string SchemesEmptyText =>
-            "Süren bir entrika yok.\n\n\"Yeni entrika\" sekmesinden casusluk, şantaj, kaçırma ya da suikast başlatabilirsin.";
+            "Süren bir entrika ya da yolda bir haberci yok.\n\n\"Yeni entrika\" sekmesinden casusluk, şantaj, kaçırma ya da suikast başlatabilirsin.";
+        [DataSourceProperty] public CourtVM Court { get; }
 
         // ---- Diğer sekmeler ----
 
@@ -132,22 +139,24 @@ namespace CheatMenu.UI.ViewModels
             int people = state.Reports.Select(r => r.TargetId).Concat(state.Secrets.Select(s => s.TargetId))
                 .Concat(state.Hooks.Where(h => h.Until > today).Select(h => h.TargetId)).Distinct().Count();
             List<Interrogation.Prisoner> prisoners = Interrogation.Prisoners();
-            Tabs[TabSchemes].Name = "Süren (" + state.Schemes.Count + ")";
             Tabs[TabPeople].Name = "Kişiler (" + people + ")";
             Tabs[TabPrisoners].Name = "Esirler (" + prisoners.Count + ")";
-            Tabs[TabNetworks].Name = "Gölge ağları (" + state.Networks.Count + ")";
+            Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count) + ")";
+            Tabs[TabNetworks].Name = "Ağlar (" + state.Networks.Count + ")";
             Tabs[TabPlots].Name = "Sana karşı (" + detected + ")";
             foreach (TabVM tab in Tabs) tab.IsSelected = tab.Index == _tab;
             IsSchemesTab = _tab == TabSchemes;
             IsNewTab = _tab == TabNew;
             IsPeopleTab = _tab == TabPeople;
             IsPrisonersTab = _tab == TabPrisoners;
+            IsCourtTab = _tab == TabCourt;
             IsNetworksTab = _tab == TabNetworks;
             IsPlotsTab = _tab == TabPlots;
             IsLogTab = _tab == TabLog;
 
             // Yalnızca görünen sekme kurulur: portreler pahalı.
             Clear(Schemes);
+            Letters.Clear();
             Clear(Prisoners);
             Clear(Networks);
             Clear(Plots);
@@ -156,7 +165,12 @@ namespace CheatMenu.UI.ViewModels
             {
                 case TabSchemes:
                     foreach (Scheme scheme in state.Schemes) Schemes.Add(new SchemeItemVM(state, scheme, MarkDirty));
-                    HasNoSchemes = Schemes.Count == 0;
+                    foreach (Letter letter in state.Letters.OrderBy(l => l.ArriveDay)) Letters.Add(new LetterItemVM(letter));
+                    HasLetters = Letters.Count > 0;
+                    HasNothingRunning = Schemes.Count == 0 && Letters.Count == 0;
+                    break;
+                case TabCourt:
+                    Court.Refresh(state);
                     break;
                 case TabNew:
                     NewScheme.Refresh(state, rebuildNew);
@@ -228,6 +242,7 @@ namespace CheatMenu.UI.ViewModels
             Clear(Plots);
             NewScheme.OnFinalize();
             People.OnFinalize();
+            Court.OnFinalize();
         }
     }
 }

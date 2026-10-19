@@ -59,7 +59,8 @@
                                 </Widget>
                                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginLeft="234" MarginRight="16" MarginTop="34" Brush="Tvh.Text.Name" Text="@Name" />
                                 <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="50" MarginLeft="234" MarginRight="16" MarginTop="72" Brush="Tvh.Text.SmallTop" Text="@Affiliation" />
-                                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="234" MarginRight="16" MarginTop="126" Brush="Tvh.Text.Gold" Text="@RelationText" />
+                                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="234" MarginRight="16" MarginTop="124" Brush="Tvh.Text.Gold" Text="@RelationText" />
+                                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="234" MarginRight="16" MarginTop="150" Brush="Tvh.Text.Small" Text="@CourtText" />
                               </Children>
                             </Widget>
 

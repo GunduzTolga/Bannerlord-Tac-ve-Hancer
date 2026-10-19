@@ -67,8 +67,8 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string StartHint { get => _startHint; set => Set(ref _startHint, value, nameof(StartHint)); }
         [DataSourceProperty] public string StartText { get => _startText; set => Set(ref _startText, value, nameof(StartText)); }
         [DataSourceProperty] public string PickHint => "Soldan bir hedef seç: özeti ve tahmini başarısı burada görünür.";
-        [DataSourceProperty] public string PrevText => "‹ Önceki";
-        [DataSourceProperty] public string NextText => "Sonraki ›";
+        [DataSourceProperty] public string PrevText => "« Önceki";
+        [DataSourceProperty] public string NextText => "Sonraki »";
 
         /// <summary>Kişi dosyasından ya da raporlardan doğrudan: türü ve hedefi seçili açar.</summary>
         public void Preselect(SchemeKind kind, Hero target)
