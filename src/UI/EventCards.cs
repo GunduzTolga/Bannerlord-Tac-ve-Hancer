@@ -6,6 +6,7 @@ using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements.Workshops;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
 using TaleWorlds.Core;
 using TaleWorlds.Core.ImageIdentifiers;
@@ -320,6 +321,77 @@ namespace CheatMenu.UI
                     : " %" + Courtships.MeetingDiscovery(lover) + " ihtimalle görülürsünüz: eşler kırılır, dedikodu yayılır.")
                 + " Bir sonraki buluşma " + RomanceRules.MeetingCooldownDays + " gün sonra.\n\nOlanlar ikinizin arasında kalır; sahne yok.",
                 CardImages.SecretAffair, lover, options, cancel, null);
+        }
+
+        /// <summary>Divan (P2.12): hazinedarın atölye önerisi; seçilen tür uzaktan, ustabaşına mektupla kurulur.</summary>
+        public static void ShowWorkshopChange(Workshop workshop, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Treasury.Board board = Treasury.CurrentBoard(state);
+            string blocked = Treasury.Blocked(state);
+            if (board == null || blocked != null)
+            {
+                MenuUI.Error(blocked ?? "Hazinedarın yok");
+                return;
+            }
+            Treasury.WorkshopAdvice advice = Treasury.Advise(board, workshop);
+            List<CardOption> options = advice.Options.Take(4).Select(option =>
+            {
+                int cost = Treasury.ChangeCost(option.type);
+                return new CardOption
+                {
+                    Label = option.type.Name + " kur (tahmini günde " + Treasury.Signed((int)option.estimate) + ", " + SchemeFactors.Money(cost) + ")",
+                    DisabledHint = SchemeFactors.CanAfford(cost) ? null : "Yeterli altının yok",
+                    Apply = () =>
+                    {
+                        Treasury.ChangeProduction(SchemeEngine.State, workshop, option.type);
+                        afterwards?.Invoke();
+                    },
+                };
+            }).ToList();
+            var cancel = new CardOption { Label = "Böyle kalsın", Apply = () => { } };
+            options.Add(cancel);
+            Hero treasurer = Treasury.Treasurer(state);
+            Show("DİVAN · HAZİNE", Tr.Locative(workshop.Settlement.Name.ToString()) + " atölyen: " + workshop.WorkshopType.Name,
+                "Şu an günde " + Treasury.Signed(advice.Income) + " getiriyor (oyunun hesabı). " + treasurer.Name + " bu işin günde "
+                + Treasury.Signed((int)advice.Current) + " kâr ettiğini tahmin ediyor.\n\n"
+                + (advice.Worth ? "Hazinedarın önerisi: " + advice.Options[0].type.Name + "." : "Hazinedara göre değiştirmeye değmez.")
+                + "\n\nTahminler hazinedarın gözüyle: hata payı %" + board.Error + " (" + TreasuryRules.Confidence(board.Error) + "). "
+                + "Değişiklik ustabaşına giden mektupla olur: oyunun değiştirme bedeli + " + SchemeFactors.Money(TreasuryRules.RemoteOrderFee) + " ulak ücreti.",
+                CardImages.Treasury, treasurer, options, cancel, null);
+        }
+
+        /// <summary>Divan (P2.12): hazinedarın zimmeti ortaya çıktı; hesap sor.</summary>
+        public static void ShowReckoning(Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero treasurer = Treasury.Treasurer(state);
+            if (treasurer == null || !state.EmbezzleFound)
+            {
+                MenuUI.Error("Hesabı sorulacak bir zimmet yok");
+                return;
+            }
+            int back = Math.Min(state.Embezzled, treasurer.Gold);
+            CardOption Option(Treasury.Reckoning choice, string label) => new CardOption
+            {
+                Label = label,
+                Apply = () =>
+                {
+                    Treasury.Reckon(SchemeEngine.State, choice);
+                    afterwards?.Invoke();
+                },
+            };
+            var later = new CardOption { Label = "Sonra karar ver", Apply = () => { } };
+            Show("DİVAN · ZİMMET", "Hesap sor: " + treasurer.Name,
+                treasurer.Name + " gelirlerinden " + SchemeFactors.Money(state.Embezzled) + " zimmetine geçirmiş. Kesesinde şu an "
+                + SchemeFactors.Money(treasurer.Gold) + " var; geri alınabilecek: " + SchemeFactors.Money(back) + ".",
+                CardImages.Embezzle, treasurer, new List<CardOption>
+                {
+                    Option(Treasury.Reckoning.Dismiss, "Parayı geri al, görevden al (ilişki -" + TreasuryRules.EmbezzleRefundRelation + ")"),
+                    Option(Treasury.Reckoning.Keep, "Parayı geri al, görevde kalsın (ilişki -" + TreasuryRules.EmbezzleKeepRelation + ")"),
+                    Option(Treasury.Reckoning.Forgive, "Affet, para onda kalsın (ilişki +" + TreasuryRules.EmbezzleForgiveRelation + ")"),
+                    later,
+                }, later, null);
         }
 
         /// <summary>Casus başı görevi seçimi (P2.3). Söylenti seçilirse ardından hedef listesi açılır.</summary>

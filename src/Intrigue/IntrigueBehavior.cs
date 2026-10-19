@@ -26,6 +26,7 @@ namespace CheatMenu.Intrigue
                 ShadowNetworks.RegisterMenus(starter);
                 CourtDays.RegisterMenus(starter);
                 Tailing.RegisterMenus(starter);
+                Treasury.ResetCache();
                 IntrigueDialogs.Register(starter);
             });
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, () =>
@@ -36,6 +37,11 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika günlük (kur ve gebelik)", Courtships.DailyTick);
                 MenuUI.SafeRun("Entrika günlük (eşin)", SpouseLife.DailyTick);
                 MenuUI.SafeRun("Aile editörü (yaşlanma)", Cheats.FamilyEditor.DailyTick);
+                MenuUI.SafeRun("Divan günlük (kervan defteri)", Treasury.DailyTick);
+            });
+            CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, (party, settlement) =>
+            {
+                if (party != null && party.IsCaravan) MenuUI.SafeRun("Kervan defteri", () => Treasury.OnSettlementLeft(party, settlement));
             });
             CampaignEvents.WarDeclared.AddNonSerializedListener(this, (a, b, detail) =>
                 MenuUI.SafeRun("Rehine anlaşması (savaş)", () => Hostages.OnWarDeclared(a, b, detail)));
@@ -48,6 +54,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (eşin)", SpouseLife.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (rehineler)", Hostages.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
+                MenuUI.SafeRun("Divan haftalık (hazinedar)", Treasury.Weekly);
             });
         }
 

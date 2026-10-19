@@ -213,6 +213,13 @@
                               </Children>
                             </Widget>
 
+                            <!-- ===== Divan ===== -->
+                            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsCouncilTab">
+                              <Children>
+                                <TvhCouncilPanel DataSource="{Council}" />
+                              </Children>
+                            </Widget>
+
                             <!-- ===== Gölge ağları ===== -->
                             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsNetworksTab">
                               <Children>

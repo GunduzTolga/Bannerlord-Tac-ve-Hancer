@@ -161,6 +161,7 @@ namespace CheatMenu.Tests
             PetitionTests();
             HostageTests();
             TailTests();
+            TreasuryTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -371,6 +372,11 @@ namespace CheatMenu.Tests
             state.DuelUntil["lord_14"] = 240;
             state.CourtDayUntil["town_V1"] = 250;
             state.TailUntil["lord_16"] = 260;
+            state.TreasurerId = "companion_1";
+            state.Embezzled = 450;
+            state.EmbezzleFound = true;
+            state.CaravanBooks.Add(new CaravanBook { PartyId = "caravan_1", TownId = "town_V1", Worth = 5400, Day = 270, SentHome = 120 });
+            state.CaravanLegs.Add(new CaravanLeg { PartyId = "caravan_1", FromId = "town_V2", ToId = "town_V1", Profit = -80, Days = 4, Day = 270 });
             state.Hostages.Add(new HostageDeal { KingdomId = "vlandia", GivenId = "child_3", HeldId = "lord_15", Since = 100, Until = 184, Fostered = 6 });
             state.Hostages.Add(new HostageDeal { KingdomId = "sturgia", GivenId = "child_4", Since = 120, Until = 204 });
             state.AgeFrozen.Add("main_hero");
@@ -430,6 +436,11 @@ namespace CheatMenu.Tests
                 && back.HostageDealWith("sturgia")?.HeldId == null && back.HostageDealWith("sturgia").GivenId == "child_4" && back.HostageDealWith("x") == null);
             Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
             Check("state: tail cooldown", back.TailUntil.Count == 1 && back.TailUntil["lord_16"] == 260);
+            Check("state: treasurer", back.TreasurerId == "companion_1" && back.Embezzled == 450 && back.EmbezzleFound);
+            Check("state: caravan book", back.CaravanBooks.Count == 1 && back.CaravanBooks[0].PartyId == "caravan_1" && back.CaravanBooks[0].TownId == "town_V1"
+                && back.CaravanBooks[0].Worth == 5400 && back.CaravanBooks[0].Day == 270 && back.CaravanBooks[0].SentHome == 120);
+            Check("state: caravan leg", back.CaravanLegs.Count == 1 && back.CaravanLegs[0].FromId == "town_V2" && back.CaravanLegs[0].ToId == "town_V1"
+                && back.CaravanLegs[0].Profit == -80 && back.CaravanLegs[0].Days == 4 && back.CaravanLegs[0].Day == 270 && back.CaravanLegs[0].PartyId == "caravan_1");
             Check("state: duel cooldown", back.DuelUntil.Count == 1 && back.DuelUntil["lord_14"] == 240);
             Check("state: family editor", back.NoChildren.SetEquals(new[] { "lord_12" }) && back.AgeFrozen.SetEquals(new[] { "main_hero", "lord_13" }));
             Check("state: spouse watch", back.SpouseWatchUntil == 205 && back.SpouseApartWeeks == 3);
@@ -589,6 +600,47 @@ namespace CheatMenu.Tests
             Check("tail scene: too close", TailRules.SceneResult(true, 70f, 8f) == TailSceneResult.Spotted);
             Check("tail scene: lost", TailRules.SceneResult(true, 30f, 0f) == TailSceneResult.Lost);
             Check("tail scene: clues", TailRules.SceneClues(0f) == 30 && TailRules.SceneClues(60f) == 60 && TailRules.SceneClues(200f) == 70);
+        }
+
+        /// <summary>Divan, hazinedar (P2.12): hata payı, fiyat gürültüsü, atölye tahmini, sefer defteri, zimmet.</summary>
+        private static void TreasuryTests()
+        {
+            CheckChance("treasury: untrained", TreasuryRules.ErrorPercent(0, 0), 45);
+            CheckChance("treasury: trader", TreasuryRules.ErrorPercent(120, 0), 25);
+            CheckChance("treasury: calculating trader", TreasuryRules.ErrorPercent(150, 1), 15);
+            CheckChance("treasury: master floor", TreasuryRules.ErrorPercent(300, 0), 5);
+            CheckChance("treasury: impulsive cap", TreasuryRules.ErrorPercent(0, -4), 60);
+            Check("treasury: confidence names", TreasuryRules.Confidence(5) == "kesin" && TreasuryRules.Confidence(15) == "güvenilir"
+                && TreasuryRules.Confidence(25) == "tahmini" && TreasuryRules.Confidence(45) == "kulaktan dolma");
+            Check("treasury: noise bounds", Math.Round(TreasuryRules.Noisy(100, 20, 1)) == 80 && Math.Round(TreasuryRules.Noisy(100, 20, 100)) == 120
+                && Math.Abs(TreasuryRules.Noisy(100, 20, 50) - 100) < 1 && Math.Round(TreasuryRules.Noisy(100, 20, 500)) == 120);
+            Check("treasury: known towns", TreasuryRules.KnownTowns(0) == 8 && TreasuryRules.KnownTowns(120) == 28 && TreasuryRules.KnownTowns(600) == 60);
+            Check("treasury: spread", TreasuryRules.SpreadPercent(50, 75) == 50 && TreasuryRules.SpreadPercent(0, 10) == 0
+                && TreasuryRules.SpreadPercent(40, 30) == -25);
+            Check("treasury: workshop margin", Math.Abs(TreasuryRules.WorkshopMargin(new[] { (10.0, 30.0, 1.5), (5.0, 4.0, 1.0) }) - 29) < 0.001);
+            Check("treasury: worth switching", TreasuryRules.WorthSwitching(50, 70) && !TreasuryRules.WorthSwitching(50, 59)
+                && !TreasuryRules.WorthSwitching(200, 230) && TreasuryRules.WorthSwitching(-20, -5));
+            CheckChance("treasury: leg profit", TreasuryRules.LegProfit(1000, 1300, 50), 350);
+            var legs = new List<CaravanLeg>();
+            for (int day = 0; day < 85; day++) TreasuryRules.AddLeg(legs, new CaravanLeg { FromId = "a", ToId = "b", Day = day });
+            Check("treasury: ledger keeps the newest", legs.Count == TreasuryRules.MaxLegs && legs[0].Day == 5 && legs[legs.Count - 1].Day == 84);
+            List<RouteStat> routes = TreasuryRules.Routes(new[]
+            {
+                new CaravanLeg { FromId = "A", ToId = "B", Profit = 100 }, new CaravanLeg { FromId = "A", ToId = "B", Profit = 300 },
+                new CaravanLeg { FromId = "B", ToId = "C", Profit = -50 }, new CaravanLeg { FromId = "C", ToId = "C", Profit = 999 },
+            });
+            Check("treasury: routes", routes.Count == 2 && routes[0].FromId == "A" && routes[0].Trips == 2 && routes[0].Average == 200
+                && routes[1].ToId == "C" && routes[1].Average == -50);
+            Check("treasury: embezzle chance", TreasuryRules.EmbezzleChance(0) == 0 && TreasuryRules.EmbezzleChance(-1) == 25
+                && TreasuryRules.EmbezzleChance(-2) == 50 && TreasuryRules.EmbezzleChance(2) == 0);
+            Check("treasury: embezzle amount", TreasuryRules.EmbezzleAmount(1000, 1) == 50 && TreasuryRules.EmbezzleAmount(1000, 100) == 140
+                && TreasuryRules.EmbezzleAmount(0, 50) == 0 && TreasuryRules.EmbezzleAmount(-5, 50) == 0);
+            Check("treasury: embezzle detection", TreasuryRules.EmbezzleDetectChance(0, false) == 15 && TreasuryRules.EmbezzleDetectChance(200, true) == 55
+                && TreasuryRules.EmbezzleDetectChance(900, true) == 75);
+            Check("treasury: stable hash", TreasuryRules.Hash("") == -2128831035 && TreasuryRules.Hash("a") == -468965076
+                && TreasuryRules.Hash("town_V1|iron") == 325742491);
+            int r1 = TreasuryRules.WeeklyRoll(7, 3, "x|town_V1|iron"), r2 = TreasuryRules.WeeklyRoll(7, 3, "x|town_V1|iron");
+            Check("treasury: weekly roll is stable", r1 == r2 && r1 >= 1 && r1 <= 100);
         }
 
         private static void PetitionTests()

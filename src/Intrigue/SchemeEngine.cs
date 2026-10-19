@@ -25,6 +25,7 @@ namespace CheatMenu.Intrigue
         public static void AssignSpymaster(Hero hero)
         {
             IntrigueState state = State;
+            if (hero.StringId == state.TreasurerId) throw new InvalidOperationException(hero.Name + " zaten hazinedarın; biri iki koltukta oturamaz");
             string busy = SchemeFactors.SpymasterBusyReason(hero);
             if (busy != null) throw new InvalidOperationException(hero.Name + " şu an " + busy + "; casus başı olamaz");
             state.SpymasterId = hero.StringId;

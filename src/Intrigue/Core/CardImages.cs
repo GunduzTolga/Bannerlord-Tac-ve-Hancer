@@ -57,6 +57,10 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Kendin takip et (P2.11): gündüz ve gece sahneleri.</summary>
         public const string Tail = "olay_takip";
         public const string TailNight = "olay_takip_gece";
+        /// <summary>Divan: hazinedarın raporu ve uzaktan atölye emri (P2.12).</summary>
+        public const string Treasury = "sonuc_hazine";
+        /// <summary>Hazinedarın zimmeti ortaya çıktı.</summary>
+        public const string Embezzle = "sonuc_zimmet";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -112,7 +116,7 @@ namespace CheatMenu.Intrigue.Core
                          Spy, SecretFound, Blackmail, Murder, MurderPoison, MurderDagger, MurderAccident, Kidnap, Caught, Exposed,
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
-                         Tail, TailNight,
+                         Tail, TailNight, Treasury, Embezzle,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

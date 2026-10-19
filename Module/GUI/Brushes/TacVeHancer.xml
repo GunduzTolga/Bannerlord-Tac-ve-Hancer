@@ -106,6 +106,12 @@
     </Styles>
   </Brush>
 
+  <Brush Name="Tvh.Text.BadRight" FontSize="18" TextHorizontalAlignment="Right" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#E07A6AFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+    </Styles>
+  </Brush>
+
   <Brush Name="Tvh.Text.GoldRight" FontSize="18" TextHorizontalAlignment="Right" TextVerticalAlignment="Center">
     <Styles>
       <Style Name="Default" FontColor="#E8C77DFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
