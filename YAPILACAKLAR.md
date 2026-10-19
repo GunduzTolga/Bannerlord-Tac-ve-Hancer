@@ -32,6 +32,9 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] Mod Seçenekleri'nde Women in Calradia ayarları
 - [ ] **AutoTrader** (20 Ekim'de eklendi): kasaba/köy menüsünde "Automatically trade wares" seçeneği; **Alt+A** ayar ekranını açıyor;
       bir kasabada otomatik al-sat yapıyor. Açılışta "1.4.6 için" uyarısı çıkabilir, önemsiz
+- [ ] **Regard and Standing** (20 Ekim'de eklendi; lordlar arası gizli ilişkilerin sahibi o, bizim casus başımız onun gerçek
+      ilişkilerini buluyor): Mod Seçenekleri'nde "Regard and Standing" sayfası; turnuva davet mektupları; klanındaki bir evlilik onay
+      istiyor. Gizli ilişki denemeleri: `docs\superpowers\specs\2026-10-20-regardstanding-iliskiler.md` sonundaki liste
 - [ ] Bu modlar ayrıyken alınmış bir kayıt varsa, yüklerken "eksik modül" uyarısı çıkabilir; yine de yüklenir
 - [ ] Yeni oyun: karakter oluşturma çökmeden geçiyor (eski çökmenin nedeni bulundu: lord sayfasının `Refresh` metodu; Diplomacy
       ve DLX Hair'in açılışta yamaladığı 37 metodun hiçbiri o tetiği taşımıyor)
