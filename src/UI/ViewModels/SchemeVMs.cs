@@ -86,7 +86,7 @@ namespace CheatMenu.UI.ViewModels
 
         public void ExecuteAssign()
         {
-            Picker.Pick("Casus başı seç", SchemeFactors.SpymasterCandidates().OrderByDescending(SchemeFactors.Roguery).ToList(),
+            Picker.Pick("Casus başı seç", Council.Candidates(SchemeEngine.State, "casus başın").OrderByDescending(SchemeFactors.Roguery).ToList(),
                 SchemeFactors.SpymasterLabel,
                 hero => Run("Casus başı", () => SchemeEngine.AssignSpymaster(hero)),
                 null, hero => Categories.HeroPortrait(hero), sort: false);

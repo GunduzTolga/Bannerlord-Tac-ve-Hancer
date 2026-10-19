@@ -317,6 +317,13 @@ namespace CheatMenu.Intrigue.Core
         public int Embezzled;
         /// <summary>Zimmet ortaya çıktı; hesabı sorulmayı bekliyor.</summary>
         public bool EmbezzleFound;
+
+        // P2.13: divan, hekim
+        public string PhysicianId;
+        /// <summary>Hekimin "sağlığın kötüye gidiyor" uyarısı bu güne kadar tekrarlanmaz.</summary>
+        public int PhysicianWarnUntil;
+        /// <summary>Klanındaki annelerin (oyunun kendi gebeliği) gebe kaldığı gün: doğuma kalan süre için.</summary>
+        public Dictionary<string, int> Conceived = new Dictionary<string, int>();
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
@@ -393,7 +400,8 @@ namespace CheatMenu.Intrigue.Core
                 new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
                     .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)).Add("nextcourt", I(NextCourtshipId))
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId)
-                    .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound)),
+                    .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
+                    .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -461,6 +469,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in NoChildren) records.Add(new TextRecord("nochild").Add("hero", id));
             foreach (KeyValuePair<string, int> p in DuelUntil) records.Add(new TextRecord("duelcd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in TailUntil) records.Add(new TextRecord("tailcd").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in Conceived) records.Add(new TextRecord("conceived").Add("hero", p.Key).Add("day", I(p.Value)));
             foreach (CaravanBook b in CaravanBooks)
                 records.Add(new TextRecord("caravanbook").Add("party", b.PartyId).Add("town", b.TownId).Add("worth", I(b.Worth))
                     .Add("day", I(b.Day)).Add("sent", I(b.SentHome)));
@@ -508,6 +517,8 @@ namespace CheatMenu.Intrigue.Core
                         state.TreasurerId = Empty(r.Get("treasurer"));
                         state.Embezzled = Math.Max(0, Int(r, "embezzled"));
                         state.EmbezzleFound = Bool(r, "embezzlefound");
+                        state.PhysicianId = Empty(r.Get("physician"));
+                        state.PhysicianWarnUntil = Int(r, "physicianwarn");
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");
@@ -646,6 +657,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "tailcd":
                         if (Empty(r.Get("hero")) != null) state.TailUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "conceived":
+                        if (Empty(r.Get("hero")) != null) state.Conceived[r.Get("hero")] = Int(r, "day");
                         break;
                     case "caravanbook":
                         if (Empty(r.Get("party")) == null || Empty(r.Get("town")) == null) break;

@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **45 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **47 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -93,6 +93,8 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 43 | `olay_takip_gece.png` | Kendin takip et: gece sahneleri (P2.11) | ★ |
 | 44 | `sonuc_hazine.png` | Divan: hazinedarın atölye önerisi, uzaktan üretim emri (P2.12) | ★ |
 | 45 | `sonuc_zimmet.png` | Divan: hazinedarın zimmeti ortaya çıktı, hesap sor (P2.12) | |
+| 46 | `sonuc_hekim.png` | Divan: saray hekiminin uyarısı, sağlık (P2.13) | |
+| 47 | `sonuc_panzehir.png` | Hekim suikast kurbanını kurtardı (P2.13) | |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -312,6 +314,18 @@ A treasurer in a fur-trimmed robe at a heavy oak table in a candlelit counting r
 
 ```
 A spymaster laying two different ledgers side by side before a stern lord in a dim treasury vault, an open strongbox half empty, the guilty treasurer standing pale by the wall under guard, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**46 · `sonuc_hekim.png`** — saray hekimi
+
+```
+An elderly court physician in a dark wool robe examining an aging lord seated by a window in a castle chamber, a table with herb bundles, clay jars, a mortar and an open medical codex, morning light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**47 · `sonuc_panzehir.png`** — hekim suikast kurbanını kurtardı
+
+```
+A court physician kneeling beside a pale wounded noble on a bed in a candlelit bedchamber, pouring an antidote from a small vial into a cup, a bandaged arm, a knocked-over goblet on the floor, a worried family member at the door, no blood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -834,4 +848,24 @@ A Sturgian treasurer caught at night in a wooden storehouse slipping silver coin
 
 ```
 A treasurer kneeling and holding out a heavy purse to a seated lord in a castle hall, courtiers watching in silence, an open ledger on the floor between them, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_hekim_2.png`** · `sonuc_hekim_3.png` — saray hekimi
+
+```
+An Aserai physician in a turban and long robe teaching a young apprentice over an open herbal manuscript in a courtyard infirmary, shelves of glass and clay vessels, sunlight through arches, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Battanian healer woman tending a pregnant noblewoman resting by a hearth in a timber hall, steaming herbal brew, a midwife preparing linens, calm and warm atmosphere, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_panzehir_2.png`** · `sonuc_panzehir_3.png` — hekim suikast kurbanını kurtardı
+
+```
+A physician sniffing a poisoned cup at a feast table while guards seize a fleeing servant in the background, a noble clutching his chest but alive, nobles rising in alarm, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Khuzait shaman-physician sewing a wound on a sleeping chieftain inside a felt yurt by lamplight, an empty antidote flask and a broken dagger beside the bed, no blood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

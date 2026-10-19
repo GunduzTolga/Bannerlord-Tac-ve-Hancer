@@ -37,8 +37,7 @@ namespace CheatMenu.Intrigue
             return hero != null && hero.IsAlive && hero.Clan == Clan.PlayerClan ? hero : null;
         }
 
-        public static IEnumerable<Hero> Candidates(IntrigueState state) =>
-            SchemeFactors.SpymasterCandidates().Where(h => h.StringId != state.SpymasterId);
+        public static IEnumerable<Hero> Candidates(IntrigueState state) => Council.Candidates(state, "hazinedarın");
 
         public static int Trade(Hero hero) => hero?.GetSkillValue(DefaultSkills.Trade) ?? 0;
 
@@ -63,7 +62,7 @@ namespace CheatMenu.Intrigue
 
         public static void Assign(IntrigueState state, Hero hero)
         {
-            if (hero.StringId == state.SpymasterId) throw new InvalidOperationException(hero.Name + " zaten casus başın; biri iki koltukta oturamaz");
+            Council.EnsureFree(state, hero, "hazinedarın");
             if (state.EmbezzleFound && state.TreasurerId != hero.StringId) throw new InvalidOperationException("Önce zimmetin hesabını sor");
             string busy = SchemeFactors.SpymasterBusyReason(hero);
             if (busy != null) throw new InvalidOperationException(hero.Name + " şu an " + busy + "; hazinedar olamaz");

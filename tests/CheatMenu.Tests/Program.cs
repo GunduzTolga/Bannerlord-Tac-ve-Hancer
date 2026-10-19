@@ -162,6 +162,7 @@ namespace CheatMenu.Tests
             HostageTests();
             TailTests();
             TreasuryTests();
+            PhysicianTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -373,6 +374,9 @@ namespace CheatMenu.Tests
             state.CourtDayUntil["town_V1"] = 250;
             state.TailUntil["lord_16"] = 260;
             state.TreasurerId = "companion_1";
+            state.PhysicianId = "companion_2";
+            state.PhysicianWarnUntil = 300;
+            state.Conceived["spouse_1"] = 275;
             state.Embezzled = 450;
             state.EmbezzleFound = true;
             state.CaravanBooks.Add(new CaravanBook { PartyId = "caravan_1", TownId = "town_V1", Worth = 5400, Day = 270, SentHome = 120 });
@@ -437,6 +441,8 @@ namespace CheatMenu.Tests
             Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
             Check("state: tail cooldown", back.TailUntil.Count == 1 && back.TailUntil["lord_16"] == 260);
             Check("state: treasurer", back.TreasurerId == "companion_1" && back.Embezzled == 450 && back.EmbezzleFound);
+            Check("state: physician", back.PhysicianId == "companion_2" && back.PhysicianWarnUntil == 300
+                && back.Conceived.Count == 1 && back.Conceived["spouse_1"] == 275);
             Check("state: caravan book", back.CaravanBooks.Count == 1 && back.CaravanBooks[0].PartyId == "caravan_1" && back.CaravanBooks[0].TownId == "town_V1"
                 && back.CaravanBooks[0].Worth == 5400 && back.CaravanBooks[0].Day == 270 && back.CaravanBooks[0].SentHome == 120);
             Check("state: caravan leg", back.CaravanLegs.Count == 1 && back.CaravanLegs[0].FromId == "town_V2" && back.CaravanLegs[0].ToId == "town_V1"
@@ -641,6 +647,26 @@ namespace CheatMenu.Tests
                 && TreasuryRules.Hash("town_V1|iron") == 325742491);
             int r1 = TreasuryRules.WeeklyRoll(7, 3, "x|town_V1|iron"), r2 = TreasuryRules.WeeklyRoll(7, 3, "x|town_V1|iron");
             Check("treasury: weekly roll is stable", r1 == r2 && r1 >= 1 && r1 <= 100);
+        }
+
+        /// <summary>Divan, saray hekimi (P2.13): koruma yüzdeleri, şarlatan, olasılık uygulama, yıllık risk.</summary>
+        private static void PhysicianTests()
+        {
+            Check("physician: quack below 30", PhysicianRules.IsQuack(29) && !PhysicianRules.IsQuack(30));
+            Check("physician: longevity", PhysicianRules.LongevityPercent(0) == -6 && PhysicianRules.LongevityPercent(30) == 0
+                && PhysicianRules.LongevityPercent(130) == 20 && PhysicianRules.LongevityPercent(280) == 50 && PhysicianRules.LongevityPercent(400) == 50);
+            Check("physician: labor", PhysicianRules.LaborPercent(0) == -10 && PhysicianRules.LaborPercent(120) == 30
+                && PhysicianRules.LaborPercent(270) == 80 && PhysicianRules.LaborPercent(400) == 80);
+            Check("physician: poison save", PhysicianRules.PoisonSaveChance(0) == 0 && PhysicianRules.PoisonSaveChance(150) == 20
+                && PhysicianRules.PoisonSaveChance(270) == 40 && PhysicianRules.PoisonSaveChance(400) == 40);
+            Check("physician: hidden pregnancy", PhysicianRules.HiddenPregnancyChance(0) == 5 && PhysicianRules.HiddenPregnancyChance(120) == 25
+                && PhysicianRules.HiddenPregnancyChance(300) == 50);
+            Check("physician: error", PhysicianRules.ErrorPercent(0) == 45 && PhysicianRules.ErrorPercent(120) == 25 && PhysicianRules.ErrorPercent(300) == 5);
+            Check("physician: apply", Math.Abs(PhysicianRules.Apply(0.1f, 50) - 0.05f) < 1e-6 && Math.Abs(PhysicianRules.Apply(0.1f, -10) - 0.11f) < 1e-6
+                && PhysicianRules.Apply(0.95f, -10) == 1f && PhysicianRules.Apply(0.5f, 100) == 0f);
+            double daily = 1 - Math.Pow(0.7, 1.0 / PhysicianRules.DaysPerYear);
+            Check("physician: yearly risk", PhysicianRules.YearlyRisk(0) == 0 && PhysicianRules.YearlyRisk(1) == 1
+                && Math.Abs(PhysicianRules.YearlyRisk(daily) - 0.3) < 1e-9);
         }
 
         private static void PetitionTests()

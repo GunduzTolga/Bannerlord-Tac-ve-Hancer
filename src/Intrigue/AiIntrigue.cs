@@ -193,6 +193,7 @@ namespace CheatMenu.Intrigue
                 return;
             }
 
+            if (Physician.TrySave(state, plot, target, who)) return;
             KillCharacterAction.ApplyByMurder(target, null, true);
             SchemeOutcomes.Notify(state, targetName + " öldürüldü", targetName + " bir suikaste kurban gitti." + who, null, CardImages.MurderDagger);
             state.AddLog(today, targetName + " suikaste kurban gitti" + (known ? " (" + plotter.Name + ")" : ""));
