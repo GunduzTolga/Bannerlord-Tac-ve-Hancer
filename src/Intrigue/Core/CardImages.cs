@@ -61,6 +61,10 @@ namespace CheatMenu.Intrigue.Core
         public const string Treasury = "sonuc_hazine";
         /// <summary>Hazinedarın zimmeti ortaya çıktı.</summary>
         public const string Embezzle = "sonuc_zimmet";
+        /// <summary>Divan: saray hekiminin uyarısı (P2.13).</summary>
+        public const string Physician = "sonuc_hekim";
+        /// <summary>Hekim suikast kurbanını kurtardı.</summary>
+        public const string Antidote = "sonuc_panzehir";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -116,7 +120,7 @@ namespace CheatMenu.Intrigue.Core
                          Spy, SecretFound, Blackmail, Murder, MurderPoison, MurderDagger, MurderAccident, Kidnap, Caught, Exposed,
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
-                         Tail, TailNight, Treasury, Embezzle,
+                         Tail, TailNight, Treasury, Embezzle, Physician, Antidote,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

@@ -39,6 +39,10 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Aile editörü (yaşlanma)", Cheats.FamilyEditor.DailyTick);
                 MenuUI.SafeRun("Divan günlük (kervan defteri)", Treasury.DailyTick);
             });
+            CampaignEvents.OnGivenBirthEvent.AddNonSerializedListener(this, (mother, children, stillborn) =>
+                MenuUI.SafeRun("Hekim (doğum)", () => Physician.OnGivenBirth(mother)));
+            CampaignEvents.OnChildConceivedEvent.AddNonSerializedListener(this, mother =>
+                MenuUI.SafeRun("Hekim (gebelik)", () => Physician.OnChildConceived(mother)));
             CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, (party, settlement) =>
             {
                 if (party != null && party.IsCaravan) MenuUI.SafeRun("Kervan defteri", () => Treasury.OnSettlementLeft(party, settlement));
@@ -55,6 +59,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (rehineler)", Hostages.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hazinedar)", Treasury.Weekly);
+                MenuUI.SafeRun("Divan haftalık (hekim)", Physician.Weekly);
             });
         }
 

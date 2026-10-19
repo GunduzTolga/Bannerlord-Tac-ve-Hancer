@@ -15,85 +15,106 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Divan sekmesi (P2.12): hazinedarın koltuğu ve raporu. Gelirler oyunun kendi hesabı (kesin); fiyatlar, tahminler ve öneriler
-    /// hazinedarın gözüyle (Trade'e göre hata payı). Sefer defteri kervanların şehirden çıkışlarından tutulur.
+    /// Divan sekmesi: üstte koltuklar (hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
+    /// tahminler ve ömür riskleri koltuk sahibinin gözüyle (becerisine göre hata payı). Casus başı sol sütunda kalır.
     /// </summary>
     public sealed class CouncilVM : TvhViewModel
     {
         private readonly Action _changed;
-        private ImageIdentifierVM _portrait;
-        private bool _hasTreasurer, _isEmbezzleFound;
-        private string _name = "", _skillText = "", _accuracyText = "", _statusText = "", _summaryText = "";
+        private readonly CouncilSeatVM _treasurer, _physician;
 
         public CouncilVM(Action changed)
         {
             _changed = changed;
-            _portrait = PortraitOf(null);
+            _treasurer = new CouncilSeatVM("HAZİNEDAR",
+                "Trade'i yüksek birini ata: gelirler, kervanların sefer defteri, atölye önerileri, ticaret fırsatları. Trade düşükse tahminleri "
+                + "yanlış olabilir; onuru düşükse kasadan çalabilir.",
+                AssignTreasurer, () => Dismiss("Hazinedar", Treasury.Dismiss), () => EventCards.ShowReckoning(_changed));
+            _physician = new CouncilSeatVM("SARAY HEKİMİ",
+                "Medicine'i yüksek birini ata: klanında doğumda ve yaşlılıktan ölümü azaltır, suikastte kurbanı kurtarabilir, eşinin gizli "
+                + "gebeliğini fark eder. Medicine 30'un altındaysa şarlatandır: tedavisi zarar verir.",
+                AssignPhysician, () => Dismiss("Hekim", Physician.Dismiss), null);
+            Seats = new MBBindingList<CouncilSeatVM> { _treasurer, _physician };
             Rows = new MBBindingList<CouncilRowVM>();
         }
 
-        [DataSourceProperty] public string SeatHeader => "HAZİNEDAR";
-        [DataSourceProperty] public ImageIdentifierVM Portrait { get => _portrait; set => Set(ref _portrait, value, nameof(Portrait)); }
-        [DataSourceProperty] public bool HasTreasurer { get => _hasTreasurer; set { if (Set(ref _hasTreasurer, value, nameof(HasTreasurer))) OnPropertyChangedWithValue(!value, nameof(HasNoTreasurer)); } }
-        [DataSourceProperty] public bool HasNoTreasurer => !_hasTreasurer;
-        [DataSourceProperty] public bool IsEmbezzleFound { get => _isEmbezzleFound; set => Set(ref _isEmbezzleFound, value, nameof(IsEmbezzleFound)); }
-        [DataSourceProperty] public string Name { get => _name; set => Set(ref _name, value, nameof(Name)); }
-        [DataSourceProperty] public string SkillText { get => _skillText; set => Set(ref _skillText, value, nameof(SkillText)); }
-        [DataSourceProperty] public string AccuracyText { get => _accuracyText; set => Set(ref _accuracyText, value, nameof(AccuracyText)); }
-        [DataSourceProperty] public string StatusText { get => _statusText; set => Set(ref _statusText, value, nameof(StatusText)); }
-        [DataSourceProperty] public string SummaryText { get => _summaryText; set => Set(ref _summaryText, value, nameof(SummaryText)); }
-        [DataSourceProperty] public string AssignText => "Hazinedar ata";
-        [DataSourceProperty] public string ChangeText => "Değiştir";
-        [DataSourceProperty] public string DismissText => "Görevden al";
-        [DataSourceProperty] public string ReckonText => "Hesap sor...";
-        [DataSourceProperty] public string EmptyText =>
-            "Divanda hazinedar koltuğu boş.\n\nKlanından Trade'i yüksek birini ata: atölyelerinin ve kervanlarının gelirini, kervanların hangi "
-            + "rotada kazanıp kaybettiğini, atölyelerin ne üretmesi gerektiğini, ticaret fırsatlarını ve kervan kurmaya uygun şehirleri "
-            + "sana uzaktan söyler. Trade'i düşükse tahminleri yanlış olabilir; onuru düşükse kasadan çalabilir.";
+        [DataSourceProperty] public MBBindingList<CouncilSeatVM> Seats { get; }
         [DataSourceProperty] public MBBindingList<CouncilRowVM> Rows { get; }
 
         public void Refresh(IntrigueState state)
         {
             Clear(Rows);
-            Hero treasurer = Treasury.Treasurer(state);
-            HasTreasurer = treasurer != null;
-            IsEmbezzleFound = treasurer != null && state.EmbezzleFound;
-            if (treasurer == null)
+            RefreshTreasurerSeat(state);
+            RefreshPhysicianSeat(state);
+            if (Treasury.Treasurer(state) == null && Physician.Current(state) == null)
+                Rows.Add(CouncilRowVM.Note("Divanda koltuklar boş. Yukarıdan klanından birini ata; raporları burada görünür."));
+            if (Physician.Working(state) != null) AddHealth(state);
+            if (Treasury.Blocked(state) == null)
             {
-                if (Name.Length > 0 || Portrait == null)
-                {
-                    _portrait?.OnFinalize();
-                    Portrait = PortraitOf(null);
-                }
-                Name = SkillText = AccuracyText = StatusText = SummaryText = "";
-                return;
+                Treasury.Board board = Treasury.CurrentBoard(state);
+                AddIncome();
+                AddWorkshops(board);
+                AddCaravans(state);
+                AddRoutes(state);
+                AddOpportunities(board);
             }
-            if (Name != treasurer.Name.ToString() || Portrait == null)
-            {
-                _portrait?.OnFinalize();
-                Portrait = PortraitOf(treasurer);
-            }
-            Name = treasurer.Name.ToString();
-            int error = Treasury.Error(treasurer);
-            SkillText = "Trade " + Treasury.Trade(treasurer) + "  ·  Hesapçı " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Calculating))
-                + "  ·  Onur " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Honor));
-            AccuracyText = "Tahmin payı %" + error + " (" + TreasuryRules.Confidence(error) + ")";
-            string blocked = Treasury.Blocked(state);
-            StatusText = state.EmbezzleFound ? "Zimmet ortaya çıktı: " + SchemeFactors.Money(state.Embezzled) + ". Hesabını sor."
-                : blocked ?? (treasurer.GetTraitLevel(DefaultTraits.Honor) < 0 ? "Görevde. Onuru düşük: kasadan çalabilir." : "Görevde");
-            int workshops = Treasury.Workshops().Sum(Treasury.WorkshopIncome), caravans = Treasury.Caravans().Sum(Treasury.CaravanIncome);
-            SummaryText = "Günlük gelir (oyunun hesabı): atölyeler " + Treasury.Signed(workshops) + ", kervanlar " + Treasury.Signed(caravans)
-                + "  ·  haftalık " + Treasury.Signed((workshops + caravans) * 7);
-            if (blocked != null) return;
-
-            Treasury.Board board = Treasury.CurrentBoard(state);
-            AddWorkshops(state, board);
-            AddCaravans(state);
-            AddRoutes(state);
-            AddOpportunities(board);
         }
 
-        private void AddWorkshops(IntrigueState state, Treasury.Board board)
+        private void RefreshTreasurerSeat(IntrigueState state)
+        {
+            Hero treasurer = Treasury.Treasurer(state);
+            if (treasurer == null)
+            {
+                _treasurer.Show(null, "", "", "", false);
+                return;
+            }
+            int error = Treasury.Error(treasurer);
+            string blocked = Treasury.Blocked(state);
+            _treasurer.Show(treasurer,
+                "Trade " + Treasury.Trade(treasurer) + "  ·  Hesapçı " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Calculating))
+                + "  ·  Onur " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Honor)),
+                "Tahmin payı %" + error + " (" + TreasuryRules.Confidence(error) + ")",
+                state.EmbezzleFound ? "Zimmet ortaya çıktı: " + SchemeFactors.Money(state.Embezzled) + ". Hesabını sor."
+                    : blocked ?? (treasurer.GetTraitLevel(DefaultTraits.Honor) < 0 ? "Görevde. Onuru düşük: kasadan çalabilir." : "Görevde"),
+                state.EmbezzleFound, "Hesap sor...");
+        }
+
+        private void RefreshPhysicianSeat(IntrigueState state)
+        {
+            Hero physician = Physician.Current(state);
+            if (physician == null)
+            {
+                _physician.Show(null, "", "", "", false);
+                return;
+            }
+            int medicine = Physician.Medicine(physician);
+            _physician.Show(physician,
+                "Medicine " + medicine + (PhysicianRules.IsQuack(medicine) ? " (şarlatan)" : "") + "  ·  tahmin payı %" + PhysicianRules.ErrorPercent(medicine),
+                Physician.ProtectionText(physician),
+                Physician.Blocked(state) ?? "Görevde", false);
+        }
+
+        // ---- Hekim ----
+
+        private void AddHealth(IntrigueState state)
+        {
+            Rows.Add(CouncilRowVM.Header("SAĞLIK (hekimin gözüyle)"));
+            foreach (Physician.HealthLine line in Physician.Report(state))
+                Rows.Add(new CouncilRowVM(line.Text, line.Risk > 0 ? "yıllık ~%" + line.Risk : "", line.Risk >= PhysicianRules.WarnYearlyRisk,
+                    null, null, null));
+        }
+
+        // ---- Hazinedar ----
+
+        private void AddIncome()
+        {
+            int workshops = Treasury.Workshops().Sum(Treasury.WorkshopIncome), caravans = Treasury.Caravans().Sum(Treasury.CaravanIncome);
+            Rows.Add(CouncilRowVM.Header("HAZİNE"));
+            Rows.Add(new CouncilRowVM("Günlük gelir (oyunun hesabı): atölyeler " + Treasury.Signed(workshops) + ", kervanlar " + Treasury.Signed(caravans),
+                "haftalık " + Treasury.Signed((workshops + caravans) * 7), workshops + caravans < 0, null, null, null));
+        }
+
+        private void AddWorkshops(Treasury.Board board)
         {
             List<Workshop> workshops = Treasury.Workshops();
             Rows.Add(CouncilRowVM.Header("ATÖLYELER (" + workshops.Count + ")"));
@@ -122,19 +143,18 @@ namespace CheatMenu.UI.ViewModels
                 List<CaravanLeg> legs = Treasury.LegsOf(state, caravan);
                 string where = caravan.CurrentSettlement != null ? Tr.Locative(caravan.CurrentSettlement.Name.ToString())
                     : caravan.TargetSettlement != null ? Tr.Dative(caravan.TargetSettlement.Name.ToString()) + " gidiyor" : "yolda";
-                string recent = legs.Count == 0 ? "defterde henüz sefer yok"
-                    : "son seferler: " + string.Join(", ", legs.Skip(Math.Max(0, legs.Count - 3))
-                        .Select(l => Treasury.TownName(l.FromId) + ">" + Treasury.TownName(l.ToId) + " " + Treasury.Signed(l.Profit)));
-                int lastThree = legs.Skip(Math.Max(0, legs.Count - 3)).Sum(l => l.Profit);
-                string text = (caravan.LeaderHero?.Name.ToString() ?? caravan.Name.ToString()) + " kervanı · " + where
-                    + "\n" + recent + (legs.Count >= 3 && lastThree < 0 ? "  ·  zarar ediyor: dağıtmayı düşün" : "");
+                List<CaravanLeg> recent = legs.Skip(Math.Max(0, legs.Count - 3)).ToList();
+                bool losing = legs.Count >= 3 && recent.Sum(l => l.Profit) < 0;
+                string text = (caravan.LeaderHero?.Name.ToString() ?? caravan.Name.ToString()) + " kervanı · " + where + "\n"
+                    + (legs.Count == 0 ? "defterde henüz sefer yok"
+                        : "son seferler: " + string.Join(", ", recent.Select(l => Treasury.TownName(l.FromId) + " > " + Treasury.TownName(l.ToId) + " " + Treasury.Signed(l.Profit))))
+                    + (losing ? "  ·  zarar ediyor: dağıtmayı düşün" : "");
                 MobileParty tracked = caravan;
-                Rows.Add(new CouncilRowVM(text, "günde " + Treasury.Signed(Treasury.CaravanIncome(caravan)), legs.Count >= 3 && lastThree < 0,
-                    "Haritada izle", null, () =>
-                    {
-                        Campaign.Current.VisualTrackerManager.RegisterObject(tracked);
-                        MenuUI.Success("Kervan haritada izleniyor");
-                    }));
+                Rows.Add(new CouncilRowVM(text, "günde " + Treasury.Signed(Treasury.CaravanIncome(caravan)), losing, "Haritada izle", null, () =>
+                {
+                    Campaign.Current.VisualTrackerManager.RegisterObject(tracked);
+                    MenuUI.Success("Kervan haritada izleniyor");
+                }));
             }
         }
 
@@ -173,7 +193,15 @@ namespace CheatMenu.UI.ViewModels
                     }));
         }
 
-        public void ExecuteAssign()
+        // ---- Atama ----
+
+        private void Dismiss(string what, Action<IntrigueState> dismiss)
+        {
+            Run(what, () => dismiss(SchemeEngine.State));
+            _changed();
+        }
+
+        private void AssignTreasurer()
         {
             IntrigueState state = SchemeEngine.State;
             Picker.Pick("Hazinedar seç", Treasury.Candidates(state).OrderByDescending(Treasury.Trade).ToList(), Treasury.Label,
@@ -185,19 +213,86 @@ namespace CheatMenu.UI.ViewModels
                 null, hero => Categories.HeroPortrait(hero), sort: false);
         }
 
-        public void ExecuteDismiss()
+        private void AssignPhysician()
         {
-            Run("Hazinedar", () => Treasury.Dismiss(SchemeEngine.State));
-            _changed();
+            IntrigueState state = SchemeEngine.State;
+            Picker.Pick("Saray hekimi seç", Physician.Candidates(state).OrderByDescending(Physician.Medicine).ToList(), Physician.Label,
+                hero => Run("Hekim", () =>
+                {
+                    Physician.Assign(SchemeEngine.State, hero);
+                    _changed();
+                }),
+                null, hero => Categories.HeroPortrait(hero), sort: false);
         }
 
-        public void ExecuteReckon() => EventCards.ShowReckoning(_changed);
+        public override void OnFinalize()
+        {
+            base.OnFinalize();
+            _treasurer.OnFinalize();
+            _physician.OnFinalize();
+            Clear(Rows);
+        }
+    }
+
+    /// <summary>Divanda bir koltuk: boşsa açıklama ve "Ata"; doluysa portre, beceri, durum ve düğmeler.</summary>
+    public sealed class CouncilSeatVM : TvhViewModel
+    {
+        private readonly Action _assign, _dismiss, _special;
+        private ImageIdentifierVM _portrait;
+        private bool _hasPerson, _hasSpecial;
+        private string _name = "", _skillText = "", _detailText = "", _statusText = "", _specialText = "";
+
+        public CouncilSeatVM(string header, string emptyText, Action assign, Action dismiss, Action special)
+        {
+            Header = header;
+            EmptyText = emptyText;
+            _assign = assign;
+            _dismiss = dismiss;
+            _special = special;
+            _portrait = PortraitOf(null);
+        }
+
+        [DataSourceProperty] public string Header { get; }
+        [DataSourceProperty] public string EmptyText { get; }
+        [DataSourceProperty] public ImageIdentifierVM Portrait { get => _portrait; set => Set(ref _portrait, value, nameof(Portrait)); }
+        [DataSourceProperty] public bool HasPerson { get => _hasPerson; set { if (Set(ref _hasPerson, value, nameof(HasPerson))) OnPropertyChangedWithValue(!value, nameof(IsEmpty)); } }
+        [DataSourceProperty] public bool IsEmpty => !_hasPerson;
+        [DataSourceProperty] public string Name { get => _name; set => Set(ref _name, value, nameof(Name)); }
+        [DataSourceProperty] public string SkillText { get => _skillText; set => Set(ref _skillText, value, nameof(SkillText)); }
+        [DataSourceProperty] public string DetailText { get => _detailText; set => Set(ref _detailText, value, nameof(DetailText)); }
+        [DataSourceProperty] public string StatusText { get => _statusText; set => Set(ref _statusText, value, nameof(StatusText)); }
+        [DataSourceProperty] public bool HasSpecial { get => _hasSpecial; set => Set(ref _hasSpecial, value, nameof(HasSpecial)); }
+        [DataSourceProperty] public string SpecialText { get => _specialText; set => Set(ref _specialText, value, nameof(SpecialText)); }
+        [DataSourceProperty] public string AssignText => "Ata";
+        [DataSourceProperty] public string ChangeText => "Değiştir";
+        [DataSourceProperty] public string DismissText => "Görevden al";
+
+        public void Show(Hero hero, string skill, string detail, string status, bool special, string specialText = "")
+        {
+            if (Name != (hero?.Name.ToString() ?? "") || Portrait == null)
+            {
+                _portrait?.OnFinalize();
+                Portrait = PortraitOf(hero);
+            }
+            HasPerson = hero != null;
+            Name = hero?.Name.ToString() ?? "";
+            SkillText = skill;
+            DetailText = detail;
+            StatusText = status;
+            HasSpecial = special && _special != null;
+            SpecialText = specialText;
+        }
+
+        public void ExecuteAssign() => _assign();
+
+        public void ExecuteDismiss() => _dismiss();
+
+        public void ExecuteSpecial() => _special?.Invoke();
 
         public override void OnFinalize()
         {
             base.OnFinalize();
             _portrait?.OnFinalize();
-            Clear(Rows);
         }
     }
 

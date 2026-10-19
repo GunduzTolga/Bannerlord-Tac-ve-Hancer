@@ -54,6 +54,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.13 — Divan: saray hekimi (yeni)
+- [ ] Divan sekmesinin üstünde iki koltuk kartı yan yana (HAZİNEDAR, SARAY HEKİMİ); boşsa açıklama ve "Ata"
+- [ ] Hekim ata → liste (Medicine, şarlatan, ömür etkisi) → kart: Medicine, koruma özeti ("Doğumda ölüm -%30, yaşlılık -%18, ...")
+- [ ] Hazinedarı ya da casus başını hekim yapmaya çalış → "zaten ...; biri iki koltukta oturamaz"
+- [ ] SAĞLIK listesi: klanındakiler, yaş, can, yaralı/gebe, yıllık risk; yaşlılarda kırmızı. Gebe olan için "doğuma ~N gün" doğru mu?
+- [ ] (Editörler'den yaşını 70+ yap) birkaç hafta sonra "Hekimin uyarıyor" kartı; bir yıl tekrar gelmiyor
+- [ ] Yapay zekâ suikastı (ayarlardan "Yapay zekâ sana entrika kursun: Normal") başarılı olursa bazen "Suikastten kurtuldu" kartı, kurban yaralı
+- [ ] Eşin gizli ilişkiden gebeyse (P2.6b) hekim haftalar içinde fark ediyor → yüzleş / görmezden gel / boşa kartı
+- [ ] Klanından bir kadın doğum yapınca ölüm daha seyrek mi (uzun oyunda gözlem; olursa rgl_log yeter)
+- [ ] Insert > Entrika > Divan > Saray hekimi: rapor metni, ata / görevden al
+- [ ] Kaydet → yükle: hekim duruyor
+
 ### P2.12 — Divan: hazinedar (yeni)
 - [ ] Entrika ekranında sekmeler sığıyor mu (9 sekme: Süren ... Divan ... Kronik)? Taşan yazı varsa ekran görüntüsü at
 - [ ] Divan sekmesi → "Hazinedar ata" → liste (Trade, Hesapçı, tahmin payı) → seç; koltuk kartı: portre, Trade, tahmin payı

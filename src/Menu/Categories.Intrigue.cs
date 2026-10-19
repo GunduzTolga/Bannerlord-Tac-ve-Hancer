@@ -51,7 +51,7 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
-                MenuEntry.Submenu("Divan: hazinedar" + (Treasury.Treasurer(state) is Hero t ? " (" + t.Name + ")" : " (boş)") + "...", ShowTreasury),
+                MenuEntry.Submenu("Divan (hazinedar, hekim)...", ShowCouncil),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -70,7 +70,41 @@ namespace CheatMenu.Menu
                 + "Kayıt testi işareti: " + (state.SaveTestMarker ?? "yok"));
         }
 
-        // ---- Divan: hazinedar (P2.12) ----
+        // ---- Divan (P2.12 hazinedar, P2.13 hekim) ----
+
+        private static void ShowCouncil()
+        {
+            IntrigueState state = SchemeEngine.State;
+            ShowCategory("Divan", new List<MenuEntry>
+            {
+                MenuEntry.Submenu("Hazinedar: " + (Treasury.Treasurer(state)?.Name.ToString() ?? "boş") + "...", ShowTreasury),
+                MenuEntry.Submenu("Saray hekimi: " + (Physician.Current(state)?.Name.ToString() ?? "boş") + "...", ShowPhysician),
+            }, ShowCouncil, "Casus başı Entrika menüsünde. Ayrıntılı raporlar: Entrika ekranı > Divan.", ShowIntrigue);
+        }
+
+        private static void ShowPhysician()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero physician = Physician.Current(state);
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu(physician == null ? "Hekim ata..." : "Hekimi değiştir...", () => Picker.Pick("Saray hekimi seç",
+                    Physician.Candidates(state).OrderByDescending(Physician.Medicine).ToList(), Physician.Label,
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Hekim", () => Physician.Assign(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowPhysician);
+                    }, ShowPhysician, HeroPortrait, sort: false)),
+            };
+            if (physician != null) entries.Add(MenuEntry.Simple("Hekimi görevden al", () => Physician.Dismiss(SchemeEngine.State)));
+            ShowCategory("Divan: saray hekimi", entries, ShowPhysician,
+                physician == null
+                    ? "Klanından Medicine'i yüksek birini hekim yap: doğumda ve yaşlılıktan ölüm azalır, suikastte kurbanı kurtarabilir, eşinin gizli gebeliğini fark eder. Medicine 30'un altındaysa şarlatandır."
+                    : Physician.ReportText(state),
+                ShowCouncil);
+        }
+
+        // ---- Divan: hazinedar ----
 
         private static void ShowTreasury()
         {
@@ -101,14 +135,14 @@ namespace CheatMenu.Menu
                 treasurer == null
                     ? "Klanından Trade'i yüksek birini hazinedar yap: gelirler, kervan seferleri, atölye önerileri ve ticaret fırsatları. Ayrıntılı rapor Entrika ekranı > Divan sekmesinde."
                     : Treasury.ReportText(state) + "\n\nAyrıntılı rapor (kervan defteri, kervan kurmaya uygun şehirler): Entrika ekranı > Divan.",
-                ShowIntrigue);
+                ShowCouncil);
         }
 
         // ---- Casus başı ----
 
         private static void PickSpymaster()
         {
-            Picker.Pick("Casus başı seç", SchemeFactors.SpymasterCandidates().OrderByDescending(SchemeFactors.Roguery).ToList(),
+            Picker.Pick("Casus başı seç", Council.Candidates(SchemeEngine.State, "casus başın").OrderByDescending(SchemeFactors.Roguery).ToList(),
                 SchemeFactors.SpymasterLabel,
                 hero =>
                 {

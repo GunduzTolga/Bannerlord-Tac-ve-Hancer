@@ -83,6 +83,8 @@ namespace CheatMenu
                 starter.AddModel<PersuasionModel>(new IntriguePersuasionModel());
                 // Aile editörü: "çocuk istemiyorlar" işaretli çiftte oyunun gebeliği olmaz.
                 starter.AddModel<PregnancyModel>(new Cheats.Models.FamilyPregnancyModel());
+                // Divan, hekim: klanında yaşlılıktan ölüm hekimin Medicine'ine göre azalır.
+                starter.AddModel<HeroDeathProbabilityCalculationModel>(new Cheats.Models.PhysicianDeathModel());
             }
         }
 
