@@ -17,9 +17,13 @@ namespace CheatMenu
         public const int DefaultSpeed = 4;
         public const int MaxPartyLimitBonus = 100;
 
-        /// <summary>Haritadaki "Entrika" düğmesinin yeri: 0 gizli, 1 sol üst, 2 üst orta, 3 sağ üst.</summary>
-        public static readonly string[] MapButtonPositionNames = { "Gizli", "Sol üst", "Üst orta", "Sağ üst" };
+        /// <summary>
+        /// Haritadaki "Entrika" düğmesinin yeri: 0 gizli, 1 sol üst, 2 üst orta, 3 sağ üst, 4 oyunun harita çubuğunda
+        /// (sol alttaki Klan / Krallık düğmelerinin yanında). Yeni seçenekler sona eklenir: kayıtlı sıra numaraları kaymasın.
+        /// </summary>
+        public static readonly string[] MapButtonPositionNames = { "Gizli", "Sol üst", "Üst orta", "Sağ üst", "Harita çubuğunda" };
         public const int DefaultMapButtonPosition = 2;
+        public const int MapBarButtonPosition = 4;
         /// <summary>Entrika ekranı kısayolu (sıra numarasıyla saklanır; 0 = yok). Oyunun kendi harita tuşlarıyla çakışmayanlar.</summary>
         public static readonly string[] ScreenHotkeyNames = { "Yok", "Home", "End", "PageUp", "PageDown", "U", "Y", "O", "F9", "F10" };
         public const int DefaultScreenHotkey = 1;

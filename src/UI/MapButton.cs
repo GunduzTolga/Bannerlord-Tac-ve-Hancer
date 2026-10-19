@@ -11,7 +11,8 @@ namespace CheatMenu.UI
     /// <summary>
     /// Haritadaki "Entrika" düğmesi: kendi küçük katmanımız (oyunun harita çubuğu prefab'ına dokunmadan; oyun yaması
     /// çubuğu değiştirse bile bozulmaz). Yeri ayarlardan seçilir ya da gizlenir. Rozet: harekete geçmeye hazır
-    /// suikast/kaçırma ve sezilen entrika sayısı.
+    /// suikast/kaçırma ve sezilen entrika sayısı. "Harita çubuğunda" seçiliyken düğmeyi MapBarButton oyunun çubuğuna koyar;
+    /// oraya eklenemezse (ya da ayar kayıt yüklenmeden değiştiyse) bu katman üst ortada yedek olarak görünür.
     /// </summary>
     public static class MapButton
     {
@@ -30,6 +31,8 @@ namespace CheatMenu.UI
             try
             {
                 int position = SettingsStore.Current.MapButtonPosition;
+                if (position == ModSettings.MapBarButtonPosition)
+                    position = MapBarButton.Injected ? 0 : ModSettings.DefaultMapButtonPosition;
                 bool wanted = position != 0 && !IntrigueScreen.IsOpen && IntrigueScreen.CannotOpenReason() == null;
                 if (!wanted)
                 {
@@ -45,7 +48,7 @@ namespace CheatMenu.UI
                 }
                 if (Environment.TickCount - _lastRefresh < RefreshMs) return;
                 _lastRefresh = Environment.TickCount;
-                if (Layer.DataSource is MapButtonVM vm) vm.Refresh(position, Badge());
+                if (Layer.DataSource is MapButtonVM vm) vm.Refresh(position, PendingCount());
             }
             catch (Exception ex)
             {
@@ -58,9 +61,14 @@ namespace CheatMenu.UI
         }
 
         /// <summary>Kampanya kapanırken: eski harita ekranına bağlı katman bırakılsın.</summary>
-        public static void Close() => Layer.Close();
+        public static void Close()
+        {
+            Layer.Close();
+            MapBarButton.Reset();
+        }
 
-        private static int Badge()
+        /// <summary>Rozet: harekete geçmeye hazır suikast/kaçırma ve sezilen (korunulmamış) entrika sayısı.</summary>
+        public static int PendingCount()
         {
             IntrigueState state = IntrigueBehavior.Current?.State;
             if (state == null) return 0;

@@ -121,7 +121,7 @@ namespace CheatMenu.Mcm
         public Dropdown<string> ScreenHotkey { get; set; } = new Dropdown<string>(ModSettings.ScreenHotkeyNames, ModSettings.DefaultScreenHotkey);
 
         [SettingPropertyDropdown("Haritadaki Entrika düğmesi", Order = 1, RequireRestart = false,
-            HintText = "Haritanın üst kenarındaki düğmenin yeri. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
+            HintText = "Düğmenin yeri: haritanın üst kenarı ya da oyunun sol alttaki harita çubuğu (Klan ve Krallık düğmelerinin yanında). Harita çubuğu seçeneği kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
         [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
         public Dropdown<string> MapButtonPosition { get; set; } = new Dropdown<string>(ModSettings.MapButtonPositionNames, ModSettings.DefaultMapButtonPosition);
 
