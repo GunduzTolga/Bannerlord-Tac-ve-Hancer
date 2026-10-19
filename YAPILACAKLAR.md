@@ -31,6 +31,15 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] Yeni kampanyada Women in Calradia yoldaşları tavernalarda; **yüzleri düzgün** (doku bozuksa ekran görüntüsü at)
 - [ ] Mod Seçenekleri'nde Women in Calradia ayarları
 - [ ] Bu modlar ayrıyken alınmış bir kayıt varsa, yüklerken "eksik modül" uyarısı çıkabilir; yine de yüklenir
+- [ ] Yeni oyun: karakter oluşturma çökmeden geçiyor (eski çökmenin nedeni bulundu: lord sayfasının `Refresh` metodu; Diplomacy
+      ve DLX Hair'in açılışta yamaladığı 37 metodun hiçbiri o tetiği taşımıyor)
+- [ ] Hile menüsü → iki krallığa savaş ilan et; aralarında Diplomacy saldırmazlık anlaşması varsa mesajda
+      "aradaki saldırmazlık anlaşması bozuldu" yazıyor ve Krallık → Diplomasi'de anlaşma artık görünmüyor
+
+Çakışma denetimi (20 Ekim): ikna modelini ikimiz de ekliyoruz, bizimki Diplomacy'ninkini çağırıp üstüne ekliyor. Ansiklopedi
+lord sayfasında ikimiz de bölüm ekliyoruz, ayrı yerlere. Klan ekranı (biz) ile Krallık ekranı (Diplomacy) ayrı. DLX Hair yalnızca yüz
+düzenleyici, envanter ve 3B görünüme dokunuyor. Women in Calradia oyunun kendi gebelik sistemini kullanıyor, yaş eşyası yaşı en az 19'da
+tutuyor. Tek boşluk saldırmazlık anlaşmasıydı: savaş ilanında bitmiyordu, artık bizim taraf bitiriyor (`src\Bundle\DiplomacyCompat.cs`).
 
 ### P1 — Entrika ekranı, olay kartları, harita düğmesi (yeni; en çok ekran görüntüsü lazım)
 - [ ] Ana menüde açılış mesajı: "Insert: menü, Home: entrika ekranı"

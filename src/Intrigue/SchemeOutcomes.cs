@@ -240,6 +240,8 @@ namespace CheatMenu.Intrigue
                 {
                     DeclareWarAction.ApplyByPlayerHostility(me, victim.Kingdom);
                     parts.Add(victim.Kingdom.Name + " sana savaş açtı");
+                    if (Bundle.DiplomacyCompat.EndNonAggressionPact(me as Kingdom, victim.Kingdom))
+                        parts.Add("saldırmazlık anlaşmanız bozuldu");
                 }
             }
             else if (victim.Kingdom != null && victim.Kingdom == mine && !Hero.MainHero.IsKingdomLeader)
