@@ -3,7 +3,7 @@
 Son güncelleme: 19 Ekim 2026 · Mod durumu: Faz 1, 2, 3A, 3B derlendi ve oyuna kuruldu.
 Faz 1 ve 2 oyunda denendi ve çalışıyor; **3A ve 3B henüz denenmedi.**
 Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye göre asker ekleme**, **yoldaş sınırını kaldır**,
-**parti sayısı sınırı** ve **Entrika E0** kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
+**parti sayısı sınırı**, **Entrika E0** ve **Entrika E1** (casus başı, casusluk, sırlar, suikast) kodlandı; bilgisayarda `build.ps1` ile derlenip denenmeli.
 
 > ⚠️ Telefondan kod yazılıp GitHub'a gönderilebilir, ama **derleyip oyuna kurmak bilgisayar ister**
 > (Visual Studio + oyunun DLL'leri). Telefonda yapılanlar, bilgisayarda `build.ps1` çalışınca oyuna gelir.
@@ -15,6 +15,21 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → ana menü: Entrika, Hileler, Editörler, Klan & krallık, Bilgi, Kurallar; alt menülerde **Geri** doğru gruba dönüyor
 - [ ] Entrika → **Kayıt testi: işaret bırak** → kaydet → kaydı yeniden yükle → Entrika menüsünde "Şu anki işaret: gün …" duruyor
 - [ ] ⚠️ Yedek kayıtta: Launcher'da modu **kapat** → aynı kaydı aç → kayıt açılıyor (sadece "modül eksik" uyarısı normal) → modu geri aç
+
+### Entrika E1 — casus başı, casusluk, suikast (yedekli bir kayıtta)
+- [ ] Entrika → **Casus başı ata** → yoldaşlar portreli listede; birini seç → menüde "Casus başı: X - Roguery N"
+- [ ] Yeni entrika → **Casusluk** → bir lord seç → onay ekranında maliyet, başarı, risk → başlat → altın düştü
+- [ ] Birkaç gün bekle → "ilk bilgiler geldi" popup'ı → **Raporu al** → rapor popup'ı (konum, parti, altın, ilişkiler, kişilik, sır satırı)
+- [ ] Entrika → **İstihbarat raporları** → rapor görünüyor; sır varsa **İfşa et** → sonuç popup'ı, ilişkiler değişti
+- [ ] Yeni entrika → **Suikast** → tanıştığın ya da raporlu bir hedef → sol altta "aşama x/5 tamamlandı" mesajları
+- [ ] Aşamalar arasında **olay popup'ları** çıkıyor (rüşvetçi hizmetkâr, zehir mi hançer mi…), seçimler uygulanıyor
+- [ ] Süren entrikalar → **Harekete geç** → rüşvet seçenekleri → portreli sonuç popup'ı → hedef gerçekten öldü ya da yaralı kurtuldu
+- [ ] Başarılı suikasttan sonra oyunun kendi ölüm bildirimi geliyor, hedefin klanına yeni lider geçiyor
+- [ ] Yakalanınca hafif/ağır ifşa sonuçları; kendi krallığından birini öldürüp yakalanınca **"Hükümdar hesap soruyor"**
+- [ ] Entrika sürerken **kaydet → yükle** → entrika aynı aşamada; bekleyen popup yeniden soruluyor
+- [ ] Kurallar → **Entrika zorluğu** Kolay/Zor → onay ekranındaki yüzdeler değişiyor
+- [ ] Hileler → **Entrika hileleri**: aşamaları tamamla, asla fark edilme, her zaman başarılı
+- [ ] Popup'lar kapanıyor mu (portreli bildirimde **Tamam** çalışmazsa **Kapat** var)? Türkçe ekler doğru mu (Caladog'un, Sargot'ta)?
 
 ### Asker ekle (kademeye göre) — yeni
 - [ ] Ordu / Parti → **Asker ekle (kademeye göre)** → kademeler (T1, T2 …) ve her birindeki asker türü sayısı görünüyor
@@ -70,7 +85,7 @@ Mod artık sadece hile menüsü değil, "her şeyi içeren" mod olacak. Tasarım
 `docs/superpowers/specs/2026-10-19-entrika-design.md` (casus başı, casusluk, sırlar, suikast, kozlar, yapay zekâ entrikaları).
 - [x] Tasarımdaki 5 açık soru cevaplandı (hepsi önerildiği gibi, ad: Taç ve Hançer)
 - [x] **E0** — menü düzeni, görünen ad, kayıt testi (kodlandı; oyunda test bekliyor)
-- [ ] **E1** — casus başı, casusluk + sırlar, suikast (aşamalar, olaylar, sonuçlar)
+- [x] **E1** — casus başı, casusluk + sırlar, suikast (aşamalar, olaylar, sonuçlar) (kodlandı; oyunda test bekliyor)
 - [ ] **E2** — şantaj/koz, kaçırma, gölge ağı, yapay zekâ entrikaları, karşı casusluk
 - [ ] **E3** — sabotaj, kışkırtma, itibar zedeleme, resimli olay kartları
 

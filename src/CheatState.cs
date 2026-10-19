@@ -15,6 +15,8 @@ namespace CheatMenu
         public static bool FastParty;
         public static bool RevealMap;
         public static bool ArmyIncludesAllies;
+        public static bool IntrigueNeverDiscovered;
+        public static bool IntrigueAlwaysSucceed;
 
         public static void ResetAll()
         {
@@ -24,6 +26,7 @@ namespace CheatMenu
             OneHitMe = OneHitArmy = false;
             InfiniteAmmoMe = InfiniteAmmoArmy = false;
             FastParty = false;
+            IntrigueNeverDiscovered = IntrigueAlwaysSucceed = false;
         }
     }
 }

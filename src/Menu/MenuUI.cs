@@ -125,6 +125,9 @@ namespace CheatMenu.Menu
             }
         }
 
+        /// <summary>Menü geçişi sürüyor mu (bir sonraki karede açılacak popup var mı).</summary>
+        public static bool HasPending => Deferred.Count > 0;
+
         public static void Defer(Action action)
         {
             if (action != null) Deferred.Enqueue(action);

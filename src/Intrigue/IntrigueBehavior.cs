@@ -1,4 +1,5 @@
 using CheatMenu.Intrigue.Core;
+using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
 
 namespace CheatMenu.Intrigue
@@ -17,6 +18,7 @@ namespace CheatMenu.Intrigue
 
         public override void RegisterEvents()
         {
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, () => MenuUI.SafeRun("Entrika günlük", SchemeEngine.DailyTick));
         }
 
         public override void SyncData(IDataStore dataStore)

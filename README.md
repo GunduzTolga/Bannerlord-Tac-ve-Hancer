@@ -1,7 +1,7 @@
 # Taç ve Hançer — Mount & Blade II: Bannerlord modu
 
 Tek oyunculu kampanya için, oyunun kendi popup pencerelerini kullanan, bağımlılıksız (Harmony/MCM yok) "her şeyi içeren" mod:
-hileler, editörler, kurallar ve yapım aşamasındaki CK3 tarzı **entrika sistemi**
+hileler, editörler, kurallar ve CK3 tarzı **entrika sistemi**
 (tasarım: `docs/superpowers/specs/2026-10-19-entrika-design.md`).
 
 Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar dosyası ve kayıtlar aynen çalışır.
@@ -16,13 +16,14 @@ Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar
 
 | Kategori | Neler var |
 |---|---|
-| **Entrika** | Yapım aşamasında (E0: kayıt testi). Casus başı, casusluk, sırlar, suikast E1'de gelecek |
+| **Entrika** | Casus başı; casusluk (60 gün geçerli rapor + lordun gerçek kişiliğinden çıkan sırlar, ifşa); suikast (2–5 aşama, 10 seçimli olay, rüşvet, ağır sonuçlar) |
 | **Hileler →** | |
 | Para & Ekonomi | Altın, etki, tahıl |
 | Karakter | Odak/attribute puanı, yetenekler, can |
 | Ordu / Parti | Asker ekleme (oyundaki tüm askerler, kademeye göre, resimli), terfi XP'si, yaralı iyileştirme, moral, parti hızı x2 |
 | Savaş içi | Ölümsüzlük, tek vuruş, sınırsız cephane ([Ben] / [Ordu], isteğe bağlı müttefikler dahil) |
 | Harita | Yerleşime / bir lordun yanına ışınlanma, ileri sarma hızı 4x/8x/16x |
+| Entrika hileleri | Aşamaları tamamla, asla fark edilme, her zaman başarılı |
 | **Editörler →** | |
 | Adlandır | Kahraman, eşraf, klan, krallık, yerleşim, parti |
 | Kahraman editörü | Yaş, yetenek, nitelik, odak, perk, kişilik, görünüm (berber ekranı) |
@@ -31,7 +32,19 @@ Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar
 | Eşya ekle | İkonlu, aramalı eşya listesi |
 | Klan & krallık | Katıl/ayrıl, krallık kur, hükümdar ol, kademe, savaş/barış, klan taşı, lider/hükümdar değiştir, krallık yok et |
 | Bilgi | Lord bulucu (gerçek konum + kamera), harita sisini kaldır |
-| Kurallar | Yetenek XP ve asker XP çarpanı, parti boyutu bonusu, öğrenme sınırını kaldır, yoldaş sınırını kaldır, parti sayısı sınırını artır / kaldır |
+| Kurallar | Yetenek XP ve asker XP çarpanı, parti boyutu bonusu, öğrenme sınırını kaldır, yoldaş sınırını kaldır, parti sayısı sınırını artır / kaldır, entrika zorluğu |
+
+## Entrika — kısa kullanım
+
+1. **Entrika → Casus başı ata:** klanından Roguery'si yüksek bir yoldaş ya da aile üyesi. Entrikaların gücü ondan gelir.
+2. **Yeni entrika → Casusluk:** hedefin konumu, gücü, kişiliği ve belki bir sırrı.
+   Rapor 60 gün geçerli; o hedefe suikastta +10 verir. Tanışmadığın birini de suikast listesine ekler.
+3. **Yeni entrika → Suikast:** en az 2 aşamadan sonra **Süren entrikalar → Harekete geç**.
+   Bekledikçe şansın artar ama her aşamada yakalanma zarı atılır. Harekete geçerken rüşvetle +5/+10/+15.
+4. Olaylar, kararlar ve sonuçlar haritada popup olarak gelir; savaştayken olanlar haritaya dönünce gösterilir.
+5. Yakalanırsan ilişki, suç puanı ve Onur kaybedersin. Bir hükümdarı öldürürsen savaş çıkabilir; kendi krallığından birini öldürürsen hükümdarın hesap sorar.
+
+Formüller, örnek hesaplar ve sonraki fazlar: `docs/superpowers/specs/2026-10-19-entrika-design.md`.
 
 Kalıcı ayarlar (ileri sarma hızı, kurallar): `Belgeler\Mount and Blade II Bannerlord\Configs\CheatMenu.txt`.
 

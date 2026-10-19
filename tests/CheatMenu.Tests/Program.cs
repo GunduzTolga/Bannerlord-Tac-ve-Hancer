@@ -115,6 +115,7 @@ namespace CheatMenu.Tests
 
             IntrigueMathTests();
             IntrigueStateTests();
+            TurkishSuffixTests();
 
             Console.WriteLine(_failures == 0 ? "ALL TESTS PASSED" : _failures + " TEST(S) FAILED");
             return _failures == 0 ? 0 : 1;
@@ -217,7 +218,7 @@ namespace CheatMenu.Tests
             {
                 Id = 3, Kind = SchemeKind.Murder, TargetId = "lord_1_1", StartDay = 10, Phase = 2, DaysIntoPhase = 3, PhaseDays = 6,
                 StartCost = 2500, Seed = -12345, Rolls = 7, EventSuccess = 8, EventDiscovery = -3, UsedEvents = { 1, 3 },
-                Method = SchemeMethod.Dagger, HalfSpeedNext = true, FeastRisk = true, PendingEvent = 5, AskedToExecute = true,
+                Method = SchemeMethod.Dagger, FeastRisk = true, PendingEvent = 5, AskedToExecute = true,
             });
             state.Reports.Add(new IntelReport
             {
@@ -239,7 +240,7 @@ namespace CheatMenu.Tests
                 && s.StartDay == 10 && s.Phase == 2 && s.DaysIntoPhase == 3 && s.PhaseDays == 6 && s.StartCost == 2500
                 && s.Seed == -12345 && s.Rolls == 7 && s.EventSuccess == 8 && s.EventDiscovery == -3
                 && s.UsedEvents.Count == 2 && s.UsedEvents[1] == 3 && s.Method == SchemeMethod.Dagger
-                && s.HalfSpeedNext && s.FeastRisk && s.PendingEvent == 5 && !s.AwaitingSpyChoice && s.AskedToExecute);
+                && s.FeastRisk && s.PendingEvent == 5 && !s.AwaitingSpyChoice && s.AskedToExecute);
             IntelReport r = back.Reports.Count == 1 ? back.Reports[0] : null;
             Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
             Check("state: secret", back.Secrets.Count == 1 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed);
@@ -259,6 +260,30 @@ namespace CheatMenu.Tests
             IntrigueState bad = IntrigueState.Parse("scheme\tkind=9\ttarget=x\nscheme\tkind=2\nsecret\tkind=77\ttarget=y\nmeta\tnext=-5");
             Check("state: bad records skipped", bad.Schemes.Count == 0 && bad.Secrets.Count == 0 && bad.NextSchemeId == 1);
         }
+
+        private static void TurkishSuffixTests()
+        {
+            ExpectSuffix(Tr.Genitive("Derthert"), "Derthert'in");
+            ExpectSuffix(Tr.Genitive("Caladog"), "Caladog'un");
+            ExpectSuffix(Tr.Genitive("Rhagaea"), "Rhagaea'nın");
+            ExpectSuffix(Tr.Genitive("Gölü"), "Gölü'nün");
+            ExpectSuffix(Tr.Genitive("Ira"), "Ira'nın");
+            ExpectSuffix(Tr.Dative("Derthert"), "Derthert'e");
+            ExpectSuffix(Tr.Dative("Caladog"), "Caladog'a");
+            ExpectSuffix(Tr.Dative("Rhagaea"), "Rhagaea'ya");
+            ExpectSuffix(Tr.Accusative("Caladog"), "Caladog'u");
+            ExpectSuffix(Tr.Accusative("Rhagaea"), "Rhagaea'yı");
+            ExpectSuffix(Tr.Accusative("Lucon"), "Lucon'u");
+            ExpectSuffix(Tr.Locative("Pravend"), "Pravend'de");
+            ExpectSuffix(Tr.Locative("Sargot"), "Sargot'ta");
+            ExpectSuffix(Tr.Locative("Derthert"), "Derthert'te");
+            ExpectSuffix(Tr.Locative("Rhagaea"), "Rhagaea'da");
+            ExpectSuffix(Tr.Locative("Epicrotea"), "Epicrotea'da");
+            ExpectSuffix(Tr.Genitive("Büyük Rhagaea"), "Büyük Rhagaea'nın");
+            Check("suffix: empty", Tr.Genitive("") == "" && Tr.Locative(null) == null);
+        }
+
+        private static void ExpectSuffix(string actual, string expected) => Check("suffix: " + actual + " (expected " + expected + ")", actual == expected);
 
         private static SchemeInputs Phases(SchemeInputs inputs, int phases)
         {

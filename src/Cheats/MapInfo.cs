@@ -44,6 +44,13 @@ namespace CheatMenu.Cheats
             MenuUI.Info(hero.Name + ": " + where);
         }
 
+        /// <summary>Kahramanın gerçek konumunu anlatan metin (ör. "Pravend içinde", "seferde, Ocs Hall yakınında").</summary>
+        public static string Where(Hero hero)
+        {
+            TryLocate(hero, out _, out string where);
+            return where;
+        }
+
         private static bool TryLocate(Hero hero, out CampaignVec2 position, out string where)
         {
             position = CampaignVec2.Invalid;

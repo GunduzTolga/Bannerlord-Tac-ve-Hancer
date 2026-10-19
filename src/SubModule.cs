@@ -67,6 +67,7 @@ namespace CheatMenu
             TimeSpeed.Tick();
             MapInfo.Tick();
             MenuUI.RunDeferred();
+            IntriguePopups.Tick();
             CleanSaveGuard.Tick();
 
             if (Input.IsKeyPressed(MenuKey) && !InformationManager.IsAnyInquiryActive())

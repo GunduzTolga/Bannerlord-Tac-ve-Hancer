@@ -39,6 +39,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Ordu / Parti", ShowParty),
                 MenuEntry.Submenu("Savaş içi", ShowCombat),
                 MenuEntry.Submenu("Harita", ShowMap),
+                MenuEntry.Submenu("Entrika hileleri", ShowIntrigueCheats),
             }, ShowCheats);
         }
 

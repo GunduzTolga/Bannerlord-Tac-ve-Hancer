@@ -1,7 +1,8 @@
 # Entrika Sistemi — Tasarım
 
 **Tarih:** 2026-10-19 · **Oyun:** v1.4.8 + War Sails v1.2.8
-**Durum:** Onaylandı (2026-10-19). Bölüm 13'teki sorular cevaplandı. E0 kodlandı; oyunda test bekliyor.
+**Durum:** Onaylandı (2026-10-19). Bölüm 13'teki sorular cevaplandı. E0 ve E1 kodlandı; oyunda test bekliyor.
+Uygulama sırasında verilen küçük kararlar bölüm 14'te.
 
 **Kullanıcı kararları (bu konuşmada verildi):**
 - Ayrı mod yok. CheatMenu "her şeyi içeren" moda dönüşür: hileler + entrika (+ ileride başka sistemler).
@@ -104,7 +105,7 @@ Bunun yerine koz (E2) ve itibar zedeleme (E3) o sistemi besler.
    keşif zarı atılır → (yakalanmadıysan) "Aşama 2/5 tamamlandı" bilgisi gelir → %50 olasılıkla bir **olay** popup'ı çıkar.
 3. **Harekete geç:** En az 2 aşamadan sonra entrika detayında "Harekete geç" açılır. İstersen o anda rüşvet eklersin.
    5. aşamaya gelince entrika kendiliğinden harekete geçmez, oyuncuya sorar.
-4. **Hedef savaşın ya da kuşatmanın içindeyse** harekete geçiş o bitene kadar ertelenir.
+4. **Hedef savaşın ya da kuşatmanın içindeyse** harekete geçilemez; bitince tekrar denenir.
 5. **Sonuç:** Başarı zarı atılır → sonuç popup'ı gelir (hedefin portresiyle) → bölüm 5.5'teki sonuçlar uygulanır.
 
 ### 5.3 Başarı şansı
@@ -169,14 +170,14 @@ Yorum:
 - Hedef oyunun kendi "öldürüldü" ölümüyle ölür: `KillCharacterAction.ApplyByMurder(hedef, katil: yok)`.
   Klan lideriyse yeni lideri, hükümdarsa yeni hükümdarı oyun kendisi belirler.
 - Casus başı Roguery XP'si kazanır.
-- Oyuncuya küçük bir **Merhamet −** kişilik XP'si (vicdan) verilir.
+- Oyuncuya küçük bir **Merhamet −** kişilik XP'si (vicdan, −40) verilir.
 
 **Başarılı ama iz bıraktı** (iz şansı = o anki keşif şansı × 2; hedef senin esirinse × 4) → **Ağır ifşa:**
 - Kurbanın klanındaki yetişkinlerle ilişki −50.
 - Kurbanın krallığındaki diğer klan liderleriyle −20.
 - Senin krallığındaki onurlu (Onur ≥ 1) lordlarla −10.
 - Kurbanın krallığında suç puanı +60.
-- İdamla aynı kişilik cezası (Onur/Merhamet).
+- Ağır kişilik cezası: Onur −150, Merhamet −100 XP.
 - Kurban hükümdarsa ve sen bağımsızsan ya da hükümdarsan: savaş (zaten savaşta değilseniz).
 - Kurbanla aynı krallıktaysan **"Hükümdar hesap soruyor"** olayı çıkar:
   - Kan bedeli öde: altın (5.000 × kurbanın kademesi) + 100 etki.
@@ -198,7 +199,7 @@ Her aşamada %50 olasılıkla, aynı entrikada tekrar etmeden çıkar. Her olay�
 | 1 | **Rüşvetçi hizmetkâr** — hedefin hizmetkârı para istiyor | Öde (maliyet ×0,3, +8 başarı) · Tehdit et (+5 başarı, +4 keşif) · Reddet |
 | 2 | **Ajan yakalandı** | Kurtar (maliyet ×0,5) · Sustur (Merhamet −, risk yok) · Bırak (%35 olasılıkla hafif ifşa) |
 | 3 | **Zehir mi, hançer mi?** — yöntem seçimi | Zehir (−3 keşif, −5 başarı) · Hançer (+8 başarı, +4 keşif) · Kaza süsü (yalnızca hedef yoldaysa: +3 başarı, iz şansı yarıya iner) |
-| 4 | **Hedef yer değiştirdi** | Takip et (maliyet ×0,2) · Bekle (sonraki aşama yarım hızda) |
+| 4 | **Hedef yer değiştirdi** | Takip et (maliyet ×0,2) · Bekle (süren aşama iki kat uzun sürer) |
 | 5 | **Rakip suikastçı** — başkası da hedefin peşinde | İşbirliği (+10 başarı, +5 keşif) · İhbar et (hedefle ilişki +10, entrika biter, para geri gelmez) · Görmezden gel |
 | 6 | **Muhafız değişimi** — kısa bir fırsat penceresi | Hemen harekete geç (aşama sınırı yok sayılır, +10 başarı) · Bekle |
 | 7 | **Vicdan azabı** — yalnızca casus başı Merhamet ≥ 1 ise | İkna et (Charm zarı) · Zorla (casus başıyla ilişki −15) · Vazgeç (entrika biter) |
@@ -211,13 +212,13 @@ Her aşamada %50 olasılıkla, aynı entrikada tekrar etmeden çıkar. Her olay�
 ## 6. Casusluk ve sırlar (E1)
 
 ### 6.1 Casusluk
-- **Hedef:** herhangi bir yetişkin lord ya da eşraf. Tanışmış olman gerekmez; tanışmadıysan −10 başarı.
+- **Hedef:** herhangi bir yetişkin lord ya da gezgin (eşraf yok: sırları ve gezisi yok). Tanışmış olman gerekmez; tanışmadıysan −10 başarı.
   Bu, v1.3'ten beri lordlara başka lordların yerini soramamak şikâyetine de cevap verir.
 - **Aşamalar:** 1–2. Aşama süresi: 5 gün − Roguery ÷ 100, en az 3 gün.
   2. aşama yalnızca sır bulma şansını artırır.
 - **Başarı:** %50 + Roguery ÷ 5 − hedefin Roguery'si ÷ 10 − kademe × 2; hükümdar −10. Sınır %20 … %95.
 - **Keşif / aşama:** %6 − Roguery ÷ 50 + hedefin Roguery'si ÷ 40. Sınır %1 … %25.
-  Keşfedilirse yalnızca hedefle ilişki −10 olur.
+  Keşfedilirse hedefle ilişki −10 olur ve o hedefe 120 gün bekleme başlar.
 - **Maliyet:** 500 + 250 × kademe.
 - **Rapor (60 gün geçerli):**
   - hedefin şu anki gerçek konumu ve partisinin gücü
@@ -347,22 +348,23 @@ Entrika
 ### 11.1 Dosyalar
 ```
 src/Intrigue/Core/          oyundan bağımsız, birim testli (TaleWorlds referansı yok)
-  SchemeKind.cs             türler: aşama sınırları, taban değerler
-  SchemeMath.cs             başarı/keşif/maliyet/süre formülleri (girdi: düz sayılar)
-  IntrigueState.cs          entrikalar, raporlar, sırlar, bekleme süreleri, geçmiş
-  IntrigueStateFormat.cs    metne yaz / metinden oku (sürümlü)
-  SchemeRandom.cs           tohumlu zar
+  SchemeMath.cs             türler, başarı/keşif/maliyet/süre formülleri, tohumlu zar (SchemeRandom)
+  SecretRules.cs            sır türleri, adları, ifşa cezaları
+  IntrigueState.cs          entrikalar, raporlar, sırlar, bekleme süreleri, bildirimler, geçmiş + metin biçimi
+  TextRecords.cs            kaçışlı satır biçimi (kayıttaki metin)
+  Tr.cs                     isimlere Türkçe hâl eki (Caladog'un, Sargot'ta)
 src/Intrigue/               oyun katmanı
-  IntrigueBehavior.cs       CampaignBehaviorBase: günlük ilerleme, kahraman ölümü, SyncData
-  SchemeFactors.cs          kahramandan SchemeMath girdilerini toplar
-  SchemeOutcomes.cs         sonuçları oyunun eylemleriyle uygular
-  IntrigueEvents.cs         olay kataloğu ve seçim popup'ları
-  IntriguePopupQueue.cs     "yalnızca haritadayken" kuyruğu
-src/Menu/Categories.Intrigue.cs   Entrika menüsü
+  IntrigueBehavior.cs       CampaignBehaviorBase: günlük olay, SyncData
+  SchemeFactors.cs          casus başı, hedef kuralları, SchemeMath girdileri, etiketler
+  SchemeEngine.cs           başlat, günlük ilerleme, aşama, harekete geç, iptal, hile
+  SchemeOutcomes.cs         sonuçları oyunun eylemleriyle uygular; rapor, sır bulma ve ifşa
+  IntrigueEvents.cs         olay kataloğu
+  IntriguePopups.cs         durumdan popup üretir ("yalnızca haritadayken")
+src/Menu/Categories.Intrigue.cs   Entrika menüsü ve entrika hileleri
 ```
 
 ### 11.2 Kayıt güvenliği
-- Tüm entrika durumu **tek bir metin** olarak kaydedilir: `SyncData("CheatMenu.Intrigue", ref string)`.
+- Tüm entrika durumu **tek bir metin** olarak kaydedilir: `SyncData("CheatMenu_Intrigue", ref string)`.
   İçinde bir sürüm satırı bulunur. Modun "kayda kendi veri türünü yazmaz" kuralı korunur.
 - Kahramanlar `StringId` ile tutulur, yüklemede `Hero.Find(id)` ile bulunur.
   Bulunamayan kahramanın kaydı düşer ve oyuncuya bilgi verilir.
@@ -391,7 +393,7 @@ src/Menu/Categories.Intrigue.cs   Entrika menüsü
 - Kahraman ve kişilik:
   - `Hero.Find(string)`, `Hero.HasMet`, `Hero.IsChild`, `Hero.LastKnownClosestSettlement`
   - `DefaultTraits.Calculating/Honor/Mercy/Valor/Generosity`, `Hero.SetTraitLevel`
-  - `TraitLevelingHelper.OnLordExecuted` ve görev sonucu XP yardımcıları
+  - `TraitLevelingHelper.OnIncidentResolved(trait, xp)` (oyunun rastgele olaylarının kişilik yolu)
 - Altyapı:
   - `CampaignEvents.DailyTickEvent`, kahraman öldü olayları
   - `IDataStore.SyncData<T>`
@@ -399,7 +401,8 @@ src/Menu/Categories.Intrigue.cs   Entrika menüsü
 
 ### 11.7 Oyunda doğrulanacaklar
 - `ApplyByMurder`'ın katil verilmezse kendiliğinden ilişki ya da suç cezası uygulayıp uygulamadığı.
-- `TraitLevelingHelper.OnLordExecuted`'ın kişilik dışında yan etkisi olup olmadığı.
+- Kişilik XP değerlerinin (−40 … −150) oyunda hissedilir ama aşırı olmadığı.
+- Portreli bildirimde "Tamam" düğmesinin seçim olmadan çalıştığı (çalışmazsa "Kapat" düğmesi var).
 - Suç puanı eşikleri (kaç puanda şehirler düşmanlaşır).
 - Bir vasalın `DeclareWarAction.ApplyByPlayerHostility` ile tüm krallığını savaşa sokup sokmadığı.
 - Hikâye modu kritik karakterlerinin nasıl tanınacağı.
@@ -440,3 +443,20 @@ Orijinal sorular:
 4. **Yapay zekâ oyuncunun kendisine suikast yapabilsin mi?** Öneri: varsayılan kapalı, ayardan açılır.
    Oyuncu ölürse oyun varise geçer; varis yoksa kampanya biter.
 5. **Kaydet-yükle sonucu değiştirmesin mi (tohumlu zar)?** Öneri: evet.
+
+---
+
+## 14. Uygulama notları (E1, 2026-10-19)
+
+- **Olaylar:** her aşama sonunda %50; bir olay aynı entrikada bir kez çıkar. Casuslukta yalnızca 1, 2 ve 8 numaralı olaylar çıkar.
+- **Son aşama:** 5. aşamada bir kez "plan hazır" popup'ı çıkar. "Sonra karar ver" denirse entrika menüden harekete geçmeyi bekler, sayaç durur.
+- **Casusluk 1. aşaması:** "raporu al" ya da "bir aşama daha sır ara" diye sorulur.
+- **Bildirimler** kayıtta tutulur: savaşta ya da konuşmadayken olan bir sonuç, haritaya dönünce gösterilir.
+  Kaydedip çıkarsan bir sonraki yüklemede gösterilir.
+- **Roguery XP'si:** aşama başına 200; başarılı casusluk +400; başarılı suikast +1.500; başarısız suikast +300.
+  Oyuncunun öğrenme hızı ve Kurallar'daki XP çarpanı uygulanır.
+- **Rapordan kısayol:** İstihbarat raporu ekranından doğrudan "Bu hedefe suikast başlat".
+- **Hükümdar hedefin sırrı:** hükümdarın hükümdarı yok. İfşa cezası, krallığındaki klan liderleriyle ilişkisine yarım olarak uygulanır.
+  Krallığı olmayan bir lordda bu ceza klanındakilere uygulanır.
+- **Kayıt testi işareti** (E0) oyunda doğrulanana kadar Entrika menüsünde duruyor.
+

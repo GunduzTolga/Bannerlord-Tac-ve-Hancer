@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CheatMenu.Cheats;
+using CheatMenu.Intrigue.Core;
 
 namespace CheatMenu.Menu
 {
@@ -27,6 +28,9 @@ namespace CheatMenu.Menu
                     v => Rules.Change(s => s.SetPartyLimitBonus(v), "Parti sayısı sınırına ekleme: +" + v)),
                 MenuEntry.Toggle("Parti sayısı sınırını kaldır", () => Rules.Settings.NoPartyLimit,
                     v => Rules.Change(s => s.NoPartyLimit = v, null)),
+                Choice("Entrika zorluğu", ModSettings.AllowedIntrigueDifficulties, () => Rules.Settings.IntrigueDifficulty,
+                    v => Rules.Change(s => s.SetIntrigueDifficulty(v), "Entrika zorluğu: " + SchemeMath.DifficultyName(v)),
+                    SchemeMath.DifficultyName),
             }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. "
                 + "Parti sayısı sınırı = klanının aynı anda kurabileceği parti sayısı (kaldırma açıkken ekleme yok sayılır).");
         }

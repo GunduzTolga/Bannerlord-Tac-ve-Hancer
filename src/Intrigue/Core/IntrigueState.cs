@@ -34,7 +34,6 @@ namespace CheatMenu.Intrigue.Core
         public int EventDiscovery;
         public List<int> UsedEvents = new List<int>();
         public SchemeMethod Method;
-        public bool HalfSpeedNext;
         public bool FeastRisk;
 
         // Oyuncudan karar bekleyen durumlar (popup'lar buradan üretilir; kayda yazıldığı için yüklemeden sonra da sorulur)
@@ -164,7 +163,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("seed", I(s.Seed)).Add("rolls", I(s.Rolls))
                     .Add("evs", I(s.EventSuccess)).Add("evd", I(s.EventDiscovery))
                     .Add("used", string.Join(",", s.UsedEvents.Select(I))).Add("method", I((int)s.Method))
-                    .Add("half", B(s.HalfSpeedNext)).Add("feast", B(s.FeastRisk))
+                    .Add("feast", B(s.FeastRisk))
                     .Add("pending", I(s.PendingEvent)).Add("spychoice", B(s.AwaitingSpyChoice)).Add("asked", B(s.AskedToExecute)));
 
             foreach (IntelReport r in Reports)
@@ -276,7 +275,6 @@ namespace CheatMenu.Intrigue.Core
                     .Select(v => int.TryParse(v, NumberStyles.Integer, CultureInfo.InvariantCulture, out int id) ? id : 0)
                     .Where(id => id > 0).ToList(),
                 Method = Enum.IsDefined(typeof(SchemeMethod), method) ? (SchemeMethod)method : SchemeMethod.None,
-                HalfSpeedNext = Bool(r, "half"),
                 FeastRisk = Bool(r, "feast"),
                 PendingEvent = Math.Max(0, Int(r, "pending")),
                 AwaitingSpyChoice = Bool(r, "spychoice"),
