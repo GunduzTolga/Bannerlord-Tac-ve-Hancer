@@ -98,6 +98,10 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | 9 | **Saray günü** | Barış zamanı içeriği ve olay kartlarının doğal yeri | Şehir menüsünden dilekçeler ve yargılamalar; kararlar kişilik, sadakat, güvenlik ve altını etkiler |
 | 10 | **Rehine anlaşmaları** | Aile, diplomasi ve kaçırmanın kesişimi | Barış ya da ittifak teminatı. Esir değil "misafir" olarak tutulur (Harmony gerekmez). |
 
+**Oyun API taramasından adaylar** (`2026-10-19-oyun-api-taramasi.md`): düello, oyunun 3B sahneleri (doğum, düğün), evlat edinme ve
+varis (P2.8'e), casusluğu kendin yap (takip ve kılık değiştirme görevleri), zindan baskını, çete savaşı, manastıra çekilme, gizlilikle
+suikast. Alevli ok (War Sails) kullanıcının DLC dosyaları gelince.
+
 **Şimdilik almadıklarımız ve nedeni:**
 
 | Fikir | Neden şimdi değil |
