@@ -1,5 +1,7 @@
 # Taç ve Hançer — Mount & Blade II: Bannerlord modu
 
+[![Derleme ve testler](https://github.com/GunduzTolga/Bannerlord-Tac-ve-Hancer/actions/workflows/build.yml/badge.svg)](https://github.com/GunduzTolga/Bannerlord-Tac-ve-Hancer/actions/workflows/build.yml)
+
 Tek oyunculu kampanya için "her şeyi içeren" mod:
 hileler, editörler, kurallar ve CK3 tarzı **entrika sistemi**
 (tasarım: `docs/superpowers/specs/2026-10-19-entrika-design.md`).

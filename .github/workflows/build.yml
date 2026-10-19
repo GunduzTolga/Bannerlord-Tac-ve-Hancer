@@ -4,6 +4,7 @@ name: Derleme ve testler
 on:
   push:
   pull_request:
+  workflow_dispatch:  # Actions sekmesinden elle de çalıştırılabilsin
 
 jobs:
   build:
