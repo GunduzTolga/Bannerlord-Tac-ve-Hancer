@@ -134,6 +134,18 @@ namespace CheatMenu.UI.ViewModels
             Refresh(false);
         }
 
+        /// <summary>Ansiklopediden: kişinin dosyası (kind null) ya da onu hedef alan yeni entrika.</summary>
+        public void FocusOn(Hero hero, SchemeKind? kind)
+        {
+            if (kind != null)
+            {
+                StartSchemeOn(kind.Value, hero);
+                return;
+            }
+            People.Select(hero);
+            SelectTab(TabPeople);
+        }
+
         public void Refresh(bool rebuildNew = true)
         {
             _dirty = false;

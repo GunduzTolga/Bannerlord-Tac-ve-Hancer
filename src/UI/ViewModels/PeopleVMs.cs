@@ -44,6 +44,13 @@ namespace CheatMenu.UI.ViewModels
             Refresh(SchemeEngine.State);
         }
 
+        /// <summary>Kişi listede (dosyası açılabilir) mi: Refresh'teki ölçütün aynısı (rapor, sır, geçerli koz ya da eşin).</summary>
+        public static bool IsListed(IntrigueState state, Hero hero, int today) =>
+            hero != null && (hero == Courtships.Spouse
+                || state.Reports.Any(r => r.TargetId == hero.StringId)
+                || state.Secrets.Any(s => s.TargetId == hero.StringId)
+                || state.Hooks.Any(h => h.TargetId == hero.StringId && h.Until > today));
+
         public void Refresh(IntrigueState state)
         {
             int today = SchemeFactors.Today;
