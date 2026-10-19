@@ -1,0 +1,5 @@
+# Taç ve Hançer'in içine paketlenen modlar, yükleme sırasıyla. Her satır third_party altındaki bir klasör:
+# modun kendi klasörünün (SubModule.xml'in durduğu yer) olduğu gibi kopyası. Bkz. BENIOKU.md.
+Bannerlord.Diplomacy
+HairAddons
+WomeninCalradia

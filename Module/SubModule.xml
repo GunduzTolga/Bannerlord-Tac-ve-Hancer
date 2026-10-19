@@ -33,6 +33,16 @@
 	<Xmls>
 	</Xmls>
 	<SubModules>
+		<!-- İçine paketlenen modların uyum yamaları; onlardan önce başlamalı (bkz. src\Bundle\BundleShim.cs). -->
+		<SubModule>
+			<Name value="CheatMenu.Bundle"/>
+			<DLLName value="CheatMenu.dll"/>
+			<SubModuleClassType value="CheatMenu.Bundle.BundleShim"/>
+			<Tags>
+				<Tag key="DedicatedServerType" value="none"/>
+			</Tags>
+		</SubModule>
+		<!-- tools\bundle.ps1 paketlenen modların alt modüllerini buraya, asıl modülümüzün önüne ekler. -->
 		<SubModule>
 			<Name value="CheatMenu"/>
 			<DLLName value="CheatMenu.dll"/>

@@ -1,0 +1,55 @@
+using System;
+using System.IO;
+using HarmonyLib;
+using TaleWorlds.Library;
+using TaleWorlds.MountAndBlade;
+
+namespace CheatMenu.Bundle
+{
+    /// <summary>
+    /// Taç ve Hançer'in içine paketlenen modların (third_party\paketler.txt, tools\bundle.ps1) uyum yamaları.
+    /// SubModule.xml'de ilk alt modül: oyun önce bütün DLL'leri yükler, sonra OnSubModuleLoad'u listedeki sırayla çağırır;
+    /// yani paketlenen modların türleri burada yüklüdür ama onların OnSubModuleLoad'u henüz çalışmamıştır.
+    /// Paketlenen mod yoksa hiçbir şey yapmaz.
+    /// </summary>
+    public sealed class BundleShim : MBSubModuleBase
+    {
+        /// <summary>Paketlenen modların kök klasördeki dosyaları (ör. ayar dosyaları) Modules\CheatMenu\Bundled\&lt;mod&gt;\ altındadır.</summary>
+        internal static string BundledFile(string modId, string fileName)
+        {
+            string bin = Path.GetDirectoryName(typeof(BundleShim).Assembly.Location);
+            return Path.GetFullPath(Path.Combine(bin, "..", "..", "Bundled", modId, fileName));
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+            try
+            {
+                Apply();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] bundle shim failed: " + ex);
+            }
+        }
+
+        // Ayrı metot: Harmony'nin türleri yalnızca bu çağrıda yüklenir, eksikse istisna yukarıda yakalanır.
+        private static void Apply()
+        {
+            var harmony = new Harmony(ModInfo.Id + ".bundle");
+            // Women in Calradia ayarlarını sabit "Modules\WomeninCalradia\config.xml" yolundan okur; dosya yoksa açılışta çöker.
+            var wicSettings = AccessTools.Method("Women_In_Calradia.SettingsLoader:LoadSettings", new[] { typeof(string) });
+            if (wicSettings != null)
+                harmony.Patch(wicSettings, prefix: new HarmonyMethod(typeof(BundleShim), nameof(WomenInCalradiaConfig)));
+        }
+
+        private static void WomenInCalradiaConfig(ref string __0)
+        {
+            // Ayrı kurulmuşsa kendi dosyası kullanılır.
+            if (File.Exists(__0)) return;
+            string bundled = BundledFile("WomeninCalradia", "config.xml");
+            if (File.Exists(bundled)) __0 = bundled;
+        }
+    }
+}

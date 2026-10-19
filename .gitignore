@@ -6,3 +6,8 @@ obj/
 .vs/
 *.user
 *.suo
+
+# Taç ve Hançer'in içine paketlenen başka modların dosyaları: GitHub'a gönderilmez, yalnızca liste ve açıklama gönderilir.
+third_party/*
+!third_party/paketler.txt
+!third_party/BENIOKU.md
