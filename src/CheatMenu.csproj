@@ -1,52 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Taç ve Hançer (iç kimlik CheatMenu). Oyunun ve kütüphanelerin DLL'leri sürümü sabitlenmiş NuGet paketlerinden gelir:
+    derleme oyun klasörüne bağlı değildir (GitHub'da da derlenir). Oyun klasörü varsa derleme sonunda mod oraya kopyalanır.
+    Oyun klasörü farklıysa: dotnet build src\CheatMenu.csproj -c Release -p:GameFolder="D:\Oyunlar\Mount & Blade II Bannerlord"
+  -->
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Library</OutputType>
-    <RootNamespace>CheatMenu</RootNamespace>
-    <AssemblyName>CheatMenu</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFramework>net472</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <Optimize>true</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
+    <AssemblyName>CheatMenu</AssemblyName>
+    <RootNamespace>CheatMenu</RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
+    <!-- Oyun sürümü: referans DLL'leri bu sürümden gelir. Oyun güncellenince burası ve SubModule.xml güncellenir. -->
+    <GameVersion>1.4.8.119303</GameVersion>
     <GameFolder Condition=" '$(GameFolder)' == '' ">C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
-    <GameBin>$(GameFolder)\bin\Win64_Shipping_Client</GameBin>
     <ModuleOut>$(GameFolder)\Modules\CheatMenu</ModuleOut>
-    <SandBoxBin>$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client</SandBoxBin>
   </PropertyGroup>
+
+  <!-- Hepsi yalnızca derleme içindir (runtime'da oyun ve kurulu modüller sağlar), mod klasörüne kopyalanmaz. -->
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="SandBox"><HintPath>$(SandBoxBin)\SandBox.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="SandBox.View"><HintPath>$(SandBoxBin)\SandBox.View.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.ScreenSystem"><HintPath>$(GameBin)\TaleWorlds.ScreenSystem.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.CampaignSystem"><HintPath>$(GameBin)\TaleWorlds.CampaignSystem.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.CampaignSystem.ViewModelCollection"><HintPath>$(GameBin)\TaleWorlds.CampaignSystem.ViewModelCollection.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.Core"><HintPath>$(GameBin)\TaleWorlds.Core.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.DotNet"><HintPath>$(GameBin)\TaleWorlds.DotNet.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.Engine"><HintPath>$(GameBin)\TaleWorlds.Engine.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.InputSystem"><HintPath>$(GameBin)\TaleWorlds.InputSystem.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.Library"><HintPath>$(GameBin)\TaleWorlds.Library.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.Localization"><HintPath>$(GameBin)\TaleWorlds.Localization.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.ModuleManager"><HintPath>$(GameBin)\TaleWorlds.ModuleManager.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.MountAndBlade"><HintPath>$(GameBin)\TaleWorlds.MountAndBlade.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.ObjectSystem"><HintPath>$(GameBin)\TaleWorlds.ObjectSystem.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="TaleWorlds.SaveSystem"><HintPath>$(GameBin)\TaleWorlds.SaveSystem.dll</HintPath><Private>False</Private></Reference>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion)" PrivateAssets="all" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox" Version="$(GameVersion)" PrivateAssets="all" IncludeAssets="compile" />
+    <PackageReference Include="Lib.Harmony.Ref" Version="2.4.2" PrivateAssets="all" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.MCM" Version="5.13.1" PrivateAssets="all" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="bin\**;obj\**" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
   <Target Name="DeployToGame" AfterTargets="Build">
-    <MakeDir Directories="$(ModuleOut)\bin\Win64_Shipping_Client" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\Module\SubModule.xml" DestinationFolder="$(ModuleOut)" />
-    <Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModuleOut)\bin\Win64_Shipping_Client" />
-    <Message Importance="high" Text="CheatMenu -> $(ModuleOut)" />
+    <Message Condition="!Exists('$(GameFolder)\bin\Win64_Shipping_Client')" Importance="high"
+             Text="Oyun klasörü bulunamadı ($(GameFolder)); mod kopyalanmadı. -p:GameFolder=... ile belirt." />
+    <MakeDir Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')" Directories="$(ModuleOut)\bin\Win64_Shipping_Client" />
+    <Copy Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')"
+          SourceFiles="$(MSBuildProjectDirectory)\..\Module\SubModule.xml" DestinationFolder="$(ModuleOut)" />
+    <Copy Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')"
+          SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModuleOut)\bin\Win64_Shipping_Client" />
+    <Message Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client')" Importance="high" Text="Taç ve Hançer -> $(ModuleOut)" />
   </Target>
 </Project>

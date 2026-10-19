@@ -1,6 +1,6 @@
 # Taç ve Hançer — Mount & Blade II: Bannerlord modu
 
-Tek oyunculu kampanya için, oyunun kendi popup pencerelerini kullanan, bağımlılıksız (Harmony/MCM yok) "her şeyi içeren" mod:
+Tek oyunculu kampanya için "her şeyi içeren" mod:
 hileler, editörler, kurallar ve CK3 tarzı **entrika sistemi**
 (tasarım: `docs/superpowers/specs/2026-10-19-entrika-design.md`).
 
@@ -8,6 +8,22 @@ Eski adı CheatMenu. İç kimlik (`CheatMenu`) değişmedi: oyun klasörü, ayar
 
 - **Oyun sürümü:** Bannerlord v1.4.8 (War Sails v1.2.8 ile uyumlu)
 - **Kapsam:** yalnızca tek oyunculu Campaign / Sandbox. Multiplayer ve Custom Battle'da hiçbir şey yapmaz.
+
+## Kurulum
+
+Önce şu dört modu kur (Nexus Mods ya da Steam Workshop; ikisi de ücretsiz, popüler modların çoğu bunları kullanır):
+
+| Mod | Nexus | Gereken en düşük sürüm |
+|---|---|---|
+| Harmony | Bannerlord.Harmony | 2.2.2 |
+| ButterLib | Bannerlord.ButterLib | 2.11.1 (1.4.8 için 2.12.0 önerilir) |
+| UIExtenderEx | Bannerlord.UIExtenderEx | 2.13.3 (3.0.3 önerilir) |
+| Mod Configuration Menu v5 (MCM) | Bannerlord.MBOptionScreen | 5.13.1 |
+
+Launcher → Mods sırası: **Harmony → ButterLib → UIExtenderEx → MCM → (oyunun kendi modülleri) → Taç ve Hançer**.
+Launcher eksik ya da yanlış sırada olanı uyarı olarak gösterir. Bir bağımlılık başlatılamazsa mod yine açılır ama ana menüde kırmızı bir uyarı çıkar.
+
+Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar Insert → Kurallar'da da var; ikisi birbirini günceller.
 
 ## Kullanım
 
@@ -66,22 +82,29 @@ Mod kaldırılsa bile kayıtlar açılır. Oyunun konsol hilelerini çağırmaz 
 
 ## Derleme
 
-Gerekenler: Visual Studio 2026 (MSBuild) ve .NET Framework 4.8.1 hedefleme paketi. Ayrıca .NET SDK gerekmez.
+Gerekenler: **.NET SDK 8 ya da üstü** (ücretsiz: `winget install Microsoft.DotNet.SDK.8` ya da Visual Studio Installer →
+".NET masaüstü geliştirme"). İlk derlemede internet gerekir: oyunun referans DLL'leri ve kütüphaneler, sürümü sabitlenmiş
+NuGet paketleri olarak bir kez iner. Derleme için oyunun kurulu olması gerekmez; kuruluysa mod oraya kopyalanır.
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
 Betik önce testleri (`tests/CheatMenu.Tests`) derleyip çalıştırır, sonra modu derler ve
-`<oyun klasörü>\Modules\CheatMenu` içine kopyalar. Oyun klasörü farklıysa `-p:GameFolder=...` ile
-`src/CheatMenu.csproj` derlenebilir. Derlerken oyun kapalı olmalı (DLL kilitlenir).
+`<oyun klasörü>\Modules\CheatMenu` içine kopyalar. Oyun klasörü farklıysa:
+`.\build.ps1 -p:GameFolder="D:\Oyunlar\Mount & Blade II Bannerlord"`. Derlerken oyun kapalı olmalı (DLL kilitlenir).
+
+GitHub her gönderimde modu oyunsuz derler ve testleri çalıştırır (Actions sekmesi, "Derleme ve testler").
 
 Ardından Launcher → Mods → **Taç ve Hançer**'i işaretle.
 
 ## Proje yapısı
 
-- `src/` — mod kodu (`Cheats/` eylemler ve oyun modelleri, `Intrigue/` entrika sistemi, `Menu/` popup menüleri)
+- `src/` — mod kodu (`Cheats/` eylemler ve oyun modelleri, `Intrigue/` entrika sistemi, `Menu/` popup menüleri,
+  `Mcm/` MCM ayar ekranı, `Patches/` Harmony yamaları)
 - `tests/` — oyunsuz çalışan birim testleri (sayı/ad doğrulama, ayar dosyası, entrika kayıt biçimi)
 - `Module/SubModule.xml` — mod manifesti
-- `docs/superpowers/` — her fazın tasarım (specs) ve uygulama (plans) belgeleri
+- `docs/superpowers/` — her fazın tasarım (specs) ve uygulama (plans) belgeleri; yol haritası: `specs/2026-10-19-yol-haritasi.md`
+- `docs/gorseller/` — olay kartı görsellerinin listesi ve prompt'ları
+- `.github/workflows/` — otomatik derleme ve test
 - `reports/`, `research_notes/` — Bannerlord eksiklikleri ve mod fırsatları araştırması

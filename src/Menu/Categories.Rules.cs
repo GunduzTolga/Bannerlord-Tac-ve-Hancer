@@ -36,7 +36,8 @@ namespace CheatMenu.Menu
                     SchemeMath.AiSettingName),
                 MenuEntry.Toggle("Yapay zekâ senin kendine de suikast kurabilsin", () => Rules.Settings.PlayerCanBeTargeted,
                     v => Rules.Change(s => s.PlayerCanBeTargeted = v, null)),
-            }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. "
+            }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. Aynı ayarlar açıklamalarıyla "
+                + "MCM'de de var: Esc > Mod Seçenekleri > Taç ve Hançer. "
                 + "Parti sayısı sınırı = klanının aynı anda kurabileceği parti sayısı (kaldırma açıkken ekleme yok sayılır).");
         }
 

@@ -6,10 +6,14 @@ namespace CheatMenu
     /// <summary>
     /// Ayarları Belgeler\Mount and Blade II Bannerlord\Configs\CheatMenu.txt dosyasında tutar.
     /// Kayıt (save) dosyalarına hiçbir şey yazmaz; dosya okunamazsa varsayılanlarla devam eder.
+    /// Çalışma zamanındaki tek kaynak budur; MCM ekranı (Mcm.TacVeHancerSettings) buna ayna tutar.
     /// </summary>
     public static class SettingsStore
     {
         private static ModSettings _current;
+
+        /// <summary>Her başarılı kayıttan sonra: MCM ekranının değerleri güncellensin.</summary>
+        public static event Action Saved;
 
         public static ModSettings Current => _current ?? (_current = Load());
 
@@ -24,6 +28,7 @@ namespace CheatMenu
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(FilePath));
                 File.WriteAllText(FilePath, Current.Format());
+                Saved?.Invoke();
                 return true;
             }
             catch (Exception ex)

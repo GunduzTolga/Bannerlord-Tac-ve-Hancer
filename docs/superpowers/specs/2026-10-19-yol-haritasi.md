@@ -1,6 +1,6 @@
 # Taç ve Hançer — Yol Haritası (profesyonel sürüm)
 
-**Tarih:** 2026-10-19 · **Durum:** Öneri. Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
+**Tarih:** 2026-10-19 · **Durum:** Onaylandı; **P0 kodlandı** (oyunda test bekliyor). Kullanıcı yönlendirmesi: "basite kaçma, profesyonel olsun. Harmony, MCM gibi ne gerekiyorsa kurarız.
 Resim ve video eklenebilir. Ama özellikler mantıklı olsun, saçma özellik olmasın."
 **Girdiler:**
 - `research_notes/nexus_mod_fikirleri.md` (Nexus araştırması)

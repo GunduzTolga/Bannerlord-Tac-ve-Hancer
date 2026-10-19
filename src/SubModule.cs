@@ -1,6 +1,10 @@
 using CheatMenu.Cheats;
 using CheatMenu.Cheats.Models;
+using System;
+using System.Collections.Generic;
 using CheatMenu.Intrigue;
+using CheatMenu.Mcm;
+using CheatMenu.Patches;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
@@ -16,6 +20,32 @@ namespace CheatMenu
         private const InputKey MenuKey = InputKey.Insert;
 
         private static bool _loadMessageShown;
+        private static readonly List<string> _initErrors = new List<string>();
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+            // Lambda: bağımlılığın türleri bu metot derlenirken değil, try içindeki çağrıda yüklensin.
+            SafeInit("Harmony", () => HarmonyPatches.Apply());
+            SafeInit("MCM", () => TacVeHancerSettings.Initialize());
+        }
+
+        /// <summary>
+        /// Bağımlılık (Harmony/MCM) eksik ya da uyumsuzsa mod yine yüklensin: hata günlüğe yazılır, ilk ekranda bildirilir.
+        /// Ayrı metot: bağımlılığın türleri yalnızca bu çağrı çalışırken yüklenir, eksikse istisna burada yakalanır.
+        /// </summary>
+        private static void SafeInit(string what, Action init)
+        {
+            try
+            {
+                init();
+            }
+            catch (Exception ex)
+            {
+                _initErrors.Add(what);
+                Debug.Print("[CheatMenu] " + what + " init failed: " + ex);
+            }
+        }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
@@ -23,6 +53,10 @@ namespace CheatMenu
             if (_loadMessageShown) return;
             _loadMessageShown = true;
             InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] yüklendi - kampanyada Insert ile aç"));
+            if (_initErrors.Count > 0)
+                InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] başlatılamayan bağımlılık: "
+                    + string.Join(", ", _initErrors) + ". Launcher'da Harmony, ButterLib, UIExtenderEx ve MCM'in kurulu ve bu modun üstünde olduğundan emin ol.",
+                    Color.FromUint(0xFFFF6B6B)));
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
@@ -38,7 +72,11 @@ namespace CheatMenu
         public override void OnGameLoaded(Game game, object initializerObject)
         {
             base.OnGameLoaded(game, initializerObject);
-            if (game.GameType is Campaign) CleanSaveGuard.OnGameLoaded();
+            if (game.GameType is Campaign)
+            {
+                CleanSaveGuard.OnGameLoaded();
+                HarmonyPatches.ReportFailures();
+            }
         }
 
         public override void OnNewGameCreated(Game game, object initializerObject)

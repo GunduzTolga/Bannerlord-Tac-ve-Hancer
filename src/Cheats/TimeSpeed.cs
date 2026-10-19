@@ -23,6 +23,9 @@ namespace CheatMenu.Cheats
             else MenuUI.Error("İleri sarma hızı " + Current + "x oldu ama ayar dosyasına yazılamadı");
         }
 
+        /// <summary>Hız başka yerden (MCM) değişti: varsayılana dönülse bile bir kez yeniden uygulansın.</summary>
+        public static void MarkChanged() => _resetPending = true;
+
         public static void Tick()
         {
             Campaign campaign = Campaign.Current;

@@ -10,6 +10,14 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 
 ## 1. Oyunda test et (bilgisayarda, yedekli bir kayıtta)
 
+### Önce: kurulum ve derleme (P0 altyapısı — yeni)
+- [ ] **.NET SDK 8+** kurulu: PowerShell'de `dotnet --version` (yoksa `winget install Microsoft.DotNet.SDK.8`)
+- [ ] Nexus/Workshop'tan **Harmony, ButterLib, UIExtenderEx, MCM** kurulu; Launcher'da sıra Harmony → ButterLib → UIExtenderEx → MCM → … → Taç ve Hançer
+- [ ] `build.ps1` çalışıyor (ilk seferde NuGet paketleri iner), testler geçiyor, mod oyun klasörüne kopyalanıyor
+- [ ] Ana menüde kırmızı "başlatılamayan bağımlılık" uyarısı **yok**
+- [ ] **Esc → Mod Seçenekleri → Taç ve Hançer** açılıyor: Kurallar, Entrika, Harita grupları; eski ayarların (CheatMenu.txt) değerleri gelmiş
+- [ ] MCM'de bir ayarı değiştir → Insert → Kurallar'da da değişmiş; Kurallar'da değiştir → MCM'de de değişmiş
+
 ### Entrika E0 — yeni ad, menü düzeni, kayıt testi (önemli: E1 buna dayanıyor)
 - [ ] Launcher'da mod **Taç ve Hançer** adıyla görünüyor, Türkçe harfler düzgün
 - [ ] Insert → ana menü: Entrika, Hileler, Editörler, Klan & krallık, Bilgi, Kurallar; alt menülerde **Geri** doğru gruba dönüyor

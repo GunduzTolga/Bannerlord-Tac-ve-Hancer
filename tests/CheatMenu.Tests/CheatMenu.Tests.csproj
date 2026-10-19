@@ -1,26 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Oyunsuz birim testleri: yalnızca saf dosyalar (TaleWorlds referansı yok) derlenir.
+    net472: Windows'ta build.ps1 çalıştırır. net8.0: GitHub'daki otomatik derleme (Linux) çalıştırır.
+  -->
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Exe</OutputType>
+    <TargetFrameworks>net472;net8.0</TargetFrameworks>
+    <LangVersion>9.0</LangVersion>
     <RootNamespace>CheatMenu.Tests</RootNamespace>
     <AssemblyName>CheatMenu.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
-    <LangVersion>9.0</LangVersion>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="..\..\src\AmountParser.cs"><Link>AmountParser.cs</Link></Compile>
-    <Compile Include="..\..\src\NameRules.cs"><Link>NameRules.cs</Link></Compile>
-    <Compile Include="..\..\src\ModSettings.cs"><Link>ModSettings.cs</Link></Compile>
-    <Compile Include="..\..\src\Intrigue\Core\*.cs"><Link>Intrigue\%(Filename)%(Extension)</Link></Compile>
+    <Compile Include="..\..\src\AmountParser.cs" Link="AmountParser.cs" />
+    <Compile Include="..\..\src\NameRules.cs" Link="NameRules.cs" />
+    <Compile Include="..\..\src\ModSettings.cs" Link="ModSettings.cs" />
+    <Compile Include="..\..\src\Intrigue\Core\*.cs" Link="Intrigue\%(Filename)%(Extension)" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
