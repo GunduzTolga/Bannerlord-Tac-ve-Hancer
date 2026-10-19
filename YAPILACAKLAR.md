@@ -54,6 +54,13 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.8 — Varis ve meşrulaştırma (yeni)
+- [ ] Sevgilinden (annesi evli) doğan çocuk: Editörler > Aile editörü > [Ben] > "Gayrimeşru çocuğunu meşrulaştır" → bedel (etki ya da altın)
+- [ ] Onay → çocuk klan ekranında; "Meşrulaştırma" kartı; resmî babası ve annesiyle ilişkiler düştü; sır "ifşa edildi"
+- [ ] Kişiler'de annesinin dosyasında da "Çocuğunu meşrulaştır" var
+- [ ] **Önce yedek kayıt al:** "Klanı devret" → varis listesi (oyunun sırasıyla) → seç → oyuna varis olarak devam ediyorsun; eski karakter emekli
+- [ ] Ordudayken / savaşta / esirken "Klanı devret" kapalı
+
 ### Düello (yeni)
 - [ ] İlişkin -10 ya da kötü bir lordla aynı şehirde: Kişiler > dosyası > "Düelloya davet et (onur)..." → kart (kabul %, sonuçlar)
 - [ ] Kabul ederse şehrin arenası açılıyor, ikiniz dövüşüyorsunuz; kimse ölmüyor (ölürse ya da sahne yanlış açılırsa ekran görüntüsü)

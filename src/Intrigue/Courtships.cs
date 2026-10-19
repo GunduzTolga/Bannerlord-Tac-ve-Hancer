@@ -370,7 +370,8 @@ namespace CheatMenu.Intrigue
                         TargetId = holder.StringId, Kind = SecretKind.Bastard, Day = SchemeFactors.Today,
                         OtherId = (holder == mother ? father : mother).StringId, ChildId = child.StringId,
                     });
-                    secretLine = "\n\nResmî babası " + official.Name + "; gerçeği bilenler az. Bu artık " + holder.Name + " için bir sır (Kişiler).";
+                    secretLine = "\n\nResmî babası " + official.Name + "; gerçeği bilenler az. Bu artık " + holder.Name + " için bir sır (Kişiler)."
+                        + (father == Hero.MainHero ? " İstersen sonra meşrulaştırıp klanına alabilirsin (Editörler > Aile editörü ya da " + mother.Name + " dosyası)." : "");
                 }
                 else secretLine = "\n\nResmî babası " + official.Name + ".";
             }
