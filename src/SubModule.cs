@@ -27,6 +27,7 @@ namespace CheatMenu
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
+            CrashLog.Install();
             // Lambda: bağımlılığın türleri bu metot derlenirken değil, try içindeki çağrıda yüklensin.
             SafeInit("Harmony", () => HarmonyPatches.Apply());
             SafeInit("MCM", () => TacVeHancerSettings.Initialize());
