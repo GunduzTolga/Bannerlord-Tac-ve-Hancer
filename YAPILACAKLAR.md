@@ -54,6 +54,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### Gece evi işletmesi (yeni, varsayılan kapalı)
+- [ ] MCM > Entrika > **Gece evi işletmesi** aç
+- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Gece evi aç (4.000, 2 gönüllü çalışan)" → açıldı; menü açıklamasında gece evi satırı
+- [ ] "Çalışan al" sınırı ağ seviyesine göre (4/6/8); pay seçenekleri (adil/standart/düşük) ayrılma oranlarıyla yazıyor
+- [ ] Bir hafta sonra "Gece evlerinden haftalık gelir" mesajı; altın arttı; kronikte kayıt
+- [ ] Bir süre sonra "Gece evinde duyulanlar: Lord" kartı; Kişiler'de o lordun güncel raporu (bazen sır)
+- [ ] Düşük payda birkaç hafta: "ayrılanlar" kartı, çalışan sayısı düştü
+- [ ] Entrika ekranı > Ağlar: şehrin kartında gece evi satırı
+- [ ] Ağı dağıt → gece evi de kapandı
+- [ ] Ayarı kapat → menüde gece evi seçenekleri yok, haftalık gelir gelmiyor
+- [ ] Kaydet → yükle → ev, çalışan sayısı ve pay aynı
+
 ### P2.5 — Ağ ifşasından diplomatik kriz (yeni)
 - [ ] Hile ya da sabırla barışta olduğun bir krallığın şehrinde gölge ağı kur; çökertilince tek kart: "Diplomatik kriz: Krallık"
       (ne oldu, suç puanı, gerilim, üç seçenek; resim: elçi)

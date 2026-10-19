@@ -91,6 +91,11 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool RomanceSecrets { get; set; } = true;
 
+        [SettingPropertyBool("Gece evi işletmesi (yetişkin teması)", Order = 4, RequireRestart = false,
+            HintText = "Gölge ağın olan şehirde gece evi açılır: isimsiz, gönüllü ve ücretli çalışanlar; gelir ve müşterilerden duyulan bilgiler. Yalnızca metin. Kapalıyken açılmaz ve var olanlar çalışmaz.")]
+        [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
+        public bool NightHouses { get; set; }
+
         // ---- Harita ----
 
         [SettingPropertyDropdown("İleri sarma hızı", Order = 0, RequireRestart = false,
@@ -170,6 +175,7 @@ namespace CheatMenu.Mcm
             AiIntrigue.SelectedIndex = SchemeMath.Clamp(s.AiIntrigue, 0, AiNames.Length - 1);
             PlayerCanBeTargeted = s.PlayerCanBeTargeted;
             RomanceSecrets = s.RomanceSecrets;
+            NightHouses = s.NightHouses;
             FastForward.SelectedIndex = IndexOf(ModSettings.AllowedSpeeds, s.FastForwardSpeed);
             ScreenHotkey.SelectedIndex = s.ScreenHotkey;
             MapButtonPosition.SelectedIndex = s.MapButtonPosition;
@@ -189,6 +195,7 @@ namespace CheatMenu.Mcm
             s.SetAiIntrigue(AiIntrigue.SelectedIndex);
             s.PlayerCanBeTargeted = PlayerCanBeTargeted;
             s.RomanceSecrets = RomanceSecrets;
+            s.NightHouses = NightHouses;
             s.SetFastForwardSpeed(At(ModSettings.AllowedSpeeds, FastForward.SelectedIndex));
             s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
             s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);

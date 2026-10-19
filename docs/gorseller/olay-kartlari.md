@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **31 olay kartı resmi**. Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **32 olay kartı resmi**. Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -79,6 +79,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 29 | `sonuc_fisilti.png` | Aldatılan eşe söylendi (P2.4) | |
 | 30 | `sonuc_diplomatik_kriz.png` | Yabancı krallıkta ağın çökertildi, elçi hesap soruyor (P2.5) | |
 | 31 | `sonuc_savas_meclisi.png` | Casus skandalları yüzünden savaş meclisi toplandı (P2.5) | |
+| 32 | `yer_gece_evi.png` | Gece evi: müşterilerden duyulanlar, ayrılanlar, baskın, dedikodu | |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -214,6 +215,12 @@ A stern foreign envoy in rich embroidered robes standing before a seated lord in
 
 ```
 A ruler standing at the head of a long table in a torch-lit great hall, leaning over a large painted map of Calradia with carved wooden markers, armored nobles around the table arguing and raising their fists, a war banner behind the throne, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**32 · `yer_gece_evi.png`** — gece evi (dış cephe; içerisi gösterilmez)
+
+```
+A two-story timber-framed house on a narrow medieval town street at night, warm lantern light behind shuttered upper windows, a red cloth lantern hanging above the door, a cloaked visitor slipping inside while a stern older woman in a plain dress and shawl counts coins at a small table by the entrance, everyone fully clothed, discreet and secretive mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
