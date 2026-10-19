@@ -51,6 +51,7 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
+                MenuEntry.Submenu("Divan: hazinedar" + (Treasury.Treasurer(state) is Hero t ? " (" + t.Name + ")" : " (boş)") + "...", ShowTreasury),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -67,6 +68,40 @@ namespace CheatMenu.Menu
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")
                 + "Zorluk: " + SchemeMath.DifficultyName(SettingsStore.Current.IntrigueDifficulty) + " (Kurallar'dan değişir). "
                 + "Kayıt testi işareti: " + (state.SaveTestMarker ?? "yok"));
+        }
+
+        // ---- Divan: hazinedar (P2.12) ----
+
+        private static void ShowTreasury()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero treasurer = Treasury.Treasurer(state);
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu(treasurer == null ? "Hazinedar ata..." : "Hazinedarı değiştir...", () => Picker.Pick("Hazinedar seç",
+                    Treasury.Candidates(state).OrderByDescending(Treasury.Trade).ToList(), Treasury.Label,
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Hazinedar", () => Treasury.Assign(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowTreasury);
+                    }, ShowTreasury, HeroPortrait, sort: false)),
+            };
+            if (treasurer != null)
+            {
+                if (state.EmbezzleFound) entries.Add(MenuEntry.Submenu("Zimmetin hesabını sor...", () => UI.EventCards.ShowReckoning(null)));
+                foreach (TaleWorlds.CampaignSystem.Settlements.Workshops.Workshop workshop in Treasury.Workshops())
+                {
+                    var chosen = workshop;
+                    entries.Add(MenuEntry.Submenu("Atölye: " + workshop.Settlement.Name + " " + workshop.WorkshopType.Name + " (günde "
+                        + Treasury.Signed(Treasury.WorkshopIncome(workshop)) + ")...", () => UI.EventCards.ShowWorkshopChange(chosen, null)));
+                }
+                entries.Add(MenuEntry.Simple("Hazinedarı görevden al", () => Treasury.Dismiss(SchemeEngine.State)));
+            }
+            ShowCategory("Divan: hazinedar", entries, ShowTreasury,
+                treasurer == null
+                    ? "Klanından Trade'i yüksek birini hazinedar yap: gelirler, kervan seferleri, atölye önerileri ve ticaret fırsatları. Ayrıntılı rapor Entrika ekranı > Divan sekmesinde."
+                    : Treasury.ReportText(state) + "\n\nAyrıntılı rapor (kervan defteri, kervan kurmaya uygun şehirler): Entrika ekranı > Divan.",
+                ShowIntrigue);
         }
 
         // ---- Casus başı ----

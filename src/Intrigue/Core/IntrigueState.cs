@@ -308,6 +308,15 @@ namespace CheatMenu.Intrigue.Core
         public Dictionary<string, int> DuelUntil = new Dictionary<string, int>();
         /// <summary>Kendin takip et (P2.11) → aynı kişiyi yeniden takip edebileceğin gün.</summary>
         public Dictionary<string, int> TailUntil = new Dictionary<string, int>();
+
+        // P2.12: divan, hazinedar
+        public string TreasurerId;
+        public List<CaravanBook> CaravanBooks = new List<CaravanBook>();
+        public List<CaravanLeg> CaravanLegs = new List<CaravanLeg>();
+        /// <summary>Hazinedarın şimdiye kadar zimmete geçirdiği (ortaya çıkana ya da hesabı sorulana kadar).</summary>
+        public int Embezzled;
+        /// <summary>Zimmet ortaya çıktı; hesabı sorulmayı bekliyor.</summary>
+        public bool EmbezzleFound;
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
@@ -383,7 +392,8 @@ namespace CheatMenu.Intrigue.Core
                 new TextRecord("version").Add("v", I(CurrentVersion)),
                 new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
                     .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)).Add("nextcourt", I(NextCourtshipId))
-                    .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId),
+                    .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId)
+                    .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
 
@@ -451,6 +461,12 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in NoChildren) records.Add(new TextRecord("nochild").Add("hero", id));
             foreach (KeyValuePair<string, int> p in DuelUntil) records.Add(new TextRecord("duelcd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in TailUntil) records.Add(new TextRecord("tailcd").Add("hero", p.Key).Add("until", I(p.Value)));
+            foreach (CaravanBook b in CaravanBooks)
+                records.Add(new TextRecord("caravanbook").Add("party", b.PartyId).Add("town", b.TownId).Add("worth", I(b.Worth))
+                    .Add("day", I(b.Day)).Add("sent", I(b.SentHome)));
+            foreach (CaravanLeg l in CaravanLegs)
+                records.Add(new TextRecord("caravanleg").Add("party", l.PartyId).Add("from", l.FromId).Add("to", l.ToId)
+                    .Add("profit", I(l.Profit)).Add("days", I(l.Days)).Add("day", I(l.Day)));
             foreach (HostageDeal h in Hostages)
                 records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
                     .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
@@ -489,6 +505,9 @@ namespace CheatMenu.Intrigue.Core
                         int mission = Int(r, "mission");
                         state.Mission = Enum.IsDefined(typeof(SpymasterMission), mission) ? (SpymasterMission)mission : SpymasterMission.None;
                         state.RumorTargetId = Empty(r.Get("rumor"));
+                        state.TreasurerId = Empty(r.Get("treasurer"));
+                        state.Embezzled = Math.Max(0, Int(r, "embezzled"));
+                        state.EmbezzleFound = Bool(r, "embezzlefound");
                         break;
                     case "savetest":
                         state.SaveTestMarker = r.Get("marker");
@@ -627,6 +646,21 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "tailcd":
                         if (Empty(r.Get("hero")) != null) state.TailUntil[r.Get("hero")] = Int(r, "until");
+                        break;
+                    case "caravanbook":
+                        if (Empty(r.Get("party")) == null || Empty(r.Get("town")) == null) break;
+                        state.CaravanBooks.Add(new CaravanBook
+                        {
+                            PartyId = r.Get("party"), TownId = r.Get("town"), Worth = Int(r, "worth"), Day = Int(r, "day"), SentHome = Int(r, "sent"),
+                        });
+                        break;
+                    case "caravanleg":
+                        if (Empty(r.Get("from")) == null || Empty(r.Get("to")) == null) break;
+                        state.CaravanLegs.Add(new CaravanLeg
+                        {
+                            PartyId = Empty(r.Get("party")), FromId = r.Get("from"), ToId = r.Get("to"), Profit = Int(r, "profit"),
+                            Days = Int(r, "days"), Day = Int(r, "day"),
+                        });
                         break;
                     case "nochild":
                         if (Empty(r.Get("hero")) != null) state.NoChildren.Add(r.Get("hero"));

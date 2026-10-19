@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Divan sekmesi (ViewModel: CouncilVM): üstte hazinedarın koltuğu, altında rapor listesi (TvhCouncilRow). -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+
+        <!-- Koltuk boş -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasNoTreasurer">
+          <Children>
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="220" MarginLeft="80" MarginRight="80" MarginTop="40" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="46" HorizontalAlignment="Center" MarginTop="290" Brush="Tvh.Button.Primary" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@AssignText" />
+              </Children>
+            </ButtonWidget>
+          </Children>
+        </Widget>
+
+        <!-- Koltukta biri var -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasTreasurer">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="150" Sprite="BlankWhiteSquare_9" Color="#3D3022FF">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="1" MarginRight="1" MarginTop="1" MarginBottom="1" Sprite="BlankWhiteSquare_9" Color="#211A14FF">
+                  <Children>
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="170" SuggestedHeight="128" MarginLeft="10" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+                      <Children>
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                          <Children>
+                            <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </Widget>
+                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="22" MarginLeft="196" MarginTop="10" Brush="Tvh.Text.Section" Text="@SeatHeader" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="196" MarginRight="250" MarginTop="32" Brush="Tvh.Text.Name" Text="@Name" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="196" MarginRight="250" MarginTop="64" Brush="Tvh.Text.Gold" Text="@SkillText" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="196" MarginRight="250" MarginTop="88" Brush="Tvh.Text.Small" Text="@AccuracyText" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="196" MarginRight="250" MarginTop="112" Brush="Tvh.Text.Muted" Text="@StatusText" />
+
+                    <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="220" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="14" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <Children>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="38" MarginBottom="8" Brush="Tvh.Button.Danger" Command.Click="ExecuteReckon" IsVisible="@IsEmbezzleFound" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ReckonText" />
+                          </Children>
+                        </ButtonWidget>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="38" MarginBottom="8" Brush="Tvh.Button" Command.Click="ExecuteAssign" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ChangeText" />
+                          </Children>
+                        </ButtonWidget>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="38" Brush="Tvh.Button.Danger" Command.Click="ExecuteDismiss" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@DismissText" />
+                          </Children>
+                        </ButtonWidget>
+                      </Children>
+                    </ListPanel>
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginTop="156" Brush="Tvh.Text.Gold" Text="@SummaryText" />
+
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="190">
+              <Children>
+                <ScrollablePanel Id="CouncilScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CouncilClip" InnerPanel="CouncilClip\CouncilList" VerticalScrollbar="..\CouncilBar">
+                  <Children>
+                    <Widget Id="CouncilClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="CouncilList" DataSource="{Rows}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <ItemTemplate>
+                            <TvhCouncilRow />
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <ScrollbarWidget Id="CouncilBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CouncilHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
+                  <Children>
+                    <Widget Id="CouncilHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
+                  </Children>
+                </ScrollbarWidget>
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -1,6 +1,6 @@
 # Görsel listesi: bütün resimler, dosya adları ve prompt'lar
 
-Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **43 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
+Modda üretilmesi gereken resimlerin **hepsi** bu dosyada: **45 olay kartı resmi**, her biri için iki sürüm daha (en sonda: "Sürümler"). Başka resim gerekmiyor. Entrika ekranı, harita
 düğmesi ve sekmeler oyunun kendi çizimlerini kullanıyor. Yeni bir özellik resim isterse buraya eklenir; birim testi koddaki her resim
 adının burada olduğunu denetler.
 
@@ -91,6 +91,8 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 41 | `sonuc_rehine.png` | Rehine anlaşması: gönderme, değişim, dönüş, bozulan barış (P2.10) | |
 | 42 | `olay_takip.png` | Kendin takip et: gündüz sahneleri ve takip raporu (P2.11) | ★ |
 | 43 | `olay_takip_gece.png` | Kendin takip et: gece sahneleri (P2.11) | ★ |
+| 44 | `sonuc_hazine.png` | Divan: hazinedarın atölye önerisi, uzaktan üretim emri (P2.12) | ★ |
+| 45 | `sonuc_zimmet.png` | Divan: hazinedarın zimmeti ortaya çıktı, hesap sor (P2.12) | |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -298,6 +300,18 @@ A hooded figure in a plain wool cloak following a richly dressed lord and two gu
 
 ```
 A cloaked figure pressed against a stone wall in the shadow of a narrow torch-lit alley at night, watching a noble and a lantern-bearing servant enter a tavern door further down the street, moonlight on wet cobblestones, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**44 · `sonuc_hazine.png`** — hazinedar (divan)
+
+```
+A treasurer in a fur-trimmed robe at a heavy oak table in a candlelit counting room, open ledgers, a balance scale, stacks of silver coins and small sample sacks of wool, iron ore and grain, a lord standing beside him reading a report, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**45 · `sonuc_zimmet.png`** — hazinedarın zimmeti
+
+```
+A spymaster laying two different ledgers side by side before a stern lord in a dim treasury vault, an open strongbox half empty, the guilty treasurer standing pale by the wall under guard, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -800,4 +814,24 @@ A Sturgian spy crouching on a snowy wooden rooftop at night, watching through a 
 
 ```
 An Imperial agent listening at the closed back-room door of a candlelit inn at night, the silhouette of a hooded stranger visible through the gap, the innkeeper pointedly looking away, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_hazine_2.png`** · `sonuc_hazine_3.png` — hazinedar (divan)
+
+```
+A merchant caravan of camels and mules being unloaded in a busy Aserai caravanserai courtyard while a clerk with a wax tablet counts the bales, a treasurer watching from a shaded arcade, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Vlandian workshop foreman reading a sealed letter in a dye works, vats of colored cloth behind him, workers pausing to listen, a courier with a muddy cloak waiting at the door, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_zimmet_2.png`** · `sonuc_zimmet_3.png` — hazinedarın zimmeti
+
+```
+A Sturgian treasurer caught at night in a wooden storehouse slipping silver coins into his own purse by lantern light, a hooded figure watching unseen from the doorway, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A treasurer kneeling and holding out a heavy purse to a seated lord in a castle hall, courtiers watching in silence, an open ledger on the floor between them, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

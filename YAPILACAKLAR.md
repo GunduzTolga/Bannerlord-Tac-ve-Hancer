@@ -54,6 +54,22 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.12 — Divan: hazinedar (yeni)
+- [ ] Entrika ekranında sekmeler sığıyor mu (9 sekme: Süren ... Divan ... Kronik)? Taşan yazı varsa ekran görüntüsü at
+- [ ] Divan sekmesi → "Hazinedar ata" → liste (Trade, Hesapçı, tahmin payı) → seç; koltuk kartı: portre, Trade, tahmin payı
+- [ ] Üstte günlük gelir: atölyeler ve kervanlar; Klan ekranındaki gelirle aynı mı?
+- [ ] ATÖLYELER: her atölye, günlük gelir, hazinedarın önerisi; "Üretimi değiştir..." → kart → bir tür seç → altın düştü, atölye değişti
+      (şehre gitmeden); birkaç gün sonra gelir tahmine yakın mı?
+- [ ] KERVANLAR: nerede / nereye gidiyor, günlük gelir; "Haritada izle" çalışıyor
+- [ ] Birkaç gün geçince SEFER DEFTERİ doluyor: "Ortysia > Sargot · 2 sefer · ort. +310" (kazançlar makul mü?)
+- [ ] TİCARET FIRSATLARI: "Demir: Varcheg'de al ~32, Sargot'ta sat ~55 (+%72)"; birine git ve fiyatlara bak: Trade'i yüksek hazinedarda
+      yakın, düşükte sapmalı mı?
+- [ ] KERVAN KURMAYA UYGUN ŞEHİRLER: üç şehir; "Haritada göster"
+- [ ] Onuru düşük birini hazinedar yap, casus başı da olsun → haftalar içinde "Hazinede açık" kartı → Divan > "Hesap sor..." üç seçenek
+- [ ] Hazinedarı casus başı yapmaya çalış → "zaten hazinedarın" hatası; tersi de
+- [ ] Insert > Entrika > "Divan: hazinedar": rapor metni, atölye değiştirme, görevden alma
+- [ ] Kaydet → yükle: hazinedar, defter, zimmet duruyor
+
 ### P2.11 — Casusluğu kendin yap (yeni)
 - [ ] Bir lordun bulunduğu şehre gir → şehir menüsünde "Birini gizlice takip et" → lord listesi → seç
 - [ ] Üç kart ("TAKİP 1/3"...): sahne metni, şüphe ve ipucu satırı; düğmelerde şüphe aralığı, ipucu, beceri, varsa bedel

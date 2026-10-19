@@ -17,13 +17,14 @@ namespace CheatMenu.UI.ViewModels
     /// </summary>
     public sealed class IntrigueScreenVM : TvhViewModel
     {
-        public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabCourt = 4, TabNetworks = 5, TabPlots = 6, TabLog = 7;
+        public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabCourt = 4, TabCouncil = 5, TabNetworks = 6, TabPlots = 7,
+            TabLog = 8;
 
         private readonly Action _close;
         private int _tab;
         private bool _dirty;
         private string _subtitle = "", _status = "";
-        private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isCourtTab, _isNetworksTab, _isPlotsTab, _isLogTab;
+        private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isCourtTab, _isCouncilTab, _isNetworksTab, _isPlotsTab, _isLogTab;
         private bool _hasRomances;
         private bool _hasNothingRunning, _hasLetters, _hasNoPrisoners, _hasNoNetworks, _hasNoPlots, _hasNoLog;
 
@@ -32,12 +33,13 @@ namespace CheatMenu.UI.ViewModels
             _close = close;
             Spymaster = new SpymasterVM(MarkDirty);
             Tabs = new MBBindingList<TabVM>();
-            string[] names = { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Ağlar", "Sana karşı", "Kronik" };
+            string[] names = { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Divan", "Ağlar", "Sana karşı", "Kronik" };
             for (int i = 0; i < names.Length; i++) Tabs.Add(new TabVM(i, names[i], t => SelectTab(t.Index)));
             Schemes = new MBBindingList<SchemeItemVM>();
             Letters = new MBBindingList<LetterItemVM>();
             Romances = new MBBindingList<RomanceRowVM>();
             Court = new CourtVM(MarkDirty, StartSchemeOn);
+            Council = new CouncilVM(MarkDirty);
             NewScheme = new NewSchemeVM(() =>
             {
                 _tab = TabSchemes;
@@ -68,6 +70,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool IsPeopleTab { get => _isPeopleTab; set => Set(ref _isPeopleTab, value, nameof(IsPeopleTab)); }
         [DataSourceProperty] public bool IsPrisonersTab { get => _isPrisonersTab; set => Set(ref _isPrisonersTab, value, nameof(IsPrisonersTab)); }
         [DataSourceProperty] public bool IsCourtTab { get => _isCourtTab; set => Set(ref _isCourtTab, value, nameof(IsCourtTab)); }
+        [DataSourceProperty] public bool IsCouncilTab { get => _isCouncilTab; set => Set(ref _isCouncilTab, value, nameof(IsCouncilTab)); }
         [DataSourceProperty] public bool IsNetworksTab { get => _isNetworksTab; set => Set(ref _isNetworksTab, value, nameof(IsNetworksTab)); }
         [DataSourceProperty] public bool IsPlotsTab { get => _isPlotsTab; set => Set(ref _isPlotsTab, value, nameof(IsPlotsTab)); }
         [DataSourceProperty] public bool IsLogTab { get => _isLogTab; set => Set(ref _isLogTab, value, nameof(IsLogTab)); }
@@ -85,6 +88,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string SchemesEmptyText =>
             "Süren bir entrika ya da yolda bir haberci yok.\n\n\"Yeni entrika\" sekmesinden casusluk, şantaj, kaçırma ya da suikast başlatabilirsin.";
         [DataSourceProperty] public CourtVM Court { get; }
+        [DataSourceProperty] public CouncilVM Council { get; }
 
         // ---- Diğer sekmeler ----
 
@@ -155,6 +159,7 @@ namespace CheatMenu.UI.ViewModels
             IsPeopleTab = _tab == TabPeople;
             IsPrisonersTab = _tab == TabPrisoners;
             IsCourtTab = _tab == TabCourt;
+            IsCouncilTab = _tab == TabCouncil;
             IsNetworksTab = _tab == TabNetworks;
             IsPlotsTab = _tab == TabPlots;
             IsLogTab = _tab == TabLog;
@@ -179,6 +184,9 @@ namespace CheatMenu.UI.ViewModels
                     break;
                 case TabCourt:
                     Court.Refresh(state);
+                    break;
+                case TabCouncil:
+                    Council.Refresh(state);
                     break;
                 case TabNew:
                     NewScheme.Refresh(state, rebuildNew);
@@ -251,6 +259,7 @@ namespace CheatMenu.UI.ViewModels
             NewScheme.OnFinalize();
             People.OnFinalize();
             Court.OnFinalize();
+            Council.OnFinalize();
         }
     }
 }
