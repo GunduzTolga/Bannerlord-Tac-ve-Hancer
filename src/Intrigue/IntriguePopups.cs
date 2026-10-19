@@ -200,6 +200,11 @@ namespace CheatMenu.Intrigue
                 new IntrigueEvents.Option { Label = "Görmezden gel (sır elinde kalır)", Apply = () => SpouseLife.Ignore(state) },
                 new IntrigueEvents.Option
                 {
+                    Label = lover.Name + " ile düello (kabul %" + Duels.AcceptChance(state, lover) + ")", DisabledHint = Duels.Blocked(state, lover),
+                    Apply = () => { SpouseLife.Ignore(state); Duels.Challenge(state, lover); },
+                },
+                new IntrigueEvents.Option
+                {
                     Label = "Boşa (haklı: ailesi az kırılır)", DisabledHint = SpouseLife.DivorceBlocked(state),
                     Apply = () => { SpouseLife.Ignore(state); SpouseLife.Divorce(state); },
                 },

@@ -54,6 +54,16 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### Düello (yeni)
+- [ ] İlişkin -10 ya da kötü bir lordla aynı şehirde: Kişiler > dosyası > "Düelloya davet et (onur)..." → kart (kabul %, sonuçlar)
+- [ ] Kabul ederse şehrin arenası açılıyor, ikiniz dövüşüyorsunuz; kimse ölmüyor (ölürse ya da sahne yanlış açılırsa ekran görüntüsü)
+- [ ] Kazanınca/kaybedince haritada sonuç kartı: ün +10 / -5
+- [ ] Reddederse "Düello reddedildi" kartı, ün +5
+- [ ] Aynı şehirde değilken düğme kapalı ve hedefin nerede olduğunu yazıyor
+- [ ] Eşinin sevgilisi ortaya çıktıysa "Eşin seni aldatıyor" kartında "... ile düello"; kazanınca ilişki bitiyor
+- [ ] Kan davalı (yakınını öldürdüğün) biriyle: kazanınca kan davası kapanıyor
+- [ ] Husumet olmayan bir lordda düğme kapalı ("Aranızda bir husumet yok")
+
 ### P2.7 — Aile editörü (yeni)
 - [ ] Insert → Editörler → **Aile editörü**: önce sen, sonra klanın, sonra diğerleri; satırlarda yaş ve eş
 - [ ] Bekâr bir klan üyesi → "Evlendir..." → yalnızca uygun adaylar; seç → oyunun evlilik bildirimi, eş klana geldi

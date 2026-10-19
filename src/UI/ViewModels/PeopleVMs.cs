@@ -245,6 +245,8 @@ namespace CheatMenu.UI.ViewModels
             {
                 StartActions.Add(LordActions.Audience(state, hero, _changed));
                 foreach (ActionItemVM action in LordActions.Romance(state, hero, _changed)) StartActions.Add(action);
+                StartActions.Add(new ActionItemVM("Düelloya davet et (" + DuelRules.ReasonName(Duels.ReasonFor(state, hero)) + ")...",
+                    Duels.Blocked(state, hero), () => EventCards.ShowDuel(hero, _changed)));
                 StartActions.Add(new ActionItemVM("Haritada izle (konuşmaya git)", null, () =>
                 {
                     string missing = Intrigue.Court.Track(hero);
