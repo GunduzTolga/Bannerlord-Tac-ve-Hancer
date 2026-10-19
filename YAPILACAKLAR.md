@@ -12,10 +12,10 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 ## 1. Oyunda test et (bilgisayarda, yedekli bir kayıtta)
 
 ### Önce: kurulum ve derleme (P0 altyapısı — yeni)
-- [ ] Ya derle (**.NET SDK 8+** gerekir: `dotnet --version`, yoksa `winget install Microsoft.DotNet.SDK.8`) ya da **derlemeden kur**:
-      GitHub → Actions → son yeşil çalıştırma → **TacVeHancer** paketi → içindeki `CheatMenu` klasörünü `Modules`'e kopyala
-- [ ] Nexus/Workshop'tan **Harmony, ButterLib, UIExtenderEx, MCM** kurulu; Launcher'da sıra Harmony → ButterLib → UIExtenderEx → MCM → … → Taç ve Hançer
-- [ ] `build.ps1` çalışıyor (ilk seferde NuGet paketleri iner), testler geçiyor, mod oyun klasörüne kopyalanıyor
+- [x] **.NET SDK 8** kuruldu (8.0.426, 19 Ekim). Alternatif: GitHub → Actions → **TacVeHancer** paketi → `CheatMenu` klasörünü `Modules`'e kopyala
+- [x] Workshop'tan **Harmony 2.4.2, ButterLib 2.12.0, UIExtenderEx 3.0.3, MCM 5.12.3** kurulu ve Launcher'da işaretli
+      (sıra: Harmony → ButterLib → UIExtenderEx → MCM → … → Taç ve Hançer). MCM şartı 5.12.3'e indirildi; kullanılan API o sürümde var
+- [x] `build.ps1` çalışıyor: 417 test geçti, arayüz denetimi geçti (24 prefab), mod oyun klasörüne kopyalandı; 621 tip bağımlılıklarla yükleniyor
 - [ ] Ana menüde kırmızı "başlatılamayan bağımlılık" uyarısı **yok**
 - [ ] **Esc → Mod Seçenekleri → Taç ve Hançer** açılıyor: Kurallar, Entrika, Harita grupları; eski ayarların (CheatMenu.txt) değerleri gelmiş
 - [ ] MCM'de bir ayarı değiştir → Insert → Kurallar'da da değişmiş; Kurallar'da değiştir → MCM'de de değişmiş
@@ -39,9 +39,9 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
       `C:\ProgramData\Mount and Blade II Bannerlord\logs` içindeki en yeni `rgl_log` dosyasını gönder
 - [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst), resimli kartlar aç/kapa
 - [ ] Haritadaki düğme oyunun kendi arayüzünün üstüne biniyor mu? Biniyorsa MCM'den yerini değiştir ve hangisinin iyi olduğunu yaz
-- [ ] **Bana gönder (ansiklopedi bağlantısı için):** oyun klasöründe `Modules` altında `EncyclopediaHeroPage.xml` ve `MapBar.xml`
-      dosyalarını ara (Windows aramasıyla) ve ikisini gönder. Bunlarla lord sayfasına "bildiğin sırlar / koz / entrika başlat" bölümünü
-      ve oyunun harita çubuğuna düğmeyi doğru yere ekleyebilirim
+- [ ] **Ansiklopedi bağlantısı ve harita çubuğu düğmesi:** gereken dosyalar PC'de bulundu, bu iş PC'deki oturumda yapılmalı
+      (oyun dosyası olduğu için repoya konmadı): `Modules\SandBox\GUI\Prefabs\Encyclopedia\EncyclopediaSubPages\EncyclopediaHeroPage.xml`,
+      `Modules\SandBox\GUI\Prefabs\Map\MapBar.xml` (fırçalar: `Modules\SandBox\GUI\Brushes\MapBar.xml`)
 
 ### P2.3 — Casus başı görevleri (yeni)
 - [ ] Sol sütunda "Görev: Boşta" ve **Görev...** düğmesi → kart: Karşı casusluk / Muhalefeti izle / Söylenti yay... / Boşta

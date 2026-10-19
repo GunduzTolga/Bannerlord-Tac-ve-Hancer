@@ -13,7 +13,8 @@
 		<DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2" Optional="false"/>
 		<DependedModule Id="Bannerlord.ButterLib" DependentVersion="v2.11.1" Optional="false"/>
 		<DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v2.13.3" Optional="false"/>
-		<DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.13.1" Optional="false"/>
+		<!-- Steam Workshop'taki MCM 5.12.3; modun kullandığı MCM API'si (attribute ayarları, Dropdown, SaveSettings) o sürümde de var. -->
+		<DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.12.3" Optional="false"/>
 		<DependedModule Id="Native" DependentVersion="v1.4.8" Optional="false"/>
 		<DependedModule Id="SandBoxCore" DependentVersion="v1.4.8" Optional="false"/>
 		<DependedModule Id="Sandbox" DependentVersion="v1.4.8" Optional="false"/>
