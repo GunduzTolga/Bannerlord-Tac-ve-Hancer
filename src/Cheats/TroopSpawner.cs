@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.ViewModelCollection;
+using TaleWorlds.Core.ImageIdentifiers;
 
 namespace CheatMenu.Cheats
 {
@@ -27,6 +30,21 @@ namespace CheatMenu.Cheats
             "[" + (troop.Culture != null ? troop.Culture.Name.ToString() : "kültürsüz") + "] " + troop.Name + " - " + Kind(troop);
 
         public static string LabelWithTier(CharacterObject troop) => "T" + troop.Tier + " " + Label(troop);
+
+        /// <summary>Parti ekranındaki asker resmi (kültür renkleriyle).</summary>
+        public static ImageIdentifier Image(CharacterObject troop)
+        {
+            try
+            {
+                return new CharacterImageIdentifier(CampaignUIHelper.GetCharacterCode(troop, false));
+            }
+            catch (Exception ex)
+            {
+                // Tek bir bozuk asker tüm listeyi açılmaz hale getirmesin; o satır resimsiz kalır.
+                TaleWorlds.Library.Debug.Print("[CheatMenu] troop image failed: " + troop.StringId + " " + ex);
+                return null;
+            }
+        }
 
         private static string Kind(CharacterObject troop) =>
             troop.IsMounted ? (troop.IsRanged ? "Atlı okçu" : "Süvari") : (troop.IsRanged ? "Okçu" : "Piyade");

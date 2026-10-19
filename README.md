@@ -14,7 +14,7 @@ Tek oyunculu kampanya için, oyunun kendi popup pencerelerini kullanan, bağıml
 |---|---|
 | Para & Ekonomi | Altın, etki, tahıl |
 | Karakter | Odak/attribute puanı, yetenekler, can |
-| Ordu / Parti | Asker ekleme (oyundaki tüm askerler, kademeye göre listeli), terfi XP'si, yaralı iyileştirme, moral, parti hızı x2 |
+| Ordu / Parti | Asker ekleme (oyundaki tüm askerler, kademeye göre, resimli), terfi XP'si, yaralı iyileştirme, moral, parti hızı x2 |
 | Savaş içi | Ölümsüzlük, tek vuruş, sınırsız cephane ([Ben] / [Ordu], isteğe bağlı müttefikler dahil) |
 | Harita | Yerleşime / bir lordun yanına ışınlanma, ileri sarma hızı 4x/8x/16x |
 | Adlandır | Kahraman, eşraf, klan, krallık, yerleşim, parti |

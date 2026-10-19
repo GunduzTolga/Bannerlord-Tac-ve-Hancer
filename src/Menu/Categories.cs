@@ -100,12 +100,14 @@ namespace CheatMenu.Menu
 
         private static void PickTroop(int? tier)
         {
-            Picker.Pick(tier.HasValue ? TroopSpawner.TierLabel(tier.Value) : "Tüm askerler",
-                tier.HasValue ? TroopSpawner.OfTier(tier.Value) : TroopSpawner.All(),
-                tier.HasValue ? TroopSpawner.Label : TroopSpawner.LabelWithTier,
+            // "Tüm kademeler" resimsiz: yüzlerce 3D asker resmi aynı anda çizilmesin.
+            bool all = !tier.HasValue;
+            Picker.Pick(all ? "Tüm askerler" : TroopSpawner.TierLabel(tier.Value),
+                all ? TroopSpawner.All() : TroopSpawner.OfTier(tier.Value),
+                all ? TroopSpawner.LabelWithTier : TroopSpawner.Label,
                 troop => MenuUI.AskNumberInRange(troop.Name + " - adet", 1, 9999, 10,
                     count => CampaignCheats.AddTroops(troop, count), () => PickTroop(tier)),
-                ShowTroopTiers);
+                ShowTroopTiers, all ? null : TroopSpawner.Image);
         }
 
         private static void ShowCombat()
