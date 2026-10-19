@@ -16,6 +16,7 @@ namespace CheatMenu.Cheats.Models
             starter.AddModel<CombatXpModel>(new CheatCombatXpModel());
             starter.AddModel<PartySizeLimitModel>(new CheatPartySizeLimitModel());
             starter.AddModel<CharacterDevelopmentModel>(new CheatCharacterDevelopmentModel());
+            starter.AddModel<ClanTierModel>(new CheatClanTierModel());
         }
     }
 }

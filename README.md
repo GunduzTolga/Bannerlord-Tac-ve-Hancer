@@ -24,7 +24,7 @@ Tek oyunculu kampanya için, oyunun kendi popup pencerelerini kullanan, bağıml
 | Eşya ekle | İkonlu, aramalı eşya listesi |
 | Klan & krallık | Katıl/ayrıl, krallık kur, hükümdar ol, kademe, savaş/barış, klan taşı, lider/hükümdar değiştir, krallık yok et |
 | Bilgi | Lord bulucu (gerçek konum + kamera), harita sisini kaldır |
-| Kurallar | Yetenek XP ve asker XP çarpanı, parti boyutu bonusu, öğrenme sınırını kaldır |
+| Kurallar | Yetenek XP ve asker XP çarpanı, parti boyutu bonusu, öğrenme sınırını kaldır, yoldaş sınırını kaldır |
 
 Kalıcı ayarlar (ileri sarma hızı, kurallar): `Belgeler\Mount and Blade II Bannerlord\Configs\CheatMenu.txt`.
 

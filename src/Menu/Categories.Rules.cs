@@ -20,6 +20,8 @@ namespace CheatMenu.Menu
                     v => Rules.Change(s => s.SetPartySizeBonus(v), "Parti boyutu bonusu: +" + v), v => "+" + v),
                 MenuEntry.Toggle("Öğrenme sınırını kaldır (senin klanın)", () => Rules.Settings.NoLearningLimit,
                     v => Rules.Change(s => s.NoLearningLimit = v, null)),
+                MenuEntry.Toggle("Yoldaş sınırını kaldır", () => Rules.Settings.NoCompanionLimit,
+                    v => Rules.Change(s => s.NoCompanionLimit = v, null)),
             }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz.");
         }
 

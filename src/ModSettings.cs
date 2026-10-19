@@ -19,6 +19,7 @@ namespace CheatMenu
         public int TroopXpMultiplier { get; private set; } = 1;
         public int PartySizeBonus { get; private set; }
         public bool NoLearningLimit { get; set; }
+        public bool NoCompanionLimit { get; set; }
 
         public void SetFastForwardSpeed(int speed) => FastForwardSpeed = Allowed(AllowedSpeeds, speed, DefaultSpeed);
         public void SetSkillXpMultiplier(int value) => SkillXpMultiplier = Allowed(AllowedXpMultipliers, value, 1);
@@ -46,9 +47,8 @@ namespace CheatMenu
                     case "SkillXpMultiplier": if (isNumber) settings.SetSkillXpMultiplier(number); break;
                     case "TroopXpMultiplier": if (isNumber) settings.SetTroopXpMultiplier(number); break;
                     case "PartySizeBonus": if (isNumber) settings.SetPartySizeBonus(number); break;
-                    case "NoLearningLimit":
-                        settings.NoLearningLimit = value == "1" || value.Equals("true", StringComparison.OrdinalIgnoreCase);
-                        break;
+                    case "NoLearningLimit": settings.NoLearningLimit = IsTrue(value); break;
+                    case "NoCompanionLimit": settings.NoCompanionLimit = IsTrue(value); break;
                 }
             }
             return settings;
@@ -60,10 +60,13 @@ namespace CheatMenu
             + "SkillXpMultiplier=" + Invariant(SkillXpMultiplier) + "\n"
             + "TroopXpMultiplier=" + Invariant(TroopXpMultiplier) + "\n"
             + "PartySizeBonus=" + Invariant(PartySizeBonus) + "\n"
-            + "NoLearningLimit=" + (NoLearningLimit ? "1" : "0") + "\n";
+            + "NoLearningLimit=" + (NoLearningLimit ? "1" : "0") + "\n"
+            + "NoCompanionLimit=" + (NoCompanionLimit ? "1" : "0") + "\n";
 
         private static int Allowed(int[] allowed, int value, int fallback) =>
             Array.IndexOf(allowed, value) >= 0 ? value : fallback;
+
+        private static bool IsTrue(string value) => value == "1" || value.Equals("true", StringComparison.OrdinalIgnoreCase);
 
         private static string Invariant(int value) => value.ToString(CultureInfo.InvariantCulture);
     }
