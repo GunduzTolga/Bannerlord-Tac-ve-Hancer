@@ -97,9 +97,10 @@ Her seçeneğin yanında etkisi küçük simgelerle (başarı, yakalanma, altın
 | 8 ✅ | **Varis ve meşrulaştırma** (kodlandı) | Hanedan teması; oyun varisi yalnızca ölünce soruyor | Gayrimeşru çocuğu meşrulaştır (etki ya da altın; babalık açığa çıkar; oyunun evlat edinme işlemi). Klanı devret: oyunun emeklilik işlemiyle istediğin zaman çekil, varisinle devam et. |
 | 9 ✅ | **Saray günü** (kodlandı) | Barış zamanı içeriği ve olay kartlarının doğal yeri | Kendi şehrinde/kalende "Divan kur": 12 dilekçeden 3'ü, dilekçe sahibi gerçek eşraf; kararlar sadakat, güvenlik, refah, erzak, altın, eşraf ilişkisi ve kişiliği etkiler; casus dilekçesi rapor verir |
 | 10 ✅ | **Rehine anlaşmaları** (kodlandı) | Aile, diplomasi ve kaçırmanın kesişimi | Barıştaki krallığa tek taraflı rehine ya da değişim; misafirler bir yıl ev sahibiyle yakınlaşır, gerilim düşer, savaş meclisi toplanmaz; barış bozulursa misafirler esir, bozan sensen yemin bozulmuş sayılır (Harmony gerekmez). |
+| 11 ✅ | **Casusluğu kendin yap** (kodlandı; kullanıcı isteği) | Casusluğa oyuncunun kendi riskini ve kararını katar | Hedefle aynı şehirdeyken onu bizzat takip et: üç resimli sahne, şüphe çubuğu (beceri, gece ve gölge ağı yardım eder), fark edilince kaç / rol yap / sustur; rapor, sır şansı, süren casusluk entrikası bir aşama ilerler. Oyunun 3B takip görevi deneysel ayarla (sonuç çağrısı yok; mod kendi ölçer). Tasarım: `2026-10-19-p2-kendin-takip.md` |
 
 **Oyun API taramasından adaylar** (`2026-10-19-oyun-api-taramasi.md`): düello (✅ kodlandı), oyunun 3B sahneleri (doğum, düğün), evlat edinme ve
-varis (P2.8'e), casusluğu kendin yap (takip ve kılık değiştirme görevleri), zindan baskını, çete savaşı, manastıra çekilme, gizlilikle
+varis (P2.8'e), casusluğu kendin yap (✅ kodlandı: kartlı takip, 3B görev deneysel; kılık değiştirme oyunda zaten var), zindan baskını, çete savaşı, manastıra çekilme, gizlilikle
 suikast. Alevli ok (War Sails) kullanıcının DLC dosyaları gelince.
 
 **Şimdilik almadıklarımız ve nedeni:**

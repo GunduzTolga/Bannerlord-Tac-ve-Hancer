@@ -54,6 +54,18 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] Insert → Entrika (liste menüsü) → **Casus başı görevi** aynı kartı açıyor
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
+### P2.11 — Casusluğu kendin yap (yeni)
+- [ ] Bir lordun bulunduğu şehre gir → şehir menüsünde "Birini gizlice takip et" → lord listesi → seç
+- [ ] Üç kart ("TAKİP 1/3"...): sahne metni, şüphe ve ipucu satırı; düğmelerde şüphe aralığı, ipucu, beceri, varsa bedel
+- [ ] Gece dene (şehirde bekle): kart resmi gece resmi, "Gece: karanlık senden yana", şüphe aralıkları daha düşük
+- [ ] Sonunda "Takip: X" kartı: rapor, sır ya da "sır yakalayamadın"; Kişiler'de rapor görünüyor
+- [ ] Hep riskli seçeneği seç → "FARK EDİLDİN" kartı: kaç / yol sor / kese; yakalanınca ilişki -15 (yabancı şehirde suç puanı da)
+- [ ] Aynı lorda karşı casusluk entrikası sürerken takip et (30+ ipucu) → sonuç kartında "bir aşama ilerledi"
+- [ ] Entrika ekranı > Kişiler > lord dosyası > "Kendin gizlice takip et": başka şehirdeyken kapalı ve nerede olduğunu yazıyor
+- [ ] Aynı lordu hemen tekrar takip et → "N gün sonra"; kaydet → yükle → bekleme süresi duruyor
+- [ ] **Deneysel:** Kurallar > "Takibi sahnede dene" aç (önce kaydet!) → takip et → oyunun şehir sahnesi açılıyor mu, hedef orada mı,
+      yürüyor mu? Çıkınca kart geliyor mu (başarı / izini kaybettin / fark edildin / görünmedi)? Ne olduğunu yaz ya da ekran görüntüsü at
+
 ### P2.10 — Rehine anlaşmaları (yeni; hükümdar ya da bağımsız klan lideri olmalısın)
 - [ ] Entrika ekranı > Saray > barışta olduğun bir krallık > "Rehine anlaşması..." → kart
 - [ ] "Rehine gönder" → klanından birini seç → kart; kişi o krallığın hanedan şehrinde; hükümdarla +15; Saray'da durum satırı

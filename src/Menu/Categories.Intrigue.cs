@@ -33,6 +33,17 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Kozlar (" + state.Hooks.Count(h => h.Until > SchemeFactors.Today) + ")...", ShowHooks),
                 MenuEntry.Submenu("Ulak ve görüşme (" + state.Audiences.Count(x => x.Until > SchemeFactors.Today) + " hazır)...", ShowAudiences),
                 MenuEntry.Submenu("Esirleri sorgula (" + Interrogation.Prisoners().Count + ")...", ShowPrisoners),
+                MenuEntry.Submenu("Kendin gizlice takip et (bulunduğun şehirde)...", () =>
+                {
+                    Settlement here = Settlement.CurrentSettlement;
+                    if (here == null || !here.IsTown)
+                    {
+                        MenuUI.Error("Önce bir şehre gir: takip edeceğin lordla aynı şehirde olmalısın");
+                        MenuUI.Defer(ShowIntrigue);
+                        return;
+                    }
+                    Tailing.ShowPick(here, ShowIntrigue);
+                }),
                 MenuEntry.Submenu("Kur ve sevgililer (" + (state.Courtships.Count + state.Lovers.Count) + ")...", ShowRomance),
                 MenuEntry.Submenu("Rehine anlaşmaları (" + state.Hostages.Count + ")...", () => Picker.Pick("Hangi krallıkla?",
                     Kingdom.All.Where(k => !k.IsEliminated && k != Clan.PlayerClan.Kingdom && k.Leader != null).ToList(),

@@ -101,6 +101,11 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool SpouseInfidelity { get; set; } = true;
 
+        [SettingPropertyBool("Takibi sahnede dene (deneysel)", Order = 6, RequireRestart = false,
+            HintText = "Kendin takip ederken kartlar yerine oyunun şehirde gizli takip görevi açılır: hedefi 3-20 metreden toplam bir dakika izle, çok yaklaşma. Deneysel; önce kaydet. Kapalıyken takip resimli kartlarla olur.")]
+        [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
+        public bool TailInScene { get; set; }
+
         // ---- Harita ----
 
         [SettingPropertyDropdown("İleri sarma hızı", Order = 0, RequireRestart = false,
@@ -182,6 +187,7 @@ namespace CheatMenu.Mcm
             RomanceSecrets = s.RomanceSecrets;
             NightHouses = s.NightHouses;
             SpouseInfidelity = s.SpouseInfidelity;
+            TailInScene = s.TailInScene;
             FastForward.SelectedIndex = IndexOf(ModSettings.AllowedSpeeds, s.FastForwardSpeed);
             ScreenHotkey.SelectedIndex = s.ScreenHotkey;
             MapButtonPosition.SelectedIndex = s.MapButtonPosition;
@@ -203,6 +209,7 @@ namespace CheatMenu.Mcm
             s.RomanceSecrets = RomanceSecrets;
             s.NightHouses = NightHouses;
             s.SpouseInfidelity = SpouseInfidelity;
+            s.TailInScene = TailInScene;
             s.SetFastForwardSpeed(At(ModSettings.AllowedSpeeds, FastForward.SelectedIndex));
             s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
             s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);

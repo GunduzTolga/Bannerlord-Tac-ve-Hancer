@@ -105,7 +105,9 @@ namespace CheatMenu
         public override void OnMissionBehaviorInitialize(Mission mission)
         {
             base.OnMissionBehaviorInitialize(mission);
-            if (Campaign.Current != null) mission.AddMissionBehavior(new CheatMissionLogic());
+            if (Campaign.Current == null) return;
+            mission.AddMissionBehavior(new CheatMissionLogic());
+            Tailing.OnMissionStarting(mission);
         }
 
         public override void OnGameEnd(Game game)

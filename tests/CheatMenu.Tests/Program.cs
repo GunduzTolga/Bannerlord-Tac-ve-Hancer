@@ -92,6 +92,8 @@ namespace CheatMenu.Tests
             Check("settings: night houses on", ModSettings.Parse("NightHouses=1").NightHouses);
             Check("settings: spouse infidelity default on", ModSettings.Parse("").SpouseInfidelity);
             Check("settings: spouse infidelity off", !ModSettings.Parse("SpouseInfidelity=0").SpouseInfidelity);
+            Check("settings: tail in scene default off", !ModSettings.Parse("").TailInScene);
+            Check("settings: tail in scene on", ModSettings.Parse("TailInScene=1").TailInScene);
             var full = new ModSettings();
             full.SetFastForwardSpeed(8);
             full.SetSkillXpMultiplier(3);
@@ -110,12 +112,13 @@ namespace CheatMenu.Tests
             full.RomanceSecrets = false;
             full.NightHouses = true;
             full.SpouseInfidelity = false;
+            full.TailInScene = true;
             ModSettings back = ModSettings.Parse(full.Format());
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
                 && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && back.MapButtonPosition == 3 && back.ScreenHotkey == 5
-                && !back.EventCards && !back.RomanceSecrets && back.NightHouses && !back.SpouseInfidelity);
+                && !back.EventCards && !back.RomanceSecrets && back.NightHouses && !back.SpouseInfidelity && back.TailInScene);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -157,6 +160,7 @@ namespace CheatMenu.Tests
             DuelTests();
             PetitionTests();
             HostageTests();
+            TailTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -366,6 +370,7 @@ namespace CheatMenu.Tests
             state.NoChildren.Add("lord_12");
             state.DuelUntil["lord_14"] = 240;
             state.CourtDayUntil["town_V1"] = 250;
+            state.TailUntil["lord_16"] = 260;
             state.Hostages.Add(new HostageDeal { KingdomId = "vlandia", GivenId = "child_3", HeldId = "lord_15", Since = 100, Until = 184, Fostered = 6 });
             state.Hostages.Add(new HostageDeal { KingdomId = "sturgia", GivenId = "child_4", Since = 120, Until = 204 });
             state.AgeFrozen.Add("main_hero");
@@ -424,6 +429,7 @@ namespace CheatMenu.Tests
                 && back.HostageDealWith("vlandia").Fostered == 6 && back.HostageDealWith("vlandia").Until == 184
                 && back.HostageDealWith("sturgia")?.HeldId == null && back.HostageDealWith("sturgia").GivenId == "child_4" && back.HostageDealWith("x") == null);
             Check("state: court day", back.CourtDayUntil.Count == 1 && back.CourtDayUntil["town_V1"] == 250);
+            Check("state: tail cooldown", back.TailUntil.Count == 1 && back.TailUntil["lord_16"] == 260);
             Check("state: duel cooldown", back.DuelUntil.Count == 1 && back.DuelUntil["lord_14"] == 240);
             Check("state: family editor", back.NoChildren.SetEquals(new[] { "lord_12" }) && back.AgeFrozen.SetEquals(new[] { "main_hero", "lord_13" }));
             Check("state: spouse watch", back.SpouseWatchUntil == 205 && back.SpouseApartWeeks == 3);
@@ -534,6 +540,57 @@ namespace CheatMenu.Tests
         }
 
         /// <summary>Saray günü: dilekçe verisi ve çekiliş.</summary>
+        /// <summary>Kendin takip et (P2.11): sahne verisi, çekiliş ve formül örnekleri.</summary>
+        private static void TailTests()
+        {
+            TailScene[] all = TailRules.All;
+            Check("tail: unique ids", all.Select(t => t.Id).Distinct().Count() == all.Length);
+            Check("tail: three options, texts name the target", all.All(t => t.Options.Length == 3 && t.Title.Length > 0
+                && t.Text.Contains("{hedef}") && t.Options.All(o => o.Label.Length > 0)));
+            Check("tail: every scene has a safe way", all.All(t => t.Options.Any(o => o.Stop || o.Suspicion <= 5)));
+            Check("tail: stop options are empty", all.SelectMany(t => t.Options).Where(o => o.Stop)
+                .All(o => o.Suspicion == 0 && o.Clues == 0 && o.Gold == 0 && o.Skill == TailSkill.None));
+            Check("tail: numbers in sane bounds", all.SelectMany(t => t.Options).All(o => o.Suspicion >= 0 && o.Suspicion <= 50
+                && o.Clues >= 0 && o.Clues <= 60 && o.Gold >= 0 && o.Gold <= 300));
+            Check("tail: enough street and climax scenes", all.Count(t => !t.Climax) >= TailRules.StreetScenes && all.Any(t => t.Climax)
+                && all.Where(t => t.Climax).All(t => t.Options.Any(o => o.Stop)));
+            bool draws = true;
+            for (int seed = 1; seed <= 20; seed++)
+            {
+                int rolls = 0;
+                List<TailScene> drawn = TailRules.Draw(count => SchemeRandom.Pick(seed, ref rolls, count));
+                draws &= drawn.Count == 3 && !drawn[0].Climax && !drawn[1].Climax && drawn[0].Id != drawn[1].Id && drawn[2].Climax;
+            }
+            Check("tail: draw two streets then a climax", draws);
+
+            CheckChance("tail: plain step", TailRules.SuspicionGain(25, 0, 0, false, 0, 50), 25);
+            CheckChance("tail: skilled vs wary target", TailRules.SuspicionGain(25, 150, 60, false, 0, 50), 20);
+            CheckChance("tail: skill reduction capped", TailRules.SuspicionGain(25, 400, 0, false, 0, 50), 10);
+            CheckChance("tail: night", TailRules.SuspicionGain(40, 0, 0, true, 0, 50), 30);
+            CheckChance("tail: network level capped at 3", TailRules.SuspicionGain(40, 0, 0, false, 5, 50), 28);
+            CheckChance("tail: no risk stays zero", TailRules.SuspicionGain(0, 0, 300, false, 0, 100), 0);
+            CheckChance("tail: at least one", TailRules.SuspicionGain(1, 300, 0, true, 3, 1), 1);
+            TailRules.SuspicionRange(20, 0, 0, false, 0, out int min, out int max);
+            Check("tail: range " + min + "-" + max, min == 15 && max == 25);
+
+            Check("tail: secret chance", TailRules.SecretChance(0) == 0 && TailRules.SecretChance(60) == 40 && TailRules.SecretChance(113) == 75
+                && TailRules.SecretChance(200) == 75 && TailRules.SecretChance(-5) == 0);
+            CheckChance("tail: run, unskilled", TailRules.EscapeChance(TailEscape.Run, 0, 0, 0, false, false), 30);
+            CheckChance("tail: run, skilled at night", TailRules.EscapeChance(TailEscape.Run, 100, 100, 0, true, false), 75);
+            CheckChance("tail: run cap", TailRules.EscapeChance(TailEscape.Run, 500, 500, 0, false, false), 90);
+            CheckChance("tail: bluff, alerted", TailRules.EscapeChance(TailEscape.Bluff, 0, 0, 100, false, true), 35);
+            CheckChance("tail: bluff floor", TailRules.EscapeChance(TailEscape.Bluff, 0, 0, 0, false, true), 10);
+            CheckChance("tail: bluff cap", TailRules.EscapeChance(TailEscape.Bluff, 0, 0, 400, false, false), 85);
+            CheckChance("tail: bribe always works", TailRules.EscapeChance(TailEscape.Bribe, 0, 0, 0, false, true), 100);
+            Check("tail: bribe cost", TailRules.BribeCost(0) == 300 && TailRules.BribeCost(3) == 900 && TailRules.BribeCost(6) == 1500);
+
+            Check("tail scene: not found", TailRules.SceneResult(false, 100f, 0f) == TailSceneResult.NotFound);
+            Check("tail scene: success", TailRules.SceneResult(true, 70f, 2f) == TailSceneResult.Success);
+            Check("tail scene: too close", TailRules.SceneResult(true, 70f, 8f) == TailSceneResult.Spotted);
+            Check("tail scene: lost", TailRules.SceneResult(true, 30f, 0f) == TailSceneResult.Lost);
+            Check("tail scene: clues", TailRules.SceneClues(0f) == 30 && TailRules.SceneClues(60f) == 60 && TailRules.SceneClues(200f) == 70);
+        }
+
         private static void PetitionTests()
         {
             Petition[] all = PetitionRules.All;

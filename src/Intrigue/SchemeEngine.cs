@@ -171,6 +171,21 @@ namespace CheatMenu.Intrigue
             return true;
         }
 
+        /// <summary>
+        /// Kendin takip et (P2.11): oyuncunun topladığı ipuçları casusluk entrikasını bir aşama ilerletir (keşif zarı ve olay yok).
+        /// Kart metnine yazılacak satırı döner; entrika karar bekliyorsa ya da ilerleyemiyorsa null.
+        /// </summary>
+        public static string AdvanceByHand(IntrigueState state, Scheme scheme)
+        {
+            Hero target = Hero.Find(scheme.TargetId);
+            Hero spymaster = SchemeFactors.Spymaster(state);
+            if (spymaster == null || TargetGoneReason(target) != null || IsWaiting(scheme)) return null;
+            int max = SchemeRules.MaxPhases(scheme.Kind);
+            return CompletePhase(state, scheme, spymaster, target, true)
+                ? "Topladıkların casus başına ulaştı: casusluk entrikası bir aşama ilerledi (" + scheme.Phase + "/" + max + ")."
+                : "Topladıkların casus başına ulaştı: casusluk entrikası sonuçlandı.";
+        }
+
         // ---- Casusluk ve şantaj: son aşamada kendiliğinden sonuçlanır ----
 
         /// <param name="keepGoing">true: bir aşama daha (casuslukta sır şansı +20, şantajda başarı +15); false: şimdi sonuçlandır.</param>

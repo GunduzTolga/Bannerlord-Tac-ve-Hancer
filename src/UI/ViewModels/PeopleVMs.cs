@@ -247,6 +247,8 @@ namespace CheatMenu.UI.ViewModels
                 foreach (ActionItemVM action in LordActions.Romance(state, hero, _changed)) StartActions.Add(action);
                 StartActions.Add(new ActionItemVM("Düelloya davet et (" + DuelRules.ReasonName(Duels.ReasonFor(state, hero)) + ")...",
                     Duels.Blocked(state, hero), () => EventCards.ShowDuel(hero, _changed)));
+                StartActions.Add(new ActionItemVM("Kendin gizlice takip et" + (SettingsStore.Current.TailInScene ? " (sahnede)" : ""),
+                    Tailing.Blocked(state, hero), () => Tailing.Start(SchemeEngine.State, hero)));
                 foreach (Hero child in Dynasty.Bastards(state).Where(c => c.Mother == hero || c.Father == hero))
                     StartActions.Add(new ActionItemVM("Çocuğunu meşrulaştır: " + child.Name + " (" + Dynasty.CostText() + ")", Dynasty.LegitimizeBlocked(state, child),
                         () => MenuUI.Confirm("Meşrulaştır: " + child.Name, child.Name + " klanına katılır, babalığın herkesçe bilinir; " + hero.Name
