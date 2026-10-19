@@ -25,6 +25,18 @@ namespace CheatMenu.UI
 
         public static string Folder => Path.Combine(ModuleHelper.GetModuleFullPath(ModInfo.Id), "Images");
 
+        private static readonly Random Dice = new Random();
+
+        /// <summary>Kartın var olan sürümlerinden (ad, ad_2 ... ad_5) rastgele biri; hiçbiri yoksa adın kendisi.</summary>
+        public static string PickVariant(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return name;
+            var found = new List<string>();
+            foreach (string variant in Intrigue.Core.CardImages.Variants(name))
+                if (!Failed.Contains(variant) && FindFile(variant) != null) found.Add(variant);
+            return found.Count == 0 ? name : found[Dice.Next(found.Count)];
+        }
+
         /// <summary>Resim dosyası var mı (yüklemeden bakar).</summary>
         public static bool Exists(string name) => !string.IsNullOrEmpty(name) && FindFile(name) != null;
 
