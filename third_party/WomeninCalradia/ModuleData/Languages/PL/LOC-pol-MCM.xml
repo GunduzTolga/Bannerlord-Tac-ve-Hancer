@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Polski" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "Zaleca się skonfigurowanie tych ustawień przed rozpoczęciem nowej gry." />
+	
+		<string id = "mcmwictitle00" text = "Zachowaj wiek" />
+		<string id = "mcmwictitle01" text = "Dodatkowe interakcje" />
+		<string id = "mcmwictitle02" text = "Podejrzany handlarz" />
+		<string id = "mcmwictitle03" text = "Męscy towarzysze" />
+		<string id = "mcmwictitle04" text = "Ragaea" />
+	
+		<string id = "mcmwichint00" text = "Zachowuje wiek dodanych postaci aż do ich zatrudnienia." />
+		<string id = "mcmwichint01" text = "Stosuje dodatkowe interakcje zapewnione przez ten mod." />
+		<string id = "mcmwichint02" text = "Dodaje do świata podejrzanego handlarza z dodatkowymi funkcjami." />
+		<string id = "mcmwichint03" text = "Dodaje trzech męskich towarzyszy. (W przypadku męskich postaci twarz i skóra ciała mogą nie być idealnie dopasowane.)" />
+		<string id = "mcmwichint04" text = "Zmienia wygląd Ragaea." />
+	</strings>
+</base>

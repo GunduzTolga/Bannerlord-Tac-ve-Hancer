@@ -1,0 +1,335 @@
+<Prefab>
+  <Constants>
+    <Constant Name="Popup.Width" Value="1320" />
+    <Constant Name="Popup.Height" Value="940" />
+  </Constants>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <!-- Fond assombri -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#000000FF" AlphaFactor="0.6" />
+
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!Popup.Width" SuggestedHeight="!Popup.Height" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <Children>
+            <ImageWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="StdAssets\Popup\order_popup_canvas" />
+            <ImageWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="StdAssets\Popup\canvas_gradient" />
+            <ImageWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="-20" MarginTop="-20" MarginRight="-20" MarginBottom="-20" Sprite="frame_9" />
+
+            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="40" MarginRight="40" MarginTop="16" MarginBottom="20" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <Children>
+
+                <!-- Titre -->
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="50" Brush="InventoryHeaderFontBrush" Brush.FontSize="34" Brush.TextHorizontalAlignment="Center" Text="@TitleText" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="8" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Center" Text="@HintText" />
+
+                <!-- Choix de la culture -->
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="48" HorizontalAlignment="Center" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="50" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecutePrevCulture" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="&lt;" />
+  </Children>
+</ButtonWidget>
+                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="420" Brush="Kingdom.TitleSmall.Text" Brush.FontSize="28" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@CultureText" />
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="50" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteNextCulture" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="&gt;" />
+  </Children>
+</ButtonWidget>
+                  </Children>
+                </ListPanel>
+
+                <!-- Résumé -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="22" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Brush.FontColor="#E9D062FF" Text="@SummaryText" IsVisible="@IsNotOverLimit" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="22" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Brush.FontColor="#E8553DFF" Text="@SummaryText" IsVisible="@IsOverLimit" />
+                  </Children>
+                </Widget>
+
+<!-- Répartition de l'armée : cible et groupe actuel -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="112" MarginTop="4" MarginBottom="2">
+                  <Children>
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#00000055" />
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100" MarginTop="6" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <Children>
+                        <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="30" HorizontalAlignment="Center" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                          <Children>
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="16" MarginRight="16" StackLayout.LayoutMethod="HorizontalLeftToRight">
+  <Children>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="14" VerticalAlignment="Center" MarginRight="6" Sprite="BlankWhiteSquare_9" Color="#B0503AFF" />
+    <SpriteWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="24" SuggestedHeight="24" VerticalAlignment="Center" MarginRight="6" Sprite="@IconInf" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginRight="6" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextVerticalAlignment="Center" Text="@InfantryLabel" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.FontColor="#E9D062FF" Brush.TextVerticalAlignment="Center" Text="@LegendInf" />
+  </Children>
+</ListPanel>
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="16" MarginRight="16" StackLayout.LayoutMethod="HorizontalLeftToRight">
+  <Children>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="14" VerticalAlignment="Center" MarginRight="6" Sprite="BlankWhiteSquare_9" Color="#5E8F3EFF" />
+    <SpriteWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="24" SuggestedHeight="24" VerticalAlignment="Center" MarginRight="6" Sprite="@IconArc" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginRight="6" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextVerticalAlignment="Center" Text="@ArchersLabel" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.FontColor="#E9D062FF" Brush.TextVerticalAlignment="Center" Text="@LegendArc" />
+  </Children>
+</ListPanel>
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="16" MarginRight="16" StackLayout.LayoutMethod="HorizontalLeftToRight">
+  <Children>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="14" VerticalAlignment="Center" MarginRight="6" Sprite="BlankWhiteSquare_9" Color="#3F6FA8FF" />
+    <SpriteWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="24" SuggestedHeight="24" VerticalAlignment="Center" MarginRight="6" Sprite="@IconCav" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginRight="6" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextVerticalAlignment="Center" Text="@CavalryLabel" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.FontColor="#E9D062FF" Brush.TextVerticalAlignment="Center" Text="@LegendCav" />
+  </Children>
+</ListPanel>
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="16" MarginRight="16" StackLayout.LayoutMethod="HorizontalLeftToRight">
+  <Children>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="14" VerticalAlignment="Center" MarginRight="6" Sprite="BlankWhiteSquare_9" Color="#C9A24AFF" />
+    <SpriteWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="24" SuggestedHeight="24" VerticalAlignment="Center" MarginRight="6" Sprite="@IconHa" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginRight="6" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextVerticalAlignment="Center" Text="@HorseArchersLabel" />
+    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.FontColor="#E9D062FF" Brush.TextVerticalAlignment="Center" Text="@LegendHa" />
+  </Children>
+</ListPanel>
+                          </Children>
+                        </ListPanel>
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="26" HorizontalAlignment="Center" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+  <Children>
+    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="130" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Right" Brush.TextVerticalAlignment="Center" MarginRight="12" Text="@TargetBarLabel" />
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="764">
+      <Children>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#140E09FF" />
+        <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginTop="2" MarginBottom="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <Children>
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@TargetBarInf" Sprite="BlankWhiteSquare_9" Color="#B0503AFF" />
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@TargetBarArc" Sprite="BlankWhiteSquare_9" Color="#5E8F3EFF" />
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@TargetBarCav" Sprite="BlankWhiteSquare_9" Color="#3F6FA8FF" />
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@TargetBarHa" Sprite="BlankWhiteSquare_9" Color="#C9A24AFF" />
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="150" MarginLeft="12" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Left" Brush.TextVerticalAlignment="Center" Text="@TargetBarText" />
+  </Children>
+</ListPanel>
+<ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="26" HorizontalAlignment="Center" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+  <Children>
+    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="130" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Right" Brush.TextVerticalAlignment="Center" MarginRight="12" Text="@CurrentBarLabel" />
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="764">
+      <Children>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#140E09FF" />
+        <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginTop="2" MarginBottom="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <Children>
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@CurrentBarInf" Sprite="BlankWhiteSquare_9" Color="#B0503AFF" />
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@CurrentBarArc" Sprite="BlankWhiteSquare_9" Color="#5E8F3EFF" />
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@CurrentBarCav" Sprite="BlankWhiteSquare_9" Color="#3F6FA8FF" />
+<Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@CurrentBarHa" Sprite="BlankWhiteSquare_9" Color="#C9A24AFF" />
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="150" MarginLeft="12" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextHorizontalAlignment="Left" Brush.TextVerticalAlignment="Center" Text="@CurrentBarText" />
+  </Children>
+</ListPanel>
+                      </Children>
+                    </ListPanel>
+                  </Children>
+                </Widget>
+
+                <!-- Liste des troupes -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="484" MarginTop="6">
+                  <Children>
+                    <ScrollablePanel Id="CATroopScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CATroopClip" InnerPanel="CATroopClip\CATroopList" MouseScrollAxis="Vertical" VerticalScrollbar="..\CATroopScrollbar">
+                      <Children>
+                        <Widget Id="CATroopClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                          <Children>
+                            <ListPanel Id="CATroopList" DataSource="{Troops}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                              <ItemTemplate>
+<Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="62" MarginBottom="4">
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#00000066" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A24A33" IsVisible="@IsWanted" />
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="4" Sprite="BlankWhiteSquare_9" Color="#E9C873FF" IsVisible="@IsWanted" />
+    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="12" StackLayout.LayoutMethod="HorizontalLeftToRight">
+      <Children>
+        <!-- Portrait -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="80" SuggestedHeight="56" VerticalAlignment="Center" MarginRight="10">
+          <Children>
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Frame1Brush" />
+            <ImageIdentifierWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@ImageId" AdditionalArgs="@ImageAdditionalArgs" TextureProviderName="@ImageTextureProviderName" />
+          </Children>
+        </Widget>
+        <!-- Type -->
+        <SpriteWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" VerticalAlignment="Center" MarginRight="10" Sprite="@FormationIcon" />
+        <!-- Rang -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="34" VerticalAlignment="Center" MarginRight="14">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#8A6A35FF" />
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#1E150DFF" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.FontColor="#E9C873FF" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@TierText" />
+          </Children>
+        </Widget>
+        <!-- Nom -->
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="410" Brush="Clan.Party.Wage.Text" Brush.FontSize="23" Brush.TextVerticalAlignment="Center" Brush.TextHorizontalAlignment="Left" Text="@Name" />
+        <!-- Progression -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="230" MarginRight="10">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextVerticalAlignment="Center" Brush.TextHorizontalAlignment="Left" Text="@HaveText" IsVisible="@IsNotWanted" />
+            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" StackLayout.LayoutMethod="HorizontalLeftToRight" IsVisible="@IsWanted">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="154" SuggestedHeight="16" VerticalAlignment="Center">
+                  <Children>
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#140E09FF" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@ProgressFill" MarginLeft="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#C9A24AFF" IsVisible="@IsIncomplete" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@ProgressFill" MarginLeft="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#6FA84AFF" IsVisible="@IsComplete" />
+                  </Children>
+                </Widget>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" Brush="Clan.Party.Wage.Text" Brush.FontSize="19" Brush.TextVerticalAlignment="Center" Brush.TextHorizontalAlignment="Left" Text="@ProgressText" />
+              </Children>
+            </ListPanel>
+          </Children>
+        </Widget>
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="54" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="3" MarginRight="3" Command.Click="ExecuteMinusBig" UpdateChildrenStates="true">
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="-10" />
+  </Children>
+</ButtonWidget>
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="54" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="3" MarginRight="3" Command.Click="ExecuteMinus" UpdateChildrenStates="true">
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="-" />
+  </Children>
+</ButtonWidget>
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="70" Brush="Clan.Party.Wage.Text" Brush.FontSize="26" Brush.TextVerticalAlignment="Center" Brush.TextHorizontalAlignment="Center" Text="@TargetText" />
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="54" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="3" MarginRight="3" Command.Click="ExecutePlus" UpdateChildrenStates="true">
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="+" />
+  </Children>
+</ButtonWidget>
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="54" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="3" MarginRight="3" Command.Click="ExecutePlusBig" UpdateChildrenStates="true">
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="+10" />
+  </Children>
+</ButtonWidget>
+      </Children>
+    </ListPanel>
+  </Children>
+</Widget>
+                              </ItemTemplate>
+                            </ListPanel>
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </ScrollablePanel>
+                    <ScrollbarWidget Id="CATroopScrollbar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CATroopHandle" MaxValue="100" MinValue="0">
+                      <Children>
+                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="4" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#5a4033FF" AlphaFactor="0.4" />
+                        <ImageWidget Id="CATroopHandle" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedHeight="10" SuggestedWidth="8" HorizontalAlignment="Center" Brush="FaceGen.Scrollbar.Handle" />
+                      </Children>
+                    </ScrollbarWidget>
+                  </Children>
+                </Widget>
+
+                <!-- Presets -->
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="48" HorizontalAlignment="Center" MarginTop="14" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginRight="10" Brush="Kingdom.TitleSmall.Text" Brush.FontSize="24" Brush.TextVerticalAlignment="Center" Text="@PresetsLabel" />
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecutePrevPreset" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="&lt;" />
+  </Children>
+</ButtonWidget>
+                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="320" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@PresetText" />
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteNextPreset" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="&gt;" />
+  </Children>
+</ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="120" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteLoadPreset" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@LoadLabel" />
+  </Children>
+</ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="250" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteSavePreset" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@SaveLabel" />
+  </Children>
+</ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="150" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteOverwritePreset" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@OverwriteLabel" />
+  </Children>
+</ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="120" SuggestedHeight="40" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteDeletePreset" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@DeleteLabel" />
+  </Children>
+</ButtonWidget>
+                  </Children>
+                </ListPanel>
+
+                <!-- Boutons de fin -->
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="56" HorizontalAlignment="Center" MarginTop="14" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="48" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteClear" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@ClearLabel" />
+  </Children>
+</ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="48" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteCancel" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@CancelLabel" />
+  </Children>
+</ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="48" VerticalAlignment="Center" MarginLeft="4" MarginRight="4" Command.Click="ExecuteDone" UpdateChildrenStates="true" >
+  <Children>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4126FF" />
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2A1E13FF" />
+    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Party.Wage.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Brush.TextVerticalAlignment="Center" Text="@DoneLabel" />
+  </Children>
+</ButtonWidget>
+                  </Children>
+                </ListPanel>
+
+              </Children>
+            </ListPanel>
+
+            <!-- Croix de fermeture -->
+            <!-- Zone cliquable large, entièrement à l'intérieur de la fenêtre (les clics hors de la fenêtre étaient perdus) -->
+            <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="84" SuggestedHeight="84" HorizontalAlignment="Right" VerticalAlignment="Top" PositionXOffset="-4" PositionYOffset="4" Command.Click="ExecuteCancel" UpdateChildrenStates="true">
+              <Children>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="64" SuggestedHeight="64" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="Popup.CloseButton" />
+              </Children>
+            </ButtonWidget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

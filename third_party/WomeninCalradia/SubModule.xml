@@ -1,0 +1,77 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<Module>
+	<Name value = "Women in Calradia"/>
+	<Id value = "WomeninCalradia"/>
+	<Version value = "v10.7.7"/>
+	<SingleplayerModule value = "true"/>
+	<MultiplayerModule value = "false"/>
+	<DependedModules>
+		<DependedModule Id = "Native"/>
+		<DependedModule Id = "SandBoxCore"/>
+		<DependedModule Id = "Sandbox"/>
+		<DependedModule Id = "CustomBattle"/>
+		<DependedModule Id = "StoryMode"/>
+	</DependedModules>
+	<SubModules>
+		<SubModule>
+			<Name value = "WomeninCalradia"/>
+			<DLLName value = "Women In Calradia.dll"/>
+			<SubModuleClassType value = "Women_In_Calradia.Main"/>
+			<Tags>
+				 <Tag key = "DedicatedServerType" value = "none" />
+				 <Tag key = "IsNoRenderModeElement" value = "false" />
+			 </Tags>
+		</SubModule>
+	</SubModules>
+	<Xmls>
+		<XmlNode>
+			<XmlName id = "NPCCharacters" path = "mic_wanderer_core"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+		<XmlNode>
+			<XmlName id = "GameText" path = "mic_wanderer_line"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+		<XmlNode>
+			<XmlName id = "EquipmentRosters" path = "mic_wanderer_set"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+		<XmlNode>
+			<XmlName id = "NPCCharacters" path = "wic_wanderer_core"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+		<XmlNode>
+			<XmlName id = "GameText" path = "wic_wanderer_line"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+		<XmlNode>
+			<XmlName id = "EquipmentRosters" path = "wic_wanderer_set"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+		<XmlNode>
+			<XmlName id = "Items" path = "wic_item"/>
+			<IncludedGameTypes>
+				<GameType value = "Campaign"/>
+				<GameType value = "CampaignStoryMode"/>
+			</IncludedGameTypes>
+		</XmlNode>
+	</Xmls>
+</Module>

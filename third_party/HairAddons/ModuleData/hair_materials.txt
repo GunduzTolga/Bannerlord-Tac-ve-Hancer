@@ -1,0 +1,28 @@
+# Pieces that use the vanilla hair material, so "As hair" color matches the base hairstyle exactly.
+# Pieces with the author's own texture (front_001-002, _hss_013-023) keep their material.
+# Накладки с ванильным материалом волос - цвет "как волосы" совпадает с базой один в один.
+# piece = material
+_hss_front_003 = female_hair_mat
+_hss_front_004 = female_hair_mat
+_hss_front_005 = female_hair_mat
+_hss_front_006 = female_hair_mat
+_hss_side_001 = female_hair_mat
+_hss_side_002 = female_hair_mat
+_hss_side_003 = female_hair_mat
+_hss_side_004 = female_hair_mat
+_hss_side_005 = female_hair_mat
+_hss_side_006 = female_hair_mat
+_hss_side_007 = female_hair_mat
+_hss_001 = female_hair_mat
+_hss_002 = female_hair_mat
+_hss_003 = female_hair_mat
+_hss_004 = female_hair_mat
+_hss_005 = female_hair_mat
+_hss_006 = female_hair_mat
+_hss_007 = female_hair_mat
+_hss_008 = female_hair_mat
+_hss_009 = female_hair_mat
+_hss_010 = female_hair_mat
+_hss_011 = female_hair_mat
+_hss_012 = female_hair_mat
+_hss_024 = female_hair_mat

@@ -1,0 +1,401 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<strings>
+	<string
+		id = "prebackstory.malfoycustom_0"
+		text = "{=mfyline000}My name is Sonadel. I'm helping my parents, who are blacksmiths." />
+	<string
+		id = "backstory_a.malfoycustom_0"
+		text = "{=mfyline001}But lately, I've been getting tired of it. It's my wish to see the wider world." />
+	<string
+		id = "backstory_b.malfoycustom_0"
+		text = "{=mfyline002}Although my father didn't teach me smithing, I know a little bit!" />
+	<string
+		id = "backstory_c.malfoycustom_0"
+		text = "{=mfyline003}I've taken charge of trading and managing the store instead of my parents. I'm sure I can be of help." />
+	<string
+		id = "response_1.malfoycustom_0"
+		text = "{=mfyline004}Those experiences are also useful in the party." />
+	<string
+		id = "response_2.malfoycustom_0"
+		text = "{=mfyline005}You still seem inexperienced." />
+	<string
+		id = "backstory_d.malfoycustom_0"
+		text = "{=mfyline006}If possible, I would like to work in your party. I secretly made my sword for a day like this!" />
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_1"
+		text = "{=mfyline010}I'm Anette..." />
+	<string
+		id = "backstory_a.malfoycustom_1"
+		text = "{=mfyline011}I joined a group selling goods in the town with my parents and the village's permission." />
+	<string
+		id = "backstory_b.malfoycustom_1"
+		text = "{=mfyline012}But then a war broke out, and I couldn't go back." />
+	<string
+		id = "backstory_c.malfoycustom_1"
+		text = "{=mfyline013}When I returned, the village was in flames, and that's why I'm here now." />
+	<string
+		id = "response_1.malfoycustom_1"
+		text = "{=mfyline014}That's truly unfortunate." />
+	<string
+		id = "response_2.malfoycustom_1"
+		text = "{=mfyline015}It's a common occurrence in these times." />
+	<string
+		id = "backstory_d.malfoycustom_1"
+		text = "{=mfyline016}To be honest, I have nowhere to go. Although I haven't learned any special skills beyond handling farming tools, I'm ready to work hard to learn." />
+
+
+	<string
+		id = "prebackstory.malfoycustom_2"
+		text = "{=mfyline020}My name is Qiana. I was a girl from an ordinary peasant family." />
+	<string
+		id = "backstory_a.malfoycustom_2"
+		text = "{=mfyline021}But my father couldn't overlook the many injustices between duty and distribution, and just like that, our ordinary days ended." />
+	<string
+		id = "backstory_b.malfoycustom_2"
+		text = "{=mfyline022}I had to learn to survive in the wild. My father sometimes brought back food from places I didn’t know." />
+	<string
+		id = "backstory_c.malfoycustom_2"
+		text = "{=mfyline023}One day, while I was sleeping in the cave, there was a loud commotion, and my father suddenly kicked me out, handing me a bow and arrow." />
+	<string
+		id = "response_1.malfoycustom_2"
+		text = "{=mfyline024}I can guess what happened..." />
+	<string
+		id = "response_2.malfoycustom_2"
+		text = "{=mfyline025}I was wondering where it smelled." />
+	<string
+		id = "backstory_d.malfoycustom_2"
+		text = "{=mfyline026}I've managed to survive so far, but I don't want to walk the same path my father did." />
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_3"
+		text = "{=mfyline030}I know it sounds weird, but listen." />
+	<string
+		id = "backstory_a.malfoycustom_3"
+		text = "{=mfyline031}I think I was in this world before but I have a faint memory." />
+	<string
+		id = "backstory_b.malfoycustom_3"
+		text = "{=mfyline032}I don't care anyway, but there are some people who remember me for some reason." />
+	<string
+		id = "backstory_c.malfoycustom_3"
+		text = "{=mfyline033}But the problem is not only that, but I don't remember everything." />
+	<string
+		id = "response_1.malfoycustom_3"
+		text = "{=mfyline034}Oh, I hope you can remember." />
+	<string
+		id = "response_2.malfoycustom_3"
+		text = "{=mfyline035}You're just saying you don't have any skills." />
+	<string
+		id = "backstory_d.malfoycustom_3"
+		text = "{=mfyline036}I think I'll get used to it soon if you help." />
+
+
+	<string
+		id = "prebackstory.malfoycustom_4"
+		text = "{=mfyline040}My name is Belladona. Sadly, I was kicked out of my village." />
+	<string
+		id = "backstory_a.malfoycustom_4"
+		text = "{=mfyline041}I accidentally gave the villagers something else instead of the herbs I was supposed to use." />
+	<string
+		id = "backstory_b.malfoycustom_4"
+		text = "{=mfyline042}But it's not my fault! The group of girls my age who were jealous must have set me up." />
+	<string
+		id = "backstory_c.malfoycustom_4"
+		text = "{=mfyline043}Suddenly, rumors spread that I was a red-haired witch, and I had to run away before the witch hunt began." />
+	<string
+		id = "response_1.malfoycustom_4"
+		text = "{=mfyline044}Everyone can make mistakes." />
+	<string
+		id = "response_2.malfoycustom_4"
+		text = "{=mfyline045}I bet you have a big cauldron in your house." />
+	<string
+		id = "backstory_d.malfoycustom_4"
+		text = "{=mfyline046}I know how to distinguish and handle herbs even though I haven't learned them formally." />
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_5"
+		text = "{=mfyline050}I used to work at the inn in the next town." />
+	<string
+		id = "backstory_a.malfoycustom_5"
+		text = "{=mfyline051}However, the inn started having more and more customers, and the workload became overwhelming." />
+	<string
+		id = "backstory_b.malfoycustom_5"
+		text = "{=mfyline052}I didn't realize it at first, but before I knew it, the inn was being called the Big Linda Inn." />
+	<string
+		id = "backstory_c.malfoycustom_5"
+		text = "{=mfyline053}Then, I happened to find it less enjoyable, so I decided to quit." />
+	<string
+		id = "response_1.malfoycustom_5"
+		text = "{=mfyline054}What if there's something more fun?" />
+	<string
+		id = "response_2.malfoycustom_5"
+		text = "{=mfyline055}Well, are you saying you had fun during that time?" />
+	<string
+		id = "backstory_d.malfoycustom_5"
+		text = "{=mfyline056}I have enough money to eat for now, so I might consider traveling if you have any suggestions for a little more money." />
+
+
+	<string
+		id = "prebackstory.malfoycustom_6"
+		text = "{=mfyline060}My name is Adrianne, and my father, a woodcutter, taught me how to chop wood with an axe." />
+	<string
+		id = "backstory_a.malfoycustom_6"
+		text = "{=mfyline061}Later, it turned out, my father didn't learn how to use an axe by cutting down trees." />
+	<string
+		id = "backstory_b.malfoycustom_6"
+		text = "{=mfyline062}My father had many enemies around him. He was eventually killed one day by them." />
+	<string
+		id = "backstory_c.malfoycustom_6"
+		text = "{=mfyline063}They killed my father and stormed my house, I held my father's axe." />
+	<string
+		id = "response_1.malfoycustom_6"
+		text = "{=mfyline064}So you got your father's revenge?" />
+	<string
+		id = "response_2.malfoycustom_6"
+		text = "{=mfyline065}I guess you didn't use your axe just for cutting down trees, either." />
+	<string
+		id = "backstory_d.malfoycustom_6"
+		text = "{=mfyline066}No, I prepared for a fight, but somehow they didn't attack me. I guess they thought their revenge was over. I was kicked out of my village instead." />
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_7"
+		text = "{=mfyline070}My name is Laura." />
+	<string
+		id = "backstory_a.malfoycustom_7"
+		text = "{=mfyline071}My parents are engineers who build large structures." />
+	<string
+		id = "backstory_b.malfoycustom_7"
+		text = "{=mfyline072}They started a new project in this town, so I'm here, too." />
+	<string
+		id = "backstory_c.malfoycustom_7"
+		text = "{=mfyline073}Meeting you must be the beginning of a new job for me. I can and should do my part now." />
+	<string
+		id = "response_1.malfoycustom_7"
+		text = "{=mfyline074}I think it's a good opportunity for me, too." />
+	<string
+		id = "response_2.malfoycustom_7"
+		text = "{=mfyline075}I doubt you can do your part..." />
+	<string
+		id = "backstory_d.malfoycustom_7"
+		text = "{=mfyline076}I learned engineers, but I was also in charge of procuring the necessary items for my parents' business." />
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_8"
+		text = "{=mfyline080}I think you've at least heard of my clan's name." />
+	<string
+		id = "backstory_a.malfoycustom_8"
+		text = "{=mfyline081}I already have a lot to eat at home, but I don't understand why my parents keep trying to push me out." />
+	<string
+		id = "backstory_b.malfoycustom_8"
+		text = "{=mfyline082}So I was forced to come outside by my parents to see the world." />
+	<string
+		id = "backstory_c.malfoycustom_8"
+		text = "{=mfyline083}Are you running a party by any chance?" />
+	<string
+		id = "response_1.malfoycustom_8"
+		text = "{=mfyline084}Yes." />
+	<string
+		id = "response_2.malfoycustom_8"
+		text = "{=mfyline085}Um, I don't need a princess." />
+	<string
+		id = "backstory_d.malfoycustom_8"
+		text = "{=mfyline086}I hope the party I'm joining has enough foods to keep us well-fed." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_9"
+		text = "{=mfyline090}People in my hometown don't feel the need for engineering at all." />
+	<string
+		id = "backstory_a.malfoycustom_9"
+		text = "{=mfyline091}I like to shoot arrows on horseback, but I'm also interested in researching and producing them." />
+	<string
+		id = "backstory_b.malfoycustom_9"
+		text = "{=mfyline092}I came here to study because it's hard to study like this near my house." />
+	<string
+		id = "backstory_c.malfoycustom_9"
+		text = "{=mfyline093}But it's hard to make money here, so at this rate, I have to quit quickly and go back." />
+	<string
+		id = "response_1.malfoycustom_9"
+		text = "{=mfyline094}I think you can achieve the things you want together." />
+	<string
+		id = "response_2.malfoycustom_9"
+		text = "{=mfyline095}Why don't you just follow what your family tells you to do?" />
+	<string
+		id = "backstory_d.malfoycustom_9"
+		text = "{=mfyline096}Anyway, I need work. Even more so if it's something I can gain experience with." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_10"
+		text = "{=mfyline100}I was a caravan guard, but I had to run away after meeting a large band of bandits." />
+	<string
+		id = "backstory_a.malfoycustom_10"
+		text = "{=mfyline101}I followed their trail and reported it to the lord, but he didn't care." />
+	<string
+		id = "backstory_b.malfoycustom_10"
+		text = "{=mfyline102}So I had no choice but to go to a hideout to save those caught alone and come back injured." />
+	<string
+		id = "backstory_c.malfoycustom_10"
+		text = "{=mfyline103}Our caravan is gone, so I don't know what to do." />
+	<string
+		id = "response_1.malfoycustom_10"
+		text = "{=mfyline104}You're a very responsible person." />
+	<string
+		id = "response_2.malfoycustom_10"
+		text = "{=mfyline105}So you're saying you've been running away?" />
+	<string
+		id = "backstory_d.malfoycustom_10"
+		text = "{=mfyline106}I'm good at tracking enemies and I know how to deal with horse-riding weapons." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_11"
+		text = "{=mfyline110}I learned medicine from surgeons and South area's scholars." />
+	<string
+		id = "backstory_a.malfoycustom_11"
+		text = "{=mfyline111}But in recent years, there's been a lot of wars, so we have all been called somewhere, and so have I." />
+	<string
+		id = "backstory_b.malfoycustom_11"
+		text = "{=mfyline112}After going through several caravans to and from the village, I’ve ended up too far." />
+	<string
+		id = "backstory_c.malfoycustom_11"
+		text = "{=mfyline113}Now, I want to work in one place, not just a wandering." />
+	<string
+		id = "response_1.malfoycustom_11"
+		text = "{=mfyline114}You seem to have studied a lot." />
+	<string
+		id = "response_2.malfoycustom_11"
+		text = "{=mfyline115}It depends on what you do." />
+	<string
+		id = "backstory_d.malfoycustom_11"
+		text = "{=mfyline116}I've learned not only medicine, but also the trading skills of caravans." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_12"
+		text = "{=mfyline120}I've never stopped fighting since I was a kid." />
+	<string
+		id = "backstory_a.malfoycustom_12"
+		text = "{=mfyline121}I had to survive these chaotic times and I learned sword and archery." />
+	<string
+		id = "backstory_b.malfoycustom_12"
+		text = "{=mfyline122}Right now, I'm doing anything that makes money." />
+	<string
+		id = "backstory_c.malfoycustom_12"
+		text = "{=mfyline123}Would an introduction be enough?" />
+	<string
+		id = "response_1.malfoycustom_12"
+		text = "{=mfyline124}Maybe." />
+	<string
+		id = "response_2.malfoycustom_12"
+		text = "{=mfyline125}I shouldn't have asked." />
+	<string
+		id = "backstory_d.malfoycustom_12"
+		text = "{=mfyline126}I don't like talking about myself." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_13"
+		text = "{=mfyline130}I left my village a few years ago. But my mercenary life with my dad was more suitable for me." />
+	<string
+		id = "backstory_a.malfoycustom_13"
+		text = "{=mfyline131}Even in the group where my dad was, I was recognized for my skills, but the problem was a shameless woman." />
+	<string
+		id = "backstory_b.malfoycustom_13"
+		text = "{=mfyline132}She kept framing my dad behind back for not following. I got angry and asked for a duel, but I lost." />
+	<string
+		id = "backstory_c.malfoycustom_13"
+		text = "{=mfyline133}As soon as the defeat was confirmed and she insulted me, her neck was suddenly cut off in front of my eyes. Dad was a gentle person, unlike me, so I was surprised." />
+	<string
+		id = "response_1.malfoycustom_13"
+		text = "{=mfyline134}He put up with the slander of himself." />
+	<string
+		id = "response_2.malfoycustom_13"
+		text = "{=mfyline135}It looks like that impulsiveness runs in the family." />
+	<string
+		id = "backstory_d.malfoycustom_13"
+		text = "{=mfyline136}We ended up being kicked out. Dad found a new wife in the meantime and settled down in a village. But I find this life more interesting." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_14"
+		text = "{=mfyline140}You look like someone who leads a troop. It’s an honor that you show interest in me." />
+	<string
+		id = "backstory_a.malfoycustom_14"
+		text = "{=mfyline141}I have three younger brothers, each with remarkable talents. Gradually, supporting those three became the most important part of my life." />
+	<string
+		id = "backstory_b.malfoycustom_14"
+		text = "{=mfyline142}When even the youngest received the lord’s favor and left home for his mission, I rejoiced at his success, but in the end I was left alone in a house where everyone had gone." />
+	<string
+		id = "backstory_c.malfoycustom_14"
+		text = "{=mfyline143}Was this what I truly wanted? Was this all that I had accomplished? Such thoughts began to arise." />
+	<string
+		id = "response_1.malfoycustom_14"
+		text = "{=mfyline144}You have done admirable work." />
+	<string
+		id = "response_2.malfoycustom_14"
+		text = "{=mfyline145}Hmm… it seems you don’t have many skills that would be useful to the troops…" />
+	<string
+		id = "backstory_d.malfoycustom_14"
+		text = "{=mfyline146}But I am confident in my stamina and persistence. Those are my strengths!" />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_15"
+		text = "{=mfyline150}I grew up under the captain who adopted me, thinking the harsh sea breeze was actually quite refreshing." />
+	<string
+		id = "backstory_a.malfoycustom_15"
+		text = "{=mfyline151}The mutiny broke out without warning, but the captain was a veteran. He narrowly fended off the pursuers, shoved me onto a raft, and cut the lines." />
+	<string
+		id = "backstory_b.malfoycustom_15"
+		text = "{=mfyline152}The traitors were desperate to silence any witnesses. I managed to escape, but at the last second, a javelin pierced right through the captain." />
+	<string
+		id = "backstory_c.malfoycustom_15"
+		text = "{=mfyline153}The raft was heavy, but I couldn't bring myself to leave him behind in the sea. I rowed to shore alone and buried him deep beneath the beach sands." />
+	<string
+		id = "response_1.malfoycustom_15"
+		text = "{=mfyline154}I don't even want to imagine what that must have been like." />
+	<string
+		id = "response_2.malfoycustom_15"
+		text = "{=mfyline155}You nearly died yourself for the sake of a dead man." />
+	<string
+		id = "backstory_d.malfoycustom_15"
+		text = "{=mfyline156}I've only now realized that the reason those harsh winds felt so 'refreshing' was all because of the captain." />
+		
+		
+		
+	<string
+		id = "prebackstory.malfoycustom_16"
+		text = "{=mfyline160}I'm just an ordinary traveler. That's all." />
+	<string
+		id = "backstory_a.malfoycustom_16"
+		text = "{=mfyline161}....." />
+	<string
+		id = "backstory_b.malfoycustom_16"
+		text = "{=mfyline162}..... ....." />
+	<string
+		id = "backstory_c.malfoycustom_16"
+		text = "{=mfyline163}Hm? So?" />
+	<string
+		id = "response_1.malfoycustom_16"
+		text = "{=mfyline164}You say you're ordinary? I am a great adventurer." />
+	<string
+		id = "response_2.malfoycustom_16"
+		text = "{=mfyline165}....." />
+	<string
+		id = "backstory_d.malfoycustom_16"
+		text = "{=mfyline166}Well, there's not much to tell." />
+</strings>
+

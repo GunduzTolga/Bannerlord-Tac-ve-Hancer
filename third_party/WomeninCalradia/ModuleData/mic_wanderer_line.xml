@@ -1,0 +1,73 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<strings>
+	<string
+		id = "prebackstory.malfoycustom2_50"
+		text = "{=mfyline500}There's nothing as stupid as introducing myself in this place, 'Hey, I'm nobleman.'" />
+	<string
+		id = "backstory_a.malfoycustom2_50"
+		text = "{=mfyline501}But that's how I introduce myself. It's only lack of gold, but it's not pride." />
+	<string
+		id = "backstory_b.malfoycustom2_50"
+		text = "{=mfyline502}I do aim to restore the glory of my old family with my brother. Even though I have never experienced old glory myself." />
+	<string
+		id = "backstory_c.malfoycustom2_50"
+		text = "{=mfyline503}Anyway, my eldest brother remains in charge, and I am, I don't know. It would be easy to understand if I said I was on a business trip." />
+	<string
+		id = "response_1.malfoycustom2_50"
+		text = "{=mfyline504}You haven't abandoned your ideals." />
+	<string
+		id = "response_2.malfoycustom2_50"
+		text = "{=mfyline505}You want to be treated like a noble?" />
+	<string
+		id = "backstory_d.malfoycustom2_50"
+		text = "{=mfyline506}I understand my current situation very well. I'm not a tactless idiot. I've never even been lived like a noble in the first place." />
+		
+		
+	<string
+		id = "prebackstory.malfoycustom2_51"
+		text = "{=mfyline510}I was a body guard of a lord." />
+	<string
+		id = "backstory_a.malfoycustom2_51"
+		text = "{=mfyline511}So, there's a place I have to go back." />
+	<string
+		id = "backstory_b.malfoycustom2_51"
+		text = "{=mfyline512}Oh, please don't misunderstand me as a deserter. My last role was to be a derelict bait so that my lord could get away safely." />
+	<string
+		id = "backstory_c.malfoycustom2_51"
+		text = "{=mfyline513}So I'm a person who's either dead or should be held or not existed." />
+	<string
+		id = "response_1.malfoycustom2_51"
+		text = "{=mfyline514}You were a soldier faithful to your duties." />
+	<string
+		id = "response_2.malfoycustom2_51"
+		text = "{=mfyline515}But don't you think should go back? Maybe the lord had no choice." />
+	<string
+		id = "backstory_d.malfoycustom2_51"
+		text = "{=mfyline516}I was prepared to die, but I wasn't. But the person who tried to survive didn't seem to be lucky. In fact, if there was somewhere to go back, I would have gone long ago." />
+
+
+
+	<string
+		id = "prebackstory.malfoycustom2_52"
+		text = "{=mfyline520}I'm a hunter, but it's not just a hunt for food." />
+	<string
+		id = "backstory_a.malfoycustom2_52"
+		text = "{=mfyline521}It's a hunt to solve the problem. You can call it the bounty hunter. Oh, of course, I only hunt animals." />
+	<string
+		id = "backstory_b.malfoycustom2_52"
+		text = "{=mfyline522}Wild boars or wolves, which mainly attack houses and farms, are my main targets." />
+	<string
+		id = "backstory_c.malfoycustom2_52"
+		text = "{=mfyline523}I accidentally kill an animal that nobleman valued. I'm taking a break from work until the incident goes quiet." />
+	<string
+		id = "response_1.malfoycustom2_52"
+		text = "{=mfyline524}Didn't you go hunting on commission? Then there wouldn't have been a problem." />
+	<string
+		id = "response_2.malfoycustom2_52"
+		text = "{=mfyline525}The difference between hunters and illegal poachers is not that big." />
+	<string
+		id = "backstory_d.malfoycustom2_52"
+		text = "{=mfyline526}I think I've been caught in someone's trap. I'm a problem solver, and I didn't want to cause a problem." />		
+		
+</strings>
+

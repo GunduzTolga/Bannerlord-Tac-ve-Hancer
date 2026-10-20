@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+	<Name value = "AutoTrader"/>
+	<Id value = "AutoTrader"/>
+	<Version value = "v1.4.6"/>
+	<SingleplayerModule value="true"/>
+	<MultiplayerModule value="false"/>
+	<Official value="false"/>
+	<DependedModules>
+    <DependedModule
+      Id="Native"
+      DependentVersion="v1.4.6"
+      Optional="false" />
+	</DependedModules>
+	<SubModules>
+		<SubModule>
+			<Name value = "AutoTrader"/>
+			<DLLName value = "AutoTrader.dll"/>
+			<SubModuleClassType value="AutoTrader.AutoTraderSubModule"/>
+			<Tags>
+				<Tag key="DedicatedServerType" value="none"/>
+				<Tag key="IsNoRenderModeElement" value="false"/>
+			</Tags>
+		</SubModule>
+	</SubModules>
+	<Xmls/>
+</Module>

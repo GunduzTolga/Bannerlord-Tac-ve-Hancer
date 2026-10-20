@@ -1,0 +1,122 @@
+﻿<?xml version = "1.0" encoding = "utf-8"?>
+<Items>
+
+	<CraftedItem id = "wic_sword_sonadel"
+				 name = "{=mfywicsm64}Sonadel's Sword"
+				 crafting_template = "OneHandedSword"
+				 is_merchandise = "false"
+				 has_modifier = "false"
+				 modifier_group = "sword">
+		<Pieces>
+			<Piece id = "aserai_blade_1"
+				   Type = "Blade"
+				   scale_factor = "105" />
+			<Piece id = "aserai_guard_3"
+				   Type = "Guard"
+				   scale_factor = "100" />
+			<Piece id = "aserai_grip_29"
+				   Type = "Handle"
+				   scale_factor = "100" />
+			<Piece id = "aserai_pommel_5"
+				   Type = "Pommel"
+				   scale_factor = "100" />
+		</Pieces>
+	</CraftedItem>
+	
+	
+	<Item id = "wic_helmet_0"
+		  name = "{=mfywicsm69}Worn Invisible Helmet"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "HeadArmor">
+		<ItemComponent>
+			<Armor head_armor = "30" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	<Item id = "wic_helmet_1"
+		  name = "{=mfywicsm70}Invisible Helmet"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "HeadArmor">
+		<ItemComponent>
+			<Armor head_armor = "40" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	<Item id = "wic_helmet_2"
+		  name = "{=mfywicsm71}Fine Invisible Helmet"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "HeadArmor">
+		<ItemComponent>
+			<Armor head_armor = "50" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	<Item id = "wic_helmet_3"
+		  name = "{=mfywicsm72}Legendary Invisible Helmet"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "HeadArmor">
+		<ItemComponent>
+			<Armor head_armor = "60" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	
+	<Item id = "wic_shoulder_0"
+		  name = "{=mfywicsm73}Worn Invisible Shouler Guards"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "Cape">
+		<ItemComponent>
+			<Armor body_armor = "8"
+				   arm_armor = "3" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	<Item id = "wic_shoulder_1"
+		  name = "{=mfywicsm74}Invisible Shouler Guards"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "Cape">
+		<ItemComponent>
+			<Armor body_armor = "12"
+				   arm_armor = "7" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	<Item id = "wic_shoulder_2"
+		  name = "{=mfywicsm75}Fine Invisible Shouler Guards"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "Cape">
+		<ItemComponent>
+			<Armor body_armor = "15"
+				   arm_armor = "10" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	<Item id = "wic_shoulder_3"
+		  name = "{=mfywicsm76}Legendary Invisible Shouler Guards"
+          mesh = "none"
+          weight = "1.0"
+		  is_merchandise = "false"
+          Type = "Cape">
+		<ItemComponent>
+			<Armor body_armor = "20"
+				   arm_armor = "15" />
+		</ItemComponent>
+		<Flags Civilian = "true" />
+	</Item>
+	
+	
+</Items>

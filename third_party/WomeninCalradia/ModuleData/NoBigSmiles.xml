@@ -1,0 +1,44 @@
+﻿<?xml version = "1.0" encoding = "utf-8"?>
+<base>
+	<face_animation_records>
+
+
+
+		<face_animation_record id = "convo_delighted" animation_name = "convo_bemused">
+			<flags>
+				<flag name = "look_at_player" />
+				<flag name = "do_blink" />
+			</flags>
+		</face_animation_record>
+	
+	
+	
+		<face_animation_record id = "convo_mocking_teasing" animation_name = "convo_bemused">
+			<flags>
+				<flag name = "do_blink" />
+				<flag name = "look_at_player" />
+			</flags>
+		</face_animation_record>
+	
+	
+	
+		<face_animation_record id = "convo_calm_friendly" animation_name = "female_custom">
+			<flags>
+				<flag name = "do_blink" />
+				<flag name = "look_at_player" />
+			</flags>
+		</face_animation_record>
+	
+	
+	
+		<face_animation_record id = "malfoy_custom_face" animation_name = "convo_calm_friendly">
+			<flags>
+				<flag name = "do_blink" />
+				<flag name = "look_at_player" />
+			</flags>
+		</face_animation_record>
+
+
+
+	</face_animation_records>
+</base>

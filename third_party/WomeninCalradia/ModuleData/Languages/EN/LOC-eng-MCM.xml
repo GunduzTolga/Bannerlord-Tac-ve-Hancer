@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "English" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "It is recommended to configure these settings before starting a new game." />
+		
+		<string id = "mcmwictitle00" text = "Preserve Age" />
+		<string id = "mcmwictitle01" text = "Extra Interactions" />
+		<string id = "mcmwictitle02" text = "A Suspicious Peddler" />
+		<string id = "mcmwictitle03" text = "Male Companions" />
+		<string id = "mcmwictitle04" text = "Rhagaea" />
+		
+		<string id = "mcmwichint00" text = "Keeps the age of added characters until you hire them." />
+		<string id = "mcmwichint01" text = "Applies the additional interactions provided by this mod." />
+		<string id = "mcmwichint02" text = "Adds a suspicious peddler to the world with extra features." />
+		<string id = "mcmwichint03" text = "Adds three male companions. (For male characters, the face and body skin may not align perfectly.)" />
+		<string id = "mcmwichint04" text = "Changes the appearance of Rhagaea." />
+	</strings>
+</base>

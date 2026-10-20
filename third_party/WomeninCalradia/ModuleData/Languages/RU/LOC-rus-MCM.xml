@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Русский" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "Рекомендуется настроить эти параметры перед началом новой игры." />
+
+		<string id = "mcmwictitle00" text = "Сохранять возраст" />
+		<string id = "mcmwictitle01" text = "Дополнительные взаимодействия" />
+		<string id = "mcmwictitle02" text = "Подозрительный торговец" />
+		<string id = "mcmwictitle03" text = "Мужские товарищи" />
+		<string id = "mcmwictitle04" text = "Реджия" />
+
+		<string id = "mcmwichint00" text = "Сохраняет возраст добавленных персонажей до их найма." />
+		<string id = "mcmwichint01" text = "Применяет дополнительные взаимодействия, предоставляемые этим модом." />
+		<string id = "mcmwichint02" text = "Добавляет в мир подозрительного торговца с дополнительными функциями." />
+		<string id = "mcmwichint03" text = "Добавляет трёх мужских товарищей. (У мужских персонажей кожа лица и тела может быть несовершенно совмещена.)" />
+		<string id = "mcmwichint04" text = "Изменяет внешний вид Реджия." />
+	</strings>
+</base>

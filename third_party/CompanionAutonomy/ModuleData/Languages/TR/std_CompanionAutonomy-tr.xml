@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="Bütçe" />
+    <string id="CA_mcm_g_purchases" text="Alışveriş" />
+    <string id="CA_mcm_g_autonomy" text="Özerklik" />
+    <string id="CA_mcm_g_display" text="Görüntü" />
+    <string id="CA_mcm_unlimited" text="Sınırsız bütçe (varsayılan)" />
+    <string id="CA_mcm_unlimited_hint" text="Varsayılan değer, her yoldaş için Klan &gt; Birlikler ekranından değiştirilebilir. Etkinse yoldaşlar harçlık almaz: doğrudan senin altınından harcarlar (asgari rezervinin üzerinde kalarak). Ne kadar zenginsen o kadar iyi teçhizatlanırlar." />
+    <string id="CA_mcm_allowance" text="Haftalık harçlık (varsayılan)" />
+    <string id="CA_mcm_allowance_hint" text="Varsayılan değer, her yoldaş için Klan &gt; Birlikler ekranından değiştirilebilir. Her hafta senin altınından ödenen miktar." />
+    <string id="CA_mcm_cap" text="Kese sınırı" />
+    <string id="CA_mcm_cap_hint" text="Bir yoldaşın biriktirebileceği azami miktar. Bunun üzerinde harçlık almayı bırakır. 0 = sınır yok." />
+    <string id="CA_mcm_reserve" text="Oyuncunun asgari rezervi" />
+    <string id="CA_mcm_reserve_hint" text="Altının, harçlıklar veya sınırsız bütçeli alışverişler yüzünden asla bu eşiğin altına düşmez." />
+    <string id="CA_mcm_family" text="Aileyi dahil et" />
+    <string id="CA_mcm_family_hint" text="Etkinse, bir birliğe liderlik eden aile üyelerin de dahil edilir (yalnızca işe alınan yoldaşlar değil)." />
+    <string id="CA_mcm_refund" text="Ölümde iade et" />
+    <string id="CA_mcm_refund_hint" text="Bir yoldaş ölürse, kesesinde kalanlar sana geri döner." />
+    <string id="CA_mcm_equip_share" text="Teçhizat payı (%)" />
+    <string id="CA_mcm_equip_share_hint" text="Bir yoldaşın her şehir ziyaretinde teçhizata harcayabileceği kese yüzdesi." />
+    <string id="CA_mcm_troop_share" text="Asker payı (%)" />
+    <string id="CA_mcm_troop_share_hint" text="Bir yoldaşın her şehir ziyaretinde yeni askerlere harcayabileceği kese yüzdesi." />
+    <string id="CA_mcm_slot_share" text="Parça başına azami (%)" />
+    <string id="CA_mcm_slot_share_hint" text="Tek bir teçhizat parçası, kalan teçhizat bütçesinin bu yüzdesinden fazlasına mal olamaz. Kese ne kadar doluysa alınan parçalar o kadar pahalı olur." />
+    <string id="CA_mcm_min_upgrade" text="Değiştirmek için asgari iyileşme (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="Bir eşyanın satın alınması için mevcut olandan en az bu oranda daha iyi olması gerekir (gereksiz alışverişleri önler)." />
+    <string id="CA_mcm_sellback" text="Eski eşyanın satışı (%)" />
+    <string id="CA_mcm_sellback_hint" text="Bir yoldaş bir eşyayı değiştirdiğinde geri alınan satış fiyatı yüzdesi." />
+    <string id="CA_mcm_min_budget" text="Alışveriş için asgari bütçe" />
+    <string id="CA_mcm_min_budget_hint" text="Bu miktarın altında yoldaş hiçbir şey almaz (biriktirir)." />
+    <string id="CA_mcm_cooldown" text="Alışverişler arası gün" />
+    <string id="CA_mcm_cooldown_hint" text="Aynı yoldaş için iki alışveriş arasındaki asgari gün sayısı." />
+    <string id="CA_mcm_max_recruits" text="Ziyaret başına azami asker" />
+    <string id="CA_mcm_max_recruits_hint" text="Her şehir ziyaretinde toplanan azami asker sayısı." />
+    <string id="CA_mcm_troop_cost" text="Asker maliyeti (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="Keseden ödenen askerlerin fiyat çarpanı (%100 = modun temel ölçeği)." />
+    <string id="CA_mcm_promote" text="Askerleri terfi ettir" />
+    <string id="CA_mcm_promote_hint" text="Etkinse, yoldaşlar kesenin asker payını önce tecrübeli askerlerinin terfisi için kullanır, kalanla yeni asker toplar." />
+    <string id="CA_mcm_dismiss" text="Düzen dışındaki askerleri terhis et" />
+    <string id="CA_mcm_dismiss_hint" text="Yalnızca ordu düzeni olan yoldaşlar için. Etkinse, düzene uymayan askerler yalnızca doğru askerlere yer açmak için kademeli olarak terhis edilir." />
+    <string id="CA_mcm_fill_free" text="Boş yerleri başka askerlerle doldur" />
+    <string id="CA_mcm_fill_free_hint" text="Yalnızca ordu düzeni olan yoldaşlar için. Etkinse, düzenin kapsamadığı yerler kasabadaki herhangi bir askerle doldurulur. Devre dışıysa, yalnızca düzenlerindeki askerleri toplarlar." />
+    <string id="CA_mcm_buy_horse" text="Atı yoksa at satın al" />
+    <string id="CA_mcm_buy_horse_hint" text="Etkinse, yaya bir yoldaş gerekli Binicilik seviyesine sahipse kendine bir binek (ardından eyer veya at zırhı) alır." />
+    <string id="CA_mcm_min_riding" text="İlk at için asgari Binicilik" />
+    <string id="CA_mcm_min_riding_hint" text="Yaya bir yoldaş, Biniciliği bu seviyeye ulaşmadıkça ilk atını almaz (saf bir piyadeyi eyere oturtmayı önler)." />
+    <string id="CA_mcm_autoshop" text="Otomatik şehir ziyaretleri (varsayılan)" />
+    <string id="CA_mcm_autoshop_hint" text="Varsayılan değer, her yoldaş için Klan &gt; Birlikler ekranından değiştirilebilir. Etkinse, bir süredir hiçbir şey almamış zengin bir yoldaş teçhizatlanmak için kendiliğinden en yakın dost şehre gider." />
+    <string id="CA_mcm_autoshop_budget" text="Yola çıkmak için asgari kese" />
+    <string id="CA_mcm_autoshop_budget_hint" text="Yoldaş yalnızca kesesi bu miktara ulaşırsa yola çıkar (sınırsız bütçede: senin kullanılabilir altının)." />
+    <string id="CA_mcm_autoshop_days" text="Yola çıkmadan önce alışverişsiz gün" />
+    <string id="CA_mcm_autoshop_days_hint" text="Kendiliğinden şehre gitmeye karar vermeden önce hiç alışveriş yapmadığı gün sayısı." />
+    <string id="CA_mcm_recruit_trips" text="Asker toplama yolculukları" />
+    <string id="CA_mcm_recruit_trips_hint" text="Yalnızca ordu düzeni olan ve kendi başına alışveriş yapan yoldaşlar için. İhtiyaç duydukları askerler bölgelerinde toplanamıyorsa, onları sunan en yakın dost kasabaya veya köye giderler." />
+    <string id="CA_mcm_recruit_distance" text="Azami yolculuk mesafesi" />
+    <string id="CA_mcm_recruit_distance_hint" text="Bir yoldaşın asker toplama yolculuğunda gidebileceği en uzak mesafe, harita birimiyle. Değer büyüdükçe Calradia'nın daha büyük kısmını geçebilir." />
+    <string id="CA_mcm_recruit_missing" text="Yolculuktan önce eksik asker" />
+    <string id="CA_mcm_recruit_missing_hint" text="Asker toplama yolculuğu yalnızca düzende en az bu kadar asker eksikse yapılır." />
+    <string id="CA_mcm_noarmies" text="Diğer lordların ordularına katılma (varsayılan)" />
+    <string id="CA_mcm_noarmies_hint" text="Varsayılan değer, her yoldaş için Klan &gt; Birlikler bölümünden değiştirilebilir. Etkinse, yoldaşlar diğer lordların yönettiği ordulara katılmayı reddeder ve savaşmadıkları anda içinde bulundukları ordudan ayrılır. Onları yine de kendi ordularınıza çağırabilirsiniz." />
+    <string id="CA_mcm_messages" text="Mesajları göster" />
+    <string id="CA_mcm_messages_hint" text="Bir yoldaş teçhizat aldığında, asker topladığında veya harçlığını aldığında mesaj gösterir." />
+    <string id="CA_ui_title" text="Yoldaşın kesesi" />
+    <string id="CA_ui_allowance" text="Harçlık / hafta" />
+    <string id="CA_ui_wallet" text="Mevcut kese" />
+    <string id="CA_ui_unlimited" text="Sınırsız bütçe" />
+    <string id="CA_ui_autoshop" text="Kendi başına alışverişe gider" />
+    <string id="CA_ui_noarmies" text="Diğer lordların ordularına katılmaz" />
+    <string id="CA_ui_treasury" text="Klan hazinesi" />
+    <string id="CA_ui_none" text="Henüz alışveriş yok" />
+    <string id="CA_ui_last" text="Son alışveriş: {TEXT}" />
+    <string id="CA_ui_composition" text="Ordu düzeni ({COUNT})" />
+    <string id="CA_ui_composition_none" text="Ordu düzeni: serbest" />
+    <string id="CA_err_popup" text="[Companion Autonomy] Ordu düzeni penceresi açılamadı: {ERROR}" />
+    <string id="CA_msg_promotes" text="{COUNT} askeri terfi ettirir ({GOLD} altın)" />
+    <string id="CA_msg_dismisses" text="{COUNT} askeri terhis eder" />
+    <string id="CA_msg_recruits" text="{COUNT} asker toplar ({GOLD} altın)" />
+    <string id="CA_msg_left" text="{GOLD} altın kaldı" />
+    <string id="CA_msg_summary" text="{HERO}, {TOWN}: {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="+{COUNT} tane daha" />
+    <string id="CA_hist_soldiers" text="{COUNT} asker" />
+    <string id="CA_hist_today" text="bugün" />
+    <string id="CA_hist_yesterday" text="dün" />
+    <string id="CA_hist_days" text="{COUNT} gün önce" />
+    <string id="CA_hist_line" text="{WHAT}, {TOWN}, {WHEN} ({GOLD} altın)" />
+    <string id="CA_msg_allowances" text="Harçlıklar ödendi: {COUNT} yoldaşa {GOLD} altın." />
+    <string id="CA_msg_reserve" text="{COUNT} yoldaş harçlığını alamadı: asgari rezervine ulaşıldı." />
+    <string id="CA_msg_arrived_empty" text="{HERO} {TOWN} şehrine vardı ama kesesi boş." />
+    <string id="CA_msg_buys" text="satın alır: {ITEMS} ({GOLD} altın)" />
+    <string id="CA_msg_nothing" text="{HERO} {TOWN} şehrini dolaştı: alabileceği daha iyi bir şey yok." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] {HERO} alışveriş yaparken hata: {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] Oyunun bu sürümünde hareket emri bulunamadı." />
+    <string id="CA_err_dump" text="İşlev listesi şuraya yazıldı: {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] Hareket emri başarısız: {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} şehre gitmekten vazgeçti: {REASON}." />
+    <string id="CA_reason_unsafe" text="şehir artık güvenli değil" />
+    <string id="CA_reason_timeout" text="yolda çok fazla zaman geçti" />
+    <string id="CA_reason_army" text="bir orduya katıldı" />
+    <string id="CA_msg_recruit_trip" text="{HERO}, ordu düzeni için asker toplamak üzere {TOWN} şehrine gidiyor." />
+    <string id="CA_msg_autotrip" text="{HERO} teçhizatlanmak için kendiliğinden {TOWN} şehrine gidiyor." />
+    <string id="CA_msg_left_army" text="{HERO}, {LEADER} ordusundan ayrılıp kendi işine dönüyor." />
+    <string id="CA_msg_refund" text="{HERO} adlı yoldaşın kesesi ({GOLD} altın) sana geri döndü." />
+    <string id="CA_dlg_ask_wallet" text="Kesen ne durumda?" />
+    <string id="CA_dlg_wallet_unlimited" text="Hazine konusunda bana serbestlik verdin. Yalnızca değeceğine inandığım şeyleri alıyorum." />
+    <string id="CA_dlg_wallet_amount" text="Harçlığımdan {GOLD} altın kaldı." />
+    <string id="CA_dlg_ask_history" text="Son zamanlarda neler aldın?" />
+    <string id="CA_dlg_history_none" text="Henüz hiçbir şey almadım." />
+    <string id="CA_dlg_history_intro" text="Son zamanlarda aldıklarım şunlar:" />
+    <string id="CA_dlg_take_wallet" text="Harçlığından kalanı bana geri ver." />
+    <string id="CA_dlg_take_answer" text="Al, hepsi burada. Elimdekiyle idare ederim." />
+    <string id="CA_dlg_order_shop" text="Şehre git ve teçhizatını yenile." />
+    <string id="CA_dlg_order_ok" text="Anlaşıldı. {CA_ORDER_TOWN} şehrine gidiyorum, daha iyi silahlanmış olarak döneceğim." />
+    <string id="CA_dlg_order_fail" text="Şu an yakınlarda güvenli bir şehir yok." />
+    <string id="CA_dlg_cancel_shop" text="Şehri unut, işine geri dön." />
+    <string id="CA_dlg_cancel_answer" text="Pekâlâ." />
+    <string id="CA_grp_kingdom" text="Krallık birlikleri: {NAME}" />
+    <string id="CA_grp_clan" text="Klan birlikleri: {NAME}" />
+    <string id="CA_pop_have" text="Birlikte: {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="Ordu düzeni: {HERO}" />
+    <string id="CA_pop_selected" text="Seçilen birlikler" />
+    <string id="CA_pop_bar_count" text="{COUNT} asker" />
+    <string id="CA_pop_empty" text="Düzen yok: yoldaş serbestçe asker toplar." />
+    <string id="CA_pop_over" text="{TOTAL} asker seçildi, birliğin kapasitesinden ({LIMIT}) {COUNT} fazla." />
+    <string id="CA_pop_summary" text="{TOTAL} / {LIMIT} asker seçildi, her türlü asker için {FREE} boş yer." />
+    <string id="CA_pop_summary_only" text="{TOTAL} / {LIMIT} asker seçildi. Yoldaş yalnızca bu askerleri toplar." />
+    <string id="CA_pop_no_preset" text="Kayıtlı hazır ayar yok" />
+    <string id="CA_pop_loaded" text="Hazır ayar yüklendi: {NAME}" />
+    <string id="CA_pop_saved" text="Hazır ayar kaydedildi: {NAME}" />
+    <string id="CA_pop_deleted" text="Hazır ayar silindi: {NAME}" />
+    <string id="CA_pop_bar_target" text="Hedef" />
+    <string id="CA_pop_bar_current" text="Mevcut" />
+    <string id="CA_pop_kind_inf" text="Piyade" />
+    <string id="CA_pop_kind_arc" text="Okçular" />
+    <string id="CA_pop_kind_cav" text="Süvari" />
+    <string id="CA_pop_kind_ha" text="Atlı okçular" />
+    <string id="CA_pop_presets" text="Hazır ayarlar" />
+    <string id="CA_pop_load" text="Yükle" />
+    <string id="CA_pop_save" text="Yeni olarak kaydet" />
+    <string id="CA_pop_overwrite" text="Üzerine yaz" />
+    <string id="CA_pop_delete" text="Sil" />
+    <string id="CA_pop_clear" text="Tümünü temizle" />
+    <string id="CA_pop_done" text="Tamam" />
+    <string id="CA_pop_cancel" text="İptal" />
+    <string id="CA_pop_hint" text="Yoldaş, seçtiğin birliklere ulaşan askerleri toplar ve oraya varana kadar terfi ettirir." />
+  </strings>
+</base>

@@ -1,0 +1,11 @@
+# Which layers stay visible under a helmet / hood, by the head item's HairCoverType.
+# Какие слои видны под шлемом / капюшоном (по HairCoverType головного предмета).
+# Sum / сумма: 1 = bangs/чёлки, 2 = locks/пряди, 4 = hairstyles/причёски.  7 = all/всё, 0 = none/ничего.
+# Per-helmet overrides are set in game: inventory -> hair icon near the helmet slot.
+# Для отдельных шлемов настраивается в игре: инвентарь -> значок волос у слота шлема.
+None  = 7
+Type1 = 3
+Type2 = 2
+Type3 = 2
+Type4 = 0
+All   = 0

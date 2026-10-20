@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Polski" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="Budżet" />
+    <string id="CA_mcm_g_purchases" text="Zakupy" />
+    <string id="CA_mcm_g_autonomy" text="Samodzielność" />
+    <string id="CA_mcm_g_display" text="Wyświetlanie" />
+    <string id="CA_mcm_unlimited" text="Nieograniczony budżet (domyślnie)" />
+    <string id="CA_mcm_unlimited_hint" text="Wartość domyślna, do zmiany dla każdego towarzysza w Klan &gt; Oddziały. Po włączeniu towarzysze nie dostają kieszonkowego: korzystają bezpośrednio z twojego złota (powyżej twojej minimalnej rezerwy). Im jesteś bogatszy, tym lepiej się wyposażają." />
+    <string id="CA_mcm_allowance" text="Tygodniowe kieszonkowe (domyślnie)" />
+    <string id="CA_mcm_allowance_hint" text="Wartość domyślna, do zmiany dla każdego towarzysza w Klan &gt; Oddziały. Kwota wypłacana co tydzień z twojego złota." />
+    <string id="CA_mcm_cap" text="Limit sakiewki" />
+    <string id="CA_mcm_cap_hint" text="Maksymalna kwota, jaką towarzysz może zaoszczędzić. Powyżej niej przestaje otrzymywać kieszonkowe. 0 = bez limitu." />
+    <string id="CA_mcm_reserve" text="Minimalna rezerwa gracza" />
+    <string id="CA_mcm_reserve_hint" text="Twoje złoto nigdy nie spadnie poniżej tego progu z powodu kieszonkowego ani zakupów z nieograniczonym budżetem." />
+    <string id="CA_mcm_family" text="Uwzględnij rodzinę" />
+    <string id="CA_mcm_family_hint" text="Po włączeniu dotyczy to także członków rodziny dowodzących oddziałem (nie tylko zwerbowanych towarzyszy)." />
+    <string id="CA_mcm_refund" text="Zwrot po śmierci" />
+    <string id="CA_mcm_refund_hint" text="Gdy towarzysz zginie, to, co zostało w jego sakiewce, wraca do ciebie." />
+    <string id="CA_mcm_equip_share" text="Udział na ekwipunek (%)" />
+    <string id="CA_mcm_equip_share_hint" text="Część sakiewki, jaką towarzysz może wydać na ekwipunek przy każdej wizycie w mieście." />
+    <string id="CA_mcm_troop_share" text="Udział na wojsko (%)" />
+    <string id="CA_mcm_troop_share_hint" text="Część sakiewki, jaką towarzysz może wydać na rekrutów przy każdej wizycie w mieście." />
+    <string id="CA_mcm_slot_share" text="Maksimum na element (%)" />
+    <string id="CA_mcm_slot_share_hint" text="Pojedynczy element ekwipunku nie może kosztować więcej niż ten procent pozostałego budżetu na ekwipunek. Im pełniejsza sakiewka, tym droższe zakupy." />
+    <string id="CA_mcm_min_upgrade" text="Minimalna poprawa do wymiany (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="Przedmiot musi być lepszy od obecnego co najmniej o tyle, aby został kupiony (zapobiega zbędnym zakupom)." />
+    <string id="CA_mcm_sellback" text="Odsprzedaż starego przedmiotu (%)" />
+    <string id="CA_mcm_sellback_hint" text="Część ceny sprzedaży odzyskiwana, gdy towarzysz wymienia przedmiot." />
+    <string id="CA_mcm_min_budget" text="Minimalny budżet na zakupy" />
+    <string id="CA_mcm_min_budget_hint" text="Poniżej tej kwoty towarzysz nic nie kupuje (oszczędza)." />
+    <string id="CA_mcm_cooldown" text="Dni między zakupami" />
+    <string id="CA_mcm_cooldown_hint" text="Minimalna liczba dni między dwoma zakupami tego samego towarzysza." />
+    <string id="CA_mcm_max_recruits" text="Maks. rekrutów na wizytę" />
+    <string id="CA_mcm_max_recruits_hint" text="Maksymalna liczba żołnierzy rekrutowanych przy każdej wizycie w mieście." />
+    <string id="CA_mcm_troop_cost" text="Koszt rekrutów (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="Mnożnik ceny rekrutów opłacanych z sakiewki (100% = podstawowy cennik moda)." />
+    <string id="CA_mcm_promote" text="Awansuj wojsko" />
+    <string id="CA_mcm_promote_hint" text="Po włączeniu towarzysze przeznaczają część sakiewki na wojsko najpierw na awans doświadczonych żołnierzy, a za resztę rekrutują." />
+    <string id="CA_mcm_dismiss" text="Zwalniaj wojsko spoza składu" />
+    <string id="CA_mcm_dismiss_hint" text="Tylko dla towarzyszy z ustalonym składem armii. Po włączeniu żołnierze niepasujący do składu są stopniowo zwalniani, wyłącznie po to, by zrobić miejsce właściwym rekrutom." />
+    <string id="CA_mcm_fill_free" text="Uzupełniaj wolne miejsca innym wojskiem" />
+    <string id="CA_mcm_fill_free_hint" text="Tylko dla towarzyszy z ustalonym składem armii. Po włączeniu miejsca nieobjęte składem są uzupełniane dowolnymi rekrutami dostępnymi w mieście. Po wyłączeniu rekrutują tylko wojsko ze swojego składu." />
+    <string id="CA_mcm_buy_horse" text="Kup konia, jeśli go nie ma" />
+    <string id="CA_mcm_buy_horse_hint" text="Po włączeniu pieszy towarzysz kupuje wierzchowca (a potem siodło lub zbroję dla konia), jeśli ma wymagany poziom Jazdy konnej." />
+    <string id="CA_mcm_min_riding" text="Minimalna Jazda konna dla pierwszego konia" />
+    <string id="CA_mcm_min_riding_hint" text="Pieszy towarzysz kupuje pierwszego konia dopiero, gdy jego Jazda konna osiągnie ten poziom (żeby nie sadzać w siodle czystego piechura)." />
+    <string id="CA_mcm_autoshop" text="Automatyczne wyprawy do miasta (domyślnie)" />
+    <string id="CA_mcm_autoshop_hint" text="Wartość domyślna, do zmiany dla każdego towarzysza w Klan &gt; Oddziały. Po włączeniu zamożny towarzysz, który od dawna nic nie kupił, sam udaje się do najbliższego przyjaznego miasta, by się wyposażyć." />
+    <string id="CA_mcm_autoshop_budget" text="Minimalna sakiewka do wyruszenia" />
+    <string id="CA_mcm_autoshop_budget_hint" text="Towarzysz wyrusza tylko wtedy, gdy jego sakiewka osiągnie tę kwotę (przy nieograniczonym budżecie: twoje dostępne złoto)." />
+    <string id="CA_mcm_autoshop_days" text="Dni bez zakupów przed wyprawą" />
+    <string id="CA_mcm_autoshop_days_hint" text="Liczba dni bez żadnych zakupów, zanim sam postanowi udać się do miasta." />
+    <string id="CA_mcm_recruit_trips" text="Wyprawy rekrutacyjne" />
+    <string id="CA_mcm_recruit_trips_hint" text="Tylko dla towarzyszy z ustalonym składem armii, którzy robią zakupy sami. Jeśli potrzebnego wojska nie da się zwerbować w ich regionie, udają się do najbliższego przyjaznego miasta lub wioski, która je oferuje." />
+    <string id="CA_mcm_recruit_distance" text="Maksymalna odległość wyprawy" />
+    <string id="CA_mcm_recruit_distance_hint" text="Jak daleko towarzysz może się udać na wyprawę rekrutacyjną, w jednostkach mapy. Im wyższa wartość, tym większą część Calradii może przemierzyć." />
+    <string id="CA_mcm_recruit_missing" text="Brakujące jednostki przed wyprawą" />
+    <string id="CA_mcm_recruit_missing_hint" text="Wyprawa rekrutacyjna odbywa się tylko wtedy, gdy w składzie brakuje co najmniej tylu jednostek." />
+    <string id="CA_mcm_noarmies" text="Nie dołączać do armii innych lordów (domyślnie)" />
+    <string id="CA_mcm_noarmies_hint" text="Wartość domyślna, do zmiany dla każdego towarzysza w Klan &gt; Oddziały. Po włączeniu towarzysze odmawiają dołączenia do armii prowadzonych przez innych lordów i opuszczają armię, w której są, gdy tylko nie walczą. Nadal możesz wzywać ich do własnych armii." />
+    <string id="CA_mcm_messages" text="Pokazuj komunikaty" />
+    <string id="CA_mcm_messages_hint" text="Pokazuje komunikat, gdy towarzysz kupuje ekwipunek, rekrutuje lub otrzymuje kieszonkowe." />
+    <string id="CA_ui_title" text="Sakiewka towarzysza" />
+    <string id="CA_ui_allowance" text="Kieszonkowe / tydzień" />
+    <string id="CA_ui_wallet" text="Obecna sakiewka" />
+    <string id="CA_ui_unlimited" text="Nieograniczony budżet" />
+    <string id="CA_ui_autoshop" text="Robi zakupy samodzielnie" />
+    <string id="CA_ui_noarmies" text="Nie dołącza do armii innych lordów" />
+    <string id="CA_ui_treasury" text="Skarbiec klanu" />
+    <string id="CA_ui_none" text="Jeszcze brak zakupów" />
+    <string id="CA_ui_last" text="Ostatni zakup: {TEXT}" />
+    <string id="CA_ui_composition" text="Skład armii ({COUNT})" />
+    <string id="CA_ui_composition_none" text="Skład armii: dowolny" />
+    <string id="CA_err_popup" text="[Companion Autonomy] Nie udało się otworzyć okna składu: {ERROR}" />
+    <string id="CA_msg_promotes" text="awansuje żołnierzy: {COUNT} ({GOLD} złota)" />
+    <string id="CA_msg_dismisses" text="zwalnia żołnierzy: {COUNT}" />
+    <string id="CA_msg_recruits" text="rekrutuje żołnierzy: {COUNT} ({GOLD} złota)" />
+    <string id="CA_msg_left" text="zostało {GOLD} złota" />
+    <string id="CA_msg_summary" text="{HERO} w {TOWN}: {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="+{COUNT} więcej" />
+    <string id="CA_hist_soldiers" text="żołnierze: {COUNT}" />
+    <string id="CA_hist_today" text="dzisiaj" />
+    <string id="CA_hist_yesterday" text="wczoraj" />
+    <string id="CA_hist_days" text="dni temu: {COUNT}" />
+    <string id="CA_hist_line" text="{WHAT}, {TOWN}, {WHEN} ({GOLD} złota)" />
+    <string id="CA_msg_allowances" text="Wypłacono kieszonkowe: {GOLD} złota dla towarzyszy: {COUNT}." />
+    <string id="CA_msg_reserve" text="Towarzysze bez kieszonkowego: {COUNT}. Osiągnięto twoją minimalną rezerwę." />
+    <string id="CA_msg_arrived_empty" text="{HERO}: przybycie do {TOWN}, ale sakiewka jest pusta." />
+    <string id="CA_msg_buys" text="kupuje: {ITEMS} ({GOLD} złota)" />
+    <string id="CA_msg_nothing" text="{HERO}, {TOWN}: nic lepszego w zasięgu." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] Błąd podczas zakupów ({HERO}): {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] Nie znaleziono rozkazu ruchu w tej wersji gry." />
+    <string id="CA_err_dump" text="Lista funkcji zapisana w: {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] Rozkaz ruchu nie powiódł się: {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} rezygnuje z wyprawy do miasta: {REASON}." />
+    <string id="CA_reason_unsafe" text="miasto nie jest już bezpieczne" />
+    <string id="CA_reason_timeout" text="zbyt długo w drodze" />
+    <string id="CA_reason_army" text="dołączenie do armii" />
+    <string id="CA_msg_recruit_trip" text="{HERO} wyrusza do {TOWN}, by zwerbować wojsko do składu armii." />
+    <string id="CA_msg_autotrip" text="{HERO} z własnej inicjatywy udaje się do {TOWN}, by się wyposażyć." />
+    <string id="CA_msg_left_army" text="{HERO} opuszcza armię {LEADER} i wraca do własnych spraw." />
+    <string id="CA_msg_refund" text="Sakiewka postaci {HERO} ({GOLD} złota) wróciła do ciebie." />
+    <string id="CA_dlg_ask_wallet" text="Jak tam twoja sakiewka?" />
+    <string id="CA_dlg_wallet_unlimited" text="Mam wolną rękę do skarbca. Kupuję tylko to, co się opłaca." />
+    <string id="CA_dlg_wallet_amount" text="Z mojego kieszonkowego zostało mi {GOLD} złota." />
+    <string id="CA_dlg_ask_history" text="Jakie były ostatnie zakupy?" />
+    <string id="CA_dlg_history_none" text="Na razie żadnych zakupów." />
+    <string id="CA_dlg_history_intro" text="Oto moje ostatnie zakupy:" />
+    <string id="CA_dlg_take_wallet" text="Oddaj mi to, co zostało z twojego kieszonkowego." />
+    <string id="CA_dlg_take_answer" text="Proszę, wszystko jest. Poradzę sobie z tym, co mam." />
+    <string id="CA_dlg_order_shop" text="Idź do miasta i ulepsz swój ekwipunek." />
+    <string id="CA_dlg_order_ok" text="Zrozumiano. Ruszam do {CA_ORDER_TOWN} i wrócę z lepszym ekwipunkiem." />
+    <string id="CA_dlg_order_fail" text="Na razie w pobliżu nie ma żadnego bezpiecznego miasta." />
+    <string id="CA_dlg_cancel_shop" text="Zapomnij o mieście, wracaj do swoich zadań." />
+    <string id="CA_dlg_cancel_answer" text="Dobrze." />
+    <string id="CA_grp_kingdom" text="Wojska królestwa: {NAME}" />
+    <string id="CA_grp_clan" text="Wojska klanu: {NAME}" />
+    <string id="CA_pop_have" text="W oddziale: {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="Skład armii: {HERO}" />
+    <string id="CA_pop_selected" text="Wybrane jednostki" />
+    <string id="CA_pop_bar_count" text="{COUNT} żołnierzy" />
+    <string id="CA_pop_empty" text="Brak składu: towarzysz rekrutuje dowolnie." />
+    <string id="CA_pop_over" text="Wybrano jednostek: {TOTAL}, o {COUNT} więcej, niż mieści oddział ({LIMIT})." />
+    <string id="CA_pop_summary" text="Wybrano {TOTAL} / {LIMIT} jednostek, wolne miejsca na dowolne wojsko: {FREE}." />
+    <string id="CA_pop_summary_only" text="Wybrano {TOTAL} / {LIMIT} jednostek. Towarzysz rekrutuje tylko to wojsko." />
+    <string id="CA_pop_no_preset" text="Brak zapisanych szablonów" />
+    <string id="CA_pop_loaded" text="Wczytano szablon: {NAME}" />
+    <string id="CA_pop_saved" text="Zapisano szablon: {NAME}" />
+    <string id="CA_pop_deleted" text="Usunięto szablon: {NAME}" />
+    <string id="CA_pop_bar_target" text="Cel" />
+    <string id="CA_pop_bar_current" text="Obecnie" />
+    <string id="CA_pop_kind_inf" text="Piechota" />
+    <string id="CA_pop_kind_arc" text="Łucznicy" />
+    <string id="CA_pop_kind_cav" text="Kawaleria" />
+    <string id="CA_pop_kind_ha" text="Konni łucznicy" />
+    <string id="CA_pop_presets" text="Szablony" />
+    <string id="CA_pop_load" text="Wczytaj" />
+    <string id="CA_pop_save" text="Zapisz jako nowy" />
+    <string id="CA_pop_overwrite" text="Nadpisz" />
+    <string id="CA_pop_delete" text="Usuń" />
+    <string id="CA_pop_clear" text="Wyczyść wszystko" />
+    <string id="CA_pop_done" text="Gotowe" />
+    <string id="CA_pop_cancel" text="Anuluj" />
+    <string id="CA_pop_hint" text="Towarzysz rekrutuje jednostki prowadzące do twojego wyboru i awansuje je, aż je osiągną." />
+  </strings>
+</base>

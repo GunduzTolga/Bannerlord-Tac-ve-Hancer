@@ -1,0 +1,5 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<LanguageData id = "日本語" name = "日本語" subtitle_extension = "jp-JP" supported_iso = ""  under_development = "false">
+	<LanguageFile xml_path = "JP/LOC-jpn.xml" />
+	<LanguageFile xml_path = "JP/LOC-jpn-MCM.xml" />
+</LanguageData>

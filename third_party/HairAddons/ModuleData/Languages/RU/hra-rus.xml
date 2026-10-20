@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Русский" />
+  </tags>
+  <strings>
+    <string id="hra_title" text="Слои причёски" />
+    <string id="hra_helmslot" text="Включён Hairstyles_dlx_HelmSlot: его пряди и причёски уже есть внутри DLX Hair Layers. Отключи HelmSlot, если не нужны его шлемы-предметы." />
+    <string id="hra_tab_bangs" text="Чёлки" />
+    <string id="hra_tab_locks" text="Пряди" />
+    <string id="hra_tab_styles" text="Причёски" />
+    <string id="hra_none" text="Нет" />
+    <string id="hra_fit" text="Подгонка" />
+    <string id="hra_color" text="Цвет" />
+    <string id="hra_clear" text="Убрать всё" />
+    <string id="hra_info_empty" text="ЛКМ - добавить (до 2 на вкладку), ПКМ - убрать" />
+    <string id="hra_match" text="как волосы" />
+    <string id="hra_texture" text="без окраски" />
+    <string id="hra_mirrored" text="зеркально" />
+    <string id="hra_t_light" text="светлота" />
+    <string id="hra_t_warm" text="тепло" />
+    <string id="hra_note_author" text="Своя текстура автора: лучше на лысой базе или с такими же" />
+    <string id="hra_h_up" text="Выше" />
+    <string id="hra_h_down" text="Ниже" />
+    <string id="hra_h_fwd" text="Вперёд (к лицу)" />
+    <string id="hra_h_back" text="Назад (к затылку)" />
+    <string id="hra_h_left" text="Влево" />
+    <string id="hra_h_right" text="Вправо" />
+    <string id="hra_h_tiltf" text="Наклон вперёд" />
+    <string id="hra_h_tiltb" text="Наклон назад" />
+    <string id="hra_h_smaller" text="Меньше" />
+    <string id="hra_h_bigger" text="Больше" />
+    <string id="hra_h_mirror" text="Отразить зеркально" />
+    <string id="hra_h_reset" text="Сбросить сдвиг" />
+    <string id="hra_h_lighter" text="Светлее" />
+    <string id="hra_h_darker" text="Темнее" />
+    <string id="hra_h_warmer" text="Теплее (рыжее)" />
+    <string id="hra_h_cooler" text="Холоднее (пепельнее)" />
+    <string id="hra_h_toall" text="Этот цвет - всем накладкам" />
+    <string id="hra_h_link" text="Как волосы героя" />
+    <string id="hra_h_notint" text="Без окраски: родной цвет текстуры" />
+    <string id="hra_c0" text="чёрный" />
+    <string id="hra_c1" text="тёмно-каштановый" />
+    <string id="hra_c2" text="каштановый" />
+    <string id="hra_c3" text="рыжевато-каштановый" />
+    <string id="hra_c4" text="светло-русый" />
+    <string id="hra_c5" text="тёмный блонд" />
+    <string id="hra_c6" text="блонд" />
+    <string id="hra_c7" text="платиновый" />
+    <string id="hra_c8" text="медный" />
+    <string id="hra_c9" text="рыжий" />
+    <string id="hra_c10" text="седой" />
+    <string id="hra_c11" text="белый" />
+    <string id="hra_inv_button" text="Волосы под шлемом" />
+    <string id="hra_inv_close" text="Закрыть" />
+    <string id="hra_inv_nohelmet" text="Шлем не надет" />
+    <string id="hra_inv_show" text="вкл" />
+    <string id="hra_inv_hide" text="выкл" />
+    <string id="hra_inv_auto" text="авто" />
+    <string id="hra_inv_bangs" text="Чёлка" />
+    <string id="hra_inv_locks" text="Пряди" />
+    <string id="hra_inv_style" text="Причёска" />
+    <string id="hra_tab_presets" text="Наборы" />
+    <string id="hra_p_save" text="Сохранить текущий набор" />
+    <string id="hra_p_help" text="ЛКМ - применить (с базой: причёска, борода, цвет), ПКМ - удалить. Наведи - состав. +Б - с бородой." />
+    <string id="hra_p_empty" text="Нечего сохранять: сначала добавь накладки" />
+    <string id="hra_p_nobase" text="Базовая причёска не применена: набор сделан для другого пола или расы" />
+    <string id="hra_p_base" text="база" />
+    <string id="hra_p_nohair" text="Базовая причёска из набора не найдена у этого героя (другой пол/раса или не установлен мод с ней) - поставлены только накладки" />
+    <string id="hra_p_defname" text="Набор" />
+    <string id="hra_p_nametitle" text="Название набора" />
+    <string id="hra_p_nametext" text="Введи название:" />
+    <string id="hra_p_m" text="М" />
+    <string id="hra_p_f" text="Ж" />
+    <string id="hra_p_b" text="+Б" />
+    <string id="hra_p_male" text="мужская" />
+    <string id="hra_p_female" text="женская" />
+    <string id="hra_p_beard" text="с бородой" />
+    <string id="hra_p_rename" text="Переименовать" />
+    <string id="hra_p_delete" text="Удалить" />
+    <string id="hra_p_tabmale" text="Мужские" />
+    <string id="hra_p_tabfemale" text="Женские" />
+    <string id="hra_p_deltitle" text="Удаление набора" />
+    <string id="hra_p_delask" text="Удалить набор" />
+    <string id="hra_p_pick" text="Сначала выбери набор кликом" />
+    <string id="hra_p_bald" text="лысая" />
+  </strings>
+</base>

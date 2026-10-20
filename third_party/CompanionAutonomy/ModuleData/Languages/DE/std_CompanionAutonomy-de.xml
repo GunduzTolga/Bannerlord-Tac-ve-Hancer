@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Deutsch" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="Budget" />
+    <string id="CA_mcm_g_purchases" text="Einkäufe" />
+    <string id="CA_mcm_g_autonomy" text="Selbstständigkeit" />
+    <string id="CA_mcm_g_display" text="Anzeige" />
+    <string id="CA_mcm_unlimited" text="Unbegrenztes Budget (Standard)" />
+    <string id="CA_mcm_unlimited_hint" text="Standardwert, für jeden Gefährten unter Clan &gt; Gruppen änderbar. Wenn aktiviert, erhalten Gefährten kein Taschengeld: Sie bedienen sich direkt an deinem Gold (oberhalb deiner Mindestreserve). Je reicher du bist, desto besser rüsten sie sich aus." />
+    <string id="CA_mcm_allowance" text="Wöchentliches Taschengeld (Standard)" />
+    <string id="CA_mcm_allowance_hint" text="Standardwert, für jeden Gefährten unter Clan &gt; Gruppen änderbar. Betrag, der jede Woche aus deinem Gold gezahlt wird." />
+    <string id="CA_mcm_cap" text="Börsenobergrenze" />
+    <string id="CA_mcm_cap_hint" text="Höchstbetrag, den ein Gefährte ansparen kann. Darüber erhält er kein Taschengeld mehr. 0 = keine Grenze." />
+    <string id="CA_mcm_reserve" text="Mindestreserve des Spielers" />
+    <string id="CA_mcm_reserve_hint" text="Dein Gold fällt durch Taschengeld oder Einkäufe mit unbegrenztem Budget nie unter diesen Wert." />
+    <string id="CA_mcm_family" text="Familie einbeziehen" />
+    <string id="CA_mcm_family_hint" text="Wenn aktiviert, gilt dies auch für Familienmitglieder, die eine Gruppe anführen (nicht nur für angeworbene Gefährten)." />
+    <string id="CA_mcm_refund" text="Erstattung bei Tod" />
+    <string id="CA_mcm_refund_hint" text="Stirbt ein Gefährte, geht der Rest seiner Börse an dich zurück." />
+    <string id="CA_mcm_equip_share" text="Anteil Ausrüstung (%)" />
+    <string id="CA_mcm_equip_share_hint" text="Anteil der Börse, den ein Gefährte bei jedem Stadtbesuch für Ausrüstung ausgeben darf." />
+    <string id="CA_mcm_troop_share" text="Anteil Truppen (%)" />
+    <string id="CA_mcm_troop_share_hint" text="Anteil der Börse, den ein Gefährte bei jedem Stadtbesuch für Rekruten ausgeben darf." />
+    <string id="CA_mcm_slot_share" text="Maximum pro Teil (%)" />
+    <string id="CA_mcm_slot_share_hint" text="Ein einzelnes Ausrüstungsteil darf nicht mehr als diesen Anteil des verbleibenden Ausrüstungsbudgets kosten. Je voller die Börse, desto teurer die gekauften Teile." />
+    <string id="CA_mcm_min_upgrade" text="Mindestverbesserung für Wechsel (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="Ein Gegenstand muss mindestens um diesen Wert besser sein als der aktuelle, damit er gekauft wird (vermeidet unnötige Käufe)." />
+    <string id="CA_mcm_sellback" text="Weiterverkauf alter Teile (%)" />
+    <string id="CA_mcm_sellback_hint" text="Anteil des Verkaufspreises, den ein Gefährte beim Ersetzen eines Gegenstands zurückerhält." />
+    <string id="CA_mcm_min_budget" text="Mindestbudget zum Einkaufen" />
+    <string id="CA_mcm_min_budget_hint" text="Unter diesem Betrag kauft der Gefährte nichts (er spart)." />
+    <string id="CA_mcm_cooldown" text="Tage zwischen Einkäufen" />
+    <string id="CA_mcm_cooldown_hint" text="Mindestanzahl an Tagen zwischen zwei Einkaufsrunden desselben Gefährten." />
+    <string id="CA_mcm_max_recruits" text="Max. Rekruten pro Besuch" />
+    <string id="CA_mcm_max_recruits_hint" text="Höchstzahl an Soldaten, die bei jedem Stadtbesuch angeworben werden." />
+    <string id="CA_mcm_troop_cost" text="Rekrutenkosten (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="Multiplikator für den Preis der aus der Börse bezahlten Rekruten (100 % = Grundtarif des Mods)." />
+    <string id="CA_mcm_promote" text="Truppen befördern" />
+    <string id="CA_mcm_promote_hint" text="Wenn aktiviert, nutzen Gefährten den Truppenanteil ihrer Börse zuerst für die Beförderung erfahrener Soldaten und rekrutieren dann mit dem Rest." />
+    <string id="CA_mcm_dismiss" text="Truppen außerhalb der Zusammensetzung entlassen" />
+    <string id="CA_mcm_dismiss_hint" text="Nur für Gefährten mit einer Armeezusammensetzung. Wenn aktiviert, werden Soldaten, die nicht zur Zusammensetzung passen, nach und nach entlassen – nur um Platz für die richtigen Rekruten zu schaffen." />
+    <string id="CA_mcm_fill_free" text="Freie Plätze mit anderen Truppen auffüllen" />
+    <string id="CA_mcm_fill_free_hint" text="Nur für Gefährten mit einer Armeezusammensetzung. Wenn aktiviert, werden die Plätze, die die Zusammensetzung nicht abdeckt, mit beliebigen Rekruten aus der Stadt aufgefüllt. Wenn deaktiviert, rekrutieren sie nur die Truppen ihrer Zusammensetzung." />
+    <string id="CA_mcm_buy_horse" text="Pferd kaufen, falls keines vorhanden" />
+    <string id="CA_mcm_buy_horse_hint" text="Wenn aktiviert, kauft sich ein Gefährte zu Fuß ein Reittier (danach Sattel oder Rossharnisch), sofern das nötige Reiten-Niveau erreicht ist." />
+    <string id="CA_mcm_min_riding" text="Mindest-Reiten für das erste Pferd" />
+    <string id="CA_mcm_min_riding_hint" text="Ein Gefährte zu Fuß kauft sein erstes Pferd nur, wenn sein Reiten diesen Wert erreicht (verhindert, dass ein reiner Infanterist in den Sattel steigt)." />
+    <string id="CA_mcm_autoshop" text="Automatische Stadtbesuche (Standard)" />
+    <string id="CA_mcm_autoshop_hint" text="Standardwert, für jeden Gefährten unter Clan &gt; Gruppen änderbar. Wenn aktiviert, geht ein wohlhabender Gefährte, der länger nichts gekauft hat, von sich aus in die nächste befreundete Stadt, um sich auszurüsten." />
+    <string id="CA_mcm_autoshop_budget" text="Mindestbörse für die Reise" />
+    <string id="CA_mcm_autoshop_budget_hint" text="Der Gefährte macht sich nur auf den Weg, wenn seine Börse diesen Betrag erreicht (bei unbegrenztem Budget: dein verfügbares Gold)." />
+    <string id="CA_mcm_autoshop_days" text="Tage ohne Einkauf vor der Reise" />
+    <string id="CA_mcm_autoshop_days_hint" text="Anzahl der Tage ohne jeden Einkauf, bevor er von sich aus in die Stadt geht." />
+    <string id="CA_mcm_recruit_trips" text="Rekrutierungsreisen" />
+    <string id="CA_mcm_recruit_trips_hint" text="Nur für Gefährten mit einer Armeezusammensetzung, die selbstständig einkaufen. Werden die benötigten Truppen in ihrer Region nicht rekrutiert, reisen sie zur nächsten befreundeten Stadt oder zum nächsten befreundeten Dorf, das sie anbietet." />
+    <string id="CA_mcm_recruit_distance" text="Maximale Reisedistanz" />
+    <string id="CA_mcm_recruit_distance_hint" text="Wie weit ein Gefährte für eine Rekrutierungsreise ziehen darf, in Karteneinheiten. Je höher der Wert, desto mehr von Calradia kann er durchqueren." />
+    <string id="CA_mcm_recruit_missing" text="Fehlende Truppen vor einer Reise" />
+    <string id="CA_mcm_recruit_missing_hint" text="Eine Rekrutierungsreise findet nur statt, wenn mindestens so viele Truppen der Zusammensetzung fehlen." />
+    <string id="CA_mcm_noarmies" text="Den Armeen anderer Fürsten fernbleiben (Standard)" />
+    <string id="CA_mcm_noarmies_hint" text="Standardwert, für jeden Gefährten unter Clan &gt; Trupps änderbar. Wenn aktiviert, weigern sich Gefährten, Armeen anderer Fürsten beizutreten, und verlassen eine Armee, sobald sie nicht kämpfen. Du kannst sie weiterhin in deine eigenen Armeen rufen." />
+    <string id="CA_mcm_messages" text="Meldungen anzeigen" />
+    <string id="CA_mcm_messages_hint" text="Zeigt eine Meldung an, wenn ein Gefährte Ausrüstung kauft, rekrutiert oder sein Taschengeld erhält." />
+    <string id="CA_ui_title" text="Börse des Gefährten" />
+    <string id="CA_ui_allowance" text="Taschengeld / Woche" />
+    <string id="CA_ui_wallet" text="Aktuelle Börse" />
+    <string id="CA_ui_unlimited" text="Unbegrenztes Budget" />
+    <string id="CA_ui_autoshop" text="Kauft selbstständig ein" />
+    <string id="CA_ui_noarmies" text="Bleibt den Armeen anderer Fürsten fern" />
+    <string id="CA_ui_treasury" text="Clan-Schatzkammer" />
+    <string id="CA_ui_none" text="Noch keine Einkäufe" />
+    <string id="CA_ui_last" text="Letzter Einkauf: {TEXT}" />
+    <string id="CA_ui_composition" text="Armeezusammensetzung ({COUNT})" />
+    <string id="CA_ui_composition_none" text="Armeezusammensetzung: frei" />
+    <string id="CA_err_popup" text="[Companion Autonomy] Das Fenster für die Zusammensetzung konnte nicht geöffnet werden: {ERROR}" />
+    <string id="CA_msg_promotes" text="befördert {COUNT} Soldaten ({GOLD} Gold)" />
+    <string id="CA_msg_dismisses" text="entlässt {COUNT} Soldaten" />
+    <string id="CA_msg_recruits" text="rekrutiert {COUNT} Soldaten ({GOLD} Gold)" />
+    <string id="CA_msg_left" text="noch {GOLD} Gold" />
+    <string id="CA_msg_summary" text="{HERO} in {TOWN}: {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="+{COUNT} weitere" />
+    <string id="CA_hist_soldiers" text="{COUNT} Soldaten" />
+    <string id="CA_hist_today" text="heute" />
+    <string id="CA_hist_yesterday" text="gestern" />
+    <string id="CA_hist_days" text="vor {COUNT} Tagen" />
+    <string id="CA_hist_line" text="{WHAT} in {TOWN}, {WHEN} ({GOLD} Gold)" />
+    <string id="CA_msg_allowances" text="Taschengeld gezahlt: {GOLD} Gold an {COUNT} Gefährten." />
+    <string id="CA_msg_reserve" text="{COUNT} Gefährte(n) haben kein Taschengeld erhalten: Deine Mindestreserve ist erreicht." />
+    <string id="CA_msg_arrived_empty" text="{HERO}: Ankunft in {TOWN}, aber die Börse ist leer." />
+    <string id="CA_msg_buys" text="kauft {ITEMS} ({GOLD} Gold)" />
+    <string id="CA_msg_nothing" text="{HERO} hat sich in {TOWN} umgesehen: nichts Besseres in Reichweite." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] Fehler beim Einkauf von {HERO}: {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] Der Bewegungsbefehl wurde in dieser Spielversion nicht gefunden." />
+    <string id="CA_err_dump" text="Funktionsliste gespeichert unter: {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] Bewegungsbefehl fehlgeschlagen: {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} verzichtet auf den Stadtbesuch: {REASON}." />
+    <string id="CA_reason_unsafe" text="die Stadt ist nicht mehr sicher" />
+    <string id="CA_reason_timeout" text="zu lange unterwegs" />
+    <string id="CA_reason_army" text="Beitritt zu einer Armee" />
+    <string id="CA_msg_recruit_trip" text="{HERO} bricht nach {TOWN} auf, um Truppen für die Armeezusammensetzung anzuwerben." />
+    <string id="CA_msg_autotrip" text="{HERO} geht aus eigenem Antrieb nach {TOWN}, um sich auszurüsten." />
+    <string id="CA_msg_left_army" text="{HERO} verlässt die Armee von {LEADER} und kümmert sich wieder um eigene Angelegenheiten." />
+    <string id="CA_msg_refund" text="Die Börse von {HERO} ({GOLD} Gold) ist an dich zurückgegangen." />
+    <string id="CA_dlg_ask_wallet" text="Wie steht es um deine Börse?" />
+    <string id="CA_dlg_wallet_unlimited" text="Du hast mir freie Hand über die Schatzkammer gegeben. Ich kaufe nur, was sich lohnt." />
+    <string id="CA_dlg_wallet_amount" text="Von meinem Taschengeld sind noch {GOLD} Gold übrig." />
+    <string id="CA_dlg_ask_history" text="Was hast du in letzter Zeit gekauft?" />
+    <string id="CA_dlg_history_none" text="Ich habe noch nichts gekauft." />
+    <string id="CA_dlg_history_intro" text="Das habe ich in letzter Zeit gekauft:" />
+    <string id="CA_dlg_take_wallet" text="Gib mir zurück, was von deinem Taschengeld übrig ist." />
+    <string id="CA_dlg_take_answer" text="Hier, alles da. Ich komme mit dem zurecht, was ich habe." />
+    <string id="CA_dlg_order_shop" text="Geh in die Stadt und verbessere deine Ausrüstung." />
+    <string id="CA_dlg_order_ok" text="Verstanden. Ich mache mich auf nach {CA_ORDER_TOWN} und komme besser ausgerüstet zurück." />
+    <string id="CA_dlg_order_fail" text="Im Moment gibt es keine sichere Stadt in der Nähe." />
+    <string id="CA_dlg_cancel_shop" text="Vergiss die Stadt, kümmere dich wieder um deine Aufgaben." />
+    <string id="CA_dlg_cancel_answer" text="Sehr wohl." />
+    <string id="CA_grp_kingdom" text="Königreichstruppen: {NAME}" />
+    <string id="CA_grp_clan" text="Clantruppen: {NAME}" />
+    <string id="CA_pop_have" text="In der Gruppe: {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="Armeezusammensetzung: {HERO}" />
+    <string id="CA_pop_selected" text="Gewählte Truppen" />
+    <string id="CA_pop_bar_count" text="{COUNT} Truppen" />
+    <string id="CA_pop_empty" text="Keine Zusammensetzung: Der Gefährte rekrutiert frei." />
+    <string id="CA_pop_over" text="{TOTAL} Truppen gewählt, {COUNT} mehr, als die Gruppe fassen kann ({LIMIT})." />
+    <string id="CA_pop_summary" text="{TOTAL} / {LIMIT} Truppen gewählt, {FREE} freie Plätze für beliebige Truppen." />
+    <string id="CA_pop_summary_only" text="{TOTAL} / {LIMIT} Truppen gewählt. Der Gefährte rekrutiert nur diese Truppen." />
+    <string id="CA_pop_no_preset" text="Keine gespeicherte Vorlage" />
+    <string id="CA_pop_loaded" text="Vorlage geladen: {NAME}" />
+    <string id="CA_pop_saved" text="Vorlage gespeichert: {NAME}" />
+    <string id="CA_pop_deleted" text="Vorlage gelöscht: {NAME}" />
+    <string id="CA_pop_bar_target" text="Ziel" />
+    <string id="CA_pop_bar_current" text="Aktuell" />
+    <string id="CA_pop_kind_inf" text="Infanterie" />
+    <string id="CA_pop_kind_arc" text="Bogenschützen" />
+    <string id="CA_pop_kind_cav" text="Kavallerie" />
+    <string id="CA_pop_kind_ha" text="Berittene Bogenschützen" />
+    <string id="CA_pop_presets" text="Vorlagen" />
+    <string id="CA_pop_load" text="Laden" />
+    <string id="CA_pop_save" text="Als neu speichern" />
+    <string id="CA_pop_overwrite" text="Überschreiben" />
+    <string id="CA_pop_delete" text="Löschen" />
+    <string id="CA_pop_clear" text="Alles löschen" />
+    <string id="CA_pop_done" text="Fertig" />
+    <string id="CA_pop_cancel" text="Abbrechen" />
+    <string id="CA_pop_hint" text="Der Gefährte rekrutiert die Truppen, die zu deiner Auswahl führen, und befördert sie, bis sie dort ankommen." />
+  </strings>
+</base>

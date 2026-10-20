@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Français" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "Il est recommandé de configurer ces paramètres avant de commencer une nouvelle partie." />
+
+		<string id = "mcmwictitle00" text = "Conserver l’âge" />
+		<string id = "mcmwictitle01" text = "Interactions supplémentaires" />
+		<string id = "mcmwictitle02" text = "Un colporteur suspect" />
+		<string id = "mcmwictitle03" text = "Compagnons masculins" />
+		<string id = "mcmwictitle04" text = "Rhagaea" />
+
+		<string id = "mcmwichint00" text = "Conserve l’âge des personnages ajoutés jusqu’à ce que vous les engagiez." />
+		<string id = "mcmwichint01" text = "Applique les interactions supplémentaires fournies par ce mod." />
+		<string id = "mcmwichint02" text = "Ajoute au monde un colporteur suspect avec des fonctionnalités supplémentaires." />
+		<string id = "mcmwichint03" text = "Ajoute trois compagnons masculins. (Pour les personnages masculins, la peau du visage et du corps peut ne pas être parfaitement alignée.)" />
+		<string id = "mcmwichint04" text = "Modifie l'apparence de Rhagaea." />
+	</strings>
+</base>

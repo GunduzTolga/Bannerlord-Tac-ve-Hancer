@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Français" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="Budget" />
+    <string id="CA_mcm_g_purchases" text="Achats" />
+    <string id="CA_mcm_g_autonomy" text="Autonomie" />
+    <string id="CA_mcm_g_display" text="Affichage" />
+    <string id="CA_mcm_unlimited" text="Budget illimité (par défaut)" />
+    <string id="CA_mcm_unlimited_hint" text="Valeur par défaut, modifiable pour chaque compagnon dans Clan &gt; Groupes. Si activé, les compagnons ne reçoivent pas d'allocation : ils puisent directement dans ton or (au-dessus de ta réserve minimale). Plus tu es riche, mieux ils s'équipent." />
+    <string id="CA_mcm_allowance" text="Allocation hebdomadaire (par défaut)" />
+    <string id="CA_mcm_allowance_hint" text="Valeur par défaut, modifiable pour chaque compagnon dans Clan &gt; Groupes. Somme versée chaque semaine, prélevée sur ton or." />
+    <string id="CA_mcm_cap" text="Plafond de bourse" />
+    <string id="CA_mcm_cap_hint" text="Montant maximum qu'un compagnon peut économiser. Au-delà, il ne reçoit plus d'allocation. 0 = pas de plafond." />
+    <string id="CA_mcm_reserve" text="Réserve minimale du joueur" />
+    <string id="CA_mcm_reserve_hint" text="Ton or ne descendra jamais sous ce seuil à cause des allocations ou des achats en budget illimité." />
+    <string id="CA_mcm_family" text="Inclure la famille" />
+    <string id="CA_mcm_family_hint" text="Si activé, les membres de ta famille qui commandent un groupe sont aussi concernés (pas seulement les compagnons recrutés)." />
+    <string id="CA_mcm_refund" text="Rembourser à la mort" />
+    <string id="CA_mcm_refund_hint" text="Si un compagnon meurt, ce qui reste dans sa bourse te revient." />
+    <string id="CA_mcm_equip_share" text="Part équipement (%)" />
+    <string id="CA_mcm_equip_share_hint" text="Pourcentage de la bourse qu'un compagnon peut dépenser en équipement à chaque passage en ville." />
+    <string id="CA_mcm_troop_share" text="Part troupes (%)" />
+    <string id="CA_mcm_troop_share_hint" text="Pourcentage de la bourse qu'un compagnon peut dépenser en recrues à chaque passage en ville." />
+    <string id="CA_mcm_slot_share" text="Max par pièce (%)" />
+    <string id="CA_mcm_slot_share_hint" text="Une seule pièce d'équipement ne peut pas coûter plus que ce pourcentage du budget équipement restant. Plus la bourse est grosse, plus les pièces achetées sont chères." />
+    <string id="CA_mcm_min_upgrade" text="Gain minimum pour changer (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="Un objet doit être au moins meilleur de ce pourcentage que l'actuel pour être acheté (évite les achats inutiles)." />
+    <string id="CA_mcm_sellback" text="Revente de l'ancien objet (%)" />
+    <string id="CA_mcm_sellback_hint" text="Pourcentage du prix de revente récupéré quand un compagnon remplace un objet." />
+    <string id="CA_mcm_min_budget" text="Budget minimum pour acheter" />
+    <string id="CA_mcm_min_budget_hint" text="En dessous de ce montant, le compagnon n'achète rien (il économise)." />
+    <string id="CA_mcm_cooldown" text="Jours entre deux achats" />
+    <string id="CA_mcm_cooldown_hint" text="Nombre de jours minimum entre deux séances d'achats pour un même compagnon." />
+    <string id="CA_mcm_max_recruits" text="Recrues max par visite" />
+    <string id="CA_mcm_max_recruits_hint" text="Nombre maximum de soldats recrutés à chaque passage en ville." />
+    <string id="CA_mcm_troop_cost" text="Coût des recrues (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="Multiplicateur du prix des recrues payées avec la bourse (100 % = barème de base du mod)." />
+    <string id="CA_mcm_promote" text="Promouvoir les troupes" />
+    <string id="CA_mcm_promote_hint" text="Si activé, les compagnons utilisent la part troupes de leur bourse pour payer d'abord la promotion de leurs soldats aguerris, puis recrutent avec ce qui reste." />
+    <string id="CA_mcm_dismiss" text="Renvoyer les troupes hors composition" />
+    <string id="CA_mcm_dismiss_hint" text="Uniquement pour les compagnons avec une composition d'armée. Si activé, les soldats qui ne correspondent pas à la composition sont renvoyés progressivement, seulement pour faire de la place aux bonnes recrues." />
+    <string id="CA_mcm_fill_free" text="Compléter les places libres avec d'autres troupes" />
+    <string id="CA_mcm_fill_free_hint" text="Uniquement pour les compagnons avec une composition d'armée. Si activé, les places que la composition ne couvre pas sont complétées avec n'importe quelles recrues disponibles en ville. Si désactivé, ils ne recrutent que les troupes de leur composition." />
+    <string id="CA_mcm_buy_horse" text="Acheter un cheval s'il n'en a pas" />
+    <string id="CA_mcm_buy_horse_hint" text="Si activé, un compagnon à pied s'achète une monture (puis une selle ou un caparaçon) s'il a le niveau d'Équitation requis." />
+    <string id="CA_mcm_min_riding" text="Équitation minimum pour un premier cheval" />
+    <string id="CA_mcm_min_riding_hint" text="Un compagnon à pied n'achète son premier cheval que si son Équitation atteint ce niveau (évite de mettre en selle un pur fantassin)." />
+    <string id="CA_mcm_autoshop" text="Passages en ville automatiques (par défaut)" />
+    <string id="CA_mcm_autoshop_hint" text="Valeur par défaut, modifiable pour chaque compagnon dans Clan &gt; Groupes. Si activé, un compagnon riche qui n'a rien acheté depuis un moment va de lui-même dans la ville amie la plus proche pour s'équiper." />
+    <string id="CA_mcm_autoshop_budget" text="Bourse minimum pour partir" />
+    <string id="CA_mcm_autoshop_budget_hint" text="Le compagnon ne fait le déplacement que si sa bourse atteint ce montant (en budget illimité : ton or disponible)." />
+    <string id="CA_mcm_autoshop_days" text="Jours sans achat avant de partir" />
+    <string id="CA_mcm_autoshop_days_hint" text="Nombre de jours sans aucun achat avant qu'il décide d'aller en ville de lui-même." />
+    <string id="CA_mcm_recruit_trips" text="Voyages de recrutement" />
+    <string id="CA_mcm_recruit_trips_hint" text="Uniquement pour les compagnons avec une composition d'armée qui font leurs achats seuls. Si les troupes dont ils ont besoin ne sont pas recrutées dans leur région, ils se rendent dans la ville ou le village ami le plus proche qui les propose." />
+    <string id="CA_mcm_recruit_distance" text="Distance maximale du voyage" />
+    <string id="CA_mcm_recruit_distance_hint" text="Jusqu'où un compagnon peut aller pour un voyage de recrutement, en unités de la carte. Plus la valeur est élevée, plus il peut traverser une grande partie du Calradia." />
+    <string id="CA_mcm_recruit_missing" text="Troupes manquantes avant un voyage" />
+    <string id="CA_mcm_recruit_missing_hint" text="Un voyage de recrutement n'a lieu que s'il manque au moins ce nombre de troupes dans la composition." />
+    <string id="CA_mcm_noarmies" text="Rester hors des armées des autres seigneurs (par défaut)" />
+    <string id="CA_mcm_noarmies_hint" text="Valeur par défaut, modifiable pour chaque compagnon dans Clan &gt; Groupes. Si activé, les compagnons refusent de rejoindre les armées menées par d'autres seigneurs, et quittent celle où ils se trouvent dès qu'ils ne sont plus en combat. Vous pouvez toujours les appeler dans vos propres armées." />
+    <string id="CA_mcm_messages" text="Afficher les messages" />
+    <string id="CA_mcm_messages_hint" text="Affiche un message quand un compagnon achète de l'équipement, recrute ou reçoit son allocation." />
+    <string id="CA_ui_title" text="Bourse du compagnon" />
+    <string id="CA_ui_allowance" text="Allocation / semaine" />
+    <string id="CA_ui_wallet" text="Bourse actuelle" />
+    <string id="CA_ui_unlimited" text="Budget illimité" />
+    <string id="CA_ui_autoshop" text="Va s'équiper seul en ville" />
+    <string id="CA_ui_noarmies" text="Reste hors des armées des autres seigneurs" />
+    <string id="CA_ui_treasury" text="Trésor du clan" />
+    <string id="CA_ui_none" text="Aucun achat pour l'instant" />
+    <string id="CA_ui_last" text="Dernier achat : {TEXT}" />
+    <string id="CA_ui_composition" text="Composition de l'armée ({COUNT})" />
+    <string id="CA_ui_composition_none" text="Composition de l'armée : libre" />
+    <string id="CA_err_popup" text="[Companion Autonomy] Impossible d'ouvrir la fenêtre de composition : {ERROR}" />
+    <string id="CA_msg_promotes" text="promeut {COUNT} soldat(s) ({GOLD} or)" />
+    <string id="CA_msg_dismisses" text="renvoie {COUNT} soldat(s)" />
+    <string id="CA_msg_recruits" text="recrute {COUNT} soldat(s) ({GOLD} or)" />
+    <string id="CA_msg_left" text="reste {GOLD} or" />
+    <string id="CA_msg_summary" text="{HERO} à {TOWN} : {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="+{COUNT} autre(s)" />
+    <string id="CA_hist_soldiers" text="{COUNT} soldat(s)" />
+    <string id="CA_hist_today" text="aujourd'hui" />
+    <string id="CA_hist_yesterday" text="hier" />
+    <string id="CA_hist_days" text="il y a {COUNT} jours" />
+    <string id="CA_hist_line" text="{WHAT} à {TOWN}, {WHEN} ({GOLD} or)" />
+    <string id="CA_msg_allowances" text="Allocations versées : {GOLD} or à {COUNT} compagnon(s)." />
+    <string id="CA_msg_reserve" text="{COUNT} compagnon(s) n'ont pas reçu leur allocation : ta réserve minimale est atteinte." />
+    <string id="CA_msg_arrived_empty" text="{HERO} : arrivée à {TOWN}, mais la bourse est vide." />
+    <string id="CA_msg_buys" text="achète {ITEMS} ({GOLD} or)" />
+    <string id="CA_msg_nothing" text="{HERO} a fait le tour de {TOWN} : rien de mieux à sa portée." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] Erreur pendant les achats de {HERO} : {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] Impossible de trouver l'ordre de déplacement dans cette version du jeu." />
+    <string id="CA_err_dump" text="Liste des fonctions écrite dans : {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] Échec de l'ordre de déplacement : {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} renonce à son passage en ville : {REASON}." />
+    <string id="CA_reason_unsafe" text="la ville n'est plus sûre" />
+    <string id="CA_reason_timeout" text="trop de temps sur la route" />
+    <string id="CA_reason_army" text="a rejoint une armée" />
+    <string id="CA_msg_recruit_trip" text="{HERO} part pour {TOWN} recruter des troupes pour sa composition d'armée." />
+    <string id="CA_msg_autotrip" text="{HERO} part de sa propre initiative s'équiper à {TOWN}." />
+    <string id="CA_msg_left_army" text="{HERO} quitte l'armée de {LEADER} et retourne à ses propres affaires." />
+    <string id="CA_msg_refund" text="La bourse de {HERO} ({GOLD} or) t'est revenue." />
+    <string id="CA_dlg_ask_wallet" text="Où en est ta bourse ?" />
+    <string id="CA_dlg_wallet_unlimited" text="Tu m'as donné carte blanche sur le trésor. Je n'achète que ce qui en vaut la peine." />
+    <string id="CA_dlg_wallet_amount" text="Il me reste {GOLD} pièces d'or de mon allocation." />
+    <string id="CA_dlg_ask_history" text="Qu'as-tu acheté dernièrement ?" />
+    <string id="CA_dlg_history_none" text="Je n'ai encore rien acheté." />
+    <string id="CA_dlg_history_intro" text="Voici ce que j'ai acheté récemment :" />
+    <string id="CA_dlg_take_wallet" text="Rends-moi ce qu'il reste de ton allocation." />
+    <string id="CA_dlg_take_answer" text="Voilà, tout y est. Je ferai avec ce que j'ai." />
+    <string id="CA_dlg_order_shop" text="Va en ville refaire ton équipement." />
+    <string id="CA_dlg_order_ok" text="Compris. Je file à {CA_ORDER_TOWN}, j'en reviendrai avec un meilleur équipement." />
+    <string id="CA_dlg_order_fail" text="Il n'y a aucune ville sûre à proximité pour l'instant." />
+    <string id="CA_dlg_cancel_shop" text="Oublie la ville, reprends tes activités." />
+    <string id="CA_dlg_cancel_answer" text="Très bien." />
+    <string id="CA_grp_kingdom" text="Troupes du royaume : {NAME}" />
+    <string id="CA_grp_clan" text="Troupes du clan : {NAME}" />
+    <string id="CA_pop_have" text="Dans le groupe : {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="Composition de l'armée : {HERO}" />
+    <string id="CA_pop_selected" text="Troupes choisies" />
+    <string id="CA_pop_bar_count" text="{COUNT} troupes" />
+    <string id="CA_pop_empty" text="Aucune composition : le compagnon recrute librement." />
+    <string id="CA_pop_over" text="{TOTAL} troupes choisies, {COUNT} de plus que ce que le groupe peut contenir ({LIMIT})." />
+    <string id="CA_pop_summary" text="{TOTAL} / {LIMIT} troupes choisies, {FREE} places libres pour n'importe quelles troupes." />
+    <string id="CA_pop_summary_only" text="{TOTAL} / {LIMIT} troupes choisies. Le compagnon ne recrute que ces troupes." />
+    <string id="CA_pop_no_preset" text="Aucun preset enregistré" />
+    <string id="CA_pop_loaded" text="Preset chargé : {NAME}" />
+    <string id="CA_pop_saved" text="Preset enregistré : {NAME}" />
+    <string id="CA_pop_deleted" text="Preset supprimé : {NAME}" />
+    <string id="CA_pop_bar_target" text="Objectif" />
+    <string id="CA_pop_bar_current" text="Actuel" />
+    <string id="CA_pop_kind_inf" text="Infanterie" />
+    <string id="CA_pop_kind_arc" text="Archers" />
+    <string id="CA_pop_kind_cav" text="Cavalerie" />
+    <string id="CA_pop_kind_ha" text="Archers montés" />
+    <string id="CA_pop_presets" text="Presets" />
+    <string id="CA_pop_load" text="Charger" />
+    <string id="CA_pop_save" text="Enregistrer comme nouveau" />
+    <string id="CA_pop_overwrite" text="Remplacer" />
+    <string id="CA_pop_delete" text="Supprimer" />
+    <string id="CA_pop_clear" text="Tout effacer" />
+    <string id="CA_pop_done" text="Valider" />
+    <string id="CA_pop_cancel" text="Annuler" />
+    <string id="CA_pop_hint" text="Le compagnon recrute les troupes qui mènent à tes choix et les fait évoluer jusqu'à les atteindre." />
+  </strings>
+</base>

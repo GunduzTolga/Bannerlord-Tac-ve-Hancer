@@ -1,0 +1,623 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Español (LA)" />
+	</tags>
+	<strings>
+
+    <!-- Name -->
+		<string id = "mfywicnpc00" text = "Sonadel" />
+		<string id = "mfywicnpc01" text = "Anette" />
+		<string id = "mfywicnpc02" text = "Qiana" />
+		<string id = "mfywicnpc03" text = "Mina" />
+		<string id = "mfywicnpc04" text = "Belladonna" />
+		<string id = "mfywicnpc05" text = "Linda" />
+		<string id = "mfywicnpc06" text = "Adrianne" />
+		<string id = "mfywicnpc07" text = "Laura" />
+		<string id = "mfywicnpc08" text = "Audre" />
+		<string id = "mfywicnpc09" text = "Su Lan" />
+		<string id = "mfywicnpc10" text = "Kally" />
+		<string id = "mfywicnpc11" text = "Fenella" />
+		<string id = "mfywicnpc12" text = "Layana" />
+		<string id = "mfywicnpc13" text = "Yoselin" />
+		<string id = "mfywicnpc50" text = "Sir Vitomir" />
+		<string id = "mfywicnpc51" text = "Franz" />
+		<string id = "mfywicnpc52" text = "Lethwin" />
+		<string id = "mfywicnpcmct" text = "Un vendedor sospechoso" />
+	
+	<!-- Clan -->
+		<string id = "mfywicclan0" text = "Rubin" />
+		<string id = "mfywicnpccln0" text = "Damir" />
+		<string id = "mfywicnpccln1" text = "Ludmila" />
+		<string id = "mfywicnpccln2" text = "Ludomir" />
+
+		
+	<!-- Sonadel -->
+		<string id = "mfyline000" text = "Mi nombre es Sonadel. Estoy ayudando a mis padres, que son herreros.." />
+		<string id = "mfyline001" text = "Pero últimamente estoy empezando a cansarme.  Mi deseo ver el mundo .." />
+		<string id = "mfyline002" text = "Aunque mi padre no me enseñó herrería, ¡sé hacerlo un poco!" />
+		<string id = "mfyline003" text = "Yo estaba a cargo del comercio y la administración de la tienda en lugar de mis padres. Seguro que te seré de ayuda.." />
+		<string id = "mfyline004" text = "Esas experiencias también son útiles en el grupo.." />
+		<string id = "mfyline005" text = "Aún te ves muy inexperto/a.." />
+		<string id = "mfyline006" text = "Si tengo la oportunidad, me gustaría trabajar en su grupo. ¡Hice mi espada sin el conocimiento de mi padre para un día como este!" />
+		<string id = "mfyline007" text = "Me gustan los días en los que estoy a tu lado en el campo de batalla y martillando contigo en la herrería. ¿Sientes lo mismo?" />
+		<string id = "mfyline008" text = "¡Hice la espada para ti! Me preguntaba cuándo ofrecertela, pero creo que ahora sería un buen momento. ¡Mi espada les encontrará y derribará a tus enemigos!" />
+		<string id = "mfyline009" text = "Es la hija del herrero, parece tímida pero ambiciosa. Sus padres aprecian que les ayude con su trabajo, pero conocen su ambición y esperan mantenerla fuera de la fragua en el futuro." />
+
+	<!-- Anette -->
+		<string id = "mfyline010" text = "Soy Anette..." />
+		<string id = "mfyline011" text = "Me uní a un grupo de personas que vendían mercancias al pueblo con el permiso de mis padres y de mi pueblo.." />
+		<string id = "mfyline012" text = "Pero hubo una guerra y no pude regresar.." />
+		<string id = "mfyline013" text = "Y cuando regresé, el pueblo estaba ardiendo y por eso estoy aquí ahora.." />
+		<string id = "mfyline014" text = "eso es muy desafortunado." />
+		<string id = "mfyline015" text = "Es común en esta edad.." />
+		<string id = "mfyline016" text = "Para ser honesto, no tengo adónde ir. Aunque no he aprendido ninguna habilidad .. aparte de cómo manejar equipos agrícolas, estoy listo/a para aprender mucho.." />
+		<string id = "mfyline017" text = "He adquirido mucha más experiencia en un corto período de tiempo que en el pasado, cuando ayudaba en el trabajo agrícola. Es vergonzoso porque de repente siento como si estuviera montando un caballo muy rápido, parece divertido a su manera.." />
+		<string id = "mfyline018" text = "Creo que la formación que me diste valió la pena. Ahora seré útil en la batalla. ¡Ah!..., por supuesto, también manejo bien las armas especiales..." />
+		<string id = "mfyline019" text = "Era una chica normal y corriente a la que le gustaba salir de vez en cuando del pueblo a vender cosas. Ahora debe aprender a sobrevivir en el mundo sola." />
+
+	<!-- Qiana -->
+		<string id = "mfyline020" text = "Mi nombre es Qiana. Obviamente, yo era una chica de una familia campesina corriente.." />
+		<string id = "mfyline021" text = "Pero mi padre no era alguien que soportara muchas injusticias entre el deber y la distribución, los días normales terminaban de repente.." />
+		<string id = "mfyline022" text = "Tuve que sobrevivir en la naturaleza. A veces mi padre me traía comida de lugares que no conocía." />
+		<string id = "mfyline023" text = "Un día mientras dormía en la cueva, con un gran alboroto, mi padre de repente me echó, dándome un arco y unas flechas.." />
+		<string id = "mfyline024" text = "puedo adivinar lo que pasó..." />
+		<string id = "mfyline025" text = "Me preguntaba donde olía." />
+		<string id = "mfyline026" text = "Estoy sobreviviendo de alguna manera hasta ahora, pero no quiero seguir el camino de mi padre.." />
+		<string id = "mfyline027" text = "Antes todo lo que tenía era habilidades de caza, ahora me alegro de haberte ayudado." />
+		<string id = "mfyline028" text = "[if:convo_thinking][ib:demure]Recuerdo rastrear y cazar animales con mi padre para sobrevivir. En ese momento no tenía muchas ganas de ir, pero últimamente siento la necesidad de tener un dia para ir a cazar." />
+		<string id = "mfyline029" text = "Es hija de un líder de la resistencia que luchó contra los señores que explotaban a los campesinos y los convertían en siervos. Sus enemigos la atacarón y la violarón, pero sobrevivió." />
+
+	<!-- Mina -->
+		<string id = "mfyline030" text = "Sé que suena raro, pero escucha.." />
+		<string id = "mfyline031" text = "Definitivamente creo que estuve en este mundo antes, pero tengo un vago recuerdo.." />
+		<string id = "mfyline032" text = "Realmente no me importa de todos modos, pero hay algunas personas que me recuerdan por alguna razón.." />
+		<string id = "mfyline033" text = "Pero el problema no es eso, sino que no lo recuerdo todo.." />
+		<string id = "mfyline034" text = "Oh, espero que puedas recordar." />
+		<string id = "mfyline035" text = "Sólo estás diciendo que... ¿no tienes ninguna habilidad.?." />
+		<string id = "mfyline036" text = "Creo que me acostumbraré pronto si me ayudas.." />
+		<string id = "mfyline037" text = "¡Si lo recuerdo!, realmente no tenía nada cuando me uní al grupo. Creo que es increíble que me aceptaras..." />
+		<string id = "mfyline038" text = "¿Cuando recuerdo?, .....recuerdo varias cosas a la vez, ¿verdad? creo que ahora es el momento" />
+		<string id = "mfyline039" text = "Creo que ella estaba originalmente en este mundo. No estoy seguro si es verdadero o falso" />
+
+	<!-- Belladona -->
+		<string id = "mfyline040" text = "Mi nombre es Belladona. Lamentablemente, me echaron de mi pueblo.." />
+		<string id = "mfyline041" text = "Accidentalmente les di a los aldeanos algo más, en lugar de las hierbas originales.. :O " />
+		<string id = "mfyline042" text = "¡Pero no es mi culpa! El grupo de chicas de mi edad que estaban celosas deben haberme tendido una trampa.." />
+		<string id = "mfyline043" text = "De repente, se difundieron rumores de que yo era una bruja pelirroja y que tuve que huir antes de que comenzara la caza de brujas." />
+		<string id = "mfyline044" text = "Todos pueden cometer errores." />
+		<string id = "mfyline045" text = "Creo que tienes un caldero grande en tu casa.." />
+		<string id = "mfyline046" text = "Sé distinguir y manejar las hierbas aunque no las haya aprendido formalmente.." />
+		<string id = "mfyline047" text = "Espero que no te esfuerces demasiado por el bien de los demás. De todos modos no me escucharás, Yo guardaré algunas hierbas solo para ti." />
+		<string id = "mfyline048" text = "[if:convo_relaxed_happy][ib:hip2]¡Creo que descubrí una nueva hierba! Este medicamento funciona especialmente bien en un veneno atractivo como tú... Te curaré ahora mismo.." />
+		<string id = "mfyline049" text = "Le encantaba dedicarse a sus estudios en su pequeña cabaña en el bosque. El apodo de “mujer pelirroja del bosque” fue suficiente para atraer la curiosidad de la gente." />
+
+	<!-- Linda -->
+		<string id = "mfyline050" text = "Solía trabajar en la posada de la ciudad de al lado.." />
+		<string id = "mfyline051" text = "Sin embargo, la posada tiene cada vez más clientes, por lo que están empezando a tener demasiado trabajo.." />
+		<string id = "mfyline052" text = "No lo sabía, pero antes de darme cuenta, el nombre de la posada comenzó a llamarse Big Linda Inn.." />
+		<string id = "mfyline053" text = "Entonces resultó que me estaba divirtiendo menos y decidí dejarlo.." />
+		<string id = "mfyline054" text = "¿Y si hay algo más divertido?" />
+		<string id = "mfyline055" text = "Bueno, ¿quieres decir que te divertiste durante ese tiempo?" />
+		<string id = "mfyline056" text = "Tengo dinero para comer por el momento, así que pensaré en viajar si tienes alguna sugerencia, para ganar más de dinero.." />
+		<string id = "mfyline057" text = "Estoy llena de energía aquí. Es mucho mejor que  tratar con pedorros y borrachos. Eso sí, si alguien me turba por nada, le azotaré con el látigo de mi caballo.." />
+		<string id = "mfyline058" text = "[if:convo_pondering][ib:hip2]Una vez me regalaste un buen caballo. En ese momento, mi orgullo estaba algo herido. Ahora estoy bastante bien... tengo que demostrar que estás equivocado/a." />
+		<string id = "mfyline059" text = "Linda era una criada que trabajaba en su posada con establos. La posada se hizo famosa gracias a ella, pero no pudo soportar la fama." />
+
+	<!-- Adrianne -->
+		<string id = "mfyline060" text = "Mi nombre es Adrianne y mi padre, leñador, me enseñó a cortar leña con un hacha.." />
+		<string id = "mfyline061" text = "Más tarde resultó que mi padre no aprendió a usar un hacha cortando bosques.." />
+		<string id = "mfyline062" text = "Mi padre no tenia sólo uno o dos enemigos a su alrededor. Finalmente, un día sus enemigos lo mataron." />
+		<string id = "mfyline063" text = "Antes de que mataran a mi padre y luego asaltaran mi casa, yo levanté el hacha de mi padre en la casa.." />
+		<string id = "mfyline064" text = "¿Entonces conseguiste la venganza de tu padre?" />
+		<string id = "mfyline065" text = "Supongo que tampoco usaste tu hacha para talar bosques.." />
+		<string id = "mfyline066" text = "No, me preparé para una pelea, pero de alguna manera no me atacaron. Supongo que pensaron que su venganza había terminado. En lugar de eso, me echaron de mi pueblo.." />
+		<string id = "mfyline067" text = "Creo estar siguiendo el mismo camino que mi padre. Si puedo estar seguro de que mi arma se utiliza por una causa justa, entonces estoy en el camino correcto.." />
+		<string id = "mfyline068" text = "Um... ¿porqué me das este dinero? El arma que me regalaste el otro día fue realmente asombrosa. Pero alguien lo robó. Encontré al culpable, pero ya lo había vendido. entonces" />
+		<string id = "mfyline069" text = "Es hija de un padre que fue un guerrero despiadado pero infinitamente misericordioso con su familia.Su apodo es “.Hacha de sangre legendaria.” ahora sigue siendo sólo una leyenda. ¿ Es esto sólo el comienzo?" />
+	
+	<!-- Laura -->
+		<string id = "mfyline070" text = "Mi nombre es Laura." />
+		<string id = "mfyline071" text = "Mis padres son ingenieros que construyen grandes estructuras.." />
+		<string id = "mfyline072" text = "Empezaron un nuevo proyecto en este pueblo, así que yo también estoy aquí.." />
+		<string id = "mfyline073" text = "Conocerte debe ser el comienzo de un nuevo trabajo para mí. Puedo y debo hacer mi parte ahora." />
+		<string id = "mfyline074" text = "Creo que es una buena oportunidad para mí también.." />
+		<string id = "mfyline075" text = "Dudo que realmente puedas hacer tu parte..." />
+		<string id = "mfyline076" text = "Aprendí técnicas, pero también me encargaba de conseguir los elementos necesarios en el negocio de mis padres.." />
+		<string id = "mfyline077" text = "Ahora te lo digo, el otro día se me olvidó un ingrediente, así que tuve miedo de que se estropeara en un momento crítico. ¡porque estabas ahí !." />
+		<string id = "mfyline078" text = "Me han golpeado tiempo atras con materiales de construcción que se derrumbaban. Mi cabeza se quedó un poco en blanco y  mis padres no querían incluirme en sus proyectos. Pero con el casco que me diste , eso ya no volverá a suceder" />
+		<string id = "mfyline079" text = "Su familia son ingenieros que viajan en caravanas y reciben encargos de pueblos y ciudades. Su familia es conocida por su meticulosa mano de obra." />
+	
+	<!-- Audre -->
+		<string id = "mfyline080" text = "Creo que alguna vez has oído hablar del nombre de mi clan.." />
+		<string id = "mfyline081" text = "Ya tengo mucho para comer en casa, pero no sé por qué mis padres siguen intentando echarme.." />
+		<string id = "mfyline082" text = "Así que mis padres me obligaron a salir para ver el mundo.." />
+		<string id = "mfyline083" text = "¿Estás organizando una pandilla por casualidad?" />
+		<string id = "mfyline084" text = "Si." />
+		<string id = "mfyline085" text = "No necesito una princesa." />
+		<string id = "mfyline086" text = "Espero que el grupo en el que voy a participar sea una tropa donde no se quede sin comida.." />
+		<string id = "mfyline087" text = "Casi muero varias veces y mis padres se asustarían si supieran que estoy pasando por todo esto. Quizás me digan que vuelva a casa ahora mismo." />
+		<string id = "mfyline088" text = "Oye, sinceramente, te falta dinero en este momento, ¿verdad? Me gustaría darte algo del dinero que he ahorrado para que puedas usarlo en momentos como este. Ahorré para ello, pero era dinero del bolsillo de mis padres." />
+		<string id = "mfyline089" text = "Su familia es famosa por ser una familia de grandes comerciantes, se ha transmitido de generación en generación. Vivió una vida como la de un noble" />
+	
+	<!-- Su Lan -->
+		<string id = "mfyline090" text = "La gente en mi ciudad natal no siente la necesidad de la ingeniería en absoluto.." />
+		<string id = "mfyline091" text = "Me gusta disparar flechas a caballo, pero también me interesa investigar y brindarlas.." />
+		<string id = "mfyline092" text = "Vine aquí a estudiar, porque es difícil estudiar  cerca de mi casa.." />
+		<string id = "mfyline093" text = "Pero es difícil ganar dinero aquí, así que a este ritmo, tendré que renunciar  y regresar.." />
+		<string id = "mfyline094" text = "Creo que juntos podéis conseguir las cosas que queréis.." />
+		<string id = "mfyline095" text = "¿Por qué no sigues lo que tu familia te dice que hagas?" />
+		<string id = "mfyline096" text = "De todos modos, necesito trabajo. Más aún si es algo con lo que puedo adquirir experiencia." />
+		<string id = "mfyline097" text = "No sé la suerte que tengo de conocerte. No en mi familia. Tal vez si no fuera por ti, volvería a casa y esquilaria lana.." />
+		<string id = "mfyline098" text = "Estoy muy emocionada/o de poder trabajar como ingeniera/o, tan pronto. Haré lo mejor que pueda en tu grupo de batalla" />
+		<string id = "mfyline099" text = "Ingeniera apasionada, viaja para encontrar su propio camino. También es experta en tiro con arco a caballo, que aprendió cuando era niña." />
+	
+	<!-- Kally -->
+		<string id = "mfyline100" text = "Yo era guardia de caravana, pero tuve que huir después de encontrarme con una gran banda de bandidos.." />
+		<string id = "mfyline101" text = "Seguí su rastro y se lo informé al señor, pero a él no le importó.." />
+		<string id = "mfyline102" text = "Así que no tuve más remedio que ir a un escondite para salvar a los presos  y regresar con heridos.." />
+		<string id = "mfyline103" text = "Nuestra caravana se ha ido, así que no sé qué hacer.." />
+		<string id = "mfyline104" text = "Eres una persona muy responsable.." />
+		<string id = "mfyline105" text = "Entonces estás diciendo que has estado huyendo?" />
+		<string id = "mfyline106" text = "Soy bueno rastreando enemigos y sé cómo lidiar con armas de montar a caballo.." />
+		<string id = "mfyline107" text = "Hay veces pienso en una misión  que fallé en el pasado. Ya no huiré, pelearé contigo y seremos atrapados juntos.." />
+		<string id = "mfyline108" text = "Una vez atacamos el escondite de unos bandidos. De hecho, hubo uno de esos lugares de los que hablé, donde fui sola/o y fracasé. Cuando sucumbi a su poder,... algo malo les había sucedido a mis antiguos camaradas. Me alegra que me hayas hecho justicia incluso ahora." />
+		<string id = "mfyline109" text = "Kally es una gran exploradora y guerrera. Aunque es responsable, también cree que es importante protegerse" />
+	
+	<!-- Fenella -->
+		<string id = "mfyline110" text = "Aprendí medicina de cirujanos y estudiosos de la zona sur.." />
+		<string id = "mfyline111" text = "Pero en los últimos años ha habido muchas guerras, por lo que a todos nos han llamado a varias partes, claro.. a mí también.." />
+		<string id = "mfyline112" text = "Después de pasar por varias caravanas hacia y desde el pueblo, llegué demasiado lejos." />
+		<string id = "mfyline113" text = "Ahora quiero trabajar en un solo lugar, no solo en un lugar ambulante.." />
+		<string id = "mfyline114" text = "Parece que has estudiado mucho." />
+		<string id = "mfyline115" text = "Depende de lo que hagas." />
+		<string id = "mfyline116" text = "No sólo aprendí medicina, sino también las habilidades comerciales de las caravanas.." />
+		<string id = "mfyline117" text = "El líder aquí es muy duro. Me acostumbré a dejar a todos atrás e ir primero solo a tratar a los heridos. Estoy preocupado por ti" />
+		<string id = "mfyline118" text = "[if:convo_pondering][ib:hip2]Te dije que ya no quería dirigir la caravana, pero fue la última vez que me diste un puesto alto rango... Me gustaría trabajar a tu lado, pero ¿podrías hacerme un favor?" />
+		<string id = "mfyline119" text = "Fenella Recibió una educación de élite que rara vez se encuentra en la medicina. Es una gran sanadora y comerciante." />
+	
+	<!-- Layana -->
+		<string id = "mfyline120" text = "Nunca he dejado de luchar desde que era niño.." />
+		<string id = "mfyline121" text = "Tuve que sobrevivir a estos tiempos caóticos y aprendí espada y tiro con arco.." />
+		<string id = "mfyline122" text = "En este momento, estoy haciendo cualquier cosa que genere dinero.." />
+		<string id = "mfyline123" text = "¿Sería suficiente una introducción?" />
+		<string id = "mfyline124" text = "Tal vez." />
+		<string id = "mfyline125" text = "No debería haber preguntado." />
+		<string id = "mfyline126" text = "No me gusta hablar de mi." />
+		<string id = "mfyline127" text = "Hubo algunos momentos dramáticos, simplemente agité mi arma como me dijeron. Me siento afortunado de tener un líder que puede guiarme así.." />
+		<string id = "mfyline128" text = "[if:malfoy_custom_face][ib:weary2]En el campo de batalla, cargo bajo el mando del capitán, cuando regreso con una herida, recibo un trato especial por parte del capitán... Hoy, creo que la herida es un poco más profunda por dentro. ¿por favor Míralo?" />
+		<string id = "mfyline129" text = "Ella escapó de un pueblo gobernado por conquistadores. Ha pasado por muchas luchas para sobrevivir a sus perseguidores." />
+	
+	<!-- Yoselin -->	
+		<string id = "mfyline130" text = "Dejé mi pueblo hace unos años. Pero mi vida de mercenario con mi papá era más adecuado para mí.." />
+		<string id = "mfyline131" text = "Incluso en el grupo donde estaba mi papá me reconocían mis habilidades, pero el problema era una mujer desvergonzada.." />
+		<string id = "mfyline132" text = "Ella seguía incriminando a mi papá a espaldas por no seguirme. Me enojé y solicite un duelo, pero perdí.." />
+		<string id = "mfyline133" text = "Tan pronto como se confirmó mi derrota.. ella me insultó, de repente la cortaron el cuello delante de mis ojos. Mi Papá era una persona amable, a diferencia de mí, así que me sorprendió.." />
+		<string id = "mfyline134" text = "Soportó la difamación hacia sí mismo pero no hacia su familia..." />
+		<string id = "mfyline135" text = "Es una familia con una personalidad fogosa.." />
+		<string id = "mfyline136" text = "Terminamos siendo expulsados. Mientras tanto, papá encontró una nueva esposa y se instaló en un pueblo. Pero encuentro esta vida más interesante.." />
+		<string id = "mfyline137" text = "Este debe ser el lugar que estaba buscando. Estoy feliz porque estoy haciendo lo que quiero hacer. Quizás más adelante sea molesto como mi papá, pero ahora no..." />
+		<string id = "mfyline138" text = "¡Después de trabajar como mercenario, fui nombrado comandante del grupo de un clan! Supongo que he logrado cierto éxito, ¿verdad?  presumiré más adelante con mi padre ." />
+		<string id = "mfyline139" text = "Perdió su ciudad natal debido a la guerra. Padre e hija son famosos de un linage de mercenarios." />
+	
+	<!-- Vitomir -->
+		<string id = "mfyline500" text = "No hay nada más tonto que presentarme aquí diciendo, 'Soy un noble.'" />
+		<string id = "mfyline501" text = "Pero así me presentaré. Solo me falta riqueza, pero no me falta orgullo." />
+		<string id = "mfyline502" text = "De hecho, tengo el objetivo de restaurar la gloria de mi clan." />
+		<string id = "mfyline503" text = "De todos modos, mi hermano mayor sigue a cargo, y yo, bueno, digamos que es fácil de entender si digo que estoy de viaje de negocios." />
+		<string id = "mfyline504" text = "No has abandonado tus ideales." />
+		<string id = "mfyline505" text = "¿Quieres que te traten como a un noble?" />
+		<string id = "mfyline506" text = "Entiendo bien mi situación actual. No soy un tonto sin conciencia. Y, prácticamente nunca he experimentado el trato de un noble." />
+		<string id = "mfyline507" text = "Creo que cada tipo de persona puede hacer cosas diferentes. Eres bastante diferente a mi hermano mayor, que es un erudito. Este enfoque me queda mejor." />
+		<string id = "mfyline508" text = "Hace poco fundaste un nuevo reino. Mi hermano me dijo que la reconstrucción de nuestro clan está casi completa. Creo que nuestro clan puede ayudar al reino." />
+		<string id = "mfyline509" text = "Él es el segundo hijo de un clan noble caído. Aunque se fue para restaurar la gloria del antiguo clan, hay rumores de que huyó para escapar de la carga de su clan caído." />
+
+	<!-- Franz -->
+		<string id = "mfyline510" text = "Fui un guardia personal de un noble." />
+		<string id = "mfyline511" text = "Así que, hay un lugar al que debo regresar." />
+		<string id = "mfyline512" text = "Ah, por favor, no me consideres un desertor. Mi última tarea fue ser un señuelo para que mi señor pudiera escapar de forma segura." />
+		<string id = "mfyline513" text = "Así que soy una persona que debería estar muerta, capturada o simplemente no existir." />
+		<string id = "mfyline514" text = "Fuiste un soldado fiel a tu deber." />
+		<string id = "mfyline515" text = "Pero, ¿no deberías regresar? Probablemente tu señor no tuvo otra opción." />
+		<string id = "mfyline516" text = "Estaba dispuesto a morir, pero no lo hice. Parece que el que intentó sobrevivir no tuvo la misma suerte. Si tuviera un lugar al que regresar, ya habría ido hace tiempo." />
+		<string id = "mfyline517" text = "Si has tomado, o vas a tomar, decisiones complicadas, espero que seas honesto conmigo. No tengo miedo de hacer mi trabajo, pero sí de hacer algo injusto." />
+		<string id = "mfyline518" text = "Recientemente, cuando huimos del combate, me sentí incómodo porque recordé el pasado. Tal vez fue la decisión correcta, pero aquellos que lo vivieron pudieron haber preferido morir con honor en la batalla." />
+		<string id = "mfyline519" text = "Es un soldado con habilidades naturales de liderazgo y combate. A pesar de su experiencia limitada, ha servido como guardia personal de un noble." />
+
+	<!-- Lethwin -->
+		<string id = "mfyline520" text = "Soy un cazador, pero no solo para conseguir comida." />
+		<string id = "mfyline521" text = "Es una caza para resolver problemas. Pueden llamarme un cazador de recompensas." />
+		<string id = "mfyline522" text = "Mi objetivo principal son los jabalíes y lobos, que suelen atacar las granjas y hogares." />
+		<string id = "mfyline523" text = "Por accidente, atrapó un animal que un noble valoraba. Estoy tomando un descanso hasta que la situación se calme." />
+		<string id = "mfyline524" text = "¿No fuiste a cazar por encargo? Si fuera así, no habría habido problemas." />
+		<string id = "mfyline525" text = "La diferencia entre un cazador y un cazador ilegal no es tan grande." />
+		<string id = "mfyline526" text = "Creo que he caído en una trampa ajena. Soy una persona que resuelve problemas, no quiero crearlos." />
+		<string id = "mfyline527" text = "Así que no estoy seguro si he ayudado a resolver tus problemas al venir aquí. Pero si me preguntas, estoy contento de estar aquí contigo." />
+		<string id = "mfyline528" text = "Me nombraste como tu explorador. Quiero felicitar tu juicio. Mi experiencia y habilidades seguramente serán útiles." />
+		<string id = "mfyline529" text = "Él es un cazador que rastrea animales problemáticos. Se rumorea que posee dientes de dragón, pero probablemente sea una exageración." />
+
+		
+	<!-- System Messages -->
+		<string id = "mfywicsm00" text = "¡La propuesta de matrimonio ha sido aceptada!" />
+		<string id = "mfywicsm01" text = "Puedes hacer esto dentro del asentamiento..." />
+		<string id = "mfywicsm02" text = "No creo que sea muy cercano a ti.." />
+		<string id = "mfywicsm03" text = "No atraído por ti.." />
+		<string id = "mfywicsm04" text = "Falta de dinero." />
+		<string id = "mfywicsm05" text = "Nivel de clan." />
+		<string id = "mfywicsm06" text = "No hay lugar para comer y descansar.." />
+		<string id = "mfywicsm07" text = "Se requiere habilidad de encanto al menos 100." />
+		<string id = "mfywicsm08" text = "Se requiere rasgo de honor." />
+		<string id = "mfywicsm09" text = "Se requiere nivel de clan al menos 4." />
+		<string id = "mfywicsm10" text = "Se requiere calcular el rasgo." />
+		<string id = "mfywicsm11" text = "Se requieren cualidades ocultas que le gusten.." />
+		<string id = "mfywicsm12" text = "Se requiere que la suma de las habilidades con una mano, dos manos y con arma de asta sea superior a 300." />
+		<string id = "mfywicsm13" text = "Se requiere rasgo de valor." />
+		<string id = "mfywicsm14" text = "Se requiere cierta cantidad de dinero. Y al menos un feudo." />
+		<string id = "mfywicsm15" text = "Se requiere habilidad de encanto al menos 100." />
+		<string id = "mfywicsm16" text = "Se requiere que la suma de las habilidades de liderazgo y tácticas sea superior a 100." />
+		<string id = "mfywicsm17" text = "Se requiere una puntuación de relación de al menos 40." />
+		<string id = "mfywicsm18" text = "Se requiere al menos un feudo." />
+		<string id = "mfywicsm19" text = "Se requiere habilidad comercial al menos 100." />
+		<string id = "mfywicsm20" text = "Su habilidad de mayordomo se requiere al menos 100. (Not Player.)" />
+		<string id = "mfywicsm21" text = "Se requiere habilidad de elaboración al menos 100." />
+		<string id = "mfywicsm22" text = "Se requiere calcular el rasgo." />
+		<string id = "mfywicsm23" text = "Se requiere nivel de clan al menos 4." />
+		<string id = "mfywicsm24" text = "Se requiere cierta cantidad de dinero." />
+		<string id = "mfywicsm25" text = "Se requiere habilidad en medicina al menos 60." />
+		<string id = "mfywicsm26" text = "Su habilidad de exploración se requiere al menos 100. (Not Player.)" />
+		<string id = "mfywicsm27" text = "Tu relación con {Hero} ha aumentado. (+ {MalValue})" />
+		<string id = "mfywicsm28" text = "Tu relación con {Hero} ha disminuido. (- {MalValue})" />
+		<string id = "mfywicsm29" text = "A ella parece gustarle ++." />
+		<string id = "mfywicsm30" text = "A ella parece no gustarle --." />
+		<string id = "mfywicsm31" text = " Te han agregado puntos de bonificación.." />
+		<string id = "mfywicsm32" text = "recibiste{MalValue} Oros como dote de {Hero}!" />
+		<string id = "mfywicsm33" text = "Su salud ha sido restaurada por 10%." />
+		<string id = "mfywicsm34" text = "Su salud ha sido restaurada por 20%." />
+		<string id = "mfywicsm35" text = "Su salud ha sido restaurada por 33%." />
+		<string id = "mfywicsm36" text = "Su salud ha sido restaurada por 20%." />
+		<string id = "mfywicsm37" text = "Su salud ha sido restaurada por 33%." />
+		<string id = "mfywicsm38" text = "Su salud ha sido restaurada por 50%." />
+		<string id = "mfywicsm39" text = "Tu resistencia ha sido restaurada por 20%." />
+		<string id = "mfywicsm40" text = "Tu resistencia ha sido restaurada por 33%." />
+		<string id = "mfywicsm41" text = "Tu resistencia ha sido restaurada por 50%." />
+		<string id = "mfywicsm42" text = "{Number} Se han agregado trozos de carne a su inventario." />
+		<string id = "mfywicsm43" text = "10 Se han agregado trozos de carne a su inventario.." />
+		<string id = "mfywicsm44" text = "2 Se han agregado trozos de carne a su inventario.." />
+		<string id = "mfywicsm45" text = "{Hero} Tiene la oportunidad de concebir a tu hijo/a." />
+		<string id = "mfywicsm46" text = "{Hero} tiene mayores posibilidades de concebir a su hijo. Requiere beneficio viril." />
+		<string id = "mfywicsm47" text = "Se requiere al menos habilidad en medicina. 60." />
+		<string id = "mfywicsm48" text = "Su nivel de habilidad con armas de una mano debe ser 100 o superior, y la persona entrenada debe tener un nivel de habilidad correspondiente de 100 o inferior.." />
+		<string id = "mfywicsm49" text = "Tu nivel de habilidad con armas a dos manos debe ser 100 o superior, y la persona entrenada debe tener un nivel de habilidad correspondiente de 100 o inferior." />
+		<string id = "mfywicsm50" text = "Su nivel de habilidad con el arma de asta debe ser 100 o superior, y la persona entrenada debe tener un nivel de habilidad correspondiente de 100 o inferior." />
+		<string id = "mfywicsm51" text = "El nivel de tu arma de arco debe ser 100 o superior, y la persona entrenada debe tener un nivel de habilidad correspondiente de 100 o inferior.." />
+		<string id = "mfywicsm52" text = "Su nivel de habilidad con la ballesta debe ser 100 o superior, y la persona entrenada debe tener un nivel de habilidad correspondiente de 100 o menos.." />
+		<string id = "mfywicsm53" text = "Su nivel de habilidad de lanzamiento debe ser 100 o superior, y la persona entrenada debe tener un nivel de habilidad correspondiente de 100 o inferior.." />
+		<string id = "mfywicsm54" text = "El artículo del premio del torneo, {Item}, se ha eliminado de tu inventario.." />
+		<string id = "mfywicsm55" text = " uno-arma de mano" />
+		<string id = "mfywicsm56" text = " dos-arma de mano" />
+		<string id = "mfywicsm57" text = "Arma de asta" />
+		<string id = "mfywicsm58" text = "Arco" />
+		<string id = "mfywicsm59" text = "Ballesta" />
+		<string id = "mfywicsm60" text = "Lanzamiento" />
+		<string id = "mfywicsm61" text = "Su esposa {Hero} está embarazada vas a tener un hijo/a ." />
+		<string id = "mfywicsm62" text = "Tu compañera {Hero}está embarazada vas a tener un hijo/a." />
+		<string id = "mfywicsm63" text = "recibiste {MalValue} Oros de{Hero}." />
+		<string id = "mfywicsm64" text = "Espada de Sonadel" />
+		<string id = "mfywicsm65" text = "Recibiste {MalValue} artículo como regalo de {Hero}." />
+		<string id = "mfywicsm66" text = "{Hero} definitivamente estará embarazada de tu hija/o." />
+		<string id = "mfywicsm67" text = "{Hero} todavía parece un poco vacilante." />
+		<string id = "mfywicsm68" text = "{Hero} ha decidido aceptar tu oferta." />
+		<string id = "mfywicsm69" text = "Casco Invisible Destrozado" />
+		<string id = "mfywicsm70" text = "Casco Invisible" />
+		<string id = "mfywicsm71" text = "Casco Invisible de Calidad" />
+		<string id = "mfywicsm72" text = "Casco Invisible Legendario" />
+		<string id = "mfywicsm73" text = "Guardias de Hombros Invisibles Destrozadas" />
+		<string id = "mfywicsm74" text = "Guardias de Hombros Invisibles" />
+		<string id = "mfywicsm75" text = "Guardias de Hombros Invisibles de Calidad" />
+		<string id = "mfywicsm76" text = "Guardias de Hombros Invisibles Legendarios" />
+		<string id = "mfywicsm77" text = "Este artículo cuesta {Price} Oro. Se requiere {Price} Oro." />
+		<string id = "mfywicsm78" text = "Pagaste {Price} Oro y recibiste {Item}." />
+		<string id = "mfywicsm79" text = "Poción Antienvejecimiento Dudosa" />
+		<string id = "mfywicsm80" text = "Poción Antienvejecimiento" />
+		<string id = "mfywicsm81" text = "Poción Antienvejecimiento Probada" />
+		<string id = "mfywicsm82" text = "{Hero} ha envejecido de {Value1} a {Value2}." />
+		<string id = "mfywicsm83" text = "¡Pero no pasó nada!" />
+		<string id = "mfywicsm84" text = "Mantequilla Caliente" />
+		<string id = "mfywicsm85" text = "Se requiere {Price} Oro para esta acción." />
+		<string id = "mfywicsm86" text = "Pagaste {Price} Oro." />
+		<string id = "mfywicsm87" text = "Se requiere {Price} Oro para esta acción. Solo puedes hacerlo cinco veces al día." />
+		<string id = "mfywicsm88" text = "Conversar" />
+		<string id = "mfywicsm89" text = "{Hero} ha venido a visitarte." />
+		<string id = "mfywicsm90" text = "Hablar" />
+		<string id = "mfywicsm91" text = "Más tarde" />
+		
+
+	<!-- Player Lines -->
+		<string id = "mfywicpl00" text = "Hay algo de qué hablar." />
+		<string id = "mfywicpl01" text = "Cuéntame la historia que me contaste cuando nos conocimos." />
+		<string id = "mfywicpl02" text = "Ha pasado un tiempo desde que te uniste a la fiesta.." />
+		<string id = "mfywicpl03" text = "Quiero presentarles el honor de ganar el torneo de hoy.." />
+		<string id = "mfywicpl04" text = "Quiero estar un poco más cerca de ti." />
+		<string id = "mfywicpl05" text = "No importa. Ni siquiera estoy sugiriendo que nos casemos ahora." />
+		<string id = "mfywicpl06" text = "Bueno, ahora que lo pienso, casi cometo un error.." />
+		<string id = "mfywicpl07" text = "¿Por qué no hablamos juntos del futuro?" />
+		<string id = "mfywicpl08" text = "(Esperando una respuesta.)" />
+		<string id = "mfywicpl09" text = "¿Me puede decir qué es? Podrías cambiar de opinión." />
+		<string id = "mfywicpl10" text = "Discutamos esto nuevamente la próxima vez.." />
+		<string id = "mfywicpl11" text = "(Aquí comenzo mi boda con ella..)" />
+		<string id = "mfywicpl12" text = "Tal vez la próxima vez." />
+		<string id = "mfywicpl13" text = "Qué piensas acerca de mí?" />
+		<string id = "mfywicpl14" text = "Esto no es realmente un problema. Pronto te gustare también." />
+		<string id = "mfywicpl15" text = "Lo único que nos falta es la confianza que viene con un largo período de tiempo. Aunque el tiempo que nos reunimos fue breve, la confianza que hemos ganado hasta ahora no será traicionada." />
+		<string id = "mfywicpl16" text = "El matrimonio es una unión entre individuos, pero también es una unión entre familias.." />
+		<string id = "mfywicpl17" text = "Quería pasar tiempo contigo, no tuve tiempo. Ya sabes.. estoy haciendo lo que tengo que hacer." />
+		<string id = "mfywicpl18" text = "¿Te sentiste así? Entonces, hablemos poco a poco a partir de hoy.." />
+		<string id = "mfywicpl19" text = "Creo que tengo lo que estás buscando.." />
+		<string id = "mfywicpl20" text = "Soy atractiva porque soy guerrera de elite." />
+		<string id = "mfywicpl21" text = "Generalmente no es visible desde afuera, pero en momentos importantes cuando todos están agitados, todos me estarán mirando." />
+		<string id = "mfywicpl22" text = "El amor es sólo una fiebre. De manera realista, elige un camino que te permita vivir cómodamente.." />
+		<string id = "mfywicpl23" text = "Descubrirás mis otros encantos en alguna parte." />
+		<string id = "mfywicpl24" text = "Con mi experiencia dirigiendo caravanas y talleres, puedo ganar dinero rápidamente." />
+		<string id = "mfywicpl25" text = "Entonces te necesito más. Creo que puedes resolver este problema.." />
+		<string id = "mfywicpl26" text = "Con mis habilidades de herrería, es fácil ganar dinero rápidamente..." />
+		<string id = "mfywicpl27" text = "Soy bueno para discernir la diferencia entre dinero y cosas importantes. Pronto no tendrás que preocuparte demasiado por eso." />
+		<string id = "mfywicpl28" text = "El dinero, a veces lo tienes, otras veces no. Estos son simplemente malos tiempos." />
+		<string id = "mfywicpl29" text = "Hay mucha gente a la que le gusto y me apoya. Si las cosas continúan así, podremos aumentar rápidamente nuestra reputación." />
+		<string id = "mfywicpl30" text = "Todavía nos siguen unos pocos soldados, pero luchamos de forma sistemática y eficaz. Estas victorias mejorarán rápidamente nuestra reputación.." />
+		<string id = "mfywicpl31" text = "¡Te gusto y tú me gustas! ¡Entonces ya está!" />
+		<string id = "mfywicpl32" text = "Tengo territorio. Allí podremos establecer las bases de nuestro clan.." />
+		<string id = "mfywicpl33" text = "El mundo simplemente no nos conoce todavía." />
+		<string id = "mfywicpl34" text = "Nuestro clan tiene una gran reputación. Estoy seguro de que seremos reconocidos en algún lugar y podremos recibir territorio.." />
+		<string id = "mfywicpl35" text = "Por el momento, solo elegiré posadas de la más alta calidad para ti." />
+		<string id = "mfywicpl36" text = "Al menos puedo ayudarte a no enfermarte aunque estés afuera.." />
+		<string id = "mfywicpl37" text = "Pensé que estabas acostumbrada a vivir así.." />
+		<string id = "mfywicpl38" text = "Echarás de menos los días en los que puedes salir como lo haces ahora.." />
+		<string id = "mfywicpl39" text = "Creo que deberíamos terminar esta relación.." />
+		<string id = "mfywicpl40" text = "Esta es la conclusión a la que llegué después de pensarlo.." />
+		<string id = "mfywicpl41" text = "No importa, mira lo que me pasó por un momento.." />
+		<string id = "mfywicpl42" text = "¿Volveremos a llevarnos algún día como antes?" />
+		<string id = "mfywicpl43" text = "La verdad es que pienso lo mismo." />
+		<string id = "mfywicpl44" text = "Eso no funcionará.." />
+		<string id = "mfywicpl45" text = "Fui herido en una batalla reciente." />
+		<string id = "mfywicpl46" text = "Creo que mejorarás más rápido si lo tratas tú mismo.." />
+		<string id = "mfywicpl47" text = "Eso podría resultar útil." />
+		<string id = "mfywicpl48" text = "Necesito más tratamiento que la última vez.." />
+		<string id = "mfywicpl49" text = "Pude recuperarme más rápido porque lo traté directamente.." />
+		<string id = "mfywicpl50" text = "Ahora que lo pienso, creo que todo lo que necesito son algunas hierbas simples.." />
+		<string id = "mfywicpl51" text = "Pareces estar herido." />
+		<string id = "mfywicpl52" text = "¿Puedo echar un vistazo por mí mismo?" />
+		<string id = "mfywicpl53" text = "Pues bien, descansa bien para la próxima.." />
+		<string id = "mfywicpl54" text = "No, en casos como este se necesita un tratamiento más riguroso.." />
+		<string id = "mfywicpl55" text = "Lo que quieras." />
+		<string id = "mfywicpl56" text = "Creo que hoy sería mejor que descansaras solo." />
+		<string id = "mfywicpl57" text = "El trabajo de herrería siempre es un trabajo duro.." />
+		<string id = "mfywicpl58" text = "Me queda energía para usar en otras áreas.." />
+		<string id = "mfywicpl59" text = "Tienes razón, necesito dormir un poco.." />
+		<string id = "mfywicpl60" text = "Estás exigiendo demasiado a alguien que está cansado del trabajo..." />
+		<string id = "mfywicpl61" text = "Bien, me gustaría que lo completaras un poco." />
+		<string id = "mfywicpl62" text = "No, sólo necesito dormir un poco.." />
+		<string id = "mfywicpl63" text = "Nuestro grupo se está quedando sin comida." />
+		<string id = "mfywicpl64" text = "Les diré a todos que tú y yo vamos a cazar.." />
+		<string id = "mfywicpl65" text = "Asegúrate de traer a la mayor cantidad de personas posible para la caza.." />
+		<string id = "mfywicpl66" text = "No hay mucho que cazar hoy... tendré que concentrarme en uno." />
+		<string id = "mfywicpl67" text = "Creo que debería hacer eso hoy también. Trae tu equipo..." />
+		<string id = "mfywicpl68" text = "Pronto podrás conseguir comida en los pueblos de los alrededores." />
+		<string id = "mfywicpl69" text = "Creo que necesitas entrenamiento con armas." />
+		<string id = "mfywicpl70" text = "El entrenamiento de hoy termina aquí..." />
+		<string id = "mfywicpl71" text = "Estoy pensando en tomar algunas clases extra hoy...." />
+		<string id = "mfywicpl72" text = "Así es, hoy habrá un poco de práctica dura.." />
+		<string id = "mfywicpl73" text = "Las armas especiales deben manejarse con cuidado.." />
+		<string id = "mfywicpl74" text = "¿Crees que tienes algo que decirme?" />
+		<string id = "mfywicpl75" text = "Bueno... lo haremos otro día.." />
+		<string id = "mfywicpl76" text = "A ver si esa hierba aguanta..." />
+		<string id = "mfywicpl77" text = "Pruébalo.." />
+		<string id = "mfywicpl78" text = ".. ¿Cuánto tiempo hemos estado juntos?" />
+		<string id = "mfywicpl79" text = "¿Entonces, qué te trae por aquí?" />
+		<string id = "mfywicpl80" text = "¡Qué osadía! ¡No has cumplido con tus deberes como esposa!" />
+		<string id = "mfywicpl81" text = "Tienes razón, te mostraré el peso de mis responsabilidades." />
+		<string id = "mfywicpl82" text = "El apoyo de la nobleza beneficiará al reino." />
+		<string id = "mfywicpl83" text = "Hablaremos de esto nuevamente la próxima vez." />
+		
+		
+	<!-- Common Lines -->
+		<string id = "mfywicst00" text = "¿Sí, capitán?" />
+		<string id = "mfywicst01" text = "Está bien, espero que tengamos más tiempo para hablar así.." />
+		<string id = "mfywicst02" text = "Dime cualquier cosa mi amor." />
+		<string id = "mfywicst03" text = "Gracias por tu interés en mi historia.." />
+		<string id = "mfywicst04" text = "[if:convo_bemused]¿Eso es para mí? Gracias por tu sinceridad." />
+		<string id = "mfywicst05" text = "[if:convo_thinking][ib:nervous2]Oh... simplemente me sorprendió porque fue un poco repentino. Aún no estoy seguro/a porque llevo poco tiempo aquí.." />
+		<string id = "mfywicst06" text = "[if:convo_bemused]Me alegra que hayas dicho eso. También quería saber más sobre ti. Yo también haré lo mejor que pueda por esta relación.." />
+		<string id = "mfywicst07" text = "[if:convo_thinking][ib:closed2]Pero ya tienes a alguien contigo.." />
+		<string id = "mfywicst08" text = "Vale, ¿por qué no? Debería tener la oportunidad de llevarte a ti también." />
+		<string id = "mfywicst09" text = "[if:convo_pondering]No, no haré eso. No quiero ese tipo de relación... putero.." />
+		<string id = "mfywicst10" text = "[if:convo_thinking][ib:demure]Yo también he pensado en eso." />
+		<string id = "mfywicst11" text = "Me gustas, pero creo que todavía necesitamos saber más el uno del otro. Espero que no tengas demasiada prisa." />
+		<string id = "mfywicst12" text = "Estoy emocionado por el futuro contigo, pero me preocupa que haya algunas cosas que nos estén frenando. No estoy seguro..." />
+		<string id = "mfywicst13" text = "[if:convo_bemused][ib:hip2]Para ser honesto, ¡estaba esperando que me preguntaras eso!" />
+		<string id = "mfywicst14" text = "Creo que las bodas se pueden hacer en un castillo, ciudad o pueblo. Podemos celebrar una boda donde queramos." />
+		<string id = "mfywicst15" text = "Te diré las cosas que me preocupan..." />
+		<string id = "mfywicst16" text = "Eres alguien que a casi todos/as les gustas, pero no eres tan cercano a mí..  :( " />
+		<string id = "mfywicst17" text = "Para ser honesta, no estoy muy atraída/o por ti." />
+		<string id = "mfywicst18" text = "Creo que la reputación de nuestro clan debería ser un poco más alta de lo que es ahora.." />
+		<string id = "mfywicst19" text = "Dada la reputación de tu familia, no creo que tengas suficiente dinero para mantenerla de nuestro clan.." />
+		<string id = "mfywicst20" text = "Mi vida actual está bien, pero cuando los tiempos se ponen difíciles, desearía tener un lugar para relajarme..." />
+		<string id = "mfywicst21" text = "Bueno ya veo..." />
+		<string id = "mfywicst22" text = "[if:convo_bemused][ib:hip2]Creo que tienes razón. Decidí creerte y estar contigo.." />
+		<string id = "mfywicst23" text = "¡Creo que sería una buena idea volver a hablar de esto después de repasar las cosas que dijiste una por una!" />
+		<string id = "mfywicst24" text = "[if:convo_bemused][ib:hip2]Sinceramente, lo que dices no parece convincente. Pero simplemente decidí no preocuparme por eso. ¡Quiero casarme contigo!" />
+		<string id = "mfywicst25" text = "No estoy seguro de por qué. Pero es cierto que tengo dudas. Quiero hablar de esto la próxima vez.." />
+		<string id = "mfywicst26" text = "Hmm... No he pensado en nada especial hasta ahora. Espero poder responder con confianza la próxima vez.." />
+		<string id = "mfywicst27" text = "Ha pasado bastante tiempo desde que estuvimos juntos. Soy feliz de verte despues de tanto tiempo.." />
+		<string id = "mfywicst28" text = "Hazme caso y trátame bien. Yo también quiero devolver esa amabilidad.." />
+		<string id = "mfywicst29" text = "No puedo negar que eres atractiva/o.." />
+		<string id = "mfywicst30" text = "Estás liderando un clan prometedor. Realmente quiero elogiar tus cualidades como líder.." />
+		<string id = "mfywicst31" text = "Tienes algo especial que deseo en alguien. Me gusta mucho. de ti." />
+		<string id = "mfywicst32" text = "[if:convo_thinking][ib:weary2]Ya estás casado con alguien que no soy yo. Sabes que no podemos hacer eso. :_(" />
+		<string id = "mfywicst33" text = "[if:convo_pondering][ib:hip2]He oído que estás empezando a llevarte bien con otra mujer. Me decepciona estar a tu lado de  segundona." />
+		<string id = "mfywicst34" text = "[if:convo_pondering][ib:hip2]No me estarás engañando con otra mujer, ...¿verdad?.. Espero haber escuchado mal.." />
+		<string id = "mfywicst35" text = "[if:convo_thinking][ib:weary2]Felicitaciones por su matrimonio, pero me entristece mucho que se haya casado con alguien que no soy yo..." />
+		<string id = "mfywicst36" text = "[if:convo_pondering][ib:demure]Tengo algo que decirte. Me resulta difícil mantener una relación contigo por más tiempo.." />
+		<string id = "mfywicst37" text = "[if:convo_thinking][ib:demure]Um, ¿realmente crees que deberíamos terminar nuestra relación?" />
+		<string id = "mfywicst38" text = "[if:convo_thinking][ib:nervous2]¿Hablas en serio sobre esto? Lo haré mejor, así que espero que cambies de opinión..." />
+		<string id = "mfywicst39" text = "Desafortunadamente, creo que este es el límite de nuestra relación.." />
+		<string id = "mfywicst40" text = "¡Oh, no! Por favor no me dejes..." />
+		<string id = "mfywicst41" text = "[if:convo_pondering][ib:hip2]Te sorprendiste. Espero que no hagas eso la próxima vez.." />
+		<string id = "mfywicst42" text = "[if:convo_thinking][ib:weary2]No me apetece. Por favor déjame en paz por ahora." />
+		<string id = "mfywicst43" text = "[if:convo_thinking]... está bien. Pero no quiero volver a salir lastimada/o.." />
+		<string id = "mfywicst44" text = "[if:convo_pondering][ib:demure2]... Capitán, tengo algo que decirle primero.." />
+		<string id = "mfywicst45" text = "Estaba pensando que quería acercarme a ese capitán. Si no te importa, ven conmigo..." />
+		<string id = "mfywicst46" text = "[if:convo_bemused]Definitivamente me convertiré en una persona digna de usted, Capitán.." />
+		<string id = "mfywicst47" text = "Oh... Ah... lamento mi comportamiento presuntuoso.." />
+		<string id = "mfywicst48" text = "[if:convo_thinking][ib:demure]Tienes una herida. Si usa esta hierba, mejorará rápidamente.." />
+		<string id = "mfywicst49" text = "En ese caso.." />
+		<string id = "mfywicst50" text = "No creo que sea una herida tan grave. No creo que sea necesaria la enfermería.." />
+		<string id = "mfywicst51" text = "Entonces, déjame revisar tus heridas lentamente en mi habitación.." />
+		<string id = "mfywicst52" text = "[if:malfoy_custom_face]¿Necesitas mi tratamiento hoy también?" />
+		<string id = "mfywicst53" text = "[if:convo_thinking][ib:weary2]Es por un incidente reciente. Descansa y te recuperarás." />
+		<string id = "mfywicst54" text = "Oh, no tienes que preocuparte tanto. No es tan grave.." />
+		<string id = "mfywicst55" text = "[if:convo_bemused][ib:weary2]Sí, entonces visitaré tu residencia brevemente hoy.." />
+		<string id = "mfywicst56" text = "[if:malfoy_custom_face][ib:weary2]La última vez, el trato fue demasiado duro. ¿Puedo pedirte que te sientas más cómodo hoy , mejor que la última vez?" />
+		<string id = "mfywicst57" text = "[if:convo_confused_normal][ib:weary2]Oh, por favor no hagas eso.." />
+		<string id = "mfywicst58" text = "Te veo sudar mucho a mi lado. Sería una buena idea tomar un breve descanso." />
+		<string id = "mfywicst59" text = "Creo que es mejor no exagerar. Preparé un espacio para que descansaras allí." />
+		<string id = "mfywicst60" text = "[if:malfoy_custom_face][ib:hip2]Confirme usted mismo la energía que tiene en los otros campos que mencionó...." />
+		<string id = "mfywicst61" text = "[if:malfoy_custom_face]Oh, ¿te falta energía? Creo que puedo restaurar eso un poco." />
+		<string id = "mfywicst62" text = "[if:convo_relaxed_happy][ib:hip2]¡Tendrás que usar toda tu energía en mí!" />
+		<string id = "mfywicst63" text = "Entonces, ¿deberíamos cazar incluso a los animales que nos rodean? Estoy listo/a." />
+		<string id = "mfywicst64" text = "Cuanta más gente haya, más comida podrás conseguir. Sería mejor si nos fuéramos todos juntos.." />
+		<string id = "mfywicst65" text = "No creo que sea necesario hablar de ello. Empacaré mis cosas en silencio y volveré aquí." />
+		<string id = "mfywicst66" text = "[if:malfoy_custom_face]Entonces, ¿vamos a cazar hoy también? Parece que el objetivo de caza ya ha sido capturado.." />
+		<string id = "mfywicst67" text = "[if:convo_relaxed_happy][ib:hip2]Parece que ya terminaste la caza y solo tienes tiempo para probar la caza, pero voy a ir a cazar de todos modos.." />
+		<string id = "mfywicst68" text = "¿Qué tipo de formación estás considerando?" />
+		<string id = "mfywicst69" text = "Vale, seguiré lo que me digas." />
+		<string id = "mfywicst70" text = "[if:convo_thinking][ib:confident2]Si es una formación importante, la haré con mis compañeros. Creo que las clases especiales sólo para mí son injustas.." />
+		<string id = "mfywicst71" text = "¿Qué armas requieren entrenamiento adicional?" />
+		<string id = "mfywicst72" text = "[if:malfoy_custom_face]¿Deberías entrenarte para usar tu arma especial hoy?" />
+		<string id = "mfywicst73" text = "[if:convo_relaxed_happy][ib:hip2]En realidad, pensé que ahora necesitaba una práctica más fuerte y dura." />
+		<string id = "mfywicst74" text = "[if:malfoy_custom_face][ib:hip2]Lo haré. Seré tu maestro de armas especiales...." />
+		<string id = "mfywicst75" text = "Nos reunimos por primera vez en {Settlement}. Hemos trabajado juntos durante estos días {Days}." />
+		<string id = "mfywicst76" text = "Nos reunimos por primera vez en {Settlement}. Hemos trabajado juntos durante estos días {Years}." />
+		<string id = "mfywicst77" text = "Nos casamos en {Settlement}. Hemos estado casados durante los días {Days}." />
+		<string id = "mfywicst78" text = "Nos casamos en {Settlement}. Hemos estado casados ​​durante los años {Years}." />
+		<string id = "mfywicst79" text = "¿Podrías darme un momento?" />
+		<string id = "mfywicst80" text = "No sé si lo sabías, pero quería decirte que hemos estado juntos por más de 10 años." />
+		<string id = "mfywicst81" text = "[if:convo_thinking][ib:demure]Me preocupa que puedas haber resultado herido recientemente." />
+		<string id = "mfywicst82" text = "[if:convo_thinking][ib:weary2]Sufrí algunas heridas en una batalla reciente. Creo que el tratamiento que me diste la última vez fue efectivo." />
+		<string id = "mfywicst83" text = "Estás dedicado a tu trabajo de herrero..." />
+		<string id = "mfywicst84" text = "Parece que nuestro grupo se está quedando sin comida." />
+		<string id = "mfywicst85" text = "[if:convo_pondering][ib:hip2]Bueno... quiero decir, estoy lista para cumplir con mis deberes como esposa, así que quizás sea el momento de que tú también cumplas los tuyos." />
+		<string id = "mfywicst86" text = "[if:convo_thinking][ib:nervous2]¡Lo siento! Así que hoy, yo..." />
+		<string id = "mfywicst87" text = "[if:convo_relaxed_happy][ib:hip2]El deber de satisfacerme podría ser bastante pesado..." />
+		<string id = "mfywicst88" text = "[if:convo_pondering][ib:hip2]... ¿Otro día? ¿Cuándo?" />
+
+
+	<!-- Merchant Lines -->
+		<string id = "mfywicmct00" text = "Mucho gusto, viajero. Si no me equivoco, nos veremos bastante seguido." />
+		<string id = "mfywicmct01" text = "¿Quién eres? ¿Qué haces?" />
+		<string id = "mfywicmct02" text = "Me encargo de artículos especiales, cosas que son difíciles de encontrar." />
+		<string id = "mfywicmct03" text = "Dime qué es lo que quieres." />
+		<string id = "mfywicmct04" text = "¿Has venido a intercambiar conmigo otra vez hoy? Siempre eres bienvenido." />
+		<string id = "mfywicmct05" text = "Preguntar sobre rumores" />
+		<string id = "mfywicmct06" text = "Poción Anti-envejecimiento" />
+		<string id = "mfywicmct07" text = "Equipo Invisible" />
+		<string id = "mfywicmct08" text = "Queso para reducir los celos" />
+		<string id = "mfywicmct09" text = "(Prueba la poción anti-envejecimiento que tienes.)" />
+		<string id = "mfywicmct10" text = "Selecciona la poción para usar" />
+		<string id = "mfywicmct11" text = "Regresar" />
+		<string id = "mfywicmct12" text = "Eso es todo por hoy." />
+		<string id = "mfywicmct13" text = "¡Muy bien, hasta la próxima!" />
+		<string id = "mfywicmct14" text = "Bienvenido, según lo que dicen los rumores o por alguien." />
+		<string id = "mfywicmct15" text = "Por favor, explícame exactamente qué es esto." />
+		<string id = "mfywicmct16" text = "Hmm, si muestras un poco de buena voluntad, compartiré la información que tengo." />
+		<string id = "mfywicmct17" text = "No puedo hacer nada si repito lo que ya dijiste o lo que ya sabes. No puedo ofrecer un reembolso, aunque no te guste." />
+		<string id = "mfywicmct18" text = "Cuéntame lo que oíste. (1,000 de oro)" />
+		<string id = "mfywicmct19" text = "Esa información será útil." />
+		<string id = "mfywicmct20" text = "Qué desperdicio de mi dinero..." />
+		<string id = "mfywicmct21" text = "Echa un vistazo." />
+		<string id = "mfywicmct22" text = "Con esta poción, te volverás más joven al instante. Pero ten cuidado, ya que no te hará más joven si tienes menos de 19 años." />
+		<string id = "mfywicmct23" text = "Si tienes mala suerte, podrían ocurrir efectos secundarios. Cuanto mejor sea la calidad, menos efectos secundarios y mejores serán los resultados." />
+		<string id = "mfywicmct24" text = "Es un placer hacer negocios contigo..." />
+		<string id = "mfywicmct25" text = "Espera, ¿el precio de la poción es diferente?" />
+		<string id = "mfywicmct26" text = "Es un ingrediente tan raro que el precio ha subido... Eso es lo que pasó." />
+		<string id = "mfywicmct27" text = "Ah, claro, no volverá al precio antiguo, así que no tiene sentido esperar. Solo subirá más." />
+		<string id = "mfywicmct28" text = "¡Es ridículamente caro!" />
+		<string id = "mfywicmct29" text = "¿Necesitas esta mantequilla?" />
+		<string id = "mfywicmct30" text = "Incluso si encuentras a varias personas a la vez, aumentan las posibilidades de que tus amantes no se den cuenta..." />
+		<string id = "mfywicmct31" text = "Y aunque se descubra tu aventura, estarán menos enojados contigo." />
+		<string id = "mfywicmct32" text = "Voy a comprar esa mantequilla ahora." />
+		<string id = "mfywicmct33" text = "Quiero darte una poción anti-envejecimiento." />
+		<string id = "mfywicmct34" text = "¿Qué estás pensando?" />
+		<string id = "mfywicmct35" text = "¿Qué personaje quieres invocar?" />
+		<string id = "mfywicmct36" text = "Si por alguna razón alguien no existe en este mundo, puedo invocarlo." />
+		<string id = "mfywicmct37" text = "Puedo revivir a alguien que ha muerto, pero en ese caso, olvidarán completamente sus recuerdos y renacerán como nuevos." />
+		<string id = "mfywicmct38" text = "¿Quieres invocar a ese personaje?" />
+		<string id = "mfywicmct39" text = "Ese personaje ya ha muerto o ha dejado este mundo. En este caso, se necesita un poco más." />
+		<string id = "mfywicmct40" text = "Hazlo, por favor." />
+		<string id = "mfywicmct41" text = "Invocar a héroe" />
+
+		<string id = "mfywicmct50" text = "Por lo que escuché, el regalo favorito de {Hero} en los torneos es {Category}." />
+		<string id = "mfywicmct51" text = "Por lo que escuché, {Hero} acepta cualquier regalo." />
+		<string id = "mfywicmct52" text = "Por lo que escuché, los regalos favoritos de {Hero} en los torneos son objetos de alto nivel." />
+		<string id = "mfywicmct53" text = "Por lo que escuché, {Hero} prefiere a alguien hábil en {Category}." />
+		<string id = "mfywicmct54" text = "Por lo que escuché, {Hero} prefiere a alguien con características de {Category}." />
+		<string id = "mfywicmct55" text = "Por lo que escuché, {Hero} prefiere a alguien con mucha riqueza." />
+		<string id = "mfywicmct56" text = "Se dice que puedes tratar a tus compañeros en el asentamiento cuando se encuentran heridos." />
+		<string id = "mfywicmct57" text = "Se dice que tus compañeros pueden tratarte en el asentamiento cuando estés herido." />
+		<string id = "mfywicmct58" text = "Se dice que si tu grupo se queda sin comida, puedes ir a cazar hablando con tus compañeros afuera." />
+		<string id = "mfywicmct59" text = "Se dice que si te quedas sin energía en la herrería, un compañero puede ayudarte a recargarla." />
+		<string id = "mfywicmct60" text = "Se dice que puedes enseñar a tus compañeros si tu nivel de habilidad con armas es alto." />
+		<string id = "mfywicmct61" text = "Si tienes la habilidad {PerkName}, se dice que puedes usarla en ciertas situaciones." />
+		<string id = "mfywicmct62" text = "Si tienes la habilidad {PerkName}, se dice que eres especialmente atractivo para el sexo opuesto." />
+		<string id = "mfywicmct63" text = "Iba a decir algo, pero... ¿qué era? Se me olvidó." />
+		<string id = "mfywicmct64" text = "Con solo comprarme la mantequilla caliente una vez, su efecto seguirá funcionando." />
+		
+	<!-- Herdis -->
+		<string id = "mfywicnpc14" text = "Herdis" />
+		<string id = "mfyline140" text = "Pareces quien lidera a las tropas. Es un honor que muestres interés en mí." />
+		<string id = "mfyline141" text = "Tengo tres hermanos menores, cada uno con talentos notables. Con el tiempo, apoyarlos a los tres se convirtió en la parte más importante de mi vida." />
+		<string id = "mfyline142" text = "Cuando incluso el más joven recibió el favor del señor y dejó el hogar para cumplir su misión, me alegré por su éxito, pero lo que quedó fui yo sola en una casa donde todos se habían ido." />
+		<string id = "mfyline143" text = "¿Era esto lo que realmente quería? ¿Era esto todo lo que había logrado? Empezaron a surgir ese tipo de pensamientos." />
+		<string id = "mfyline144" text = "Has hecho un trabajo admirable." />
+		<string id = "mfyline145" text = "Mmm… parece que no tienes muchas habilidades que serían útiles para las tropas…" />
+		<string id = "mfyline146" text = "Pero confío en mi resistencia y perseverancia. ¡Esas son mis fortalezas!" />
+		<string id = "mfyline147" text = "[if:convo_pondering][ib:hip2]¿Ya ha pasado tanto tiempo? Supongo que esta es una buena oportunidad para darte un poco de sermón. ¿Has comido bien hoy? No deberías salir a la batalla con el estómago vacío. Asegúrate de que tu armadura esté bien ajustada. Si se afloja como la última vez, podría ser peligroso. Cuando montes a caballo, revisa siempre dos veces las correas de la silla. ¡Podrías lastimarte si te caes!" />
+		<string id = "mfyline148" text = "[if:convo_bemused][ib:demure]Cuando dejé mi hogar, dije que me marchaba para encontrar mi propia vida. Y otra razón era encontrar una pareja maravillosa. Estoy segura de que puedo criar bien a los niños. Eh… entonces, ¿te casarías conmigo?" />
+		<string id = "mfyline149" text = "Es la hermana mayor que creció cuidando de sus tres hermanos menores. Ahora que todos han crecido, ha salido a buscar su propia vida." />
+
+	<!-- Anneli -->
+		<string id = "mfywicnpc15" text = "Anneli" />
+		<string id = "mfyline150" text = "Crecí bajo el mando del capitán que me adoptó, pensando que la gélida brisa marina era en realidad bastante refrescante." />
+		<string id = "mfyline151" text = "El motín estalló sin previo aviso, pero el capitán era un veterano. Apenas pudo repeler a los perseguidores, me empujó a una balsa y cortó las amarras." />
+		<string id = "mfyline152" text = "Los traidores estaban desesperados por silenciar a cualquier testigo. Logré escapar, pero en el último segundo, una jabalina atravesó al capitán." />
+		<string id = "mfyline153" text = "La balsa pesaba mucho, pero no pude soportar la idea de dejarlo atrás en el mar. Remé sola hasta la orilla y lo enterré profundamente bajo la arena de la playa." />
+		<string id = "mfyline154" text = "Ni siquiera quiero imaginar lo que debió ser aquello." />
+		<string id = "mfyline155" text = "Casi mueres tú también por un hombre muerto." />
+		<string id = "mfyline156" text = "Solo ahora me doy cuenta de que la razón por la que esos vientos gélidos se sentían tan 'refrescantes' era únicamente por el capitán." />
+		<string id = "mfyline157" text = "Después de viajar de un lugar a otro, me he dado cuenta de que no me gusta tanto navegar. Creo que galopar por las llanuras a caballo va más conmigo." />
+		<string id = "mfyline158" text = "[if:convo_thinking][ib:nervous2] Cuando cae la noche durante un viaje, recuerdo lo que pasó. Dicho esto... ¿estaría bien si me quedara contigo un rato esta noche?" />
+		<string id = "mfyline158_0" text = "Si sirve de ayuda, supongo que una breve estancia sería aceptable." />
+		<string id = "mfyline158_1" text = "No, no haré eso." />
+		<string id = "mfyline158_2" text = "[if:convo_pondering][ib:hip2] Pero esos recuerdos aún me persiguen. Si me lo permites, me quedaré tranquilamente a tu lado." />
+		<string id = "mfyline158_3" text = "Entendido. Pero no va a pasar nada." />
+		<string id = "mfyline158_4" text = "Como ya he dicho, vuelve a tu sitio." />
+		<string id = "mfyline158_5" text = "[if:malfoy_custom_face][ib:hip2] Creo que hoy por fin podré descansar en paz..." />
+		<string id = "mfyline159" text = "Tiene un agudo sentido de lo que hay que hacer en cualquier situación. Es una marinera experimentada que ha servido en barcos mercantes." />
+		
+	<!-- Elara -->
+		<string id = "mfywicnpc16" text = "Elara" />
+		<string id = "mfyline160" text = "Solo soy una viajera común. Eso es todo." />
+		<string id = "mfyline161" text = "....." />
+		<string id = "mfyline162" text = "..... ......" />
+		<string id = "mfyline163" text = "¿Hm? ¿Y qué?" />
+		<string id = "mfyline164" text = "¿Dices que eres común? Yo soy una gran aventurera." />
+		<string id = "mfyline165" text = "....." />
+		<string id = "mfyline166" text = "Bueno, no hay mucho que contar." />
+		<string id = "mfyline167" text = "Preguntes lo que preguntes, no hay historias ocultas ni grandes secretos. Simplemente me gustan el dinero y las espadas." />
+		<string id = "mfyline168" text = "Creo que me robaste algo." />
+		<string id = "mfyline168_0" text = "[if:convo_pondering][ib:hip2]¿Eh? ¿De qué está hablando de repente?" />
+		<string id = "mfyline168_1" text = "¡Gata ladrona! ¡Sé exactamente dónde lo escondiste!" />
+		<string id = "mfyline168_2" text = "O quizá no." />
+		<string id = "mfyline169" text = "Hay rumores de que pertenece al Gremio de Ladrones, pero no se sabe si son ciertos." />
+	
+	</strings>
+</base>

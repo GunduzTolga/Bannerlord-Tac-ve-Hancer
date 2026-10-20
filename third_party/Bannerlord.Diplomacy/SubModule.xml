@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+    <Name value="Diplomacy" />
+    <Id value="Bannerlord.Diplomacy" />
+    <Version value="v1.5.4" />
+    <ModuleType value="Community"/>
+    <Official value="false" />
+    <DefaultModule value="false" />
+    <SingleplayerModule value="true" />
+    <MultiplayerModule value="false" />
+    <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/832" />
+    <DependedModules>
+        <DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.4.2" />
+        <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v2.11.1" />
+        <DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v5.12.3" />
+        <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v2.13.2" />
+        <DependedModule Id="Native" DependentVersion="v1.4.0" />
+        <DependedModule Id="SandBoxCore" DependentVersion="v1.4.0" />
+        <DependedModule Id="Sandbox" DependentVersion="v1.4.0" />
+        <DependedModule Id="StoryMode" DependentVersion="v1.4.0" />
+    </DependedModules>
+    <DependedModuleMetadatas>
+        <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v2.4.2" />
+        <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v2.11.1" />
+        <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v5.12.3" />
+        <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v2.13.2" />
+        <DependedModuleMetadata id="Native" order="LoadBeforeThis" version="v1.4.0.*" />
+        <DependedModuleMetadata id="SandBoxCore" order="LoadBeforeThis" version="v1.4.0.*" />
+        <DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" version="v1.4.0.*" />
+        <DependedModuleMetadata id="StoryMode" order="LoadBeforeThis" version="v1.4.0.*" />
+        <DependedModuleMetadata id="CustomBattle" order="LoadBeforeThis" version="v1.4.0.*" optional="true" />
+        <DependedModuleMetadata id="BirthAndDeath" order="LoadBeforeThis" version="v1.4.0.*" optional="true" />
+        <DependedModuleMetadata id="NavalDLC" order="LoadBeforeThis" version="v1.4.0.*" optional="true" />
+    </DependedModuleMetadatas>
+    <SubModules>
+        <!-- Bannerlord Module Loader. Do not change the name! -->
+        <SubModule>
+            <Name value="Bannerlord Module Loader" />
+            <DLLName value="Bannerlord.ModuleLoader.Bannerlord.Diplomacy.dll" />
+            <SubModuleClassType value="Bannerlord.ModuleLoader.Bannerlord_Diplomacy" />
+            <Tags>
+                <Tag key="LoaderFilter" value ="Bannerlord.Diplomacy.*.dll" />
+            </Tags>
+        </SubModule>
+    </SubModules>
+    <Xmls>
+        <XmlNode>
+            <XmlName id="GameText" path="gt_common"/>
+        </XmlNode>
+        <XmlNode>
+            <XmlName id="GameText" path="gt_help"/>
+        </XmlNode>
+        <XmlNode>
+            <XmlName id="GameText" path="gt_war_exhaustion"/>
+        </XmlNode>
+    </Xmls>
+</Module>

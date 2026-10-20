@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Русский" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="Бюджет" />
+    <string id="CA_mcm_g_purchases" text="Покупки" />
+    <string id="CA_mcm_g_autonomy" text="Самостоятельность" />
+    <string id="CA_mcm_g_display" text="Отображение" />
+    <string id="CA_mcm_unlimited" text="Неограниченный бюджет (по умолчанию)" />
+    <string id="CA_mcm_unlimited_hint" text="Значение по умолчанию, меняется для каждого спутника в разделе Клан &gt; Отряды. Если включено, спутники не получают содержание: они берут деньги прямо из вашей казны (не опускаясь ниже минимального резерва). Чем вы богаче, тем лучше они экипируются." />
+    <string id="CA_mcm_allowance" text="Еженедельное содержание (по умолчанию)" />
+    <string id="CA_mcm_allowance_hint" text="Значение по умолчанию, меняется для каждого спутника в разделе Клан &gt; Отряды. Сумма, выплачиваемая каждую неделю из вашей казны." />
+    <string id="CA_mcm_cap" text="Предел кошелька" />
+    <string id="CA_mcm_cap_hint" text="Максимальная сумма, которую может накопить спутник. Сверх неё содержание больше не выплачивается. 0 = без ограничения." />
+    <string id="CA_mcm_reserve" text="Минимальный резерв игрока" />
+    <string id="CA_mcm_reserve_hint" text="Ваша казна никогда не опустится ниже этого порога из-за содержания или покупок с неограниченным бюджетом." />
+    <string id="CA_mcm_family" text="Включить семью" />
+    <string id="CA_mcm_family_hint" text="Если включено, это касается и членов вашей семьи, возглавляющих отряд (а не только нанятых спутников)." />
+    <string id="CA_mcm_refund" text="Возврат при гибели" />
+    <string id="CA_mcm_refund_hint" text="Если спутник погибает, остаток его кошелька возвращается к вам." />
+    <string id="CA_mcm_equip_share" text="Доля на снаряжение (%)" />
+    <string id="CA_mcm_equip_share_hint" text="Доля кошелька, которую спутник может потратить на снаряжение при каждом посещении города." />
+    <string id="CA_mcm_troop_share" text="Доля на войска (%)" />
+    <string id="CA_mcm_troop_share_hint" text="Доля кошелька, которую спутник может потратить на рекрутов при каждом посещении города." />
+    <string id="CA_mcm_slot_share" text="Максимум на предмет (%)" />
+    <string id="CA_mcm_slot_share_hint" text="Один предмет снаряжения не может стоить больше этой доли оставшегося бюджета на снаряжение. Чем полнее кошелёк, тем дороже покупки." />
+    <string id="CA_mcm_min_upgrade" text="Минимальное улучшение для замены (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="Предмет покупается, только если он лучше текущего хотя бы на эту величину (избегает бесполезных покупок)." />
+    <string id="CA_mcm_sellback" text="Продажа старого предмета (%)" />
+    <string id="CA_mcm_sellback_hint" text="Доля цены продажи, которую спутник получает при замене предмета." />
+    <string id="CA_mcm_min_budget" text="Минимальный бюджет для покупок" />
+    <string id="CA_mcm_min_budget_hint" text="Ниже этой суммы спутник ничего не покупает (копит)." />
+    <string id="CA_mcm_cooldown" text="Дней между покупками" />
+    <string id="CA_mcm_cooldown_hint" text="Минимальное число дней между двумя покупками одного и того же спутника." />
+    <string id="CA_mcm_max_recruits" text="Макс. рекрутов за визит" />
+    <string id="CA_mcm_max_recruits_hint" text="Максимальное число солдат, нанимаемых при каждом посещении города." />
+    <string id="CA_mcm_troop_cost" text="Стоимость рекрутов (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="Множитель цены рекрутов, оплачиваемых из кошелька (100% = базовые расценки мода)." />
+    <string id="CA_mcm_promote" text="Повышать войска" />
+    <string id="CA_mcm_promote_hint" text="Если включено, спутники тратят долю кошелька на войска сначала на повышение опытных солдат, а на остаток нанимают новых." />
+    <string id="CA_mcm_dismiss" text="Распускать войска вне состава" />
+    <string id="CA_mcm_dismiss_hint" text="Только для спутников с заданным составом армии. Если включено, солдаты, не подходящие под состав, распускаются постепенно — только чтобы освободить место для нужных рекрутов." />
+    <string id="CA_mcm_fill_free" text="Заполнять свободные места другими войсками" />
+    <string id="CA_mcm_fill_free_hint" text="Только для спутников с заданным составом армии. Если включено, места, не охваченные составом, заполняются любыми рекрутами из города. Если выключено, они набирают только войска своего состава." />
+    <string id="CA_mcm_buy_horse" text="Купить коня, если его нет" />
+    <string id="CA_mcm_buy_horse_hint" text="Если включено, пеший спутник покупает скакуна (затем седло или конскую броню), если у него достаточный уровень Верховой езды." />
+    <string id="CA_mcm_min_riding" text="Мин. Верховая езда для первого коня" />
+    <string id="CA_mcm_min_riding_hint" text="Пеший спутник купит первого коня, только если его Верховая езда достигнет этого уровня (чтобы не сажать в седло чистого пехотинца)." />
+    <string id="CA_mcm_autoshop" text="Автоматические поездки в город (по умолчанию)" />
+    <string id="CA_mcm_autoshop_hint" text="Значение по умолчанию, меняется для каждого спутника в разделе Клан &gt; Отряды. Если включено, состоятельный спутник, давно ничего не покупавший, сам отправляется в ближайший дружественный город за снаряжением." />
+    <string id="CA_mcm_autoshop_budget" text="Минимальный кошелёк для поездки" />
+    <string id="CA_mcm_autoshop_budget_hint" text="Спутник отправляется в путь, только если его кошелёк достигает этой суммы (при неограниченном бюджете: ваша доступная казна)." />
+    <string id="CA_mcm_autoshop_days" text="Дней без покупок до поездки" />
+    <string id="CA_mcm_autoshop_days_hint" text="Сколько дней без покупок должно пройти, прежде чем спутник сам решит отправиться в город." />
+    <string id="CA_mcm_recruit_trips" text="Поездки за рекрутами" />
+    <string id="CA_mcm_recruit_trips_hint" text="Только для спутников с заданным составом армии, которые сами делают покупки. Если нужные войска не набираются в их краях, они отправляются в ближайший дружественный город или деревню, где они есть." />
+    <string id="CA_mcm_recruit_distance" text="Максимальная дальность поездки" />
+    <string id="CA_mcm_recruit_distance_hint" text="Как далеко спутник может уйти за рекрутами, в единицах карты. Чем больше значение, тем большую часть Кальрадии он может пересечь." />
+    <string id="CA_mcm_recruit_missing" text="Недостающих войск до поездки" />
+    <string id="CA_mcm_recruit_missing_hint" text="Поездка за рекрутами начинается, только если в составе не хватает хотя бы стольких войск." />
+    <string id="CA_mcm_noarmies" text="Не вступать в армии других лордов (по умолчанию)" />
+    <string id="CA_mcm_noarmies_hint" text="Значение по умолчанию, меняется для каждого спутника в разделе Клан &gt; Отряды. Если включено, спутники отказываются вступать в армии других лордов и покидают армию, в которой находятся, как только не сражаются. Вы по-прежнему можете звать их в свои армии." />
+    <string id="CA_mcm_messages" text="Показывать сообщения" />
+    <string id="CA_mcm_messages_hint" text="Показывает сообщение, когда спутник покупает снаряжение, нанимает солдат или получает содержание." />
+    <string id="CA_ui_title" text="Кошелёк спутника" />
+    <string id="CA_ui_allowance" text="Содержание / неделя" />
+    <string id="CA_ui_wallet" text="Текущий кошелёк" />
+    <string id="CA_ui_unlimited" text="Неограниченный бюджет" />
+    <string id="CA_ui_autoshop" text="Сам ходит за покупками" />
+    <string id="CA_ui_noarmies" text="Не вступает в армии других лордов" />
+    <string id="CA_ui_treasury" text="Казна клана" />
+    <string id="CA_ui_none" text="Покупок пока нет" />
+    <string id="CA_ui_last" text="Последняя покупка: {TEXT}" />
+    <string id="CA_ui_composition" text="Состав армии ({COUNT})" />
+    <string id="CA_ui_composition_none" text="Состав армии: свободный" />
+    <string id="CA_err_popup" text="[Companion Autonomy] Не удалось открыть окно состава: {ERROR}" />
+    <string id="CA_msg_promotes" text="повышает солдат: {COUNT} ({GOLD} золота)" />
+    <string id="CA_msg_dismisses" text="распускает солдат: {COUNT}" />
+    <string id="CA_msg_recruits" text="нанимает солдат: {COUNT} ({GOLD} золота)" />
+    <string id="CA_msg_left" text="осталось {GOLD} золота" />
+    <string id="CA_msg_summary" text="{HERO}, {TOWN}: {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="ещё +{COUNT}" />
+    <string id="CA_hist_soldiers" text="солдат: {COUNT}" />
+    <string id="CA_hist_today" text="сегодня" />
+    <string id="CA_hist_yesterday" text="вчера" />
+    <string id="CA_hist_days" text="дней назад: {COUNT}" />
+    <string id="CA_hist_line" text="{WHAT}, {TOWN}, {WHEN} ({GOLD} золота)" />
+    <string id="CA_msg_allowances" text="Выплачено содержание: {GOLD} золота, спутников: {COUNT}." />
+    <string id="CA_msg_reserve" text="Спутников без содержания: {COUNT}. Достигнут ваш минимальный резерв." />
+    <string id="CA_msg_arrived_empty" text="{HERO}: прибытие в {TOWN}, но кошелёк пуст." />
+    <string id="CA_msg_buys" text="покупает: {ITEMS} ({GOLD} золота)" />
+    <string id="CA_msg_nothing" text="{HERO}, {TOWN}: ничего лучше по карману нет." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] Ошибка при покупках ({HERO}): {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] Не удалось найти приказ на перемещение в этой версии игры." />
+    <string id="CA_err_dump" text="Список функций сохранён в: {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] Не удалось выполнить приказ на перемещение: {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} отказывается от поездки в город: {REASON}." />
+    <string id="CA_reason_unsafe" text="город больше не безопасен" />
+    <string id="CA_reason_timeout" text="слишком долго в пути" />
+    <string id="CA_reason_army" text="присоединение к армии" />
+    <string id="CA_msg_recruit_trip" text="{HERO} отправляется в {TOWN} нанимать войска для состава армии." />
+    <string id="CA_msg_autotrip" text="{HERO} по собственной инициативе отправляется в {TOWN} за снаряжением." />
+    <string id="CA_msg_left_army" text="{HERO} покидает армию {LEADER} и возвращается к своим делам." />
+    <string id="CA_msg_refund" text="Кошелёк ({HERO}, {GOLD} золота) возвращён вам." />
+    <string id="CA_dlg_ask_wallet" text="Как обстоят дела с твоим кошельком?" />
+    <string id="CA_dlg_wallet_unlimited" text="У меня свободный доступ к казне. Я покупаю только то, что того стоит." />
+    <string id="CA_dlg_wallet_amount" text="От моего содержания осталось {GOLD} золота." />
+    <string id="CA_dlg_ask_history" text="Какие у тебя последние покупки?" />
+    <string id="CA_dlg_history_none" text="Покупок пока не было." />
+    <string id="CA_dlg_history_intro" text="Вот мои последние покупки:" />
+    <string id="CA_dlg_take_wallet" text="Верни мне то, что осталось от твоего содержания." />
+    <string id="CA_dlg_take_answer" text="Вот, всё до монеты. Обойдусь тем, что есть." />
+    <string id="CA_dlg_order_shop" text="Отправляйся в город и обнови снаряжение." />
+    <string id="CA_dlg_order_ok" text="Принято. Отправляюсь в {CA_ORDER_TOWN} и вернусь с лучшим снаряжением." />
+    <string id="CA_dlg_order_fail" text="Сейчас поблизости нет безопасного города." />
+    <string id="CA_dlg_cancel_shop" text="Забудь о городе, возвращайся к своим делам." />
+    <string id="CA_dlg_cancel_answer" text="Как скажешь." />
+    <string id="CA_grp_kingdom" text="Войска королевства: {NAME}" />
+    <string id="CA_grp_clan" text="Войска клана: {NAME}" />
+    <string id="CA_pop_have" text="В отряде: {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="Состав армии: {HERO}" />
+    <string id="CA_pop_selected" text="Выбранные войска" />
+    <string id="CA_pop_bar_count" text="{COUNT} воинов" />
+    <string id="CA_pop_empty" text="Состав не задан: спутник нанимает кого угодно." />
+    <string id="CA_pop_over" text="Выбрано войск: {TOTAL} — на {COUNT} больше, чем вмещает отряд ({LIMIT})." />
+    <string id="CA_pop_summary" text="Выбрано {TOTAL} / {LIMIT}, свободных мест для любых войск: {FREE}." />
+    <string id="CA_pop_summary_only" text="Выбрано {TOTAL} / {LIMIT}. Спутник набирает только эти войска." />
+    <string id="CA_pop_no_preset" text="Нет сохранённых шаблонов" />
+    <string id="CA_pop_loaded" text="Шаблон загружен: {NAME}" />
+    <string id="CA_pop_saved" text="Шаблон сохранён: {NAME}" />
+    <string id="CA_pop_deleted" text="Шаблон удалён: {NAME}" />
+    <string id="CA_pop_bar_target" text="Цель" />
+    <string id="CA_pop_bar_current" text="Сейчас" />
+    <string id="CA_pop_kind_inf" text="Пехота" />
+    <string id="CA_pop_kind_arc" text="Стрелки" />
+    <string id="CA_pop_kind_cav" text="Кавалерия" />
+    <string id="CA_pop_kind_ha" text="Конные лучники" />
+    <string id="CA_pop_presets" text="Шаблоны" />
+    <string id="CA_pop_load" text="Загрузить" />
+    <string id="CA_pop_save" text="Сохранить как новый" />
+    <string id="CA_pop_overwrite" text="Перезаписать" />
+    <string id="CA_pop_delete" text="Удалить" />
+    <string id="CA_pop_clear" text="Очистить всё" />
+    <string id="CA_pop_done" text="Готово" />
+    <string id="CA_pop_cancel" text="Отмена" />
+    <string id="CA_pop_hint" text="Спутник нанимает войска, ведущие к выбранным, и повышает их, пока они ими не станут." />
+  </strings>
+</base>
