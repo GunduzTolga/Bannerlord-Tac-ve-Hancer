@@ -12,7 +12,7 @@
         <!-- ===== Sol: kişiler ===== -->
         <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="520">
           <Children>
-            <ScrollablePanel Id="PeopleScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="PeopleClip" InnerPanel="PeopleClip\PeopleList" VerticalScrollbar="..\PeopleBar">
+            <ScrollablePanel Id="PeopleScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="PeopleClip" InnerPanel="PeopleClip\PeopleList" VerticalScrollbar="..\PeopleBar\Scrollbar">
               <Children>
                 <Widget Id="PeopleClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                   <Children>
@@ -25,11 +25,7 @@
                 </Widget>
               </Children>
             </ScrollablePanel>
-            <ScrollbarWidget Id="PeopleBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="PeopleHandle" MinValue="0" MaxValue="100" Brush="Tvh.Scrollbar">
-              <Children>
-                <ImageWidget Id="PeopleHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Brush="Tvh.Scrollbar.Handle" />
-              </Children>
-            </ScrollbarWidget>
+            <Standard.VerticalScrollbar Id="PeopleBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
           </Children>
         </Widget>
 
@@ -39,7 +35,7 @@
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasPerson">
               <Children>
                 <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" DoNotAcceptEvents="true" />
-                <ScrollablePanel Id="DossierScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="DossierClip" InnerPanel="DossierClip\DossierInner" VerticalScrollbar="..\DossierBar">
+                <ScrollablePanel Id="DossierScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="DossierClip" InnerPanel="DossierClip\DossierInner" VerticalScrollbar="..\DossierBar\Scrollbar">
                   <Children>
                     <Widget Id="DossierClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                       <Children>
@@ -130,11 +126,7 @@
                     </Widget>
                   </Children>
                 </ScrollablePanel>
-                <ScrollbarWidget Id="DossierBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="DossierHandle" MinValue="0" MaxValue="100" Brush="Tvh.Scrollbar">
-                  <Children>
-                    <ImageWidget Id="DossierHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Brush="Tvh.Scrollbar.Handle" />
-                  </Children>
-                </ScrollbarWidget>
+                <Standard.VerticalScrollbar Id="DossierBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
               </Children>
             </Widget>
           </Children>

@@ -57,7 +57,7 @@
         <!-- Klan liderleri -->
         <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="230" IsVisible="@HasKingdom">
           <Children>
-            <ScrollablePanel Id="CourtScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CourtClip" InnerPanel="CourtClip\CourtList" VerticalScrollbar="..\CourtBar">
+            <ScrollablePanel Id="CourtScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="CourtClip" InnerPanel="CourtClip\CourtList" VerticalScrollbar="..\CourtBar\Scrollbar">
               <Children>
                 <Widget Id="CourtClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                   <Children>
@@ -70,11 +70,7 @@
                 </Widget>
               </Children>
             </ScrollablePanel>
-            <ScrollbarWidget Id="CourtBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CourtHandle" MinValue="0" MaxValue="100" Brush="Tvh.Scrollbar">
-              <Children>
-                <ImageWidget Id="CourtHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Brush="Tvh.Scrollbar.Handle" />
-              </Children>
-            </ScrollbarWidget>
+            <Standard.VerticalScrollbar Id="CourtBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
           </Children>
         </Widget>
       </Children>

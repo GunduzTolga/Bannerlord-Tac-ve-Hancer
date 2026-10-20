@@ -51,7 +51,7 @@
                   <Children>
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginBottom="@TextBottomMargin">
                       <Children>
-                        <ScrollablePanel Id="CardTextScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="CardTextClip" InnerPanel="CardTextClip\CardTextInner" VerticalScrollbar="..\CardTextBar">
+                        <ScrollablePanel Id="CardTextScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="CardTextClip" InnerPanel="CardTextClip\CardTextInner" VerticalScrollbar="..\CardTextBar\Scrollbar">
                           <Children>
                             <Widget Id="CardTextClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                               <Children>
@@ -64,11 +64,7 @@
                             </Widget>
                           </Children>
                         </ScrollablePanel>
-                        <ScrollbarWidget Id="CardTextBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CardTextHandle" MinValue="0" MaxValue="100" Brush="Tvh.Scrollbar">
-                          <Children>
-                            <ImageWidget Id="CardTextHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Brush="Tvh.Scrollbar.Handle" />
-                          </Children>
-                        </ScrollbarWidget>
+                        <Standard.VerticalScrollbar Id="CardTextBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
                       </Children>
                     </Widget>
 
