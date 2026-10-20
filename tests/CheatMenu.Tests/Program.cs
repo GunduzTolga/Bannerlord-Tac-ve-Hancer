@@ -188,6 +188,7 @@ namespace CheatMenu.Tests
             PhysicianTests();
             MarshalTests();
             StewardTests();
+            CompatTests();
             Check("dynasty: legitimize costs", DynastyRules.LegitimizeInfluenceCost(true) == 50 && DynastyRules.LegitimizeGoldCost(true) == 0
                 && DynastyRules.LegitimizeInfluenceCost(false) == 0 && DynastyRules.LegitimizeGoldCost(false) == 2000);
 
@@ -731,6 +732,46 @@ namespace CheatMenu.Tests
                 && StewardRules.DaysUntil(26, -0.3f, 25) == 4);
             Check("steward: signed", StewardRules.Signed(0.5f, Tr.Culture) == "+0,5" && StewardRules.Signed(-1.2f, Tr.Culture) == "-1,2"
                 && StewardRules.Signed(0f, Tr.Culture) == "0,0");
+        }
+
+        private static void CompatTests()
+        {
+            PatchEntry P(string target, string mod, PatchKind kind, bool skip = false) =>
+                new PatchEntry { Target = target, Mod = mod, Kind = kind, CanSkipOriginal = skip };
+            Check("compat: infrastructure", CompatRules.IsInfrastructure("Bannerlord.UIExtenderEx") && CompatRules.IsInfrastructure("MCMv5")
+                && CompatRules.IsInfrastructure("Bannerlord.ButterLib.Something") && !CompatRules.IsInfrastructure("Bannerlord.Diplomacy")
+                && !CompatRules.IsInfrastructure("CheatMenu") && !CompatRules.IsInfrastructure(null));
+
+            List<CompatFinding> one = CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Prefix, true), P("A.M", "X", PatchKind.Postfix) });
+            Check("compat: one mod on a method is not a finding", one.Count == 0);
+            List<CompatFinding> infra = CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Transpiler), P("A.M", "Bannerlord.UIExtenderEx", PatchKind.Transpiler) });
+            Check("compat: infrastructure overlap ignored", infra.Count == 0);
+            Check("compat: postfixes stack", CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Postfix), P("A.M", "Y", PatchKind.Postfix) })
+                .Single().Risk == CompatRisk.Low);
+            Check("compat: two transpilers", CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Transpiler), P("A.M", "Y", PatchKind.Transpiler) })
+                .Single().Risk == CompatRisk.High);
+            Check("compat: two skipping prefixes", CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Prefix, true), P("A.M", "Y", PatchKind.Prefix, true) })
+                .Single().Risk == CompatRisk.High);
+            Check("compat: skipper vs other prefix", CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Prefix, true), P("A.M", "Y", PatchKind.Prefix) })
+                .Single().Risk == CompatRisk.Medium);
+            Check("compat: skipper vs transpiler", CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Prefix, true), P("A.M", "Y", PatchKind.Transpiler) })
+                .Single().Risk == CompatRisk.High);
+            Check("compat: skipper vs postfix is fine", CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Prefix, true), P("A.M", "Y", PatchKind.Postfix) })
+                .Single().Risk == CompatRisk.Low);
+            List<CompatFinding> sorted = CompatRules.PatchFindings(new[] { P("B.M", "X", PatchKind.Postfix), P("B.M", "Y", PatchKind.Postfix),
+                P("A.M", "X", PatchKind.Transpiler), P("A.M", "Y", PatchKind.Transpiler) });
+            Check("compat: worst first", sorted.Count == 2 && sorted[0].Risk == CompatRisk.High && sorted[0].Lines.Count == 2);
+
+            ModelEntry M(string mod, bool callsBase, bool game = false) => new ModelEntry { Kind = "PregnancyModel", Mod = mod, CallsBase = callsBase, IsGame = game };
+            Check("compat: one mod model is not a finding", CompatRules.ModelFindings(new[] { M("TaleWorlds.CampaignSystem", true, true), M("X", false) }).Count == 0);
+            Check("compat: chained models fine", CompatRules.ModelFindings(new[] { M("TaleWorlds.CampaignSystem", true, true), M("X", true), M("CheatMenu", true) })
+                .Single().Risk == CompatRisk.Low);
+            List<CompatFinding> lost = CompatRules.ModelFindings(new[] { M("TaleWorlds.CampaignSystem", true, true), M("X", true), M("Y", false), M("CheatMenu", true) });
+            Check("compat: non-chaining model hides earlier mod", lost.Single().Risk == CompatRisk.High && lost[0].Title.Contains("X (Y")
+                && !lost[0].Title.Contains("CheatMenu ("));
+            Check("compat: earlier non-chaining model is harmless", CompatRules.ModelFindings(new[] { M("X", false), M("CheatMenu", true) }).Single().Risk == CompatRisk.Low);
+            string text = CompatRules.Format(sorted, lost, new[] { "CheatMenu", "X" }, "bugün");
+            Check("compat: report text", text.Contains("Ciddi: 2") && text.Contains("Sorunsuz ortak nokta: 1") && text.Contains("[CİDDİ]"));
         }
 
         private static void PetitionTests()
