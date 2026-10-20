@@ -109,7 +109,11 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Klan ekranı (L): sekmeler Üyeler · Birlikler · **Entrika** · Tımarlar · Diğer; beşi üst şeride sığıyor, yazılar taşmıyor
 - [ ] Entrika sekmesine tıkla: sağdaki "Mali Durum" kutusu gizleniyor; solda casus başı kutusu (oyunun pencere çerçevesi), sağda alt sekmeler
 - [ ] Başka sekmeye geç (Üyeler vb.) → bizim panel kapanıyor, oyunun paneli geliyor; geri dönünce kaldığın alt sekme duruyor
-- [ ] Düğmeler oyunun pencere düğmeleri gibi; seçili alt sekme altın; kartlar ve satırlar taş dokulu (harita olaylarının seçenekleri gibi)
+- [ ] Düğmeler oyunun pencere düğmeleri gibi; kartlar ve satırlar taş dokulu (harita olaylarının seçenekleri gibi)
+- [ ] **Oyunun kendi fırçaları (20 Ekim):** alt sekmeler (Entrikalar, Yeni, Kişiler...) Klan ekranının üst sekmeleriyle aynı görünüyor
+      (`Header.Tab.Center`), ana düğmeler oyunun "Tamam" düğmesi (`Popup.Done.Button`), casus başı kutusu Klan ekranının sol liste
+      paneli gibi (`Frame1Brush`), kaydırma çubukları oyunun kendi çubuğu (`Standard.VerticalScrollbar`). `build.ps1` bu adları oyunun
+      dosyalarında doğrular: "oyunda böyle bir fırça yok" derse o parça eski görünüşünde kalır (çökmez), hatayı bana gönder
 - [ ] Türkçe harfler (ş, ğ, ı, İ) başlık yazı tipinde (Galahad) düzgün mü
 - [ ] Sekmeden bir olay kartı açılınca (ör. Harekete geç → rüşvet kartı) kart Klan ekranının üstünde görünüyor
 - [ ] Düello ya da sahnede takip seçilince Klan ekranı kapanıyor, sahne haritadan açılıyor
