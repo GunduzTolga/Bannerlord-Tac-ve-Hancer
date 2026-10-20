@@ -62,8 +62,9 @@ neden bulundu (`tools\RefCheck`, Regard and Standing 1.5.0'ın DLL'iyle). Regard
 Remembers**'la konuşan tek bir sınıf taşıyor (`PairRegardSource+Source`, o modun bir arayüzünü uyguluyor). Calradia Remembers kurulu
 değilken oyun o sınıfı yükleyemiyor ve pencereyi gösteriyor. Mod bunu bekliyor: köprüyü yalnızca Calradia Remembers varsa açıyor,
 geri kalan her şey çalışıyor. Yani **OK'e basınca oyun devam etmeli**; ayrı kurulumda da aynı pencere çıkardı.
-- [x] OK'e basınca da açılmadı → **DLL yamandı** (`tools\RsPatch`): o sınıfın Calradia Remembers arayüzü söküldü, oyun artık yüklemeye
-      çalışmıyor. Repodaki `third_party\RegardStanding\bin\Win64_Shipping_Client\RegardStanding.dll` yamalı
+- [x] Yalnızca sınıfın arayüzünü sökmek yetmedi (oyun DLL referanslarına da bakıyor) → **Calradia Remembers bağlantısı DLL'den
+      tamamen söküldü** (`tools\RsPatch`: 16 üye silindi, 13 metot boşaltıldı, 3 DLL referansı kaldırıldı; kalan 20.945 çağrının hepsi
+      çözülüyor). Repodaki `third_party\RegardStanding\bin\Win64_Shipping_Client\RegardStanding.dll` yamalı
 - [ ] Yamalı `RegardStanding.dll`'i iki yere koy: oyunda `Modules\CheatMenu\bin\Win64_Shipping_Client\` (hemen etki eder) ve
       masaüstündeki repoda `third_party\RegardStanding\bin\Win64_Shipping_Client\` (derleme eskisini geri koymasın). Oyun açılıyor,
       pencere çıkmıyor
