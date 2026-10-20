@@ -9,6 +9,7 @@ using TaleWorlds.CampaignSystem.GameState;
 using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
+using TaleWorlds.TwoDimension;
 
 namespace CheatMenu.UI
 {
@@ -27,6 +28,9 @@ namespace CheatMenu.UI
         private static readonly object PauseOwner = new object();
         private static bool _wasBusy;
         private static int _lastTab;
+        // Sekmeler ve panel oyunun Klan ekranı fırçalarını kullanır; bu ekran Klan ekranı dışında açıldığı için onların
+        // sprite'larını kendisi yükler (yalnızca oyun yüklememişse; kapanınca boşaltır).
+        private static SpriteCategory _clanSprites;
 
         public static bool IsOpen => Layer.IsOpen;
 
@@ -59,6 +63,7 @@ namespace CheatMenu.UI
             IntrigueScreenVM vm = null;
             try
             {
+                _clanSprites = TvhUi.AcquireSprites(TvhUi.ClanSpriteCategory);
                 vm = new IntrigueScreenVM(() => MenuUI.Defer(Close), tab >= 0 ? tab : _lastTab);
                 if (!Layer.Open(Movie, vm, Order, true)) throw new InvalidOperationException("harita ekranı bulunamadı");
             }
@@ -66,6 +71,8 @@ namespace CheatMenu.UI
             {
                 vm?.OnFinalize();
                 Layer.Close();
+                TvhUi.ReleaseSprites(_clanSprites);
+                _clanSprites = null;
                 MenuUI.Error("Entrika ekranı açılamadı (" + ex.Message + "). Liste menüsü açılıyor.");
                 Debug.Print("[CheatMenu] intrigue screen failed: " + ex);
                 MenuUI.Defer(() => MenuUI.SafeRun("Entrika", Categories.ShowIntrigueMenu));
@@ -103,6 +110,8 @@ namespace CheatMenu.UI
             if (!IsOpen) return;
             if (Layer.DataSource is IntrigueScreenVM vm) _lastTab = vm.CurrentTab;
             Layer.Close();
+            TvhUi.ReleaseSprites(_clanSprites);
+            _clanSprites = null;
             TimePause.Release(PauseOwner);
         }
 

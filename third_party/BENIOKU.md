@@ -5,7 +5,11 @@ Taç ve Hançer başka modları kendi klasörüne paketler: launcher'da tek mod 
 - Her mod burada kendi klasöründe durur (`third_party\<mod>\`). Klasör, modun oyundaki `Modules\<mod>` klasörünün aynen kopyasıdır: `SubModule.xml` dahil.
 - Hangi modların hangi sırayla yükleneceği `paketler.txt` dosyasında yazar.
 - Derleme (`build.ps1`) önce Taç ve Hançer'i oyunun `Modules\CheatMenu` klasörüne kopyalar, sonra `tools\bundle.ps1` bu modları oraya ekler.
-- Bu klasördeki modların dosyaları GitHub'a gönderilmez (`.gitignore`). Yalnızca bu açıklama ve `paketler.txt` gönderilir.
+- **Repoda olanlar:** modların kodları (DLL), XML'leri, arayüz prefab'ları, dil ve ayar dosyaları. Telefondan çalışırken de görülsünler,
+  kodları kendi modumuza taşınabilsin diye (mod sahiplerinin izniyle; mod yalnızca kişisel kullanım için).
+- **Repoda olmayanlar:** büyük içerik (doku `.tpac/.dds`, resim, ses, video, 3B model, sahne, `.pdb`). `.gitignore` bunları dışarıda
+  tutar; yalnızca PC'deki kopyada durur, `build.ps1` oradan alır. PC'deki kopya kaybolursa modu yeniden indirip klasörüne koymak yeter.
+- Repo **gizli (private)** olmalı: başkalarının dosyaları açık bir repoda dağıtılmış olur.
 
 ## Mod eklemek ya da çıkarmak
 

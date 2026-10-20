@@ -29,7 +29,7 @@
             <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginBottom="50" MarginLeft="30" MarginRight="30" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoTargets" />
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginBottom="50">
               <Children>
-                <ScrollablePanel Id="TargetsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="TargetsClip" InnerPanel="TargetsClip\TargetsList" VerticalScrollbar="..\TargetsBar">
+                <ScrollablePanel Id="TargetsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="TargetsClip" InnerPanel="TargetsClip\TargetsList" VerticalScrollbar="..\TargetsBar\Scrollbar">
                   <Children>
                     <Widget Id="TargetsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                       <Children>
@@ -42,11 +42,7 @@
                     </Widget>
                   </Children>
                 </ScrollablePanel>
-                <ScrollbarWidget Id="TargetsBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="TargetsHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                  <Children>
-                    <Widget Id="TargetsHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                  </Children>
-                </ScrollbarWidget>
+                <Standard.VerticalScrollbar Id="TargetsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
               </Children>
             </Widget>
 
@@ -70,8 +66,9 @@
         </Widget>
 
         <!-- ===== Sağ: özet ===== -->
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="680" MarginTop="166" Sprite="BlankWhiteSquare_9" Color="#1D1712FF">
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="680" MarginTop="166">
           <Children>
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" DoNotAcceptEvents="true" />
             <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="40" MarginRight="40" Brush="Tvh.Text.BodyCenter" Text="@PickHint" IsVisible="@HasNoSelection" />
 
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasSelection">
@@ -90,7 +87,7 @@
 
                 <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="16" MarginRight="8" MarginTop="184" MarginBottom="104">
                   <Children>
-                    <ScrollablePanel Id="SummaryScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="SummaryClip" InnerPanel="SummaryClip\SummaryInner" VerticalScrollbar="..\SummaryBar">
+                    <ScrollablePanel Id="SummaryScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="SummaryClip" InnerPanel="SummaryClip\SummaryInner" VerticalScrollbar="..\SummaryBar\Scrollbar">
                       <Children>
                         <Widget Id="SummaryClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                           <Children>
@@ -103,11 +100,7 @@
                         </Widget>
                       </Children>
                     </ScrollablePanel>
-                    <ScrollbarWidget Id="SummaryBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="SummaryHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                      <Children>
-                        <Widget Id="SummaryHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                      </Children>
-                    </ScrollbarWidget>
+                    <Standard.VerticalScrollbar Id="SummaryBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
                   </Children>
                 </Widget>
 

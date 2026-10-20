@@ -74,6 +74,13 @@ namespace CheatMenu
                     Color.FromUint(0xFFFF6B6B)));
         }
 
+        /// <summary>Bütün modlar modellerini ve yamalarını ekledikten sonra: paketlenen modların uyum raporu.</summary>
+        public override void OnAfterGameInitializationFinished(Game game, object starterObject)
+        {
+            base.OnAfterGameInitializationFinished(game, starterObject);
+            if (game.GameType is Campaign && starterObject is CampaignGameStarter starter) Bundle.CompatReport.Run(starter);
+        }
+
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
             base.OnGameStart(game, gameStarterObject);
@@ -141,7 +148,7 @@ namespace CheatMenu
             IntrigueScreen.Close();
             ClanIntrigueTab.Reset();
             EventCards.CloseForGameEnd();
-            MapButton.Close();
+            MapBarButton.Reset();
             TimePause.Reset();
             CheatState.ResetAll();
         }
@@ -158,7 +165,6 @@ namespace CheatMenu
             EventCards.Tick();
             IntrigueScreen.Tick();
             ClanIntrigueTab.Tick();
-            MapButton.Tick();
             CleanSaveGuard.Tick();
 
             bool popupOpen = InformationManager.IsAnyInquiryActive() || EventCards.IsOpen;
