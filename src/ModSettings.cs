@@ -18,20 +18,10 @@ namespace CheatMenu
         public const int MaxPartyLimitBonus = 100;
 
         /// <summary>
-        /// Haritadaki "Entrika" düğmesinin yeri: 0 gizli, 1 sol üst, 2 üst orta, 3 sağ üst, 4 oyunun harita çubuğunda
-        /// (sol alttaki Klan / Krallık düğmelerinin yanında). Yeni seçenekler sona eklenir: kayıtlı sıra numaraları kaymasın.
+        /// Ayar dosyasının biçim sürümü. 3: haritanın üstündeki ayrı Entrika düğmesi kaldırıldı; düğme yalnızca oyunun harita
+        /// çubuğunda (MapBarButton). Eski dosyadaki "MapButtonPosition" bir kez çevrilir: 0 (gizli) kapalı, diğer her yer açık.
         /// </summary>
-        public static readonly string[] MapButtonPositionNames = { "Gizli", "Sol üst", "Üst orta", "Sağ üst", "Harita çubuğunda" };
-        public const int MapBarButtonPosition = 4;
-        public const int DefaultMapButtonPosition = MapBarButtonPosition;
-        /// <summary>Harita çubuğuna eklenemezse (oyun yaması) düğmenin yedek yeri: üst orta.</summary>
-        public const int MapBarFallbackPosition = 2;
-
-        /// <summary>
-        /// Ayar dosyasının biçim sürümü. 2: varsayılan düğme yeri harita çubuğu oldu; sürüm satırı olmayan (eski) dosyada
-        /// kayıtlı "Üst orta" (eski varsayılan) bir kez harita çubuğuna taşınır.
-        /// </summary>
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
 
         /// <summary>Parse sırasında eski dosyadan taşıma yapıldı (MCM'in eski değeri geri yazmaması için).</summary>
         public bool Migrated { get; private set; }
@@ -52,7 +42,8 @@ namespace CheatMenu
         public int AiIntrigue { get; private set; } = 1;
         /// <summary>Yapay zekâ oyuncunun kendisine de suikast/kaçırma kurabilir mi (varsayılan kapalı).</summary>
         public bool PlayerCanBeTargeted { get; set; }
-        public int MapButtonPosition { get; private set; } = DefaultMapButtonPosition;
+        /// <summary>Entrika düğmesi oyunun sol alttaki harita çubuğunda (Klan ve Krallık'ın yanında). Varsayılan açık.</summary>
+        public bool MapBarButton { get; set; } = true;
         public int ScreenHotkey { get; private set; } = DefaultScreenHotkey;
         /// <summary>Entrika olayları resimli kartla mı (true) yoksa oyunun düz seçim penceresiyle mi sorulsun.</summary>
         public bool EventCards { get; set; } = true;
@@ -77,8 +68,6 @@ namespace CheatMenu
         public void SetIntrigueDifficulty(int value) => IntrigueDifficulty = Allowed(AllowedIntrigueDifficulties, value, 1);
         public void SetAiIntrigue(int value) => AiIntrigue = Allowed(AllowedIntrigueDifficulties, value, 1);
         public void SetPartyLimitBonus(int value) => PartyLimitBonus = value >= 0 && value <= MaxPartyLimitBonus ? value : 0;
-        public void SetMapButtonPosition(int value) =>
-            MapButtonPosition = value >= 0 && value < MapButtonPositionNames.Length ? value : DefaultMapButtonPosition;
         public void SetScreenHotkey(int value) => ScreenHotkey = value >= 0 && value < ScreenHotkeyNames.Length ? value : DefaultScreenHotkey;
 
         /// <summary>Bilinmeyen anahtarlar, yorumlar (#) ve bozuk satırlar yok sayılır.</summary>
@@ -87,7 +76,6 @@ namespace CheatMenu
             var settings = new ModSettings();
             if (string.IsNullOrEmpty(text)) return settings;
 
-            int version = 1;
             foreach (string rawLine in text.Split('\n'))
             {
                 string line = rawLine.Trim();
@@ -110,7 +98,12 @@ namespace CheatMenu
                     case "IntrigueDifficulty": if (isNumber) settings.SetIntrigueDifficulty(number); break;
                     case "AiIntrigue": if (isNumber) settings.SetAiIntrigue(number); break;
                     case "PlayerCanBeTargeted": settings.PlayerCanBeTargeted = IsTrue(value); break;
-                    case "MapButtonPosition": if (isNumber) settings.SetMapButtonPosition(number); break;
+                    case "MapBarButton": settings.MapBarButton = IsTrue(value); break;
+                    case "MapButtonPosition":
+                        // Eski biçim (sürüm 2 ve öncesi): ayrı düğmenin yeri. Gizli değilse düğme artık harita çubuğunda.
+                        if (isNumber) settings.MapBarButton = number != 0;
+                        settings.Migrated = true;
+                        break;
                     case "ScreenHotkey": if (isNumber) settings.SetScreenHotkey(number); break;
                     case "EventCards": settings.EventCards = IsTrue(value); break;
                     case "RomanceSecrets": settings.RomanceSecrets = IsTrue(value); break;
@@ -118,13 +111,7 @@ namespace CheatMenu
                     case "SpouseInfidelity": settings.SpouseInfidelity = IsTrue(value); break;
                     case "TailInScene": settings.TailInScene = IsTrue(value); break;
                     case "CutThrough": if (isNumber) settings.SetCutThrough(number); break;
-                    case "SettingsVersion": if (isNumber) version = number; break;
                 }
-            }
-            if (version < 2 && settings.MapButtonPosition == MapBarFallbackPosition)
-            {
-                settings.MapButtonPosition = MapBarButtonPosition;
-                settings.Migrated = true;
             }
             return settings;
         }
@@ -143,7 +130,7 @@ namespace CheatMenu
             + "IntrigueDifficulty=" + Invariant(IntrigueDifficulty) + "\n"
             + "AiIntrigue=" + Invariant(AiIntrigue) + "\n"
             + "PlayerCanBeTargeted=" + (PlayerCanBeTargeted ? "1" : "0") + "\n"
-            + "MapButtonPosition=" + Invariant(MapButtonPosition) + "\n"
+            + "MapBarButton=" + (MapBarButton ? "1" : "0") + "\n"
             + "ScreenHotkey=" + Invariant(ScreenHotkey) + "\n"
             + "EventCards=" + (EventCards ? "1" : "0") + "\n"
             + "RomanceSecrets=" + (RomanceSecrets ? "1" : "0") + "\n"

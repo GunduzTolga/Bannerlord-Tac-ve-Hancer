@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using CheatMenu.Intrigue;
+using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using HarmonyLib;
 using SandBox.View.Map.Navigation;
@@ -19,7 +21,8 @@ namespace CheatMenu.UI
     /// handler'ın öğe listesine bir öğe eklemek yeter; NavalDLC'nin filo düğmesi de aynı yolla eklenir.
     /// İkon için oyunun fırçalarına (MapBar.Left.Icons, MapBar.Left.Button.Backgrounds) çalışma anında "intrigue" katmanı
     /// eklenir; fırçayı XML'de yeniden tanımlamayız ki oyunun ileride ekleyeceği düğmelerin ikonları ezilmesin.
-    /// Herhangi bir adım tutmazsa öğe eklenmez ve MapButton eski üst-orta düğmesini yedek olarak gösterir.
+    /// Herhangi bir adım tutmazsa öğe eklenmez; entrika Klan ekranının sekmesinden, kısayoldan ve Insert menüsünden açılmaya devam eder.
+    /// Haritanın üstünde ayrı bir düğme yok: arayüz oyunun kendisininki gibi kalsın.
     /// </summary>
     public static class MapBarButton
     {
@@ -33,10 +36,10 @@ namespace CheatMenu.UI
         private const string IconTemplateLayer = "quest";
         private const string BackgroundTemplateLayer = "clan";
 
-        /// <summary>Şu anki harita çubuğuna öğe eklendi mi (eklenmediyse eski düğme yedek olarak görünür).</summary>
+        /// <summary>Şu anki harita çubuğuna öğe eklendi mi.</summary>
         public static bool Injected { get; private set; }
 
-        public static bool Wanted => SettingsStore.Current.MapButtonPosition == ModSettings.MapBarButtonPosition;
+        public static bool Wanted => SettingsStore.Current.MapBarButton;
 
         private static WeakReference<INavigationElement[]> _elements;
 
@@ -114,7 +117,7 @@ namespace CheatMenu.UI
         // Ekran açıkken çubuktaki diğer ekranlar onun üstüne açılmasın.
         public override bool IsLockingNavigation => true;
 
-        public override bool HasAlert => Safe(() => MapButton.PendingCount() > 0);
+        public override bool HasAlert => Safe(() => PendingCount() > 0);
 
         public override void OpenView() => MenuUI.Defer(() => IntrigueScreen.Open());
 
@@ -139,7 +142,16 @@ namespace CheatMenu.UI
         protected override TextObject GetTooltip() => new TextObject("Entrika", null);
 
         protected override TextObject GetAlertTooltip() =>
-            new TextObject("Harekete geçmeye hazır entrika ya da sezilen tehlike: " + Safe(MapButton.PendingCount), null);
+            new TextObject("Harekete geçmeye hazır entrika ya da sezilen tehlike: " + Safe(PendingCount), null);
+
+        /// <summary>Rozet: harekete geçmeye hazır suikast/kaçırma/sabotaj ve sezilen (korunulmamış) entrika sayısı.</summary>
+        internal static int PendingCount()
+        {
+            IntrigueState state = IntrigueBehavior.Current?.State;
+            if (state == null) return 0;
+            int ready = state.Schemes.Count(s => SchemeRules.IsStrike(s.Kind) && SchemeEngine.CannotExecuteReason(s) == null);
+            return ready + state.AiPlots.Count(p => p.Detected && !p.Protected);
+        }
 
         private static T Safe<T>(Func<T> read)
         {

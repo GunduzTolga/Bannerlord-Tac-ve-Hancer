@@ -12,7 +12,7 @@
         <!-- ===== Sol: kişiler ===== -->
         <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="520">
           <Children>
-            <ScrollablePanel Id="PeopleScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="PeopleClip" InnerPanel="PeopleClip\PeopleList" VerticalScrollbar="..\PeopleBar">
+            <ScrollablePanel Id="PeopleScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="PeopleClip" InnerPanel="PeopleClip\PeopleList" VerticalScrollbar="..\PeopleBar\Scrollbar">
               <Children>
                 <Widget Id="PeopleClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                   <Children>
@@ -25,20 +25,17 @@
                 </Widget>
               </Children>
             </ScrollablePanel>
-            <ScrollbarWidget Id="PeopleBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="PeopleHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-              <Children>
-                <Widget Id="PeopleHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-              </Children>
-            </ScrollbarWidget>
+            <Standard.VerticalScrollbar Id="PeopleBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
           </Children>
         </Widget>
 
         <!-- ===== Sağ: dosya ===== -->
         <Widget DataSource="{Dossier}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="540">
           <Children>
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#1D1712FF" IsVisible="@HasPerson">
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasPerson">
               <Children>
-                <ScrollablePanel Id="DossierScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="DossierClip" InnerPanel="DossierClip\DossierInner" VerticalScrollbar="..\DossierBar">
+                <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" DoNotAcceptEvents="true" />
+                <ScrollablePanel Id="DossierScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="14" AutoHideScrollBars="true" ClipRect="DossierClip" InnerPanel="DossierClip\DossierInner" VerticalScrollbar="..\DossierBar\Scrollbar">
                   <Children>
                     <Widget Id="DossierClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                       <Children>
@@ -67,7 +64,7 @@
                             <!-- Rapor -->
                             <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="16" MarginRight="16" MarginBottom="14" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@HasReport">
                               <Children>
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1" MarginBottom="8" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" />
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginBottom="8" Sprite="SPGeneral\SPOptions\options_divider_flat" />
                                 <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40">
                                   <Children>
                                     <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="24" Brush="Tvh.Text.Section" Text="@ReportHeader" />
@@ -86,7 +83,7 @@
                             <!-- Sırlar -->
                             <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="16" MarginRight="16" MarginBottom="14" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@HasSecrets">
                               <Children>
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1" MarginBottom="8" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" />
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginBottom="8" Sprite="SPGeneral\SPOptions\options_divider_flat" />
                                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" Brush="Tvh.Text.Section" Text="@SecretsHeader" />
                                 <ListPanel DataSource="{Secrets}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
                                   <ItemTemplate>
@@ -99,7 +96,7 @@
                             <!-- Koz -->
                             <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="16" MarginRight="16" MarginBottom="14" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@HasHook">
                               <Children>
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1" MarginBottom="8" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" />
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginBottom="8" Sprite="SPGeneral\SPOptions\options_divider_flat" />
                                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" Brush="Tvh.Text.Section" Text="@HookHeader" />
                                 <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="8" Brush="Tvh.Text.Body" Text="@HookText" />
                                 <ListPanel DataSource="{HookActions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
@@ -113,7 +110,7 @@
                             <!-- Entrika başlat -->
                             <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="16" MarginRight="16" MarginBottom="16" StackLayout.LayoutMethod="VerticalTopToBottom">
                               <Children>
-                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="1" MarginBottom="8" Sprite="BlankWhiteSquare_9" Color="#3D3022FF" />
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginBottom="8" Sprite="SPGeneral\SPOptions\options_divider_flat" />
                                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" Brush="Tvh.Text.Section" Text="@StartHeader" />
                                 <ListPanel DataSource="{StartActions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
                                   <ItemTemplate>
@@ -129,11 +126,7 @@
                     </Widget>
                   </Children>
                 </ScrollablePanel>
-                <ScrollbarWidget Id="DossierBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="DossierHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
-                  <Children>
-                    <Widget Id="DossierHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
-                  </Children>
-                </ScrollbarWidget>
+                <Standard.VerticalScrollbar Id="DossierBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
               </Children>
             </Widget>
           </Children>

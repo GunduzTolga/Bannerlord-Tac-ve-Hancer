@@ -47,9 +47,8 @@ namespace CheatMenu.Menu
                 Choice("Entrika ekranı kısayolu", Indexes(ModSettings.ScreenHotkeyNames), () => Rules.Settings.ScreenHotkey,
                     v => Rules.Change(s => s.SetScreenHotkey(v), "Entrika ekranı kısayolu: " + ModSettings.ScreenHotkeyNames[v]),
                     v => ModSettings.ScreenHotkeyNames[v]),
-                Choice("Haritadaki Entrika düğmesi", Indexes(ModSettings.MapButtonPositionNames), () => Rules.Settings.MapButtonPosition,
-                    v => Rules.Change(s => s.SetMapButtonPosition(v), "Entrika düğmesi: " + ModSettings.MapButtonPositionNames[v]),
-                    v => ModSettings.MapButtonPositionNames[v]),
+                MenuEntry.Toggle("Harita çubuğunda Entrika düğmesi (kaydı yeniden yükleyince)", () => Rules.Settings.MapBarButton,
+                    v => Rules.Change(s => s.MapBarButton = v, null)),
                 MenuEntry.Toggle("Resimli olay kartları", () => Rules.Settings.EventCards, v => Rules.Change(s => s.EventCards = v, null)),
             }, ShowRules, "Ayarlar kalıcıdır ve anında etkilidir; kayıt dosyasına bir şey yazılmaz. Aynı ayarlar açıklamalarıyla "
                 + "MCM'de de var: Esc > Mod Seçenekleri > Taç ve Hançer. "
