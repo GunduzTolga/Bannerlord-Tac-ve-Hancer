@@ -57,6 +57,19 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] Hile menüsü → iki krallığa savaş ilan et; aralarında Diplomacy saldırmazlık anlaşması varsa mesajda
       "aradaki saldırmazlık anlaşması bozuldu" yazıyor ve Krallık → Diplomasi'de anlaşma artık görünmüyor
 
+**Açılışta "Taç ve Hançer.RegardStanding submodule could not be loaded correctly due to a dependency conflict" (20 Ekim akşamı):**
+neden bulundu (`tools\RefCheck`, Regard and Standing 1.5.0'ın DLL'iyle). Regard and Standing, isteğe bağlı ortağı **Calradia
+Remembers**'la konuşan tek bir sınıf taşıyor (`PairRegardSource+Source`, o modun bir arayüzünü uyguluyor). Calradia Remembers kurulu
+değilken oyun o sınıfı yükleyemiyor ve pencereyi gösteriyor. Mod bunu bekliyor: köprüyü yalnızca Calradia Remembers varsa açıyor,
+geri kalan her şey çalışıyor. Yani **OK'e basınca oyun devam etmeli**; ayrı kurulumda da aynı pencere çıkardı.
+- [x] Yalnızca sınıfın arayüzünü sökmek yetmedi (oyun DLL referanslarına da bakıyor) → **Calradia Remembers bağlantısı DLL'den
+      tamamen söküldü** (`tools\RsPatch`: 16 üye silindi, 13 metot boşaltıldı, 3 DLL referansı kaldırıldı; kalan 20.945 çağrının hepsi
+      çözülüyor). Repodaki `third_party\RegardStanding\bin\Win64_Shipping_Client\RegardStanding.dll` yamalı
+- [ ] Yamalı `RegardStanding.dll`'i iki yere koy: oyunda `Modules\CheatMenu\bin\Win64_Shipping_Client\` (hemen etki eder) ve
+      masaüstündeki repoda `third_party\RegardStanding\bin\Win64_Shipping_Client\` (derleme eskisini geri koymasın). Oyun açılıyor,
+      pencere çıkmıyor
+- [ ] Hâlâ çıkıyorsa: en yeni `rgl_log` (`C:\ProgramData\Mount and Blade II Bannerlord\logs`) ve pencerenin ekran görüntüsü
+
 **Uyum raporu (yeni, 20 Ekim akşamı):** kampanya her açıldığında mod, bütün modların oyuna yaptığı Harmony yamalarını ve eklediği
 oyun modellerini tarar; birden çok modun aynı yere dokunduğu her noktayı risk seviyesiyle
 `Belgeler\Mount and Blade II Bannerlord\Configs\TacVeHancer\uyum_raporu.txt`'ye yazar. Ciddi ya da dikkat gerektiren çakışma

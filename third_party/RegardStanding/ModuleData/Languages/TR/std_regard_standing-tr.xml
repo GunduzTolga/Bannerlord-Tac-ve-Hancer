@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <strings>
+    <string id="rs_bless_companion" text="{NAME} is your companion, and the game marries only nobles: wed with your blessing, they would become a noble of your house." />
+    <string id="rs_bless_no" text="Refuse" />
+    <string id="rs_bless_text" text="{MINE}, of your clan, and {OTHER} of the {HOUSE} have been courting for {DAYS} days, and wish to marry. They would live with the {HOME}. Will you give them your blessing?" />
+    <string id="rs_bless_title" text="A Wedding Asks Your Blessing" />
+    <string id="rs_bless_wait" text="{A} and {B} have your blessing, but cannot marry yet: {WHY}." />
+    <string id="rs_bless_yes" text="Give my blessing" />
+    <string id="rs_cn_courtship" text="A Courtship" />
+    <string id="rs_cn_feud" text="A Feud Between Houses" />
+    <string id="rs_cn_romance" text="A Romance at Court" />
+    <string id="rs_cn_scandal" text="A Scandal at Court" />
+    <string id="rs_cn_test" text="A test of Regard &amp; Standing's notices: the court's news will look like this. Click to read it and dismiss it." />
+    <string id="rs_cn_wedding" text="A Wedding at Court" />
+    <string id="rs_cn_word" text="Word at Court" />
+    <string id="rs_days_less" text="less than a day" />
+    <string id="rs_days_n" text="about {N} days" />
+    <string id="rs_days_one" text="about a day" />
+    <string id="rs_dlg_dedicate" text="I would dedicate my victory at {RS_WON_AT} to you." />
+    <string id="rs_dlg_dedicate_cool" text="Hm. I did not expect that from you. ...I accept it." />
+    <string id="rs_dlg_dedicate_fine" text="A fine gesture, and seen by all. I am in your debt for it." />
+    <string id="rs_dlg_dedicate_honor" text="You honor me. I will not forget it." />
+    <string id="rs_id" text="English, with {NAME} for what changes" />
+    <string id="rs_inv_accept" text="Accept" />
+    <string id="rs_inv_close" text="The lists close in {DAYS}." />
+    <string id="rs_inv_close_far" text="The lists close in {DAYS}; {TOWN} is {RIDE} from you." />
+    <string id="rs_inv_decline" text="Decline" />
+    <string id="rs_inv_far" text="{TOWN} is {RIDE} from you." />
+    <string id="rs_inv_notice" text="{HOST} has written to invite you to the tournament at {TOWN}; the letter comes by courier.{PRACTICAL} Will you come?" />
+    <string id="rs_inv_title" text="A Letter from {HOST}" />
+    <string id="rs_kin_aunt" text="aunt" />
+    <string id="rs_kin_brother" text="brother" />
+    <string id="rs_kin_daughter" text="daughter" />
+    <string id="rs_kin_father" text="father" />
+    <string id="rs_kin_granddaughter" text="granddaughter" />
+    <string id="rs_kin_grandfather" text="grandfather" />
+    <string id="rs_kin_grandmother" text="grandmother" />
+    <string id="rs_kin_grandson" text="grandson" />
+    <string id="rs_kin_husband" text="husband" />
+    <string id="rs_kin_mother" text="mother" />
+    <string id="rs_kin_nephew" text="nephew" />
+    <string id="rs_kin_niece" text="niece" />
+    <string id="rs_kin_sister" text="sister" />
+    <string id="rs_kin_son" text="son" />
+    <string id="rs_kin_uncle" text="uncle" />
+    <string id="rs_kin_wife" text="wife" />
+    <string id="rs_letter_bye" text="Come if you can." />
+    <string id="rs_letter_bye_cool" text="Answer as you see fit." />
+    <string id="rs_letter_bye_friend" text="Come, and we will drink to it after." />
+    <string id="rs_letter_close" text="The lists close in {DAYS}." />
+    <string id="rs_letter_close_far" text="The lists close in {DAYS}; {TOWN} lies {RIDE} from where my courier found you." />
+    <string id="rs_letter_far" text="{TOWN} lies {RIDE} from where my courier found you." />
+    <string id="rs_letter_hi" text="To {NAME}, greetings." />
+    <string id="rs_letter_hi_cool" text="To {NAME}." />
+    <string id="rs_letter_hi_friend" text="To {NAME}, my friend, greetings." />
+    <string id="rs_letter_lady" text="my lady" />
+    <string id="rs_letter_lord" text="my lord" />
+    <string id="rs_letter_open1" text="The lists are raised at {TOWN}, and the heralds are calling the names of those who will ride. It would honour my hall to hear yours among them, {SIR}." />
+    <string id="rs_letter_open2" text="There will be jousting at {TOWN}, and I would have the best blades I know of in the field. Yours is one of them, {SIR}." />
+    <string id="rs_letter_open3" text="My town of {TOWN} holds a tournament, and the talk in my hall is of who will ride. I told them I would write to you, {SIR}." />
+    <string id="rs_letter_open_cool1" text="Custom asks that the lists at {TOWN} be open to those of name, and yours is a name. Consider this the courtesy it is." />
+    <string id="rs_letter_open_cool2" text="The lists are raised at {TOWN}. Whatever stands between us, the field is open to you, as custom asks." />
+    <string id="rs_letter_prize" text="The victor takes {PRIZE}, and the feast after is mine to give." />
+    <string id="rs_letter_sign" text="{HOST}, of the {CLAN}" />
+    <string id="rs_mcm_affair_children" text="Children of affairs" />
+    <string id="rs_mcm_affair_children_h" text="A married noblewoman in an affair may bear her lover's child (5% a week the two are together). The game counts her husband as the father, so the child is legitimate and no succession changes; the truth is a secret of the mother and the lover, whispered about if the affair comes to light. Never your own heirs." />
+    <string id="rs_mcm_affair_children_unmarried" text="Also unmarried mothers" />
+    <string id="rs_mcm_affair_children_unmarried_h" text="An unmarried noblewoman in an affair may bear her lover's child too. The child is then the lover's in the game, born into the lover's house: illegitimate with Bellum Civile 1.4.3 or later (out of the succession and the inheritance), able to inherit there otherwise. It cannot be hidden: at the birth the affair comes to light. Off by default." />
+    <string id="rs_mcm_affair_conceive_percent" text="Chance to conceive a week together (%)" />
+    <string id="rs_mcm_affair_conceive_percent_h" text="The chance each week the lovers are together (same castle or town, party or army) that a child is conceived, with children of affairs on. Default 5." />
+    <string id="rs_mcm_affair_length_percent" text="How long affairs last (%)" />
+    <string id="rs_mcm_affair_length_percent_h" text="How long an affair goes on before it is broken off or comes to light: 200 about twice as long, 50 about half. At 100 most last a season or two." />
+    <string id="rs_mcm_affairs" text="Nobles have affairs (experimental)" />
+    <string id="rs_mcm_affairs_h" text="A noble in an unhappy marriage (no pull toward their own spouse) and someone they want, who wants them back, may become lovers in secret. It takes rapport (or a feeling that lingers from before a marriage), and being close lately; honour holds them back: an honourable noble needs more of everything (rapport 70 with Honor 1, 90 with Honor 2; a stronger pull; closer lately). Rulers and their families too; never you (your family and companions, yes); a realm with one going on is half as likely to see another. It is broken off, or it comes to light, likelier the longer it lasts, or when word of it reaches the spouse. A noble of a strict culture (Calradia Remembers' jealousy cultures: Vlandia, the Empire, Sturgia) strays half as often. The wronged spouse forgives if generous or merciful (more readily in a lenient culture, and bears it where their people accept a shared partner); otherwise holds a grudge against the lover (a feud, if they speak for their house) and against their spouse, heavier in a strict culture. All of it remembered in Calradia Remembers. Runs rapport even with attachments off. Off by itself when Dramalord is loaded." />
+    <string id="rs_mcm_affairs_per_year" text="New affairs per year (world)" />
+    <string id="rs_mcm_affairs_per_year_h" text="A ceiling: at most this many new affairs a year, in the whole world. A realm with one going on is half as likely to see another." />
+    <string id="rs_mcm_affairs_while_fond" text="Lovers while fond of another" />
+    <string id="rs_mcm_affairs_while_fond_h" text="On: a noble fond of someone may still take a lover nearby, carrying the flame for the other. Off: someone fond of another takes no lover." />
+    <string id="rs_mcm_attachments" text="Nobles grow fond of each other (experimental)" />
+    <string id="rs_mcm_attachments_h" text="Two unmarried nobles who have lived through things together (battles, an army, grief, a tournament) may grow fond of each other, if they feel the pull: like values attract, opposite ones only between respectful rivals (the lists, opposite sides at court in Bellum Civile); looks (weight and build, to each one's taste) and admiration (glory, prowess, charm, power, fame or friends, whichever each values) add to it; ill will shuts it. Mutual, or one of them in secret. They remember it in Calradia Remembers. It marries nobody and changes no house: it ends when one of them marries (the feeling lingers, from one year to ten with the rapport), dies, or after two years. Off by itself when Dramalord is loaded." />
+    <string id="rs_mcm_attachments_per_year" text="New attachments per year (world)" />
+    <string id="rs_mcm_attachments_per_year_h" text="A ceiling: at most this many new attachments a campaign year, in the whole world." />
+    <string id="rs_mcm_bastard_stigma" text="Children born out of wedlock are looked down on" />
+    <string id="rs_mcm_bastard_stigma_h" text="A child born out of wedlock (illegitimate in Bellum Civile 1.4.3, which includes your own when Bridges to Remember marks them, or born of an affair to an unmarried mother) is looked down on: a lasting leaning that relations drift toward, -20 where customs are strict, -10 middling, -5 lenient, nothing where houses share partners. Never by their own parents, siblings or spouse. It ends when they are legitimized. Shown in the Relation tooltip." />
+    <string id="rs_mcm_bastard_stigma_percent" text="How heavily (%)" />
+    <string id="rs_mcm_bastard_stigma_percent_h" text="How heavily a birth out of wedlock weighs, in percent of -20 strict / -10 middling / -5 lenient. 50 halves it, 200 doubles it." />
+    <string id="rs_mcm_battle_record" text="Lords remember who beat whom" />
+    <string id="rs_mcm_battle_record_h" text="Every lord's battles against you are counted. At the 2nd, 3rd, 5th, 8th, 12th and 20th time you beat them they remember it in their own temper (the brave want the next fight, the cautious would rather not meet you, the rest respect you); a lord who beats you remembers the 1st, 3rd and 5th time, and paying you back after losing twice or more. Off: no such memories. Without Calradia Remembers they are kept in the encyclopedia, under the relation on their page." />
+    <string id="rs_mcm_battle_temper" text="Battles bind those of a like temper more" />
+    <string id="rs_mcm_battle_temper_h" text="Rapport from a battle on the same side weighs temper: +1 for each of Valor, Honor, Mercy and Calculating the two hold alike, -1 for each opposed, never under +1. Off: every battle gives the same (+3, +4 in a defeat)." />
+    <string id="rs_mcm_between_npcs" text="Between NPCs too (experimental)" />
+    <string id="rs_mcm_between_npcs_h" text="On: every pair of nobles has a relation of their own, not only with you, starting from what their clan leaders think of each other. Off: as in the base game, two NPCs share their clan leaders' relation. Turning it off keeps what they had; it comes back when turned on again. With Bellum Civile, turn off its Enable Relationship Memory." />
+    <string id="rs_mcm_camp_events" text="Quarrels in your camp (Affairs of Calradia)" />
+    <string id="rs_mcm_camp_events_h" text="With Affairs of Calradia: its notes from your camp leave something. Two companions who argued by the fire: rapport +1 and rivals (their differences pull for a while). Who came to blows: rivals and +0.5, or a grudge of 8 each way if they were on bad terms already. One who settled a quarrel among the men: rapport +1 with you. They remember it. The other notes (training, hunting, drinking, prayer...) are left alone. Off: the notes leave nothing." />
+    <string id="rs_mcm_castle_knights" text="Castle knights (Realistic Medieval Castles)" />
+    <string id="rs_mcm_castle_knights_h" text="With Realistic Medieval Castles: the two knights of each castle count like nobles for rapport: days in their castle with those there, serving its lord (a little each day), your drills in its courtyard (+1 to +4 with you, +1 between the two). When the castle changes hands they remember it, and may resent a lord who took it by siege from one they were bound to. In Calradia Remembers they are told whom they serve and how bound they are. Off: left out, as before." />
+    <string id="rs_mcm_clear_game_start" text="Clear the game's random starting friendships" />
+    <string id="rs_mcm_clear_game_start_h" text="On: on a new campaign, the friendships and enmities the game hands out at random between lords (a lady of the Empire, close friends with a Khuzait she has never met) are cleared in its first hours. Two lords of different clans who are not kin start at 0, or at their leaning with the option above. Kin keep theirs. A campaign already under way is never touched." />
+    <string id="rs_mcm_companion_patrols" text="Companion patrols (Calradia Remembers)" />
+    <string id="rs_mcm_companion_patrols_h" text="With Calradia Remembers 2.7.15 or later: a companion you send on patrol around a place. The lord who holds it (not you, not at war with you): +1 for each fight the patrol wins, at most 3, and he remembers it. When it is over the companion remembers it and gains rapport with you (after 7 days out), and the place's notables remember it if a fight was won. Off: patrols leave nothing." />
+    <string id="rs_mcm_down" text="Standing per regard lost" />
+    <string id="rs_mcm_down_h" text="Each point of regard lost takes away this much relation. 0: losing regard never costs standing." />
+    <string id="rs_mcm_elope_family_relation" text="Relation lost by their family" />
+    <string id="rs_mcm_elope_family_relation_h" text="How much relation the family of the one left behind (their kin who are not the lovers' kin, and the heads of their house and of the house they were born to) loses with both lovers, and the weight of their grudges. Default 60." />
+    <string id="rs_mcm_elope_spouse_relation" text="Relation lost by the one left behind" />
+    <string id="rs_mcm_elope_spouse_relation_h" text="How much relation the one left behind loses with both lovers, and the weight of the grudge they hold against each. Where two keep no relation of their own it falls on their houses' heads, as in the game. Default 100." />
+    <string id="rs_mcm_elopements" text="Lovers run off together (experimental)" />
+    <string id="rs_mcm_elopements_h" text="Lovers who cannot give each other up may run off together: an affair never found out, of 50 days or more with rapport 80 or more (75 days and 90 when either is honourable), and Valor in one of them. The one who is married leaves their spouse, and the two are wed by the game's own wedding, which chooses their house; children stay where they are. The scandal follows, as when an affair comes to light. Never a ruler, never your clan or your spouse. The one left behind and their family never forgive it: the relations below, and grudges that never wear off (a feud, if they speak for their house). Two unmarried courting without consent (their houses at odds, or your blessing refused) may run off too: courting 50 days, rapport 60 (75 days and 80 when honourable), Valor in one; never into your clan against your word; the head of a house one of them left never forgives it (the family relation below). Affairs on for the first, courtships for the second." />
+    <string id="rs_mcm_elopements_per_year" text="Elopements per year (world)" />
+    <string id="rs_mcm_elopements_per_year_h" text="A ceiling: at most this many lovers run off together a year, in the whole world." />
+    <string id="rs_mcm_exact" text="Exact numbers (no Charm)" />
+    <string id="rs_mcm_exact_h" text="On: exactly the numbers above. Off: your Charm skill and perks grow gains, as the game does for every relation gain (in testing, +3 became +6)." />
+    <string id="rs_mcm_fade" text="Your relations fade over time" />
+    <string id="rs_mcm_fade_floor" text="Good relations never fade below" />
+    <string id="rs_mcm_fade_floor_h" text="An old friend stays at least this friendly. 0: everything fades toward 0." />
+    <string id="rs_mcm_fade_grudges" text="Grudges fade too" />
+    <string id="rs_mcm_fade_grudges_h" text="On: bad relations also drift back toward 0. Off: they stay until you mend them." />
+    <string id="rs_mcm_fade_h" text="Your relations drift slowly toward 0 unless something keeps them up (talking, quests, battles...), so you are not at 100 with everyone forever. Only relations with you: relations between NPCs and your own clan are never touched. With Bellum Civile's Relationship Memory on (its default), the lords and notables it manages are left to it, since it already fades them; this then covers everyone else. Do not combine with another mod that fades relations, such as Calradia Forgets, or they will fade twice." />
+    <string id="rs_mcm_fade_points_per_year" text="Points lost per year" />
+    <string id="rs_mcm_fade_points_per_year_h" text="How fast, per year of 84 days (the normal year; rate_year_days in the file), so fast mode keeps the same pace per day. 6 takes 100 down to about 64 in six years." />
+    <string id="rs_mcm_fade_talk_days" text="Talking holds off fading (days)" />
+    <string id="rs_mcm_fade_talk_days_h" text="After a Calradia Remembers chat in which you said something, that person's relation with you does not fade for this many days: keeping in touch keeps a relation up. 0: chats do not count." />
+    <string id="rs_mcm_feast_rapport" text="Feasts bind those who attend (Convivium)" />
+    <string id="rs_mcm_feast_rapport_h" text="With Convivium: Living Feasts: nobles who attended the same feast (12 hours or more in its settlement) get rapport +4 with each other and +2 more with the host, like a wedding between two houses. Without Bridges to Remember each also remembers the feast. Off: feasts give nothing. Turn off Convivium's own courtship, pregnancy and scandals in its menu so two systems do not do the same thing." />
+    <string id="rs_mcm_fond_of_max" text="Fond of how many at once" />
+    <string id="rs_mcm_fond_of_max_h" text="How many nobles one may be fond of at the same time, each fondness a story of its own. 1: one at a time, as before." />
+    <string id="rs_mcm_grp_affairs_between_npcs" text="Affairs between NPCs" />
+    <string id="rs_mcm_grp_attachments_between_npcs" text="Attachments between NPCs" />
+    <string id="rs_mcm_grp_fading" text="Fading" />
+    <string id="rs_mcm_grp_grudges_between_npcs" text="Grudges between NPCs" />
+    <string id="rs_mcm_grp_natural_leanings" text="Natural leanings" />
+    <string id="rs_mcm_grp_own_relations" text="Own relations" />
+    <string id="rs_mcm_grp_regard_and_standing" text="Regard and Standing" />
+    <string id="rs_mcm_grp_the_matchmaker" text="The matchmaker" />
+    <string id="rs_mcm_grp_tournaments" text="Tournaments" />
+    <string id="rs_mcm_grudge_battle_deaths" text="Kin killed in battle leave a grudge" />
+    <string id="rs_mcm_grudge_battle_deaths_h" text="On: a noble holds a grudge against whoever killed their kin in battle. Off: only murders and executions do, for mods where far more lords die in battle (Death for All)." />
+    <string id="rs_mcm_grudge_escalation" text="Weight for a feud between houses" />
+    <string id="rs_mcm_grudge_escalation_h" text="A grudge this heavy becomes a feud between the houses (once). A murdered father is 35, an executed one 30, one killed in battle 12; grudges add up." />
+    <string id="rs_mcm_grudge_fade_per_year" text="Grudges fade per year" />
+    <string id="rs_mcm_grudge_fade_per_year_h" text="Points a grudge loses each campaign year. 0: they never fade." />
+    <string id="rs_mcm_grudges" text="Nobles hold grudges (experimental)" />
+    <string id="rs_mcm_grudges_h" text="Nobles hold grudges against each other: for kin killed (murdered, executed, in battle) or for marrying someone they were fond of. They remember it privately in Calradia Remembers, and it wears off with time. A strong one held by a house's leader, or their spouse or close kin, becomes a feud between the two houses: their leaders' relation drops and the word goes around. Never yours: Calradia Remembers keeps those." />
+    <string id="rs_mcm_hearsay" text="Word spreads person to person" />
+    <string id="rs_mcm_hearsay_h" text="On: word of an attachment or a feud spreads from person to person (same party, army, town, family). Those it touches personally (kin, the one a secret is about) remember it in Calradia Remembers; the world hears it once in Calradia Remembers' news, so it never crowds out anyone's memories. A secret fondness can slip out, and the one it is about may hear of it. Off: only the court-wide rumor." />
+    <string id="rs_mcm_honor_debts" text="Debts of honor" />
+    <string id="rs_mcm_honor_debts_h" text="Only the extraordinary counts. Free a noble of another realm, not at war with you (from a dungeon, or from captors after a day or more), or let an enemy noble you hold go without ransom, and they, their spouse, parents, children, siblings and the head of their house owe you a debt of honor; free one of your own realm and only their close kin do (to them it was what a fellow lord does). Not friendship: an obligation between nobles, told in every prompt with Calradia Remembers, and it stands even if you wrong them later. It does not fade; it is paid only in kind: they let you or one of yours go while at war with you, rescue you from another realm, or rescue one of your house. Off: no such debts." />
+    <string id="rs_mcm_include_children" text="Include children" />
+    <string id="rs_mcm_include_children_h" text="Off: children keep their clan leader's relation until they come of age, and only then get one of their own." />
+    <string id="rs_mcm_include_minor_clans" text="Include minor clans and mercenaries" />
+    <string id="rs_mcm_include_minor_clans_h" text="Off: only the realms' noble clans. Minor clans and mercenary companies keep the game's clan-leader rule." />
+    <string id="rs_mcm_invite_chance_max" text="Most chance of an invitation (%)" />
+    <string id="rs_mcm_invite_chance_max_h" text="The chance is your tournament wins / 4 + your level / 4 + your clan's tier x 2 + his relation / 15, less 2 for each invitation open, and never more than this." />
+    <string id="rs_mcm_invite_days_to_answer" text="Days to answer" />
+    <string id="rs_mcm_invite_days_to_answer_h" text="An invitation unanswered for this many days lapses, without a word and without a penalty." />
+    <string id="rs_mcm_invite_letters" text="Invitations come as the host's letter (Calradia Remembers)" />
+    <string id="rs_mcm_invite_letters_h" text="With Calradia Remembers 2.7.17 or later: the invitation is the host's letter, carried by its courier, opened in its letter window and kept in its letter book; he remembers writing it. The notice beside the map still asks accept or decline. Off: the whole letter is in the notice." />
+    <string id="rs_mcm_invite_max_days_away" text="Farthest invitation (days' ride)" />
+    <string id="rs_mcm_invite_max_days_away_h" text="An invitation comes only from a tournament you can reach before it ends (the game ends it about 15 days after it begins), and no farther than this many days' ride from where you are. The invitation says how many days it has left and how far it is." />
+    <string id="rs_mcm_invite_max_pending" text="Invitations open at once" />
+    <string id="rs_mcm_invite_max_pending_h" text="No new invitation while this many are open (unanswered, or accepted and not yet held)." />
+    <string id="rs_mcm_kin_deaths" text="Families remember their dead" />
+    <string id="rs_mcm_kin_deaths_h" text="When someone dies, their spouse, parents, children and siblings remember it, with the full name, what the dead was to them and how they died: &quot;My daughter Debana the Lioness died in childbirth.&quot; When one of your spouses dies, your other spouses remember it too (with Affairs of Calradia's polygamy as well). A violent death reaches the rest of the house too: for an execution or a murder its head and adult nobles (eight at most), for a death in battle its head (&quot;Siga, of our house, was executed by order of X.&quot;). An execution at your hand is left to Calradia Remembers for the close kin, which already tells the kin. Off: no such memories. Without Calradia Remembers they are kept in the encyclopedia." />
+    <string id="rs_mcm_leader_share" text="Share that reaches the clan leader" />
+    <string id="rs_mcm_leader_share_h" text="With own relations on, a clan member's change lands on them alone; this part of it also reaches their clan leader, from regard or from the game itself (freeing him after a battle, a quest, a raid). 0.25: a quarter. 0: the leader never hears of it." />
+    <string id="rs_mcm_lean" text="Relations drift toward their natural leaning (experimental)" />
+    <string id="rs_mcm_lean_h" text="Each pair has a natural leaning: what kinship, character, culture and the realms would make of the two (with Bellum Civile, its politics too). See it by hovering over Relation on a hero's encyclopedia page. On: relations drift slowly toward it: yours with each noble, every pair of clan leaders, and the NPC pairs that have their own. It replaces fading. Clan leaders' relations with their ruler are what Bellum Civile weighs for rebellions. With Bellum's Relationship Memory on, the pairs it manages are left to it." />
+    <string id="rs_mcm_lean_points_per_year" text="Points per year toward the leaning" />
+    <string id="rs_mcm_lean_points_per_year_h" text="How fast a relation moves toward its leaning, per year of 84 days (the normal year; rate_year_days in the file). It never goes past it." />
+    <string id="rs_mcm_lean_start" text="NPC relations start from their leaning (experimental)" />
+    <string id="rs_mcm_lean_start_h" text="On: once per campaign, each pair of clan leaders gets its leaning added to what the game gave it; a new leader later starts at the leaning. With 'Between NPCs too', each new NPC pair starts at its leaning instead of a share of their leaders'. Your own relations keep their start. Best on a new campaign." />
+    <string id="rs_mcm_linger_years_max" text="Longest a feeling lingers (years)" />
+    <string id="rs_mcm_linger_years_max_h" text="When the beloved marries another, the feeling lingers: from one year (a summer fling) up to this many (true love). By the rapport, up to this less two; a year more for an honourable heart, and a year more if the fondness had lasted a year or more. While it lingers it can turn into an affair." />
+    <string id="rs_mcm_marriage_blessing" text="Your clan asks your blessing" />
+    <string id="rs_mcm_marriage_blessing_h" text="One of your clan (family or companion) who courts someone, after a fortnight, asks for your blessing with a notice beside the map. Given, they wed at once, by the game's own wedding; a companion, whom the game does not count as a noble, becomes a noble of your house at the wedding. Refused, they remember it, and daring lovers may run off anyway, out of your clan, never into it. Dismissed unanswered, they ask again after a season. Off: your clan is left out of courtships, as before." />
+    <string id="rs_mcm_marriage_houses_min" text="Houses agree from (relation)" />
+    <string id="rs_mcm_marriage_houses_min_h" text="Below this relation between the heads of two houses, they do not agree to a wedding between them: the couple courts and waits, or may run off. Default -20 (the game itself allows down to -50); Maifailun's idea was 0." />
+    <string id="rs_mcm_marriages" text="Courtship and marriage (experimental)" />
+    <string id="rs_mcm_marriages_h" text="Two nobles fond of each other, both ways, for a season, with rapport 40 or more, may start courting, and then marry through the game's own wedding (its rules of age, clan and house; Calradia Remembers records it). Not without consent: the heads of their houses at odds, or, for one of your clan, your blessing. Not when their realms are at war; never a ruler. Without consent they court and wait, or may run off (affairs group). Needs attachments on." />
+    <string id="rs_mcm_marriages_per_year" text="Weddings per year (world)" />
+    <string id="rs_mcm_marriages_per_year_h" text="A ceiling: at most this many weddings out of courtship a year, in the whole world." />
+    <string id="rs_mcm_matchmaker" text="Your family proposes matches" />
+    <string id="rs_mcm_matchmaker_age_gap" text="Most years apart" />
+    <string id="rs_mcm_matchmaker_age_gap_h" text="A match is proposed only within this many years of age." />
+    <string id="rs_mcm_matchmaker_asked" text="Other houses ask you for a match" />
+    <string id="rs_mcm_matchmaker_asked_h" text="Once a month at most, the head of a house on good terms with you (relation 10 or more) asks whom of your family you would see their unmarried son or daughter marry. Name one, or no one; naming one gives the two a little rapport and the head remembers your answer. Nobody is promised." />
+    <string id="rs_mcm_matchmaker_every_days" text="Days between proposals (0: a year)" />
+    <string id="rs_mcm_matchmaker_every_days_h" text="How often each unmarried member gets new proposals. 0: once a game year. One notice a week at most." />
+    <string id="rs_mcm_matchmaker_h" text="Maifailun's idea: the eldest of your family proposes three matches for an unmarried member of your clan, one they already get on with, one of a house on good terms with you, one of a strong house, and says which they would choose. A notice beside the map; choosing one gives the two a little rapport. Only a suggestion: nobody is married or promised; the wedding is yours to arrange, as before." />
+    <string id="rs_mcm_matchmaker_player" text="For you too" />
+    <string id="rs_mcm_matchmaker_player_h" text="While you are unmarried, your family proposes matches for you as well (your chamberlain, if you have no elder family)." />
+    <string id="rs_mcm_max_game_gain" text="Most the game adds at once" />
+    <string id="rs_mcm_max_game_gain_h" text="The most the game itself adds to your relation with someone at once, after Charm. Some of the game's sums run away: a lord freed after a battle once thanked you with +90. Only gains with you; losses and regard are not touched. 0: no ceiling." />
+    <string id="rs_mcm_max_per_change" text="Most standing per regard change" />
+    <string id="rs_mcm_max_per_change_h" text="The most relation a single regard change can move, either way. 0: no cap. 10 keeps a quest worth +10 regard from moving standing by 30." />
+    <string id="rs_mcm_mirror" text="Regard moves standing" />
+    <string id="rs_mcm_mirror_h" text="Personal regard won or lost in Calradia Remembers also moves the game's own relation (clan standing). Off: the two stay apart, as in Calradia Remembers alone." />
+    <string id="rs_mcm_news_courtship" text="Tell: courtships and weddings" />
+    <string id="rs_mcm_news_courtship_h" text="Two nobles courting, and the wedding a courtship ends in. Off: neither notice nor message." />
+    <string id="rs_mcm_news_feuds" text="Tell: feuds between houses" />
+    <string id="rs_mcm_news_feuds_h" text="A grudge become ill will between two houses. Off: neither notice nor message." />
+    <string id="rs_mcm_news_fondness" text="Tell: who has grown fond of whom" />
+    <string id="rs_mcm_news_fondness_h" text="Two nobles fond of each other, as the court comes to know it. Off: neither notice nor message (Calradia Remembers still has it as news)." />
+    <string id="rs_mcm_news_on_screen" text="Court rumors on screen (without CR)" />
+    <string id="rs_mcm_news_on_screen_h" text="Without Calradia Remembers: who has grown fond of whom, a courtship, a scandal or a feud is shown on screen as a message as it becomes known at court, where Calradia Remembers would tell it as news. With Calradia Remembers this does nothing. Off: in the log only. The notice beside the map has its own switch below." />
+    <string id="rs_mcm_news_scandals" text="Tell: affairs found out and scandals" />
+    <string id="rs_mcm_news_scandals_h" text="An affair whispered about or come to light, and whose child it may be. Off: neither notice nor message." />
+    <string id="rs_mcm_notices" text="Court news as a notice beside the map" />
+    <string id="rs_mcm_notices_h" text="The court's news as a notice beside the map, like the game's own for a new season or a wedding, so it is not lost in a battle's log: hover for the text, click to read it and dismiss it. Without Calradia Remembers; with it, see the next switch. Not kept in the save: one left unread is gone after loading." />
+    <string id="rs_mcm_notices_with_cr" text="Notices with Calradia Remembers too" />
+    <string id="rs_mcm_notices_with_cr_h" text="With Calradia Remembers its chat already tells these as news. On: the notices beside the map as well." />
+    <string id="rs_mcm_notify" text="Show the relation notice" />
+    <string id="rs_mcm_notify_h" text="The game's usual 'relation increased' message when standing moves." />
+    <string id="rs_mcm_pair_regard" text="Friends and enemies in Calradia Remembers count this mod's reasons" />
+    <string id="rs_mcm_pair_regard_h" text="With Calradia Remembers 2.7.17 or later: its own weighing of two people (a friend or an enemy in its chat and on the encyclopedia page) counts this mod's reasons too: a grudge (-5 to -30), rapport of 20 or more (+5 to +30), rivals in the lists (-5), a debt of honor owed to you (+15). Calradia Remembers caps all other mods together at 40 either way. Takes effect from the next campaign loaded. Off: it weighs only its own reasons." />
+    <string id="rs_mcm_personal" text="Each noble has their own relation" />
+    <string id="rs_mcm_personal_h" text="Each noble has their own relation with you, not their clan leader's. Off: back to the game's rule, where the whole clan shares the leader's. Relations already given stay in the save and come back when you turn it on again. Using Affairs of Calradia's personal relations? Turn one of the two off." />
+    <string id="rs_mcm_prompt_toward_player" text="Feelings toward you in every prompt (CR)" />
+    <string id="rs_mcm_prompt_toward_player_h" text="With Calradia Remembers: each character's rapport with you, romantic pull toward you, secret fondness and grudge, in numbers and in words, in every prompt ({{rs_toward_player}}), so the model weighs this mod's attraction and not only Calradia Remembers' regard. Off: only as memories, as before." />
+    <string id="rs_mcm_rapport_to_attach" text="Rapport needed" />
+    <string id="rs_mcm_rapport_to_attach_h" text="Shared experience a pair needs before an attachment can start (up to 100): a battle side by side 3, a day in the same army 0.5, a tournament 2, grief over kin lost to the same house 10, a day in the same town 0.2 (10 at most), a captivity that ended well with a merciful or honourable captor 1 a day (15 at most). It wears off 3% a week. A pull is needed too: like values, or opposite ones between respectful rivals." />
+    <string id="rs_mcm_rate_year_days" text="Year for rates and ceilings (days)" />
+    <string id="rs_mcm_rate_year_days_h" text="The year that rates and yearly ceilings are measured in: points a year (fading, leanings, grudges), new attachments and affairs a year, how fast an affair starts or comes to light. 84 is the game's normal year, so with a fast-mode calendar (shorter years) these keep the same pace per day. 0: everything follows the game's own year." />
+    <string id="rs_mcm_regard_persuasion" text="Regard sways persuasion (%)" />
+    <string id="rs_mcm_regard_persuasion_h" text="Regard as a will to listen: a noble who holds you dear is easier to persuade in the game's persuasion screen (courting, convincing, quests), one who loathes you harder. The percent at full regard; 0: regard does not count." />
+    <string id="rs_mcm_remember_changes" text="Remember game changes of at least" />
+    <string id="rs_mcm_remember_changes_h" text="A change of the game's own relation with you this big or more is remembered by that noble (in Calradia Remembers, or without it on their encyclopedia page), when its reason is known (Bellum Civile names it, or you helped them in battle). A battle's memory says where and how it went. 0: never. (Who beat whom has its own switch below.)" />
+    <string id="rs_mcm_shared_past" text="Shared past before the campaign (Calradia Remembers)" />
+    <string id="rs_mcm_shared_past_h" text="With Calradia Remembers 2.7.15 or later: what it draws two lords lived through before the campaign counts here too, once each. Old friends: rapport +15; rode together +8; a life saved +10; an insult never forgiven: a grudge of 12; a debt never repaid: 8; a quarrel over grazing land: 6 each way; a rivalry in the lists: rivals. Off: it is only told, as before." />
+    <string id="rs_mcm_skip_causes" text="Regard causes that never move standing" />
+    <string id="rs_mcm_skip_causes_h" text="Calradia Remembers names each regard change by its cause: conversation, letter, quest, commitment, compensation, grudge, jealousy, divorce, rescue, stance, violence, departure, unspecified. Those listed here (separated by commas) never move your relation. Default: unspecified, divorce (Calradia Remembers already moves the relation itself for a divorce)." />
+    <string id="rs_mcm_start_enemies" text="Starting enemies in a neighbouring realm" />
+    <string id="rs_mcm_start_enemies_h" text="With the option above: each lord of a realm starts with this many enemies in a neighbouring realm, one whose castles and towns lie nearest theirs (-30 to -60), drawn anew for each campaign: a Vlandian lord may start with an enemy in Battania. 0: none." />
+    <string id="rs_mcm_start_friends" text="Starting friends in their own realm" />
+    <string id="rs_mcm_start_friends_h" text="With the option above, in place of the game's random ties: each lord of a realm starts with this many friends among the other houses of their own realm (+30 to +60), drawn anew for each campaign. Never kin. 0: none." />
+    <string id="rs_mcm_start_percent" text="Starting relation (% of clan leader's)" />
+    <string id="rs_mcm_start_percent_h" text="What each clan member starts with, as a share of their clan leader's relation with you. 100 copies it; 0 starts everyone from scratch. Only for those who do not have a relation of their own yet: changing it never touches anyone who already has one." />
+    <string id="rs_mcm_start_rivals" text="Old rivals (culture&gt;culture)" />
+    <string id="rs_mcm_start_rivals_h" text="Old rivals by the realms' cultures: &quot;a&gt;b&quot; sends the starting enemies of a realm of culture a to a realm of culture b, however far, and lets b's lords draw theirs from a too. Culture ids or names (vlandia, empire, sturgia, battania, khuzait, aserai, nord, rhodok), separated by commas. Empty: neighbours only. Default: rhodok&gt;vlandia." />
+    <string id="rs_mcm_title" text="Regard and Standing" />
+    <string id="rs_mcm_tournament_dedication" text="Dedicate a victory" />
+    <string id="rs_mcm_tournament_dedication_h" text="After you win a tournament, a line in the conversation with a lord of another house dedicates the victory to them, once per victory and within 30 days of it: +1 to +3, rapport +2, and they remember it." />
+    <string id="rs_mcm_tournament_invites" text="Lords invite you to their tournaments" />
+    <string id="rs_mcm_tournament_invites_h" text="When a tournament starts, the lord of the town may invite you (idea from TripleThreat's Healthy Relationships): not in the first week, at peace with his realm, your crime there under 15, his relation with you -30 or better, outside an army. A notice beside the map: accept +1, decline -1 (your Charm may save you). Come +1 to +2, win +2 to +5 more; accept and never come -2 to -3, unless duty kept you (war between your realms, a new war, an army, a siege, captivity). He remembers it. War between your realms withdraws an open invitation. Never when a Convivium feast is held in that town." />
+    <string id="rs_mcm_tournament_relation" text="Invitations touch the game's relation" />
+    <string id="rs_mcm_tournament_relation_h" text="Off: invitations and dedications give only rapport and memories, and the game's relation is left alone (for collections where another mod keeps it)." />
+    <string id="rs_mcm_trace" text="Trace on screen" />
+    <string id="rs_mcm_trace_h" text="Also print each mirrored change on screen. They are always in Documents\RegardStanding\regard_standing_log.txt. Which causes never count is set in regard_standing.txt (skip_causes)." />
+    <string id="rs_mcm_up" text="Standing per regard gained" />
+    <string id="rs_mcm_up_h" text="Each point of regard gained adds this much relation. 0.5: one point for every two of regard." />
+    <string id="rs_mcm_vengeance_oaths" text="Vengeance oaths leave a grudge (Heroes Evolve)" />
+    <string id="rs_mcm_vengeance_oaths_h" text="With Heroes Evolve: a lord, or a companion riding for a house, stripped of his gear while a prisoner swears his house will pay it back. He holds a grudge of 20 against the one who stripped him (a companion never starts a feud), halved when his house has its vengeance. Read off the game's own log; Heroes Evolve is not touched. Off: the oaths plant nothing." />
+    <string id="rs_mm_answer" text="Answer" />
+    <string id="rs_mm_arrange" text="To arrange the match of {A} and {B}, speak with {WHO}: the hand can be given in the chat." />
+    <string id="rs_mm_asked" text="{HEAD} of {CLAN} asks whom of your family you would see {WHOSE} marry." />
+    <string id="rs_mm_asked_window" text="{HEAD}: &quot;{NAME} is of an age to marry, and our houses have been on good terms. Whom of your family would you see wed?&quot; Naming one promises nothing: speak with {HEAD} to arrange it." />
+    <string id="rs_mm_asks" text="A House Asks for a Match" />
+    <string id="rs_mm_chamberlain" text="Your chamberlain" />
+    <string id="rs_mm_count1" text="a match" />
+    <string id="rs_mm_count2" text="two matches" />
+    <string id="rs_mm_count3" text="three matches" />
+    <string id="rs_mm_hardly" text="{A} and {B} have hardly met." />
+    <string id="rs_mm_head_of" text="{HEAD}, who heads the house" />
+    <string id="rs_mm_item" text="{NAME} of {CLAN}, {AGE}" />
+    <string id="rs_mm_know" text="{A} and {B} already know each other." />
+    <string id="rs_mm_named" text="You named {A} for {B}. To arrange the match, speak with {WHO}." />
+    <string id="rs_mm_named_chat" text="You named {A} for {B}. To arrange the match, speak with {WHO}: the hand can be given in the chat." />
+    <string id="rs_mm_none" text="None of them, for now" />
+    <string id="rs_mm_none_h" text="Choose nobody: the proposal is set aside, and nothing is held against anyone." />
+    <string id="rs_mm_noone" text="No one, for now" />
+    <string id="rs_mm_noone_btn" text="No one" />
+    <string id="rs_mm_noone_h" text="Name nobody: {HEAD} is told so, and takes no offence." />
+    <string id="rs_mm_not_now" text="Not now" />
+    <string id="rs_mm_propose" text="To propose the match of {A} and {B}, speak with {WHO}." />
+    <string id="rs_mm_proposed" text="A Match Proposed" />
+    <string id="rs_mm_summary" text="{WHO} has {COUNT} in mind for {FOR} to marry." />
+    <string id="rs_mm_the_choice" text="(the choice)" />
+    <string id="rs_mm_their_kin" text="their {KIN} {NAME}" />
+    <string id="rs_mm_think" text="I'll think on it" />
+    <string id="rs_mm_thought" text="I have given thought to whom {ABOUT} should marry." />
+    <string id="rs_mm_voice_kin" text="Your {KIN} {NAME}" />
+    <string id="rs_mm_why_kin" text="Our families have been on good terms: {HEAD} thinks well of us." />
+    <string id="rs_mm_why_known" text="{A} and {B} already get on; I have seen it." />
+    <string id="rs_mm_why_known_you" text="You two already get on; I have seen it." />
+    <string id="rs_mm_why_strong" text="That house is strong: an alliance with them would protect us." />
+    <string id="rs_mm_window" text="{WHO}: &quot;{SAID}&quot; Hover over each for the reason. Choosing one promises nothing: speak with the head of that house to propose the match." />
+    <string id="rs_mm_would_choose" text="Of these, I would choose {NAME}: {REASON}" />
+    <string id="rs_mm_your_kin" text="your {KIN} {NAME}" />
+    <string id="rs_msg_eloped_unblessed" text="{A} and {B} have run off and wed without your blessing." />
+    <string id="rs_msg_exposed" text="{A} and {B} were lovers, and it has come to light." />
+    <string id="rs_msg_no_cr" text="Calradia Remembers is not loaded: regard does not move standing. Everything else works; what the nobles remember is kept here (their encyclopedia page, regardstanding.chronicle)." />
+    <string id="rs_msg_own" text="Own relations: {N} nobles have a relation of their own with you." />
+    <string id="rs_msg_own_new" text="Own relations: {N} nobles have a relation of their own with you ({NEW} new, starting from their clan leader's)." />
+    <string id="rs_msg_own_off" text="Own relations are off in the settings (personal = false); relations stay with the clan leader." />
+    <string id="rs_msg_seen" text="At {PLACE} you see {A} and {B} together at night. They are lovers." />
+    <string id="rs_msg_seen_married" text="At {PLACE} you see {A} and {B} together at night. They are lovers, and {A} is married to {SPOUSE}." />
+    <string id="rs_ok" text="OK" />
+    <string id="rs_prefix" text="[Regard &amp; Standing]" />
+    <string id="rs_prize" text="{ITEM} (worth {VALUE} denars)" />
+    <string id="rs_ride_less" text="less than a day's ride" />
+    <string id="rs_ride_n" text="about {N} days' ride" />
+    <string id="rs_ride_one" text="about a day's ride" />
+    <string id="rs_say_came" text="{HOST} is glad you came to the tournament at {TOWN}." />
+    <string id="rs_say_came_won" text="{HOST} is delighted: you came to the tournament at {TOWN} and won it." />
+    <string id="rs_say_cancelled" text="The tournament at {TOWN} has been cancelled." />
+    <string id="rs_say_closed" text="The invitation to the tournament at {TOWN} is no longer open." />
+    <string id="rs_say_ends" text="The tournament at {TOWN} ends in {DAYS}." />
+    <string id="rs_say_ends_host" text="The tournament at {TOWN} ends in {DAYS}; {HOST} expects you there." />
+    <string id="rs_say_expects" text="{HOST} expects you at the tournament at {TOWN}." />
+    <string id="rs_say_expects_left" text="{HOST} expects you at the tournament at {TOWN}: it has {DAYS} left." />
+    <string id="rs_say_never" text="{HOST} takes it ill: you accepted the invitation to the tournament at {TOWN} and never came." />
+    <string id="rs_say_never_forgiven" text="You never came to the tournament at {TOWN}, but {HOST} lets it pass." />
+    <string id="rs_say_refusal_cool" text="{HOST} takes your refusal coolly." />
+    <string id="rs_say_refusal_gracious" text="{HOST} takes your refusal graciously." />
+    <string id="rs_say_understands" text="{HOST} understands: {WHY}." />
+    <string id="rs_say_war" text="With war between your realms, {HOST}'s invitation to the tournament at {TOWN} no longer stands." />
+    <string id="rs_the_lord" text="The lord" />
+    <string id="rs_why_army" text="you were called to an army" />
+    <string id="rs_why_captive" text="you were held captive" />
+    <string id="rs_why_new_war" text="a new war called you away" />
+    <string id="rs_why_siege" text="you were at a siege" />
+    <string id="rs_why_war" text="war came between your realms" />
+    <string id="rs_you" text="you" />
+    <string id="rs_yourself" text="yourself" />
+  </strings>
+</base>

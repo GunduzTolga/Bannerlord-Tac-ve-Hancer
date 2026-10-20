@@ -124,6 +124,7 @@ Ardından Launcher → Mods → **Taç ve Hançer**'i işaretle.
   `UI/` Entrika paneli (Klan sekmesi), olay kartları ve harita çubuğu düğmesi (Gauntlet katmanları ve ViewModel'ler), `Mcm/` MCM ayar ekranı, `Patches/` Harmony yamaları)
 - `tests/` — oyunsuz çalışan birim testleri (sayı/ad doğrulama, ayar dosyası, entrika kayıt biçimi, resim adları)
 - `tools/GuiCheck/` — arayüz dosyalarının oyunsuz denetimi (CI'da çalışır)
+- `tools/RefCheck/` — paketlenen modların DLL'leri oyunda yüklenebilir mi (eksik DLL ya da tür; `build.ps1` oyun kuruluysa çalıştırır)
 - `Module/` — oyundaki modül klasörüne olduğu gibi kopyalanır: `SubModule.xml` (manifest), `GUI/Prefabs` ve `GUI/Brushes`
   (arayüz), `Images/` (olay kartı resimleri)
 - `docs/superpowers/` — her fazın tasarım (specs) ve uygulama (plans) belgeleri; yol haritası: `specs/2026-10-19-yol-haritasi.md`
