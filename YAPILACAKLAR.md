@@ -62,11 +62,12 @@ neden bulundu (`tools\RefCheck`, Regard and Standing 1.5.0'ın DLL'iyle). Regard
 Remembers**'la konuşan tek bir sınıf taşıyor (`PairRegardSource+Source`, o modun bir arayüzünü uyguluyor). Calradia Remembers kurulu
 değilken oyun o sınıfı yükleyemiyor ve pencereyi gösteriyor. Mod bunu bekliyor: köprüyü yalnızca Calradia Remembers varsa açıyor,
 geri kalan her şey çalışıyor. Yani **OK'e basınca oyun devam etmeli**; ayrı kurulumda da aynı pencere çıkardı.
-- [ ] Pencerede **OK** → oyun ana menüye geliyor mu? Gelmiyorsa (kapanıyor/donuyorsa) en yeni `rgl_log` dosyasını gönder
-- [ ] Pencere her açılışta can sıkıyorsa üç yol: (1) arkadaşın Calradia Remembers köprüsünü MCM köprüsü gibi ayrı bir DLL'e
-      (`RegardStanding.CR.dll`) taşısın, pencere tamamen gider; (2) Calradia Remembers'ı da paketleriz; (3) Regard and Standing'i
-      çıkarırız (`paketler.txt`'de satırın başına `#`), Taç ve Hançer kendi gizli ilişki sistemine döner
-- [ ] `git pull` öncesi PC'deki `third_party\RegardStanding` klasörünü sil (aynı mod artık repoda; yoksa git "would be overwritten" der)
+- [x] OK'e basınca da açılmadı → **DLL yamandı** (`tools\RsPatch`): o sınıfın Calradia Remembers arayüzü söküldü, oyun artık yüklemeye
+      çalışmıyor. Repodaki `third_party\RegardStanding\bin\Win64_Shipping_Client\RegardStanding.dll` yamalı
+- [ ] Yamalı `RegardStanding.dll`'i iki yere koy: oyunda `Modules\CheatMenu\bin\Win64_Shipping_Client\` (hemen etki eder) ve
+      masaüstündeki repoda `third_party\RegardStanding\bin\Win64_Shipping_Client\` (derleme eskisini geri koymasın). Oyun açılıyor,
+      pencere çıkmıyor
+- [ ] Hâlâ çıkıyorsa: en yeni `rgl_log` (`C:\ProgramData\Mount and Blade II Bannerlord\logs`) ve pencerenin ekran görüntüsü
 
 **Uyum raporu (yeni, 20 Ekim akşamı):** kampanya her açıldığında mod, bütün modların oyuna yaptığı Harmony yamalarını ve eklediği
 oyun modellerini tarar; birden çok modun aynı yere dokunduğu her noktayı risk seviyesiyle
