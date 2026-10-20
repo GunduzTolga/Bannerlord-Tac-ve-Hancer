@@ -57,6 +57,13 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] Hile menüsü → iki krallığa savaş ilan et; aralarında Diplomacy saldırmazlık anlaşması varsa mesajda
       "aradaki saldırmazlık anlaşması bozuldu" yazıyor ve Krallık → Diplomasi'de anlaşma artık görünmüyor
 
+**Açılışta "Taç ve Hançer.RegardStanding submodule could not be loaded correctly due to a dependency conflict" (20 Ekim akşamı):**
+oyun, Regard and Standing'in DLL'indeki bazı türleri yükleyemedi (dayandığı bir DLL ya da tür bulunamıyor). DLL'i repoda olmadığı
+için nedeni buradan görülemedi; `build.ps1` artık bunu oyunu açmadan buluyor (`tools\RefCheck`).
+- [ ] `build.ps1` çalıştır → en sondaki "DLL DENETİMİ" bölümündeki **HATA** satırlarını gönder (eksik DLL ya da tür adıyla yazıyor)
+- [ ] Beklerken oynamak istersen: `third_party\paketler.txt`'de `RegardStanding` satırının başına `#` koy, `build.ps1` çalıştır.
+      Taç ve Hançer kendi gizli ilişki sistemine döner; uyarı gider
+
 **Uyum raporu (yeni, 20 Ekim akşamı):** kampanya her açıldığında mod, bütün modların oyuna yaptığı Harmony yamalarını ve eklediği
 oyun modellerini tarar; birden çok modun aynı yere dokunduğu her noktayı risk seviyesiyle
 `Belgeler\Mount and Blade II Bannerlord\Configs\TacVeHancer\uyum_raporu.txt`'ye yazar. Ciddi ya da dikkat gerektiren çakışma

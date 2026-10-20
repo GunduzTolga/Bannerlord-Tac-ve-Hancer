@@ -25,3 +25,10 @@ dotnet run --project (Join-Path $PSScriptRoot 'tools\GuiCheck\GuiCheck.csproj') 
     (Join-Path $packages 'bannerlord.referenceassemblies.sandbox\1.4.8.119303\ref\net472') `
     (Join-Path $packages 'bannerlord.uiextenderex\2.13.3\lib\netstandard2.0') @gameArgs
 if ($LASTEXITCODE -ne 0) { throw 'Arayuz denetimi basarisiz: oyunda Entrika ekrani acilmayabilir' }
+
+# Paketlenen modların DLL'leri oyunda yüklenebilir mi (oyunun "dependency conflict" uyarısının nedeni). Yalnızca oyun kuruluysa.
+if ($gameArgs.Count -gt 0) {
+    $framework = Join-Path $packages 'microsoft.netframework.referenceassemblies.net472\1.0.3\build\.NETFramework\v4.7.2'
+    dotnet run --project (Join-Path $PSScriptRoot 'tools\RefCheck\RefCheck.csproj') -c Release -- $gameFolder $framework
+    if ($LASTEXITCODE -ne 0) { throw 'DLL denetimi basarisiz: yukaridaki HATA satirlari oyunun acilista verdigi uyarinin nedeni' }
+}
