@@ -1,0 +1,703 @@
+﻿<?xml version = "1.0" encoding = "utf-8"?>
+<NPCCharacters>
+
+
+	<NPCCharacter id = "malfoycustom_0"
+				  name = "{=mfywicnpc00}Sonadel"
+                  age = "21"
+                  voice = "softspoken"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.empire"
+                  occupation = "Wanderer"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.4" build = "0.6"  key = "0010A80D92B4400410338B10EC5FF291C06C7A74797C169258DEF0C087491A0A09CC0602081582399600000000F00F000000000000001508000000006F1430C4"  />
+		</face>
+		<skills>
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Steward"
+				   value = "85" />
+			<skill id = "Crafting"
+				   value = "70" />
+		</skills>
+		<Traits>
+			<Trait id = "Mercy"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "sonadel_template" />
+			<EquipmentSet id = "sonadel_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_1"
+                  name = "{=mfywicnpc01}Anette"
+				  age = "20"
+                  voice = "softspoken"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.empire"
+                  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "20" weight = "0.5" build = "0.5"  key = "00050005402C20060B204A3204AB94FBC2F87870EC722B30CC74922088AC4D960057700208A3FA3177000000008008000000000000000008000000004D1020C4"  />
+		</face>
+		<skills>
+			<skill id = "Polearm"
+				   value = "110" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "anette_template" />
+			<EquipmentSet id = "anette_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_2"
+                  name = "{=mfywicnpc02}Qiana"
+                  age = "18"
+                  voice = "softspoken"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.battania"
+                  occupation = "Wanderer"
+				  default_group = "Ranged">
+		<face>
+			<BodyProperties version = "4" age = "18" weight = "0.2" build = "0.1"  key = "0002680AC0B4400D004C4B81137A43A4B0B96739657838508B756231796A541206913613073484571300000000A00B0000000000000000170000000046FC20C4"  />
+		</face>
+		<Traits>  
+		</Traits>
+		<skills>
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "110" />
+			<skill id = "Scouting"
+				   value = "55" />
+		</skills>
+		<Equipments>
+			<EquipmentSet id = "qiana_template" />
+			<EquipmentSet id = "qiana_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_3"
+                  name = "{=mfywicnpc03}Mina"
+                  age = "18"
+                  voice = "earnest"
+				  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.empire"
+                  occupation = "Wanderer"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "18" weight = "0.1" build = "0.2"  key = "00027C03400020027673264546856554E074881968A65824D9A58600876C5547006316B2091463373100000000B00A0000000000000000B60000000020CC20C4"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "30" />
+			<skill id = "Polearm"
+				   value = "30" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "40" />
+			<skill id = "Bow"
+				   value = "40" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "mina_template" />
+			<EquipmentSet id = "mina_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_4"
+				  name = "{=mfywicnpc04}Belladonna"
+				  age = "22"
+				  voice = "earnest"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.battania"
+				  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "22" weight = "0.2886" build = "0.6744"  key = "0000740792B42001A044FC6D19DDF3E182ED7B090B6A1CD0A0D0C0B3835B4314006A460305038036A400000000C00A0000000000000015050000000044AC30C4"  />
+		</face>
+		<skills>
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Medicine"
+				   value = "90" />
+			<skill id = "Charm"
+				   value = "80" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+			<Trait id = "Calculating"
+				   value = "-1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "belladonna_template" />
+			<EquipmentSet id = "belladonna_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_5"
+				  name = "{=mfywicnpc05}Linda"
+				  age = "24"
+				  voice = "earnest"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.sturgia"
+				  occupation = "Wanderer"
+				  default_group = "Cavalry">
+		<face>
+			<BodyProperties version = "4" age = "24" weight = "0.3555" build = "0.7423"  key = "00055405502C4004003C4D3F2A95F6D3A3C9485872780C30A8ACF0D07D680F0B0AFE06130D268356B500000000F00F00000000000000001D0000000047AC10C4"  />
+		</face>
+		<skills>
+			<skill id = "Riding"
+				   value = "60" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Steward"
+				   value = "55" />
+			<skill id = "Charm"
+				   value = "120" />
+		</skills>
+		<Traits>
+			<Trait id = "Mercy"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "linda_template" />
+			<EquipmentSet id = "linda_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_6"
+                  name = "{=mfywicnpc06}Adrianne"
+                  age = "22"
+                  voice = "softspoken"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.sturgia"
+                  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "22" weight = "0.3358" build = "0.6235"  key = "00004C0000A0400A2056652A66A8D1C5817A9960A5971430EA512200887D390606BC06030804A1159500000000E00F00000000000000150800000000691420C4"  />
+		</face>
+		<skills>
+			<skill id = "TwoHanded"
+				   value = "110" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "75" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+			<Trait id = "Mercy"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "adrianne_template" />
+			<EquipmentSet id = "adrianne_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_7"
+                  name = "{=mfywicnpc07}Laura"
+                  age = "20"
+                  voice = "earnest"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.vlandia"
+                  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "20" weight = "0.2608" build = "0.5265"  key = "000200009488300614597614FB8AF0C463CF7BB2CB9A1F62BEF4A3C07D1B060A006846020606C4358400600000E00F000000000000001406000000006ED420C4"  />
+		</face>
+		<skills>
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Engineering"
+				   value = "65" />
+			<skill id = "Steward"
+				   value = "55" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "laura_template" />
+			<EquipmentSet id = "laura_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_8"
+                  name = "{=mfywicnpc08}Audre"
+                  age = "19"
+                  voice = "earnest"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.vlandia"
+                  occupation = "Wanderer"
+				  default_group = "Cavalry">
+		<face>
+			<BodyProperties version = "4" age = "19" weight = "0.3287" build = "0.5849"  key = "000270008000400E0765C30A595D5AC8B1B98B38BC848963C737A320829B4C27008A0002040884739500000000B00B000000000000000004000000004E7800C4"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "30" />
+			<skill id = "Polearm"
+				   value = "20" />
+			<skill id = "Riding"
+				   value = "60" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "audre_template" />
+			<EquipmentSet id = "audre_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_9"
+                  name = "{=mfywicnpc09}Su Lan"
+                  age = "21"
+                  voice = "earnest"
+				  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.khuzait"
+                  occupation = "Wanderer"
+                  default_group = "HorseArcher">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.3352" build = "0.5617"  key = "0015D80D93B4400F10645F13FF56F55470D99AC3CCBE0C21C09962608A2E383600485602042B97468500000000A009100000000000001504000000007E7C20C4"  />
+		</face>
+		<skills>
+			<skill id = "Riding"
+				   value = "65" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "65" />
+			<skill id = "Engineering"
+				   value = "70" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "sulan_template" />
+			<EquipmentSet id = "sulan_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_10"
+                  name = "{=mfywicnpc10}Kally"
+                  age = "23"
+                  voice = "softspoken"
+				  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.khuzait"
+                  occupation = "Wanderer"
+				  default_group = "HorseArcher">
+		<face>
+			<BodyProperties version = "4" age = "23" weight = "0.1648" build = "0.4336"  key = "001BB80B9314400B3055BC1CAC56D1C570F9AB8B7C5F3B30E17DE3708A2E6A360BFE0613032996457200000000E00F00000000000000151300000000667410C4"  />
+		</face>
+		<skills>
+			<skill id = "Polearm"
+				   value = "30" />
+			<skill id = "Riding"
+				   value = "55" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "110" />
+			<skill id = "Scouting"
+				   value = "60" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "-1" />
+			<Trait id = "Honor"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "kally_template" />
+			<EquipmentSet id = "kally_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_11"
+                  name = "{=mfywicnpc11}Fenella"
+                  age = "22"
+                  voice = "earnest"
+                  is_hero = "true"
+                  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.aserai"
+				  occupation = "Wanderer"
+				  default_group = "Cavalry">
+		<face>
+			<BodyProperties version = "4" age = "22" weight = "0.4" build = "0.6219"  key = "0023A80F121430020168FC654A9E06C5E1CB7D6B3B7D9540809AF3B98BCA0C5A0079660307CB975A9600000000F00F0000000000000015070000000060FC10C4"  />
+		</face>
+		<skills>
+			<skill id = "Riding"
+				   value = "30" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Medicine"
+				   value = "95" />
+			<skill id = "Trade"
+				   value = "75" />
+		</skills>
+		<Traits>
+			<Trait id = "Mercy"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "fenella_template" />
+			<EquipmentSet id = "fenella_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_12"
+				  name = "{=mfywicnpc12}Layana"
+				  age = "23"
+				  voice = "ironic"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.aserai"
+				  occupation = "Wanderer"
+				  default_group = "Cavalry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.4" build = "0.4"  key = "002E9C0E4F2C200856684B430242C2E6847C7828608A134084CE616085B6501600A666130A2576446600000000C00A00000000000000001A00000000436440C4"  />
+		</face>
+		<skills>
+			<skill id = "Polearm"
+				   value = "75" />
+			<skill id = "OneHanded"
+				   value = "55" />
+			<skill id = "Riding"
+				   value = "80" />
+			<skill id = "Athletics"
+				   value = "55" />
+			<skill id = "Bow"
+				   value = "75" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "1" />
+			<Trait id = "Generosity"
+				   value = "-1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "layana_template" />
+			<EquipmentSet id = "layana_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_13"
+				  name = "{=mfywicnpc13}Yoselin"
+				  age = "22"
+				  voice = "ironic"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.vlandia"
+				  occupation = "Wanderer"
+				  default_group = "Cavalry">
+		<face>
+			<BodyProperties version = "4" age = "22" weight = "0.2515" build = "0.8688"  key = "0002480094FC300360668F08858C37E370DC79C6AB9B0D008719C092862F2809008D40030858B863D400A80000C00C000000000000000008000000000D1810C4"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "55" />
+			<skill id = "Polearm"
+				   value = "110" />
+			<skill id = "Riding"
+				   value = "90" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "1" />
+			<Trait id = "Calculating"
+				   value = "-1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "yoselin_template" />
+			<EquipmentSet id = "yoselin_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom_14"
+				  name = "{=mfywicnpc14}Herdis"
+				  age = "26"
+				  voice = "earnest"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.nord"
+				  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "26" weight = "0.1246" build = "0.1916"  key = "000050002B2C401630347F4236D5B9D5B05E847C906A41005A75F1507B971DC70AFE06130C07B3A93200000000F00F00000000000000001C00000000479420C4"  />
+		</face>
+		<skills>
+			<skill id = "Polearm"
+				   value = "30" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "100" />
+			<skill id = "Bow"
+				   value = "40" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Medicine"
+				   value = "40" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "herdis_template" />
+			<EquipmentSet id = "herdis_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+	
+	
+	
+	<NPCCharacter id = "malfoycustom_15"
+				  name = "{=mfywicnpc15}Anneli"
+				  age = "20"
+				  voice = "softspoken"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.nord"
+				  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "20" weight = "0.2" build = "0.6"  key = "000000016AB42002005A1A630242A4B6A36E760B004700508D43D3007B47A0140BBA0602050273469300070000F00F0000000000000000050000000042B430C4"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "55" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "40" />
+			<skill id = "Crossbow"
+				   value = "110" />
+			<skill id = "Medicine"
+				   value = "20" />
+			<skill id = "Boatswain"
+					value = "100" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "-1" />
+			<Trait id = "Honor"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "anneli_template" />
+			<EquipmentSet id = "anneli_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+	
+	
+	
+	<NPCCharacter id = "malfoycustom_16"
+				  name = "{=mfywicnpc16}Elara"
+				  age = "20"
+				  voice = "curt"
+				  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+				  culture = "Culture.empire"
+				  occupation = "Wanderer"
+				  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "20" weight = "0.3" build = "0.7423"  key = "0005540D9214400659396F6F8B76F4A2A3B72984A28A0D02D00DF0807D680F0A0AFE060204368256B400000000F00F000000000000000004000000006A8C10C4"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "125" />
+			<skill id = "Throwing"
+				   value = "80" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "80" />
+			<skill id = "Bow"
+				   value = "40" />
+			<skill id = "Crossbow"
+				   value = "20" />
+		</skills>
+		<Traits>
+			<Trait id = "Honor"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "elara_template" />
+			<EquipmentSet id = "elara_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+	
+	
+	
+</NPCCharacters>

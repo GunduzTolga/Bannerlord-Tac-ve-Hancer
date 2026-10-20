@@ -1,0 +1,357 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<EquipmentRosters>
+
+
+
+	<EquipmentRoster id = "sonadel_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.empire_sword_1_t2"/>
+			<Equipment slot = "Body" id = "Item.half_apron"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "sonadel_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.empire_sword_1_t2"/>
+			<Equipment slot = "Body" id = "Item.half_apron"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "anette_template">
+		<EquipmentSet>
+			<Equipment slot = "Body" id = "Item.empire_short_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+			<Equipment slot = "Item0" id = "Item.peasant_pitchfork_1_t1"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "anette_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Body" id = "Item.empire_short_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "qiana_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.hunting_bow"/>
+			<Equipment slot = "Item1" id = "Item.default_arrows"/>
+			<Equipment slot = "Body" id = "Item.burlap_sack_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "qiana_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.hooked_cleaver"/>
+			<Equipment slot = "Body" id = "Item.burlap_sack_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "mina_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.hooked_cleaver"/>
+			<Equipment slot = "Body" id = "Item.torn_bandit_clothes"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "mina_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.hooked_cleaver"/>
+			<Equipment slot = "Body" id = "Item.torn_bandit_clothes"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "belladonna_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.bastard_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.northern_leather_vest"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "belladonna_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.bastard_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.northern_leather_vest"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "linda_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.horse_whip"/>
+			<Equipment slot = "Body" id = "Item.cut_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "linda_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.horse_whip"/>
+			<Equipment slot = "Body" id = "Item.cut_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "adrianne_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.battania_2haxe_1_t2"/>
+			<Equipment slot = "Head" id = "Item.cervelliere_over_arming_coif"/>
+			<Equipment slot = "Body" id = "Item.layered_leather_tunic"/>
+			<Equipment slot = "Leg" id = "Item.strapped_shoes"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "adrianne_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.iron_spatha_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.laced_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "laura_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.iron_spatha_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.vlandian_corset_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "laura_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.iron_spatha_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.vlandian_corset_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "audre_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.vlandia_sword_1_t2"/>
+			<Equipment slot = "Item1" id = "Item.heavy_horsemans_kite_shield"/>
+			<Equipment slot = "Body" id = "Item.leather_and_iron_plate_armor"/>
+			<Equipment slot = "Leg" id = "Item.strapped_shoes"/>
+			<Equipment slot = "Horse" id = "Item.t2_vlandia_horse"/>
+			<Equipment slot = "HorseHarness" id = "Item.halfchain_barding"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "audre_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.vlandia_sword_1_t2"/>
+			<Equipment slot = "Body" id = "Item.vlandian_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "sulan_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.steppe_bow"/>
+			<Equipment slot = "Item1" id = "Item.steppe_arrows"/>
+			<Equipment slot = "Body" id = "Item.nordic_tunic"/>
+			<Equipment slot = "Leg" id = "Item.strapped_shoes"/>
+			<Equipment slot = "Horse" id = "Item.khuzait_horse"/>
+			<Equipment slot = "HorseHarness" id = "Item.light_harness"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "sulan_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.iron_spatha_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.nordic_tunic"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "kally_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.khuzait_lance_1_t3"/>
+			<Equipment slot = "Item1" id = "Item.steppe_bow"/>
+			<Equipment slot = "Item2" id = "Item.steppe_arrows"/>
+			<Equipment slot = "Body" id = "Item.belted_leather_cuirass"/>
+			<Equipment slot = "Leg" id = "Item.strapped_shoes"/>
+			<Equipment slot = "Horse" id = "Item.khuzait_horse"/>
+			<Equipment slot = "HorseHarness" id = "Item.light_harness"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "kally_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.iron_spatha_sword_t2"/>
+			<Equipment slot = "Body" id = "Item.bandit_leather_water_flask"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "fenella_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.hooked_cleaver"/>
+			<Equipment slot = "Body" id = "Item.vlandian_noble_woman_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+			<Equipment slot = "Horse" id = "Item.aserai_horse"/>
+			<Equipment slot = "HorseHarness" id = "Item.light_harness"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "fenella_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.hooked_cleaver"/>
+			<Equipment slot = "Body" id = "Item.vlandian_noble_woman_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "layana_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.simple_sabre_sword_t2" />
+			<Equipment slot = "Item1" id = "Item.empire_lance_1_t3" />
+			<Equipment slot = "Item2" id = "Item.bound_desert_round_shield" />
+			<Equipment slot = "Head" id = "Item.pirate_a_head" />
+			<Equipment slot = "Body" id = "Item.sleeveless_studded_fur_armor" />
+			<Equipment slot = "Leg" id = "Item.sturgia_boots_d" />
+			<Equipment slot = "Horse" id = "Item.aserai_horse" />
+			<Equipment slot = "HorseHarness" id = "Item.bandit_saddle_desert" />
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "layana_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.hooked_cleaver"/>
+			<Equipment slot = "Head" id = "Item.pirate_a_head" />
+			<Equipment slot = "Body" id = "Item.sleeveless_studded_fur_armor"/>
+			<Equipment slot = "Leg" id = "Item.sturgia_boots_d" />
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "yoselin_template">
+		<EquipmentSet>
+			<Equipment slot = "Item0" id = "Item.vlandia_sword_1_t2"/>
+			<Equipment slot = "Body" id = "Item.hauberk"/>
+			<Equipment slot = "Leg" id = "Item.strapped_shoes"/>
+			<Equipment slot = "Horse" id = "Item.t2_vlandia_horse"/>
+			<Equipment slot = "HorseHarness" id = "Item.light_harness"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "yoselin_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Item0" id = "Item.vlandia_sword_1_t2"/>
+			<Equipment slot = "Body" id = "Item.fur_trimmed_tunic"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+
+
+
+
+
+	<EquipmentRoster id = "herdis_template">
+		<EquipmentSet>
+			<Equipment slot = "Body" id = "Item.nordic_civilian_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "herdis_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Body" id = "Item.nordic_civilian_dress"/>
+			<Equipment slot = "Leg" id = "Item.southern_moccasins"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "anneli_template">
+		<EquipmentSet>
+			<Equipment slot = "Body" id = "Item.cloth_apron"/>
+			<Equipment slot = "Leg" id = "Item.leather_shoes"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "anneli_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Body" id = "Item.cloth_apron"/>
+			<Equipment slot = "Leg" id = "Item.leather_shoes"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+	
+	
+	
+	<EquipmentRoster id = "elara_template">
+		<EquipmentSet>
+			<Equipment slot = "Body" id = "Item.assassin_armor"/>
+			<Equipment slot = "Leg" id = "Item.fine_town_boots"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "elara_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Body" id = "Item.long_hemp_tunic"/>
+			<Equipment slot = "Leg" id = "Item.fine_town_boots"/>
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+	
+
+	
+	
+	<EquipmentRoster id = "IMC_Merchant_template">
+		<EquipmentSet>
+			<Equipment slot = "Body" id = "Item.steppe_robe" />
+			<Equipment slot = "Leg" id = "Item.leather_shoes" />
+		</EquipmentSet>
+	</EquipmentRoster>
+	<EquipmentRoster id = "IMC_Merchant_template_civ">
+		<EquipmentSet civilian = "true">
+			<Equipment slot = "Body" id = "Item.steppe_robe" />
+			<Equipment slot = "Leg" id = "Item.leather_shoes" />
+		</EquipmentSet>
+	</EquipmentRoster>
+	
+</EquipmentRosters>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Português (BR)" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="Orçamento" />
+    <string id="CA_mcm_g_purchases" text="Compras" />
+    <string id="CA_mcm_g_autonomy" text="Autonomia" />
+    <string id="CA_mcm_g_display" text="Exibição" />
+    <string id="CA_mcm_unlimited" text="Orçamento ilimitado (padrão)" />
+    <string id="CA_mcm_unlimited_hint" text="Valor padrão, ajustável para cada companheiro em Clã &gt; Grupos. Se ativado, os companheiros não recebem mesada: usam diretamente o seu ouro (acima da sua reserva mínima). Quanto mais rico você for, melhor eles se equipam." />
+    <string id="CA_mcm_allowance" text="Mesada semanal (padrão)" />
+    <string id="CA_mcm_allowance_hint" text="Valor padrão, ajustável para cada companheiro em Clã &gt; Grupos. Quantia paga toda semana do seu ouro." />
+    <string id="CA_mcm_cap" text="Limite da bolsa" />
+    <string id="CA_mcm_cap_hint" text="Quantia máxima que um companheiro pode economizar. Acima dela, ele deixa de receber a mesada. 0 = sem limite." />
+    <string id="CA_mcm_reserve" text="Reserva mínima do jogador" />
+    <string id="CA_mcm_reserve_hint" text="Seu ouro nunca ficará abaixo deste limite por causa das mesadas ou das compras com orçamento ilimitado." />
+    <string id="CA_mcm_family" text="Incluir a família" />
+    <string id="CA_mcm_family_hint" text="Se ativado, os membros da sua família que lideram um grupo também são incluídos (não apenas os companheiros recrutados)." />
+    <string id="CA_mcm_refund" text="Reembolsar na morte" />
+    <string id="CA_mcm_refund_hint" text="Se um companheiro morrer, o que restar na bolsa dele volta para você." />
+    <string id="CA_mcm_equip_share" text="Parte para equipamento (%)" />
+    <string id="CA_mcm_equip_share_hint" text="Porcentagem da bolsa que um companheiro pode gastar em equipamento a cada visita a uma cidade." />
+    <string id="CA_mcm_troop_share" text="Parte para tropas (%)" />
+    <string id="CA_mcm_troop_share_hint" text="Porcentagem da bolsa que um companheiro pode gastar em recrutas a cada visita a uma cidade." />
+    <string id="CA_mcm_slot_share" text="Máximo por peça (%)" />
+    <string id="CA_mcm_slot_share_hint" text="Uma única peça de equipamento não pode custar mais que esta porcentagem do orçamento de equipamento restante. Quanto mais cheia a bolsa, mais caras as peças compradas." />
+    <string id="CA_mcm_min_upgrade" text="Melhoria mínima para trocar (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="Um item precisa ser pelo menos esta porcentagem melhor que o atual para ser comprado (evita compras inúteis)." />
+    <string id="CA_mcm_sellback" text="Revenda do item antigo (%)" />
+    <string id="CA_mcm_sellback_hint" text="Porcentagem do preço de revenda recuperada quando um companheiro substitui um item." />
+    <string id="CA_mcm_min_budget" text="Orçamento mínimo para comprar" />
+    <string id="CA_mcm_min_budget_hint" text="Abaixo desta quantia, o companheiro não compra nada (ele economiza)." />
+    <string id="CA_mcm_cooldown" text="Dias entre compras" />
+    <string id="CA_mcm_cooldown_hint" text="Número mínimo de dias entre duas sessões de compras do mesmo companheiro." />
+    <string id="CA_mcm_max_recruits" text="Recrutas máximos por visita" />
+    <string id="CA_mcm_max_recruits_hint" text="Número máximo de soldados recrutados a cada visita a uma cidade." />
+    <string id="CA_mcm_troop_cost" text="Custo dos recrutas (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="Multiplicador do preço dos recrutas pagos com a bolsa (100% = tabela base do mod)." />
+    <string id="CA_mcm_promote" text="Promover tropas" />
+    <string id="CA_mcm_promote_hint" text="Se ativado, os companheiros usam a parte para tropas da bolsa para pagar primeiro a promoção dos soldados experientes e depois recrutam com o que sobrar." />
+    <string id="CA_mcm_dismiss" text="Dispensar tropas fora da composição" />
+    <string id="CA_mcm_dismiss_hint" text="Apenas para companheiros com uma composição de exército. Se ativado, os soldados que não se encaixam na composição são dispensados aos poucos, só para abrir espaço aos recrutas certos." />
+    <string id="CA_mcm_fill_free" text="Preencher as vagas livres com outras tropas" />
+    <string id="CA_mcm_fill_free_hint" text="Apenas para companheiros com uma composição de exército. Se ativado, as vagas que a composição não cobre são preenchidas com quaisquer recrutas disponíveis na cidade. Se desativado, eles só recrutam as tropas da sua composição." />
+    <string id="CA_mcm_buy_horse" text="Comprar um cavalo se não tiver" />
+    <string id="CA_mcm_buy_horse_hint" text="Se ativado, um companheiro a pé compra uma montaria (e depois uma sela ou armadura de cavalo) se tiver o nível de Montaria necessário." />
+    <string id="CA_mcm_min_riding" text="Montaria mínima para o primeiro cavalo" />
+    <string id="CA_mcm_min_riding_hint" text="Um companheiro a pé só compra o primeiro cavalo se a Montaria dele atingir este nível (evita colocar um soldado de infantaria puro na sela)." />
+    <string id="CA_mcm_autoshop" text="Viagens automáticas à cidade (padrão)" />
+    <string id="CA_mcm_autoshop_hint" text="Valor padrão, ajustável para cada companheiro em Clã &gt; Grupos. Se ativado, um companheiro rico que não compra nada há algum tempo vai sozinho à cidade aliada mais próxima para se equipar." />
+    <string id="CA_mcm_autoshop_budget" text="Bolsa mínima para partir" />
+    <string id="CA_mcm_autoshop_budget_hint" text="O companheiro só faz a viagem se a bolsa dele atingir esta quantia (com orçamento ilimitado: o seu ouro disponível)." />
+    <string id="CA_mcm_autoshop_days" text="Dias sem compras antes de partir" />
+    <string id="CA_mcm_autoshop_days_hint" text="Número de dias sem nenhuma compra antes que ele decida ir à cidade por conta própria." />
+    <string id="CA_mcm_recruit_trips" text="Viagens de recrutamento" />
+    <string id="CA_mcm_recruit_trips_hint" text="Apenas para companheiros com uma composição de exército que fazem compras sozinhos. Se as tropas de que precisam não são recrutadas na região, eles vão até a cidade ou vila amiga mais próxima que as ofereça." />
+    <string id="CA_mcm_recruit_distance" text="Distância máxima da viagem" />
+    <string id="CA_mcm_recruit_distance_hint" text="Até onde um companheiro pode ir numa viagem de recrutamento, em unidades do mapa. Quanto maior o valor, mais da Calradia ele pode atravessar." />
+    <string id="CA_mcm_recruit_missing" text="Tropas faltantes antes de uma viagem" />
+    <string id="CA_mcm_recruit_missing_hint" text="Uma viagem de recrutamento só acontece se faltarem pelo menos estas tropas na composição." />
+    <string id="CA_mcm_noarmies" text="Ficar fora dos exércitos de outros senhores (padrão)" />
+    <string id="CA_mcm_noarmies_hint" text="Valor padrão, ajustável para cada companheiro em Clã &gt; Grupos. Se ativado, os companheiros se recusam a entrar em exércitos liderados por outros senhores e saem daquele em que estão assim que não estiverem lutando. Você ainda pode chamá-los para os seus próprios exércitos." />
+    <string id="CA_mcm_messages" text="Mostrar mensagens" />
+    <string id="CA_mcm_messages_hint" text="Mostra uma mensagem quando um companheiro compra equipamento, recruta ou recebe a mesada." />
+    <string id="CA_ui_title" text="Bolsa do companheiro" />
+    <string id="CA_ui_allowance" text="Mesada / semana" />
+    <string id="CA_ui_wallet" text="Bolsa atual" />
+    <string id="CA_ui_unlimited" text="Orçamento ilimitado" />
+    <string id="CA_ui_autoshop" text="Faz compras por conta própria" />
+    <string id="CA_ui_noarmies" text="Fica fora dos exércitos de outros senhores" />
+    <string id="CA_ui_treasury" text="Tesouro do clã" />
+    <string id="CA_ui_none" text="Nenhuma compra ainda" />
+    <string id="CA_ui_last" text="Última compra: {TEXT}" />
+    <string id="CA_ui_composition" text="Composição do exército ({COUNT})" />
+    <string id="CA_ui_composition_none" text="Composição do exército: livre" />
+    <string id="CA_err_popup" text="[Companion Autonomy] Não foi possível abrir a janela de composição: {ERROR}" />
+    <string id="CA_msg_promotes" text="promove {COUNT} soldado(s) ({GOLD} de ouro)" />
+    <string id="CA_msg_dismisses" text="dispensa {COUNT} soldado(s)" />
+    <string id="CA_msg_recruits" text="recruta {COUNT} soldado(s) ({GOLD} de ouro)" />
+    <string id="CA_msg_left" text="restam {GOLD} de ouro" />
+    <string id="CA_msg_summary" text="{HERO} em {TOWN}: {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="+{COUNT} a mais" />
+    <string id="CA_hist_soldiers" text="{COUNT} soldado(s)" />
+    <string id="CA_hist_today" text="hoje" />
+    <string id="CA_hist_yesterday" text="ontem" />
+    <string id="CA_hist_days" text="há {COUNT} dias" />
+    <string id="CA_hist_line" text="{WHAT} em {TOWN}, {WHEN} ({GOLD} de ouro)" />
+    <string id="CA_msg_allowances" text="Mesadas pagas: {GOLD} de ouro para {COUNT} companheiro(s)." />
+    <string id="CA_msg_reserve" text="{COUNT} companheiro(s) não receberam a mesada: sua reserva mínima foi atingida." />
+    <string id="CA_msg_arrived_empty" text="{HERO}: chegada a {TOWN}, mas a bolsa está vazia." />
+    <string id="CA_msg_buys" text="compra {ITEMS} ({GOLD} de ouro)" />
+    <string id="CA_msg_nothing" text="{HERO} percorreu {TOWN}: nada melhor ao seu alcance." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] Erro durante as compras de {HERO}: {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] Não foi possível encontrar a ordem de movimento nesta versão do jogo." />
+    <string id="CA_err_dump" text="Lista de funções gravada em: {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] Falha na ordem de movimento: {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} desiste da viagem à cidade: {REASON}." />
+    <string id="CA_reason_unsafe" text="a cidade não é mais segura" />
+    <string id="CA_reason_timeout" text="tempo demais na estrada" />
+    <string id="CA_reason_army" text="entrou em um exército" />
+    <string id="CA_msg_recruit_trip" text="{HERO} parte para {TOWN} para recrutar tropas para sua composição de exército." />
+    <string id="CA_msg_autotrip" text="{HERO} vai por iniciativa própria se equipar em {TOWN}." />
+    <string id="CA_msg_left_army" text="{HERO} deixa o exército de {LEADER} e volta aos próprios assuntos." />
+    <string id="CA_msg_refund" text="A bolsa de {HERO} ({GOLD} de ouro) voltou para você." />
+    <string id="CA_dlg_ask_wallet" text="Como está a sua bolsa?" />
+    <string id="CA_dlg_wallet_unlimited" text="Você me deu carta branca no tesouro. Só compro o que vale a pena." />
+    <string id="CA_dlg_wallet_amount" text="Ainda tenho {GOLD} moedas de ouro da minha mesada." />
+    <string id="CA_dlg_ask_history" text="O que você comprou ultimamente?" />
+    <string id="CA_dlg_history_none" text="Ainda não comprei nada." />
+    <string id="CA_dlg_history_intro" text="Aqui está o que comprei recentemente:" />
+    <string id="CA_dlg_take_wallet" text="Devolva-me o que sobrou da sua mesada." />
+    <string id="CA_dlg_take_answer" text="Aqui está, tudo certo. Vou me virar com o que tenho." />
+    <string id="CA_dlg_order_shop" text="Vá à cidade melhorar seu equipamento." />
+    <string id="CA_dlg_order_ok" text="Entendido. Vou para {CA_ORDER_TOWN}, voltarei com equipamento melhor." />
+    <string id="CA_dlg_order_fail" text="Não há nenhuma cidade segura por perto no momento." />
+    <string id="CA_dlg_cancel_shop" text="Esqueça a cidade, volte às suas tarefas." />
+    <string id="CA_dlg_cancel_answer" text="Muito bem." />
+    <string id="CA_grp_kingdom" text="Tropas do reino: {NAME}" />
+    <string id="CA_grp_clan" text="Tropas do clã: {NAME}" />
+    <string id="CA_pop_have" text="No grupo: {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="Composição do exército: {HERO}" />
+    <string id="CA_pop_selected" text="Tropas escolhidas" />
+    <string id="CA_pop_bar_count" text="{COUNT} tropas" />
+    <string id="CA_pop_empty" text="Sem composição: o companheiro recruta livremente." />
+    <string id="CA_pop_over" text="{TOTAL} tropas escolhidas, {COUNT} a mais do que o grupo comporta ({LIMIT})." />
+    <string id="CA_pop_summary" text="{TOTAL} / {LIMIT} tropas escolhidas, {FREE} vagas livres para quaisquer tropas." />
+    <string id="CA_pop_summary_only" text="{TOTAL} / {LIMIT} tropas escolhidas. O companheiro só recruta essas tropas." />
+    <string id="CA_pop_no_preset" text="Nenhuma predefinição salva" />
+    <string id="CA_pop_loaded" text="Predefinição carregada: {NAME}" />
+    <string id="CA_pop_saved" text="Predefinição salva: {NAME}" />
+    <string id="CA_pop_deleted" text="Predefinição excluída: {NAME}" />
+    <string id="CA_pop_bar_target" text="Objetivo" />
+    <string id="CA_pop_bar_current" text="Atual" />
+    <string id="CA_pop_kind_inf" text="Infantaria" />
+    <string id="CA_pop_kind_arc" text="Arqueiros" />
+    <string id="CA_pop_kind_cav" text="Cavalaria" />
+    <string id="CA_pop_kind_ha" text="Arqueiros montados" />
+    <string id="CA_pop_presets" text="Predefinições" />
+    <string id="CA_pop_load" text="Carregar" />
+    <string id="CA_pop_save" text="Salvar como novo" />
+    <string id="CA_pop_overwrite" text="Substituir" />
+    <string id="CA_pop_delete" text="Excluir" />
+    <string id="CA_pop_clear" text="Limpar tudo" />
+    <string id="CA_pop_done" text="Confirmar" />
+    <string id="CA_pop_cancel" text="Cancelar" />
+    <string id="CA_pop_hint" text="O companheiro recruta as tropas que levam às suas escolhas e as promove até chegar lá." />
+  </strings>
+</base>

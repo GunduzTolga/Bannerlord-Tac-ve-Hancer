@@ -1,0 +1,8 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "solution">
+  <outputDirectory>../MBModule/MBModule/</outputDirectory>
+  <XMLDirectory>../WOTS/Modules/WomeninCalradia/</XMLDirectory>
+  <ModuleAssemblyDirectory>../WOTS/bin/</ModuleAssemblyDirectory>
+  <file id = "soln_face_animation_records" name = "ModuleData/NoBigSmiles.xml" type = "face_animation_record" />
+  <file id = "soln_skins" name = "ModuleData/skins.xml" type = "skin" />
+</base>

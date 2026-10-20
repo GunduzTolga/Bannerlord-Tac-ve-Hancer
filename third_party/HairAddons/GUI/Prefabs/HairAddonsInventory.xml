@@ -1,0 +1,79 @@
+<Prefab>
+  <Window>
+    <!-- Корень не ловит клики - не мешает инвентарю -->
+    <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <!-- слева от персонажа, под верхними вкладками -->
+        <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top" MarginTop="@PosY" PositionXOffset="@PosX" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <Children>
+            <!-- кнопка меню: иконка + короткая подпись -->
+            <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="80" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <Children>
+                <!-- полоска-ручка: тянуть ЛКМ, ПКМ - вернуть на место -->
+                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="58" SuggestedHeight="12" HorizontalAlignment="Center" MarginBottom="3" Command.HoverBegin="ExecuteGripHoverBegin" Command.HoverEnd="ExecuteGripHoverEnd" Command.AlternateClick="ExecuteGripReset">
+                  <Children>
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#0E0B08B0" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="2" HorizontalAlignment="Center" VerticalAlignment="Center" PositionYOffset="-2" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="2" HorizontalAlignment="Center" VerticalAlignment="Center" PositionYOffset="2" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="58" SuggestedHeight="58" HorizontalAlignment="Center" Command.Click="ExecuteToggle">
+                  <Children>
+                    <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IconPath="@MenuIcon" />
+                  </Children>
+                </ButtonWidget>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="13" Text="@ButtonText" />
+              </Children>
+            </ListPanel>
+            <!-- раскрывающийся список: шлем + три слота -->
+            <ListPanel IsVisible="@IsOpen" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" MarginLeft="6" Sprite="BlankWhiteSquare_9" Color="#0E0B08D0" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <Children>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="270" SuggestedHeight="26" MarginTop="4" Brush="FaceGen.Input.Text" Brush.FontColor="#C9A25EFF" Brush.FontSize="15" Text="@HelmetText" />
+                <ListPanel IsVisible="@HasHelmet" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" MarginLeft="6" MarginRight="6" MarginBottom="6" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="86" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <Children>
+                        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="64" SuggestedHeight="64" HorizontalAlignment="Center" Command.Click="ExecuteSlot0">
+                          <Children>
+                            <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IconPath="@Slot0Icon" />
+                          </Children>
+                        </ButtonWidget>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="15" Text="@Slot0Label" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontColor="#9A8A70FF" Brush.FontSize="13" Text="@Slot0State" IsHidden="@Slot0Manual" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontColor="#C9A25EFF" Brush.FontSize="13" Text="@Slot0State" IsVisible="@Slot0Manual" />
+                      </Children>
+                    </ListPanel>
+                    <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="86" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <Children>
+                        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="64" SuggestedHeight="64" HorizontalAlignment="Center" Command.Click="ExecuteSlot1">
+                          <Children>
+                            <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IconPath="@Slot1Icon" />
+                          </Children>
+                        </ButtonWidget>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="15" Text="@Slot1Label" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontColor="#9A8A70FF" Brush.FontSize="13" Text="@Slot1State" IsHidden="@Slot1Manual" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontColor="#C9A25EFF" Brush.FontSize="13" Text="@Slot1State" IsVisible="@Slot1Manual" />
+                      </Children>
+                    </ListPanel>
+                    <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="86" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <Children>
+                        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="64" SuggestedHeight="64" HorizontalAlignment="Center" Command.Click="ExecuteSlot2">
+                          <Children>
+                            <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IconPath="@Slot2Icon" />
+                          </Children>
+                        </ButtonWidget>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="15" Text="@Slot2Label" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontColor="#9A8A70FF" Brush.FontSize="13" Text="@Slot2State" IsHidden="@Slot2Manual" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontColor="#C9A25EFF" Brush.FontSize="13" Text="@Slot2State" IsVisible="@Slot2Manual" />
+                      </Children>
+                    </ListPanel>
+                  </Children>
+                </ListPanel>
+              </Children>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -1,0 +1,218 @@
+<Prefab>
+  <Window>
+    <!-- Корень не ловит клики, чтобы не мешать вращать персонажа -->
+    <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+
+        <!-- Панель "второй шрам" слева, видна только на вкладке тату -->
+        <Widget IsVisible="@IsVisible" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="380" SuggestedHeight="830" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="30" MarginTop="210" Sprite="BlankWhiteSquare_9" Color="#0E0B08E6">
+          <Children>
+            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="12" MarginRight="8" MarginTop="10" MarginBottom="10" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <Children>
+
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" Brush="Stage.Title.Text" Brush.FontSize="30" Text="@TitleText" />
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" Brush="FaceGen.Input.Text" Text="@InfoText" />
+                <!-- вкладки: шрамы / макияж / раскраска -->
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTabScars">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTabScars" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="19" Text="@TabScarsText" IsVisible="@IsTabScars" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="19" Text="@TabScarsText" IsHidden="@IsTabScars" />
+                      </Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTabMakeup">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTabMakeup" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="19" Text="@TabMakeupText" IsVisible="@IsTabMakeup" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="19" Text="@TabMakeupText" IsHidden="@IsTabMakeup" />
+                      </Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTabPaint">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTabPaint" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="19" Text="@TabPaintText" IsVisible="@IsTabPaint" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="19" Text="@TabPaintText" IsHidden="@IsTabPaint" />
+                      </Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTabSkin">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTabSkin" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="19" Text="@TabSkinText" IsVisible="@IsTabSkin" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="19" Text="@TabSkinText" IsHidden="@IsTabSkin" />
+                      </Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="14" MarginTop="4" MarginBottom="6" Sprite="General\CharacterCreation\stone_divider" />
+
+                <!-- Сетка: копия ванильной FaceGenGrid, 3 колонки -->
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" StackLayout.LayoutMethod="HorizontalRightToLeft">
+                  <Children>
+                    <ScrollbarWidget Id="LayerScrollbar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" VerticalAlignment="Center" MarginTop="10" MarginBottom="10" AlignmentAxis="Vertical" Handle="LayerScrollbarHandle" MaxValue="100" MinValue="0">
+                      <Children>
+                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="4" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#5A4033FF" AlphaFactor="0.2" />
+                        <ImageWidget Id="LayerScrollbarHandle" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedHeight="10" SuggestedWidth="8" HorizontalAlignment="Center" Brush="FaceGen.Scrollbar.Handle" />
+                      </Children>
+                    </ScrollbarWidget>
+
+                    <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" AutoHideScrollBars="true" ClipRect="LayerClip" InnerPanel="LayerClip\LayerGrid" VerticalScrollbar="..\LayerScrollbar">
+                      <Children>
+                        <Widget Id="LayerClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                          <Children>
+                            <NavigatableGridWidget Id="LayerGrid" DataSource="{Layers}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" ColumnCount="3" DefaultCellHeight="112" DefaultCellWidth="112" LayoutImp="GridLayout" MinIndex="3001" MaxIndex="3100">
+                              <ItemTemplate>
+                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="104" SuggestedHeight="104" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="FaceGen.Card" Command.Click="ExecuteAction" IsSelected="@IsSelected">
+                                  <Children>
+                                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="@ImagePath" AlphaFactor="0.8" />
+                                    <ScarIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" IsVisible="@HasIcon" IconPath="@IconPath" />
+                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Stage.Title.Text" Text="@Label" />
+                                  </Children>
+                                </ButtonWidget>
+                              </ItemTemplate>
+                            </NavigatableGridWidget>
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </ScrollablePanel>
+                  </Children>
+                </ListPanel>
+
+
+                <!-- ===== настройка выбранного слоя ===== -->
+                <ListPanel IsVisible="@HasEdit" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                  <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="14" MarginTop="6" MarginBottom="4" Sprite="General\CharacterCreation\stone_divider" />
+                <!-- выбранные слои: клик = настраивать этот -->
+                <ListPanel DataSource="{Active}" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <ItemTemplate>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="54" SuggestedHeight="54" MarginRight="4" Brush="FaceGen.Card" Command.Click="ExecuteAction" IsSelected="@IsSelected">
+                      <Children>
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="@ImagePath" AlphaFactor="0.8" />
+                        <ScarIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" IsVisible="@HasIcon" IconPath="@IconPath" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontSize="14" Text="@Label" />
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="4" VerticalAlignment="Bottom" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsSelected" />
+                      </Children>
+                    </ButtonWidget>
+                  </ItemTemplate>
+                </ListPanel>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginTop="2" Brush="FaceGen.Input.Text" Brush.FontSize="17" Text="@EditText" />
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor0">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#1E1A1CFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor1">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#3A3634FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor2">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#5A3A26FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor3">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#8E2A22FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor4">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#B23A3AFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor5">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#9A4A24FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor6">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#A2602AFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor7">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#C08A3EFF" /></Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginTop="3" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor8">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2C3E66FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor9">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#3E6AA8FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor10">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2F6F72FF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor11">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#2F5A3AFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor12">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#5A3A6AFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor13">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#D7B25AFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor14">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#C9BFAEFF" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteColor15">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#EDE6DAFF" /></Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="5" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteLighter">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextLighter" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteDenser">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextDenser" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteSmaller">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextSmaller" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteBigger">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextBigger" /></Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteLeft">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="&lt;" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteUp">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="^" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteDown">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="v" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteRight">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="&gt;" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteRotL">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextRotL" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteRotR">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextRotR" /></Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteOrigColor">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextOrig" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteMirror">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextMirror" /></Children>
+                    </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteResetEdit">
+                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" /><TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="17" Text="@TextReset" /></Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+                  </Children>
+                </ListPanel>
+              </Children>
+            </ListPanel>
+          </Children>
+        </Widget>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

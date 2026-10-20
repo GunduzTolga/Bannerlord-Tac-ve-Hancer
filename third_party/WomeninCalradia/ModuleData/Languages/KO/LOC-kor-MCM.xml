@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "한국어" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "새 게임을 시작하기 전에 설정하는 것을 권장합니다." />
+		
+		<string id = "mcmwictitle00" text = "나이 유지" />
+		<string id = "mcmwictitle01" text = "추가 상호작용" />
+		<string id = "mcmwictitle02" text = "수상한 행상인" />
+		<string id = "mcmwictitle03" text = "남성 동료" />
+		<string id = "mcmwictitle04" text = "라가에아" />
+		
+		<string id = "mcmwichint00" text = "추가되는 캐릭터들이 당신에게 고용되기 전까지 나이를 유지합니다." />
+		<string id = "mcmwichint01" text = "이 모드에서 제공하는 추가 상호작용을 적용합니다." />
+		<string id = "mcmwichint02" text = "추가 기능을 제공하는 수상한 행상인을 월드에 추가합니다." />
+		<string id = "mcmwichint03" text = "남성 동료 3명을 추가합니다. (남성 캐릭터의 경우 얼굴과 몸의 피부가 완벽하게 맞지 않을 수 있습니다.)" />
+		<string id = "mcmwichint04" text = "라가에아의 외형을 변경합니다." />
+	</strings>
+</base>

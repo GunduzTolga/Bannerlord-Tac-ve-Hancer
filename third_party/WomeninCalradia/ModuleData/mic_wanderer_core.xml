@@ -1,0 +1,356 @@
+﻿<?xml version = "1.0" encoding = "utf-8"?>
+<NPCCharacters>
+
+
+	<NPCCharacter id = "malfoycustom2_50"
+				  name = "{=mfywicnpc50}Sir Vitomir"
+                  age = "21"
+                  voice = "ironic"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.sturgia"
+                  occupation = "Wanderer"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.2454" build = "0.7176"  key = "00004C00000040023B804DA5477781F9F2BA8F3AB3879751B834D30288AC4C16000000020A23F025B4009F0000000000000000000000000A000000004D603005"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "80" />
+			<skill id = "Polearm"
+				   value = "30" />
+			<skill id = "Riding"
+				   value = "20" />
+			<skill id = "Athletics"
+				   value = "70" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Throwing"
+				   value = "95" />
+			<skill id = "Leadership"
+				   value = "55" />
+		</skills>
+		<Traits>
+			<Trait id = "Calculating"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Vitomir_template" />
+			<EquipmentSet id = "Vitomir_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom2_51"
+				  name = "{=mfywicnpc51}Franz"
+                  age = "25"
+                  voice = "softspoken"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.vlandia"
+                  occupation = "Wanderer"
+                  default_group = "Cavalry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.2022" build = "1"  key = "000218034000735B9D50189737B850C7A26C8D5656AA9600B2D45D247FC17325000006020D14C11173006F0000000000000000000000000D000000002FBC7004"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "55" />
+			<skill id = "Polearm"
+				   value = "90" />
+			<skill id = "Riding"
+				   value = "70" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Tactics"
+				   value = "55" />
+			<skill id = "Leadership"
+				   value = "90" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Franz_template" />
+			<EquipmentSet id = "Franz_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom2_52"
+				  name = "{=mfywicnpc52}Lethwin"
+                  age = "21"
+                  voice = "earnest"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.khuzait"
+                  occupation = "Wanderer"
+                  default_group = "HorseArcher">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.1418" build = "0.5398"  key = "000DB00D8070400809801F54C598F1A9A27F7F3A6398B6407BA6BD007F364300000006020B0070138200880000000000000000000000000B000000004F6C8006"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "30" />
+			<skill id = "Polearm"
+				   value = "30" />
+			<skill id = "Riding"
+				   value = "70" />
+			<skill id = "Athletics"
+				   value = "20" />
+			<skill id = "Bow"
+				   value = "120" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Scouting"
+				   value = "60" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+			<Trait id = "Valor"
+				   value = "-1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Lethwin_template" />
+			<EquipmentSet id = "Lethwin_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "IMC_Merchant"
+				  name = "{=mfywicnpcmct}A Suspicious Peddler"
+                  age = "30"
+                  voice = "earnest"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.neutral_culture"
+                  occupation = "Special"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.267" build = "0.8904"  key = "0015AC0D8000674D558D3C846995A37AA28C8F5B4389961089077F007F3653110000062407049110D4000000000000000000000000000027000000004EE47002" />
+		</face>
+		<skills>
+			<skill id = "Trade"
+				   value = "250" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "IMC_Merchant_template" />
+			<EquipmentSet id = "IMC_Merchant_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+	
+	
+	
+	
+	
+	<NPCCharacter id = "malfoycustom3_0"
+				  name = "{=mfywicnpccln0}Damir"
+                  age = "34"
+                  voice = "earnest"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.sturgia"
+                  occupation = "Lord"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.3102" build = "0.5201"  key = "00000000800071825B804D8B5956B5F792978F4887A59700C837D30288AC4C1402A850240A23B025000000000000000000000000000000000000000035408005"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "150" />
+			<skill id = "Polearm"
+				   value = "150" />
+			<skill id = "Riding"
+				   value = "100" />
+			<skill id = "Athletics"
+				   value = "70" />
+			<skill id = "Bow"
+				   value = "100" />
+			<skill id = "Crossbow"
+				   value = "100" />
+			<skill id = "Throwing"
+				   value = "250" />
+			<skill id = "Leadership"
+				   value = "225" />
+			<skill id = "Steward"
+				   value = "225" />
+			<skill id = "Scouting"
+				   value = "120" />
+			<skill id = "Tactics"
+				   value = "180" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "-1" />
+			<Trait id = "Mercy"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Damir_template" />
+			<EquipmentSet id = "Damir_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom3_1"
+				  name = "{=mfywicnpccln1}Ludmila"
+                  age = "29"
+                  voice = "softspoken"
+                  is_hero = "true"
+				  is_female = "true"
+				  is_template = "false"
+                  culture = "Culture.sturgia"
+                  occupation = "Lord"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.1" build = "0.3"  key = "00024C0540B4100F438974938975D4FA50AE8637544569A09A45F200817E5914017416130707732377000000000000000000000000000038000000003EE440C3"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "100" />
+			<skill id = "Polearm"
+				   value = "70" />
+			<skill id = "Riding"
+				   value = "80" />
+			<skill id = "Athletics"
+				   value = "55" />
+			<skill id = "Bow"
+				   value = "150" />
+			<skill id = "Crossbow"
+				   value = "150" />
+			<skill id = "Throwing"
+				   value = "30" />
+			<skill id = "Leadership"
+				   value = "120" />
+			<skill id = "Steward"
+				   value = "200" />
+		</skills>
+		<Traits>
+			<Trait id = "Generosity"
+				   value = "1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Ludmila_template" />
+			<EquipmentSet id = "Ludmila_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+
+	<NPCCharacter id = "malfoycustom3_2"
+				  name = "{=mfywicnpccln2}Ludomir"
+                  age = "12"
+                  voice = "ironic"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.sturgia"
+                  occupation = "Lord"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.4614" build = "1"  key = "000504034000400F43804DA54B9C50C7F2F88E4883A48931659AEB05889E9C2100CF70020C23B02800000000000000000000000000000000000000002B905084"  />
+		</face>
+		<skills>
+			<skill id = "OneHanded"
+				   value = "150" />
+			<skill id = "Polearm"
+				   value = "150" />
+			<skill id = "Riding"
+				   value = "120" />
+			<skill id = "Athletics"
+				   value = "180" />
+			<skill id = "Bow"
+				   value = "30" />
+			<skill id = "Crossbow"
+				   value = "20" />
+			<skill id = "Throwing"
+				   value = "225" />
+			<skill id = "Leadership"
+				   value = "120" />
+			<skill id = "Steward"
+				   value = "160" />
+		</skills>
+		<Traits>
+			<Trait id = "Valor"
+				   value = "1" />
+			<Trait id = "Calculating"
+				   value = "-1" />
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Ludomir_template" />
+			<EquipmentSet id = "Ludomir_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+	
+	
+	
+	
+	
+	<NPCCharacter id = "malfoycustom3_3"
+				  name = "temp_father"
+                  age = "60"
+                  voice = "ironic"
+                  is_hero = "true"
+				  is_female = "false"
+				  is_template = "false"
+                  culture = "Culture.sturgia"
+                  occupation = "Lord"
+                  default_group = "Infantry">
+		<face>
+			<BodyProperties version = "4" age = "21" weight = "0.2454" build = "0.7176"  key = "00004C00000000023B804DA5477781F9F2BA8F3ABC879751C837D30288AC4C1600AB40020A23B02500000000000000000000000000000000000000004D603005"  />
+		</face>
+		<skills>
+
+		</skills>
+		<Traits>
+
+		</Traits>
+		<Equipments>
+			<EquipmentSet id = "Vitomir_template" />
+			<EquipmentSet id = "Vitomir_template_civ"
+						  civilian = "true" />
+		</Equipments>
+	</NPCCharacter>
+
+
+
+
+</NPCCharacters>

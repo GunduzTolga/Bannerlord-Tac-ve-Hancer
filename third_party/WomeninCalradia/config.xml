@@ -1,0 +1,42 @@
+﻿<?xml version = "1.0" encoding = "utf-8"?>
+<WomeninCalradia.Settings>
+
+
+
+<No_Aging_Mode>true</No_Aging_Mode>
+<!-- 
+	if you set true  => Default. to keep their age until you hire them.
+	if you set false => Same as vanilla
+-->
+
+
+<Additional_Interactions>true</Additional_Interactions>
+<!-- 
+	if you set true  => Default.
+	if you set false => All additional interactions in this mod are turned off, so wanderers are only just created.
+-->
+
+
+<Merchant>true</Merchant>
+<!-- 
+	if you set true  => Default.
+	if you set false => Disable the merchant it provides additional features.
+-->
+
+
+<Male_Companions>true</Male_Companions>
+<!-- 
+	if you set true  => Adds three male companions. (For male characters, the face and body skin may not align perfectly.)
+	if you set false => Off.
+-->
+
+
+<Rhagaea>true</Rhagaea>
+<!-- 
+	if you set true  => Changes the appearance of Rhagaea.
+	if you set false => Keeps their vanilla appearance.
+-->
+
+
+
+</WomeninCalradia.Settings>

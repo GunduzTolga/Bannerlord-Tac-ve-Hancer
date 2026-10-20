@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "日本語" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "新しいゲームを始める前に、これらの設定を構成することをお勧めします。" />
+	
+		<string id = "mcmwictitle00" text = "年齢を保持" />
+		<string id = "mcmwictitle01" text = "追加インタラクション" />
+		<string id = "mcmwictitle02" text = "怪しい行商人" />
+		<string id = "mcmwictitle03" text = "男性コンパニオン" />
+		<string id = "mcmwictitle04" text = "ラガエア" />
+	
+		<string id = "mcmwichint00" text = "追加されたキャラクターの年齢を雇うまで保持します。" />
+		<string id = "mcmwichint01" text = "このMODによって提供される追加インタラクションを適用します。" />
+		<string id = "mcmwichint02" text = "追加機能を持つ怪しい行商人をワールドに追加します。" />
+		<string id = "mcmwichint03" text = "三人の男性コンパニオンを追加します。（男性キャラクターの場合、顔と体の肌の色が完全に一致しないことがあります。）" />
+		<string id = "mcmwichint04" text = "ラガエアの外見を変更します。" />
+	</strings>
+</base>

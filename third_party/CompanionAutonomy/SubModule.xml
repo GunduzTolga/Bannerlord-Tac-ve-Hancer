@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+    <Name value="Companion Autonomy"/>
+    <Id value="CompanionAutonomy"/>
+    <Version value="v1.2.1"/>
+    <DefaultModule value="false"/>
+    <ModuleCategory value="Singleplayer"/>
+    <ModuleType value="Community" />
+
+    <DependedModules>
+        <DependedModule Id="Bannerlord.Harmony" />
+        <DependedModule Id="Bannerlord.ButterLib" />
+        <DependedModule Id="Bannerlord.UIExtenderEx" />
+        <DependedModule Id="Bannerlord.MBOptionScreen" />
+        <DependedModule Id="Native" />
+        <DependedModule Id="SandBoxCore" />
+        <DependedModule Id="Sandbox" />
+    </DependedModules>
+
+    <SubModules>
+        <SubModule>
+            <Name value="CompanionAutonomy"/>
+            <DLLName value="CompanionAutonomy.dll"/>
+            <SubModuleClassType value="CompanionAutonomy.SubModule"/>
+            <Tags>
+                <Tag key="DedicatedServerType" value="none" />
+                <Tag key="IsNoRenderModeElement" value="false" />
+            </Tags>
+        </SubModule>
+    </SubModules>
+
+    <Xmls/>
+</Module>

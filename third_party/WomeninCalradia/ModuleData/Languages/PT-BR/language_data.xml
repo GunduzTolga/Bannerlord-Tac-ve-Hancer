@@ -1,0 +1,5 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<LanguageData id = "Português (BR)" name = "Português (BR)" subtitle_extension = "pt-BR" supported_iso = "pt-BR" text_processor = "TaleWorlds.Localization.TextProcessor.LanguageProcessors.PortugueseTextProcessor" under_development = "false">
+	<LanguageFile xml_path = "PT-BR/LOC-pt-br.xml" />
+	<LanguageFile xml_path = "PT-BR/LOC-pt-br-MCM.xml" />
+</LanguageData>

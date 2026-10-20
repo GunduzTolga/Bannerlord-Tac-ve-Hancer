@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Русский" />
+  </tags>
+  <strings>
+    <string id="scx_title" text="Доп. шрамы" />
+    <string id="scx_same" text="Этот шрам уже выбран как база" />
+    <string id="scx_notscar" text="Доп. шрамы сочетаются только со шрамом в базе" />
+    <string id="scx_base_none" text="База: нет" />
+    <string id="scx_base_tattoo" text="База: тату / макияж" />
+    <string id="scx_loading" text="Загружаю тату..." />
+    <string id="scx_failed" text="Не удалось совместить, см. лог" />
+    <string id="scx_base_scar" text="База: шрам" />
+    <string id="scx_blind_r" text="(бельмо справа)" />
+    <string id="scx_blind_l" text="(бельмо слева)" />
+    <string id="scx_tab_scars" text="Шрамы" />
+    <string id="scx_tab_makeup" text="Макияж" />
+    <string id="scx_tab_paint" text="Раскраска" />
+    <string id="scx_tab_skin" text="Кожа" />
+    <string id="scx_e_color" text="Цвет" />
+    <string id="scx_e_orig" text="Свой цвет" />
+    <string id="scx_e_mirror" text="Отразить" />
+    <string id="scx_e_reset" text="Сброс" />
+    <string id="scx_e_lighter" text="Слабее" />
+    <string id="scx_e_denser" text="Сильнее" />
+    <string id="scx_e_smaller" text="Меньше" />
+    <string id="scx_e_bigger" text="Больше" />
+    <string id="scx_e_rotl" text="Пов. -" />
+    <string id="scx_e_rotr" text="Пов. +" />
+    <string id="scx_e_opacity" text="Сила" />
+    <string id="scx_e_size" text="Размер" />
+    <string id="scx_e_mirrored" text="отражено" />
+  </strings>
+</base>

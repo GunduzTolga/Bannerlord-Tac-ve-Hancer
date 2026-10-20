@@ -1,0 +1,623 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "日本語" />
+	</tags>
+	<strings>
+  
+	<!-- Name -->
+		<string id = "mfywicnpc00" text = "ソナデル" />
+		<string id = "mfywicnpc01" text = "アネット" />
+		<string id = "mfywicnpc02" text = "キアナ" />
+		<string id = "mfywicnpc03" text = "ミナ" />
+		<string id = "mfywicnpc04" text = "ベラドンナ" />
+		<string id = "mfywicnpc05" text = "リンダ" />
+		<string id = "mfywicnpc06" text = "エイドリアンヌ" />
+		<string id = "mfywicnpc07" text = "ローラ" />
+		<string id = "mfywicnpc08" text = "オードレ" />
+		<string id = "mfywicnpc09" text = "スー・ラン" />
+		<string id = "mfywicnpc10" text = "カリー" />
+		<string id = "mfywicnpc11" text = "フェネラ" />
+		<string id = "mfywicnpc12" text = "ラヤナ" />
+		<string id = "mfywicnpc13" text = "ヨセリン" />
+		<string id = "mfywicnpc50" text = "サー・ヴィトミール" />
+		<string id = "mfywicnpc51" text = "フランツ" />
+		<string id = "mfywicnpc52" text = "レスウィン" />
+		<string id = "mfywicnpcmct" text = "怪しげな行商人" />
+
+	<!-- Clan -->
+		<string id = "mfywicclan0" text = "ルビン" />
+		<string id = "mfywicnpccln0" text = "ダミール" />
+		<string id = "mfywicnpccln1" text = "ルドミラ" />
+		<string id = "mfywicnpccln2" text = "ルドミール" />	
+	
+	
+	<!-- Sonadel -->
+		<string id = "mfyline000" text = "私の名前はソナデルです。鍛冶屋である両親を手伝っています。" />
+		<string id = "mfyline001" text = "でも最近は少し飽きてきました。もっと広い世界を見てみたいんです。" />
+		<string id = "mfyline002" text = "父から本格的な鍛冶を学んだわけではありませんが、少しは分かりますよ！" />
+		<string id = "mfyline003" text = "今は両親の代わりに取引や店の管理を任されています。きっとお役に立てると思います。" />
+		<string id = "mfyline004" text = "そうした経験は、パーティーでもきっと役に立ちます。" />
+		<string id = "mfyline005" text = "あなたはまだ経験が浅いようですね。" />
+		<string id = "mfyline006" text = "機会があれば、他のところで働いてみたいです。その日のために、父に内緒で自分の剣を作っておきました！" />
+		<string id = "mfyline007" text = "戦場であなたのそばに立ち、鍛冶場で並んで槌を振るう日々が好きです。あなたも同じ気持ちですか？" />
+		<string id = "mfyline008" text = "この剣はあなたのために作りました！いつ渡そうか迷っていましたが、今がいいと思います。この剣があなたのそばで、敵を斬り伏せる助けになりますように！" />
+		<string id = "mfyline009" text = "鍛冶屋の娘で、一見おとなしく見えるが、強い野心を秘めている。将来は鍛冶場から離れたいと思っている。" />
+
+	<!-- Anette -->
+		<string id = "mfyline010" text = "私はアネットです……" />
+		<string id = "mfyline011" text = "両親と一緒に、村の許可を得て町で物を売る一団に加わっていました。" />
+		<string id = "mfyline012" text = "ですが、その途中で戦争が始まり、村へ戻れなくなってしまったのです。" />
+		<string id = "mfyline013" text = "ようやく戻った時、村は炎に包まれていました。それで、今はここにいます。" />
+		<string id = "mfyline014" text = "それは本当にお気の毒ですね。" />
+		<string id = "mfyline015" text = "この時代では、よくあることです。" />
+		<string id = "mfyline016" text = "正直に言って、行く当てはありません。農具の扱い以外に特別な技はありませんが、一生懸命学ぶ覚悟はあります。" />
+		<string id = "mfyline017" text = "農作業を手伝っていた頃より、短い間にずっと多くの経験を積みました。速い馬に突然乗せられたようで戸惑いますが、それなりに楽しいです。" />
+		<string id = "mfyline018" text = "あなたがしてくれた訓練は、きっと実を結びました。今なら戦いで役に立てると思います。それに、特殊な武器の扱いも……もちろん。" />
+		<string id = "mfyline019" text = "時々町で物を売るのが好きな、ごく普通の少女だった。今は、この世界で生き延びる術を学ばなければならない。" />
+
+	<!-- Qiana -->
+		<string id = "mfyline020" text = "私は平凡な農民の家に生まれた少女でした。" />
+		<string id = "mfyline021" text = "ですが父は、義務と分配の間にある数々の不正を見過ごすことができず、そうして私たちの平穏な日々は終わりました。" />
+		<string id = "mfyline022" text = "私は荒野で生き延びる術を学ばなければなりませんでした。父は時折、私の知らない場所から食料を持ち帰ってきました。" />
+		<string id = "mfyline023" text = "ある日、洞窟で眠っていると大きな騒ぎが起こり、父は突然私を外へ追い出し、弓と矢を渡しました。" />
+		<string id = "mfyline024" text = "何が起きたのかは、だいたい想像がつきます……。" />
+		<string id = "mfyline025" text = "どこから匂いがしていたのか、不思議に思っていましたから。" />
+		<string id = "mfyline026" text = "ここまで生き延びてきましたが、父と同じ道を歩みたいとは思いません。" />
+		<string id = "mfyline027" text = "以前は狩りの技しかありませんでしたが、それがあなたの役に立ったなら嬉しいです。" />
+		<string id = "mfyline028" text = "[if:convo_thinking][ib:demure]生きるために、父と共に獣を追い狩っていた記憶があります。あの頃は嫌でしたが、最近は次の狩りの日を待っているだけのような気がします……。" />
+		<string id = "mfyline029" text = "農民を搾取し農奴に変えた領主に抗った反乱指導者の娘。敵に命を狙われたが、生き延びた。" />
+
+	<!-- Mina -->
+		<string id = "mfyline030" text = "変に聞こえるかもしれませんが、聞いてください。" />
+		<string id = "mfyline031" text = "私は以前、この世界にいた気がします。かすかな記憶があるんです。" />
+		<string id = "mfyline032" text = "私は気にしていませんが、なぜか私を覚えている人がいます。" />
+		<string id = "mfyline033" text = "問題は、それだけでなく、すべてを覚えているわけではないことです。" />
+		<string id = "mfyline034" text = "ああ、あなたも覚えていてくれたらいいのに。" />
+		<string id = "mfyline035" text = "ただ、技術がないと言っているだけでしょう。" />
+		<string id = "mfyline036" text = "手伝ってもらえれば、すぐ慣れると思います。" />
+		<string id = "mfyline037" text = "記憶では、パーティーに加わった時、何も持っていませんでした。それでも受け入れてくれたのはすごいことだと思います。" />
+		<string id = "mfyline038" text = "忘れていた記憶が突然戻る時って、いくつも同時に思い出しますよね。きっとその時です。" />
+		<string id = "mfyline039" text = "自分は元々この世界の人間だと思っている。本当かどうかは分からない。" />
+
+	<!-- Belladona -->
+		<string id = "mfyline040" text = "私の名前はベラドンナ。不幸にも村を追い出されました。" />
+		<string id = "mfyline041" text = "使うはずだった薬草ではなく、誤って別のものを村人に渡してしまったのです。" />
+		<string id = "mfyline042" text = "でも私のせいじゃありません！嫉妬していた同年代の娘たちが罠にはめたに違いないんです。" />
+		<string id = "mfyline043" text = "いつの間にか赤毛の魔女だという噂が広まり、魔女狩りが始まる前に逃げるしかありませんでした。" />
+		<string id = "mfyline044" text = "誰にでも失敗はあります。" />
+		<string id = "mfyline045" text = "あなたの家には大きな大鍋がありそうですね。" />
+		<string id = "mfyline046" text = "正式に学んだわけではありませんが、薬草の見分け方と扱い方は心得ています。" />
+		<string id = "mfyline047" text = "他人のために無理をしすぎないでください。どうせ私の言うことは聞かないでしょうから、あなたのための薬草はいつも取っておきます。" />
+		<string id = "mfyline048" text = "[if:convo_relaxed_happy][ib:hip2]新しい薬草を見つけた気がします！あなたのように魅力的な毒には特によく効く薬ですよ……今すぐ治してあげます。" />
+		<string id = "mfyline049" text = "森の中の小さな小屋で研究に没頭するのが好きだった。「赤毛の森の女」というあだ名だけで、人々の好奇心を刺激するには十分だった。" />
+
+	<!-- Linda -->
+		<string id = "mfyline050" text = "以前は隣町の宿屋で働いていました。" />
+		<string id = "mfyline051" text = "ですが、客がどんどん増えて、仕事が手に負えなくなっていったんです。" />
+		<string id = "mfyline052" text = "最初は気づきませんでしたが、いつの間にかその宿は『大リンダ宿』と呼ばれていました。" />
+		<string id = "mfyline053" text = "それで次第につまらなくなり、辞めることにしたんです。" />
+		<string id = "mfyline054" text = "もっと楽しいことがあるかもしれないでしょう？" />
+		<string id = "mfyline055" text = "じゃあ、その頃は楽しかったってことですか？" />
+		<string id = "mfyline056" text = "当面食べていくお金はあるので、もう少し稼げるなら旅も考えています。" />
+		<string id = "mfyline057" text = "ここは活気があっていいですね。酔っぱらいの相手をするよりずっとましです。もっとも、理由もなく驚かせたら、馬鞭で叩きますけど。" />
+		<string id = "mfyline058" text = "[if:convo_pondering][ib:hip2]以前、立派な馬をくれましたよね。あの時は少し自尊心が傷つきました。私はもう十分立派なんですから…今こそ、それを証明しないと…" />
+		<string id = "mfyline059" text = "宿屋と厩舎で働いていた女中。彼女のおかげで宿は有名になったが、その名声には耐えられなかった。" />
+
+	<!-- Adrianne -->
+		<string id = "mfyline060" text = "私の名前はエイドリアンヌ。木こりだった父から、斧で木を切る方法を教わりました。" />
+		<string id = "mfyline061" text = "後になって分かったのですが、父はただ木を切って斧を学んだわけではありませんでした。" />
+		<string id = "mfyline062" text = "父の周囲には多くの敵がいて、やがて彼らに殺されました。" />
+		<string id = "mfyline063" text = "父が殺され、家に踏み込まれる前、私は父の斧を手にしていました。" />
+		<string id = "mfyline064" text = "それで、父の仇を討ったのですか？" />
+		<string id = "mfyline065" text = "あなたも斧を、木を切るためだけに使っていたわけではなさそうですね。" />
+		<string id = "mfyline066" text = "いいえ、戦う覚悟はしていましたが、彼らは私を襲いませんでした。復讐は終わったと思ったのでしょう。代わりに、私は村を追い出されました。" />
+		<string id = "mfyline067" text = "父と同じ道を歩んでいるのではと悩みました。でも、この武器が正義のために使われていると確信できるなら、それは正しい道だと思います。" />
+		<string id = "mfyline068" text = "えっと…このお金のことですか？先日いただいた武器は本当に素晴らしかったのですが、盗まれてしまいました。犯人は見つけましたが、すでに売られていて…少し復讐して戻ってきたところです。" />
+		<string id = "mfyline069" text = "無慈悲な戦士だったが家族には情け深かった父の娘。「伝説の血塗られた斧」という異名は、今や伝説として残るのみ。あるいは、これが始まりなのか。" />
+
+	<!-- Laura -->
+		<string id = "mfyline070" text = "私の名前はローラです。" />
+		<string id = "mfyline071" text = "両親は巨大な建造物を造る技師です。" />
+		<string id = "mfyline072" text = "この町で新しい計画を始めたので、私も一緒に来ました。" />
+		<string id = "mfyline073" text = "あなたと出会ったことは、私にとっても新しい仕事の始まりだと思います。今こそ自分の役割を果たす時ですね。" />
+		<string id = "mfyline074" text = "私にとっても良い機会だと思います。" />
+		<string id = "mfyline075" text = "あなたが役目を果たせるかは疑わしいですが…" />
+		<string id = "mfyline076" text = "技術を学ぶ一方で、両親の仕事に必要な物資の調達も担当していました。" />
+		<string id = "mfyline077" text = "実は先日、重要な材料を一つ忘れてしまい、肝心な時に崩れるのではと不安でした。あなたがいて助かりました。" />
+		<string id = "mfyline078" text = "以前、崩れた建材に当たったことがあります。それ以来少し頭がぼんやりして、両親は私を工事から外したがっていました。でも、前にもらったヘルメットがあれば、もう大丈夫です。" />
+		<string id = "mfyline079" text = "隊商と共に各地を巡り、村や町から依頼を受ける技師の家系。緻密な仕事ぶりで知られている。" />
+
+	<!-- Audre -->
+		<string id = "mfyline080" text = "少なくとも、私の一族の名は一度は耳にしたことがあると思います。" />
+		<string id = "mfyline081" text = "家には十分な食べ物があるのに、なぜ両親が私を外に出そうとするのか分かりません。" />
+		<string id = "mfyline082" text = "そうして、世界を見てこいと両親に半ば強制的に外へ出されました。" />
+		<string id = "mfyline083" text = "もしかして、パーティーを率いているのですか？" />
+		<string id = "mfyline084" text = "はい。" />
+		<string id = "mfyline085" text = "ええと、私はお姫様のような存在は必要ありません。" />
+		<string id = "mfyline086" text = "私が加わるパーティーには、少なくとも食べ物に困らない余裕があってほしいです。" />
+		<string id = "mfyline087" text = "すでに何度も死にかけました。こんなことを知ったら、両親はすぐに帰ってこいと言うでしょう。" />
+		<string id = "mfyline088" text = "正直、今お金に困っていますよね？ こういう時のために貯めていたお金があります。ほとんどは両親にもらったお小遣いですが。" />
+		<string id = "mfyline089" text = "彼女の一族は代々続く大商人の家系として有名です。彼女はほとんど貴族のような生活を送ってきました。" />
+
+	<!-- Su Lan -->
+		<string id = "mfyline090" text = "私の故郷の人々は、工学の必要性をまったく感じていません。" />
+		<string id = "mfyline091" text = "私は馬上で弓を射るのが好きですが、その研究や製作にも興味があります。" />
+		<string id = "mfyline092" text = "家の近くではこのような勉強が難しいため、ここへ来ました。" />
+		<string id = "mfyline093" text = "ですが、ここではお金を稼ぐのが難しく、このままではすぐに諦めて帰らなければなりません。" />
+		<string id = "mfyline094" text = "一緒なら、望むことを成し遂げられると思います。" />
+		<string id = "mfyline095" text = "家族の言うとおりにしたほうがいいのではありませんか？" />
+		<string id = "mfyline096" text = "とにかく、私は仕事が必要です。経験を積めるならなおさらです。" />
+		<string id = "mfyline097" text = "あなたに出会えたことがどれほど幸運か分かりません。あなたがいなければ、今頃は家に戻って羊毛を刈っていたでしょう。" />
+		<string id = "mfyline098" text = "こんなに早く技師として働けることに胸が躍ります。パーティーのために全力を尽くします。" />
+		<string id = "mfyline099" text = "情熱的な技師として、自分の道を探して旅をしています。幼い頃から学んだ騎馬弓術にも長けています。" />
+
+	<!-- Kally -->
+		<string id = "mfyline100" text = "私はキャラバンの護衛でしたが、大規模な盗賊団に遭遇し、逃げるしかありませんでした。" />
+		<string id = "mfyline101" text = "彼らの足取りを追って領主に報告しましたが、取り合ってもらえませんでした。" />
+		<string id = "mfyline102" text = "仕方なく、捕らわれていた人々を救うため一人で隠れ家に向かい、負傷して戻りました。" />
+		<string id = "mfyline103" text = "キャラバンは失われ、これからどうすればいいのか分かりません。" />
+		<string id = "mfyline104" text = "あなたはとても責任感のある方ですね。" />
+		<string id = "mfyline105" text = "つまり、逃げ続けていたということですか？" />
+		<string id = "mfyline106" text = "私は敵を追跡するのが得意で、騎乗用の武器の扱いにも慣れています。" />
+		<string id = "mfyline107" text = "過去に失敗した任務を思い出すことがあります。もう逃げません。あなたと共に戦い、捕まるほうがましです。" />
+		<string id = "mfyline108" text = "かつて盗賊の隠れ家を攻撃しました。以前、一人で失敗した場所です。あなたの力でそこが制圧されたとき、元の仲間たちに何が起きたのか悟りました。今でも正義を示してくれて感謝しています。" />
+		<string id = "mfyline109" text = "彼女は斥候であり戦士です。責任感が強い一方で、自分を守ることも大切だと考えています。" />
+
+	<!-- Fenella -->
+		<string id = "mfyline110" text = "私は外科医や南方地域の学者たちから医学を学びました。" />
+		<string id = "mfyline111" text = "しかし近年は戦争が相次ぎ、皆が各地へ呼び出され、私もその一人でした。" />
+		<string id = "mfyline112" text = "村を行き来するいくつものキャラバンを経て、気づけば随分遠くまで来ていました。" />
+		<string id = "mfyline113" text = "今は放浪ではなく、一か所に腰を据えて働きたいと思っています。" />
+		<string id = "mfyline114" text = "相当勉強されたようですね。" />
+		<string id = "mfyline115" text = "何をするかによります。" />
+		<string id = "mfyline116" text = "私は医学だけでなく、キャラバンの取引技術も学びました。" />
+		<string id = "mfyline117" text = "ここのリーダーはあまりにも無茶です。いつも皆を置いて一人で先に進くのですから。そのおかげで治療には慣れましたが、あなたのことが心配です。" />
+		<string id = "mfyline118" text = "[if:convo_pondering][ib:hip2]もうキャラバンを率いたくないと言いましたよね。でも前回は私に任せました…あなたのそばで働きたいのですが、一つお願いしてもいいですか？" />
+		<string id = "mfyline119" text = "彼女は稀有な高度医療教育を受けています。優れた治療師であり商人です。" />
+
+	<!-- Layana -->
+		<string id = "mfyline120" text = "私は子どもの頃から戦いを止めたことがありません。" />
+		<string id = "mfyline121" text = "この混乱の時代を生き延びるため、剣と弓を学びました。" />
+		<string id = "mfyline122" text = "今は金になることなら何でもしています。" />
+		<string id = "mfyline123" text = "自己紹介はそれで十分ですか？" />
+		<string id = "mfyline124" text = "多分。" />
+		<string id = "mfyline125" text = "聞くべきではありませんでした。" />
+		<string id = "mfyline126" text = "自分のことを話すのは好きではありません。" />
+		<string id = "mfyline127" text = "劇的な瞬間もありましたが、私は常に指揮官の命令どおり武器を振るっただけです。こうして導いてくれる指揮官がいるのは幸運だと思います。" />
+		<string id = "mfyline128" text = "[if:malfoy_custom_face][ib:weary2]戦場では隊長の命令で突撃し、傷を負って戻ると特別な治療を受けていました…今日は少し傷が深いようです。診てもらえますか？" />
+		<string id = "mfyline129" text = "彼女は征服者に支配された村から逃げ出しました。追っ手から生き延びるため、多くの戦いを経験しています。" />
+
+	<!-- Yoselin -->
+		<string id = "mfyline130" text = "私は数年前に村を離れましたが、父との傭兵生活のほうが自分に合っていました。" />
+		<string id = "mfyline131" text = "父のいた部隊でも私の実力は認められていましたが、恥知らずな女が問題でした。" />
+		<string id = "mfyline132" text = "彼女は陰で父を中傷し、私は怒って決闘を挑みましたが負けました。" />
+		<string id = "mfyline133" text = "敗北が確定し、侮辱された瞬間、目の前で彼女の首が切り落とされました。温厚な父がそんなことをするとは思いませんでした。" />
+		<string id = "mfyline134" text = "父は自分への中傷をずっと耐えていたのです。" />
+		<string id = "mfyline135" text = "その衝動的な性格は家系のようですね。" />
+		<string id = "mfyline136" text = "結局、私たちは追い出されました。父は新しい妻を得て村に定住しましたが、私はこの生き方のほうが面白いです。" />
+		<string id = "mfyline137" text = "これこそ私が求めていたものです。やりたいことをしていて幸せです。いつか父のようになるかもしれませんが、今ではありません。" />
+		<string id = "mfyline138" text = "傭兵として働いた後、あるクランのパーティ指揮官に任命されました！ 成し遂げたと思いませんか？ 後で父に自慢します。" />
+		<string id = "mfyline139" text = "彼女は戦争で故郷を失いました。有名な傭兵の父娘として知られています。" />
+
+	<!-- Vitomir -->
+		<string id = "mfyline500" text = "ここで『私は貴族だ』と名乗るほど愚かなことはありません。" />
+		<string id = "mfyline501" text = "それでもそう名乗りましょう。財産はなくとも、誇りは失っていません。" />
+		<string id = "mfyline502" text = "私には一族の栄光を取り戻すという目的があります。" />
+		<string id = "mfyline503" text = "長兄が家を継いでおり、私は……分かりやすく言えば用事で外に出ている身です。" />
+		<string id = "mfyline504" text = "理想はまだ捨てていないのですね。" />
+		<string id = "mfyline505" text = "貴族として扱われたいのですか？" />
+		<string id = "mfyline506" text = "自分の立場はよく理解しています。貴族らしい扱いを受けた経験もほとんどありません。" />
+		<string id = "mfyline507" text = "人にはそれぞれ役割があります。学者肌の兄とは違い、このやり方が私には合っています。" />
+		<string id = "mfyline508" text = "あなたが新たな王国を建てたと聞きました。兄から、一族の再建もほぼ終わったと聞いています。我が一族は王国の助けとなるでしょう。" />
+		<string id = "mfyline509" text = "没落した貴族家の次男。家の再興を目指して旅立ったが、その重荷から逃げたという噂もある。" />
+
+	<!-- Franz -->
+		<string id = "mfyline510" text = "私はある領主の親衛隊でした。" />
+		<string id = "mfyline511" text = "だから、戻るべき場所があります。" />
+		<string id = "mfyline512" text = "誤解しないでください。私は脱走兵ではありません。最後の任務は、領主が安全に逃げられるよう囮になることでした。" />
+		<string id = "mfyline513" text = "ですから、私は死んでいるか、捕らえられているか、あるいは存在しない人間であるべきでした。" />
+		<string id = "mfyline514" text = "あなたは任務に忠実な兵士でしたね。" />
+		<string id = "mfyline515" text = "しかし、戻るべきではありませんか？領主にもやむを得ない事情があったはずです。" />
+		<string id = "mfyline516" text = "私は死ぬ覚悟ができていましたが、生き残りました。生き残ろうとした者の方が運が悪かったようです。戻る場所があれば、すでに戻っていたでしょう。" />
+		<string id = "mfyline517" text = "今後も難しい決断を下した、あるいは下すつもりなら、私に正直でいてほしい。任務を遂行することは怖くありませんが、不正を行うことは恐れます。" />
+		<string id = "mfyline518" text = "最近、戦闘から退いたとき、過去を思い出して不快でした。正しい判断かもしれませんが、経験した者たちは名誉ある戦死を望んだかもしれません。" />
+		<string id = "mfyline519" text = "生まれつき指導力と戦闘能力を備えた兵士です。経験は少ないものの、領主の護衛として務めたことがあります。" />
+
+	<!-- Lethwin -->
+		<string id = "mfyline520" text = "私はハンターですが、単に食料を集めるだけではありません。" />
+		<string id = "mfyline521" text = "問題解決のための狩猟です。賞金稼ぎと呼んでも構いません。" />
+		<string id = "mfyline522" text = "農場や家を襲うことが多いイノシシやオオカミが主な標的です。" />
+		<string id = "mfyline523" text = "うっかり貴族が大事にしていた動物を捕まえてしまいました。状況が落ち着くまで休養中です。" />
+		<string id = "mfyline524" text = "依頼での狩猟ではなかったのですか？そうなら問題にはならなかったはずです。" />
+		<string id = "mfyline525" text = "ハンターと違法密猟者の違いは大きくありません。" />
+		<string id = "mfyline526" text = "誰かの罠にかかってしまったようです。私は問題解決者で、問題を作るつもりはありませんでした。" />
+		<string id = "mfyline527" text = "だから、ここに来たことであなたの問題を解決できたかはわかりません。しかし、聞かれれば、あなたと共にいることを嬉しく思います。" />
+		<string id = "mfyline528" text = "私を偵察に任命しましたね。その判断を称賛します。私の経験と技術は確実に役立つでしょう。" />
+		<string id = "mfyline529" text = "厄介な動物を追跡するハンターです。ドラゴンの歯を持っているという噂もありますが、おそらく誇張です。" />
+
+		
+	<!-- System Messages -->
+		<string id = "mfywicsm00" text = "結婚の申し込みが承諾されました！" />
+		<string id = "mfywicsm01" text = "これは集落内でのみ行えます。" />
+		<string id = "mfywicsm02" text = "近くにいません。" />
+		<string id = "mfywicsm03" text = "魅力を感じません。" />
+		<string id = "mfywicsm04" text = "お金が足りません。" />
+		<string id = "mfywicsm05" text = "氏族のランクが低すぎます。" />
+		<string id = "mfywicsm06" text = "家がありません。" />
+		<string id = "mfywicsm07" text = "魅力スキルが最低100必要です。" />
+		<string id = "mfywicsm08" text = "名誉の特性が必要です。" />
+		<string id = "mfywicsm09" text = "氏族ランクは最低4である必要があります。" />
+		<string id = "mfywicsm10" text = "計算能力の特性が必要です。" />
+		<string id = "mfywicsm11" text = "彼女の好む隠れた特性を持っている必要があります。" />
+		<string id = "mfywicsm12" text = "片手武器、両手武器、槍スキルの合計が300を超える必要があります。" />
+		<string id = "mfywicsm13" text = "勇気の特性が必要です。" />
+		<string id = "mfywicsm14" text = "一定額の金と最低1つの封土が必要です。" />
+		<string id = "mfywicsm15" text = "魅力スキルが最低100必要です。" />
+		<string id = "mfywicsm16" text = "指揮と戦術スキルの合計が100を超える必要があります。" />
+		<string id = "mfywicsm17" text = "関係スコアは最低40必要です。" />
+		<string id = "mfywicsm18" text = "最低1つの封土が必要です。" />
+		<string id = "mfywicsm19" text = "交易スキルが最低100必要です。" />
+		<string id = "mfywicsm20" text = "彼女の執事スキルが最低100必要です。（プレイヤーは対象外）" />
+		<string id = "mfywicsm21" text = "作成スキルが最低100必要です。" />
+		<string id = "mfywicsm22" text = "計算能力の特性が必要です。" />
+		<string id = "mfywicsm23" text = "氏族ランクは最低4である必要があります。" />
+		<string id = "mfywicsm24" text = "一定額の金が必要です。" />
+		<string id = "mfywicsm25" text = "医学スキルが最低60必要です。" />
+		<string id = "mfywicsm26" text = "彼女の偵察スキルが最低100必要です。（プレイヤーは対象外）" />
+		<string id = "mfywicsm27" text = "{Hero}との関係が上がりました。(+ {MalValue})" />
+		<string id = "mfywicsm28" text = "{Hero}との関係が下がりました。(- {MalValue})" />
+		<string id = "mfywicsm29" text = "彼女は好意を持っているようです。" />
+		<string id = "mfywicsm30" text = "彼女は嫌っているようです。" />
+		<string id = "mfywicsm31" text = "彼女にボーナスステータスが追加されました。" />
+		<string id = "mfywicsm32" text = "{Hero}から持参金として{MalValue}ゴールドを受け取りました！" />
+		<string id = "mfywicsm33" text = "あなたの体力が10％回復しました。" />
+		<string id = "mfywicsm34" text = "あなたの体力が20％回復しました。" />
+		<string id = "mfywicsm35" text = "あなたの体力が33％回復しました。" />
+		<string id = "mfywicsm36" text = "彼女の体力が20％回復しました。" />
+		<string id = "mfywicsm37" text = "彼女の体力が33％回復しました。" />
+		<string id = "mfywicsm38" text = "彼女の体力が50％回復しました。" />
+		<string id = "mfywicsm39" text = "あなたのスタミナが20％回復しました。" />
+		<string id = "mfywicsm40" text = "あなたのスタミナが33％回復しました。" />
+		<string id = "mfywicsm41" text = "あなたのスタミナが50％回復しました。" />
+		<string id = "mfywicsm42" text = "{Number} 個の肉があなたのインベントリに追加されました。" />
+		<string id = "mfywicsm43" text = "10 個の肉があなたのインベントリに追加されました。" />
+		<string id = "mfywicsm44" text = "2 個の肉があなたのインベントリに追加されました。" />
+		<string id = "mfywicsm45" text = "{Hero} はあなたの子を妊娠する可能性があります。" />
+		<string id = "mfywicsm46" text = "{Hero} はあなたの子を妊娠する可能性が高くなります。Virile 特性が必要です。" />
+		<string id = "mfywicsm47" text = "医学スキルが最低60必要です。" />
+		<string id = "mfywicsm48" text = "片手武器スキルが100以上で、訓練される人物の対応スキルが100以下である必要があります。" />
+		<string id = "mfywicsm49" text = "両手武器スキルが100以上で、訓練される人物の対応スキルが100以下である必要があります。" />
+		<string id = "mfywicsm50" text = "槍スキルが100以上で、訓練される人物の対応スキルが100以下である必要があります。" />
+		<string id = "mfywicsm51" text = "弓スキルが100以上で、訓練される人物の対応スキルが100以下である必要があります。" />
+		<string id = "mfywicsm52" text = "クロスボウスキルが100以上で、訓練される人物の対応スキルが100以下である必要があります。" />
+		<string id = "mfywicsm53" text = "投擲スキルが100以上で、訓練される人物の対応スキルが100以下である必要があります。" />
+		<string id = "mfywicsm54" text = "トーナメント賞品 {Item} がインベントリから削除されました。" />
+		<string id = "mfywicsm55" text = "片手武器" />
+		<string id = "mfywicsm56" text = "両手武器" />
+		<string id = "mfywicsm57" text = "槍" />
+		<string id = "mfywicsm58" text = "弓" />
+		<string id = "mfywicsm59" text = "クロスボウ" />
+		<string id = "mfywicsm60" text = "投擲" />
+		<string id = "mfywicsm61" text = "あなたの妻 {Hero} があなたの子を妊娠しました。" />
+		<string id = "mfywicsm62" text = "あなたの仲間 {Hero} があなたの子を妊娠しました。" />
+		<string id = "mfywicsm63" text = "{Hero} から {MalValue} ゴールドを受け取りました。" />
+		<string id = "mfywicsm64" text = "ソナデルの剣" />
+		<string id = "mfywicsm65" text = "{Hero} から {MalValue} 個のアイテムを贈り物として受け取りました。" />
+		<string id = "mfywicsm66" text = "{Hero} は必ずあなたの子を妊娠します。" />
+		<string id = "mfywicsm67" text = "{Hero} はまだ少し躊躇しているようです。" />
+		<string id = "mfywicsm68" text = "{Hero} はあなたの申し出を受け入れることに決めました。" />
+		<string id = "mfywicsm69" text = "使用感のある透明ヘルメット" />
+		<string id = "mfywicsm70" text = "透明ヘルメット" />
+		<string id = "mfywicsm71" text = "良質な透明ヘルメット" />
+		<string id = "mfywicsm72" text = "伝説の透明ヘルメット" />
+		<string id = "mfywicsm73" text = "使用感のある透明肩当て" />
+		<string id = "mfywicsm74" text = "透明肩当て" />
+		<string id = "mfywicsm75" text = "良質な透明肩当て" />
+		<string id = "mfywicsm76" text = "伝説の透明肩当て" />
+		<string id = "mfywicsm77" text = "このアイテムの価格は {Price} ゴールドです。{Price} ゴールドが必要です。" />
+		<string id = "mfywicsm78" text = "{Price} ゴールドを支払い、{Item} を受け取りました。" />
+		<string id = "mfywicsm79" text = "怪しい若返りの薬" />
+		<string id = "mfywicsm80" text = "若返りの薬" />
+		<string id = "mfywicsm81" text = "実証済み若返りの薬" />
+		<string id = "mfywicsm82" text = "{Hero} は {Value1} から {Value2} に年を取らされました。" />
+		<string id = "mfywicsm83" text = "しかし、何も起こりませんでした！" />
+		<string id = "mfywicsm84" text = "熱いバター" />
+		<string id = "mfywicsm85" text = "この行動には {Price} ゴールドが必要です。" />
+		<string id = "mfywicsm86" text = "{Price} ゴールドを支払いました。" />
+		<string id = "mfywicsm87" text = "この行動には {Price} ゴールドが必要です。1日5回までしかできません。" />
+		<string id = "mfywicsm88" text = "会話をリクエスト" />
+		<string id = "mfywicsm89" text = "{Hero} が訪ねてきました。" />
+		<string id = "mfywicsm90" text = "話す" />
+		<string id = "mfywicsm91" text = "後で" />
+
+
+	<!-- Player Lines -->
+		<string id = "mfywicpl00" text = "話したいことがあります。" />
+		<string id = "mfywicpl01" text = "初めて会った時に話してくれた話を教えてください。" />
+		<string id = "mfywicpl02" text = "パーティーに参加してからしばらく経ちましたね。" />
+		<string id = "mfywicpl03" text = "今日のトーナメントで優勝した栄誉をあなたに贈りたいです。" />
+		<string id = "mfywicpl04" text = "もう少し親しくなりたいです。" />
+		<string id = "mfywicpl05" text = "問題ありません。それについては気にしません。" />
+		<string id = "mfywicpl06" text = "そういえば、危うく失敗するところでした。" />
+		<string id = "mfywicpl07" text = "一緒に未来について話しませんか？" />
+		<string id = "mfywicpl08" text = "（返事を待っています。）" />
+		<string id = "mfywicpl09" text = "それが何か教えてくれますか？気が変わるかもしれません。" />
+		<string id = "mfywicpl10" text = "この件はまた後で話しましょう。" />
+		<string id = "mfywicpl11" text = "（ここで彼女との結婚式を始めます。）" />
+		<string id = "mfywicpl12" text = "また後で会えるかもしれません。" />
+		<string id = "mfywicpl13" text = "私についてどう思いますか？" />
+		<string id = "mfywicpl14" text = "これは問題ではありません。すぐにあなたも私を好きになるでしょう。" />
+		<string id = "mfywicpl15" text = "私たちに欠けているのは長期間にわたる信頼です。出会った時間は短くても、これまで築いた信頼は裏切られません。" />
+		<string id = "mfywicpl16" text = "結婚は個人間の結びつきですが、家族間の結びつきでもあります。" />
+		<string id = "mfywicpl17" text = "あなたと時間を過ごしたかったのですが、時間がありませんでした。必要なことをしているからです。" />
+		<string id = "mfywicpl18" text = "そう感じましたか？では、今日から少しずつ話していきましょう。" />
+		<string id = "mfywicpl19" text = "でも、私はあなたが求めているものを持っていると思います。" />
+		<string id = "mfywicpl20" text = "私は精鋭の戦士だから魅力的です。" />
+		<string id = "mfywicpl21" text = "普段は外見に現れませんが、重要な場面で皆が興奮している時、皆が私を見ています。" />
+		<string id = "mfywicpl22" text = "恋はただの熱病です。現実的に、快適に生きられる道を選びましょう。" />
+		<string id = "mfywicpl23" text = "私の他の魅力もどこかで発見できるでしょう。" />
+		<string id = "mfywicpl24" text = "キャラバンや工房の経験で、私は素早くお金を稼げます。" />
+		<string id = "mfywicpl25" text = "だから、あなたが必要です。この問題を解決できると思います。" />
+		<string id = "mfywicpl26" text = "鍛冶スキルがあれば、簡単にお金を素早く稼げます…" />
+		<string id = "mfywicpl27" text = "私はお金と大切なものの違いを見極めるのが得意です。すぐに心配する必要はなくなります。" />
+		<string id = "mfywicpl28" text = "お金は来たり行ったりします。今は一時的な挫折に過ぎません。" />
+		<string id = "mfywicpl29" text = "私を支持してくれる人がたくさんいます。このまま続けば、評判をすぐに上げられるでしょう。" />
+		<string id = "mfywicpl30" text = "まだ従う兵士は少ないですが、組織的かつ効率的に戦っています。この勝利はすぐに評判を高めるでしょう。" />
+		<string id = "mfywicpl31" text = "あなたが私を好きで、私もあなたを好きです！それなら決まりです！" />
+		<string id = "mfywicpl32" text = "家があります。そこで私たちの一族の基盤を築けます。" />
+		<string id = "mfywicpl33" text = "まだ世界は私たちを認めていません。" />
+		<string id = "mfywicpl34" text = "私たちの一族は素晴らしい評判を持っています。誰かが私たちを認め、土地を受け取れるでしょう。" />
+		<string id = "mfywicpl35" text = "今すぐ家がなくても、あなたには最高の宿を選びます。" />
+		<string id = "mfywicpl36" text = "少なくとも外出中の健康を守る手助けはできます。" />
+		<string id = "mfywicpl37" text = "あなたはこのような生活に慣れていると思っていました。" />
+		<string id = "mfywicpl38" text = "外を自由に歩き回れた日々が恋しくなりますよ。" />
+		<string id = "mfywicpl39" text = "この関係は終わりにする必要があると思います。" />
+		<string id = "mfywicpl40" text = "よく考えた末に出した結論です。" />
+		<string id = "mfywicpl41" text = "気にしないで、ちょっと自分に何が起きたのか考えていただけです。" />
+		<string id = "mfywicpl42" text = "以前のように仲良くできますか？" />
+		<string id = "mfywicpl43" text = "私も同じ気持ちです。" />
+		<string id = "mfywicpl44" text = "その提案は受け入れられません。" />
+		<string id = "mfywicpl45" text = "最近の戦闘で怪我をしました。" />
+		<string id = "mfywicpl46" text = "あなたが直接治療してくれれば、回復も早いと思います。" />
+		<string id = "mfywicpl47" text = "それは助かるかもしれません。" />
+		<string id = "mfywicpl48" text = "以前よりも治療時間が必要です。" />
+		<string id = "mfywicpl49" text = "あなたが直接治療してくれたおかげで、回復が早まりました。" />
+		<string id = "mfywicpl50" text = "そういえば、ちょっとした薬草だけで十分です。" />
+		<string id = "mfywicpl51" text = "怪我をしているようですね。" />
+		<string id = "mfywicpl52" text = "私が自分で見てもいいですか？" />
+		<string id = "mfywicpl53" text = "では、次回のためによく休んでください。" />
+		<string id = "mfywicpl54" text = "いいえ、今回はもっと荒っぽい治療が必要です。" />
+		<string id = "mfywicpl55" text = "あなたの望むことは何でもします。" />
+		<string id = "mfywicpl56" text = "今日はただ休んだ方がいいと思います。" />
+		<string id = "mfywicpl57" text = "鍛冶はいつも大変な仕事です。" />
+		<string id = "mfywicpl58" text = "でも、他の作業のための体力はまだ残っています。" />
+		<string id = "mfywicpl59" text = "その通りですね。少し寝るべきです。" />
+		<string id = "mfywicpl60" text = "働き疲れた人に要求しすぎです…" />
+		<string id = "mfywicpl61" text = "そうですね、少し補ってほしいです。" />
+		<string id = "mfywicpl62" text = "いいえ、ただ少し眠る必要があります。" />
+		<string id = "mfywicpl63" text = "パーティーの食料が少なくなっています。" />
+		<string id = "mfywicpl64" text = "あなたと私が狩りに行くと皆に伝えます。" />
+		<string id = "mfywicpl65" text = "狩りにはできるだけ多くの人を連れて行きましょう。" />
+		<string id = "mfywicpl66" text = "今日はあまり狩るものがありません…一つに集中するしかないです。" />
+		<string id = "mfywicpl67" text = "今日もそれをやるべきだと思います。" />
+		<string id = "mfywicpl68" text = "周囲の集落から食料を手に入れられるようになるでしょう。" />
+		<string id = "mfywicpl69" text = "武器の訓練が必要だと思います。" />
+		<string id = "mfywicpl70" text = "今日の訓練はこれで終わりです。" />
+		<string id = "mfywicpl71" text = "今日は追加訓練をしようと思っています…" />
+		<string id = "mfywicpl72" text = "はい、今日はきつい練習になります。" />
+		<string id = "mfywicpl73" text = "特殊な武器は慎重に扱うべきです。" />
+		<string id = "mfywicpl74" text = "何か考え事をしているようですね。" />
+		<string id = "mfywicpl75" text = "まあ…また別の日にやりましょう。" />
+		<string id = "mfywicpl76" text = "私の訓練に耐えられるか見てみましょう…" />
+		<string id = "mfywicpl77" text = "証明してください。" />
+		<string id = "mfywicpl78" text = "私たちはどのくらい一緒にいますか？" />
+		<string id = "mfywicpl79" text = "で、どうしてここに来たのですか？" />
+		<string id = "mfywicpl80" text = "何てことだ！妻としての義務を果たしていません！" />
+		<string id = "mfywicpl81" text = "その通りです。責任の重さを見せましょう。" />
+		<string id = "mfywicpl82" text = "貴族の支援は王国に利益をもたらします。" />
+		<string id = "mfywicpl83" text = "この件はまた次回話しましょう。" />
+		
+
+	<!-- Common Lines -->
+		<string id = "mfywicst00" text = "はい、キャプテン？" />
+		<string id = "mfywicst01" text = "今日のようにもっと話せるといいですね。" />
+		<string id = "mfywicst02" text = "何でも話してください、愛しい人。" />
+		<string id = "mfywicst03" text = "私の話に興味を持ってくれてありがとう。" />
+		<string id = "mfywicst04" text = "[if:convo_bemused]私のためにですか？ありがとうございます。" />
+		<string id = "mfywicst05" text = "[if:convo_thinking][ib:nervous2]あの…少し突然だったので驚いただけです。まだ短い時間しかここにいないので、よくわかりません。" />
+		<string id = "mfywicst06" text = "[if:convo_bemused]そう言ってくれてうれしいです。私もあなたのことをもっと知りたいです。この関係のために頑張ります。" />
+		<string id = "mfywicst07" text = "[if:convo_thinking][ib:closed2]でも、あなたにはもう誰かがいますよね？" />
+		<string id = "mfywicst08" text = "いいですよ、私もあなたと一緒に過ごす機会が欲しいです。" />
+		<string id = "mfywicst09" text = "[if:convo_pondering]いいえ、そういう関係は作りたくありません。" />
+		<string id = "mfywicst10" text = "[if:convo_thinking][ib:demure]私もそれについて考えました。" />
+		<string id = "mfywicst11" text = "まだお互いをもっと知る必要がありますね。焦ってほしくありません。" />
+		<string id = "mfywicst12" text = "あなたとの未来に期待していますが、少し不安な点もあります。まだはっきりとは…" />
+		<string id = "mfywicst13" text = "[if:convo_bemused][ib:hip2]正直に言うと、それをあなたが話すのを待っていました！" />
+		<string id = "mfywicst14" text = "結婚式は城でも町でも村でも行えます。どこでも私たちの選んだ場所でできます。" />
+		<string id = "mfywicst15" text = "私の懸念を少し話させてください…" />
+		<string id = "mfywicst16" text = "あなたは一般的に好かれる人ですが、私たちはあまり親しくありませんでした。" />
+		<string id = "mfywicst17" text = "正直、強い魅力を感じていません。" />
+		<string id = "mfywicst18" text = "私たちのクランの評判を維持するだけの資源は十分ではないと思います。" />
+		<string id = "mfywicst19" text = "私たちのクランの評判は今より少し高くあるべきだと思います。" />
+		<string id = "mfywicst20" text = "今は大丈夫ですが、困ったときにくつろげる場所がある方がいいでしょう。" />
+		<string id = "mfywicst21" text = "うーん…そうですね…" />
+		<string id = "mfywicst22" text = "[if:convo_bemused][ib:hip2]その通りですね。信頼して一緒にいることにしました。" />
+		<string id = "mfywicst23" text = "言ったことを一つ一つ確認した後に、もう一度話すのが良いと思います！" />
+		<string id = "mfywicst24" text = "[if:convo_bemused][ib:hip2]正直言って、あなたの言うことは説得力がないように思えます。でも、それは気にしないことにしました。" />
+		<string id = "mfywicst25" text = "なぜかは完全にはわかりませんが、ためらいを感じます。次回もっと話したいです。" />
+		<string id = "mfywicst26" text = "うーん…まだ具体的には考えていません。次回はもっと自信を持って答えられるといいです。" />
+		<string id = "mfywicst27" text = "一緒にいる時間がずいぶん経ちましたね。この時間を過ごせてうれしいです。" />
+		<string id = "mfywicst28" text = "あなたの優しさに感謝します。私も感謝の気持ちを示したいです。" />
+		<string id = "mfywicst29" text = "あなたが魅力的な人であることは否定できません。" />
+		<string id = "mfywicst30" text = "あなたは有望なクランを率いています。リーダーとしての資質を心から尊敬します。" />
+		<string id = "mfywicst31" text = "あなたには特別なものがあります。それを持っているのが好きです。" />
+		<string id = "mfywicst32" text = "[if:convo_thinking][ib:weary2]でも、あなたはすでに誰かと結婚しています。こんなことは続けられません。" />
+		<string id = "mfywicst33" text = "[if:convo_pondering][ib:hip2]あなたが他の女性と親しくしていると聞きました。私と一緒にいるのにそれをするなんて、がっかりです。" />
+		<string id = "mfywicst34" text = "[if:convo_pondering][ib:hip2]私以外の女性と浮気しているのですか？聞き間違いであってほしいです。" />
+		<string id = "mfywicst35" text = "[if:convo_thinking][ib:weary2]結婚おめでとうございます。でも私以外の人と結婚したことがとても悲しいです。" />
+		<string id = "mfywicst36" text = "[if:convo_pondering][ib:demure]言わなければならないことがあります。この関係を維持するのは難しくなってきたと思います。" />
+		<string id = "mfywicst37" text = "[if:convo_thinking][ib:demure]えっと、本当に私たちの関係を終わらせるべきだと思いますか？" />
+		<string id = "mfywicst38" text = "[if:convo_thinking][ib:nervous2]本気ですか？私も頑張ります。どうか考え直してください…" />
+		<string id = "mfywicst39" text = "残念ですが、これが私たちの関係の限界のようです。" />
+		<string id = "mfywicst40" text = "ああ！お願い、私を置いて行かないで…" />
+		<string id = "mfywicst41" text = "[if:convo_pondering][ib:hip2]驚きました。次回は同じことをしないでほしいです。" />
+		<string id = "mfywicst42" text = "[if:convo_thinking][ib:weary2]それは正しくないと思います。今は放っておいてください。" />
+		<string id = "mfywicst43" text = "[if:convo_thinking]…わかりました。でも、もう傷つきたくありません。" />
+		<string id = "mfywicst44" text = "[if:convo_pondering][ib:demure2]…キャプテン、あなたに伝えたいことがあります。" />
+		<string id = "mfywicst45" text = "キャプテン、もっと近くなりたいと思っています。よろしければ…" />
+		<string id = "mfywicst46" text = "[if:convo_bemused]キャプテン、あなたにふさわしい人になりますと約束します。" />
+		<string id = "mfywicst47" text = "ああ…ごめんなさい…" />
+		<string id = "mfywicst48" text = "[if:convo_thinking][ib:demure]傷があります。この薬草を使えば早く回復します。" />
+		<string id = "mfywicst49" text = "ええと…" />
+		<string id = "mfywicst50" text = "それほど深い傷ではないと思います。看護は必要ないでしょう。" />
+		<string id = "mfywicst51" text = "では、私の部屋でゆっくり傷を確認しましょう。" />
+		<string id = "mfywicst52" text = "[if:malfoy_custom_face]今日も私の手当が必要ですか？" />
+		<string id = "mfywicst53" text = "[if:convo_thinking][ib:weary2]最近の出来事のせいです。休めば回復します。" />
+		<string id = "mfywicst54" text = "ああ、そんなに心配しなくても大丈夫です。それほど深刻ではありません。" />
+		<string id = "mfywicst55" text = "[if:convo_bemused][ib:weary2]わかりました。では、今日あなたのところに立ち寄ります。" />
+		<string id = "mfywicst56" text = "[if:malfoy_custom_face][ib:weary2]前回の手当が少し荒かったです。今日は優しくしてもらえますか？" />
+		<string id = "mfywicst57" text = "[if:convo_confused_normal][ib:weary2]ああ、やめてください。" />
+		<string id = "mfywicst58" text = "一生懸命汗をかいていましたね。少し休みましょう。" />
+		<string id = "mfywicst59" text = "無理をしていませんように。休める場所を用意しました。" />
+		<string id = "mfywicst60" text = "[if:malfoy_custom_face][ib:hip2]では、『残りのスタミナ』を見せてください…" />
+		<string id = "mfywicst61" text = "[if:malfoy_custom_face]ああ、スタミナが足りませんか？少し回復を手伝えると思います。" />
+		<string id = "mfywicst62" text = "[if:convo_relaxed_happy][ib:hip2]すべてのスタミナを私に使ってくださいね！" />
+		<string id = "mfywicst63" text = "それなら、周りの動物も狩るべきでしょうか？準備はできています。" />
+		<string id = "mfywicst64" text = "人数が多ければ多いほど、集められる食料も増えます。一緒に出発するのが良いでしょう。" />
+		<string id = "mfywicst65" text = "他の人に知らせる必要はないと思います。そっと装備をまとめて戻ってきます。" />
+		<string id = "mfywicst66" text = "[if:malfoy_custom_face]では、今日も狩りに行きますか？でも、私が獲物のように見えますね。" />
+		<string id = "mfywicst67" text = "[if:convo_relaxed_happy][ib:hip2]狩りはすでに終わって楽しむ時間のようですが、せっかくなので行きましょう。" />
+		<string id = "mfywicst68" text = "どんな訓練を考えていますか？" />
+		<string id = "mfywicst69" text = "わかりました。教えてくれるならすぐに従います。" />
+		<string id = "mfywicst70" text = "[if:convo_thinking][ib:confident2]重要な訓練なら、他の仲間と一緒にやります。私だけ特別クラスは不公平だと思います。" />
+		<string id = "mfywicst71" text = "どの武器に特別な訓練が必要ですか？" />
+		<string id = "mfywicst72" text = "[if:malfoy_custom_face]それでも今日、あなたの特別な武器の扱い方の訓練をしますか？" />
+		<string id = "mfywicst73" text = "[if:convo_relaxed_happy][ib:hip2]実は、私ももっと強く、厳しい訓練が必要だと思っていました。" />
+		<string id = "mfywicst74" text = "[if:malfoy_custom_face][ib:hip2]わかりました。あなたの特別な武器の達人になります…" />
+		<string id = "mfywicst75" text = "私たちは{Settlement}で初めて会いました。{Days}日間、一緒に働いてきました。" />
+		<string id = "mfywicst76" text = "私たちは{Settlement}で初めて会いました。{Years}年間、一緒に働いてきました。" />
+		<string id = "mfywicst77" text = "{Settlement}で結婚しました。結婚して{Days}日が経ちました。" />
+		<string id = "mfywicst78" text = "{Settlement}で結婚しました。結婚して{Years}年が経ちました。" />
+		<string id = "mfywicst79" text = "少しお時間をいただけますか？" />
+		<string id = "mfywicst80" text = "気づいているかは分かりませんが、私たちは10年以上一緒にいます。" />
+		<string id = "mfywicst81" text = "[if:convo_thinking][ib:demure]最近、傷ついていないか心配です。" />
+		<string id = "mfywicst82" text = "[if:convo_thinking][ib:weary2]最近の戦闘で少し負傷しました。前回のあなたの手当は効果的だったと思います。" />
+		<string id = "mfywicst83" text = "あなたは鍛冶仕事に専念していますね…" />
+		<string id = "mfywicst84" text = "私たちのパーティーは食料が不足しているようです。" />
+		<string id = "mfywicst85" text = "[if:convo_pondering][ib:hip2]まあ…私は妻としての義務を果たす準備ができていますから、あなたもそれを果たすべきです。" />
+		<string id = "mfywicst86" text = "[if:convo_thinking][ib:nervous2]ごめんなさい！それで、今日は…" />
+		<string id = "mfywicst87" text = "[if:convo_relaxed_happy][ib:hip2]私を満足させる義務はかなり重いかもしれません…" />
+		<string id = "mfywicst88" text = "[if:convo_pondering][ib:hip2]…別の日ですか？いつ？" />
+		
+		
+	<!-- Merchant Lines -->
+		<string id = "mfywicmct00" text = "はじめまして、旅人さん。もし間違っていなければ、これから何度もお会いするでしょう。" />
+		<string id = "mfywicmct01" text = "あなたは誰ですか？何をしているのですか？" />
+		<string id = "mfywicmct02" text = "私は特別な品物を扱っています――見つけるのが難しいものです。" />
+		<string id = "mfywicmct03" text = "欲しいものを教えてください。" />
+		<string id = "mfywicmct04" text = "今日もまた私と取引に来ましたか？いつでも歓迎します。" />
+		<string id = "mfywicmct05" text = "噂について聞く" />
+		<string id = "mfywicmct06" text = "若返りの薬" />
+		<string id = "mfywicmct07" text = "透明装備" />
+		<string id = "mfywicmct08" text = "嫉妬軽減チーズ" />
+		<string id = "mfywicmct09" text = "（持っている若返りの薬を試す）" />
+		<string id = "mfywicmct10" text = "使用する薬を選択" />
+		<string id = "mfywicmct11" text = "戻る" />
+		<string id = "mfywicmct12" text = "今日はこれで終わりです。" />
+		<string id = "mfywicmct13" text = "では、また次回お会いしましょう。" />
+		<string id = "mfywicmct14" text = "噂や誰かに基づいたサービスへようこそ。" />
+		<string id = "mfywicmct15" text = "これが何か、正確に説明してください。" />
+		<string id = "mfywicmct16" text = "少し好意を見せてくれれば、私が持っている情報を教えます。" />
+		<string id = "mfywicmct17" text = "言ったことや知っていることを言っても仕方ありません。気に入らなくても返金はできません。" />
+		<string id = "mfywicmct18" text = "聞いたことを教えてください。（1,000ゴールド）" />
+		<string id = "mfywicmct19" text = "その情報は役に立ちます。" />
+		<string id = "mfywicmct20" text = "お金の無駄遣いだ…" />
+		<string id = "mfywicmct21" text = "見てみてください。" />
+		<string id = "mfywicmct22" text = "この薬を飲むとすぐに若返ることができます。ただし、19歳未満では効果がありません。" />
+		<string id = "mfywicmct23" text = "運が悪ければ副作用が出ることもあります。品質が良いほど、副作用は少なく効果も高くなります。" />
+		<string id = "mfywicmct24" text = "大きな取引をありがとう…" />
+		<string id = "mfywicmct25" text = "待って、この薬の値段が違うと思いますか？" />
+		<string id = "mfywicmct26" text = "非常に珍しい材料なので、値段が上がった…ということです。" />
+		<string id = "mfywicmct27" text = "もちろん、元の値段には戻りませんから、待つのは無駄です。さらに上がるだけです。" />
+		<string id = "mfywicmct28" text = "法外に高い！" />
+		<string id = "mfywicmct29" text = "このバターは必要ですか？" />
+		<string id = "mfywicmct30" text = "たとえ複数の人に同時に会っても、恋人に気づかれない確率は上がります…" />
+		<string id = "mfywicmct31" text = "そして、もしあなたの浮気が発覚しても、彼らはあまり怒らないでしょう。" />
+		<string id = "mfywicmct32" text = "そのバターを今すぐ買います。" />
+		<string id = "mfywicmct33" text = "あなたに若返りの薬をあげたいです。" />
+		<string id = "mfywicmct34" text = "何を考えているのですか？" />
+		<string id = "mfywicmct35" text = "どのキャラクターを召喚したいですか？" />
+		<string id = "mfywicmct36" text = "この世界に存在しない誰かを、私が呼び出すことができます。" />
+		<string id = "mfywicmct37" text = "亡くなった人を呼び戻すこともできますが、その場合は記憶を完全に忘れて新たに生まれ変わります。" />
+		<string id = "mfywicmct38" text = "そのキャラクターを召喚しますか？" />
+		<string id = "mfywicmct39" text = "そのキャラクターはすでに一度死亡するか、この世界を去っています。その場合、少し追加の条件が必要です。" />
+		<string id = "mfywicmct40" text = "お願いします。" />
+		<string id = "mfywicmct41" text = "ヒーロー召喚" />
+
+		<string id = "mfywicmct50" text = "聞いたところによると、{Hero}の好きなトーナメントの贈り物は{Category}です。" />
+		<string id = "mfywicmct51" text = "聞いたところによると、{Hero}はどんな贈り物でも喜ぶそうです。" />
+		<string id = "mfywicmct52" text = "聞いたところによると、{Hero}の好きなトーナメントの贈り物は高ランクのアイテムです。" />
+		<string id = "mfywicmct53" text = "聞いたところによると、{Hero}は{Category}に優れた人物を好むそうです。" />
+		<string id = "mfywicmct54" text = "聞いたところによると、{Hero}は{Category}の特性を持つ人を好むそうです。" />
+		<string id = "mfywicmct55" text = "聞いたところによると、{Hero}は裕福な人を好むそうです。" />
+		<string id = "mfywicmct56" text = "聞いたところによると、仲間が負傷したとき、集落で仲間を治療できるそうです。" />
+		<string id = "mfywicmct57" text = "聞いたところによると、あなたが負傷したとき、仲間が集落で治療してくれるそうです。" />
+		<string id = "mfywicmct58" text = "聞いたところによると、パーティーの食料が不足したら、仲間と外で狩りに行けるそうです。" />
+		<string id = "mfywicmct59" text = "聞いたところによると、鍛冶でスタミナがなくなった場合、仲間が回復を手伝ってくれるそうです。" />
+		<string id = "mfywicmct60" text = "聞いたところによると、武器スキルが高ければ仲間に教えることができるそうです。" />
+		<string id = "mfywicmct61" text = "聞いたところによると、{PerkName}パークがあれば、特定の状況で使用できるそうです。" />
+		<string id = "mfywicmct62" text = "聞いたところによると、{PerkName}パークがあれば異性に特に魅力的に見えるそうです。" />
+		<string id = "mfywicmct63" text = "何か言おうと思っていたのですが、何だったか忘れてしまいました。" />
+		<string id = "mfywicmct64" text = "ホットバターは私から買った後も効果が続きます。" />
+		
+	<!-- Herdis -->
+		<string id = "mfywicnpc14" text = "ヘルディス" />
+		<string id = "mfyline140" text = "あなたは部隊を率いる者のようですね。私に関心を示してくださるとは光栄です。" />
+		<string id = "mfyline141" text = "私には三人の弟がいて、それぞれ並外れた才能を持っています。その三人を支えることが、次第に私の人生で最も重要なことになりました。" />
+		<string id = "mfyline142" text = "末っ子でさえ領主の寵愛を受け、使命のために家を出たとき、私は彼の成功を喜びました。しかし結局、家に残ったのは私一人でした。" />
+		<string id = "mfyline143" text = "これは本当に私が望んでいたことだったのだろうか？これが私の成し遂げたすべてなのか？そんな考えが浮かび始めました。" />
+		<string id = "mfyline144" text = "あなたは立派な働きをしましたね。" />
+		<string id = "mfyline145" text = "うーん…部隊に役立つスキルはあまり持っていないようですね…" />
+		<string id = "mfyline146" text = "でも私は持久力と粘り強さには自信があります。それが私の強みです！" />
+		<string id = "mfyline147" text = "[if:convo_pondering][ib:hip2]もうこんなに時間が経ったのですね。少し口うるさく言う良い機会だと思います。今日、ちゃんと食事はしましたか？空腹で戦場に出るべきではありません。鎧がしっかり装着されているか確認してください。前回のように緩んでしまうと危険です。そして乗馬の際は、必ず鞍のベルトを二重に確認してください。落馬すると大怪我をする可能性があります！" />
+		<string id = "mfyline148" text = "[if:convo_bemused][ib:demure]家を出るとき、自分の人生を見つけるためだと言いました。もう一つの理由は素敵なパートナーを見つけるためです。私は子どもを立派に育てられる自信があります。ええと…私と結婚してくれますか？" />
+		<string id = "mfyline149" text = "彼女は長女で、三人の弟の世話をして育ちました。今では弟たちも皆成長し、彼女は自分の人生を探すために旅立ったのです。" />
+
+	<!-- Anneli -->
+		<string id = "mfywicnpc15" text = "アネリ" />
+		<string id = "mfyline150" text = "私を養子にしてくれた船長のもとで育ちました。荒々しい潮風も、実はとても心地よいものだと思っていました。" />
+		<string id = "mfyline151" text = "反乱は前触れもなく起きましたが、船長はベテランでした。追手をかろうじて退けると、私を筏に押し込み、綱を切り離したのです。" />
+		<string id = "mfyline152" text = "裏切り者たちは目撃者を消そうと必死でした。私はなんとか逃げ出しましたが、最後の瞬間に一本の投げ槍が船長を貫きました。" />
+		<string id = "mfyline153" text = "筏は重かったけれど、船長を海に置き去りにすることはできませんでした。一人で海岸まで漕ぎ、浜辺の砂深く彼を埋葬しました。" />
+		<string id = "mfyline154" text = "それがどんな思いだったか、想像もしたくないな。" />
+		<string id = "mfyline155" text = "死んだ者のために、君まで死ぬところだったんだぞ。" />
+		<string id = "mfyline156" text = "あの厳しい風がなぜ「心地よく」感じられたのか、今になってようやく分かりました。すべて船長のおかげだったのだと。" />
+		<string id = "mfyline157" text = "各地を旅して回るうちに、私は航海があまり好きではないと気づきました。平原を馬で駆け抜ける方が、私には合っているようです。" />
+		<string id = "mfyline158" text = "[if:convo_thinking][ib:nervous2] 航海中に夜が訪れると、あの時のことを思い出してしまいます。それで……もしよろしければ、今夜少しだけあなたの側にいてもいいでしょうか？" />
+		<string id = "mfyline158_0" text = "力になれるのなら、少しの間なら構わない。" />
+		<string id = "mfyline158_1" text = "いや、それはできない。" />
+		<string id = "mfyline158_2" text = "[if:convo_pondering][ib:hip2] でも、あの記憶が今も私を苦しめるのです。お許しいただけるなら、静かにあなたの側にいさせてください。" />
+		<string id = "mfyline158_3" text = "分かった。だが、何も起きないぞ。" />
+		<string id = "mfyline158_4" text = "言ったはずだ、自分の場所に戻れ。" />
+		<string id = "mfyline158_5" text = "[if:malfoy_custom_face][ib:hip2] 今日はようやく、安らかに眠れそうです……" />
+		<string id = "mfyline159" text = "彼女は状況に応じて何をすべきかを見極める鋭い感覚を持っています。商船での勤務経験がある熟練の船乗りです。" />
+		
+	<!-- Elara -->
+		<string id = "mfywicnpc16" text = "エララ" />
+		<string id = "mfyline160" text = "私はただの平凡な旅人。それだけよ。" />
+		<string id = "mfyline161" text = "....." />
+		<string id = "mfyline162" text = "..... ......" />
+		<string id = "mfyline163" text = "ん？ それで？" />
+		<string id = "mfyline164" text = "自分を平凡だって？ 私は偉大な冒険者よ。" />
+		<string id = "mfyline165" text = "....." />
+		<string id = "mfyline166" text = "まあ、特に話すことはないわね。" />
+		<string id = "mfyline167" text = "何を聞かれても、隠された過去や大した秘密なんてないわ。ただお金と剣が好きなだけ。" />
+		<string id = "mfyline168" text = "あなた、私のものを盗んだ気がするんだけど？" />
+		<string id = "mfyline168_0" text = "[if:convo_pondering][ib:hip2]え？ いきなり何の話ですか？" />
+		<string id = "mfyline168_1" text = "この泥棒猫！ どこに隠したか全部わかってるんだから！" />
+		<string id = "mfyline168_2" text = "……気のせいかも。" />
+		<string id = "mfyline169" text = "盗賊ギルド所属という噂があるが、その真偽は不明だ。" />
+
+	</strings>
+</base>

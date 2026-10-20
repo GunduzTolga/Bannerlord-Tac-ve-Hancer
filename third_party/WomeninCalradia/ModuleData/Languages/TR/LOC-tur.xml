@@ -1,0 +1,623 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Türkçe" />
+	</tags>
+	<strings>
+  
+    <!-- Name -->
+		<string id = "mfywicnpc00" text = "Sonadel" />
+		<string id = "mfywicnpc01" text = "Anette" />
+		<string id = "mfywicnpc02" text = "Qiana" />
+		<string id = "mfywicnpc03" text = "Mina" />
+		<string id = "mfywicnpc04" text = "Belladonna" />
+		<string id = "mfywicnpc05" text = "Linda" />
+		<string id = "mfywicnpc06" text = "Adrianne" />
+		<string id = "mfywicnpc07" text = "Laura" />
+		<string id = "mfywicnpc08" text = "Audre" />
+		<string id = "mfywicnpc09" text = "Su Lan" />
+		<string id = "mfywicnpc10" text = "Kally" />
+		<string id = "mfywicnpc11" text = "Fenella" />
+		<string id = "mfywicnpc12" text = "Layana" />
+		<string id = "mfywicnpc13" text = "Yoselin" />
+		<string id = "mfywicnpc50" text = "Sir Vitomir" />
+		<string id = "mfywicnpc51" text = "Franz" />
+		<string id = "mfywicnpc52" text = "Lethwin" />
+		<string id = "mfywicnpcmct" text = "Şüpheli Bir Satıcı" />
+	
+	<!-- Clan -->
+		<string id = "mfywicclan0" text = "Rubin" />
+		<string id = "mfywicnpccln0" text = "Damir" />
+		<string id = "mfywicnpccln1" text = "Ludmila" />
+		<string id = "mfywicnpccln2" text = "Ludomir" />
+	
+	
+	<!-- Sonadel -->
+		<string id = "mfyline000" text = "Benim adım Sonadel. Demircilikle uğraşan anne babama yardım ediyorum." />
+		<string id = "mfyline001" text = "Ama artık bu işten yorulmaya başladım. Ben daha geniş bir dünya görmek istiyorum." />
+		<string id = "mfyline002" text = "Babam bana demirciliği öğretmedi. Ama buna rağmen nasıl demir dövmeyi biraz biliyorum!" />
+		<string id = "mfyline003" text = "Malzeme tedariğini ve ticaret işlerini anne babamın yerine ben yapıyordum. Eminim yardımım dokunacaktır." />
+		<string id = "mfyline004" text = "Bu deneyimler birliğime fayda sağlar." />
+		<string id = "mfyline005" text = "Yine de çok deneyimsiz görünüyorsun." />
+		<string id = "mfyline006" text = "Eğer bana bir şans verirsen birliğinde görev yapmak isterim. Ben böyle bir gün için babamdan habersiz kendi kılıcımı yaptım!" />
+		<string id = "mfyline007" text = "Savaş alanında senin yanında olduğum ve seninle beraber demir dövdüğüm günleri seviyorum. Sen de böyle hissediyor musun?" />
+		<string id = "mfyline008" text = "Bu kılıcı senin için yaptım! Sana ne zaman teslim edeceğimi düşünüyordum. İşte şimdi tam zamanı! Kılıcım senin yanında olacak ve düşmanlarını kesecek!" />
+		<string id = "mfyline009" text = "Sonadel demirci kızıdır, çekingen görünür ama hırslıdır. Anne ve babası, işlerinde kendilerine yardım etmesinden memnunlar ancak ondaki hırsı biliyorlar ve gelecekte onu demirhaneden uzak tutmak istiyorlar." />
+	
+	<!-- Anette -->
+		<string id = "mfyline010" text = "Benim adım Anette.." />
+		<string id = "mfyline011" text = "Anne babamdan ve köy büyüğünden aldığım izinle şehirlere mal satan bir birliğe katıldım." />
+		<string id = "mfyline012" text = "Ama savaş vardı ve köyüme bir süre geri dönemedim." />
+		<string id = "mfyline013" text = "Geri döndüğümde köyümüz yağmalanmıştı, her yeri yangın sarmıştı. İşte bu yüzden artık buralardayım." />
+		<string id = "mfyline014" text = "Bu gerçekten çok üzücü bir durum." />
+		<string id = "mfyline015" text = "Bu zamanlarda böyle şeyler yaygın görülüyor." />
+		<string id = "mfyline016" text = "Dürüst olmak gerekirse gidebileceğim bir yer yok. Tarım aletlerini kullanmaktan başka özel bir yeteneğim olmasa da, hızlı bir şekilde öğrenebilirim." />
+		<string id = "mfyline017" text = "Kısa bir süre içinde, geçmişte tarım işlerine yardım ettiğimden çok daha fazla deneyim kazandım. Bu zor bir durum çünkü birdenbire çok hızlı giden bir ata binmişim gibi geliyor ama aynı zamanda eğlenceli." />
+		<string id = "mfyline018" text = "Bana verdiğin eğitimin karşılığını aldığımı düşünüyorum. Artık savaşlarda faydam dokunur. Ah, ve tabii ki özel silahları da kullanabilirim artık..." />
+		<string id = "mfyline019" text = "Anette, zaman zaman şehirlere gidip mal satmaktan hoşlanan sıradan bir kızdı. Ama artık bir şekilde hayatta kalmayı öğrenmek zorunda." />
+	
+	<!-- Qiana -->
+		<string id = "mfyline020" text = "Benim adım Qiana. Açıkçası sıradan köylü bir aileden geliyorum." />
+		<string id = "mfyline021" text = "Babam hizmet ve vergiler karşısındaki adaletsizliğe daha fazla sabredemedi. Bu yüzden normal günler bir anda sona erdi." />
+		<string id = "mfyline022" text = "Benim de doğada hayatta kalmam gerekiyordu. Babam bazen bilmediğim yerlerden bana yiyecek getiriyordu." />
+		<string id = "mfyline023" text = "Bir gün mağarada uyuyordum. Babam büyük bir telaş içinde bana bir yay ve biraz da ok vererek beni aniden kovdu." />
+		<string id = "mfyline024" text = "Ne olduğunu tahmin edebiliyorum." />
+		<string id = "mfyline025" text = "Bunun anlama geldiğini merak ediyorum." />
+		<string id = "mfyline026" text = "Ben bugüne kadar bir şekilde hayatta kalmayı başardım. Ancak babamın yürüdüğü yoldan gitmek istemiyorum." />
+		<string id = "mfyline027" text = "Daha önce sahip olduğum tek şey avcılık kabiliyetimdi. Ama bunun işe yarıyor olmasına sevindim." />
+		<string id = "mfyline028" text = "[if:convo_thinking][ib:demure]Hayatta kalmak için babamla birlikte hayvanları takip ettiğimizi ve avladığımızı hatırlıyorume. O zamanlar gerçekten ava gitmek istemiyordum ama son zamanlarda avlanacağım günü bekliyormuşum gibi hissediyorum..." />
+		<string id = "mfyline029" text = "Qiana, köylüleri sömüren ve onları köleye dönüştüren lordlara karşı savaşan bir direniş liderinin kızıdır. Düşmanları tarafından ortadan kaldırılmak istendi ​​ama hayatta kalmayı başardı." />
+	
+	<!-- Mina -->
+		<string id = "mfyline030" text = "Kulağa garip geldiğini biliyorum, ama lütfen dinle." />
+		<string id = "mfyline031" text = "Daha önce kesinlikle bu dünyada olduğumu düşünüyorum, ancak zayıf bir hafızam var." />
+		<string id = "mfyline032" text = "Zaten pek de umurumda değil de, bazı sebeplerden dolayı beni hatırlayanlar var." />
+		<string id = "mfyline033" text = "Ama sorun sadece bu değil, ben de her şeyi hatırlamıyorum." />
+		<string id = "mfyline034" text = "Hmm, umarım hatırlayabilirsin." />
+		<string id = "mfyline035" text = "Kısacası hiçbir yeteneğim yok diyorsun.." />
+		<string id = "mfyline036" text = "Bana yardım edersen kısa zamanda bu duruma alışacağımı düşünüyorum." />
+		<string id = "mfyline037" text = "Yanlış hatırlamıyorsam birliğe katıldığımda gerçekten hiçbir şeyim yoktu. Beni bu şekilde kabul etmiş olman şaşılacak şeydi doğrusu." />
+		<string id = "mfyline038" text = "Eğer hatırlamaz ve birdenbire hatırlamaya başlarsan, aynı anda birçok şeyi hatırlarsın, öyle değil mi? Bence tam zamanı." />
+		<string id = "mfyline039" text = "Mina, aslen bu dünyada olduğunu düşünüyor. Doğru mu, yanlış mı emin değil." />
+	
+	<!-- Belladona -->
+		<string id = "mfyline040" text = "Benim adım Belladona. Ne yazık ki köyümden kovuldum." />
+		<string id = "mfyline041" text = "Köylülere şifalı bitkiler yerine yanlışlıkla başka bir şeyler vermişim." />
+		<string id = "mfyline042" text = "Ama bu benim suçum değil! Benimle aynı yaşlardaki kıskanç kızlar bana tuzak kurmuş olmalı." />
+		<string id = "mfyline043" text = "Aniden kırmızı saçlı bir cadı olduğum dedikodusu yayılmaya başladı ve ben de yakalanmamak için kaçmak zorunda kaldım." />
+		<string id = "mfyline044" text = "Her insan hata yapabilir." />
+		<string id = "mfyline045" text = "Bence senin evinde büyük bir kazan vardır." />
+		<string id = "mfyline046" text = "Resmi yollardan öğrenmemiş olsam da, şifalı bitkileri ayırt edebilirim ve onlarla neler yapılabileceğini biliyorum." />
+		<string id = "mfyline047" text = "Umarım başkalarının iyiliği için kendini fazla zorlamazsın. Zaten beni dinlemeyeceğine göre, biraz şifalı bitkiyi yalnızca senin için her zaman saklayacağım.." />
+		<string id = "mfyline048" text = "[if:convo_relaxed_happy][ib:hip2]Sanırım yeni bir bitki keşfettim! Bu ilaç özellikle senin gibi çekici bir zehir üzerinde işe yarıyor... Seni hemen şimdi iyileştireceğim." />
+		<string id = "mfyline049" text = "Belladona, ormandaki küçük kulübesinde kendini çalışmalarına adamayı seviyordu. “Kızıl saçlı orman kadını” lakabı insanların ilgisini çekmeye yetti." />
+	
+	<!-- Linda -->
+		<string id = "mfyline050" text = "Ben en yakın şehirdeki handa çalışıyordum." />
+		<string id = "mfyline051" text = "Ancak hanın müşterileri giderek arttı, bu yüzden çok fazla iş yapmaya başladık." />
+		<string id = "mfyline052" text = "Benim haberim olmadan hanın adını Büyük Linda Hanı koymuşlar, bilmiyordum." />
+		<string id = "mfyline053" text = "Sonra orada daha az eğlenmeye başladım ve ayrılmaya karar verdim." />
+		<string id = "mfyline054" text = "Ya daha eğlenceli bir şey varsa?" />
+		<string id = "mfyline055" text = "Yani o zamanlar eğleniyor muydun?" />
+		<string id = "mfyline056" text = "Şimdilik yiyecek param var, bu yüzden daha fazla para önerirsen ancak o zaman seyahat etmeyi düşünürüm." />
+		<string id = "mfyline057" text = "Burası enerji dolu. Sarhoşlarla uğraştığım zamandan çok daha iyi. Elbette biri beni boşuna şaşırtırsa at kırbacımla onu kırbaçlarım." />
+		<string id = "mfyline058" text = "[if:convo_pondering][ib:hip2]Bir keresinde bana güzel bir at hediye etmiştin. O zamanlar aslında biraz gururum incinmişti. Çünkü ben zaten gayet iyiyim... Şimdi sana yanıldığını kanıtlamam lazım..." />
+		<string id = "mfyline059" text = "Linda, bir handa ve onun ahırlarında çalışan bir hizmetçiydi. Han onun sayesinde şöhret kazandı ama o bunu kaldıramadı." />
+	
+	<!-- Adrianne -->
+		<string id = "mfyline060" text = "Benim adım Adrianne, baltayla odun yarmayı oduncu olan babamdan öğrendim." />
+		<string id = "mfyline061" text = "Babamın balta kullanmayı odun yarmaktan öğrenmediği daha sonradan ortaya çıktı." />
+		<string id = "mfyline062" text = "Babam, sadece bir iki düşmanı olan biri değildi. En nihayetinde düşmanları tarafından bir gün öldürüldü." />
+		<string id = "mfyline063" text = "Önce babamı öldürüp sonra da evime baskın yaptılar, ben de evden babamın baltasını aldım." />
+		<string id = "mfyline064" text = "Yani babanın intikamını mı aldın?" />
+		<string id = "mfyline065" text = "Sanırım baltayı sen de odun yarmak için kullanmadın." />
+		<string id = "mfyline066" text = "Hayır, ben onlarla çatışmaya hazırlandım ama nedense bana saldırmadılar. Sanırım babamı öldürmek onlar için yeterliydi. Bu olaydan sonra ben de köyümden kovuldum." />
+		<string id = "mfyline067" text = "Babamla aynı yolu izliyor olabileceğimi düşündüm. Ama eğer silahımın haklı bir amaç için kullanıldığından emin olabilirsem o zaman doğru yoldayım demektir." />
+		<string id = "mfyline068" text = "Bu paranın ne olduğunu mu sormak istiyorsun? Geçen gün bana hediye ettiğin silah gerçekten muhteşemdi. Ama birisi onu çaldı. Suçluyu buldum ama çoktan satmıştı. O yüzden 'küçük bir intikam' ile geri dönüyorum." />
+		<string id = "mfyline069" text = "Adrianne, acımasız bir savaşçı ama ailesine karşı sonsuz merhametli bir babanın kızıdır. “Efsanevi Kan Baltası” lakabı artık sadece bir efsane olarak kaldı. Yoksa bu sadece başlangıç ​​mı?" />
+	
+	<!-- Laura -->
+		<string id = "mfyline070" text = "Benim adım Laura." />
+		<string id = "mfyline071" text = "Annem ve babam büyük yapılar inşa eden mühendisler." />
+		<string id = "mfyline072" text = "Bu şehirde yeni bir projeye başladılar, ben de o yüzden buradayım." />
+		<string id = "mfyline073" text = "Seninle tanışmak benim için yeni bir işin başlangıcı olsa gerek. Artık üzerime düşeni yapabilirim ve yapmalıyım da." />
+		<string id = "mfyline074" text = "Sanırım bu benim için de iyi bir fırsat." />
+		<string id = "mfyline075" text = "Üzerine düşeni yapabileceğinden şüpheliyim.." />
+		<string id = "mfyline076" text = "Teknik bilgim var, ama aynı zamanda anne ve babamın işinden dolayı malzeme tedariğinden de anlarım." />
+		<string id = "mfyline077" text = "Sana şimdi söyleyeyim, geçen gün bir bileşeni atlamıştım. O yüzden kritik bir anda kırılacağından korktum. Çünkü sen oradaydın." />
+		<string id = "mfyline078" text = "Daha önce de yıkılan inşaat malzemeleri bana çarpmıştı. O zamandan beri kafam biraz boşaldı ve sanırım ailem beni projelerine dahil etmek istemedi. Ama geçende bana verdiğin miğferle artık böyle bir şey olmayacak." />
+		<string id = "mfyline079" text = "Laura'nın ailesi kervanlarla seyahat eden, köy ve şehirlerden komisyon alan mühendislerdir. Ailesi aynı zamanda titiz işçilikleriyle tanınıyor." />
+	
+	<!-- Audre -->
+		<string id = "mfyline080" text = "Klanımın adını daha önce mutlaka duymuşsundur." />
+		<string id = "mfyline081" text = "Evde yiyecek bolluğu varken ailemin beni neden kovmaya çalıştığını bilmiyorum." />
+		<string id = "mfyline082" text = "Yani ailem tarafından dış dünyayı görmek için dışarı çıkmaya zorlandım." />
+		<string id = "mfyline083" text = "Şansıma, sen bir birlik lideri misin?" />
+		<string id = "mfyline084" text = "Evet." />
+		<string id = "mfyline085" text = "Benim bir prensese ihtiyacım yok." />
+		<string id = "mfyline086" text = "Umarım yiyeceğin hiç tükenmediği bir birliğe katılabilirim." />
+		<string id = "mfyline087" text = "Zaten birkaç kez ölümden döndüm ve tüm bu yaşadıklarımı bilseydiler ailem korkardı. Belki de hemen eve dönmemi isterlerdi." />
+		<string id = "mfyline088" text = "Hey, dürüst olmak gerekirse şu anda para sıkıntısı çekiyorsun, değil mi? Biriktirdiğim paranın bir kısmını sana vermek istiyorum, böylece bunun gibi zor zamanlarda kullanabilirsin. Bu parayı biriktirdim ama büyük kısmı ailemin bana verdiği harçlıktı." />
+		<string id = "mfyline089" text = "Audre'nin ailesi, nesilden nesile aktarılan büyük tüccarlardan oluşan bir aile olarak tanınır. Kendisi de neredeyse soylularınki gibi bir hayat yaşadı." />
+	
+	<!-- Su Lan -->
+		<string id = "mfyline090" text = "Memleketimdeki insanlar mühendisliğe ihtiyaç duyulacağını hiç düşünmüyor." />
+		<string id = "mfyline091" text = "At sırtında ok atmayı seviyorum, aynı zamanda okları incelemek ve üretmekle de uğraşıyorum." />
+		<string id = "mfyline092" text = "Buraya da çalışıp öğrenmeye geldim çünkü evimin yakınlarında burdaki gibi çalışmak zor." />
+		<string id = "mfyline093" text = "Aynı şekilde burda da para kazanmak zor, yani bir an evvel geri dönmeliyim." />
+		<string id = "mfyline094" text = "Birliğimde istediğin şeyleri başarabileceğini düşünüyorum." />
+		<string id = "mfyline095" text = "Neden ailenin sana yapmanı söylediği şeyleri yapmıyorsun?" />
+		<string id = "mfyline096" text = "Her halükarda bana bir iş lazım. Dahası, bunun tecrübe kazanabileceğim bir iş olması lazım." />
+		<string id = "mfyline097" text = "Seninle tanıştığım için ne kadar şanslı olduğumu bilmiyorum. Ailemde böyle değildim. Belki de sen olmasaydın eve dönüp yün kesecektim." />
+		<string id = "mfyline098" text = "Bu kadar kısa süre sonra mühendis olarak çalışabileceğim için gerçekten heyecanlıyım. Birliğinde elimden geleni yapacağım." />
+		<string id = "mfyline099" text = "Su Lan, kendi yolunu bulmak için seyahat eden tutkulu bir mühendistir. Ayrıca çocukluğunda öğrendiği atlı okçulukta da yeteneklidir." />
+	
+	<!-- Kally -->
+		<string id = "mfyline100" text = "Ben bir kervan muhafızıydım ama büyük bir haydut grubuyla karşılaştıktan sonra kaçmak zorunda kaldım." />
+		<string id = "mfyline101" text = "Haydutların izini takip edip saklandıkları yeri komutana bildirdim, ama komutan bu durumu hiç umursamadı." />
+		<string id = "mfyline102" text = "Bu yüzden esirleri kurtarmak için tek başıma sığınağa gittim ve oradan yaralı olarak geri döndüm." />
+		<string id = "mfyline103" text = "Kervan beni bırakıp gitti, bu yüzden ne yapacağımı bilmiyorum." />
+		<string id = "mfyline104" text = "Sen sorumluluk sahibi bir insansın." />
+		<string id = "mfyline105" text = "Yani kaçak olduğunu mu söylüyorsun?" />
+		<string id = "mfyline106" text = "Düşmanın izini sürme konusunda oldukça iyiyim ve at sırtında iyi silah kullanırım." />
+		<string id = "mfyline107" text = "Bazen, geçmişte başarısız olduğum bir görevi düşünüyorum. Artık kaçmayacağım, seninle savaşacak ve yeri gelince seninle birlikte yakalanacağım." />
+		<string id = "mfyline108" text = "Bir keresinde bir haydut sığınağına saldırmıştık. Aslında daha önce bahsettiğim, tek başıma gittiğim ve başarısız olduğum bir yer vardı. Gücüne yenik düştüğümde, eski yoldaşlarımın başına kötü bir şey geldiğini biliyordum. Bana dürüstlüğü gösterdiğin için şimdi bile hoşnutum." />
+		<string id = "mfyline109" text = "Kally, iyi bir izci ve savaşçıdır. Sorumlululuk sahibi olmasına rağmen kendini korumanın da önemli olduğuna inanıyor." />
+	
+	<!-- Fenella -->
+		<string id = "mfyline110" text = "Hekimliği cerrahlardan ve Güneyli bilginlerden öğrendim." />
+		<string id = "mfyline111" text = "Son yıllarda çok fazla savaş olduğundan herkes bir yerlerden çağrıldı, ben de öyle." />
+		<string id = "mfyline112" text = "Köylere gidip gelen birçok kervanla seyahat ettikten sonra çok uzaklara geldim." />
+		<string id = "mfyline113" text = "Artık sağda solda gezmek yerine sabit bir yerde çalışmak istiyorum." />
+		<string id = "mfyline114" text = "Çok eğitimli görünüyorsun." />
+		<string id = "mfyline115" text = "Yaptığın işe bağlı." />
+		<string id = "mfyline116" text = "Sadece hekimliği değil, kervanlardan ticaret becerisini de öğrendim." />
+		<string id = "mfyline117" text = "Buradaki liderimiz çok çetin. Daima herkesi geride bırakıp tek başına önden gidiyor. Bu yüzden yaraları tedavi etme konusunda daha çok çalışıyorum. Demek istediğim, senin için endişeleniyorum." />
+		<string id = "mfyline118" text = "[if:convo_pondering][ib:hip2]Sana artık kervan yönetmek istemediğimi söylemiştim ama en son beni kervanın başına getirdiğinde... Senin yanında çalışmak isterim ama, bana bir iyilik yapar mısın?" />
+		<string id = "mfyline119" text = "Fenella hekimlikte nadiren görülen, üstün bir eğitim aldı. O büyük bir şifacı ve tüccardır." />
+	
+	<!-- Layana -->
+		<string id = "mfyline120" text = "Mücadele etmeyi çocukluğumdan beri hiç bırakmadım." />
+		<string id = "mfyline121" text = "Kargaşanın hakim olduğu ortamda hayatta kalabilmek için kılıç kullanmayı ve ok atmayı öğrendim." />
+		<string id = "mfyline122" text = "Şu anda para kazandırabilecek her işi yapıyorum." />
+		<string id = "mfyline123" text = "Böyle bir önsöz yeterli oldu mu?" />
+		<string id = "mfyline124" text = "Belki de olmuştur." />
+		<string id = "mfyline125" text = "Hiç konuşmamalıydık." />
+		<string id = "mfyline126" text = "Kendim hakkında konuşmayı sevmiyorum." />
+		<string id = "mfyline127" text = "Çarpıcı anlar yaşandı ama bunu her yaptığımda, liderin söylediği gibi silahımı kullandım. Beni böyle yönetebilecek bir lidere sahip olduğum için kendimi şanslı hissediyorum." />
+		<string id = "mfyline128" text = "[if:malfoy_custom_face][ib:weary2]Savaş alanında kaptanın komutasında hücum ediyorum ve yaralı olarak döndüğümde kaptandan özel tedavi görüyorum... Bugün yaranın biraz daha derin olduğunu düşünüyorum. Şuna bir bakar mısın?" />
+		<string id = "mfyline129" text = "Layana, ele geçirenlerin yönettiği bir köyden kaçtı. Onu kovalayanlarla hayatta kalmak adına pek çok çatışmaya girdi." />
+	
+	<!-- Yoselin -->	
+		<string id = "mfyline130" text = "Köyümden birkaç yıl önce ayrıldım. Babamla birlikte paralı askerlik yapmak benim için daha uygundu." />
+		<string id = "mfyline131" text = "Babamın bulunduğu grupta bile yeteneklerimle tanınıyordum ama sorun utanmaz bir kadındı." />
+		<string id = "mfyline132" text = "Onunla birlikte olmadığı için babamın arkasından devamlı iş çeviriyordu. Sinirlenip onu düelloya davet ettim, ama kaybettim." />
+		<string id = "mfyline133" text = "Kaybedeceğim kesinleşince bana hakaret etmeye başladı. Tam bu sırada gözlerimin önünde birden boğazı kesildi. Babam benim aksime daha uysal bir insandı, bu yüzden şaşırmıştım." />
+		<string id = "mfyline134" text = "Kendine atılan iftiralara katlandı." />
+		<string id = "mfyline135" text = "Patlayıcı kişiliğe sahip bir aile.." />
+		<string id = "mfyline136" text = "Bu olaydan sonra kovulduk. Babam bu sırada kendine yeni bir eş bulmuş ve bir köye yerleşmiş. Ama ben bu hayatı daha ilgi çekici buluyorum." />
+		<string id = "mfyline137" text = "Burası tam aradığım yer olmalı. Mutluyum çünkü yapmak istediğim şeyi yapıyorum. Daha sonra babam gibi olabilirim, ama şimdi değil." />
+		<string id = "mfyline138" text = "Paralı asker olarak çalıştıktan sonra bir klan birliğine komutan olarak atandım! Sanırım bir miktar başarı elde ettim, değil mi? Babamla daha sonra övünürüm." />
+		<string id = "mfyline139" text = "Yoselin, savaştan dolayı memleketini kaybetti. Babasıyla birlikte tanınmış paralı asker olarak ailesinin de şöhret kazanmasını sağladı." />
+	
+	<!-- Vitomir -->
+		<string id = "mfyline500" text = "Burada kendimi ‘Ben bir soyluyum’ diyerek tanıtmak kadar aptalca bir şey olamaz." />
+		<string id = "mfyline501" text = "Ama işte kendimi böyle tanıtacağım. Eksik olan sadece servetim, gururumdan asla ödün veremem." />
+		<string id = "mfyline502" text = "Eski klanımın şanını geri getirme amacım var." />
+		<string id = "mfyline503" text = "Her neyse, ağabeyim hâlâ başkan, ben de… diyelim ki iş için buradayım, bu şekilde daha anlaşılır olur." />
+		<string id = "mfyline504" text = "Gerçekçi oldun ama ideallerinden vazgeçmedin." />
+		<string id = "mfyline505" text = "Soylu gibi muamele görmek mi istiyorsun?" />
+		<string id = "mfyline506" text = "Şu anki durumumu çok iyi anlıyorum. Ben aptal birisi değilim. Zaten hiç soylu muamelesi görmedim, pek de bilemiyorum." />
+		<string id = "mfyline507" text = "Her insanın yapabileceği farklı şeyler vardır. Sen benim akademik ağabeyimden oldukça farklısın. Bu yaklaşım bana daha uygun." />
+		<string id = "mfyline508" text = "Kısa süre önce yeni bir krallık kurdunuz. Ağabeyimden, klanımızın yeniden inşasının neredeyse tamamlandığını duydum. Klanımızın bu krallığa yardım edebileceğine inanıyorum." />
+		<string id = "mfyline509" text = "O, düşen bir soylu klanının ikinci oğludur. Eski klanının şanını geri getirmek için yola çıkmış olsa da, bazı dedikodulara göre eski klanının yükünden kaçmak için kaçmış." />
+
+	<!-- Franz -->
+		<string id = "mfyline510" text = "Ben bir lordun kişisel muhafızıyım." />
+		<string id = "mfyline511" text = "Yani dönmem gereken bir yer var." />
+		<string id = "mfyline512" text = "Ama lütfen beni bir kaçak asker olarak yanlış anlamayın. Son görevim, lordumun güvenli bir şekilde kaçabilmesi için yem olarak kullanılmaktı." />
+		<string id = "mfyline513" text = "Yani ben ölü olmalıydım, yakalanmalıydım ya da sadece var olmamalıyım." />
+		<string id = "mfyline514" text = "Görevine sadık bir askermişsin." />
+		<string id = "mfyline515" text = "Ama geri dönmen gerekmez mi? Lordun belki de başka bir seçeneği yoktu." />
+		<string id = "mfyline516" text = "Ölmeye hazırdım ama ölmedim. Hayatta kalmaya çalışan kişi daha şanssızdı. Eğer geri dönecek bir yerim olsaydı, çoktan gitmiştim." />
+		<string id = "mfyline517" text = "Eğer zor bir karar verdiysen ya da vereceksen, umarım bana dürüst olursun. Ben işimi yapmaktan korkmam ama haksızlık yapmaktan korkarım." />
+		<string id = "mfyline518" text = "Son zamanlarda savaştan kaçarken eski hatıralarımı hatırladım ve bu bana çok rahatsızlık verdi. Belki de doğru bir karardı, ama bunu yaşayanlar onurlu bir şekilde savaşta ölmeyi tercih etmiş olabilirler." />
+		<string id = "mfyline519" text = "O, doğal liderlik ve savaş becerilerine sahip bir askerdir. Sınırlı deneyime sahip olsa da bir lordun muhafızı olarak görev yapmıştır." />
+
+	<!-- Lethwin -->
+		<string id = "mfyline520" text = "Ben bir avcıyım, ama sadece yiyecek toplamak için değil." />
+		<string id = "mfyline521" text = "Bu, sorunları çözmek için yapılan bir av. Bana ödül avcısı da diyebilirsiniz." />
+		<string id = "mfyline522" text = "Genellikle çiftlikleri ve evleri sıkça saldıran yaban domuzları ve kurtlar benim ana hedefimdir." />
+		<string id = "mfyline523" text = "Bir zamanlar bir soylunun çok değer verdiği bir hayvanı yanlışlıkla yakaladım. Durum sakinleşene kadar işten uzak kaldım." />
+		<string id = "mfyline524" text = "Bir görevi yerine getirmedim mi? Eğer öyleyse, o zaman sorun olmayacaktı." />
+		<string id = "mfyline525" text = "Bir avcı ile yasadışı bir avcı arasındaki fark o kadar büyük değil." />
+		<string id = "mfyline526" text = "Bence bir başkasının tuzağına düşmüş olabilirim. Ben sorun çözen biriyim, sorun yaratmak istemem." />
+		<string id = "mfyline527" text = "O yüzden buraya gelip buradaki sorunları çözmek için yardımcı olup olamayacağım konusunda emin değilim. Ama sorarsanız, burada sizinle olmak benim için çok iyi." />
+		<string id = "mfyline528" text = "Beni keşif görevlisi olarak atadınız. Bu kararınızı takdir ediyorum. Deneyimim ve becerilerim kesinlikle faydalı olacaktır." />
+		<string id = "mfyline529" text = "O, başı belada olan hayvanları yakalayan bir avcıdır. Ejderha dişi taşıdığına dair söylentiler var, ama bu muhtemelen abartılmış bir söylentidir." />
+
+		
+	<!-- System Messages -->
+		<string id = "mfywicsm00" text = "Evlenme teklifi kabul edildi!" />
+		<string id = "mfywicsm01" text = "Yerleşkedeyken yapılabilir." />
+		<string id = "mfywicsm02" text = "Sana yakın değilim." />
+		<string id = "mfywicsm03" text = "İlgilenmiyorum." />
+		<string id = "mfywicsm04" text = "Yetersiz para." />
+		<string id = "mfywicsm05" text = "Klan seviyesi." />
+		<string id = "mfywicsm06" text = "Ev yok." />
+		<string id = "mfywicsm07" text = "En az 100 cazibe becerisi gerekli." />
+		<string id = "mfywicsm08" text = "Onur özelliği gerekli." />
+		<string id = "mfywicsm09" text = "Klan seviyesi en az 4 olmalı." />
+		<string id = "mfywicsm10" text = "Çıkarcıclık özelliği gerekli." />
+		<string id = "mfywicsm11" text = "Sevdiği gizli özellikler gerekli." />
+		<string id = "mfywicsm12" text = "Tek elli, çift elli ve gönderli silah becerilerinin toplamı 300'den fazla olmalı." />
+		<string id = "mfywicsm13" text = "Yiğit özelliği gerekli." />
+		<string id = "mfywicsm14" text = "Belli bir miktar para ve en az bir yerleşke gerekli." />
+		<string id = "mfywicsm15" text = "En az 100 cazibe becerisi gerekli." />
+		<string id = "mfywicsm16" text = "Liderlik ve taktik becerilerinin toplamı 100'den fazla olmalı." />
+		<string id = "mfywicsm17" text = "En az 40 ilişki puanı gerekli." />
+		<string id = "mfywicsm18" text = "En az bir yerleşkeye sahip olman gerekli." />
+		<string id = "mfywicsm19" text = "En az 100 ticaret becerisi gerekli." />
+		<string id = "mfywicsm20" text = "Kızın en az 100 vekil becerisine sahip olması gerekli." />
+		<string id = "mfywicsm21" text = "En az 100 demircilik becerisi gerekli." />
+		<string id = "mfywicsm22" text = "Çıkarcı özelliği gerekli." />
+		<string id = "mfywicsm23" text = "Klan seviyesi en az 4 olmalı." />
+		<string id = "mfywicsm24" text = "Belli bir miktar para gerekli." />
+		<string id = "mfywicsm25" text = "En az 60 hekimlik becerisi gerekli." />
+		<string id = "mfywicsm26" text = "Kızın en az 100 izcilik becerisine sahip olması gerekli." />
+		<string id = "mfywicsm27" text = "{Hero} ile ilişkin arttı. (+ {MalValue})" />
+		<string id = "mfywicsm28" text = "{Hero} ile ilişkin azaldı. (- {MalValue})" />
+		<string id = "mfywicsm29" text = "Hoşlanıyor gibi görünüyor." />
+		<string id = "mfywicsm30" text = "Hoşlanmıyor gibi görünüyor." />
+		<string id = "mfywicsm31" text = "Kıza bonus puanlar eklendi." />
+		<string id = "mfywicsm32" text = "{Hero}'{.den} çeyiz olarak {MalValue} altın aldın!" />
+		<string id = "mfywicsm33" text = "Canının %10 kadarını toparladın." />
+		<string id = "mfywicsm34" text = "Canının %20 kadarını toparladın." />
+		<string id = "mfywicsm35" text = "Canının %33 kadarını toparladın." />
+		<string id = "mfywicsm36" text = "Kız, canının %20 kadarını toparladı." />
+		<string id = "mfywicsm37" text = "Kız, canının %33 kadarını toparladı." />
+		<string id = "mfywicsm38" text = "Kız, canının %50 kadarını toparladı." />
+		<string id = "mfywicsm39" text = "Dayanıklılığının %20 kadarını toparladın." />
+		<string id = "mfywicsm40" text = "Dayanıklılığının %33 kadarını toparladın." />
+		<string id = "mfywicsm41" text = "Dayanıklılığının %50 kadarını toparladın." />
+		<string id = "mfywicsm42" text = "{Number} parça et envantere eklendi." />
+		<string id = "mfywicsm43" text = "10 parça et envantere eklendi." />
+		<string id = "mfywicsm44" text = "2 parça et envantere eklendi." />
+		<string id = "mfywicsm45" text = "{Hero}'{.nin} senden hamile kalma ihtimali var." />
+		<string id = "mfywicsm46" text = "{Hero}{.nin} senden hamile kalma ihtimali daha yüksek şekilde var. Yiğit getirisi gerekli." />
+		<string id = "mfywicsm47" text = "En az 60 hekimlik becerisi gerekli." />
+		<string id = "mfywicsm48" text = "En az 100 tek elli siah becerisi gerekli, eğitilecek kişinin becerisi ise en fazla 100 olmalı." />
+		<string id = "mfywicsm49" text = "En az 100 çift elli silah becerisi gerekli, eğitilecek kişinin becerisi ise en fazla 100 olmalı." />
+		<string id = "mfywicsm50" text = "En az 100 gönderli silah becerisi gerekli, eğitilecek kişinin becerisi ise en fazla 100 olmalı." />
+		<string id = "mfywicsm51" text = "En az 100 okçuluk becerisi gerekli, eğitilecek kişinin becerisi ise en fazla 100 olmalı." />
+		<string id = "mfywicsm52" text = "En az 100 kundaklı yaylar becerisi gerekli, eğitilecek kişinin becerisi ise en fazla 100 olmalı." />
+		<string id = "mfywicsm53" text = "En az 100 fırlatma becerisi gerekli, eğitilecek kişinin becerisi ise en fazla 100 olmalı." />
+		<string id = "mfywicsm54" text = "Turnuva ödülü olan {Item} öğesi envanterden kaldırıldı." />
+		<string id = "mfywicsm55" text = "Tek elli silah" />
+		<string id = "mfywicsm56" text = "Çift elli silah" />
+		<string id = "mfywicsm57" text = "Gönderli Silah" />
+		<string id = "mfywicsm58" text = "Yay" />
+		<string id = "mfywicsm59" text = "Kundaklı yay" />
+		<string id = "mfywicsm60" text = "Fırlatma silahı" />
+		<string id = "mfywicsm61" text = "Eşin {Hero} az önce hamile olduğunu öğrendi." />
+		<string id = "mfywicsm62" text = "Yoldaşın {Hero} az önce hamile olduğunu öğrendi." />
+		<string id = "mfywicsm63" text = "{Hero}'{.den} {MalValue} altın aldın." />
+		<string id = "mfywicsm64" text = "Sonadel'in Kılıcı" />
+		<string id = "mfywicsm65" text = "{Hero}'{.den} {MalValue} aldın." />
+		<string id = "mfywicsm66" text = "{Hero} kesinlikle senden hamile kalacaktır." />
+		<string id = "mfywicsm67" text = "{Hero} halâ biraz kararsız görünüyor." />
+		<string id = "mfywicsm68" text = "{Hero}, teklifini kabul etmeye karar verdi." />
+		<string id = "mfywicsm69" text = "Eski Görünmeyen Miğfer" /> 
+		<string id = "mfywicsm70" text = "Görünmeyen Miğfer" /> 
+		<string id = "mfywicsm71" text = "Nitelikli Görünmeyen Miğfer" /> 
+		<string id = "mfywicsm72" text = "Efsanevi Görünmeyen Miğfer" />
+		<string id = "mfywicsm73" text = "Eski Görünmeyen Omuzluk" /> 
+		<string id = "mfywicsm74" text = "Görünmeyen Omuzluk" />
+		<string id = "mfywicsm75" text = "Nitelikli Görünmeyen Omuzluk" /> 
+		<string id = "mfywicsm76" text = "Efsanevi Görünmeyen Omuzluk" />
+		<string id = "mfywicsm77" text = "Bu ürünün fiyatı {Price} Altın. {Price} Altın gereklidir." />
+		<string id = "mfywicsm78" text = "{Price} Altın ödediniz ve {Item} aldınız." />
+		<string id = "mfywicsm79" text = "Şüpheli Yaşlanma Karşıtı İksir" />
+		<string id = "mfywicsm80" text = "Yaşlanma Karşıtı İksir" />
+		<string id = "mfywicsm81" text = "Kanıtlanmış Yaşlanma Karşıtı İksir" />
+		<string id = "mfywicsm82" text = "{Hero} yaşlandı, {Value1} yaşından {Value2} yaşına dönüştü." />
+		<string id = "mfywicsm83" text = "Ama hiçbir şey olmadı!" />
+		<string id = "mfywicsm84" text = "Sıcak Tereyağı" />
+		<string id = "mfywicsm85" text = "Bu işlemi yapmak için {Price} Altın gereklidir." />
+		<string id = "mfywicsm86" text = "{Price} Altın ödediniz." />
+		<string id = "mfywicsm87" text = "Bu işlemi yapmak için {Price} Altın gereklidir. Günde sadece 5 kez yapılabilir." />
+		<string id = "mfywicsm88" text = "Konuşma Talebi" />
+		<string id = "mfywicsm89" text = "{Hero} sizi ziyaret etmeye geldi." />
+		<string id = "mfywicsm90" text = "Konuş" />
+		<string id = "mfywicsm91" text = "Sonra" />
+	
+	
+	<!-- Player Lines -->
+		<string id = "mfywicpl00" text = "Konuşmamız gereken bir şey var." />
+		<string id = "mfywicpl01" text = "Tanıştığımız zaman anlattığın hikayeyi tekrar anlat." />
+		<string id = "mfywicpl02" text = "Birliğe katıldığından bu yana uzun zaman geçti." />
+		<string id = "mfywicpl03" text = "Bugün kazandığım turnuvayı sana adamak istiyorum." />
+		<string id = "mfywicpl04" text = "Sana biraz daha yakın olmak istiyorum." />
+		<string id = "mfywicpl05" text = "Önemli değil. Artık evlenmemizi bile önermiyorum." />
+		<string id = "mfywicpl06" text = "Peki, düşündüm de neredeyse bir hata yapıyordum." />
+		<string id = "mfywicpl07" text = "Neden birlikte olabileceğimiz bir geleceği konuşmuyoruz?" />
+		<string id = "mfywicpl08" text = "(Yanıt bekliyor.)" />
+		<string id = "mfywicpl09" text = "Ne oluyor, söyler misin? Fikrini değiştirebilirsin." />
+		<string id = "mfywicpl10" text = "Bunu daha sonra tekrar konuşuruz." />
+		<string id = "mfywicpl11" text = "(Ve onunla evlilik başlar.)" />
+		<string id = "mfywicpl12" text = "Belki daha sonra.." />
+		<string id = "mfywicpl13" text = "Benim hakkımda ne düşünüyorsun?" />
+		<string id = "mfywicpl14" text = "Bu gerçekten bir sorun değil. Zamanla sen de beni seversin." />
+		<string id = "mfywicpl15" text = "Tek eksiğimiz, uzun zamana dayanan güven. Şu ana kadar kazandığımız güvene ihanet edilmeyecek olsa da, kısa süredir tanışıyoruz." />
+		<string id = "mfywicpl16" text = "Evlilik, kişiler arası bir bağ olduğu kadar aileler arası da bir bağdır." />
+		<string id = "mfywicpl17" text = "Seninle vakit geçirmeyi istedim, ama buna ayıracak zamanım olmadı. Çünkü yapmam gerekeni yapıyorum." />
+		<string id = "mfywicpl18" text = "Gerçekten de böyle mi hissettin? O halde bugünden itibaren azar azar konuşalım." />
+		<string id = "mfywicpl19" text = "Ama sanırım aradığın şey bende var." />
+		<string id = "mfywicpl20" text = "Çekiciyim, çünkü seçkin bir savaşçıyım." />
+		<string id = "mfywicpl21" text = "Genelde dışarıdan belli olmuyor ama herkesin heyecanlı olduğu önemli anlarda herkes bana bakıyor olacak." />
+		<string id = "mfywicpl22" text = "Aşk sadece bir ateştir. Gerçekçi olarak rahat yaşamana imkan sunan bir yol seç." />
+		<string id = "mfywicpl23" text = "Diğer cazibelerimi başka zaman keşfedeceksin." />
+		<string id = "mfywicpl24" text = "Kervan ve atölye işletme tecrübelerim sayesinde hızlıca para kazanabilirim." />
+		<string id = "mfywicpl25" text = "Yani sana daha çok ihtiyacım var. Bence bu sorunu çözebilirsin." />
+		<string id = "mfywicpl26" text = "Demircilik becerilerim sayesinde hızlıca para kazanabilirim, bu çok kolay..." />
+		<string id = "mfywicpl27" text = "Para ve önemli şeyler arasındaki farkı ayırt etmekte iyiyim. Yakında bu konuda fazla endişelenmene gerek kalmayacak." />
+		<string id = "mfywicpl28" text = "Para bazen vardır, bazen yoktur. Bunlar sadece kötü zamanlar." />
+		<string id = "mfywicpl29" text = "Beni seven ve destekleyen birçok insan var. Böyle devam ederse itibarımızı hızlıca artırabiliriz." />
+		<string id = "mfywicpl30" text = "Halâ bizi takip eden biraz asker var ama sistemli ve etkili bir şekilde savaşıyoruz. Bu zaferler itibarımızı hızlıca artıracaktır." />
+		<string id = "mfywicpl31" text = "Sen benden hoşlanıyorsun, ben de senden. O halde bu iş tamam!" />
+		<string id = "mfywicpl32" text = "Benim bölgem var. Orada klanımızın temelini atabiliriz." />
+		<string id = "mfywicpl33" text = "Dünya henüz bizi tanımıyor." />
+		<string id = "mfywicpl34" text = "Klanımızın yüksek bir itibarı var. Eminim bir yerlerde tanınacağız ve toprak sahibi olacağız." />
+		<string id = "mfywicpl35" text = "Şimdilik senin için sadece en kaliteli hanları seçeceğim." />
+		<string id = "mfywicpl36" text = "En azından dışarıda olsan bile hastalanmamana yardımcı olabilirim." />
+		<string id = "mfywicpl37" text = "Böyle yaşamaya alıştığını sanıyordum." />
+		<string id = "mfywicpl38" text = "Şimdiki gibi dışarı çıkıp dolaşabileceğin günleri özleyeceksin." />
+		<string id = "mfywicpl39" text = "Bence bu ilişkiyi sonlandırmalıyız." />
+		<string id = "mfywicpl40" text = "Biraz düşündükten sonra vardığım sonuç bu." />
+		<string id = "mfywicpl41" text = "Boşver, bana bir anda ne oldu merak ediyorum." />
+		<string id = "mfywicpl42" text = "Yine eskiden olduğu gibi anlaşabilecek miyiz?" />
+		<string id = "mfywicpl43" text = "Aslında ben de aynı şeyi düşünüyorum." />
+		<string id = "mfywicpl44" text = "Bu yeterli değil." />
+		<string id = "mfywicpl45" text = "Son savaşta yaralandım." />
+		<string id = "mfywicpl46" text = "Bana iyi bakarsan daha hızlı iyileşeceğimi düşünüyorum." />
+		<string id = "mfywicpl47" text = "Bu işe yarayabilir." />
+		<string id = "mfywicpl48" text = "Öncekinden daha fazla tedavi süresine ihtiyacım var." />
+		<string id = "mfywicpl49" text = "Bana iyi baktığın için daha çabuk iyileştim." />
+		<string id = "mfywicpl50" text = "Şimdi düşünüyorum da, bence tek ihtiyacım olan şey sadece biraz şifalı bitki." />
+		<string id = "mfywicpl51" text = "Yaralı görünüyorsun." />
+		<string id = "mfywicpl52" text = "Kendim bakabilir miyim?" />
+		<string id = "mfywicpl53" text = "Peki o zaman, bir dahakine iyi dinlen." />
+		<string id = "mfywicpl54" text = "Hayır, bu gibi durumlarda daha titiz tedavi gerekir." />
+		<string id = "mfywicpl55" text = "Nasıl istersen." />
+		<string id = "mfywicpl56" text = "Bence bugün kendi başına kalıp dinlenmen senin için daha iyi olur." />
+		<string id = "mfywicpl57" text = "Demircilik her zaman zor bir iştir." />
+		<string id = "mfywicpl58" text = "Fakat başka alanlarda kullanabileceğim dayanıklılığa sahibim." />
+		<string id = "mfywicpl59" text = "Haklısın, biraz uyumam lazım." />
+		<string id = "mfywicpl60" text = "Çalışmaktan yorulmuş birinden çok şey istiyorsun..." />
+		<string id = "mfywicpl61" text = "Tamam, o zaman biraz doldurmanı istiyorum." />
+		<string id = "mfywicpl62" text = "Hayır, sadece biraz uyumaya ihtiyacım var." />
+		<string id = "mfywicpl63" text = "Birliğimizin erzağı tükeniyor." />
+		<string id = "mfywicpl64" text = "Diğerlerine beraber ava çıktığımızı söyleyeceğim." />
+		<string id = "mfywicpl65" text = "Mümkün olduğu kadar çok adamı ava götürelim." />
+		<string id = "mfywicpl66" text = "Bugün avlanacak pek bir şey yok... Bir tanesine odaklanmam gerek." />
+		<string id = "mfywicpl67" text = "Bence bunu bugün de yapmalıyız." />
+		<string id = "mfywicpl68" text = "Yakında çevredeki yerleşkelerden erzak tedarik edebiliriz." />
+		<string id = "mfywicpl69" text = "Bence senin silah eğitimine ihtiyacın var." />
+		<string id = "mfywicpl70" text = "Bugünlük bu kadar idman yeterli." />
+		<string id = "mfywicpl71" text = "Bugün ek idman yapmayı düşünüyorum..." />
+		<string id = "mfywicpl72" text = "Evet, bugün zorlu bir idman olacak." />
+		<string id = "mfywicpl73" text = "Özel silahlar dikkatli kullanılmalıdır." />
+		<string id = "mfywicpl74" text = "Bana söyleyecek bir şeyin varmış gibi görünüyorsun." />
+		<string id = "mfywicpl75" text = "Peki... Bunu başka bir gün yaparız." />
+		<string id = "mfywicpl76" text = "Bakalım zehrime dayanabilecek misin..." />
+		<string id = "mfywicpl77" text = "Kanıtla." />
+		<string id = "mfywicpl78" text = "Biz ne zamandır birlikteyiz?" />
+		<string id = "mfywicpl79" text = "Peki, seni buraya getiren ne?" />
+		<string id = "mfywicpl80" text = "Ne cüret! Sen bir eş olarak görevlerini yerine getirmedin!" />
+		<string id = "mfywicpl81" text = "Haklısın, sana sorumluluklarımın ağırlığını göstereceğim." />
+		<string id = "mfywicpl82" text = "Nobleslerin desteği krallığa fayda sağlayacaktır." />
+		<string id = "mfywicpl83" text = "Bunu bir dahaki sefere konuşuruz." />
+		
+	
+	<!-- Common Lines -->
+		<string id = "mfywicst00" text = "Evet, Kaptan?" />
+		<string id = "mfywicst01" text = "Tamam, umarım böyle konuşacak zamanımız boldur." />
+		<string id = "mfywicst02" text = "Bana ne istersen söyle, hayatım." />
+		<string id = "mfywicst03" text = "Hikayeme ilgi duyduğun için teşekkür ederim." />
+		<string id = "mfywicst04" text = "[if:convo_bemused]Bu benim için mi? Samimiyetin için teşekkür ederim." />
+		<string id = "mfywicst05" text = "[if:convo_thinking][ib:nervous2]Ah... Şaşırdım çünkü bu biraz ani oldu. Kısa bir süredir buradayım, yani emin değilim." />
+		<string id = "mfywicst06" text = "[if:convo_bemused]Bunu söylediğine sevindim. Ben de senin hakkında daha fazla şey öğrenmek isterim. Ayrıca bu ilişki için de elimden geleni yapacağım." />
+		<string id = "mfywicst07" text = "[if:convo_thinking][ib:closed2]Ama sen zaten biriyle berabersin." />
+		<string id = "mfywicst08" text = "Tamam, neden olmasın? Benim de seni elde etmek için bir şansım olmalı." />
+		<string id = "mfywicst09" text = "[if:convo_pondering]Hayır, bunu yapmayacağım. Böyle bir ilişki kurmak istemiyorum." />
+		<string id = "mfywicst10" text = "[if:convo_thinking][ib:demure]Ben de böyle düşünüyordum." />
+		<string id = "mfywicst11" text = "Ben senden hoşlanıyorum ama yine de birbirimizi daha iyi tanımamız gerektiğini düşünüyorum. Umarım bunun için acelen yoktur." />
+		<string id = "mfywicst12" text = "Seninle bir gelecek kurmak için heyecanlıyım ama bizi temkinli olmaya iten birkaç şey olduğundan endişeleniyorum. Emin değilim..." />
+		<string id = "mfywicst13" text = "[if:convo_bemused][ib:hip2]Dürüst olmak gerekirse, bunu bana sormanı bekliyordum!" />
+		<string id = "mfywicst14" text = "Evlilik işlerinin kalede, şehirde veya köyde tamamlanabileceğini düşünüyorum. İstediğimiz yerde düğün yapabiliriz." />
+		<string id = "mfywicst15" text = "Sana endişelendiğim şeyleri anlatacağım..." />
+		<string id = "mfywicst16" text = "Neredeyse herkesin hoşlanacağı birisin ama bana o kadar yakın değildin." />
+		<string id = "mfywicst17" text = "Dürüst olmam gerekirse, senden pek etkilenmedim." />
+		<string id = "mfywicst18" text = "Klanımızın biraz daha fazla itibarlı olması gerektiğini düşünüyorum." />
+		<string id = "mfywicst19" text = "Klanımızın itibarına göre bunu sürdürmek için yeterli paramızın olduğunu düşünmüyorum." />
+		<string id = "mfywicst20" text = "Şu an iyi ama keşke işler zorlaştığında dinlenecek bir yerimiz olsaydı." />
+		<string id = "mfywicst21" text = "Pekala... Anladım..." />
+		<string id = "mfywicst22" text = "[if:convo_bemused][ib:hip2]Bence haklısın. Sana inanmaya ve seninle olmaya karar verdim." />
+		<string id = "mfywicst23" text = "Söylediklerini bir bir inceledikten sonra bu konuyu tekrar konuşmak iyi olur diye düşünüyorum!" />
+		<string id = "mfywicst24" text = "[if:convo_bemused][ib:hip2]Dürüst olmak gerekirse, söylediklerin pek inandırıcı gelmiyor. Ama bu konuda endişelenmemeye karar verdim. Seninle evlenmek istiyorum!" />
+		<string id = "mfywicst25" text = "Nedenini bilmiyorum ama, kararsız kaldığım doğrudur. Bu konu hakkında daha sonra konuşmak istiyorum." />
+		<string id = "mfywicst26" text = "Hmm... Şu ana kadar bilhassa bunu düşünmedim. Umarım bir dahaki sefere kendimden emin cevap verebilirim." />
+		<string id = "mfywicst27" text = "Birlikte olduğumuzdan bu yana epey zaman geçti. Seni uzun zamandır görüyor olmak güzel." />
+		<string id = "mfywicst28" text = "Bana dikkat et ve bana iyi davran. Ben de bu iyiliğin karşılığını vermek isterim." />
+		<string id = "mfywicst29" text = "Çekici olduğunu inkar edemem." />
+		<string id = "mfywicst30" text = "Ümit verici bir klanın liderisin. Gerçekten liderlik özelliklerini övmek istiyorum." />
+		<string id = "mfywicst31" text = "Sende, bir insanda olmasını istediğim özel bir şey var. Senin bu yönünü gerçekten seviyorum." />
+		<string id = "mfywicst32" text = "[if:convo_thinking][ib:weary2]Sen başka biriyle evlendin. Bunu yapamayacağımızı biliyorsun." />
+		<string id = "mfywicst33" text = "[if:convo_pondering][ib:hip2]Başka bir kadınla ilişki yürüttüğünü duydum. Beni de yanında bulundurduğun için hayal kırıklığına uğradım." />
+		<string id = "mfywicst34" text = "[if:convo_pondering][ib:hip2]Beni başka bir kadınla aldatmıyorsun, değil mi? Umarım yanlış duymuşumdur." />
+		<string id = "mfywicst35" text = "[if:convo_thinking][ib:weary2]Evliliğin hayırlı olsun ama benden başka biriyle evlenmene çok üzüldüm." />
+		<string id = "mfywicst36" text = "[if:convo_pondering][ib:demure]Sana söylemem gereken bir şey var. Artık seninle olan ilişkimi sürdürmekte zorlanıyorum." />
+		<string id = "mfywicst37" text = "[if:convo_thinking][ib:demure]Gerçekten bu ilişkiye son vermemiz gerektiğini mi düşünüyorsun?" />
+		<string id = "mfywicst38" text = "[if:convo_thinking][ib:nervous2]Söylediklerinde ciddi misin? Daha iyisini yapacağım, umarım fikrini değiştirirsin..." />
+		<string id = "mfywicst39" text = "Üzgünüm ama bence ilişkimiz buraya kadar." />
+		<string id = "mfywicst40" text = "Hayır! Lütfen beni bırakma..." />
+		<string id = "mfywicst41" text = "[if:convo_pondering][ib:hip2]Şaşırdım. Umarım bir dahaki sefere bunu yapmazsın." />
+		<string id = "mfywicst42" text = "[if:convo_thinking][ib:weary2]Ben öyle düşünmüyorum. Şimdi lütfen beni yalnız bırak." />
+		<string id = "mfywicst43" text = "[if:convo_thinking]... Peki. Ama tekrardan canımın yanmasını istemiyorum." />
+		<string id = "mfywicst44" text = "[if:convo_pondering][ib:demure2]... Kaptan, sana söylemem gereken bir şey var." />
+		<string id = "mfywicst45" text = "Kaptanla yakınlaşmak istediğimi düşünüyorum. Sakıncası yoksa benimle..." />
+		<string id = "mfywicst46" text = "[if:convo_bemused]Kesinlikle sana layık biri olacağım Kaptan." />
+		<string id = "mfywicst47" text = "Ah... Haddimi aştığım için özür dilerim." />
+		<string id = "mfywicst48" text = "[if:convo_thinking][ib:demure]Yaralısın. Eğer bu bitkiyi kullanırsan çabuk iyileşirsin.." />
+		<string id = "mfywicst49" text = "Peki..." />
+		<string id = "mfywicst50" text = "Bence o kadar da ciddi bir yara değil. Hemşireliğin gerekli olduğunu düşünmüyorum." />
+		<string id = "mfywicst51" text = "O zaman yarayı odamda yavaşça kontrol edelim.." />
+		<string id = "mfywicst52" text = "[if:malfoy_custom_face]Bugün de tedavime ihtiyacın var mı?" />
+		<string id = "mfywicst53" text = "[if:convo_thinking][ib:weary2]Son yaşadıklarımdan dolayı böyle oldu. Dinlenmeye zaman ayırırsam iyileşirim." />
+		<string id = "mfywicst54" text = "Ah, bu kadar endişelenmene gerek yok. O kadar ciddi değil." />
+		<string id = "mfywicst55" text = "[if:convo_bemused][ib:weary2]Tamam, o zaman bugün senin mekana uğrayacağım." />
+		<string id = "mfywicst56" text = "[if:malfoy_custom_face][ib:weary2]Geçen seferki tedavi çok sertti. Bugün geçenkine göre daha rahat olmanı isteyebilir miyim?" />
+		<string id = "mfywicst57" text = "[if:convo_confused_normal][ib:weary2]Ah, lütfen bunu yapma." />
+		<string id = "mfywicst58" text = "Çok terlediğini gördüm. Bir süre ara verelim." />
+		<string id = "mfywicst59" text = "Umarım çok çalışmıyorsundur. Dinlenmen için orada bir yer hazırladım." />
+		<string id = "mfywicst60" text = "[if:malfoy_custom_face][ib:hip2]O zaman lütfen bana ‘kalan dayanıklılığını’ göster..." />
+		<string id = "mfywicst61" text = "[if:malfoy_custom_face]Ah, dayanıklılığın yetersiz mi? Sanırım senin için biraz toparlayabilirim." />
+		<string id = "mfywicst62" text = "[if:convo_relaxed_happy][ib:hip2]Tüm dayanıklılığını benim için kullanmak zorunda kalacaksın!" />
+		<string id = "mfywicst63" text = "Peki etrafımızdaki hayvanları bile mi avlamamız lazım? Ben hazırım." />
+		<string id = "mfywicst64" text = "Ne kadar çok kişi olursa o kadar çok erzak elde edebiliriz. Biz diğerlerinden ayrılırsak daha iyi olur." />
+		<string id = "mfywicst65" text = "Başkalarına söylemeye gerek olduğunu düşünmüyorum. Ekipmanımı gizlice toplayıp buraya geri döneceğim." />
+		<string id = "mfywicst66" text = "[if:malfoy_custom_face]Peki bugün de ava mı gideceğiz? Her ne kadar av benmişim gibi görünse de." />
+		<string id = "mfywicst67" text = "[if:convo_relaxed_happy][ib:hip2]Görünüşe göre avı çoktan bitirmişsin ve tadını çıkarma zamanı geldi, ama yine de ava çıkalım." />
+		<string id = "mfywicst68" text = "Ne tür bir eğitim düşünüyorsun?" />
+		<string id = "mfywicst69" text = "Tamam, bana öğretir öğretmez seni takip edeceğim." />
+		<string id = "mfywicst70" text = "[if:convo_thinking][ib:confident2]Bu önemli bir eğitim, bunu diğer arkadaşlarla birlikte yapacağım. Sadece bana özel derslerin adil olmadığını düşünüyorum." />
+		<string id = "mfywicst71" text = "Hangi silah türünde daha fazla eğitime ihtiyacım var peki?" />
+		<string id = "mfywicst72" text = "[if:malfoy_custom_face]Özel silahını nasıl kullanacağım konusunda bugün de ezgersiz yapmalı mıyım?" />
+		<string id = "mfywicst73" text = "[if:convo_relaxed_happy][ib:hip2]Aslında daha güçlü ve zorlu bir eğitime ihtiyacım olduğunu ben de düşündüm." />
+		<string id = "mfywicst74" text = "[if:malfoy_custom_face][ib:hip2]Bunu yapacağım. Senin özel silahının ustası olacağım..." />
+		<string id = "mfywicst75" text = "İlk olarak {Settlement}'{.de} tanıştık. {Days} gündür beraber çalışıyoruz." />
+		<string id = "mfywicst76" text = "İlk olarak {Settlement}'{.de} tanıştık. {Years} yıldır beraber çalışıyoruz." />
+		<string id = "mfywicst77" text = "{Settlement}'{.de} evlendik. {Days} gündür evliyiz." />
+		<string id = "mfywicst78" text = "{Settlement}'{.de} evlendik. {Years} yıldır evliyiz." />
+		<string id = "mfywicst79" text = "Biraz zaman ayırabilir misin?" />
+		<string id = "mfywicst80" text = "Bilmiyor olabilirsin ama seninle 10 yıldan fazladır birlikte olduğumuzu sana bildirmek istedim." />
+		<string id = "mfywicst81" text = "[if:convo_thinking][ib:demure]Son zamanlarda canın sıkılmış gibi göründü, endişeleniyorum." />
+		<string id = "mfywicst82" text = "[if:convo_thinking][ib:weary2]Son savaşta biraz yaralandım. Geçen sefer yaptığın tedavi gerçekten etkili olmuş gibi." />
+		<string id = "mfywicst83" text = "Demircilik işine oldukça odaklanmışsın..." />
+		<string id = "mfywicst84" text = "Partimizde yiyecek tükeniyor gibi görünüyor." />
+		<string id = "mfywicst85" text = "[if:convo_pondering][ib:hip2]Yani... Ben bir eş olarak görevimi yerine getirmeye hazırım, o yüzden sen de kendi görevinin gereğini yerine getirmelisin." />
+		<string id = "mfywicst86" text = "[if:convo_thinking][ib:nervous2]Üzgünüm! Yani, bugün ben..." />
+		<string id = "mfywicst87" text = "[if:convo_relaxed_happy][ib:hip2]Beni tatmin etme sorumluluğun gerçekten ağır olabilir..." />
+		<string id = "mfywicst88" text = "[if:convo_pondering][ib:hip2]... Başka bir gün? Ne zaman?" />
+		
+	
+	<!-- Merchant Lines -->
+		<string id = "mfywicmct00" text = "Tanıştığımıza sevindim, gezgin. Yanılmıyorsam, beni sıkça göreceksin." />
+		<string id = "mfywicmct01" text = "Sen kimsin? Ne iş yapıyorsun?" />
+		<string id = "mfywicmct02" text = "Özel eşyalarla ilgileniyorum—bulması zor şeylerle." />
+		<string id = "mfywicmct03" text = "Ne istediğini söyle." />
+		<string id = "mfywicmct04" text = "Yine mi benimle ticaret yapmaya geldin? Her zaman hoş geldin." />
+		<string id = "mfywicmct05" text = "Dedikodular hakkında sor." />
+		<string id = "mfywicmct06" text = "Yaşlanma karşıtı iksir" />
+		<string id = "mfywicmct07" text = "Görünmeyen Ekipman" />
+		<string id = "mfywicmct08" text = "Kıskanma azaltıcı peynir" />
+		<string id = "mfywicmct09" text = "(Sahip olduğun yaşlanma karşıtı iksiri dene.)" />
+		<string id = "mfywicmct10" text = "Kullanılacak iksiri seç" />
+		<string id = "mfywicmct11" text = "Geri git" />
+		<string id = "mfywicmct12" text = "Bugünlük bu kadar." />
+		<string id = "mfywicmct13" text = "Tamam, bir dahaki sefere görüşürüz." />
+		<string id = "mfywicmct14" text = "Dedikodulara göre, ya da birinin söylediğine göre, buraya hoş geldin." />
+		<string id = "mfywicmct15" text = "Bunun ne olduğunu tam olarak açıkla." />
+		<string id = "mfywicmct16" text = "Hmm, biraz iyi niyet gösterirsen, elimdeki bilgileri paylaşırım." />
+		<string id = "mfywicmct17" text = "Söylediklerimi tekrar eder ya da zaten bildiklerini anlatırsam, yapacak bir şeyim yok. Beğenmesen de para iadesi yapamam." />
+		<string id = "mfywicmct18" text = "Duyduğun şeyleri söyle. (1.000 altın)" />
+		<string id = "mfywicmct19" text = "Bu bilgi işine yarar." />
+		<string id = "mfywicmct20" text = "Param boşuna gitti..." />
+		<string id = "mfywicmct21" text = "Bir göz at." />
+		<string id = "mfywicmct22" text = "Bu iksiri içtiğin anda gençleşeceksin. Ama dikkat et, 19 yaşın altındaysan daha gençleşemezsin." />
+		<string id = "mfywicmct23" text = "Şanssızsan, yan etkiler olabilir. Kaliteli olanı tercih edersen, yan etkiler daha az olur ve etkisi daha iyi olur." />
+		<string id = "mfywicmct24" text = "Ticaret için teşekkür ederim..." />
+		<string id = "mfywicmct25" text = "Bir dakika, iksirin fiyatı farklı mı?" />
+		<string id = "mfywicmct26" text = "O kadar nadir bir malzeme ki fiyatı arttı... İşte böyle oldu." />
+		<string id = "mfywicmct27" text = "Tabii ki, eski fiyata geri dönmeyecek. Beklemek boşuna. Sadece daha da artacak." />
+		<string id = "mfywicmct28" text = "O kadar pahalı ki!" />
+		<string id = "mfywicmct29" text = "Bu tereyağına ihtiyacın var mı?" />
+		<string id = "mfywicmct30" text = "Birden fazla kişiyle aynı anda karşılaşırsan, sevgililerin bunu fark etme ihtimali azalacak..." />
+		<string id = "mfywicmct31" text = "Ve hatta ilişkiniz ortaya çıkarsa bile, size daha az kızacaklar." />
+		<string id = "mfywicmct32" text = "Şimdi o tereyağını alacağım." />
+		<string id = "mfywicmct33" text = "Sana yaşlanma karşıtı iksir vermek istiyorum." />
+		<string id = "mfywicmct34" text = "Birçok ürün arasında hangisini düşünüyorsun?" />
+		<string id = "mfywicmct35" text = "Hangi karakteri çağırmak istersin?" />
+		<string id = "mfywicmct36" text = "Eğer birisi burada yoksa, onu çağırabilirim." />
+		<string id = "mfywicmct37" text = "Ölmüş birini geri getirebilirim ama o durumda tamamen hafızasını kaybeder ve sıfırdan doğar." />
+		<string id = "mfywicmct38" text = "O karakteri çağırmak ister misin?" />
+		<string id = "mfywicmct39" text = "O karakter zaten bir kez öldü ya da bu dünyayı terk etti. Bu durumda biraz ekstra şeyler gerekebilir." />
+		<string id = "mfywicmct40" text = "Bunu yap lütfen." />
+		<string id = "mfywicmct41" text = "Kahraman Çağır" />
+
+		<string id = "mfywicmct50" text = "Duyduğuma göre, {Hero}'nun en sevdiği turnuva hediyesi {Category}ymış." />
+		<string id = "mfywicmct51" text = "Duyduğuma göre, {Hero} her türlü hediyeyi kabul edermiş." />
+		<string id = "mfywicmct52" text = "Duyduğuma göre, {Hero}'nun en sevdiği turnuva hediyeleri yüksek seviyeye sahip eşyalar." />
+		<string id = "mfywicmct53" text = "Duyduğuma göre, {Hero} {Category} konusunda yetenekli insanları tercih edermiş." />
+		<string id = "mfywicmct54" text = "Duyduğuma göre, {Hero} {Category} özelliklerine sahip insanları tercih edermiş." />
+		<string id = "mfywicmct55" text = "Duyduğuma göre, {Hero} çok parası olan insanları tercih edermiş." />
+		<string id = "mfywicmct56" text = "Duyduğuma göre, eğer bir arkadaşın yaralanmışsa, yerleşim yerinde ona tedavi yapabilirmişsin." />
+		<string id = "mfywicmct57" text = "Duyduğuma göre, eğer sen yaralanırsan, yerleşim yerinde arkadaşların seni tedavi edebilirmiş." />
+		<string id = "mfywicmct58" text = "Duyduğuma göre, eğer takımının yiyeceği azalırsa, dışarıda arkadaşlarınla konuşarak avlanmaya çıkabilirmişsin." />
+		<string id = "mfywicmct59" text = "Duyduğuma göre, eğer demirci atölyesinde stamina'n tükenirse, arkadaşların sana yardımcı olabilir." />
+		<string id = "mfywicmct60" text = "Duyduğuma göre, eğer silah becerilerin yüksekse, arkadaşlarını eğitebilirmişsin." />
+		<string id = "mfywicmct61" text = "Eğer {PerkName} yeteneğin varsa, belirli durumlarda onu kullanabilirmişsin." />
+		<string id = "mfywicmct62" text = "Eğer {PerkName} yeteneğin varsa, karşı cinse karşı çok daha çekici oluyormuşsun." />
+		<string id = "mfywicmct63" text = "Bir şey söyleyecektim ama neydi? Unuttum." />
+		<string id = "mfywicmct64" text = "Benden sıcak tereyağını bir kez satın alırsanız, etkisi devam eder." />
+		
+	<!-- Herdis -->
+		<string id = "mfywicnpc14" text = "Herdis" />
+		<string id = "mfyline140" text = "Birliği yöneten biri gibi görünüyorsunuz. Bana ilgi gösterdiğiniz için onur duydum." />
+		<string id = "mfyline141" text = "Üç küçük erkek kardeşim var; her biri olağanüstü yeteneklere sahip. Zamanla o üçüne destek olmak hayatımın en önemli parçası haline geldi." />
+		<string id = "mfyline142" text = "En küçüğü bile lordun takdirini alıp görevi için evi terk ettiğinde onun başarısından sevinç duydum, ama sonunda herkes gitmiş bir evde yalnız ben kaldım." />
+		<string id = "mfyline143" text = "Gerçekten istediğim şey bu muydu? Başardığım her şey bu muydu? Böyle düşünceler belirmeye başladı." />
+		<string id = "mfyline144" text = "Takdire şayan bir iş çıkardınız." />
+		<string id = "mfyline145" text = "Hmm… Görünüşe göre birliğe faydalı olabilecek çok fazla yeteneğiniz yok…" />
+		<string id = "mfyline146" text = "Ama dayanıklılığıma ve sebatıma güveniyorum. Bunlar benim güçlü yönlerim!" />
+		<string id = "mfyline147" text = "[if:convo_pondering][ib:hip2]Zaten bu kadar zaman geçti mi? Biraz sitem etmem için iyi bir fırsat sanırım. Bugün düzgünce yedin mi? Boş mideyle savaşa çıkmamalısın. Zırhının düzgünce sabitlendiğinden emin ol. Geçen seferki gibi gevşerse tehlikeli olabilir. At sürerken eğer binersen, eğer biniyorsan eyer kayışlarını her zaman tekrar kontrol et. Düşersen ciddi şekilde yaralanabilirsin!" />
+		<string id = "mfyline148" text = "[if:convo_bemused][ib:demure]Evi terk ettiğimde kendi hayatımı bulmak için yola çıktığımı söylemiştim. Bir diğer neden de harika bir eş bulmaktı. Çocukları iyi yetiştirebileceğime inanıyorum. Şey… benimle evlenir misin?" />
+		<string id = "mfyline149" text = "O, üç küçük kardeşine bakarak büyümüş en büyük kız kardeştir. Şimdi hepsi büyüdüğünde, kendi hayatını bulmak için yola çıktı." />
+
+	<!-- Anneli -->
+		<string id = "mfywicnpc15" text = "Anneli" />
+		<string id = "mfyline150" text = "Beni evlat edinen kaptanın yanında büyüdüm, o sert deniz esintisinin aslında oldukça ferahlatıcı olduğunu düşünürdüm." />
+		<string id = "mfyline151" text = "İsyan uyarı yapmaksızın patlak verdi ama kaptan bir veterandı. Peşimizdekileri güçlükle savuşturdu, beni bir sala itti ve halatları kesti." />
+		<string id = "mfyline152" text = "Hainler görgü tanıklarını susturmak için can atıyordu. Kaçmayı başardım ama son saniyede bir mızrak kaptanın vücudunu delip geçti." />
+		<string id = "mfyline153" text = "Sal ağırdı ama onu denizde bırakmaya gönlüm el vermedi. Tek başıma kıyıya kürek çektim ve onu kumsalın derinliklerine gömdüm." />
+		<string id = "mfyline154" text = "Bunun nasıl bir his olduğunu hayal bile etmek istemiyorum." />
+		<string id = "mfyline155" text = "Ölü bir adam uğruna neredeyse sen de ölüyordun." />
+		<string id = "mfyline156" text = "O sert rüzgarların neden bu kadar 'ferahlatıcı' geldiğini şimdi anlıyorum; hepsi kaptan sayesindeymiş." />
+		<string id = "mfyline157" text = "Yer yer gezdikten sonra fark ettim ki denizcilikten pek hoşlanmıyorum. Ovalarda at sürmek sanırım tam benim tarzım." />
+		<string id = "mfyline158" text = "[if:convo_thinking][ib:nervous2] Yolculuk sırasında gece çöktüğünde olanları hatırlıyorum. Şey... bu gece biraz seninle kalabilir miyim?" />
+		<string id = "mfyline158_0" text = "Eğer yardımı olacaksa, kısa bir süreliğine kalman kabul edilebilir sanırım." />
+		<string id = "mfyline158_1" text = "Hayır, bunu yapmayacağım." />
+		<string id = "mfyline158_2" text = "[if:convo_pondering][ib:hip2] Ama o anılar hala peşimi bırakmıyor. Eğer izin verirsen, sessizce yanında kalacağım." />
+		<string id = "mfyline158_3" text = "Anlaşıldı. Ama hiçbir şey olmayacak." />
+		<string id = "mfyline158_4" text = "Söylediğim gibi, kendi yerine dön." />
+		<string id = "mfyline158_5" text = "[if:malfoy_custom_face][ib:hip2] Sanırım bugün sonunda huzur içinde dinlenebileceğim..." />
+		<string id = "mfyline159" text = "Her durumda ne yapılması gerektiği konusunda keskin bir sezgiye sahip. Ticari gemilerde görev yapmış deneyimli bir denizcidir." />
+		
+	<!-- Elara -->
+		<string id = "mfywicnpc16" text = "Elara" />
+		<string id = "mfyline160" text = "Ben sadece sıradan bir gezginim. Hepsi bu." />
+		<string id = "mfyline161" text = "....." />
+		<string id = "mfyline162" text = "..... ......" />
+		<string id = "mfyline163" text = "Hm? Yani?" />
+		<string id = "mfyline164" text = "Kendine sıradan mı diyorsun? Ben büyük bir maceracıyım." />
+		<string id = "mfyline165" text = "....." />
+		<string id = "mfyline166" text = "Pek anlatacak bir şey yok doğrusu." />
+		<string id = "mfyline167" text = "Ne sorarsan sor, gizli hikâyeler ya da büyük sırlar yok. Ben sadece para ve kılıçları severim." />
+		<string id = "mfyline168" text = "Sanırım bana ait bir şeyi çaldın." />
+		<string id = "mfyline168_0" text = "[if:convo_pondering][ib:hip2]Ne? Durduk yere neden bahsediyorsunuz?" />
+		<string id = "mfyline168_1" text = "Seni hırsız kedi! Onu nereye sakladığını çok iyi biliyorum!" />
+		<string id = "mfyline168_2" text = "Ya da bilmiyorumdur." />
+		<string id = "mfyline169" text = "Hırsızlar Loncası'na bağlı olduğuna dair söylentiler var, ama doğru olup olmadığı bilinmiyor." />
+
+	</strings>
+</base>

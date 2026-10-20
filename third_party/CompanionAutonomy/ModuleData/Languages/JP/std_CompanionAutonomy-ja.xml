@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="日本語" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="予算" />
+    <string id="CA_mcm_g_purchases" text="購入" />
+    <string id="CA_mcm_g_autonomy" text="自主性" />
+    <string id="CA_mcm_g_display" text="表示" />
+    <string id="CA_mcm_unlimited" text="予算無制限（既定値）" />
+    <string id="CA_mcm_unlimited_hint" text="既定値です。仲間ごとに「クラン &gt; 部隊」で変更できます。有効にすると仲間は手当を受け取らず、あなたの所持金（最低保留額を超える分）から直接支払います。あなたが裕福なほど、良い装備を揃えます。" />
+    <string id="CA_mcm_allowance" text="週ごとの手当（既定値）" />
+    <string id="CA_mcm_allowance_hint" text="既定値です。仲間ごとに「クラン &gt; 部隊」で変更できます。毎週あなたの所持金から支払われる額です。" />
+    <string id="CA_mcm_cap" text="財布の上限" />
+    <string id="CA_mcm_cap_hint" text="仲間が貯められる最大額です。これを超えると手当は支払われません。0 = 上限なし。" />
+    <string id="CA_mcm_reserve" text="プレイヤーの最低保留額" />
+    <string id="CA_mcm_reserve_hint" text="手当や予算無制限の購入によって、あなたの所持金がこの額を下回ることはありません。" />
+    <string id="CA_mcm_family" text="家族を含める" />
+    <string id="CA_mcm_family_hint" text="有効にすると、部隊を率いる家族も対象になります（雇った仲間だけではありません）。" />
+    <string id="CA_mcm_refund" text="死亡時に返還" />
+    <string id="CA_mcm_refund_hint" text="仲間が死亡した場合、財布の残りはあなたに戻ります。" />
+    <string id="CA_mcm_equip_share" text="装備の割合 (%)" />
+    <string id="CA_mcm_equip_share_hint" text="町を訪れるたびに仲間が装備に使える財布の割合です。" />
+    <string id="CA_mcm_troop_share" text="兵の割合 (%)" />
+    <string id="CA_mcm_troop_share_hint" text="町を訪れるたびに仲間が新兵に使える財布の割合です。" />
+    <string id="CA_mcm_slot_share" text="1品あたりの上限 (%)" />
+    <string id="CA_mcm_slot_share_hint" text="装備1品の価格は、残りの装備予算のこの割合を超えられません。財布が豊かなほど高価な品を買います。" />
+    <string id="CA_mcm_min_upgrade" text="交換に必要な最低向上率 (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="現在の品より少なくともこの割合だけ優れていなければ購入しません（無駄な買い物を防ぎます）。" />
+    <string id="CA_mcm_sellback" text="旧装備の売却率 (%)" />
+    <string id="CA_mcm_sellback_hint" text="仲間が装備を交換するときに回収される売値の割合です。" />
+    <string id="CA_mcm_min_budget" text="購入に必要な最低予算" />
+    <string id="CA_mcm_min_budget_hint" text="この額を下回ると仲間は何も買いません（貯金します）。" />
+    <string id="CA_mcm_cooldown" text="購入間隔（日）" />
+    <string id="CA_mcm_cooldown_hint" text="同じ仲間の買い物と次の買い物の間に必要な最低日数です。" />
+    <string id="CA_mcm_max_recruits" text="1回の訪問の最大新兵数" />
+    <string id="CA_mcm_max_recruits_hint" text="町を訪れるたびに募集される兵の最大数です。" />
+    <string id="CA_mcm_troop_cost" text="新兵の費用 (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="財布から支払う新兵の価格倍率です（100% = このModの基本価格）。" />
+    <string id="CA_mcm_promote" text="兵を昇格させる" />
+    <string id="CA_mcm_promote_hint" text="有効にすると、仲間は財布の兵の割合をまず経験を積んだ兵の昇格に使い、残りで新兵を募集します。" />
+    <string id="CA_mcm_dismiss" text="編成外の兵を解雇する" />
+    <string id="CA_mcm_dismiss_hint" text="軍の編成を設定した仲間のみ。有効にすると、編成に合わない兵は、正しい新兵の枠を空けるためだけに少しずつ解雇されます。" />
+    <string id="CA_mcm_fill_free" text="空いた枠を他の兵で埋める" />
+    <string id="CA_mcm_fill_free_hint" text="軍の編成を設定した仲間のみ。有効にすると、編成に含まれない枠は町にいる任意の新兵で埋められます。無効にすると、編成内の兵だけを募集します。" />
+    <string id="CA_mcm_buy_horse" text="馬がなければ購入する" />
+    <string id="CA_mcm_buy_horse_hint" text="有効にすると、徒歩の仲間は必要な騎乗スキルがあれば乗騎（その後に鞍や馬鎧）を購入します。" />
+    <string id="CA_mcm_min_riding" text="最初の馬に必要な騎乗スキル" />
+    <string id="CA_mcm_min_riding_hint" text="徒歩の仲間は、騎乗スキルがこの値に達した場合にのみ最初の馬を購入します（純粋な歩兵を馬に乗せないため）。" />
+    <string id="CA_mcm_autoshop" text="自動で町へ行く（既定値）" />
+    <string id="CA_mcm_autoshop_hint" text="既定値です。仲間ごとに「クラン &gt; 部隊」で変更できます。有効にすると、しばらく何も買っていない裕福な仲間が、自ら最寄りの友好的な町へ装備を整えに行きます。" />
+    <string id="CA_mcm_autoshop_budget" text="出発に必要な最低所持金" />
+    <string id="CA_mcm_autoshop_budget_hint" text="財布がこの額に達した場合にのみ仲間は出発します（予算無制限の場合はあなたの使える所持金）。" />
+    <string id="CA_mcm_autoshop_days" text="出発までの無購入日数" />
+    <string id="CA_mcm_autoshop_days_hint" text="自分から町へ行くと決めるまでの、何も買わなかった日数です。" />
+    <string id="CA_mcm_recruit_trips" text="募兵の旅" />
+    <string id="CA_mcm_recruit_trips_hint" text="軍の編成を設定し、自分で買い物をする仲間のみ。必要な兵が地元で募集できない場合、それを募集できる最寄りの友好的な町か村へ向かいます。" />
+    <string id="CA_mcm_recruit_distance" text="旅の最大距離" />
+    <string id="CA_mcm_recruit_distance_hint" text="募兵の旅で仲間が移動できる距離（マップ単位）。値が大きいほど、カルラディアの広い範囲を移動できます。" />
+    <string id="CA_mcm_recruit_missing" text="旅に出る前の不足兵数" />
+    <string id="CA_mcm_recruit_missing_hint" text="編成の兵がこの数以上不足している場合にのみ、募兵の旅に出ます。" />
+    <string id="CA_mcm_noarmies" text="他の領主の軍に加わらない（既定）" />
+    <string id="CA_mcm_noarmies_hint" text="既定値。仲間ごとに「氏族 &gt; 部隊」で変更できます。有効にすると、仲間は他の領主が率いる軍への参加を断り、戦闘中でなければ所属中の軍からすぐに離れます。あなた自身の軍には引き続き呼べます。" />
+    <string id="CA_mcm_messages" text="メッセージを表示" />
+    <string id="CA_mcm_messages_hint" text="仲間が装備を買ったとき、兵を募集したとき、手当を受け取ったときにメッセージを表示します。" />
+    <string id="CA_ui_title" text="仲間の財布" />
+    <string id="CA_ui_allowance" text="手当 / 週" />
+    <string id="CA_ui_wallet" text="現在の財布" />
+    <string id="CA_ui_unlimited" text="予算無制限" />
+    <string id="CA_ui_autoshop" text="自分で買い物に行く" />
+    <string id="CA_ui_noarmies" text="他の領主の軍に加わらない" />
+    <string id="CA_ui_treasury" text="クランの金庫" />
+    <string id="CA_ui_none" text="まだ購入なし" />
+    <string id="CA_ui_last" text="最後の購入：{TEXT}" />
+    <string id="CA_ui_composition" text="軍の編成（{COUNT}）" />
+    <string id="CA_ui_composition_none" text="軍の編成：自由" />
+    <string id="CA_err_popup" text="[Companion Autonomy] 編成ウィンドウを開けませんでした：{ERROR}" />
+    <string id="CA_msg_promotes" text="{COUNT}人の兵を昇格（{GOLD}ゴールド）" />
+    <string id="CA_msg_dismisses" text="{COUNT}人の兵を解雇" />
+    <string id="CA_msg_recruits" text="{COUNT}人の兵を募集（{GOLD}ゴールド）" />
+    <string id="CA_msg_left" text="残り{GOLD}ゴールド" />
+    <string id="CA_msg_summary" text="{HERO}（{TOWN}）：{DETAILS}{LEFT}。" />
+    <string id="CA_hist_more" text="他{COUNT}点" />
+    <string id="CA_hist_soldiers" text="兵{COUNT}人" />
+    <string id="CA_hist_today" text="今日" />
+    <string id="CA_hist_yesterday" text="昨日" />
+    <string id="CA_hist_days" text="{COUNT}日前" />
+    <string id="CA_hist_line" text="{WHAT}（{TOWN}、{WHEN}、{GOLD}ゴールド）" />
+    <string id="CA_msg_allowances" text="手当を支払いました：{COUNT}人の仲間に{GOLD}ゴールド。" />
+    <string id="CA_msg_reserve" text="{COUNT}人の仲間が手当を受け取れませんでした：最低保留額に達しています。" />
+    <string id="CA_msg_arrived_empty" text="{HERO}は{TOWN}に着きましたが、財布は空です。" />
+    <string id="CA_msg_buys" text="購入：{ITEMS}（{GOLD}ゴールド）" />
+    <string id="CA_msg_nothing" text="{HERO}は{TOWN}を見て回りましたが、手の届く良い品はありませんでした。" />
+    <string id="CA_err_shopping" text="[Companion Autonomy] {HERO}の買い物中にエラー：{ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] このバージョンのゲームでは移動命令が見つかりませんでした。" />
+    <string id="CA_err_dump" text="関数一覧を保存しました：{PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] 移動命令に失敗しました：{ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO}は町へ行くのをやめました：{REASON}。" />
+    <string id="CA_reason_unsafe" text="町はもう安全ではありません" />
+    <string id="CA_reason_timeout" text="移動に時間がかかりすぎました" />
+    <string id="CA_reason_army" text="軍に加わりました" />
+    <string id="CA_msg_recruit_trip" text="{HERO}は軍の編成のため、{TOWN}へ兵を募集しに向かいます。" />
+    <string id="CA_msg_autotrip" text="{HERO}は装備を整えるため、自ら{TOWN}へ向かいます。" />
+    <string id="CA_msg_left_army" text="{HERO}は{LEADER}の軍を離れ、自分の務めに戻ります。" />
+    <string id="CA_msg_refund" text="{HERO}の財布（{GOLD}ゴールド）があなたに戻りました。" />
+    <string id="CA_dlg_ask_wallet" text="財布の具合はどうだ？" />
+    <string id="CA_dlg_wallet_unlimited" text="金庫は好きに使っていいと言われているからな。価値のある物しか買わないさ。" />
+    <string id="CA_dlg_wallet_amount" text="手当の残りは{GOLD}ゴールドだ。" />
+    <string id="CA_dlg_ask_history" text="最近は何を買った？" />
+    <string id="CA_dlg_history_none" text="まだ何も買っていない。" />
+    <string id="CA_dlg_history_intro" text="最近買った物はこれだ：" />
+    <string id="CA_dlg_take_wallet" text="手当の残りを返してくれ。" />
+    <string id="CA_dlg_take_answer" text="ほら、全部ある。手持ちでなんとかするさ。" />
+    <string id="CA_dlg_order_shop" text="町へ行って装備を整えてこい。" />
+    <string id="CA_dlg_order_ok" text="了解した。{CA_ORDER_TOWN}へ向かい、より良い装備で戻ってくる。" />
+    <string id="CA_dlg_order_fail" text="今のところ近くに安全な町はない。" />
+    <string id="CA_dlg_cancel_shop" text="町のことは忘れて、自分の務めに戻れ。" />
+    <string id="CA_dlg_cancel_answer" text="わかった。" />
+    <string id="CA_grp_kingdom" text="王国の兵：{NAME}" />
+    <string id="CA_grp_clan" text="氏族の兵：{NAME}" />
+    <string id="CA_pop_have" text="部隊内：{COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="軍の編成：{HERO}" />
+    <string id="CA_pop_selected" text="選んだ兵種" />
+    <string id="CA_pop_bar_count" text="{COUNT}人" />
+    <string id="CA_pop_empty" text="編成なし：仲間は自由に募集します。" />
+    <string id="CA_pop_over" text="{TOTAL}人を選択：部隊の上限（{LIMIT}）より{COUNT}人多いです。" />
+    <string id="CA_pop_summary" text="{TOTAL} / {LIMIT}人を選択、任意の兵用の空き枠：{FREE}。" />
+    <string id="CA_pop_summary_only" text="{TOTAL} / {LIMIT}人を選択。仲間はこれらの兵だけを募集します。" />
+    <string id="CA_pop_no_preset" text="保存済みのプリセットなし" />
+    <string id="CA_pop_loaded" text="プリセットを読み込みました：{NAME}" />
+    <string id="CA_pop_saved" text="プリセットを保存しました：{NAME}" />
+    <string id="CA_pop_deleted" text="プリセットを削除しました：{NAME}" />
+    <string id="CA_pop_bar_target" text="目標" />
+    <string id="CA_pop_bar_current" text="現在" />
+    <string id="CA_pop_kind_inf" text="歩兵" />
+    <string id="CA_pop_kind_arc" text="弓兵" />
+    <string id="CA_pop_kind_cav" text="騎兵" />
+    <string id="CA_pop_kind_ha" text="騎馬弓兵" />
+    <string id="CA_pop_presets" text="プリセット" />
+    <string id="CA_pop_load" text="読み込む" />
+    <string id="CA_pop_save" text="新規保存" />
+    <string id="CA_pop_overwrite" text="上書き" />
+    <string id="CA_pop_delete" text="削除" />
+    <string id="CA_pop_clear" text="すべて消去" />
+    <string id="CA_pop_done" text="決定" />
+    <string id="CA_pop_cancel" text="キャンセル" />
+    <string id="CA_pop_hint" text="仲間は選んだ兵種につながる兵を募集し、そこに到達するまで昇格させます。" />
+  </strings>
+</base>

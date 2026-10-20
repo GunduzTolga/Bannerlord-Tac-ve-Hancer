@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Italiano" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "Si consiglia di configurare queste impostazioni prima di iniziare una nuova partita." />
+
+		<string id = "mcmwictitle00" text = "Mantieni età" />
+		<string id = "mcmwictitle01" text = "Interazioni extra" />
+		<string id = "mcmwictitle02" text = "Un venditore sospetto" />
+		<string id = "mcmwictitle03" text = "Compagni maschili" />
+		<string id = "mcmwictitle04" text = "Rhagaea" />
+
+		<string id = "mcmwichint00" text = "Mantiene l’età dei personaggi aggiunti fino a quando non li assumi." />
+		<string id = "mcmwichint01" text = "Applica le interazioni extra fornite da questa mod." />
+		<string id = "mcmwichint02" text = "Aggiunge un venditore sospetto nel mondo con funzionalità extra." />
+		<string id = "mcmwichint03" text = "Aggiunge tre compagni maschili. (Nei personaggi maschili, la pelle del viso e del corpo potrebbe non essere perfettamente allineata.)" />
+		<string id = "mcmwichint04" text = "Modifica l'aspetto di Rhagaea." />
+	</strings>
+</base>

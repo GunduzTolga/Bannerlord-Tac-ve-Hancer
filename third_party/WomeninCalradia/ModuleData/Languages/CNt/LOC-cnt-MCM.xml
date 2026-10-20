@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "繁體中文" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "建議在開始新遊戲之前配置這些設定。" />
+
+		<string id = "mcmwictitle00" text = "保留年齡" />
+		<string id = "mcmwictitle01" text = "額外交互" />
+		<string id = "mcmwictitle02" text = "可疑的小販" />
+		<string id = "mcmwictitle03" text = "男性同伴" />
+		<string id = "mcmwictitle04" text = "拉蓋婭" />
+
+		<string id = "mcmwichint00" text = "在你雇用之前保留新增角色的年齡。" />
+		<string id = "mcmwichint01" text = "應用此模組提供的額外交互。" />
+		<string id = "mcmwichint02" text = "在世界中新增一名具有額外功能的可疑小販。" />
+		<string id = "mcmwichint03" text = "新增三名男性同伴。（男性角色的臉部與身體皮膚可能無法完全對齊。）" />
+		<string id = "mcmwichint04" text = "變更 拉蓋婭 的外觀。" />
+	</strings>
+</base>

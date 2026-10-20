@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "Türkçe" />
+	</tags>
+	<strings>
+		<string id = "mcmwicmodname" text = "Women in Calradia" />
+		
+		<string id = "mcmwicgroup00" text = "Yeni bir oyuna başlamadan önce bu ayarların yapılandırılması tavsiye edilir." />
+
+		<string id = "mcmwictitle00" text = "Yaşı Koru" />
+		<string id = "mcmwictitle01" text = "Ekstra Etkileşimler" />
+		<string id = "mcmwictitle02" text = "Şüpheli Bir Satıcı" />
+		<string id = "mcmwictitle03" text = "Erkek Yoldaşlar" />
+		<string id = "mcmwictitle04" text = "Rhagaea" />
+		
+		<string id = "mcmwichint00" text = "Eklenen karakterlerin yaşını, onları işe alana kadar korur." />
+		<string id = "mcmwichint01" text = "Bu mod tarafından sağlanan ekstra etkileşimleri uygular." />
+		<string id = "mcmwichint02" text = "Ekstra özelliklere sahip şüpheli bir satıcıyı dünyaya ekler." />
+		<string id = "mcmwichint03" text = "Üç erkek yoldaş ekler. (Erkek karakterlerde yüz ve vücut derisi mükemmel şekilde hizalanmayabilir.)" />
+		<string id = "mcmwichint04" text = "Rhagaea'nın görünümünü değiştirir." />
+	</strings>
+</base>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="한국어" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="예산" />
+    <string id="CA_mcm_g_purchases" text="구매" />
+    <string id="CA_mcm_g_autonomy" text="자율성" />
+    <string id="CA_mcm_g_display" text="표시" />
+    <string id="CA_mcm_unlimited" text="무제한 예산 (기본값)" />
+    <string id="CA_mcm_unlimited_hint" text="기본값이며, 동료마다 '가문 &gt; 부대'에서 바꿀 수 있습니다. 켜면 동료는 수당을 받지 않고 당신의 골드(최소 예비금 초과분)에서 직접 지출합니다. 당신이 부유할수록 더 좋은 장비를 갖춥니다." />
+    <string id="CA_mcm_allowance" text="주간 수당 (기본값)" />
+    <string id="CA_mcm_allowance_hint" text="기본값이며, 동료마다 '가문 &gt; 부대'에서 바꿀 수 있습니다. 매주 당신의 골드에서 지급되는 금액입니다." />
+    <string id="CA_mcm_cap" text="지갑 한도" />
+    <string id="CA_mcm_cap_hint" text="동료가 모을 수 있는 최대 금액입니다. 이를 넘으면 더 이상 수당을 받지 않습니다. 0 = 한도 없음." />
+    <string id="CA_mcm_reserve" text="플레이어 최소 예비금" />
+    <string id="CA_mcm_reserve_hint" text="수당이나 무제한 예산 구매로 인해 당신의 골드가 이 기준 아래로 내려가지 않습니다." />
+    <string id="CA_mcm_family" text="가족 포함" />
+    <string id="CA_mcm_family_hint" text="켜면 부대를 이끄는 가족도 적용됩니다 (영입한 동료만이 아니라)." />
+    <string id="CA_mcm_refund" text="사망 시 환급" />
+    <string id="CA_mcm_refund_hint" text="동료가 사망하면 지갑에 남은 돈이 당신에게 돌아옵니다." />
+    <string id="CA_mcm_equip_share" text="장비 비율 (%)" />
+    <string id="CA_mcm_equip_share_hint" text="동료가 도시를 방문할 때마다 장비에 쓸 수 있는 지갑의 비율입니다." />
+    <string id="CA_mcm_troop_share" text="병력 비율 (%)" />
+    <string id="CA_mcm_troop_share_hint" text="동료가 도시를 방문할 때마다 신병 모집에 쓸 수 있는 지갑의 비율입니다." />
+    <string id="CA_mcm_slot_share" text="품목당 최대 (%)" />
+    <string id="CA_mcm_slot_share_hint" text="장비 한 점의 가격은 남은 장비 예산의 이 비율을 넘을 수 없습니다. 지갑이 두둑할수록 더 비싼 물건을 삽니다." />
+    <string id="CA_mcm_min_upgrade" text="교체 최소 향상도 (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="현재 물건보다 최소 이만큼 좋아야 구매합니다 (불필요한 구매 방지)." />
+    <string id="CA_mcm_sellback" text="기존 물품 되팔기 (%)" />
+    <string id="CA_mcm_sellback_hint" text="동료가 물건을 교체할 때 돌려받는 판매가의 비율입니다." />
+    <string id="CA_mcm_min_budget" text="구매 최소 예산" />
+    <string id="CA_mcm_min_budget_hint" text="이 금액 미만이면 동료는 아무것도 사지 않습니다 (저축합니다)." />
+    <string id="CA_mcm_cooldown" text="구매 간격 (일)" />
+    <string id="CA_mcm_cooldown_hint" text="같은 동료의 두 번의 구매 사이 최소 일수입니다." />
+    <string id="CA_mcm_max_recruits" text="방문당 최대 신병 수" />
+    <string id="CA_mcm_max_recruits_hint" text="도시 방문마다 모집하는 최대 병사 수입니다." />
+    <string id="CA_mcm_troop_cost" text="신병 비용 (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="지갑에서 지불하는 신병 가격의 배율입니다 (100% = 모드 기본 가격)." />
+    <string id="CA_mcm_promote" text="병력 승급" />
+    <string id="CA_mcm_promote_hint" text="켜면 동료가 지갑의 병력 비율을 먼저 숙련된 병사의 승급에 쓰고, 남은 돈으로 신병을 모집합니다." />
+    <string id="CA_mcm_dismiss" text="편성 외 병력 해산" />
+    <string id="CA_mcm_dismiss_hint" text="군대 편성이 있는 동료에게만 적용됩니다. 켜면 편성에 맞지 않는 병사가 알맞은 신병의 자리를 만들 때만 조금씩 해산됩니다." />
+    <string id="CA_mcm_fill_free" text="빈 자리를 다른 병력으로 채우기" />
+    <string id="CA_mcm_fill_free_hint" text="군대 편성이 설정된 동료에게만 적용됩니다. 켜면 편성에 포함되지 않은 자리를 마을의 아무 신병으로 채웁니다. 끄면 편성에 있는 병력만 모집합니다." />
+    <string id="CA_mcm_buy_horse" text="말이 없으면 구매" />
+    <string id="CA_mcm_buy_horse_hint" text="켜면 도보 동료가 필요한 승마 수준을 갖췄을 때 탈것(그다음 안장이나 마갑)을 삽니다." />
+    <string id="CA_mcm_min_riding" text="첫 말에 필요한 최소 승마" />
+    <string id="CA_mcm_min_riding_hint" text="도보 동료는 승마가 이 수준에 도달해야 첫 말을 삽니다 (순수 보병을 말에 태우지 않도록)." />
+    <string id="CA_mcm_autoshop" text="자동 도시 방문 (기본값)" />
+    <string id="CA_mcm_autoshop_hint" text="기본값이며, 동료마다 '가문 &gt; 부대'에서 바꿀 수 있습니다. 켜면 한동안 아무것도 사지 않은 부유한 동료가 스스로 가장 가까운 우호 도시로 가서 장비를 갖춥니다." />
+    <string id="CA_mcm_autoshop_budget" text="출발 최소 지갑" />
+    <string id="CA_mcm_autoshop_budget_hint" text="지갑이 이 금액에 도달해야 동료가 출발합니다 (무제한 예산일 때: 당신의 사용 가능한 골드)." />
+    <string id="CA_mcm_autoshop_days" text="출발 전 미구매 일수" />
+    <string id="CA_mcm_autoshop_days_hint" text="스스로 도시에 가기로 결정하기 전까지 아무것도 사지 않은 일수입니다." />
+    <string id="CA_mcm_recruit_trips" text="모병 여행" />
+    <string id="CA_mcm_recruit_trips_hint" text="군대 편성이 설정되어 있고 스스로 쇼핑하는 동료에게만 적용됩니다. 필요한 병력을 자기 지역에서 모집할 수 없으면, 그 병력을 제공하는 가장 가까운 우호 도시나 마을로 갑니다." />
+    <string id="CA_mcm_recruit_distance" text="최대 여행 거리" />
+    <string id="CA_mcm_recruit_distance_hint" text="모병 여행에서 동료가 갈 수 있는 최대 거리(지도 단위)입니다. 값이 클수록 칼라디아를 더 멀리 가로지를 수 있습니다." />
+    <string id="CA_mcm_recruit_missing" text="여행 전 부족 병력 수" />
+    <string id="CA_mcm_recruit_missing_hint" text="편성에서 병력이 최소 이만큼 부족할 때만 모병 여행을 떠납니다." />
+    <string id="CA_mcm_noarmies" text="다른 영주의 군대에 합류하지 않음 (기본값)" />
+    <string id="CA_mcm_noarmies_hint" text="기본값이며 동료마다 '가문 &gt; 부대'에서 바꿀 수 있습니다. 켜면 동료는 다른 영주가 이끄는 군대에 합류하기를 거부하고, 전투 중이 아니면 속한 군대를 바로 떠납니다. 당신의 군대에는 여전히 부를 수 있습니다." />
+    <string id="CA_mcm_messages" text="메시지 표시" />
+    <string id="CA_mcm_messages_hint" text="동료가 장비를 사거나, 병사를 모집하거나, 수당을 받을 때 메시지를 표시합니다." />
+    <string id="CA_ui_title" text="동료의 지갑" />
+    <string id="CA_ui_allowance" text="수당 / 주" />
+    <string id="CA_ui_wallet" text="현재 지갑" />
+    <string id="CA_ui_unlimited" text="무제한 예산" />
+    <string id="CA_ui_autoshop" text="스스로 쇼핑하러 감" />
+    <string id="CA_ui_noarmies" text="다른 영주의 군대에 합류하지 않음" />
+    <string id="CA_ui_treasury" text="가문 금고" />
+    <string id="CA_ui_none" text="아직 구매 없음" />
+    <string id="CA_ui_last" text="최근 구매: {TEXT}" />
+    <string id="CA_ui_composition" text="군대 편성 ({COUNT})" />
+    <string id="CA_ui_composition_none" text="군대 편성: 자유" />
+    <string id="CA_err_popup" text="[Companion Autonomy] 편성 창을 열 수 없습니다: {ERROR}" />
+    <string id="CA_msg_promotes" text="병사 {COUNT}명 승급 ({GOLD} 골드)" />
+    <string id="CA_msg_dismisses" text="병사 {COUNT}명 해산" />
+    <string id="CA_msg_recruits" text="병사 {COUNT}명 모집 ({GOLD} 골드)" />
+    <string id="CA_msg_left" text="{GOLD} 골드 남음" />
+    <string id="CA_msg_summary" text="{HERO} ({TOWN}): {DETAILS}{LEFT}." />
+    <string id="CA_hist_more" text="외 {COUNT}개" />
+    <string id="CA_hist_soldiers" text="병사 {COUNT}명" />
+    <string id="CA_hist_today" text="오늘" />
+    <string id="CA_hist_yesterday" text="어제" />
+    <string id="CA_hist_days" text="{COUNT}일 전" />
+    <string id="CA_hist_line" text="{WHAT} ({TOWN}, {WHEN}, {GOLD} 골드)" />
+    <string id="CA_msg_allowances" text="수당 지급: 동료 {COUNT}명에게 {GOLD} 골드." />
+    <string id="CA_msg_reserve" text="동료 {COUNT}명이 수당을 받지 못했습니다: 최소 예비금에 도달했습니다." />
+    <string id="CA_msg_arrived_empty" text="{HERO}이(가) {TOWN}에 도착했지만 지갑이 비어 있습니다." />
+    <string id="CA_msg_buys" text="구매: {ITEMS} ({GOLD} 골드)" />
+    <string id="CA_msg_nothing" text="{HERO}이(가) {TOWN}을(를) 둘러봤지만 살 수 있는 더 좋은 물건이 없습니다." />
+    <string id="CA_err_shopping" text="[Companion Autonomy] {HERO} 구매 중 오류: {ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] 이 게임 버전에서 이동 명령을 찾을 수 없습니다." />
+    <string id="CA_err_dump" text="함수 목록 저장 위치: {PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] 이동 명령 실패: {ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO}이(가) 도시 방문을 포기했습니다: {REASON}." />
+    <string id="CA_reason_unsafe" text="도시가 더 이상 안전하지 않음" />
+    <string id="CA_reason_timeout" text="이동 시간이 너무 길었음" />
+    <string id="CA_reason_army" text="군대에 합류함" />
+    <string id="CA_msg_recruit_trip" text="{HERO}이(가) 군대 편성을 위해 {TOWN}(으)로 병력을 모집하러 갑니다." />
+    <string id="CA_msg_autotrip" text="{HERO}이(가) 장비를 갖추러 스스로 {TOWN}(으)로 향합니다." />
+    <string id="CA_msg_left_army" text="{HERO}이(가) {LEADER}의 군대를 떠나 자기 일로 돌아갑니다." />
+    <string id="CA_msg_refund" text="{HERO}의 지갑({GOLD} 골드)이 당신에게 돌아왔습니다." />
+    <string id="CA_dlg_ask_wallet" text="지갑 사정은 어떤가?" />
+    <string id="CA_dlg_wallet_unlimited" text="금고를 마음대로 써도 된다고 하셨지요. 값어치 있는 것만 삽니다." />
+    <string id="CA_dlg_wallet_amount" text="수당이 {GOLD} 골드 남았습니다." />
+    <string id="CA_dlg_ask_history" text="최근에 무엇을 샀나?" />
+    <string id="CA_dlg_history_none" text="아직 아무것도 사지 않았습니다." />
+    <string id="CA_dlg_history_intro" text="최근에 산 것들입니다:" />
+    <string id="CA_dlg_take_wallet" text="남은 수당을 돌려주게." />
+    <string id="CA_dlg_take_answer" text="여기 있습니다, 전부요. 가진 것으로 어떻게든 해보죠." />
+    <string id="CA_dlg_order_shop" text="도시에 가서 장비를 개선하게." />
+    <string id="CA_dlg_order_ok" text="알겠습니다. {CA_ORDER_TOWN}(으)로 가서 더 나은 장비를 갖추고 돌아오겠습니다." />
+    <string id="CA_dlg_order_fail" text="지금은 근처에 안전한 도시가 없습니다." />
+    <string id="CA_dlg_cancel_shop" text="도시는 잊고 하던 일로 돌아가게." />
+    <string id="CA_dlg_cancel_answer" text="알겠습니다." />
+    <string id="CA_grp_kingdom" text="왕국 병종: {NAME}" />
+    <string id="CA_grp_clan" text="가문 병종: {NAME}" />
+    <string id="CA_pop_have" text="부대 내: {COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="군대 편성: {HERO}" />
+    <string id="CA_pop_selected" text="선택한 병종" />
+    <string id="CA_pop_bar_count" text="병력 {COUNT}명" />
+    <string id="CA_pop_empty" text="편성 없음: 동료가 자유롭게 모집합니다." />
+    <string id="CA_pop_over" text="{TOTAL}명 선택, 부대 정원({LIMIT})보다 {COUNT}명 많습니다." />
+    <string id="CA_pop_summary" text="{TOTAL} / {LIMIT}명 선택, 아무 병력이나 넣을 빈자리 {FREE}개." />
+    <string id="CA_pop_summary_only" text="{TOTAL} / {LIMIT}명 선택. 동료는 이 병력만 모집합니다." />
+    <string id="CA_pop_no_preset" text="저장된 프리셋 없음" />
+    <string id="CA_pop_loaded" text="프리셋 불러옴: {NAME}" />
+    <string id="CA_pop_saved" text="프리셋 저장됨: {NAME}" />
+    <string id="CA_pop_deleted" text="프리셋 삭제됨: {NAME}" />
+    <string id="CA_pop_bar_target" text="목표" />
+    <string id="CA_pop_bar_current" text="현재" />
+    <string id="CA_pop_kind_inf" text="보병" />
+    <string id="CA_pop_kind_arc" text="궁병" />
+    <string id="CA_pop_kind_cav" text="기병" />
+    <string id="CA_pop_kind_ha" text="궁기병" />
+    <string id="CA_pop_presets" text="프리셋" />
+    <string id="CA_pop_load" text="불러오기" />
+    <string id="CA_pop_save" text="새로 저장" />
+    <string id="CA_pop_overwrite" text="덮어쓰기" />
+    <string id="CA_pop_delete" text="삭제" />
+    <string id="CA_pop_clear" text="모두 지우기" />
+    <string id="CA_pop_done" text="완료" />
+    <string id="CA_pop_cancel" text="취소" />
+    <string id="CA_pop_hint" text="동료가 선택한 병종으로 이어지는 병력을 모집하고, 도달할 때까지 승급시킵니다." />
+  </strings>
+</base>

@@ -1,0 +1,623 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<base xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd = "http://www.w3.org/2001/XMLSchema" type = "string">
+	<tags>
+		<tag language = "繁體中文" />
+	</tags>
+	<strings>
+  
+    <!-- Name -->
+		<string id = "mfywicnpc00" text = "索娜德爾" />
+		<string id = "mfywicnpc01" text = "安妮特" />
+		<string id = "mfywicnpc02" text = "齊安娜" />
+		<string id = "mfywicnpc03" text = "米娜" />
+		<string id = "mfywicnpc04" text = "貝拉多娜" />
+		<string id = "mfywicnpc05" text = "琳達" />
+		<string id = "mfywicnpc06" text = "阿德里安娜" />
+		<string id = "mfywicnpc07" text = "勞拉" />
+		<string id = "mfywicnpc08" text = "奧黛爾" />
+		<string id = "mfywicnpc09" text = "蘇蘭" />
+		<string id = "mfywicnpc10" text = "卡莉" />
+		<string id = "mfywicnpc11" text = "菲奈拉" />
+		<string id = "mfywicnpc12" text = "拉亞娜" />
+		<string id = "mfywicnpc13" text = "約瑟琳" />
+		<string id = "mfywicnpc50" text = "維托米爾爵士" />
+		<string id = "mfywicnpc51" text = "弗朗茲" />
+		<string id = "mfywicnpc52" text = "雷斯溫" />
+		<string id = "mfywicnpcmct" text = "可疑的商販" />
+
+	<!-- Clan -->
+		<string id = "mfywicclan0" text = "魯賓" />
+		<string id = "mfywicnpccln0" text = "達米爾" />
+		<string id = "mfywicnpccln1" text = "盧德米拉" />
+		<string id = "mfywicnpccln2" text = "盧多米爾" />
+	
+	
+	<!-- Sonadel -->
+		<string id = "mfyline000" text = "我叫索娜德爾。我在幫助我的父母，他們是鐵匠。" />
+		<string id = "mfyline001" text = "但最近，我開始厭倦了。我希望看到更廣闊的世界。" />
+		<string id = "mfyline002" text = "雖然我的父親沒有教我打鐵，我知道一點怎麼做!" />
+		<string id = "mfyline003" text = "我替我的父母負責交易和管理鐵匠鋪。我肯定能幫上忙。" />
+		<string id = "mfyline004" text = "這些經驗在部隊中也很有用。" />
+		<string id = "mfyline005" text = "你看起來還是沒甚麼經驗。" />
+		<string id = "mfyline006" text = "如果有機會，我想加入你的部隊。我瞞著父親鑄劍，就是為了這樣的一天！" />
+		<string id = "mfyline007" text = "我很喜歡跟你一起上戰場和在鐵匠鋪打鐵的日子。 你也這樣認為嗎？" />
+		<string id = "mfyline008" text = "我為你打造了這把劍！ 我一直在想什麼時候交給你，但我認為現在是個好時機。 我的劍將與你相遇並砍倒你的敵人！" />
+		<string id = "mfyline009" text = "她是鐵匠的女兒，看似膽怯卻野心勃勃。 她的父母很感激她在工作上對他們的幫助，但他們知道她的野心，並希望她有個更美好的未來。" />
+	
+	<!-- Anette -->
+		<string id = "mfyline010" text = "我是安妮特..." />
+		<string id = "mfyline011" text = "在徵得父母和村里人的同意後，我加入了向城鎮上賣東西的商隊。" />
+		<string id = "mfyline012" text = "但戰爭爆發了，我回不去了。" />
+		<string id = "mfyline013" text = "當我回去的時候，村子正在燃燒，這就是我現在在這裡的原因。" />
+		<string id = "mfyline014" text = "這是非常不幸的。" />
+		<string id = "mfyline015" text = "這在這個時代很常見。" />
+		<string id = "mfyline016" text = "說實話，我無處可去。雖然除瞭如何會使用農具之外，我還沒有學到任何特殊技能，但我已經做好了努力學習的準備。" />
+		<string id = "mfyline017" text = "與以前幫忙農活相比，我在短時間內獲得了許多經驗。 這令我有點尷尬，因為感覺就像我突然騎了一匹非常快的馬，所以事物都變化得很快，這也是一種獨特的樂趣。" />
+		<string id = "mfyline018" text = "我認為您對我的培訓終於得到了回報。 我將會在戰鬥中發揮所長。 哦，當然也能很好地使用這些特殊武器…" />
+		<string id = "mfyline019" text = "她是個普通的女孩，偶爾喜歡進城賣東西。 現在她必須學會在這個世界上生存。" />
+	
+	<!-- Qiana -->
+		<string id = "mfyline020" text = "我叫齊安娜。顯然，我是一個來自普通農民家庭的女孩。" />
+		<string id = "mfyline021" text = "但父親並不是一個在工作強度大和報酬太少之間忍受太多不公的人，所以平凡的日子突然就結束了。" />
+		<string id = "mfyline022" text = "我必須在大自然中生存。父親有時從我不知道的地方帶食物給我。" />
+		<string id = "mfyline023" text = "有一天，我在山洞裡睡覺，突然一陣騷動，父親把我趕了出來，給了我一把弓箭。" />
+		<string id = "mfyline024" text = "我能猜到發生了什麼事..." />
+		<string id = "mfyline025" text = "我想知道我們是怎麼被暴露行蹤的。" />
+		<string id = "mfyline026" text = "到目前為止，我還活著，但我不想走我父親走過的路。" />
+		<string id = "mfyline027" text = "以前，狩獵技能是我的所有。 但我很高興它對你有幫助。" />
+		<string id = "mfyline028" text = "[if:convo_thinking][ib:demure]我很懷念和父親一起追蹤和狩獵動物來生存的日子。 儘管當時我並不想去，但最近，我滿腦子都是在期待著去打獵的那一天..." />
+		<string id = "mfyline029" text = "她是一位抵抗領袖的女兒，她與剝削農民並將他們變成農奴的領主進行鬥爭。 她成為敵人消滅的目標，但她活了下來。" />
+	
+	<!-- Mina -->
+		<string id = "mfyline030" text = "我知道這聽起來很奇怪，但請聽我說。" />
+		<string id = "mfyline031" text = "我肯定認為我以前來過這個世界，但我的記憶很模糊。" />
+		<string id = "mfyline032" text = "反正我也不在乎，但有些人出於某種原因會記得我。" />
+		<string id = "mfyline033" text = "但問題不僅如此，我還不記得任何事情。" />
+		<string id = "mfyline034" text = "哦，我希望你還記得。" />
+		<string id = "mfyline035" text = "你只是說你沒有任何技能。" />
+		<string id = "mfyline036" text = "如果你幫我，我想我很快就會習慣的。" />
+		<string id = "mfyline037" text = "如果我沒記錯的話，我在剛剛加入隊伍的時候確實什麼都不知道。 我覺得你接受這樣的我真是太棒了。" />
+		<string id = "mfyline038" text = "如果你由不記得，並突然開始記得所有事情，你會同時記起很多重要的事情，對嗎？ 就是這個時候了。" />
+		<string id = "mfyline039" text = "她以為自己本來就在這個世界上。 不確定這是真的還是假的。" />
+	
+	<!-- Belladona -->
+		<string id = "mfyline040" text = "我叫貝拉多娜。不幸的是，我被趕出了我的村莊。" />
+		<string id = "mfyline041" text = "我不小心給村民吃了別的東西，而不是原來的草藥。" />
+		<string id = "mfyline042" text = "但這不是我的錯！一定是那群嫉妒我的同齡女孩陷害我的。" />
+		<string id = "mfyline043" text = "突然，我是紅髮女巫的傳言不脛而走，我不得不在女巫追捕開始之前逃走。" />
+		<string id = "mfyline044" text = "每個人都可能犯錯。" />
+		<string id = "mfyline045" text = "我覺得你家有個大鍋子。" />
+		<string id = "mfyline046" text = "雖然我沒有正式學習過，但我知道如何辨別和處理草藥。" />
+		<string id = "mfyline047" text = "希望你不要為了別人而把自己逼得太緊。 反正你都不聽我的話，那我就永遠留一些草藥給你。" />
+		<string id = "mfyline048" text = "[if:convo_relaxed_happy][ib:hip2]我想我發現了一種新草藥！ 這藥對你這種誘人的毒藥尤其有效……我現在就給你醫治。" />
+		<string id = "mfyline049" text = "她喜歡在樹林裡的小木屋裡全心投入學習。 「紅髮森林女巫」的綽號足以引起人們的好奇。" />
+	
+	<!-- Linda -->
+		<string id = "mfyline050" text = "我以前在隔壁城鎮的酒館工作。" />
+		<string id = "mfyline051" text = "然而，酒館的客人越來越多，工作開始變得繁重。" />
+		<string id = "mfyline052" text = "我不知道，但不知不覺中，酒館的名字就開始叫大琳達酒館了。" />
+		<string id = "mfyline053" text = "後來，我的越來越厭倦這樣的生活，就決定放棄工作出去旅行了。" />
+		<string id = "mfyline054" text = "如果有更有趣的東西呢？" />
+		<string id = "mfyline055" text = "你是說那段時間你玩得很開心？" />
+		<string id = "mfyline056" text = "我暫時還有錢吃飯，所以我會考慮旅行，如果你有什麼建議的話，可以多花點錢。" />
+		<string id = "mfyline057" text = "這裡充滿了能量。 這比我對付醉漢的時候好多了。 當然，如果有人無緣無故地讓我受驚，那就準備吃我一記馬鞭吧。" />
+		<string id = "mfyline058" text = "[if:convo_pondering][ib:hip2]你曾經送給我一匹好馬。 其實那時我的自尊心其實受到了一點傷害。 難道我不夠好嗎？我現在必須證明你錯了..." />
+		<string id = "mfyline059" text = "琳達是一名女僕，在旅館及其馬厩工作。 她的客棧因她而出名，卻扛不住名聲。" />
+	
+	<!-- Adrianne -->
+		<string id = "mfyline060" text = "我叫阿德里安娜，我的父親是一名樵夫，他教我如何用斧頭砍柴。" />
+		<string id = "mfyline061" text = "後來才知道，父親並不是靠砍伐樹林學會使用斧頭的。" />
+		<string id = "mfyline062" text = "我的父親身邊不是只有一兩個敵人。在那天，他被敵人殺死了。" />
+		<string id = "mfyline063" text = "在他們殺死我父親並衝進我家之前，我在家裡舉起了父親的斧頭。" />
+		<string id = "mfyline064" text = "這麼說你替你父親報了仇？" />
+		<string id = "mfyline065" text = "我猜你的斧頭也不是用來砍樹的。" />
+		<string id = "mfyline066" text = "不，我做好了戰鬥準備，但不知道為什麼，他們沒有攻擊我。我猜他們以為復仇已經結束了。我反而被趕出了村子。" />
+		<string id = "mfyline067" text = "我想我可能會走上和父親一樣的道路。 但如果我能確定我的武器是用於正義上，那麼我便走對了。" />
+		<string id = "mfyline068" text = "呃……你想問一下，這些錢是什麼回事？ 前幾天你送給我的武器真是太棒了。 但有人偷了它。 我找到了罪魁禍首，但他已經賣掉了。 所以，我帶著『一點報復』回來了。" />
+		<string id = "mfyline069" text = "她的父親是一名殘酷的戰士，但對家人卻無限仁慈。 「傳奇血斧」的綽號如今也只是傳說了。 或者這只是一個開始？" />
+	
+	<!-- Laura -->
+		<string id = "mfyline070" text = "我叫勞拉。" />
+		<string id = "mfyline071" text = "我的父母都是工程師，負責建造大型建築。" />
+		<string id = "mfyline072" text = "他們在這個城鎮啟動了一個新項目，所以我也來了。" />
+		<string id = "mfyline073" text = "對我來說，遇見你一定是新工作的開始。我現在也可以發揮所長了。" />
+		<string id = "mfyline074" text = "我覺得這對我來說也是個好機會。" />
+		<string id = "mfyline075" text = "我懷疑你是否真的能做好自己的部份..." />
+		<string id = "mfyline076" text = "我學習技術，但也負責從父母的工程項目中找必要的零件。" />
+		<string id = "mfyline077" text = "現在我告訴你，我那天漏掉了一個重要的零件，所以我很擔心它會在關鍵時刻壞掉。 因為當時你就在那東西下面。" />
+		<string id = "mfyline078" text = "我以前曾被倒塌的建築材料擊中過。 從那時起，我的頭腦變得有點空白，我認為我的父母不想讓我參與他們的項目。 但有了你上次給我的頭盔，這種情況就不會再發生了。" />
+		<string id = "mfyline079" text = "她的家人都是工程師，帶著商隊旅行，接受來自村莊和城鎮的委託。 她的家族以做工細緻而聞名。" />
+	
+	<!-- Audre -->
+		<string id = "mfyline080" text = "我想你已經聽過我的家族的名字了。" />
+		<string id = "mfyline081" text = "我家裡已經有很多吃的了，但我不知道為什麼我父母總是想把我趕出去。" />
+		<string id = "mfyline082" text = "於是，我被父母逼著來到外面看世界。" />
+		<string id = "mfyline083" text = "你的部隊缺人嗎？" />
+		<string id = "mfyline084" text = "毫無疑問。" />
+		<string id = "mfyline085" text = "我不需要公主。" />
+		<string id = "mfyline086" text = "我希望我要加入的部隊是一支不會缺糧的部隊。" />
+		<string id = "mfyline087" text = "我已經好幾次差點死了，如果我的父母知道我正在經歷這一切，他們會嚇壞的。 也許他們會告訴我馬上回家。" />
+		<string id = "mfyline088" text = "嘿，老實說，你現在很缺錢，對吧？ 我想給你一些我存下來的錢，這樣你就可以在這樣的時候使用它。 我存了錢，但大部分都是父母給我的零用錢。" />
+		<string id = "mfyline089" text = "她的家族是一個世代相傳的大商人世家。 她過著幾乎像貴族一樣的生活。" />
+	
+	<!-- Su Lan -->
+		<string id = "mfyline090" text = "我家鄉的人根本不覺得需要工程學。" />
+		<string id = "mfyline091" text = "我喜歡在馬背上射箭，但也對研究和生產箭矢感興趣。" />
+		<string id = "mfyline092" text = "我來到這裡學習，因為在我家附近很難有這樣的學習環境。" />
+		<string id = "mfyline093" text = "但在這裡很難賺錢，所以照這樣下去，我很快便得辭職回去。" />
+		<string id = "mfyline094" text = "我認為你可以實現到自己的願望。" />
+		<string id = "mfyline095" text = "為什麼不聽從家人的安排？" />
+		<string id = "mfyline096" text = "總之，我需要工作。如果我能從中獲得經驗，那就更好了。" />
+		<string id = "mfyline097" text = "我不知道我有多幸運能夠遇見你。 不是我的家鄉。 也許如果沒有你，我就已經回家剪羊毛了。" />
+		<string id = "mfyline098" text = "我很高興這麼快就能成為工程師。 我會在你們的聚會中竭盡全力。" />
+		<string id = "mfyline099" text = "作為一名充滿熱情的工程師，她四處旅行尋找自己的道路。 她也擅長騎馬射箭，這是她小時候學會的。" />
+	
+	<!-- Kally -->
+		<string id = "mfyline100" text = "我曾經是商隊護衛，但在遇到一大群強盜後，我不得不逃跑。" />
+		<string id = "mfyline101" text = "我跟蹤他們的蹤跡，並向領主報告，但他並不在意。" />
+		<string id = "mfyline102" text = "所以，我別無選擇，只能去藏身處救那些獨自被抓的人，然後拖著受傷的身軀回來。" />
+		<string id = "mfyline103" text = "我們的商隊沒了，所以我不知道該怎麼辦。" />
+		<string id = "mfyline104" text = "你是個很有責任感的人。" />
+		<string id = "mfyline105" text = "你是說你一直在逃避？" />
+		<string id = "mfyline106" text = "我擅長追蹤敵人，也懂得對付騎兵。" />
+		<string id = "mfyline107" text = "有時我會想起以前曾經失敗過的任務。 我不會再逃跑了，我會在你身邊一起戰鬥，與你一起被敵人俘虜。" />
+		<string id = "mfyline108" text = "我們曾經襲擊過一個強盜的藏身處。 其實我之前也提到過，有個地方我曾經一個人闖進去，結果失敗了。 屈服於你強大的力量前，我知道我以前的老對手一定會發生一些非常不好的事情。 我很高興你為我伸張了正義。" />
+		<string id = "mfyline109" text = "凱莉是一位出色的偵察兵和戰士。 儘管她有擔當，但她也認為保護自己很重要。" />
+	
+	<!-- Fenella -->
+		<string id = "mfyline110" text = "我從外科醫生和南方的學者那裡學習醫學。" />
+		<string id = "mfyline111" text = "但近年來，戰爭頻發，我們都被徵召到某個地方，而我也一樣。" />
+		<string id = "mfyline112" text = "跟隨過幾個來往村莊的商隊後，我發現我走得太遠了。" />
+		<string id = "mfyline113" text = "現在，我只想停下來，在某個地方工作，不再想流浪了。" />
+		<string id = "mfyline114" text = "看來你學了很多東西。" />
+		<string id = "mfyline115" text = "這要看你是做什麼的。" />
+		<string id = "mfyline116" text = "我不僅學會了醫藥，還學會了商隊的貿易技巧。" />
+		<string id = "mfyline117" text = "這裡的隊長太愛逞強了。 總是把所有人留在後面，自己上前。 所以我習慣於治療受傷。 我的意思是，我很擔心你。" />
+		<string id = "mfyline118" text = "[if:convo_pondering][ib:hip2]我告訴過你我不想再經營商隊了，但是上次你仍然讓我負責商隊……我真的很想在你旁邊工作，你能幫我一個忙嗎？" />
+		<string id = "mfyline119" text = "菲奈拉接受了醫學界罕見的精英教育。 她是一位偉大的治療師和商人。" />
+	
+	<!-- Layana -->
+		<string id = "mfyline120" text = "從小到大，我從未停止過戰鬥。" />
+		<string id = "mfyline121" text = "我必須在這個混亂的時代生存下去，於是我學會了劍術和射箭。" />
+		<string id = "mfyline122" text = "現在，只要能賺錢，我什麼都乾。" />
+		<string id = "mfyline123" text = "介紹一下就夠了嗎？" />
+		<string id = "mfyline124" text = "也許吧。" />
+		<string id = "mfyline125" text = "我不該問的。" />
+		<string id = "mfyline126" text = "我不喜歡談論自己。" />
+		<string id = "mfyline127" text = "曾經出現一些戲劇性的時刻，但每次我這樣做時，我只是按照隊長的指示揮舞著我的武器。 我為有一個能這樣帶領我的隊長而感到幸運。" />
+		<string id = "mfyline128" text = "[if:malfoy_custom_face][ib:weary2]在戰場上，我在隊長的指揮下衝鋒，當我帶著傷口回來時，我會受到隊長的特別照料……今天，我覺得傷口在裡面更深了一些。 你能看一下嗎？" />
+		<string id = "mfyline129" text = "她逃離了一個被征服者統治的村莊。 為了從追捕者中倖存下來，她經歷了許多戰鬥。" />
+	
+	<!-- Yoselin -->
+		<string id = "mfyline130" text = "幾年前我離開了村子。但和我父親一起的僱傭兵生活更適合我。" />
+		<string id = "mfyline131" text = "即使在我父親所在的僱傭軍裡，我的能力也得到了認可，但問題是我爸爸身邊有一個無恥的女人。" />
+		<string id = "mfyline132" text = "她一直在背後誣陷我爸爸。我很生氣，要求跟她決鬥，可惜我輸了。" />
+		<string id = "mfyline133" text = "就在敗局已定，她侮辱我的時候，她的脖子突然在我眼前被砍斷了。爸爸是個溫柔的人，不像我，所以我很驚訝。" />
+		<string id = "mfyline134" text = "他忍受了對自己的誹謗。" />
+		<string id = "mfyline135" text = "這是一個性格火辣的家族。" />
+		<string id = "mfyline136" text = "最後我們被趕了出來。在此期間，爸爸找了個新妻子，在一個村子里安頓下來。不過我認為現在的生活更有趣。" />
+		<string id = "mfyline137" text = "這一定就是我要找的地方。 我很高興，因為我正在做我想做的事。 儘管以後可能會變得像我父親一樣，但不是現在。" />
+		<string id = "mfyline138" text = "當了傭兵之後，我被任命為部落的隊長！ 我想我已經取得了一些成功，對嗎？ 我稍後會向爸爸誇耀。" />
+		<string id = "mfyline139" text = "她因戰爭失去了家鄉。 她的家族因是著名的僱傭兵父女而聞名。" />
+	
+	<!-- Vitomir -->
+		<string id = "mfyline500" text = "在這裡自我介紹說‘我是貴族’簡直是愚蠢至極。" />
+		<string id = "mfyline501" text = "但我還是這樣自我介紹。缺少的只是財富，但驕傲我一點也不缺。" />
+		<string id = "mfyline502" text = "我確實有恢復我家族榮耀的目標。" />
+		<string id = "mfyline503" text = "總之，我的大哥仍然負責家族事務，而我嘛，簡單來說就是出差了。" />
+		<string id = "mfyline504" text = "你沒有放棄自己的理想。" />
+		<string id = "mfyline505" text = "你想被當成貴族一樣對待嗎？" />
+		<string id = "mfyline506" text = "我很清楚我現在的處境。我不是個毫無頭腦的傻子。說實話，我幾乎沒受過貴族待遇。" />
+		<string id = "mfyline507" text = "我認為不同的人能做不同的事。你和我學者風格的大哥截然不同。我覺得這種方式更適合我。" />
+		<string id = "mfyline508" text = "不久前，你建立了一個新的王國。我從我哥哥那裡聽說我們家族的重建工作已經接近完成。我相信我們的家族能幫助這個王國。" />
+		<string id = "mfyline509" text = "他是一個沒落貴族家的二公子。雖然他離開是為了恢復家族榮耀，但也有傳聞說他是為了逃避家族的重擔才離開的。" />
+
+	<!-- Franz -->
+		<string id = "mfyline510" text = "我曾是某位領主的私人衛兵。" />
+		<string id = "mfyline511" text = "所以，我確實有個應該回去的地方。" />
+		<string id = "mfyline512" text = "哦，別誤會我不是逃兵。我的最後一個任務是作為誘餌讓我的領主安全撤退。" />
+		<string id = "mfyline513" text = "所以我現在是一個應該死掉、被俘或者根本不存在的人。" />
+		<string id = "mfyline514" text = "你是一個忠誠於職責的士兵。" />
+		<string id = "mfyline515" text = "但是你難道不應該回去嗎？領主可能也沒有選擇的餘地。" />
+		<string id = "mfyline516" text = "我準備好了死，但我沒有死。看起來想活下去的那個人沒那麼幸運。如果我有地方可以回去，我早就回去了。" />
+		<string id = "mfyline517" text = "如果你做過，或者正在做艱難的決定，我希望你能對我坦誠。我不怕做我的工作，但我怕做不公正的事。" />
+		<string id = "mfyline518" text = "最近我們逃離戰鬥時，回憶起過去讓我感到不舒服。也許那是對的決定，但經歷過的那些人可能寧願在戰鬥中死得光榮。" />
+		<string id = "mfyline519" text = "他是一個天生具有領導才能和戰鬥技巧的士兵。儘管經驗有限，但曾經擔任過領主的衛兵。" />
+
+	<!-- Lethwin -->
+		<string id = "mfyline520" text = "我是一個獵人，但不只是為了獲取食物。" />
+		<string id = "mfyline521" text = "這是為了處理問題的狩獵。你可以叫我賞金獵人。" />
+		<string id = "mfyline522" text = "我主要獵殺那些經常襲擊農場和家庭的野豬和狼。" />
+		<string id = "mfyline523" text = "我不小心捕捉到了一隻貴族珍愛的動物。在局勢平靜之前，我正在休息。" />
+		<string id = "mfyline524" text = "你不是受委託去打獵嗎？如果是的話，應該不會出問題的。" />
+		<string id = "mfyline525" text = "獵人和非法盜獵者之間的區別其實並不大。" />
+		<string id = "mfyline526" text = "我想我可能陷入了別人的陷阱。我是個解決問題的人，不是製造麻煩的人。" />
+		<string id = "mfyline527" text = "所以我不確定我來這裡是否幫你解決了問題。如果你問我，我很高興和你在一起。" />
+		<string id = "mfyline528" text = "你任命我為你的偵察兵，我很欣賞你的眼光。我的經驗和技能一定會對你有所幫助。" />
+		<string id = "mfyline529" text = "他是一個追蹤麻煩動物的獵人。關於他擁有龍牙的傳聞，可能是誇張了。" />	
+	
+	
+	<!-- System Messages -->
+		<string id = "mfywicsm00" text = "求婚已被接受！" />
+		<string id = "mfywicsm01" text = "可以在城鎮內進行。" />
+		<string id = "mfywicsm02" text = "我跟你不親近。" />
+		<string id = "mfywicsm03" text = "對你沒興趣。" />
+		<string id = "mfywicsm04" text = "缺錢。" />
+		<string id = "mfywicsm05" text = "家族等級。" />
+		<string id = "mfywicsm06" text = "沒有居所。" />
+		<string id = "mfywicsm07" text = "魅力技能至少需要100。" />
+		<string id = "mfywicsm08" text = "需要榮譽特質。" />
+		<string id = "mfywicsm09" text = "家族等級至少需要4。" />
+		<string id = "mfywicsm10" text = "需要狡詐特質。" />
+		<string id = "mfywicsm11" text = "需要她喜歡的隱藏特質。" />
+		<string id = "mfywicsm12" text = "單手、雙手、長柄武器技能總和要求在300以上。" />
+		<string id = "mfywicsm13" text = "需要英勇特質。" />
+		<string id = "mfywicsm14" text = "需要一定數量的錢。 並且至少有一個封地。" />
+		<string id = "mfywicsm15" text = "魅力技能至少需要100。" />
+		<string id = "mfywicsm16" text = "統御和戰術技能的總和要求大於100。" />
+		<string id = "mfywicsm17" text = "關係要求至少40。" />
+		<string id = "mfywicsm18" text = "至少需要一個封地。" />
+		<string id = "mfywicsm19" text = "貿易技能至少需要100。" />
+		<string id = "mfywicsm20" text = "她的管理技能至少需要100。(不是玩家技能。)" />
+		<string id = "mfywicsm21" text = "鍛造技能至少需要100。" />
+		<string id = "mfywicsm22" text = "需要狡詐特質。" />
+		<string id = "mfywicsm23" text = "家族等級至少需要4。" />
+		<string id = "mfywicsm24" text = "需要一定數量的錢。" />
+		<string id = "mfywicsm25" text = "醫術要求至少60。" />
+		<string id = "mfywicsm26" text = "她的偵察技能至少需要100。(不是玩家技能。)" />
+		<string id = "mfywicsm27" text = "你與{Hero}的關係提升了。 (+ {MalValue})" />
+		<string id = "mfywicsm28" text = "你與{Hero}的關係降低了。 (- {MalValue})" />
+		<string id = "mfywicsm29" text = "她好像很喜歡。" />
+		<string id = "mfywicsm30" text = "她似乎不喜歡。" />
+		<string id = "mfywicsm31" text = "額外點數已添加到她身上。" />
+		<string id = "mfywicsm32" text = "你收到了{MalValue}金幣作為{Hero}的嫁妝！" />
+		<string id = "mfywicsm33" text = "你的生命值已經恢復了10%。" />
+		<string id = "mfywicsm34" text = "你的生命值已經恢復了20%。" />
+		<string id = "mfywicsm35" text = "你的生命值已經恢復了33%。" />
+		<string id = "mfywicsm36" text = "她的生命值已經恢復了20%。" />
+		<string id = "mfywicsm37" text = "她的生命值已經恢復了33%。" />
+		<string id = "mfywicsm38" text = "她的生命值已經恢復了50%。" />
+		<string id = "mfywicsm39" text = "你的體力已經恢復了20%。" />
+		<string id = "mfywicsm40" text = "你的體力已經恢復了33%。" />
+		<string id = "mfywicsm41" text = "你的體力已經恢復了50%。" />
+		<string id = "mfywicsm42" text = "{Number}塊肉已添加到您的庫存中。" />
+		<string id = "mfywicsm43" text = "10塊肉已添加到您的庫存中。" />
+		<string id = "mfywicsm44" text = "2 塊肉已添加到您的庫存中。" />
+		<string id = "mfywicsm45" text = "{Hero}有機會懷上您的孩子。" />
+		<string id = "mfywicsm46" text = "{Hero}有更高機會懷上您的孩子。 需要陽剛之氣天賦。" />
+		<string id = "mfywicsm47" text = "醫術要求至少60。" />
+		<string id = "mfywicsm48" text = "你的單手武器技能等級必須為100級或更高，而接受訓練的人相應的技能等級必須為100級或更低。" />
+		<string id = "mfywicsm49" text = "你的雙手武器技能等級必須在100級以上，而接受訓練的人相應的技能等級必須在100級以下。" />
+		<string id = "mfywicsm50" text = "你的長柄武器技能等級必須為100或更高，而接受訓練的人的相應技能等級必須為100或更低。" />
+		<string id = "mfywicsm51" text = "您的弓箭武器等級必須為100級或更高，而受訓者的相應技能等級必須為100級或更低。" />
+		<string id = "mfywicsm52" text = "您的弩技能等級必須為100級或更高，而接受訓練的人相應的技能等級必須為100級或更低。" />
+		<string id = "mfywicsm53" text = "您的投擲技能等級必須為100或更高，而接受訓練的人的相應技能等級必須為100或更低。" />
+		<string id = "mfywicsm54" text = "競技大賽獎品{Item}已經從庫存中移除。" />
+		<string id = "mfywicsm55" text = "單手武器" />
+		<string id = "mfywicsm56" text = "雙手武器" />
+		<string id = "mfywicsm57" text = "長柄武器" />
+		<string id = "mfywicsm58" text = "弓" />
+		<string id = "mfywicsm59" text = "弩" />
+		<string id = "mfywicsm60" text = "投擲武器" />
+		<string id = "mfywicsm61" text = "你的妻子{Hero}懷上了你的孩子。" />
+		<string id = "mfywicsm62" text = "你的同伴{Hero}懷上了你的孩子。" />
+		<string id = "mfywicsm63" text = "你收到{MalValue}金幣由{Hero}送贈。" />
+		<string id = "mfywicsm64" text = "索娜德爾的劍" />
+		<string id = "mfywicsm65" text = "你收到{MalValue}物品作為禮物，由{Hero}送贈。" />
+		<string id = "mfywicsm66" text = "{Hero}一定會懷上你的孩子。" />
+		<string id = "mfywicsm67" text = "{Hero}似乎仍然有點猶豫。" />
+		<string id = "mfywicsm68" text = "{Hero}已經決定接受你的提議。" />
+		<string id = "mfywicsm69" text = "破舊的隱形頭盔" />
+		<string id = "mfywicsm70" text = "隱形頭盔" />
+		<string id = "mfywicsm71" text = "精良的隱形頭盔" />
+		<string id = "mfywicsm72" text = "傳奇隱形頭盔" />
+		<string id = "mfywicsm73" text = "破舊的隱形肩甲" />
+		<string id = "mfywicsm74" text = "隱形肩甲" />
+		<string id = "mfywicsm75" text = "精良的隱形肩甲" />
+		<string id = "mfywicsm76" text = "傳奇隱形肩甲" />
+		<string id = "mfywicsm77" text = "這項物品的價格為{Price}金幣。需要{Price}金幣。" />
+		<string id = "mfywicsm78" text = "你支付了{Price}金幣並收到{Item}。" />
+		<string id = "mfywicsm79" text = "可疑的抗衰老藥水" />
+		<string id = "mfywicsm80" text = "抗衰老藥水" />
+		<string id = "mfywicsm81" text = "經過驗證的抗衰老藥水" />
+		<string id = "mfywicsm82" text = "{Hero}的年齡從{Value1}歲變為{Value2}歲。" />
+		<string id = "mfywicsm83" text = "但什麼也沒發生！" />
+		<string id = "mfywicsm84" text = "熱黃油" />
+		<string id = "mfywicsm85" text = "這個動作需要{Price}金幣。" />
+		<string id = "mfywicsm86" text = "你支付了{Price}金幣。" />
+		<string id = "mfywicsm87" text = "這個動作需要{Price}金幣。一天只能執行五次。" />
+		<string id = "mfywicsm88" text = "請求對話" />
+		<string id = "mfywicsm89" text = "{Hero}來拜訪你了。" />
+		<string id = "mfywicsm90" text = "對話" />
+		<string id = "mfywicsm91" text = "稍後" />
+	
+	
+	<!-- Player Lines -->
+		<string id = "mfywicpl00" text = "我有話想說。" />
+		<string id = "mfywicpl01" text = "我想聽聽你的故事。" />
+		<string id = "mfywicpl02" text = "你加入隊伍已經有一段時間了。" />
+		<string id = "mfywicpl03" text = "我想將今天贏得競技大賽的榮譽獻給妳。" />
+		<string id = "mfywicpl04" text = "我想與妳再親近一點。" />
+		<string id = "mfywicpl05" text = "沒關係。 我不是說我們現在就應該結婚。" />
+		<string id = "mfywicpl06" text = "好吧，反思了一下，我差點就犯了錯誤。" />
+		<string id = "mfywicpl07" text = "我們不如一起計劃未來吧？" />
+		<string id = "mfywicpl08" text = "（等待一個答覆。）" />
+		<string id = "mfywicpl09" text = "你能告訴我那是什麼嗎？ 或者我會令你會回心轉意。" />
+		<string id = "mfywicpl10" text = "這個問題我們下次再討論吧。" />
+		<string id = "mfywicpl11" text = "（從這裡我開始與她的婚禮。）" />
+		<string id = "mfywicpl12" text = "或許下次吧。" />
+		<string id = "mfywicpl13" text = "你覺得我為人怎麼樣？" />
+		<string id = "mfywicpl14" text = "這不是甚麼大問題。 很快你也會喜歡上我的。" />
+		<string id = "mfywicpl15" text = "我們所缺乏的只是長期累積的信任。 雖然我們見面的時間很短，但我們迄今為止所獲得的信任是不會被忘記的。" />
+		<string id = "mfywicpl16" text = "婚姻是人與人之間的連結，也是家庭之間的聯繫。" />
+		<string id = "mfywicpl17" text = "我很想和你共度時光，但我真的沒有空閒時間。 因為我正在做我認為必需做的事情。" />
+		<string id = "mfywicpl18" text = "你也這樣覺得嗎？ 那麼，從今天開始，我們攜手一起前進吧。" />
+		<string id = "mfywicpl19" text = "但我身上有你一直在找的特質。" />
+		<string id = "mfywicpl20" text = "我的吸引力是無法抵擋的，因為我是卡拉迪亞最強的戰士。" />
+		<string id = "mfywicpl21" text = "雖然平常在外面看不出來，但到了大家都焦躁不安的緊要時刻，大家都會信任並依靠著我。" />
+		<string id = "mfywicpl22" text = "愛情只是像發燒一樣。 現實一點吧，走一條能讓你過得自由自在的路。" />
+		<string id = "mfywicpl23" text = "你可能會在某處發現我的其他優點。" />
+		<string id = "mfywicpl24" text = "憑藉我經營商隊和工坊的經驗，我可以很快賺到很多的錢。" />
+		<string id = "mfywicpl25" text = "所以比起上來，我認為我更需要你。 我認為只有你可以解決這個問題。" />
+		<string id = "mfywicpl26" text = "以我的鍛造技術，想賺快錢當然沒問題…" />
+		<string id = "mfywicpl27" text = "我善於辨別金錢和重要事物之間的分別。 很快你就不用為此太擔心了。" />
+		<string id = "mfywicpl28" text = "錢這東西，往往在你需要時就沒有。 現在就是這個糟糕的時期。" />
+		<string id = "mfywicpl29" text = "有很多人喜歡我、支持我。 長此以往，我們的名氣就能迅速提升。" />
+		<string id = "mfywicpl30" text = "雖然跟隨我們的士兵仍然很少，但我們正在有系統和效率地戰鬥。 這些勝利將很快提高我們的聲譽。" />
+		<string id = "mfywicpl31" text = "你喜歡我，我也喜歡你！ 就這樣決定吧！" />
+		<string id = "mfywicpl32" text = "我擁有領地。 在那裡我們將能夠建立我們家族的基礎。" />
+		<string id = "mfywicpl33" text = "世界還不了解我們。" />
+		<string id = "mfywicpl34" text = "我們家族享有很高的聲譽。 我確信我們會在某個地方得到認可，並且我們能夠獲得領土。" />
+		<string id = "mfywicpl35" text = "當前此刻，我會為你選擇最優質的旅館。" />
+		<string id = "mfywicpl36" text = "至少我可以幫助你即使在外面也不會生病。" />
+		<string id = "mfywicpl37" text = "我以為你已經習慣這樣的生活了。" />
+		<string id = "mfywicpl38" text = "你會懷念那些可以像現在一樣出去走走的日子。" />
+		<string id = "mfywicpl39" text = "我認為我們應該結束這段關係。" />
+		<string id = "mfywicpl40" text = "這是我思考後得出的結論。" />
+		<string id = "mfywicpl41" text = "沒關係吧，我很好奇我接下來會怎樣。" />
+		<string id = "mfywicpl42" text = "我們還會像以前那樣相處嗎？" />
+		<string id = "mfywicpl43" text = "其實我也這麼認為。" />
+		<string id = "mfywicpl44" text = "那不行。" />
+		<string id = "mfywicpl45" text = "我在最近的一次戰鬥中受傷了。" />
+		<string id = "mfywicpl46" text = "我想如果你親自治療我的話我會好得更快。" />
+		<string id = "mfywicpl47" text = "這可能有用。" />
+		<string id = "mfywicpl48" text = "我需要比上次更多的治療時間。" />
+		<string id = "mfywicpl49" text = "我之所以能夠恢復得更快，是因為你親自治療了我。" />
+		<string id = "mfywicpl50" text = "現在想來，我覺得我需要的只是一些簡單的草藥。" />
+		<string id = "mfywicpl51" text = "你好像受傷了。" />
+		<string id = "mfywicpl52" text = "我可以親自看看嗎？" />
+		<string id = "mfywicpl53" text = "那麼，好好休息，下次再見吧。" />
+		<string id = "mfywicpl54" text = "不，像這樣的情況，就需要更深入的治療。" />
+		<string id = "mfywicpl55" text = "隨你喜歡吧。" />
+		<string id = "mfywicpl56" text = "我想你今天還是自己休息比較好。" />
+		<string id = "mfywicpl57" text = "鐵匠的工作總是很辛苦。" />
+		<string id = "mfywicpl58" text = "但我還有剩餘的體力可以用在其他方面。" />
+		<string id = "mfywicpl59" text = "你說得對，我需要睡一會兒。" />
+		<string id = "mfywicpl60" text = "你對一個工作疲憊的人提出了過多的要求..." />
+		<string id = "mfywicpl61" text = "好的，所以我希望你能稍微替代一下。" />
+		<string id = "mfywicpl62" text = "不，我只是需要睡一會兒。" />
+		<string id = "mfywicpl63" text = "我們隊伍的食物即將耗盡。" />
+		<string id = "mfywicpl64" text = "我會告訴其他人你和我要去打獵。" />
+		<string id = "mfywicpl65" text = "讓我們帶盡可能多的人去狩獵吧。" />
+		<string id = "mfywicpl66" text = "今天沒什麼好狩獵的…我必須專注於其中一隻獵物。" />
+		<string id = "mfywicpl67" text = "我想我們今天也應該這樣做。" />
+		<string id = "mfywicpl68" text = "我們很快就能從周圍的定居點獲取食物。" />
+		<string id = "mfywicpl69" text = "我認為你需要武器訓練。" />
+		<string id = "mfywicpl70" text = "這就是今天訓練的全部。" />
+		<string id = "mfywicpl71" text = "我今天想參加一些額外的訓練..." />
+		<string id = "mfywicpl72" text = "是的，今天這將是一次艱難的練習。" />
+		<string id = "mfywicpl73" text = "特殊武器應小心處理。" />
+		<string id = "mfywicpl74" text = "你看起來好像有話要告訴我。" />
+		<string id = "mfywicpl75" text = "好吧...我們改天再做。" />
+		<string id = "mfywicpl76" text = "看你能不能保儲我的毒液…" />
+		<string id = "mfywicpl77" text = "證明一下。" />
+		<string id = "mfywicpl78" text = "我們在一起已經多久了？" />	
+		<string id = "mfywicpl79" text = "那麼，你是因為什麼而來的？" />
+		<string id = "mfywicpl80" text = "你怎麼敢！你沒有履行妻子的義務！" />
+		<string id = "mfywicpl81" text = "你說得對，我會向你展示我肩負的責任。" />
+		<string id = "mfywicpl82" text = "貴族的支持將會有益於王國。" />
+		<string id = "mfywicpl83" text = "我們下次再談這個。" />
+	
+	
+	<!-- Common Lines -->
+		<string id = "mfywicst00" text = "怎麼了，隊長？" />
+		<string id = "mfywicst01" text = "好吧，我希望我們有更多的時間像這樣交談。" />
+		<string id = "mfywicst02" text = "告訴我所有事情吧，我的愛人。" />
+		<string id = "mfywicst03" text = "感謝您對我的故事感興趣。" />
+		<string id = "mfywicst04" text = "[if:convo_bemused]給我的？ 謝謝你的誠意。" />
+		<string id = "mfywicst05" text = "[if:convo_thinking][ib:nervous2]喔……我只是感到驚訝，因為有點突然。 我還不確定，因為我來這裡的時間很短。" />
+		<string id = "mfywicst06" text = "[if:convo_bemused]我很高興你這麼說。 我也想多了解你。 我也會為這段關係竭盡全力。" />
+		<string id = "mfywicst07" text = "[if:convo_thinking][ib:closed2]但你已經有人陪伴你了。" />
+		<string id = "mfywicst08" text = "好吧，為什麼不呢？ 我也應該有機會帶你去。" />
+		<string id = "mfywicst09" text = "[if:convo_pondering]不，我不會那樣做。 我不想建立這樣的關係。" />
+		<string id = "mfywicst10" text = "[if:convo_thinking][ib:demure]我也想過這個問題。" />
+		<string id = "mfywicst11" text = "我喜歡你，但我想我們還需要更多地了解彼此。 我希望你不要太急。" />
+		<string id = "mfywicst12" text = "我對與你一起的未來感到興奮，但我擔心有一些事情令我們卻步。 我不肯定..." />
+		<string id = "mfywicst13" text = "[if:convo_bemused][ib:hip2]說實話，我一直在等你問我這個問題！" />
+		<string id = "mfywicst14" text = "我認為婚禮可以在城堡、城鎮或村莊舉行。 我們可以在任何我們想要的地方舉辦婚禮。" />
+		<string id = "mfywicst15" text = "我會告訴你我擔心的事情..." />
+		<string id = "mfywicst16" text = "你幾乎是所有人都會喜歡的人，但你與我還沒去到那麼親近。" />
+		<string id = "mfywicst17" text = "說實話，我對你不感興趣。" />
+		<string id = "mfywicst18" text = "與我們家族的聲望相比，我認為我們沒有足夠的錢來維持它。" />
+		<string id = "mfywicst19" text = "我認為我們家族的聲望應該要比現在高一點。" />
+		<string id = "mfywicst20" text = "目前還好，但我希望當事情變得困難時我們可以有一個休息的地方。" />
+		<string id = "mfywicst21" text = "嗯……我明白了……" />
+		<string id = "mfywicst22" text = "[if:convo_bemused][ib:hip2]我認為你是對的。 我決定相信你，在你身邊和你一起走下去。" />
+		<string id = "mfywicst23" text = "我想，等我們把你說的這些事情一一解決之後，再好好談這個問題！" />
+		<string id = "mfywicst24" text = "[if:convo_bemused][ib:hip2]老實說，你說的話似乎沒有說服力。 但我決定不去擔心這件事。 我想和你結婚！" />
+		<string id = "mfywicst25" text = "我不知道為什麼。 但我確實很猶豫。 下次再談這個吧。" />
+		<string id = "mfywicst26" text = "嗯……到目前為止我還沒有感覺到甚麼。 希望下次我能自信地回答。" />
+		<string id = "mfywicst27" text = "我們已經有一段時間沒有在一起了。 很高興終於見到你了。" />
+		<string id = "mfywicst28" text = "關心我，對我好。 我也想報答這份恩情。" />
+		<string id = "mfywicst29" text = "我不能否認你是一個有魅力的人。" />
+		<string id = "mfywicst30" text = "你領導著一個有前途的家族。 我真的很欣賞你的領導能力。" />
+		<string id = "mfywicst31" text = "你有一種我希望能在他人身上看到的特質。 我真的很喜歡你這一點。" />
+		<string id = "mfywicst32" text = "[if:convo_thinking][ib:weary2]你已經結婚了。 你知道我們不能那樣做。" />
+		<string id = "mfywicst33" text = "[if:convo_pondering][ib:hip2]我聽說你開始和另一個女人一起了。 我很失望你還把我留在你身邊。" />
+		<string id = "mfywicst34" text = "[if:convo_pondering][ib:hip2]你不會背叛我和別的女人在一起吧？ 我希望我聽錯了。" />
+		<string id = "mfywicst35" text = "[if:convo_thinking][ib:weary2]恭喜你結婚了，但我很難過你嫁給了別人而不是我。" />
+		<string id = "mfywicst36" text = "[if:convo_pondering][ib:demure]我有件事要告訴你。 我發現很難再與你維持關係了。" />
+		<string id = "mfywicst37" text = "[if:convo_thinking][ib:demure]嗯，你真的認為我們應該結束我們的關係嗎？" />
+		<string id = "mfywicst38" text = "[if:convo_thinking][ib:nervous2]你說的是認真的嗎？ 我會做得更好的，所以我希望你能改變主意..." />
+		<string id = "mfywicst39" text = "這很不幸，但我認為這是我們關係的極限。" />
+		<string id = "mfywicst40" text = "不要！ 別離開我..." />
+		<string id = "mfywicst41" text = "[if:convo_pondering][ib:hip2]我很驚訝。 希望你下次不要再這樣做了。" />
+		<string id = "mfywicst42" text = "[if:convo_thinking][ib:weary2]我不這麼認為。 請暫時別打擾我。" />
+		<string id = "mfywicst43" text = "[if:convo_thinking]... 好的。 但我不想再受到傷害。" />
+		<string id = "mfywicst44" text = "[if:convo_pondering][ib:demure2]……隊長，我有話要告訴你。" />
+		<string id = "mfywicst45" text = "我在想，我可以跟隊長更加親近嗎？ 如果你不介意的話，可以跟我交往嗎..." />
+		<string id = "mfywicst46" text = "[if:convo_bemused]我一定會成為一個配得上隊長的人。" />
+		<string id = "mfywicst47" text = "噢……抱歉我的行為太過分了。" />
+		<string id = "mfywicst48" text = "[if:convo_thinking][ib:demure]你有傷口。 如果你使用這種草藥，你會很快好起來。" />
+		<string id = "mfywicst49" text = "很好..." />
+		<string id = "mfywicst50" text = "我覺得傷口沒那麼嚴重 我認為護理沒有必要。" />
+		<string id = "mfywicst51" text = "那麼，就在我的房間裡慢慢檢查一下傷口吧。" />
+		<string id = "mfywicst52" text = "[if:malfoy_custom_face]你今天也需要我的治療嗎？" />
+		<string id = "mfywicst53" text = "[if:convo_thinking][ib:weary2]是因為最近發生的事。 如果我花時間休息，我就會康復。" />
+		<string id = "mfywicst54" text = "哦，你不用擔心那麼多。 事情沒那麼嚴重。" />
+		<string id = "mfywicst55" text = "[if:convo_bemused][ib:weary2]好吧，那我今天就去你那裡吧。" />
+		<string id = "mfywicst56" text = "[if:malfoy_custom_face][ib:weary2]上次的治療太粗暴了。 我可以請你今天比上次舒服一點嗎？" />
+		<string id = "mfywicst57" text = "[if:convo_confused_normal][ib:weary2]哦，請不要這樣做。" />
+		<string id = "mfywicst58" text = "你正在大汗淋漓。 我們休息一下吧。" />
+		<string id = "mfywicst59" text = "我希望你沒有勞累過度。 我在那邊為你準備了休息的地方。" />
+		<string id = "mfywicst60" text = "[if:malfoy_custom_face][ib:hip2]那麼，請讓我看看你還有多少『剩餘體力』…" />
+		<string id = "mfywicst61" text = "[if:malfoy_custom_face]噢，你是不是體力不夠？ 我想我可以為你恢復一點。" />
+		<string id = "mfywicst62" text = "[if:convo_relaxed_happy][ib:hip2]你得把你所有的體力都用在我身上！" />
+		<string id = "mfywicst63" text = "那麼我們是否應該捕獵周遭的動物呢？ 我準備好了。" />
+		<string id = "mfywicst64" text = "人越多，我們能得到的食物就越多。 如果我們和其他人一起離開會更好。" />
+		<string id = "mfywicst65" text = "我認為沒有必要告訴其他人。 我就悄悄收拾裝備回來了。" />
+		<string id = "mfywicst66" text = "[if:malfoy_custom_face]那麼，我們今天也去打獵嗎？ 雖然看起來我是獵物。" />
+		<string id = "mfywicst67" text = "[if:convo_relaxed_happy][ib:hip2]看起來你已經完成了狩獵，是時候享受它了，但我們還是去狩獵吧。" />
+		<string id = "mfywicst68" text = "您正在考慮什麼樣的訓練？" />
+		<string id = "mfywicst69" text = "好吧，只要你教我的話我就跟著你。" />
+		<string id = "mfywicst70" text = "[if:convo_thinking][ib:confident2]如果訓練很重要，我會和其他同伴一起進行。 我認為專門為我開設的特別課程，對其他同伴是不公平的。" />
+		<string id = "mfywicst71" text = "怎麼樣的武器需要額外訓練？" />
+		<string id = "mfywicst72" text = "[if:malfoy_custom_face]我今天還應該訓練如何使用你的特殊武器嗎？" />
+		<string id = "mfywicst73" text = "[if:convo_relaxed_happy][ib:hip2]其實我也覺得還需要更強烈更深入的訓練。" />
+		<string id = "mfywicst74" text = "[if:malfoy_custom_face][ib:hip2]我會做的。 我將會成為你特殊武器的主人......" />
+		<string id = "mfywicst75" text = "我們第一次見面是在{Settlement}。 我們一起合作了{Days}天。" />
+		<string id = "mfywicst76" text = "我們第一次見面是在{Settlement}。 我們一起合作了{Years}年。" />
+		<string id = "mfywicst77" text = "我們在{Settlement}結婚。 我們已經結婚{Days}天了。" />
+		<string id = "mfywicst78" text = "我們在{Settlement}結婚。 我們已經結婚{Years}年了。" />
+		<string id = "mfywicst79" text = "請問可以稍微抽空嗎？" />
+		<string id = "mfywicst80" text = "不知道你是否知道，但我想告訴你，我們已經在一起超過十年了。" />
+		<string id = "mfywicst81" text = "[if:convo_thinking][ib:demure]最近我有點擔心，你是不是受傷了？" />
+		<string id = "mfywicst82" text = "[if:convo_thinking][ib:weary2]我最近在戰鬥中受了些傷，覺得上次你給的治療挺有效的。" />
+		<string id = "mfywicst83" text = "你對鍛造真的很專心啊..." />
+		<string id = "mfywicst84" text = "我們隊伍好像食物不夠了。" />
+		<string id = "mfywicst85" text = "[if:convo_pondering][ib:hip2]嗯...我的意思是，我準備好了履行妻子的責任，所以你也應該履行你的責任。" />
+		<string id = "mfywicst86" text = "[if:convo_thinking][ib:nervous2]對不起！所以今天我..." />
+		<string id = "mfywicst87" text = "[if:convo_relaxed_happy][ib:hip2]讓我滿足你的責任，可能會很重..." />
+		<string id = "mfywicst88" text = "[if:convo_pondering][ib:hip2]...其他日子呢？什麼時候？" />
+		
+		
+	<!-- Merchant Lines -->
+		<string id = "mfywicmct00" text = "很高興見到你，旅行者。如果我沒弄錯的話，我們會經常見面的。" />
+		<string id = "mfywicmct01" text = "你是誰？你做什麼的？" />
+		<string id = "mfywicmct02" text = "我處理一些特殊物品——那些很難找到的東西。" />
+		<string id = "mfywicmct03" text = "告訴我你想要什麼。" />
+		<string id = "mfywicmct04" text = "今天又來和我交易了嗎？隨時歡迎。" />
+		<string id = "mfywicmct05" text = "問一下關於傳聞的事" />
+		<string id = "mfywicmct06" text = "抗衰老藥水" />
+		<string id = "mfywicmct07" text = "隱形裝備" />
+		<string id = "mfywicmct08" text = "嫉妒減少奶酪" />
+		<string id = "mfywicmct09" text = "（試試你擁有的抗衰老藥水。）" />
+		<string id = "mfywicmct10" text = "選擇使用的藥水" />
+		<string id = "mfywicmct11" text = "返回" />
+		<string id = "mfywicmct12" text = "今天就到這裡。" />
+		<string id = "mfywicmct13" text = "好吧，下次見。" />
+		<string id = "mfywicmct14" text = "根據傳聞或某些人的說法，歡迎使用我的服務。" />
+		<string id = "mfywicmct15" text = "請準確說明這是什麼。" />
+		<string id = "mfywicmct16" text = "嗯，如果你表現出一點誠意，我會告訴你我所知道的信息。" />
+		<string id = "mfywicmct17" text = "即使我說了你已經知道的事，也沒辦法。如果你不喜歡，我也不能退款。" />
+		<string id = "mfywicmct18" text = "告訴我你聽到的事情。（支付1000金幣）" />
+		<string id = "mfywicmct19" text = "這些信息應該有用。" />
+		<string id = "mfywicmct20" text = "真是浪費我的錢..." />
+		<string id = "mfywicmct21" text = "看看吧。" />
+		<string id = "mfywicmct22" text = "喝下這個藥水後，你會立刻變年輕。不過小心，如果你未滿19歲，藥水不會讓你變得更年輕。" />
+		<string id = "mfywicmct23" text = "如果運氣不好，可能會有副作用。藥水的質量越好，副作用越少，效果也越好。" />
+		<string id = "mfywicmct24" text = "謝謝你這麼大方的交易..." />
+		<string id = "mfywicmct25" text = "等等，藥水的價格是不是不一樣了？" />
+		<string id = "mfywicmct26" text = "這材料太稀有了，所以價格漲了... 就是這樣。" />
+		<string id = "mfywicmct27" text = "哦，當然，它不會回到以前的價格，所以等待是沒有意義的。價格只會繼續上漲。" />
+		<string id = "mfywicmct28" text = "這也太貴了吧！" />
+		<string id = "mfywicmct29" text = "你需要這塊黃油嗎？" />
+		<string id = "mfywicmct30" text = "即使你同時遇到很多人，你的戀人也不容易察覺..." />
+		<string id = "mfywicmct31" text = "即使你的婚外情被發現，他們也不會對你太生氣。" />
+		<string id = "mfywicmct32" text = "我現在就去買那塊黃油。" />
+		<string id = "mfywicmct33" text = "我想給你一瓶抗衰老藥水。" />
+		<string id = "mfywicmct34" text = "你在想什麼？" />
+		<string id = "mfywicmct35" text = "你想召喚哪個角色？" />
+		<string id = "mfywicmct36" text = "如果某個角色因為某些原因不在這個世界，我可以把他召喚出來。" />
+		<string id = "mfywicmct37" text = "我可以復生一個死去的人，但在那種情況下，他們會完全忘記過去的記憶，重新開始。" />
+		<string id = "mfywicmct38" text = "你想召喚那個角色嗎？" />
+		<string id = "mfywicmct39" text = "那個角色已經死過一次或離開了這個世界。這樣的話需要一點額外的費用。" />
+		<string id = "mfywicmct40" text = "請這麼做吧。" />
+		<string id = "mfywicmct41" text = "召喚英雄" />
+
+		<string id = "mfywicmct50" text = "聽說，{Hero}最喜歡的比賽禮物是{Category}。" />
+		<string id = "mfywicmct51" text = "聽說，{Hero}對任何禮物都很滿意。" />
+		<string id = "mfywicmct52" text = "聽說，{Hero}最喜歡的比賽禮物是高品質的物品。" />
+		<string id = "mfywicmct53" text = "聽說，{Hero}喜歡擅長{Category}的人。" />
+		<string id = "mfywicmct54" text = "聽說，{Hero}喜歡擁有{Category}特徵的人。" />
+		<string id = "mfywicmct55" text = "聽說，{Hero}喜歡擁有大量財富的人。" />
+		<string id = "mfywicmct56" text = "聽說，當你的同伴受傷時，可以在定居點治療他們。" />
+		<string id = "mfywicmct57" text = "聽說，當你受傷時，你的同伴可以在定居點治療你。" />
+		<string id = "mfywicmct58" text = "聽說，如果你的隊伍食物不足，你可以和隊員交談去狩獵。" />
+		<string id = "mfywicmct59" text = "聽說，如果你在鐵匠鋪耗盡體力，你的同伴可以幫你恢復體力。" />
+		<string id = "mfywicmct60" text = "聽說，如果你的武器技能很高，你可以教你的同伴。" />
+		<string id = "mfywicmct61" text = "如果你擁有{PerkName}特技，聽說在某些情況下你可以使用它。" />
+		<string id = "mfywicmct62" text = "如果你擁有{PerkName}特技，聽說它對異性有特別的吸引力。" />
+		<string id = "mfywicmct63" text = "我本來想說點什麼，但忘了。" />
+		<string id = "mfywicmct64" text = "只要從我這裡買一次熱黃油，它的效果會持續下去。" />
+		
+	<!-- Herdis -->
+		<string id = "mfywicnpc14" text = "赫爾迪斯" />
+		<string id = "mfyline140" text = "你看起來像是率領一支部隊的人。能得到你的關注令我感到榮幸。" />
+		<string id = "mfyline141" text = "我有三個弟弟，他們各個都很有才華。漸漸地，照顧這三人成為我人生中最重要的事。" />
+		<string id = "mfyline142" text = "當連最小的弟弟也得到領主的寵幸，離家執行任務時，我為他的成功感到高興，但最後卻只剩我一人在空蕩的房子裡。" />
+		<string id = "mfyline143" text = "這真的是我想要的嗎？這就是我所達成的一切嗎？這樣的念頭開始浮現。" />
+		<string id = "mfyline144" text = "你做得很出色。" />
+		<string id = "mfyline145" text = "嗯……看起來你並沒有很多對部隊有用的技能……" />
+		<string id = "mfyline146" text = "但我對自己的體力與堅韌很有信心。那些是我的強項！" />
+		<string id = "mfyline147" text = "[if:convo_pondering][ib:hip2]已經過了這麼久嗎？正好讓我囉唆幾句。你今天有好好吃飯嗎？出征前不應空腹上陣。務必檢查盔甲是否固定好。像上次那樣鬆了會很危險。騎馬時也要再確認馬鞍帶，摔下來會受重傷！" />
+		<string id = "mfyline148" text = "[if:convo_bemused][ib:demure]離開家的時候，我說過我要去尋找屬於我的人生。另一個原因是希望找到一位美好的伴侶。我有信心能把孩子們教養得好。那個……你願意和我結婚嗎？" />
+		<string id = "mfyline149" text = "她是長女，自小照顧三個弟弟。現在他們都長大了，她便出發去尋找自己的生活。" />
+
+	<!-- Anneli -->
+		<string id = "mfywicnpc15" text = "安內莉" />
+		<string id = "mfyline150" text = "我在收養我的船長手下長大，那時我覺得刺骨的海風其實還挺清爽的。" />
+		<string id = "mfyline151" text = "叛亂爆發得毫無預兆，但船長是個老手。他勉強擋住了追兵，把我推上木筏，砍斷了繩索。" />
+		<string id = "mfyline152" text = "叛徒們急於除掉所有目擊者。我成功逃脫了，但在最後一刻，一枝標槍刺穿了船長的身體。" />
+		<string id = "mfyline153" text = "木筏很重，但我無法忍受將他留在海里。我獨自划向岸邊，將他深埋在海灘的沙中。" />
+		<string id = "mfyline154" text = "我甚至不想去想象那是種什麼樣的感覺。" />
+		<string id = "mfyline155" text = "為了一個死人，你差點連命都丟了。" />
+		<string id = "mfyline156" text = "我現在才意識到，那些刺骨的風之所以感覺「清爽」，全是因為有船長在。" />
+		<string id = "mfyline157" text = "在各地旅行後，我發現自己並不怎麼喜歡航海。我覺得在平原上騎馬奔馳才更適合我。" />
+		<string id = "mfyline158" text = "[if:convo_thinking][ib:nervous2] 航行中夜幕降臨時，我總會想起發生過的事。那個……如果可以的話，今晚我能留在你身邊一會兒嗎？" />
+		<string id = "mfyline158_0" text = "如果這能幫到你，我想短時間的停留是可以接受的。" />
+		<string id = "mfyline158_1" text = "不，我不打算那樣做。" />
+		<string id = "mfyline158_2" text = "[if:convo_pondering][ib:hip2] 但那些記憶依然糾纏著我。只要你允許，我會安靜地待在你身邊的。" />
+		<string id = "mfyline158_3" text = "明白了。但什麼都不會發生。" />
+		<string id = "mfyline158_4" text = "就像我說的，回到你自己的地方去。" />
+		<string id = "mfyline158_5" text = "[if:malfoy_custom_face][ib:hip2] 我想今天終於能安穩地休息了……" />
+		<string id = "mfyline159" text = "她對任何情況下該做什麼有著敏銳的洞察力。她是一名曾在商船上服役的經驗豐富的海員。" />
+		
+	<!-- Elara -->
+		<string id = "mfywicnpc16" text = "艾拉拉" />
+		<string id = "mfyline160" text = "我只是個普通的旅行者，僅此而已。" />
+		<string id = "mfyline161" text = "....." />
+		<string id = "mfyline162" text = "..... ......" />
+		<string id = "mfyline163" text = "嗯？所以呢？" />
+		<string id = "mfyline164" text = "你說你很普通？我可是偉大的冒險家。" />
+		<string id = "mfyline165" text = "....." />
+		<string id = "mfyline166" text = "嗯，也沒什麼特別好說的。" />
+		<string id = "mfyline167" text = "不管你問什麼，都沒有什麼隱藏的故事或驚人的秘密。我只是喜歡錢和劍而已。" />
+		<string id = "mfyline168" text = "我覺得你偷了我的東西。" />
+		<string id = "mfyline168_0" text = "[if:convo_pondering][ib:hip2]啊？您突然在說什麼？" />
+		<string id = "mfyline168_1" text = "你這偷東西的貓！我知道你把它藏在哪了！" />
+		<string id = "mfyline168_2" text = "也可能沒有。" />
+		<string id = "mfyline169" text = "有傳聞說她隸屬於盜賊公會，但真假不得而知。" />
+
+	</strings>
+</base>

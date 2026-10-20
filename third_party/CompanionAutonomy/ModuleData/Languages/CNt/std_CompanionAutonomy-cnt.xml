@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="繁體中文" />
+  </tags>
+  <strings>
+    <string id="CA_mcm_g_budget" text="預算" />
+    <string id="CA_mcm_g_purchases" text="購買" />
+    <string id="CA_mcm_g_autonomy" text="自主性" />
+    <string id="CA_mcm_g_display" text="顯示" />
+    <string id="CA_mcm_unlimited" text="無限預算（預設）" />
+    <string id="CA_mcm_unlimited_hint" text="預設值，可在「家族 &gt; 部隊」中為每位同伴個別修改。啟用後，同伴不再領取津貼，而是直接動用你的金幣（不低於你的最低儲備）。你越富有，他們的裝備就越好。" />
+    <string id="CA_mcm_allowance" text="每週津貼（預設）" />
+    <string id="CA_mcm_allowance_hint" text="預設值，可在「家族 &gt; 部隊」中為每位同伴個別修改。每週從你的金幣中支付的金額。" />
+    <string id="CA_mcm_cap" text="錢袋上限" />
+    <string id="CA_mcm_cap_hint" text="同伴可積攢的最高金額。超過後不再發放津貼。0 = 無上限。" />
+    <string id="CA_mcm_reserve" text="玩家最低儲備" />
+    <string id="CA_mcm_reserve_hint" text="你的金幣不會因津貼或無限預算的購買而低於此數值。" />
+    <string id="CA_mcm_family" text="包括家人" />
+    <string id="CA_mcm_family_hint" text="啟用後，率領部隊的家人也會生效（不僅限於招募的同伴）。" />
+    <string id="CA_mcm_refund" text="死亡時退還" />
+    <string id="CA_mcm_refund_hint" text="同伴死亡時，其錢袋中剩餘的錢歸還給你。" />
+    <string id="CA_mcm_equip_share" text="裝備比例 (%)" />
+    <string id="CA_mcm_equip_share_hint" text="同伴每次進城可用於裝備的錢袋比例。" />
+    <string id="CA_mcm_troop_share" text="兵員比例 (%)" />
+    <string id="CA_mcm_troop_share_hint" text="同伴每次進城可用於招募新兵的錢袋比例。" />
+    <string id="CA_mcm_slot_share" text="單件上限 (%)" />
+    <string id="CA_mcm_slot_share_hint" text="單件裝備的價格不能超過剩餘裝備預算的此比例。錢袋越鼓，買的東西越貴。" />
+    <string id="CA_mcm_min_upgrade" text="更換所需最低提升 (%)" />
+    <string id="CA_mcm_min_upgrade_hint" text="物品至少要比當前的好這麼多才會購買（避免無謂的購買）。" />
+    <string id="CA_mcm_sellback" text="舊物品回收 (%)" />
+    <string id="CA_mcm_sellback_hint" text="同伴替換物品時收回的售價比例。" />
+    <string id="CA_mcm_min_budget" text="購物最低預算" />
+    <string id="CA_mcm_min_budget_hint" text="低於此金額時，同伴不會購買任何東西（會攢錢）。" />
+    <string id="CA_mcm_cooldown" text="購物間隔（天）" />
+    <string id="CA_mcm_cooldown_hint" text="同一同伴兩次購物之間的最少天數。" />
+    <string id="CA_mcm_max_recruits" text="每次最多招募人數" />
+    <string id="CA_mcm_max_recruits_hint" text="每次進城最多招募的士兵數量。" />
+    <string id="CA_mcm_troop_cost" text="新兵費用 (%)" />
+    <string id="CA_mcm_troop_cost_hint" text="用錢袋支付的新兵價格倍率（100% = 本模組的基礎價格）。" />
+    <string id="CA_mcm_promote" text="晉升士兵" />
+    <string id="CA_mcm_promote_hint" text="啟用後，同伴會先用錢袋中的兵員比例支付老兵的晉升費用，再用剩下的錢招募新兵。" />
+    <string id="CA_mcm_dismiss" text="遣散編制外的士兵" />
+    <string id="CA_mcm_dismiss_hint" text="僅適用於設定了軍隊編制的同伴。啟用後，不符合編制的士兵會逐步遣散，僅為合適的新兵騰出位置。" />
+    <string id="CA_mcm_fill_free" text="用其他士兵填補空位" />
+    <string id="CA_mcm_fill_free_hint" text="僅適用於設定了軍隊編制的同伴。啟用後，編制未涵蓋的空位會以城鎮中任意可招募的新兵填補。停用後，他們只招募編制內的士兵。" />
+    <string id="CA_mcm_buy_horse" text="沒有馬時購買馬匹" />
+    <string id="CA_mcm_buy_horse_hint" text="啟用後，步行的同伴若騎術等級足夠，會購買坐騎（之後再買馬鞍或馬鎧）。" />
+    <string id="CA_mcm_min_riding" text="首匹馬所需騎術" />
+    <string id="CA_mcm_min_riding_hint" text="步行的同伴只有在騎術達到此等級時才會購買第一匹馬（避免讓純步兵騎馬）。" />
+    <string id="CA_mcm_autoshop" text="自動進城（預設）" />
+    <string id="CA_mcm_autoshop_hint" text="預設值，可在「家族 &gt; 部隊」中為每位同伴個別修改。啟用後，一段時間沒買東西的富裕同伴會主動前往最近的友方城鎮添置裝備。" />
+    <string id="CA_mcm_autoshop_budget" text="出發所需最低錢袋" />
+    <string id="CA_mcm_autoshop_budget_hint" text="只有錢袋達到此金額時同伴才會出發（無限預算時：你的可用金幣）。" />
+    <string id="CA_mcm_autoshop_days" text="出發前未購物天數" />
+    <string id="CA_mcm_autoshop_days_hint" text="同伴決定主動進城前沒有任何購物的天數。" />
+    <string id="CA_mcm_recruit_trips" text="招募之旅" />
+    <string id="CA_mcm_recruit_trips_hint" text="僅適用於設定了軍隊編制且自行採購的同伴。如果所在地區招募不到所需士兵，他們會前往提供這些士兵的最近友方城鎮或村莊。" />
+    <string id="CA_mcm_recruit_distance" text="最大行程距離" />
+    <string id="CA_mcm_recruit_distance_hint" text="同伴進行招募之旅時可走的最遠距離（地圖單位）。數值越大，能穿越的卡拉迪亞範圍越廣。" />
+    <string id="CA_mcm_recruit_missing" text="出發前缺少的兵員數" />
+    <string id="CA_mcm_recruit_missing_hint" text="只有當編制中至少缺少這麼多士兵時才會進行招募之旅。" />
+    <string id="CA_mcm_noarmies" text="不加入其他領主的軍隊（預設）" />
+    <string id="CA_mcm_noarmies_hint" text="預設值，可在「家族 &gt; 部隊」中為每位同伴單獨修改。啟用後，同伴會拒絕加入其他領主率領的軍隊，並在不處於戰鬥時立即離開所在的軍隊。你仍可召集他們加入你自己的軍隊。" />
+    <string id="CA_mcm_messages" text="顯示訊息" />
+    <string id="CA_mcm_messages_hint" text="同伴購買裝備、招募士兵或領取津貼時顯示訊息。" />
+    <string id="CA_ui_title" text="同伴錢袋" />
+    <string id="CA_ui_allowance" text="津貼 / 週" />
+    <string id="CA_ui_wallet" text="當前錢袋" />
+    <string id="CA_ui_unlimited" text="無限預算" />
+    <string id="CA_ui_autoshop" text="自行採購" />
+    <string id="CA_ui_noarmies" text="不加入其他領主的軍隊" />
+    <string id="CA_ui_treasury" text="家族金庫" />
+    <string id="CA_ui_none" text="尚無購買紀錄" />
+    <string id="CA_ui_last" text="最近購買：{TEXT}" />
+    <string id="CA_ui_composition" text="軍隊編制（{COUNT}）" />
+    <string id="CA_ui_composition_none" text="軍隊編制：自由" />
+    <string id="CA_err_popup" text="[Companion Autonomy] 無法開啟編制視窗：{ERROR}" />
+    <string id="CA_msg_promotes" text="晉升了 {COUNT} 名士兵（{GOLD} 金幣）" />
+    <string id="CA_msg_dismisses" text="遣散了 {COUNT} 名士兵" />
+    <string id="CA_msg_recruits" text="招募了 {COUNT} 名士兵（{GOLD} 金幣）" />
+    <string id="CA_msg_left" text="剩餘 {GOLD} 金幣" />
+    <string id="CA_msg_summary" text="{HERO}（{TOWN}）：{DETAILS}{LEFT}。" />
+    <string id="CA_hist_more" text="另外 {COUNT} 件" />
+    <string id="CA_hist_soldiers" text="{COUNT} 名士兵" />
+    <string id="CA_hist_today" text="今天" />
+    <string id="CA_hist_yesterday" text="昨天" />
+    <string id="CA_hist_days" text="{COUNT} 天前" />
+    <string id="CA_hist_line" text="{WHAT}（{TOWN}，{WHEN}，{GOLD} 金幣）" />
+    <string id="CA_msg_allowances" text="已發放津貼：{GOLD} 金幣，共 {COUNT} 名同伴。" />
+    <string id="CA_msg_reserve" text="{COUNT} 名同伴未領到津貼：已達到你的最低儲備。" />
+    <string id="CA_msg_arrived_empty" text="{HERO} 抵達了 {TOWN}，但錢袋是空的。" />
+    <string id="CA_msg_buys" text="購買了 {ITEMS}（{GOLD} 金幣）" />
+    <string id="CA_msg_nothing" text="{HERO} 逛遍了 {TOWN}：沒有買得起的更好裝備。" />
+    <string id="CA_err_shopping" text="[Companion Autonomy] {HERO} 購物時出錯：{ERROR}" />
+    <string id="CA_err_nomove" text="[Companion Autonomy] 在此遊戲版本中找不到移動指令。" />
+    <string id="CA_err_dump" text="函式列表已寫入：{PATH}" />
+    <string id="CA_err_move" text="[Companion Autonomy] 移動指令失敗：{ERROR}" />
+    <string id="CA_msg_abandon" text="{HERO} 放棄了進城：{REASON}。" />
+    <string id="CA_reason_unsafe" text="城鎮已不再安全" />
+    <string id="CA_reason_timeout" text="在路上耽擱太久" />
+    <string id="CA_reason_army" text="加入了軍隊" />
+    <string id="CA_msg_recruit_trip" text="{HERO} 前往 {TOWN}，為軍隊編制招募士兵。" />
+    <string id="CA_msg_autotrip" text="{HERO} 主動前往 {TOWN} 添置裝備。" />
+    <string id="CA_msg_left_army" text="{HERO}離開了{LEADER}的軍隊，回去處理自己的事務。" />
+    <string id="CA_msg_refund" text="{HERO} 的錢袋（{GOLD} 金幣）已歸還給你。" />
+    <string id="CA_dlg_ask_wallet" text="你的錢袋怎麼樣了？" />
+    <string id="CA_dlg_wallet_unlimited" text="你讓我隨意動用金庫。我只買值得買的東西。" />
+    <string id="CA_dlg_wallet_amount" text="我的津貼還剩 {GOLD} 金幣。" />
+    <string id="CA_dlg_ask_history" text="你最近買了些什麼？" />
+    <string id="CA_dlg_history_none" text="我還什麼都沒買。" />
+    <string id="CA_dlg_history_intro" text="這是我最近買的東西：" />
+    <string id="CA_dlg_take_wallet" text="把你津貼剩下的錢還給我。" />
+    <string id="CA_dlg_take_answer" text="給，一分不少。我會湊合著用手頭的東西。" />
+    <string id="CA_dlg_order_shop" text="去城裡改善一下你的裝備。" />
+    <string id="CA_dlg_order_ok" text="明白。我這就去 {CA_ORDER_TOWN}，回來時裝備會更好。" />
+    <string id="CA_dlg_order_fail" text="目前附近沒有安全的城鎮。" />
+    <string id="CA_dlg_cancel_shop" text="別管城鎮了，回去做你的事吧。" />
+    <string id="CA_dlg_cancel_answer" text="好的。" />
+    <string id="CA_grp_kingdom" text="王國兵種：{NAME}" />
+    <string id="CA_grp_clan" text="家族兵種：{NAME}" />
+    <string id="CA_pop_have" text="部隊中：{COUNT}" />
+    <string id="CA_pop_progress" text="{HAVE} / {TARGET}" />
+    <string id="CA_pop_title" text="軍隊編制：{HERO}" />
+    <string id="CA_pop_selected" text="已選兵種" />
+    <string id="CA_pop_bar_count" text="{COUNT} 名士兵" />
+    <string id="CA_pop_empty" text="未設定編制：同伴會自由招募。" />
+    <string id="CA_pop_over" text="已選 {TOTAL} 名士兵，比部隊容量（{LIMIT}）多 {COUNT} 名。" />
+    <string id="CA_pop_summary" text="已選 {TOTAL} / {LIMIT} 名，剩餘 {FREE} 個空位可招任意士兵。" />
+    <string id="CA_pop_summary_only" text="已選 {TOTAL} / {LIMIT} 名。同伴只招募這些士兵。" />
+    <string id="CA_pop_no_preset" text="沒有已儲存的預設" />
+    <string id="CA_pop_loaded" text="已載入預設：{NAME}" />
+    <string id="CA_pop_saved" text="已儲存預設：{NAME}" />
+    <string id="CA_pop_deleted" text="已刪除預設：{NAME}" />
+    <string id="CA_pop_bar_target" text="目標" />
+    <string id="CA_pop_bar_current" text="目前" />
+    <string id="CA_pop_kind_inf" text="步兵" />
+    <string id="CA_pop_kind_arc" text="弓箭手" />
+    <string id="CA_pop_kind_cav" text="騎兵" />
+    <string id="CA_pop_kind_ha" text="騎射手" />
+    <string id="CA_pop_presets" text="預設" />
+    <string id="CA_pop_load" text="載入" />
+    <string id="CA_pop_save" text="另存為新預設" />
+    <string id="CA_pop_overwrite" text="覆蓋" />
+    <string id="CA_pop_delete" text="刪除" />
+    <string id="CA_pop_clear" text="全部清除" />
+    <string id="CA_pop_done" text="完成" />
+    <string id="CA_pop_cancel" text="取消" />
+    <string id="CA_pop_hint" text="同伴會招募能晉升為所選兵種的士兵，並一路晉升直到達成。" />
+  </strings>
+</base>
