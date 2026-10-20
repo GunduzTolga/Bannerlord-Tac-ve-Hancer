@@ -1,0 +1,46 @@
+# Devir notu — 20 Ekim 2026 akşamı (buluttaki oturumdan yerel oturuma)
+
+## Git durumu
+- Çalışma dalı `ccr-be29c96c-8tfbau`; `main`'den 8 commit önde (PR #1 birleştirildikten sonrakiler). Yerelde ilk iş:
+  `git pull --no-edit origin ccr-be29c96c-8tfbau` (birleştirme commit'i açılırsa düzenleyici açılmasın diye `--no-edit`).
+- PC'de `third_party\RegardStanding` repodakiyle çakışırsa (git "would be overwritten" der): PC'deki klasörü sil, repodaki yamalı.
+- Paketlenen modların çoğu (Diplomacy, HairAddons, WomeninCalradia, AutoTrader, ScarsExtra, CompanionAutonomy) yalnızca PC'de,
+  repoda değil. Yerelde zaten var; istenirse `git add third_party` ile koda eklenir (.gitignore büyük içeriği dışarıda tutar).
+
+## Bu akşam yapılanlar (dalda, oyunda henüz doğrulanmadı)
+1. **Arayüz oyunun kendi stilleriyle:** sekme/düğme/panel fırçaları oyunun fırçalarından kopyalanıyor (`TvhUi.GameLooks`:
+   Header.Tab.Center, Clan.TabControl.Text, Popup.Done.Button, Popup.Button.Text, Frame1Brush), bütün kaydırma çubukları oyunun
+   `Standard.VerticalScrollbar` prefab'ı. GuiCheck `--game` ile bu adları oyunda doğrular (build.ps1 oyun kuruluysa yapar).
+2. **Uyum raporu** (`src/Bundle/CompatReport.cs` + `src/CompatRules.cs`, testli): `uyum_raporu.txt`.
+3. **RefCheck** (`tools/RefCheck`): paketli DLL'lerde eksik DLL / yüklenemeyen tür; build.ps1 sonunda çalışır.
+4. **Regard and Standing açılış penceresi** ("submodule could not be loaded correctly due to a dependency conflict"): neden,
+   isteğe bağlı Calradia Remembers'ın DLL'lerine referans. `tools/RsPatch` bağlantıyı tamamen söktü; repodaki
+   `third_party/RegardStanding/bin/Win64_Shipping_Client/RegardStanding.dll` yamalı. Arada indirilen DLL Windows'un "engelli"
+   işaretiyle "Cannot load" verdi; `bundle.ps1` artık her kopyada `Unblock-File` yapıyor.
+5. **Entrika sekmesi boş ve tıklanmıyor** (Klan ekranında üçüncü düğme): teşhis, başka bir modun Klan ekranını türetilmiş
+   `ClanManagementVM` ile açması (`GauntletClanScreen.CreateDataSource`; muhtemelen Companion Autonomy) → UIExtenderEx mixin'i yalnızca
+   tam türe bağlıyordu. Düzeltme: `[ViewModelMixin(..., handleDerived: true)]`. Bağlanmazsa Klan ekranında kırmızı mesaj ekran
+   türünü ve DLL'ini yazar (`ClanIntrigueTab.CheckBound`).
+
+## Açık sorunlar — önce bunlar
+1. **Entrika sekmesi** düzeldi mi? Dalı çek, build.ps1, oyunda L → Entrika. Hâlâ boşsa kırmızı mesajdaki türe bak; o modun kaynağında
+   `CreateDataSource`'u bul. Gerekirse UIExtenderEx'siz yedek: mixin özelliklerini `ViewModel._propertiesAndMethods`'a kendimiz ekleriz.
+2. **Regard and Standing penceresi** gitti mi? Gitmediyse `rgl_log`'daki ayrıntıya bak (oyun hangi referansı/türü şikâyet ediyor);
+   `tools/RefCheck`'i dağıtılmış modüle karşı çalıştır.
+3. **Companion Autonomy, Klan > Birlikler'de "Birlik Lideri Rolleri & Etkileri"nin üstüne biniyor** ("Yoldaşın kesesi / Harçlık /
+   Kendi başına alışverişe gider / Ordu düzeni" bloğu). Onun prefab ekini (third_party\CompanionAutonomy\GUI) aşağı/yan kaydır ya da
+   rol listesinin altına al. Oyunun ClanParties prefab'ına bakarak yerleştir.
+4. **Haritadaki savaş yorgunluğu afişinde "ENTRİKA" yazıyor** (Diplomacy'nin 25 ⚑ 68 göstergesi). Olması gereken krallık adı ya da
+   "Savaş". Bizim bir metnimiz/dil dosyamız ya da harita çubuğu düğmemiz (`src/UI/MapBarButton.cs`, `MapBar.Left.*` fırçalarına katman
+   ekliyor) Diplomacy'ninkiyle çakışıyor olabilir — kontrol et.
+
+## Kullanıcının istedikleri (sıradaki işler)
+- **Savaş Raporu (Diplomacy) ekranını geliştir:** kullanıcı çok beğendi (üst kısım güzel). Daha fazla bilgi ve oyun görünümü.
+- **İsyanlar ve İç Savaş penceresi (Diplomacy):** daha oyuna benzesin (şu an boş liste, düz kutu).
+- **Krallığın lordlarıyla iletişim sayfası** — önerilen: Krallık ekranında Diplomacy sekmelerinin yanına "Lordlar" sekmesi
+  (UIExtenderEx, Klan sekmemiz gibi). Liste: portre, klan, ilişki, konum, sana bakışı, son temas. Eylemler: haberci gönder (mevcut
+  `Messengers` sistemi; hal hatır/teşekkür/özür, karaktere göre ilişki, haftalık sınır), hediye (altın/eşya, karaktere göre),
+  ziyafete davet (şehrinde, birkaç lord), oylamada destek sözü iste, yanına çağır (lordun partisi gelir, konuşma oyunun diyaloğunda).
+  Bizim "Saray" alt sekmesi (`TvhCourtPanel`) zaten krallık lordlarını gösteriyor; oradan yararlan.
+- Diplomacy ve diğer modların özelliklerini kendi ekranlarımıza taşıma (kullanıcının uzun vadeli isteği: tek mod, her şey bizim arayüzde).
+- Karar bekleyenler: Convivium, Diplomacy & Intrigue (YAPILACAKLAR).
