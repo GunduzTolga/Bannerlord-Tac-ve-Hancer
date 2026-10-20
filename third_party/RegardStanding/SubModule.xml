@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="Regard and Standing"/>
+  <Id value="RegardStanding"/>
+  <Version value="v1.5.0"/>
+  <DefaultModule value="false"/>
+  <SingleplayerModule value="true"/>
+  <ModuleCategory value="Singleplayer"/>
+  <ModuleType value="Community"/>
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony"/>
+    <DependedModule Id="Native"/>
+    <DependedModule Id="SandBoxCore"/>
+    <DependedModule Id="Sandbox"/>
+    <!-- Optional="true": the game's own launcher reads this form; the community launcher
+         (BUTR) reads OptionalDependModules and the metadata below. Neither asks for them. -->
+    <DependedModule Id="BellumCivile" Optional="true"/>
+    <DependedModule Id="CalradiaRemembers" Optional="true"/>
+    <DependedModule Id="Bannerlord.MBOptionScreen" Optional="true"/>
+  </DependedModules>
+  <!-- Opcionales: con Calradia Remembers, el aprecio mueve la relacion y los nobles hablan
+       de lo que viven en el chat; sin el, lo que recuerdan queda en la enciclopedia.
+       Con Mod Configuration Menu aparece la pagina de opciones. -->
+  <OptionalDependModules>
+    <OptionalDependModule Id="BellumCivile"/>
+    <OptionalDependModule Id="CalradiaRemembers"/>
+    <OptionalDependModule Id="Bannerlord.MBOptionScreen"/>
+  </OptionalDependModules>
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis"/>
+    <DependedModuleMetadata id="BellumCivile" order="LoadBeforeThis" optional="true"/>
+    <DependedModuleMetadata id="CalradiaRemembers" order="LoadBeforeThis" optional="true"/>
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" optional="true"/>
+  </DependedModuleMetadatas>
+  <SubModules>
+    <SubModule>
+      <Name value="RegardStanding"/>
+      <DLLName value="RegardStanding.dll"/>
+      <SubModuleClassType value="RegardStanding.SubModule"/>
+      <Tags/>
+    </SubModule>
+  </SubModules>
+  <Xmls/>
+</Module>

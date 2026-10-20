@@ -1,0 +1,4 @@
+!# Regard & Standing. Every line here that does not start with !# is sent to the model on every turn. Keep notes on !# lines only.
+!# {{rs_toward_player}}: the character's rapport with you, romantic pull toward you, secret fondness and grudge, in numbers and words.
+!# Empty when there is nothing to say. Delete the token, or set prompt_toward_player = false, to leave it out.
+{{rs_toward_player}}

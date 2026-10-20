@@ -45,6 +45,10 @@ static class Program
         if (!modules.TryGetValue(moduleId, out string ours)) { Console.WriteLine("Modül bulunamadı: " + moduleId); return 2; }
         XmlDocument manifest = Load(Path.Combine(ours, "SubModule.xml"));
         List<string> depends = manifest.SelectNodes("/Module/DependedModules/DependedModule/@Id").Cast<XmlNode>().Select(n => n.Value).ToList();
+        // Paketlenen bir modun isteğe bağlı ortakları (ör. Regard and Standing için Calradia Remembers): kurulu değilse o modun
+        // onlara dayanan birkaç türü yüklenemez. Oyun açılışta uyarı penceresi gösterir, OK ile devam eder; mod onları atlar.
+        var optional = new HashSet<string>(manifest.SelectNodes("/Module/DependedModules/DependedModule[@Optional='true']/@Id").Cast<XmlNode>()
+            .Select(n => n.Value), StringComparer.OrdinalIgnoreCase);
         var subModuleDlls = new HashSet<string>(manifest.SelectNodes("/Module/SubModules/SubModule/DLLName/@value").Cast<XmlNode>()
             .Select(n => n.Value), StringComparer.OrdinalIgnoreCase);
 
@@ -61,7 +65,7 @@ static class Program
         AddDir(Path.Combine(ours, Bin));
         foreach (string id in depends)
             if (modules.TryGetValue(id, out string dir)) AddDir(Path.Combine(dir, Bin));
-            else if (!IsOfficial(id)) Console.WriteLine("UYARI bağımlı modül kurulu değil: " + id);
+            else if (!IsOfficial(id) && !optional.Contains(id)) Console.WriteLine("UYARI bağımlı modül kurulu değil: " + id);
         foreach (string official in new[] { "Native", "SandBoxCore", "Sandbox", "StoryMode", "CustomBattle", "NavalDLC" })
             if (modules.TryGetValue(official, out string dir)) AddDir(Path.Combine(dir, Bin));
 
@@ -91,12 +95,15 @@ static class Program
             catch (BadImageFormatException) { continue; } // .NET olmayan (yerel) DLL
             catch (Exception ex) { Report(subModule, file, "açılamadı: " + ex.Message); continue; }
 
+            // Eksik DLL tek başına sorun değil (yalnızca kullanılırsa); oyunun uyarısı aşağıdaki tür hatalarından gelir.
             foreach (AssemblyName reference in assembly.GetReferencedAssemblies())
             {
                 if (available.ContainsKey(reference.Name)) continue;
                 string where = elsewhere.TryGetValue(reference.Name, out List<string> mods)
                     ? " (şu modüllerde var ama oyun onları yüklemiyor: " + string.Join(", ", mods) + ")" : "";
-                Report(subModule, file, "eksik DLL: " + reference.Name + " " + reference.Version + where);
+                string owner = OptionalOwner(reference.Name);
+                Console.WriteLine("BİLGİ " + file + ": eksik DLL: " + reference.Name + " " + reference.Version + where
+                    + (owner != null ? " (isteğe bağlı mod " + owner + " kurulu değil)" : ""));
             }
             // Oyun türleri yüklerken üst türleri ve arayüzleri de çözer; burada ayrıca istenmezse tembel kalırlar.
             Type[] types;
@@ -105,7 +112,7 @@ static class Program
             {
                 types = ex.Types.Where(t => t != null).ToArray();
                 foreach (string message in ex.LoaderExceptions.Where(e => e != null).Select(e => e.Message).Distinct().Take(15))
-                    Report(subModule, file, "yüklenemeyen tür: " + message);
+                    Report(subModule, file, "yüklenemeyen tür: " + message, message);
             }
             catch (Exception ex) { Report(subModule, file, "türleri okunamadı: " + ex.Message); continue; }
             var broken = new List<string>();
@@ -118,19 +125,29 @@ static class Program
                 }
                 catch (Exception ex) { broken.Add(type.FullName + " (" + ex.Message + ")"); }
             }
-            foreach (string b in broken.Take(15)) Report(subModule, file, "yüklenemeyen tür: " + b);
+            foreach (string b in broken.Take(15)) Report(subModule, file, "yüklenemeyen tür: " + b, b);
             if (broken.Count > 15) Report(subModule, file, "... ve " + (broken.Count - 15) + " tür daha");
         }
 
-        void Report(bool subModule, string file, string message)
+        // Bir eksik DLL'in hangi isteğe bağlı modüle ait olduğu (adı modül adıyla başlıyorsa).
+        string OptionalOwner(string assemblyName) =>
+            optional.FirstOrDefault(id => assemblyName.Equals(id, StringComparison.OrdinalIgnoreCase)
+                || assemblyName.StartsWith(id + ".", StringComparison.OrdinalIgnoreCase));
+
+        void Report(bool subModule, string file, string message, string detail = null)
         {
             // Alt modül DLL'i: oyun açılışta tamamını okur, hata uyarı penceresi çıkarır. Kütüphane: yalnızca kullanılırsa sorun olur.
-            if (subModule) errors++; else warnings++;
-            Console.WriteLine((subModule ? "HATA " : "UYARI ") + file + ": " + message);
+            // Hata, kurulu olmayan isteğe bağlı bir modülden geliyorsa: pencere çıkar ama OK ile devam edilir; derlemeyi durdurmaz.
+            string owner = detail == null ? null
+                : optional.FirstOrDefault(id => detail.Contains("'" + id + ",") || detail.Contains("'" + id + "."));
+            if (subModule && owner == null) errors++; else warnings++;
+            Console.WriteLine((subModule && owner == null ? "HATA " : "UYARI ") + file + ": " + message
+                + (owner != null ? Environment.NewLine + "      -> isteğe bağlı mod " + owner + " kurulu değil: oyun açılışta \"dependency conflict\" "
+                    + "penceresi gösterir, OK ile devam eder; o modla ortak özellik kapalı kalır" : ""));
         }
 
         Console.WriteLine(errors == 0
-            ? "DLL DENETİMİ GEÇTİ (" + subModuleDlls.Count + " alt modül DLL'i" + (warnings > 0 ? ", " + warnings + " kütüphane uyarısı" : "") + ")"
+            ? "DLL DENETİMİ GEÇTİ (" + subModuleDlls.Count + " alt modül DLL'i" + (warnings > 0 ? ", " + warnings + " uyarı" : "") + ")"
             : errors + " hata: oyun bu alt modüller için \"dependency conflict\" uyarısı verir");
         return errors == 0 ? 0 : 1;
     }
