@@ -365,6 +365,9 @@ namespace CheatMenu.Intrigue.Core
         public SpymasterMission Mission;
         /// <summary>Söylenti görevinin hedefi.</summary>
         public string RumorTargetId;
+        /// <summary>Casus başının yetiştirdiği ajanlar ve biriken eğitim haftası (AgentRules).</summary>
+        public int Agents;
+        public int AgentTraining;
 
         /// <summary>E0 kayıt testi: oyuncunun bıraktığı işaret; kaydet-yükle sonrası durmalı.</summary>
         public string SaveTestMarker { get; set; }
@@ -426,7 +429,7 @@ namespace CheatMenu.Intrigue.Core
                 new TextRecord("version").Add("v", I(CurrentVersion)),
                 new TextRecord("meta").Add("spymaster", SpymasterId).Add("next", I(NextSchemeId)).Add("seed", I(Seed)).Add("rolls", I(Rolls))
                     .Add("nextplot", I(NextPlotId)).Add("nextletter", I(NextLetterId)).Add("nextcourt", I(NextCourtshipId))
-                    .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId)
+                    .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId).Add("agents", I(Agents)).Add("agenttrain", I(AgentTraining))
                     .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
                     .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId).Add("steward", StewardId)
                     .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil))
@@ -545,6 +548,8 @@ namespace CheatMenu.Intrigue.Core
                         int mission = Int(r, "mission");
                         state.Mission = Enum.IsDefined(typeof(SpymasterMission), mission) ? (SpymasterMission)mission : SpymasterMission.None;
                         state.RumorTargetId = Empty(r.Get("rumor"));
+                        state.Agents = SchemeMath.Clamp(Int(r, "agents"), 0, AgentRules.MaxCap);
+                        state.AgentTraining = Math.Max(0, Int(r, "agenttrain"));
                         state.TreasurerId = Empty(r.Get("treasurer"));
                         state.Embezzled = Math.Max(0, Int(r, "embezzled"));
                         state.EmbezzleFound = Bool(r, "embezzlefound");

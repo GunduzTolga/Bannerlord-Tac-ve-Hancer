@@ -19,6 +19,8 @@ namespace CheatMenu.Intrigue.Core
         // Yerleşim
         /// <summary>O yerleşimdeki gölge ağının seviyesi (0: yok).</summary>
         public int NetworkLevel;
+        /// <summary>Casus başının ajanları (AgentRules).</summary>
+        public int Agents;
         public bool IsCastle;
         public int Security;
         public int Loyalty;
@@ -81,6 +83,7 @@ namespace CheatMenu.Intrigue.Core
                 + SchemeMath.Clamp(i.EventSuccess, -15, 15)
                 + SchemeMath.BribeBonus(i.BribeLevel)
                 + 5 * NetworkLevel(i)
+                + AgentRules.Success(i.Agents)
                 - Security(i) / 5.0
                 - Math.Min(i.GovernorRoguery / 20.0, 10)
                 - (i.IsCastle ? 5 : 0)
@@ -97,6 +100,7 @@ namespace CheatMenu.Intrigue.Core
                 + Math.Min(i.GovernorRoguery / 30.0, 6)
                 + i.EventDiscovery
                 - 2 * NetworkLevel(i)
+                - AgentRules.Discovery(i.Agents)
                 + DifficultyDiscovery(i.Difficulty);
             return SchemeMath.Clamp(Round(value), 2, 35);
         }
@@ -110,6 +114,7 @@ namespace CheatMenu.Intrigue.Core
                 + SchemeMath.Clamp(i.EventSuccess, -15, 15)
                 + SchemeMath.BribeBonus(i.BribeLevel)
                 + 5 * NetworkLevel(i)
+                + AgentRules.Success(i.Agents)
                 + (50 - SchemeMath.Clamp(i.Loyalty, 0, 100)) / 2.0
                 - Security(i) / 6.0
                 - Math.Min(i.GovernorRoguery / 20.0, 10)
@@ -126,6 +131,7 @@ namespace CheatMenu.Intrigue.Core
                 + Math.Min(i.GovernorRoguery / 30.0, 6)
                 + i.EventDiscovery
                 - 2 * NetworkLevel(i)
+                - AgentRules.Discovery(i.Agents)
                 + DifficultyDiscovery(i.Difficulty);
             return SchemeMath.Clamp(Round(value), 3, 40);
         }

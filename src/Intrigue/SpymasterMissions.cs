@@ -37,6 +37,11 @@ namespace CheatMenu.Intrigue
                 string blocked = RumorBlocked(state, rumorTarget);
                 if (blocked != null) throw new InvalidOperationException(blocked);
             }
+            if (mission == SpymasterMission.TrainAgents)
+            {
+                int max = AgentRules.MaxAgents(SchemeFactors.Roguery(SchemeFactors.Spymaster(state)));
+                if (state.Agents >= max) throw new InvalidOperationException("Ajan kadron dolu (" + state.Agents + "/" + max + "): Roguery arttıkça büyür");
+            }
             state.Mission = mission;
             state.RumorTargetId = mission == SpymasterMission.SpreadRumors ? rumorTarget.StringId : null;
             string what = MissionRules.Name(mission) + (mission == SpymasterMission.SpreadRumors ? ": " + rumorTarget.Name : "");
@@ -68,6 +73,7 @@ namespace CheatMenu.Intrigue
             string text = MissionRules.Name(state.Mission);
             if (state.Mission == SpymasterMission.SpreadRumors) text += ": " + (RumorTarget(state)?.Name.ToString() ?? "?");
             if (state.Mission != SpymasterMission.None && !Working(state, out _)) text += " (casus başı meşgul: duruyor)";
+            if (state.Agents > 0) text += " · ajan " + state.Agents;
             return text;
         }
 
@@ -86,6 +92,11 @@ namespace CheatMenu.Intrigue
                         + SchemeFactors.Money(MissionRules.RumorWeeklyCost) + ". Haftalık yakalanma %" + MissionRules.RumorDiscovery(roguery, difficulty)
                         + ": o zaman lordla -" + MissionRules.RumorExposedTargetPenalty + ", hükümdarıyla -" + MissionRules.RumorExposedRulerPenalty
                         + " ve görev biter.";
+                case SpymasterMission.TrainAgents:
+                    return "Her " + AgentRules.WeeksPerAgent + " haftada bir ajan; eğitim haftada " + SchemeFactors.Money(AgentRules.TrainingWeeklyCost)
+                        + ". Kadro en fazla " + AgentRules.MaxAgents(roguery) + " (Roguery'ye göre). Her ajan bütün entrikalara +%"
+                        + AgentRules.SuccessPerAgent + " başarı, -%" + AgentRules.DiscoveryPerAgent + " yakalanma (gölge ağı gibi, ama her yerde); bakım ajan başına haftada "
+                        + SchemeFactors.Money(AgentRules.UpkeepPerAgent) + ". Bir entrikan ortaya çıkarsa bir ajan yakalanır.";
                 default:
                     return "Görev yok: casus başı yalnızca entrikalarla uğraşır.";
             }
@@ -96,11 +107,16 @@ namespace CheatMenu.Intrigue
         public static void Weekly()
         {
             IntrigueState state = IntrigueBehavior.Current?.State;
-            if (state == null || state.Mission == SpymasterMission.None) return;
+            if (state == null) return;
+            AgentUpkeep(state);
+            if (state.Mission == SpymasterMission.None) return;
             if (!Working(state, out Hero spymaster)) return;
             int roguery = SchemeFactors.Roguery(spymaster);
             switch (state.Mission)
             {
+                case SpymasterMission.TrainAgents:
+                    TrainAgents(state, roguery);
+                    break;
                 case SpymasterMission.WatchDissent:
                     WatchDissent(state, roguery);
                     break;
@@ -166,6 +182,56 @@ namespace CheatMenu.Intrigue
                 return;
             }
             ChangeRelationAction.ApplyRelationChangeBetweenHeroes(target, ruler, -MissionRules.RumorRelationLoss(roguery), false);
+        }
+
+        // ---- Ajanlar ----
+
+        /// <summary>Ajanların haftalık bakımı (görev ne olursa olsun); ödenemezse bir ajan dağılır.</summary>
+        private static void AgentUpkeep(IntrigueState state)
+        {
+            if (state.Agents <= 0) return;
+            int cost = AgentRules.Upkeep(state.Agents);
+            if (SchemeFactors.CanAfford(cost))
+            {
+                SchemeFactors.Pay(cost);
+                return;
+            }
+            state.Agents--;
+            string text = "Ajanlarından birine bu hafta ödeme yapılamadı ve ortadan kayboldu. Kalan ajan: " + state.Agents + ".";
+            SchemeOutcomes.Notify(state, "Bir ajan gitti", text, SchemeFactors.Spymaster(state));
+            state.AddLog(SchemeFactors.Today, "Ajan dağıldı (ödeme yok); kalan " + state.Agents);
+        }
+
+        private static void TrainAgents(IntrigueState state, int roguery)
+        {
+            int max = AgentRules.MaxAgents(roguery);
+            if (state.Agents >= max)
+            {
+                Stop(state, "Ajan yetiştirme bitti: kadro dolu (" + state.Agents + "/" + max + "). Casus başının Roguery'si arttıkça yeniden seçebilirsin.", null);
+                return;
+            }
+            if (!SchemeFactors.CanAfford(AgentRules.TrainingWeeklyCost))
+            {
+                Stop(state, "Ajan yetiştirme bitti: eğitim için altının kalmadı.", null);
+                return;
+            }
+            SchemeFactors.Pay(AgentRules.TrainingWeeklyCost);
+            int agents = state.Agents, progress = state.AgentTraining;
+            bool ready = AgentRules.TrainWeek(ref agents, ref progress);
+            state.Agents = agents;
+            state.AgentTraining = progress;
+            if (!ready) return;
+            state.AddLog(SchemeFactors.Today, "Yeni ajan hazır (" + state.Agents + "/" + max + ")");
+            MenuUI.Success("Casus başın yeni bir ajan yetiştirdi: " + state.Agents + "/" + max);
+        }
+
+        /// <summary>Bir entrika ortaya çıktığında: bir ajan yakalanır. Sonuç metnine eklenecek cümle (ajan yoksa boş).</summary>
+        public static string LoseAgent(IntrigueState state)
+        {
+            if (state.Agents <= 0) return "";
+            state.Agents--;
+            state.AddLog(SchemeFactors.Today, "Bir ajan yakalandı; kalan " + state.Agents);
+            return " Ajanlarından biri yakalandı (kalan " + state.Agents + ").";
         }
 
         private static void Stop(IntrigueState state, string text, Hero target)
