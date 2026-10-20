@@ -97,6 +97,7 @@ namespace CheatMenu.Intrigue
                 BribeLevel = bribeLevel,
                 Difficulty = SettingsStore.Current.IntrigueDifficulty,
                 NetworkLevel = NetworkLevel(state, s),
+                Agents = spymaster != null ? state.Agents : 0,
                 IsCastle = s.IsCastle,
                 Security = (int)Math.Round(town?.Security ?? 0f),
                 Loyalty = (int)Math.Round(town?.Loyalty ?? 50f),
@@ -231,6 +232,7 @@ namespace CheatMenu.Intrigue
                 : Expose(state, s, SettlementSchemeRules.SabotageOwnerPenalty, 0, SettlementSchemeRules.SabotageDiscoveredCrime,
                     SettlementSchemeRules.SabotageDiscoveredTension, false);
             state.AddLog(Today, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + s.Name);
+            consequences += SpymasterMissions.LoseAgent(state);
             SchemeOutcomes.Notify(state, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + s.Name,
                 (incite ? "Elebaşlarından biri " + Tr.Locative(s.Name.ToString()) + " tutuklandı ve seni ele verdi."
                     : "Adamların " + Tr.Locative(s.Name.ToString()) + " daha hazırlık yaparken yakalandı.")

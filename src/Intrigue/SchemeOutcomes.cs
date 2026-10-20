@@ -39,20 +39,21 @@ namespace CheatMenu.Intrigue
             int today = SchemeFactors.Today;
             state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
             state.AddLog(today, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + target.Name);
+            string agentLost = SpymasterMissions.LoseAgent(state);
 
             if (!SchemeRules.IsStrike(scheme.Kind))
             {
                 int penalty = scheme.Kind == SchemeKind.Blackmail ? 15 : 10;
                 Relate(target, -penalty);
                 Notify(state, SchemeRules.Name(scheme.Kind) + " ortaya çıktı: " + target.Name,
-                    target.Name + " peşinde adamların olduğunu fark etti. Entrika dağıldı.\n\nSonuç: " + target.Name + " ile ilişki -" + penalty + ".",
+                    target.Name + " peşinde adamların olduğunu fark etti. Entrika dağıldı.\n\nSonuç: " + target.Name + " ile ilişki -" + penalty + "." + agentLost,
                     target, CardImages.Caught);
                 return;
             }
 
             string consequences = ApplyLightExposure(state, target, 20, scheme.FeastRisk);
             Notify(state, SchemeRules.Name(scheme.Kind) + " planı ortaya çıktı: " + target.Name,
-                Tr.Dative(target.Name.ToString()) + " karşı kurduğun plan, daha harekete geçmeden ortaya çıktı. Adamların dağıldı.\n\nSonuç: " + consequences,
+                Tr.Dative(target.Name.ToString()) + " karşı kurduğun plan, daha harekete geçmeden ortaya çıktı. Adamların dağıldı.\n\nSonuç: " + consequences + agentLost,
                 target, CardImages.Caught);
         }
 

@@ -41,6 +41,12 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Casus başı: Ajan yetiştir (21 Ekim, yeni)
+- [ ] Yoldaşı casus başı ata (krallık gerekmez), Görev → **Ajan yetiştir**; iki hafta sonra "yeni ajan" mesajı, haftada 200 altın düştü
+- [ ] Görev satırında "· ajan N"; yeni entrikanın başarı yüzdesi ajan başına +2 arttı; bakım ajan başına haftada 50 altın
+- [ ] Bir entrikan ortaya çıkınca sonuçta "Ajanlarından biri yakalandı (kalan N)"; kaydet-yükle sonrası ajan sayısı duruyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-ajan-yetistir.md`
+
 ### Karar bekleyen modlar (20 Ekim'de incelendi, eklenmedi)
 - **Convivium: Living Feasts:** lordlar salonda gerçekten toplanıyor, yapay zekâ da ziyafet veriyor; ziyafette ikna, askerlere
   ziyafet, turnuva. Ama kur/özel sahne, gebelik/babalık ve onur düellosu kısımları bizim kur, gebelik ve düello sistemlerimizle

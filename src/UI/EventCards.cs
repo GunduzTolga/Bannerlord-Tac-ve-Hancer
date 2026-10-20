@@ -534,6 +534,10 @@ namespace CheatMenu.UI
                 Option(SpymasterMission.SpreadRumors, "Söylenti yay...: hedef seç (haftada -" + MissionRules.RumorRelationLoss(roguery) + ")",
                     SpymasterMissions.RumorCandidates(state).Count == 0 ? "Sarayında kulağın olan bir lord yok (rapor ya da gölge ağı)" : null,
                     () => MenuUI.Defer(() => PickRumorTarget(afterwards))),
+                Option(SpymasterMission.TrainAgents, "Ajan yetiştir: " + state.Agents + "/" + AgentRules.MaxAgents(roguery) + " ajan (haftada "
+                        + SchemeFactors.Money(AgentRules.TrainingWeeklyCost) + ")",
+                    state.Agents >= AgentRules.MaxAgents(roguery) ? "Ajan kadron dolu: casus başının Roguery'si arttıkça büyür" : null,
+                    () => SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.TrainAgents)),
                 Option(SpymasterMission.None, "Boşta: yalnızca entrikalar", null,
                     () => SpymasterMissions.SetMission(SchemeEngine.State, SpymasterMission.None)),
             };
@@ -543,7 +547,8 @@ namespace CheatMenu.UI
                 + SpymasterMissions.StatusText(state) + ".\n\n"
                 + "Karşı casusluk: " + SpymasterMissions.Description(SpymasterMission.CounterIntel, roguery, difficulty) + "\n\n"
                 + "Muhalefeti izle: " + SpymasterMissions.Description(SpymasterMission.WatchDissent, roguery, difficulty) + "\n\n"
-                + "Söylenti yay: " + SpymasterMissions.Description(SpymasterMission.SpreadRumors, roguery, difficulty);
+                + "Söylenti yay: " + SpymasterMissions.Description(SpymasterMission.SpreadRumors, roguery, difficulty) + "\n\n"
+                + "Ajan yetiştir: " + SpymasterMissions.Description(SpymasterMission.TrainAgents, roguery, difficulty);
             Show("CASUS BAŞI · GÖREV", "Görev: " + spymaster.Name, text, CardImages.Spy, spymaster, options, cancel, null);
         }
 

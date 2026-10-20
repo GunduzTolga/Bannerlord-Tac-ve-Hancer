@@ -10,6 +10,40 @@ namespace CheatMenu.Intrigue.Core
         WatchDissent = 2,
         /// <summary>Seçilen lordun hükümdarıyla ilişkisini haftadan haftaya düşürür; yakalanma riski var.</summary>
         SpreadRumors = 3,
+        /// <summary>Casus başı ajan yetiştirir: her yerde işe yarayan küçük bir başarı bonusu.</summary>
+        TrainAgents = 4,
+    }
+
+    /// <summary>Casus başının ajanları (tasarım: docs/superpowers/specs/2026-10-21-ajan-yetistir.md). Saf: test edilir.</summary>
+    public static class AgentRules
+    {
+        public const int MaxCap = 5;
+        public const int WeeksPerAgent = 2;
+        public const int TrainingWeeklyCost = 200;
+        public const int UpkeepPerAgent = 50;
+        public const int SuccessPerAgent = 2;
+        public const int MaxSuccess = 10;
+        public const int DiscoveryPerAgent = 1;
+        public const int MaxDiscovery = 5;
+
+        /// <summary>Kadro üst sınırı: 1 + Roguery/50, en fazla 5.</summary>
+        public static int MaxAgents(int roguery) => SchemeMath.Clamp(1 + roguery / 50, 1, MaxCap);
+
+        public static int Success(int agents) => System.Math.Min(System.Math.Max(agents, 0) * SuccessPerAgent, MaxSuccess);
+
+        public static int Discovery(int agents) => System.Math.Min(System.Math.Max(agents, 0) * DiscoveryPerAgent, MaxDiscovery);
+
+        public static int Upkeep(int agents) => System.Math.Max(agents, 0) * UpkeepPerAgent;
+
+        /// <summary>Bir eğitim haftası: biriken haftalar dolunca bir ajan hazır olur (true).</summary>
+        public static bool TrainWeek(ref int agents, ref int progress)
+        {
+            progress++;
+            if (progress < WeeksPerAgent) return false;
+            progress = 0;
+            agents++;
+            return true;
+        }
     }
 
     /// <summary>
@@ -52,6 +86,7 @@ namespace CheatMenu.Intrigue.Core
                 case SpymasterMission.CounterIntel: return "Karşı casusluk";
                 case SpymasterMission.WatchDissent: return "Muhalefeti izle";
                 case SpymasterMission.SpreadRumors: return "Söylenti yay";
+                case SpymasterMission.TrainAgents: return "Ajan yetiştir";
                 default: return "Boşta";
             }
         }

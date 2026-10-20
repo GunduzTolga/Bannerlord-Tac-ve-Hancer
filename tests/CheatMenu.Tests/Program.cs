@@ -423,6 +423,8 @@ namespace CheatMenu.Tests
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
             state.Mission = SpymasterMission.SpreadRumors;
             state.RumorTargetId = "lord_12";
+            state.Agents = 3;
+            state.AgentTraining = 1;
 
             IntrigueState back = IntrigueState.Parse(state.Write());
             Scheme s = back.Schemes.Count == 1 ? back.Schemes[0] : null;
@@ -495,6 +497,8 @@ namespace CheatMenu.Tests
             Check("state: mission", back.Mission == SpymasterMission.SpreadRumors && back.RumorTargetId == "lord_12");
             Check("state: unknown letter kind dropped", IntrigueState.Parse("letter\tid=1\tkind=9\ttarget=x\tarrive=5").Letters.Count == 0);
             Check("state: mission default", IntrigueState.Parse("").Mission == SpymasterMission.None);
+            Check("state: agents", back.Agents == 3 && back.AgentTraining == 1);
+            Check("state: agents default", IntrigueState.Parse("").Agents == 0);
 
             Check("state: report valid at 72", back.HasValidReport("lord_1_1", 72) && !back.HasValidReport("lord_1_1", 73));
             Check("state: cooldown", back.IsOnCooldown("lord_2", 199) && !back.IsOnCooldown("lord_2", 200));
@@ -572,6 +576,24 @@ namespace CheatMenu.Tests
             CheckChance("mission: rumor discovery", MissionRules.RumorDiscovery(100, normal), 6);
             CheckChance("mission: rumor discovery hard", MissionRules.RumorDiscovery(100, SchemeMath.HardDifficulty), 9);
             CheckChance("mission: rumor discovery floor", MissionRules.RumorDiscovery(600, SchemeMath.EasyDifficulty), 2);
+            Check("mission: train agents name", MissionRules.Name(SpymasterMission.TrainAgents) == "Ajan yetiştir");
+            CheckChance("agents: max roguery 0", AgentRules.MaxAgents(0), 1);
+            CheckChance("agents: max roguery 100", AgentRules.MaxAgents(100), 3);
+            CheckChance("agents: max cap", AgentRules.MaxAgents(400), 5);
+            CheckChance("agents: success 3", AgentRules.Success(3), 6);
+            CheckChance("agents: success cap", AgentRules.Success(9), 10);
+            CheckChance("agents: discovery 3", AgentRules.Discovery(3), 3);
+            CheckChance("agents: discovery cap", AgentRules.Discovery(9), 5);
+            CheckChance("agents: none", AgentRules.Success(-2) + AgentRules.Discovery(0), 0);
+            CheckChance("agents: upkeep", AgentRules.Upkeep(3), 150);
+            int trainedAgents = 0, trainedWeeks = 0;
+            bool firstWeek = AgentRules.TrainWeek(ref trainedAgents, ref trainedWeeks);
+            bool secondWeek = AgentRules.TrainWeek(ref trainedAgents, ref trainedWeeks);
+            Check("agents: one agent per two weeks", !firstWeek && secondWeek && trainedAgents == 1 && trainedWeeks == 0);
+            var withoutAgents = new SettlementSchemeInputs { CompletedPhases = 2, Roguery = 100 };
+            var withAgents = new SettlementSchemeInputs { CompletedPhases = 2, Roguery = 100, Agents = 3 };
+            CheckChance("agents: incite success +6", SettlementSchemeRules.InciteSuccess(withAgents) - SettlementSchemeRules.InciteSuccess(withoutAgents), 6);
+            CheckChance("agents: incite discovery -3", SettlementSchemeRules.InciteDiscovery(withoutAgents) - SettlementSchemeRules.InciteDiscovery(withAgents), 3);
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
