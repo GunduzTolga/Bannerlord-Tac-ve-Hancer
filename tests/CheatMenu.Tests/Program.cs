@@ -764,6 +764,13 @@ namespace CheatMenu.Tests
                 && CompatRules.IsInfrastructure("Bannerlord.ButterLib.Something") && !CompatRules.IsInfrastructure("Bannerlord.Diplomacy")
                 && !CompatRules.IsInfrastructure("CheatMenu") && !CompatRules.IsInfrastructure(null));
 
+            const string effective = "TaleWorlds.CampaignSystem.GameComponents.DefaultDiplomacyModel.GetHeroesForEffectiveRelation";
+            List<CompatFinding> guarded = CompatRules.PatchFindings(new[]
+                { P(effective, "Bannerlord.Diplomacy.1.4.8", PatchKind.Prefix, true), P(effective, "RegardStanding", PatchKind.Prefix, true) });
+            Check("compat: reviewed null guard is not a conflict", guarded.Single().Risk == CompatRisk.Low
+                && guarded.Single().Lines.Any(l => l.Contains("incelendi")));
+            Check("compat: guard only for its own method", !CompatRules.IsReviewedGuard(P("A.M", "Bannerlord.Diplomacy", PatchKind.Prefix, true)));
+
             List<CompatFinding> one = CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Prefix, true), P("A.M", "X", PatchKind.Postfix) });
             Check("compat: one mod on a method is not a finding", one.Count == 0);
             List<CompatFinding> infra = CompatRules.PatchFindings(new[] { P("A.M", "X", PatchKind.Transpiler), P("A.M", "Bannerlord.UIExtenderEx", PatchKind.Transpiler) });

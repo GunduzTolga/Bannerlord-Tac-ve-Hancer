@@ -28,8 +28,11 @@ namespace CheatMenu.UI
     {
         public const string ElementId = "intrigue";
 
-        // Oyunun Roguery (hilekârlık) yetenek ikonu; her zaman yüklü ui_group1 kategorisinde.
-        private const string IconSprite = @"SPGeneral\Skills\gui_skills_icon_roguery";
+        // Oyunun Roguery (hilekârlık) yetenek ikonu; her zaman yüklü ui_group1 kategorisinde. Önce karakter ekranındaki küçük
+        // sürümü (76 px, çubuk ikonlarına yakın), yoksa büyüğü. Doygunluğu sıfırlanır: çubuktaki diğer ikonlar gibi gri görünsün.
+        private static readonly string[] IconSprites =
+            { @"SPGeneral\Skills\gui_skills_icon_roguery_small", @"SPGeneral\Skills\gui_skills_icon_roguery" };
+        private const float IconSaturation = -100f;
         private const string IconBrush = "MapBar.Left.Icons";
         private const string BackgroundBrush = "MapBar.Left.Button.Backgrounds";
         // Boyut ve hizalama ayarları bu oyun katmanlarından kopyalanır.
@@ -83,7 +86,7 @@ namespace CheatMenu.UI
         /// <summary>İkon ve arka plan katmanlarını oyunun fırçalarına bir kez ekler.</summary>
         private static bool EnsureBrushLayers()
         {
-            Sprite icon = UIResourceManager.SpriteData?.GetSprite(IconSprite);
+            Sprite icon = IconSprites.Select(name => UIResourceManager.SpriteData?.GetSprite(name)).FirstOrDefault(s => s != null);
             return icon != null
                 && AddLayer(IconBrush, IconTemplateLayer, icon)
                 && AddLayer(BackgroundBrush, BackgroundTemplateLayer, null);
@@ -99,7 +102,11 @@ namespace CheatMenu.UI
             var layer = new BrushLayer();
             layer.FillFrom(template);
             layer.Name = ElementId;
-            if (sprite != null) layer.Sprite = sprite;
+            if (sprite != null)
+            {
+                layer.Sprite = sprite;
+                layer.SaturationFactor = IconSaturation;
+            }
             brush.AddLayer(layer);
             return true;
         }
@@ -114,8 +121,8 @@ namespace CheatMenu.UI
 
         public override bool IsActive => Safe(() => IntrigueScreen.IsOpen || ClanIntrigueTab.IsShowing);
 
-        // Ekran açıkken çubuktaki diğer ekranlar onun üstüne açılmasın.
-        public override bool IsLockingNavigation => true;
+        // Oyunun kendi düğmeleri gibi false: true, çubuktaki bütün diğer düğmeleri kilitler (yalnızca Entrika açılabiliyordu).
+        public override bool IsLockingNavigation => false;
 
         public override bool HasAlert => Safe(() => PendingCount() > 0);
 

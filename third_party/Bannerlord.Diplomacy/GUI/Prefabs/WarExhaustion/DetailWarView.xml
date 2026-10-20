@@ -12,7 +12,7 @@
     <Constant Name="Banner.Height" BrushLayer="Default" BrushName="Flat.Tuple.Banner.Small" BrushValueType="Height"/>
     <Constant Name="Banner.Width.Scaled" MultiplyResult="0.43" Value="!Banner.Width"/>
     <Constant Name="Banner.Height.Scaled" MultiplyResult="0.43" Value="!Banner.Height"/>
-    <Constant Name="StatMargin" Value="30" />
+    <Constant Name="StatMargin" Value="45" />
   </Constants>
   <Window>
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
@@ -20,15 +20,15 @@
         <BrushWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Center" LayoutImp.LayoutMethod="VerticalTopToBottom" Brush="Frame1Canvas">
           <Children>
 
-            <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="650" SuggestedHeight="@ReportHeight" Brush="Frame1.Border" IsEnabled="true">
+            <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="820" SuggestedHeight="@ReportHeight" Brush="Frame1.Border" IsEnabled="true">
               <Children>
                 <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
                   <Children>
                     <Standard.Background />
                     <!--Banner-->
-                    <MaskedTextureWidget PositionXOffset="-100" DataSource="{Faction1Visual}" ImageId="@Id" AdditionalArgs="@AdditionalArgs" ImageTypeCode="@ImageTypeCode" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="243" SuggestedHeight="398" HorizontalAlignment="Left" Brush="Encyclopedia.Faction.Banner" OverlayTextureScale="1.5" TextureProviderName="@TextureProviderName"/>
+                    <MaskedTextureWidget PositionXOffset="-100" DataSource="{Faction1Visual}" ImageId="@Id" AdditionalArgs="@AdditionalArgs" ImageTypeCode="@ImageTypeCode" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="490" HorizontalAlignment="Left" Brush="Encyclopedia.Faction.Banner" OverlayTextureScale="1.5" TextureProviderName="@TextureProviderName"/>
                     <!--Banner-->
-                    <MaskedTextureWidget PositionXOffset="100" DataSource="{Faction2Visual}" ImageId="@Id" AdditionalArgs="@AdditionalArgs" ImageTypeCode="@ImageTypeCode" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="243" SuggestedHeight="398" HorizontalAlignment="Right" Brush="Encyclopedia.Faction.Banner" OverlayTextureScale="1.5" TextureProviderName="@TextureProviderName"/>
+                    <MaskedTextureWidget PositionXOffset="100" DataSource="{Faction2Visual}" ImageId="@Id" AdditionalArgs="@AdditionalArgs" ImageTypeCode="@ImageTypeCode" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="490" HorizontalAlignment="Right" Brush="Encyclopedia.Faction.Banner" OverlayTextureScale="1.5" TextureProviderName="@TextureProviderName"/>
 
                   </Children>
                 </Widget>
@@ -79,7 +79,7 @@
                         </ListPanel>
                       </Children>
                     </ListPanel>
-                    <TextWidget VerticalAlignment="Center" HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Info.Text" Text="@StartDate" />
+                    <TextWidget VerticalAlignment="Center" HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Text="@StartDate" />
                     <AutoHideTextWidget VerticalAlignment="Center" HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Diplomacy.Faction.HelpButton" Text="@ActiveQuestWarning">
                       <Children>
                         <HintWidget DataSource="{ActiveQuestHint}" DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" IsEnabled="false"/>
@@ -87,7 +87,7 @@
                     </AutoHideTextWidget>
 
                     <Widget WidthSizePolicy = "StretchToParent" HeightSizePolicy = "Fixed" SuggestedHeight="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Sprite="GradientDivider_9" AlphaFactor="0.4" MarginLeft="10" MarginRight="10" MarginTop="10" MarginBottom="10"/>
-                    <TextWidget HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Encyclopedia.SubPage.Info.Text" Text="@WarExhaustionReportLabel"/>
+                    <TextWidget HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Encyclopedia.SubPage.Info.Text" Brush.FontSize="24" Text="@WarExhaustionReportLabel"/>
 
                     <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" MarginTop="10">
                       <Children>
@@ -95,7 +95,7 @@
                           <ItemTemplate>
                             <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren">
                               <Children>
-                                <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="100" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" Text="@WarExhaustionValueFaction1">
+                                <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Text="@WarExhaustionValueFaction1">
                                   <Children>
                                     <HintWidget DataSource="{Faction1ValueHint}" DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" IsEnabled="false"/>
                                   </Children>
@@ -108,7 +108,7 @@
                           <ItemTemplate>
                             <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center">
                               <Children>
-                                <TextWidget MarginLeft="25" MarginRight="25" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" Text="@Text"/>
+                                <TextWidget MarginLeft="25" MarginRight="25" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Text="@Text"/>
                               </Children>
                             </ListPanel>
                           </ItemTemplate>
@@ -117,7 +117,7 @@
                           <ItemTemplate>
                             <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren">
                               <Children>
-                                <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="100" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" Text="@WarExhaustionValueFaction2">
+                                <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Text="@WarExhaustionValueFaction2">
                                   <Children>
                                     <HintWidget DataSource="{Faction2ValueHint}" DoNotAcceptEvents="true" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" IsEnabled="false"/>
                                   </Children>
@@ -130,25 +130,25 @@
                     </ListPanel>
                     <Widget WidthSizePolicy = "StretchToParent" HeightSizePolicy = "Fixed" SuggestedHeight="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Sprite="GradientDivider_9" AlphaFactor="0.4" MarginLeft="10" MarginRight="10" MarginTop="10" MarginBottom="10"/>
 
-                    <TextWidget HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Encyclopedia.SubPage.Info.Text" Text="@StatsLabel"/>
+                    <TextWidget HorizontalAlignment="Center" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" Brush="Encyclopedia.SubPage.Info.Text" Brush.FontSize="24" Text="@StatsLabel"/>
                     <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" MarginTop="10">
                       <Children>
                         <ListPanel HorizontalAlignment="Center" DataSource="{Stats}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
                           <Children>
-                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="100" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" IntText="@TotalStrength"/>
-                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="100" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" IntText="@Fiefs"/>
+                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" IntText="@TotalStrength"/>
+                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" IntText="@Fiefs"/>
                           </Children>
                         </ListPanel>
                         <ListPanel HorizontalAlignment="Center" MarginLeft="!StatMargin" MarginRight="!StatMargin" DataSource="{Stats}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
                           <Children>
-                            <TextWidget MarginLeft="25" MarginRight="25" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" Text="@TotalStrengthLabel"/>
-                            <TextWidget MarginLeft="25" MarginRight="25" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" Text="@FiefsLabel"/>
+                            <TextWidget MarginLeft="25" MarginRight="25" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Text="@TotalStrengthLabel"/>
+                            <TextWidget MarginLeft="25" MarginRight="25" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" Text="@FiefsLabel"/>
                           </Children>
                         </ListPanel>
                         <ListPanel HorizontalAlignment="Center" DataSource="{OpponentStats}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
                           <Children>
-                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="100" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" IntText="@TotalStrength"/>
-                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="100" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.TextHorizontalAlignment="Center" IntText="@Fiefs"/>
+                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" IntText="@TotalStrength"/>
+                            <TextWidget WidthSizePolicy="Fixed" SuggestedWidth="130" HeightSizePolicy="CoverChildren" Brush="Info.Text" Brush.FontSize="20" Brush.TextHorizontalAlignment="Center" IntText="@Fiefs"/>
                           </Children>
                         </ListPanel>
                       </Children>
@@ -161,7 +161,7 @@
           </Children>
         </BrushWidget>
         <!--Close Popup Button-->
-        <ButtonWidget Id="ClosePopupWidget" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!Popup.CloseButton.Width" SuggestedHeight="!Popup.CloseButton.Height" HorizontalAlignment="Center" VerticalAlignment="Center" PositionXOffset="325" PositionYOffset="@CloseButtonYOffset" Brush="Popup.CloseButton" Command.Click="OnComplete"/>
+        <ButtonWidget Id="ClosePopupWidget" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!Popup.CloseButton.Width" SuggestedHeight="!Popup.CloseButton.Height" HorizontalAlignment="Center" VerticalAlignment="Center" PositionXOffset="410" PositionYOffset="@CloseButtonYOffset" Brush="Popup.CloseButton" Command.Click="OnComplete"/>
       </Children>
     </Widget>
   </Window>

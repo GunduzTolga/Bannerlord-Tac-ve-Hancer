@@ -58,6 +58,20 @@ namespace CheatMenu
                 ? mod.StartsWith(p, StringComparison.OrdinalIgnoreCase)
                 : mod.Equals(p, StringComparison.OrdinalIgnoreCase) || mod.StartsWith(p + ".", StringComparison.OrdinalIgnoreCase));
 
+        /// <summary>
+        /// İncelenmiş ön yamalar: asıl metodu yalnızca geçersiz girdide atlıyor (koruma), başka modun işini boşa çıkarmıyor.
+        /// Mod adı tam ya da "ad." ile başlayan (ör. Bannerlord.Diplomacy.1.4.8).
+        /// </summary>
+        public static readonly string[][] ReviewedGuards =
+        {
+            // Diplomacy 1.5.4: iki kişiden biri null ise çıkışları null yapıp atlar; ikisi de varsa dokunmaz (20 Ekim'de IL'den incelendi).
+            new[] { "TaleWorlds.CampaignSystem.GameComponents.DefaultDiplomacyModel.GetHeroesForEffectiveRelation", "Bannerlord.Diplomacy" },
+        };
+
+        public static bool IsReviewedGuard(PatchEntry p) =>
+            p != null && p.Kind == PatchKind.Prefix && p.Mod != null && ReviewedGuards.Any(g => g[0] == p.Target
+                && (p.Mod.Equals(g[1], StringComparison.OrdinalIgnoreCase) || p.Mod.StartsWith(g[1] + ".", StringComparison.OrdinalIgnoreCase)));
+
         public static List<CompatFinding> PatchFindings(IEnumerable<PatchEntry> patches)
         {
             var findings = new List<CompatFinding>();
@@ -66,7 +80,7 @@ namespace CheatMenu
                 List<string> mods = target.Select(p => p.Mod).Distinct().ToList();
                 if (mods.Count < 2) continue;
                 List<string> transpilers = target.Where(p => p.Kind == PatchKind.Transpiler).Select(p => p.Mod).Distinct().ToList();
-                List<string> skippers = target.Where(p => p.Kind == PatchKind.Prefix && p.CanSkipOriginal).Select(p => p.Mod).Distinct().ToList();
+                List<string> skippers = target.Where(p => p.Kind == PatchKind.Prefix && p.CanSkipOriginal && !IsReviewedGuard(p)).Select(p => p.Mod).Distinct().ToList();
                 CompatRisk risk;
                 string why;
                 if (transpilers.Count >= 2)
@@ -79,7 +93,7 @@ namespace CheatMenu
                     risk = CompatRisk.High;
                     why = "iki mod da asıl metodu atlayıp kendi işini yapabiliyor (" + string.Join(", ", skippers) + "); hangisi geçerli belirsiz";
                 }
-                else if (skippers.Count == 1 && target.Any(p => p.Mod != skippers[0] && (p.Kind == PatchKind.Transpiler || p.Kind == PatchKind.Prefix)))
+                else if (skippers.Count == 1 && target.Any(p => p.Mod != skippers[0] && !IsReviewedGuard(p) && (p.Kind == PatchKind.Transpiler || p.Kind == PatchKind.Prefix)))
                 {
                     risk = transpilers.Any(t => t != skippers[0]) ? CompatRisk.High : CompatRisk.Medium;
                     why = skippers[0] + " asıl metodu atlayabiliyor; o zaman öbür modun bu metoda yaptığı değişiklik çalışmaz";
@@ -166,7 +180,7 @@ namespace CheatMenu
         {
             switch (p.Kind)
             {
-                case PatchKind.Prefix: return p.CanSkipOriginal ? "önce çalışır, asıl metodu atlayabilir" : "önce çalışır";
+                case PatchKind.Prefix: return IsReviewedGuard(p) ? "önce çalışır, yalnızca geçersiz girdide atlar (incelendi)" : p.CanSkipOriginal ? "önce çalışır, asıl metodu atlayabilir" : "önce çalışır";
                 case PatchKind.Postfix: return "sonra çalışır";
                 case PatchKind.Transpiler: return "kodunu değiştirir";
                 default: return "hata yakalar";
