@@ -7,7 +7,34 @@ obj/
 *.user
 *.suo
 
-# Taç ve Hançer'in içine paketlenen başka modların dosyaları: GitHub'a gönderilmez, yalnızca liste ve açıklama gönderilir.
-third_party/*
-!third_party/paketler.txt
-!third_party/BENIOKU.md
+# Taç ve Hançer'in içine paketlenen başka modlar (third_party\<mod>\): kodları (DLL), XML'leri, arayüz prefab'ları, dil ve ayar
+# dosyaları repoda; telefondan çalışırken de görülsün, kodları kendi modumuza taşınabilsin. Büyük içerik (doku, resim, ses, video,
+# 3B model, sahne) GitHub'a gönderilmez: yalnızca PC'deki kopyada durur, derleme oradan alır.
+third_party/**/*.tpac
+third_party/**/*.dds
+third_party/**/*.png
+third_party/**/*.jpg
+third_party/**/*.jpeg
+third_party/**/*.tga
+third_party/**/*.bmp
+third_party/**/*.psd
+third_party/**/*.webp
+third_party/**/*.mp4
+third_party/**/*.webm
+third_party/**/*.bik
+third_party/**/*.ivf
+third_party/**/*.ogg
+third_party/**/*.wav
+third_party/**/*.mp3
+third_party/**/*.bnk
+third_party/**/*.wem
+third_party/**/*.fbx
+third_party/**/*.mtsm
+third_party/**/*.xscene
+third_party/**/*.zip
+third_party/**/*.7z
+third_party/**/*.rar
+# Hata ayıklama sembolleri büyük ve gereksiz; DLL yeter.
+third_party/**/*.pdb
+# Yukarıdaki "bin/" kuralı bizim derleme çıktılarımız için; paketlenen modların bin klasörü (DLL'leri) repoya girer.
+!third_party/**/bin/
