@@ -32,7 +32,7 @@ Ayarlar: **Esc → Mod Seçenekleri → Taç ve Hançer** (MCM). Aynı ayarlar I
 
 ## Kullanım
 
-- Kampanyada **Home** ya da haritanın üstündeki **ENTRİKA** düğmesi → **Entrika ekranı** (kısayol ve düğmenin yeri MCM → Arayüz'den değişir).
+- Kampanyada **Home**, oyunun sol alttaki harita çubuğundaki **Entrika** düğmesi ya da Klan ekranının **Entrika** sekmesi (kısayol ve düğme MCM → Arayüz'den değişir). Haritanın üstünde ayrı bir düğme yok.
 - Kampanyada **Insert** → ana menü: Entrika ekranı, Entrika (liste menüsü), Hileler, Editörler, Klan & krallık, Bilgi, Kurallar.
 - Haritada **Ctrl+Alt + Sol tık** → tıklanan yere ışınlanma.
 
@@ -121,7 +121,7 @@ Ardından Launcher → Mods → **Taç ve Hançer**'i işaretle.
 ## Proje yapısı
 
 - `src/` — mod kodu (`Cheats/` eylemler ve oyun modelleri, `Intrigue/` entrika sistemi, `Menu/` popup menüleri,
-  `UI/` Entrika ekranı, olay kartları ve harita düğmesi (Gauntlet katmanları ve ViewModel'ler), `Mcm/` MCM ayar ekranı, `Patches/` Harmony yamaları)
+  `UI/` Entrika paneli (Klan sekmesi), olay kartları ve harita çubuğu düğmesi (Gauntlet katmanları ve ViewModel'ler), `Mcm/` MCM ayar ekranı, `Patches/` Harmony yamaları)
 - `tests/` — oyunsuz çalışan birim testleri (sayı/ad doğrulama, ayar dosyası, entrika kayıt biçimi, resim adları)
 - `tools/GuiCheck/` — arayüz dosyalarının oyunsuz denetimi (CI'da çalışır)
 - `Module/` — oyundaki modül klasörüne olduğu gibi kopyalanır: `SubModule.xml` (manifest), `GUI/Prefabs` ve `GUI/Brushes`

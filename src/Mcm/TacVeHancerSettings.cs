@@ -126,10 +126,10 @@ namespace CheatMenu.Mcm
         [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
         public Dropdown<string> ScreenHotkey { get; set; } = new Dropdown<string>(ModSettings.ScreenHotkeyNames, ModSettings.DefaultScreenHotkey);
 
-        [SettingPropertyDropdown("Haritadaki Entrika düğmesi", Order = 1, RequireRestart = false,
-            HintText = "Entrika düğmesinin yeri: oyunun sol alttaki harita çubuğu (varsayılan; Klan ve Krallık düğmelerinin yanında) ya da haritanın üst kenarı. Düğme Klan ekranını Entrika sekmesinde açar; sekme her zaman Klan ekranında, Birlikler ile Tımarlar arasında. Harita çubuğu seçeneği kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
+        [SettingPropertyBool("Harita çubuğunda Entrika düğmesi", Order = 1, RequireRestart = false,
+            HintText = "Oyunun sol alttaki harita çubuğunda, Klan ve Krallık düğmelerinin yanında Entrika düğmesi. Klan ekranını Entrika sekmesinde açar; sekme her zaman Klan ekranında, Birlikler ile Tımarlar arasında. Kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
         [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
-        public Dropdown<string> MapButtonPosition { get; set; } = new Dropdown<string>(ModSettings.MapButtonPositionNames, ModSettings.DefaultMapButtonPosition);
+        public bool MapBarButton { get; set; } = true;
 
         [SettingPropertyBool("Resimli olay kartları", Order = 2, RequireRestart = false,
             HintText = "Entrika olayları, kararları ve sonuçları resimli kartla gösterilir (resim yoksa kişinin portresi). Kapalıyken oyunun düz seçim penceresi kullanılır.")]
@@ -203,7 +203,7 @@ namespace CheatMenu.Mcm
             TailInScene = s.TailInScene;
             FastForward.SelectedIndex = IndexOf(ModSettings.AllowedSpeeds, s.FastForwardSpeed);
             ScreenHotkey.SelectedIndex = s.ScreenHotkey;
-            MapButtonPosition.SelectedIndex = s.MapButtonPosition;
+            MapBarButton = s.MapBarButton;
             EventCards = s.EventCards;
             CutThrough.SelectedIndex = s.CutThrough;
         }
@@ -226,7 +226,7 @@ namespace CheatMenu.Mcm
             s.TailInScene = TailInScene;
             s.SetFastForwardSpeed(At(ModSettings.AllowedSpeeds, FastForward.SelectedIndex));
             s.SetScreenHotkey(ScreenHotkey.SelectedIndex);
-            s.SetMapButtonPosition(MapButtonPosition.SelectedIndex);
+            s.MapBarButton = MapBarButton;
             s.EventCards = EventCards;
             s.SetCutThrough(CutThrough.SelectedIndex);
         }

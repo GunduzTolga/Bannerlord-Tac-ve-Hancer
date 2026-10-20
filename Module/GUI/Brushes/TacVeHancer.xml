@@ -195,20 +195,6 @@
     </Styles>
   </Brush>
 
-  <Brush Name="Tvh.Text.MapButton" Font="Galahad" FontSize="20" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
-    <Styles>
-      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineColor="#000000FF" TextOutlineAmount="0.2" TextGlowRadius="0" TextBlur="0" />
-      <Style Name="Hovered" FontColor="#FFFFFFFF" />
-      <Style Name="Pressed" FontColor="#E4C59BFF" />
-    </Styles>
-  </Brush>
-
-  <Brush Name="Tvh.Text.Badge" FontSize="15" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
-    <Styles>
-      <Style Name="Default" FontColor="#FFFFFFFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
-    </Styles>
-  </Brush>
-
   <!-- ===================== Zeminler ===================== -->
 
   <!-- Tam ekran karartma: alttaki haritaya tıklanmasın (yedek ayrı ekran ve olay kartı). -->
@@ -496,30 +482,6 @@
       <Style Name="Disabled">
         <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.8" />
         <BrushLayer Name="Frame" ColorFactor="0.7" />
-      </Style>
-    </Styles>
-    <SoundProperties>
-      <EventSounds>
-        <EventSound EventName="Click" Audio="default" />
-      </EventSounds>
-    </SoundProperties>
-  </Brush>
-
-  <!-- Haritadaki yedek "Entrika" düğmesi (oyunun çubuğuna eklenemezse üst ortada). -->
-  <Brush Name="Tvh.MapButton">
-    <Layers>
-      <BrushLayer Name="Default" Sprite="button_default_9" IsHidden="true" />
-      <BrushLayer Name="Hovered" Sprite="button_default_hover_9" IsHidden="true" />
-    </Layers>
-    <Styles>
-      <Style Name="Default">
-        <BrushLayer Name="Default" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
-      </Style>
-      <Style Name="Hovered">
-        <BrushLayer Name="Hovered" ColorFactor="1.1" IsHidden="false" HorizontalFlip="true" />
-      </Style>
-      <Style Name="Pressed">
-        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
       </Style>
     </Styles>
     <SoundProperties>

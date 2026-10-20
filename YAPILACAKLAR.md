@@ -85,7 +85,7 @@ Entrika hilelerinden "Süren entrikaların aşamalarını tamamla" ve "Entrikala
 
 ### P1 — Entrika ekranı, olay kartları, harita düğmesi (yeni; en çok ekran görüntüsü lazım)
 - [ ] Ana menüde açılış mesajı: "Insert: menü, Home: entrika ekranı"
-- [ ] Haritanın üst ortasında **ENTRİKA** düğmesi var; tıklayınca ekran açılıyor ve oyun duruyor
+- [ ] Haritanın üstünde ayrı bir Entrika düğmesi **yok** (20 Ekim'de kaldırıldı); düğme yalnızca oyunun harita çubuğunda
 - [ ] **Home** ekranı açıp kapatıyor; **Esc** ve **Kapat** kapatıyor; Insert → **Entrika ekranı** da açıyor
 - [ ] Görünüm: koyu pencere, altın kenarlık, Türkçe harfler düzgün, yazılar okunur, taşan/üst üste binen yazı yok (ekran görüntüsü at)
 - [ ] Sol sütun: casus başının **portresi**, Roguery, durum, sınırlar; **Değiştir** ile seçim listesi açılıyor
@@ -100,7 +100,7 @@ Entrika hilelerinden "Süren entrikaların aşamalarını tamamla" ve "Entrikala
 - [ ] Ekran açıkken klavye haritaya gitmiyor (C / I / P karakter, envanter, parti ekranını açmıyor)
 - [ ] Ekran ya da kart açılamazsa çökme yerine kırmızı mesaj + liste menüsü / düz pencere geliyor. Olursa
       `C:\ProgramData\Mount and Blade II Bannerlord\logs` içindeki en yeni `rgl_log` dosyasını gönder
-- [ ] MCM → **Arayüz**: kısayol, düğme yeri (Gizli / Sol üst / Üst orta / Sağ üst / Harita çubuğunda — varsayılan), resimli kartlar aç/kapa
+- [ ] MCM → **Arayüz**: kısayol, "Harita çubuğunda Entrika düğmesi" (açık/kapalı, varsayılan açık), resimli kartlar aç/kapa
 - [x] **Ansiklopedi bağlantısı ve harita çubuğu düğmesi** PC'de yapıldı (19 Ekim); denemesi aşağıda
 
 ### Entrika artık Klan ekranının bir sekmesi (yeni, 19 Ekim; en çok ekran görüntüsü lazım)
@@ -115,7 +115,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Düello ya da sahnede takip seçilince Klan ekranı kapanıyor, sahne haritadan açılıyor
 - [ ] "Bitti" ya da Esc Klan ekranını kapatıyor
 - [ ] Casus başı / divan koltuğu seçerken listede **yoldaşların portreleri** var (eskiden yalnızca ad vardı)
-- [ ] Ayarlar tek seferlik taşındı: düğme yeri "Üst orta" idiyse artık "Harita çubuğunda" (MCM'de de öyle görünüyor)
+- [ ] Ayarlar tek seferlik taşındı: eski düğme yeri "Gizli" idiyse harita çubuğu düğmesi kapalı, başka bir yerdeyse açık (MCM'de de öyle)
 - [ ] Sekme görünmüyorsa ya da bozuksa: Home yine çalışır, ekran görüntüsü at
 
 ### Harita çubuğu düğmesi ve ansiklopedideki Entrika bölümü (PC'de yapıldı)
@@ -124,7 +124,10 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] **Home** de Klan ekranını Entrika sekmesinde açıyor, tekrar basınca kapatıyor; Insert → Entrika ekranı da aynı
 - [ ] Çubuktaki düğmenin üstüne gelince "Entrika" ipucu; harekete hazır suikast/kaçırma ya da sezilen entrika varsa rozet
 - [ ] Konuşma sırasında çubuktaki düğme soluk ve nedeni yazıyor
-- [ ] Simge boş/bozuk görünüyorsa ekran görüntüsü at (çubuğa eklenemezse eski düğme üst ortada çıkar, mod bozulmaz)
+- [ ] Simge boş/bozuk görünüyorsa ekran görüntüsü at (çubuğa eklenemezse düğme hiç çıkmaz; Home ve Klan sekmesi çalışır, mod bozulmaz)
+- [ ] Görünüm (20 Ekim): olay kartı oyunun açılır pencere tuvali ve çerçevesiyle; Divan satırları, haberci ve kronik satırları, sırlar, Saray
+      kutusu, kişi dosyası taş dokulu kartlarla; kaydırma çubukları oyunun tutamacıyla; düz renkli kutu kalmadı (portre çerçeveleri ve ilerleme
+      çubukları hariç). Oyunun kendi ekranlarının yanında yabancı duran bir yer varsa ekran görüntüsü at
 - [ ] Ansiklopedide bir lordun sayfası: "Müttefikler" başlığının üstünde **Entrika** bölümü; bildiklerin
       (rapor kaç gün önce, sırlar, koz, süren entrika, hükümdarıyla arası). Başlığa tıklayınca diğerleri gibi katlanıyor
 - [ ] **Dosyasını aç** (yalnızca hakkında bir şey biliyorsan açık) → ansiklopedi kapanır, Klan ekranı Entrika sekmesinde, Kişiler'de o kişiyle
