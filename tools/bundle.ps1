@@ -92,10 +92,15 @@ function Copy-IfChanged([string]$source, [string]$rel) {
     $dest = Join-Path $ModuleOut $rel
     $src = Get-Item $source
     $existing = Get-Item $dest -ErrorAction SilentlyContinue
-    if ($existing -and $existing.Length -eq $src.Length -and $existing.LastWriteTimeUtc -eq $src.LastWriteTimeUtc) { return }
+    # Files downloaded from the internet carry Windows' "blocked" mark; the game refuses such DLLs ("Cannot load").
+    if ($existing -and $existing.Length -eq $src.Length -and $existing.LastWriteTimeUtc -eq $src.LastWriteTimeUtc) {
+        Unblock-File $dest -ErrorAction SilentlyContinue
+        return
+    }
     $destDir = Split-Path -Parent $dest
     if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Force $destDir | Out-Null }
     Copy-Item $source $dest -Force
+    Unblock-File $dest -ErrorAction SilentlyContinue
     $script:copied++
 }
 
