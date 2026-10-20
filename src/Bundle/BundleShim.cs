@@ -42,6 +42,20 @@ namespace CheatMenu.Bundle
             var wicSettings = AccessTools.Method("Women_In_Calradia.SettingsLoader:LoadSettings", new[] { typeof(string) });
             if (wicSettings != null)
                 harmony.Patch(wicSettings, prefix: new HarmonyMethod(typeof(BundleShim), nameof(WomenInCalradiaConfig)));
+
+            // Companion Autonomy, Klan > Birlikler'de kendi bütçe bölümü görünürken "Birlik Lideri Rol Etkileri" listesini 230'dan
+            // 36 piksele indiriyor (tek satır: liste görünmez oluyor). Liste kaydırılabilir; birkaç satır görünecek kadar yükseklik verilir.
+            var roleEffectsHeight = AccessTools.PropertyGetter("CompanionAutonomy.ClanPartyBudgetMixin:CARoleEffectsHeight");
+            if (roleEffectsHeight != null && roleEffectsHeight.ReturnType == typeof(float))
+                harmony.Patch(roleEffectsHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(RoleEffectsHeight)));
+        }
+
+        /// <summary>Companion Autonomy açıkken rol etkileri listesinin en az yüksekliği (oyunun kendisi 230 kullanır).</summary>
+        internal const float MinRoleEffectsHeight = 130f;
+
+        private static void RoleEffectsHeight(ref float __result)
+        {
+            if (__result < MinRoleEffectsHeight) __result = MinRoleEffectsHeight;
         }
 
         private static void WomenInCalradiaConfig(ref string __0)
