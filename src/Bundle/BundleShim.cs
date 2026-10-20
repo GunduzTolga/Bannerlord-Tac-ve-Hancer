@@ -50,6 +50,42 @@ namespace CheatMenu.Bundle
                 harmony.Patch(roleEffectsHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(RoleEffectsHeight)));
         }
 
+        /// <summary>
+        /// Diplomacy'nin asıl DLL'ini kendi yükleyicisi OnSubModuleLoad'da yükler (bizden sonra): onun türlerine dokunan yamalar
+        /// bütün modüller yüklendikten sonra uygulanır.
+        /// </summary>
+        protected override void OnBeforeInitialModuleScreenSetAsRoot()
+        {
+            base.OnBeforeInitialModuleScreenSetAsRoot();
+            if (_lateApplied) return;
+            _lateApplied = true;
+            try
+            {
+                ApplyLate();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] bundle shim (late) failed: " + ex);
+            }
+        }
+
+        private static bool _lateApplied;
+
+        private static void ApplyLate()
+        {
+            var harmony = new Harmony(ModInfo.Id + ".bundle.late");
+            // Savaş Raporu (Diplomacy): prefab'ı büyütüldü (third_party\Bannerlord.Diplomacy\GUI\Prefabs\WarExhaustion\DetailWarView.xml),
+            // yüksekliği de aynı oranda; kapatma düğmesinin yeri (CloseButtonYOffset) bu yükseklikten hesaplanır.
+            var reportHeight = AccessTools.PropertyGetter("Diplomacy.ViewModel.DetailWarVM:ReportHeight");
+            if (reportHeight != null && reportHeight.ReturnType == typeof(int))
+                harmony.Patch(reportHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportHeight)));
+        }
+
+        /// <summary>Savaş Raporu penceresinin büyütme oranı (yazılar 16'dan 20 puntoya).</summary>
+        internal const float WarReportScale = 1.25f;
+
+        private static void WarReportHeight(ref int __result) => __result = (int)Math.Round(__result * WarReportScale);
+
         /// <summary>Companion Autonomy açıkken rol etkileri listesinin en az yüksekliği (oyunun kendisi 230 kullanır).</summary>
         internal const float MinRoleEffectsHeight = 130f;
 
