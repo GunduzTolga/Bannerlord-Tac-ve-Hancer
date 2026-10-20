@@ -58,11 +58,15 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
       "aradaki saldırmazlık anlaşması bozuldu" yazıyor ve Krallık → Diplomasi'de anlaşma artık görünmüyor
 
 **Açılışta "Taç ve Hançer.RegardStanding submodule could not be loaded correctly due to a dependency conflict" (20 Ekim akşamı):**
-oyun, Regard and Standing'in DLL'indeki bazı türleri yükleyemedi (dayandığı bir DLL ya da tür bulunamıyor). DLL'i repoda olmadığı
-için nedeni buradan görülemedi; `build.ps1` artık bunu oyunu açmadan buluyor (`tools\RefCheck`).
-- [ ] `build.ps1` çalıştır → en sondaki "DLL DENETİMİ" bölümündeki **HATA** satırlarını gönder (eksik DLL ya da tür adıyla yazıyor)
-- [ ] Beklerken oynamak istersen: `third_party\paketler.txt`'de `RegardStanding` satırının başına `#` koy, `build.ps1` çalıştır.
-      Taç ve Hançer kendi gizli ilişki sistemine döner; uyarı gider
+neden bulundu (`tools\RefCheck`, Regard and Standing 1.5.0'ın DLL'iyle). Regard and Standing, isteğe bağlı ortağı **Calradia
+Remembers**'la konuşan tek bir sınıf taşıyor (`PairRegardSource+Source`, o modun bir arayüzünü uyguluyor). Calradia Remembers kurulu
+değilken oyun o sınıfı yükleyemiyor ve pencereyi gösteriyor. Mod bunu bekliyor: köprüyü yalnızca Calradia Remembers varsa açıyor,
+geri kalan her şey çalışıyor. Yani **OK'e basınca oyun devam etmeli**; ayrı kurulumda da aynı pencere çıkardı.
+- [ ] Pencerede **OK** → oyun ana menüye geliyor mu? Gelmiyorsa (kapanıyor/donuyorsa) en yeni `rgl_log` dosyasını gönder
+- [ ] Pencere her açılışta can sıkıyorsa üç yol: (1) arkadaşın Calradia Remembers köprüsünü MCM köprüsü gibi ayrı bir DLL'e
+      (`RegardStanding.CR.dll`) taşısın, pencere tamamen gider; (2) Calradia Remembers'ı da paketleriz; (3) Regard and Standing'i
+      çıkarırız (`paketler.txt`'de satırın başına `#`), Taç ve Hançer kendi gizli ilişki sistemine döner
+- [ ] `git pull` öncesi PC'deki `third_party\RegardStanding` klasörünü sil (aynı mod artık repoda; yoksa git "would be overwritten" der)
 
 **Uyum raporu (yeni, 20 Ekim akşamı):** kampanya her açıldığında mod, bütün modların oyuna yaptığı Harmony yamalarını ve eklediği
 oyun modellerini tarar; birden çok modun aynı yere dokunduğu her noktayı risk seviyesiyle
