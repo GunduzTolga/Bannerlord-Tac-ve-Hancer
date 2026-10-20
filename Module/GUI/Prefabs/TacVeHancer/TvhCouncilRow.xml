@@ -19,7 +19,7 @@
         </Widget>
 
         <!-- Kayıt -->
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#1D1712FF" IsVisible="@IsRow">
+        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" MarginBottom="4" Brush="Tvh.Card" IsVisible="@IsRow">
           <Children>
             <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="14" MarginRight="430" MarginTop="6" Brush="Tvh.Text.SmallTop" Text="@Text" />
             <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="180" HorizontalAlignment="Right" MarginRight="236" Brush="Tvh.Text.GoldRight" Text="@ValueText" IsVisible="@IsGood" />
@@ -30,7 +30,7 @@
               </Children>
             </ButtonWidget>
           </Children>
-        </Widget>
+        </BrushWidget>
       </Children>
     </Widget>
   </Window>

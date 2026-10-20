@@ -25,9 +25,9 @@
                 </Widget>
               </Children>
             </ScrollablePanel>
-            <ScrollbarWidget Id="CouncilBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CouncilHandle" MinValue="0" MaxValue="100" Brush="Tvh.Backdrop">
+            <ScrollbarWidget Id="CouncilBar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" AlignmentAxis="Vertical" Handle="CouncilHandle" MinValue="0" MaxValue="100" Brush="Tvh.Scrollbar">
               <Children>
-                <Widget Id="CouncilHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF" />
+                <ImageWidget Id="CouncilHandle" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="60" HorizontalAlignment="Center" Brush="Tvh.Scrollbar.Handle" />
               </Children>
             </ScrollbarWidget>
           </Children>

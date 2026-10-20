@@ -78,18 +78,14 @@ namespace CheatMenu.Tests
             Check("settings: ai intrigue default few", ModSettings.Parse("").AiIntrigue == SchemeMath.AiFew);
             Check("settings: ai intrigue off", ModSettings.Parse("AiIntrigue=0").AiIntrigue == SchemeMath.AiOff);
             Check("settings: player targeted default off", !ModSettings.Parse("").PlayerCanBeTargeted);
-            Check("settings: map button default is the game's map bar", ModSettings.Parse("").MapButtonPosition == ModSettings.MapBarButtonPosition
-                && ModSettings.DefaultMapButtonPosition == ModSettings.MapBarButtonPosition);
-            ModSettings oldTopCenter = ModSettings.Parse("MapButtonPosition=2\nScreenHotkey=1");
-            Check("settings: old file's top center moves to the map bar once", oldTopCenter.MapButtonPosition == ModSettings.MapBarButtonPosition && oldTopCenter.Migrated);
-            Check("settings: old file's other choice stays", ModSettings.Parse("MapButtonPosition=3").MapButtonPosition == 3 && !ModSettings.Parse("MapButtonPosition=3").Migrated);
-            ModSettings newTopCenter = ModSettings.Parse("SettingsVersion=2\nMapButtonPosition=2");
-            Check("settings: top center chosen after the move stays", newTopCenter.MapButtonPosition == 2 && !newTopCenter.Migrated);
-            Check("settings: saved file carries the version", ModSettings.Parse(newTopCenter.Format()).MapButtonPosition == 2);
-            Check("settings: map button hidden", ModSettings.Parse("MapButtonPosition=0").MapButtonPosition == 0);
-            Check("settings: map button 9 -> default", ModSettings.Parse("MapButtonPosition=9").MapButtonPosition == ModSettings.DefaultMapButtonPosition);
-            Check("settings: map button in the game's map bar", ModSettings.Parse("MapButtonPosition=4").MapButtonPosition == ModSettings.MapBarButtonPosition
-                && ModSettings.MapButtonPositionNames[ModSettings.MapBarButtonPosition] == "Harita çubuğunda");
+            Check("settings: map bar button on by default", ModSettings.Parse("").MapBarButton);
+            Check("settings: map bar button off", !ModSettings.Parse("MapBarButton=0").MapBarButton);
+            ModSettings oldHidden = ModSettings.Parse("MapButtonPosition=0\nScreenHotkey=1");
+            Check("settings: old hidden button stays off, file migrates", !oldHidden.MapBarButton && oldHidden.Migrated && oldHidden.ScreenHotkey == 1);
+            Check("settings: old top/corner positions move to the map bar", ModSettings.Parse("MapButtonPosition=2").MapBarButton
+                && ModSettings.Parse("MapButtonPosition=3").MapBarButton && ModSettings.Parse("SettingsVersion=2\nMapButtonPosition=4").MapBarButton);
+            Check("settings: new file needs no migration", !ModSettings.Parse("SettingsVersion=3\nMapBarButton=1").Migrated);
+            Check("settings: saved file has no old key", !new ModSettings().Format().Contains("MapButtonPosition"));
             Check("settings: cut through default player only", ModSettings.Parse("").CutThrough == CutThroughRules.PlayerOnly);
             Check("settings: cut through everyone", ModSettings.Parse("CutThrough=2").CutThrough == CutThroughRules.Everyone);
             Check("settings: cut through 9 -> default", ModSettings.Parse("CutThrough=9").CutThrough == CutThroughRules.DefaultMode);
@@ -132,7 +128,7 @@ namespace CheatMenu.Tests
             full.SetIntrigueDifficulty(0);
             full.SetAiIntrigue(2);
             full.PlayerCanBeTargeted = true;
-            full.SetMapButtonPosition(3);
+            full.MapBarButton = false;
             full.SetScreenHotkey(5);
             full.EventCards = false;
             full.RomanceSecrets = false;
@@ -143,7 +139,7 @@ namespace CheatMenu.Tests
             Check("settings: full round trip", back.FastForwardSpeed == 8 && back.SkillXpMultiplier == 3
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
-                && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && back.MapButtonPosition == 3 && back.ScreenHotkey == 5
+                && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && !back.MapBarButton && back.ScreenHotkey == 5
                 && !back.EventCards && !back.RomanceSecrets && back.NightHouses && !back.SpouseInfidelity && back.TailInScene);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.

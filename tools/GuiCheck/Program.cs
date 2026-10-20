@@ -20,7 +20,6 @@ static class Program
     {
         { "TvhIntrigueScreen", "CheatMenu.UI.ViewModels.IntrigueScreenVM" },
         { "TvhEventCard", "CheatMenu.UI.ViewModels.EventCardVM" },
-        { "TvhMapButton", "CheatMenu.UI.ViewModels.MapButtonVM" },
     };
 
     // Kullandığımız oyun sprite'ları: yalnızca HER ZAMAN YÜKLÜ kategorilerden (ui_group1, ui_textures). Başka bir ekranın

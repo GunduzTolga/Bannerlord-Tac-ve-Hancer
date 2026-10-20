@@ -4,7 +4,7 @@
   <Window>
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="2">
       <Children>
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#1D1712FF" />
+        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" />
         <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="110" SuggestedHeight="30" MarginLeft="12" Brush="Tvh.Text.Gold" Text="@DayText" />
         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="130" MarginRight="12" MarginTop="5" MarginBottom="5" Brush="Tvh.Text.Body" Text="@Text" />
       </Children>

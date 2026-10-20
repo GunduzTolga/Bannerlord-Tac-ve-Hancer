@@ -141,7 +141,7 @@ namespace CheatMenu
             IntrigueScreen.Close();
             ClanIntrigueTab.Reset();
             EventCards.CloseForGameEnd();
-            MapButton.Close();
+            MapBarButton.Reset();
             TimePause.Reset();
             CheatState.ResetAll();
         }
@@ -158,7 +158,6 @@ namespace CheatMenu
             EventCards.Tick();
             IntrigueScreen.Tick();
             ClanIntrigueTab.Tick();
-            MapButton.Tick();
             CleanSaveGuard.Tick();
 
             bool popupOpen = InformationManager.IsAnyInquiryActive() || EventCards.IsOpen;
