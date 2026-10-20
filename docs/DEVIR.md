@@ -22,6 +22,18 @@
    tam türe bağlıyordu. Düzeltme: `[ViewModelMixin(..., handleDerived: true)]`. Bağlanmazsa Klan ekranında kırmızı mesaj ekran
    türünü ve DLL'ini yazar (`ClanIntrigueTab.CheckBound`).
 
+## 21 Ekim, PC oturumu: bulgular
+- Bulut dalı yerelde `main`'e birleşti; build.ps1 temiz (testler, arayüz denetimi, DLL denetimi: 8 alt modül DLL'i yükleniyor).
+- **Entrika sekmesi:** "başka mod Klan ekranını türetilmiş VM ile açıyor" teşhisi tutmuyor: paketteki hiçbir DLL `ClanManagementVM`
+  ya da `GauntletClanScreen`'den türemiyor, onları kurmuyor ya da yamalamıyor. UIExtenderEx 3.0.3'ün bağlama için aradığı oyun
+  iç yapıları (`ViewModel._propertiesAndMethods`, `DataSourceTypeBindingPropertiesCollection` Properties/Methods/ctor) 1.4.8'de var.
+  Sekme şeridinin DataSource'u ClanManagementVM'nin kendisi. Kesin teşhis için oyunda `CheckBound`'un kırmızı mesajı gerekli
+  (son derleme oyunda hiç açılmadı).
+- **Companion Autonomy rol etkileri:** hata değil, tasarımı: bütçe bloğu görünürken `CARoleEffectsHeight` 36 px. BundleShim en az 130 px yapıyor.
+- **"ENTRİKA" afişi:** Diplomacy'nin göstergesinde yazı yok; büyük ihtimalle kaldırılan yüzen harita düğmemizdi (üst-orta yedeği). Oyunda bak.
+- **Repo herkese açık (PUBLIC):** RegardStanding'in (yamalı) DLL'i yerel `main`'de ve bulut dalında. Push etmeden önce kullanıcı kararı:
+  repo gizli mi olacak?
+
 ## Açık sorunlar — önce bunlar
 1. **Entrika sekmesi** düzeldi mi? Dalı çek, build.ps1, oyunda L → Entrika. Hâlâ boşsa kırmızı mesajdaki türe bak; o modun kaynağında
    `CreateDataSource`'u bul. Gerekirse UIExtenderEx'siz yedek: mixin özelliklerini `ViewModel._propertiesAndMethods`'a kendimiz ekleriz.
