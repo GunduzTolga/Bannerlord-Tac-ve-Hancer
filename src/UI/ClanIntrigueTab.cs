@@ -38,6 +38,8 @@ namespace CheatMenu.UI
         private static Action _onMap;
         private static int _onMapAge;
         private static bool _wasBusy;
+        private static int _unboundFrames;
+        private static bool _unboundReported;
 
         /// <summary>UIExtenderEx kaydı tuttu (kampanya başında, UiExtensions.Register).</summary>
         public static bool Registered { get; internal set; }
@@ -128,6 +130,7 @@ namespace CheatMenu.UI
         {
             try
             {
+                CheckBound();
                 if (_onMap != null)
                 {
                     if (Current == null && Game.Current?.GameStateManager?.ActiveState is MapState)
@@ -168,6 +171,25 @@ namespace CheatMenu.UI
             }
         }
 
+        /// <summary>
+        /// Klan ekranı açık ama sekmemizin ViewModel eki oluşmadıysa (düğme boş ve tıklanmaz) bir kez nedenini yazar.
+        /// </summary>
+        private static void CheckBound()
+        {
+            if (!Registered || !(Game.Current?.GameStateManager?.ActiveState is ClanState))
+            {
+                _unboundFrames = 0;
+                return;
+            }
+            if (Current != null || _unboundReported || ++_unboundFrames < 60) return;
+            _unboundReported = true;
+            object vm = (ScreenManager.TopScreen as SandBox.GauntletUI.GauntletClanScreen)?._dataSource;
+            string type = vm?.GetType().FullName ?? "(ekran bulunamadı: " + ScreenManager.TopScreen?.GetType().FullName + ")";
+            Debug.Print("[CheatMenu] clan intrigue mixin missing; clan view model: " + type + " from " + vm?.GetType().Assembly.GetName().Name);
+            MenuUI.Error("Entrika sekmesi Klan ekranına bağlanamadı (ekran: " + type
+                + (vm != null ? ", " + vm.GetType().Assembly.GetName().Name : "") + "). Bu satırın ekran görüntüsünü at; Insert menüsü çalışır.");
+        }
+
         /// <summary>Kampanya kapanırken.</summary>
         public static void Reset()
         {
@@ -183,7 +205,9 @@ namespace CheatMenu.UI
     /// Klan ekranının ViewModel'ine eklenen alanlar. Oyunun bir sekmesi seçilince (SetSelectedCategory) UIExtenderEx OnRefresh'i
     /// çağırır; bizim sekme o an kapanır. Bizim sekme seçilince oyunun dört sekmesi kapatılır (SetSelectedCategory çağrılmadan).
     /// </summary>
-    [ViewModelMixin(nameof(ClanManagementVM.SetSelectedCategory))]
+    // handleDerived: başka bir mod Klan ekranını kendi türettiği ViewModel'le açabilir (GauntletClanScreen.CreateDataSource);
+    // UIExtenderEx ekleri yalnızca tam türe bağlar, o zaman sekme boş ve tıklanmaz kalırdı.
+    [ViewModelMixin(nameof(ClanManagementVM.SetSelectedCategory), true)]
     public sealed class ClanIntrigueMixin : BaseViewModelMixin<ClanManagementVM>
     {
         private IntrigueScreenVM _intrigue;
