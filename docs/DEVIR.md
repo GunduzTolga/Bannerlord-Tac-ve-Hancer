@@ -1,11 +1,24 @@
-# Devir notu — 20 Ekim 2026 akşamı (buluttaki oturumdan yerel oturuma)
+# Devir notu
 
-## Git durumu
-- Çalışma dalı `ccr-be29c96c-8tfbau`; `main`'den 8 commit önde (PR #1 birleştirildikten sonrakiler). Yerelde ilk iş:
-  `git pull --no-edit origin ccr-be29c96c-8tfbau` (birleştirme commit'i açılırsa düzenleyici açılmasın diye `--no-edit`).
+## En son durum — 21 Ekim 2026 (PC oturumu, telefona devir)
+- **Git:** her şey `main`'de ve GitHub'da. Bulut dalı `ccr-be29c96c-8tfbau` da `main`'e getirildi. Yeni işe `main`'den başla.
+  Repo herkese açık kalıyor (kullanıcı kararı); paketli modların kodu (DLL, XML) artık repoda, büyük içerik (.tpac, resim, ses) dışarıda.
+- **Bugün yapılanlar (oyunda henüz doğrulanmadı):**
+  - Harita çubuğu: Entrika düğmesi `IsLockingNavigation = true` dönüyordu, bütün çubuğu kilitliyordu (yalnızca Entrika açılıyordu). Artık false.
+  - Entrika simgesi: Roguery'nin küçük simgesi (`gui_skills_icon_roguery_small`), doygunluk -100 (diğer çubuk simgeleri gibi gri).
+    Kullanıcı "diğerleri gibi" istedi; oyunda hâlâ uymazsa kendi gri simgemizi çizmek gerekecek (sprite sayfaları .tpac'ta, görülemiyor).
+  - Savaş Raporu (Diplomacy `DetailWarView.xml`, third_party'de düzenlendi): 820 px genişlik, 20/24 punto, büyük sancaklar; BundleShim
+    `DetailWarVM.ReportHeight`'i 1.25 ile büyütüyor (Diplomacy DLL'i bizden sonra yüklendiği için OnBeforeInitialModuleScreenSetAsRoot'ta).
+    Kullanıcı ekranı çok beğendi; geliştirmeye devam edilebilir (yeni bilgi için Diplomacy VM'inden veri çekmek gerekir).
+  - Casus başına "Ajan yetiştir" görevi (`AgentRules`, tasarım `2026-10-21-ajan-yetistir.md`). Casusluk krallık istemiyor; yoldaş casus başı olabilir.
+  - Companion Autonomy rol etkileri en az 130 px (BundleShim). Uyum raporu: Diplomacy'nin null-koruma yaması "incelendi" (yanlış alarm gitti).
+  - 27 yeni kart resmi (49/64).
+- **Açık:** Klan ekranındaki Entrika sekmesi hâlâ boş olabilir. "Türetilmiş VM" teşhisi yanlış çıktı (aşağıda); kesin teşhis için oyundaki
+  kırmızı mesaj (`ClanIntrigueTab.CheckBound`) bekleniyor. Karar bekleyen modlar: Convivium, Diplomacy & Intrigue (YAPILACAKLAR).
+- **Bulutta derleme yok:** oyun dosyaları yalnızca PC'de. Bulutta yazılan kod PC'de `build.ps1` ile derlenip oyuna kurulur.
+
+## 20 Ekim akşamı (buluttaki oturumdan yerel oturuma) — tarihçe
 - PC'de `third_party\RegardStanding` repodakiyle çakışırsa (git "would be overwritten" der): PC'deki klasörü sil, repodaki yamalı.
-- Paketlenen modların çoğu (Diplomacy, HairAddons, WomeninCalradia, AutoTrader, ScarsExtra, CompanionAutonomy) yalnızca PC'de,
-  repoda değil. Yerelde zaten var; istenirse `git add third_party` ile koda eklenir (.gitignore büyük içeriği dışarıda tutar).
 
 ## Bu akşam yapılanlar (dalda, oyunda henüz doğrulanmadı)
 1. **Arayüz oyunun kendi stilleriyle:** sekme/düğme/panel fırçaları oyunun fırçalarından kopyalanıyor (`TvhUi.GameLooks`:
