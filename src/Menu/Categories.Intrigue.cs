@@ -58,16 +58,11 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Geçmiş...", ShowIntrigueLog),
             };
             if (spymaster != null) entries.Add(MenuEntry.Simple("Casus başını görevden al", SchemeEngine.DismissSpymaster));
-            entries.Add(MenuEntry.Simple("Kayıt testi: işaret bırak (geçici)", () =>
-            {
-                state.SaveTestMarker = "gün " + SchemeFactors.Today;
-                MenuUI.Success("İşaret bırakıldı: " + state.SaveTestMarker + ". Şimdi kaydet ve kaydı yeniden yükle.");
-            }));
+            entries.Add(MenuEntry.Submenu("Hanedan: meşrulaştırma ve klanı devretme...", ShowDynasty));
 
             ShowCategory("Entrika", entries, ShowIntrigue,
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")
-                + "Zorluk: " + SchemeMath.DifficultyName(SettingsStore.Current.IntrigueDifficulty) + " (Kurallar'dan değişir). "
-                + "Kayıt testi işareti: " + (state.SaveTestMarker ?? "yok"));
+                + "Zorluk: " + SchemeMath.DifficultyName(SettingsStore.Current.IntrigueDifficulty) + " (Kurallar'dan değişir).");
         }
 
         // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 serdar, P2.15 kâhya) ----

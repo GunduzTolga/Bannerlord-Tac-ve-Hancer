@@ -16,7 +16,7 @@ büyütebilir.
 | Kadro üst sınırı | 1 + Roguery/50, en fazla 5 (Roguery 0: 1, 100: 3, 200+: 5) |
 | Yetiştirme | Görev "Ajan yetiştir" iken 2 haftada 1 ajan; eğitim haftada 200 altın |
 | Bakım | Her ajan haftada 50 altın, görev ne olursa olsun. Ödenemezse bir ajan dağılır |
-| Etki | Ajan başına bütün entrikalara +2 başarı, −1 yakalanma (en fazla +10 / −5). Kişi hedefli entrikalarda gölge ağı bonusuyla toplanır, formüldeki ortak üst sınır geçerli (+15 başarı, −6 yakalanma). Sabotaj ve kışkırtmada ayrıca eklenir |
+| Etki | Ajan başına bütün entrikalara +2 başarı, −1 yakalanma (en fazla +10 / −5). Gölge ağından ayrı, her entrikaya olduğu gibi eklenir: ağın üst sınırına takılmaz, yarıya da inmez (21 Ekim düzeltmesi: önceden kişi hedefli entrikalarda ağ bonusuyla birlikte sınırlanıyor, casusluk ve şantajda yarıya iniyordu) |
 | Kayıp | Bir entrikan ortaya çıkarsa bir ajan yakalanır |
 | Casus başı yoksa | Ajanlar bekler ama bonus vermez; eğitim casus başı meşgulken (esir, vali, parti lideri) durur |
 

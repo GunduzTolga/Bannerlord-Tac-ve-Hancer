@@ -145,12 +145,6 @@ namespace CheatMenu.Intrigue
         {
             int today = Today;
             NetworkBonus(state, target, out int networkSuccess, out int networkDiscovery);
-            // Casus başının ajanları her yerde işe yarar; formüldeki gölge ağı üst sınırı ikisine birlikte uygulanır.
-            if (spymaster != null)
-            {
-                networkSuccess += AgentRules.Success(state.Agents);
-                networkDiscovery += AgentRules.Discovery(state.Agents);
-            }
             Secret secret = kind == SchemeKind.Blackmail ? BestSecret(state, target) : null;
             return new SchemeInputs
             {
@@ -175,6 +169,8 @@ namespace CheatMenu.Intrigue
                 HasMet = target.HasMet,
                 NetworkSuccess = networkSuccess,
                 NetworkDiscovery = networkDiscovery,
+                AgentSuccess = spymaster != null ? AgentRules.Success(state.Agents) : 0,
+                AgentDiscovery = spymaster != null ? AgentRules.Discovery(state.Agents) : 0,
                 HasHook = state.ActiveHook(target.StringId, today) != null,
                 SecretSeverity = secret != null ? SecretRules.ExposurePenalty(secret.Kind) : 0,
             };

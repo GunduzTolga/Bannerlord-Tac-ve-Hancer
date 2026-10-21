@@ -13,7 +13,7 @@ using TaleWorlds.Localization;
 namespace CheatMenu.Intrigue
 {
     /// <summary>
-    /// Saray günü (P2.9, tasarım: docs/superpowers/specs/2026-10-19-p2-saray-gunu.md). Kendi şehrinde ya da kalende "Divan kur": üç
+    /// Saray günü (P2.9, tasarım: docs/superpowers/specs/2026-10-19-p2-saray-gunu.md). Kendi şehrinde ya da kalende "Saray günü düzenle": üç
     /// dilekçe resimli kartla gelir; her seçeneğin sonucu düğmede yazar. Kararlar oyunun değerlerini (sadakat, güvenlik, refah, erzak),
     /// eşrafla ilişkini ve kişilik özelliklerini (oyunun görev ödülleri gibi) etkiler. Aynı yerde 21 günde bir.
     /// </summary>
@@ -24,7 +24,7 @@ namespace CheatMenu.Intrigue
         public static void RegisterMenus(CampaignGameStarter starter)
         {
             foreach (string menu in new[] { "town", "castle" })
-                starter.AddGameMenuOption(menu, "tvh_courtday_" + menu, "Divan kur (saray günü)",
+                starter.AddGameMenuOption(menu, "tvh_courtday_" + menu, "Saray günü düzenle (dilekçeler)",
                     args =>
                     {
                         args.optionLeaveType = GameMenuOption.LeaveType.Manage;

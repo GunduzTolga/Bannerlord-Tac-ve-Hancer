@@ -95,7 +95,7 @@ namespace CheatMenu.Intrigue
                 case SpymasterMission.TrainAgents:
                     return "Her " + AgentRules.WeeksPerAgent + " haftada bir ajan; eğitim haftada " + SchemeFactors.Money(AgentRules.TrainingWeeklyCost)
                         + ". Kadro en fazla " + AgentRules.MaxAgents(roguery) + " (Roguery'ye göre). Her ajan bütün entrikalara +%"
-                        + AgentRules.SuccessPerAgent + " başarı, -%" + AgentRules.DiscoveryPerAgent + " yakalanma (gölge ağı gibi, ama her yerde); bakım ajan başına haftada "
+                        + AgentRules.SuccessPerAgent + " başarı, -%" + AgentRules.DiscoveryPerAgent + " yakalanma (her yerde, gölge ağından ayrı ve onun sınırına takılmadan); bakım ajan başına haftada "
                         + SchemeFactors.Money(AgentRules.UpkeepPerAgent) + ". Bir entrikan ortaya çıkarsa bir ajan yakalanır.";
                 default:
                     return "Görev yok: casus başı yalnızca entrikalarla uğraşır.";

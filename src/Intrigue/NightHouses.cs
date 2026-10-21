@@ -192,9 +192,21 @@ namespace CheatMenu.Intrigue
             return hero == me.Spouse || hero.Spouse == me || state.Lovers.Any(l => l.HeroId == hero.StringId);
         }
 
-        /// <summary>null: yoldaş evi işletmeyi kabul eder; değilse nedeni (kendi kararı).</summary>
+        /// <summary>null: yoldaş ya da eşin evi işletmeyi kabul eder; değilse nedeni (kendi kararı).</summary>
         public static string Refusal(IntrigueState state, Hero hero) =>
-            HouseRules.ManagerRefusal((int)hero.Age, IsPartner(state, hero), hero.GetTraitLevel(DefaultTraits.Honor), hero.GetRelation(Hero.MainHero));
+            HouseRules.ManagerRefusal((int)hero.Age, hero.GetTraitLevel(DefaultTraits.Honor), hero.GetRelation(Hero.MainHero));
+
+        /// <summary>Yönetici adayları: evde iş alabilecek yoldaşlar ve (aynı koşullarla) eşin. Eş yalnızca yönetici olabilir.</summary>
+        public static List<Hero> ManagerCandidates(IntrigueState state)
+        {
+            List<Hero> list = CompanionCandidates(state);
+            Hero spouse = Hero.MainHero.Spouse;
+            if (spouse != null && spouse.IsAlive && !spouse.IsPrisoner && spouse.Clan == Clan.PlayerClan && spouse.GovernorOf == null
+                && !(spouse.PartyBelongedTo != null && spouse.PartyBelongedTo.LeaderHero == spouse) && !list.Contains(spouse)
+                && Council.SeatOf(state, spouse) == null && state.Hostages.All(d => d.GivenId != spouse.StringId))
+                list.Insert(0, spouse);
+            return list;
+        }
 
         /// <summary>null: yoldaş evde çalışmak ister; değilse nedeni (kendi karakteri).</summary>
         public static string WorkRefusal(IntrigueState state, Hero hero) =>
@@ -473,8 +485,8 @@ namespace CheatMenu.Intrigue
         private static void PickManager(Settlement town)
         {
             IntrigueState state = SchemeEngine.State;
-            Picker.Pick("Genelevi kim işletsin?", CompanionCandidates(state),
-                h => h.Name + " - Charm " + h.GetSkillValue(DefaultSkills.Charm) + ", Roguery " + h.GetSkillValue(DefaultSkills.Roguery)
+            Picker.Pick("Genelevi kim işletsin?", ManagerCandidates(state),
+                h => h.Name + (h == Hero.MainHero.Spouse ? " (eşin)" : "") + " - Charm " + h.GetSkillValue(DefaultSkills.Charm) + ", Roguery " + h.GetSkillValue(DefaultSkills.Roguery)
                     + (Refusal(state, h) is string why ? "  [istemez: " + why + "]" : ""),
                 h => MenuUI.Defer(() => AskManager(town, h)),
                 () => MenuUI.Defer(() => ShowManage(town)), h => Categories.HeroPortrait(h), sort: false);
@@ -517,11 +529,11 @@ namespace CheatMenu.Intrigue
                 "Yönetici: " + (manager != null ? manager.Name.ToString() : "yok") + ".",
                 "Evde çalışan yoldaşların: " + (working.Count > 0 ? string.Join(", ", working.Select(h => h.Name)) : "yok") + ".",
                 "",
-                "Yönetici evin hesabını ve kapısını tutar: Charm kazancı, Roguery haberleri ve gizliliği artırır; kazancın %"
-                    + HouseRules.ManagerCutPercent + "'u kendi kesesine.",
+                "Yönetici evin hesabını ve kapısını tutar, müşteriye çıkmaz: Charm kazancı, Roguery haberleri ve gizliliği artırır; kazancın %"
+                    + HouseRules.ManagerCutPercent + "'u kendi kesesine. Bir yoldaşın ya da eşin olabilir, isterse.",
                 "",
                 "Bir yoldaşına evde çalışmak isteyip istemediğini sorabilirsin. Karar onun: onurlu biri ya da sana güvenmeyen istemez; hesapçı, "
-                    + "sokağı bilen (Roguery 50+) ya da onuru düşük biri isteyebilir. Eşin ve sevgilin hiç sorulmaz. Çalışırsa partinden ayrılır, "
+                    + "sokağı bilen (Roguery 50+) ya da onuru düşük biri isteyebilir. Eşin ve sevgilin buna hiç sorulmaz. Çalışırsa partinden ayrılır, "
                     + "şehirde kalır; kazancının payı (şu an %" + HouseRules.SharePercent(house.Share) + ", haftada ~"
                     + SchemeFactors.Money(HouseRules.WorkerPay(house.Share, WorkerTrait.None, prosperity, Charm(manager))) + ") kendi kesesine gider. "
                     + "İstediği hafta bırakır; sen de istediğin an geri çağırırsın.",
@@ -541,7 +553,7 @@ namespace CheatMenu.Intrigue
                     : new EventCards.CardOption
                     {
                         Label = "Yönetici ata...",
-                        DisabledHint = CompanionCandidates(state).Count == 0 ? "Sorabileceğin bir yoldaşın yok (divanda, valilikte, parti başında ya da evde olmayan)" : null,
+                        DisabledHint = ManagerCandidates(state).Count == 0 ? "Sorabileceğin bir yoldaşın ya da eşin yok (divanda, valilikte, parti başında ya da evde olmayan)" : null,
                         Apply = () => MenuUI.Defer(() => PickManager(town)),
                     },
                 new EventCards.CardOption

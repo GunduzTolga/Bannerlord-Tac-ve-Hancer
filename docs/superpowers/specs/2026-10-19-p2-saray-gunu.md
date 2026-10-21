@@ -9,7 +9,7 @@ sadakat, güvenlik, refah ve erzak değerlerini, eşrafla ilişkini ve kişilik 
 
 ## Nasıl
 
-- **Nerede:** kendi şehrin ya da kalende, yerleşim menüsünde "Divan kur (saray günü)". Aynı yerde 21 günde bir; beklerken düğme kapalı
+- **Nerede:** kendi şehrin ya da kalende, yerleşim menüsünde "Saray günü düzenle (dilekçeler)". Aynı yerde 21 günde bir; beklerken düğme kapalı
   ve kaç gün kaldığını söyler.
 - **Divanda üç dilekçe** gelir, her biri resimli bir kartta. Dilekçe sahibi o yerin gerçek bir eşrafıdır (tüccar, zanaatkâr, çete
   lideri, muhtar); kartta portresi görünür. Uygun eşraf yoksa portre çıkmaz.

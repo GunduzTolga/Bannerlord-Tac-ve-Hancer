@@ -83,6 +83,9 @@ namespace CheatMenu.Intrigue.Core
         // E2
         public int NetworkSuccess;
         public int NetworkDiscovery;
+        /// <summary>Casus başının ajanları (AgentRules): gölge ağından ayrı, her entrikaya olduğu gibi eklenir.</summary>
+        public int AgentSuccess;
+        public int AgentDiscovery;
         public bool HasHook;
         public int SecretSeverity;
     }
@@ -130,6 +133,7 @@ namespace CheatMenu.Intrigue.Core
                 + (i.TargetIsPlayersCaptive ? 20 : 0)
                 - (i.TargetAlerted ? 15 : 0)
                 + Math.Min(i.NetworkSuccess, 15)
+                + i.AgentSuccess
                 + (i.HasHook ? 10 : 0)
                 + DifficultySuccess(i.Difficulty);
 
@@ -146,6 +150,7 @@ namespace CheatMenu.Intrigue.Core
                 + Math.Max(i.TargetCalculating, 0) * 2
                 + i.EventDiscovery
                 - Math.Min(i.NetworkDiscovery, 6)
+                - i.AgentDiscovery
                 + DifficultyDiscovery(i.Difficulty);
 
         /// <summary>Şantaj: elindeki sır ne kadar ağırsa (ifşa cezası) o kadar etkili; 2. aşama +15.</summary>
@@ -160,6 +165,7 @@ namespace CheatMenu.Intrigue.Core
                 + Opportunity(SchemeKind.Blackmail, i.CompletedPhases)
                 + Clamp(i.EventSuccess, -15, 15)
                 + i.NetworkSuccess / 2.0
+                + i.AgentSuccess
                 + DifficultySuccess(i.Difficulty);
             return Clamp(Round(value), 15, 90);
         }
@@ -171,6 +177,7 @@ namespace CheatMenu.Intrigue.Core
                 + i.TargetRoguery / 40.0
                 + i.EventDiscovery
                 - i.NetworkDiscovery / 2.0
+                - i.AgentDiscovery
                 + DifficultyDiscovery(i.Difficulty);
             return Clamp(Round(value), 2, 30);
         }
@@ -185,6 +192,7 @@ namespace CheatMenu.Intrigue.Core
                 - (i.HasMet ? 0 : 10)
                 + Clamp(i.EventSuccess, -15, 15)
                 + i.NetworkSuccess / 2.0
+                + i.AgentSuccess
                 + DifficultySuccess(i.Difficulty);
             return Clamp(Round(value), 20, 95);
         }
@@ -196,6 +204,7 @@ namespace CheatMenu.Intrigue.Core
                 + i.TargetRoguery / 40.0
                 + i.EventDiscovery
                 - i.NetworkDiscovery / 2.0
+                - i.AgentDiscovery
                 + DifficultyDiscovery(i.Difficulty);
             return Clamp(Round(value), 1, 25);
         }

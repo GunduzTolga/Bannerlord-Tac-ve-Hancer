@@ -610,6 +610,14 @@ namespace CheatMenu.Tests
             var withAgents = new SettlementSchemeInputs { CompletedPhases = 2, Roguery = 100, Agents = 3 };
             CheckChance("agents: incite success +6", SettlementSchemeRules.InciteSuccess(withAgents) - SettlementSchemeRules.InciteSuccess(withoutAgents), 6);
             CheckChance("agents: incite discovery -3", SettlementSchemeRules.InciteDiscovery(withoutAgents) - SettlementSchemeRules.InciteDiscovery(withAgents), 3);
+            // Ajanlar kişi hedefli entrikalarda da tam eklenir: gölge ağının sınırına takılmaz, yarıya inmez.
+            var netCapped = new SchemeInputs { Roguery = 60, TargetRoguery = 20, NetworkSuccess = 15, NetworkDiscovery = 6 };
+            var netAndAgents = new SchemeInputs { Roguery = 60, TargetRoguery = 20, NetworkSuccess = 15, NetworkDiscovery = 6, AgentSuccess = 6, AgentDiscovery = 3 };
+            CheckChance("agents: murder success past the network cap", SchemeMath.MurderSuccess(netAndAgents) - SchemeMath.MurderSuccess(netCapped), 6);
+            var noisy = new SchemeInputs { TargetRoguery = 20, NetworkDiscovery = 6 };
+            var noisyWithAgents = new SchemeInputs { TargetRoguery = 20, NetworkDiscovery = 6, AgentDiscovery = 3 };
+            CheckChance("agents: murder discovery past the network cap", SchemeMath.MurderDiscovery(noisy) - SchemeMath.MurderDiscovery(noisyWithAgents), 3);
+            CheckChance("agents: spy success not halved", SchemeMath.SpySuccess(netAndAgents) - SchemeMath.SpySuccess(netCapped), 6);
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
@@ -997,9 +1005,9 @@ namespace CheatMenu.Tests
             Check("house: unnamed workers get names and keep their start day", named == 3 && legacy.Houses[0].Workers.All(w => w.Name != null
                 && w.Age >= HouseRules.MinAge && w.Since == 40) && HouseRules.NameUnnamed(legacy.Houses[0], null, null, n => 0) == 0);
 
-            Check("house: manager decides for themself", HouseRules.ManagerRefusal(30, false, 0, 10) == null && HouseRules.ManagerRefusal(30, false, 1, 50) != null
-                && HouseRules.ManagerRefusal(30, false, -1, -5) != null && HouseRules.ManagerRefusal(30, false, -2, 0) == null);
-            Check("house: never a spouse, lover or minor", HouseRules.ManagerRefusal(30, true, -2, 100) != null && HouseRules.ManagerRefusal(17, false, -2, 100) != null);
+            Check("house: manager decides for themself", HouseRules.ManagerRefusal(30, 0, 10) == null && HouseRules.ManagerRefusal(30, 1, 50) != null
+                && HouseRules.ManagerRefusal(30, -1, -5) != null && HouseRules.ManagerRefusal(30, -2, 0) == null);
+            Check("house: never a minor as manager", HouseRules.ManagerRefusal(17, -2, 100) != null);
 
             // Yoldaş çalışan: kendi isteğiyle
             Check("house: a companion works only if they want to", HouseRules.CompanionWorkRefusal(25, false, 0, 1, 0, 0) == null
