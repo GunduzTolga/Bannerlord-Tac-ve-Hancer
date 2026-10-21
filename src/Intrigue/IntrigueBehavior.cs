@@ -39,7 +39,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika günlük (eşin)", SpouseLife.DailyTick);
                 MenuUI.SafeRun("Aile editörü (yaşlanma)", Cheats.FamilyEditor.DailyTick);
                 MenuUI.SafeRun("Divan günlük (kervan defteri)", Treasury.DailyTick);
-                MenuUI.SafeRun("Divan günlük (başkomutanın uyarıları)", Marshal.Daily);
+                MenuUI.SafeRun("Divan günlük (mareşalin uyarıları)", Marshal.Daily);
                 MenuUI.SafeRun("Divan günlük (kâhyanın uyarıları)", Steward.Daily);
                 MenuUI.SafeRun("Genelev günlük (hastalık)", Brothels.Daily);
             });
@@ -68,7 +68,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hazinedar)", Treasury.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hekim)", Physician.Weekly);
-                MenuUI.SafeRun("Divan haftalık (başkomutan)", Marshal.Weekly);
+                MenuUI.SafeRun("Divan haftalık (mareşal)", Marshal.Weekly);
                 MenuUI.SafeRun("Divan haftalık (kâhya)", Steward.Weekly);
             });
         }

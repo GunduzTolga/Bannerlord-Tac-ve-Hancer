@@ -47,7 +47,7 @@ Haritadaki savaş yorgunluğu göstergesine tıklayınca Diplomacy'nin raporu ye
       "savaş N gündür sürüyor" satırı. Sağ üstte Kapat; Esc de kapatıyor
 - [ ] Altta iki sütun (kaydırılıyor): **Savaşın gidişatı** (üstünlük puanı, kayıplar, fethedilen yerler, yağmalar, esir lordlar),
       **Kuvvetler** (güç, ordular, klanlar, lordlar, şehir/kale/köy, müttefikler, başka cepheler), **Savaş yorgunluğu** (Diplomacy'nin
-      dökümü); sağda **Başkomutanın raporu**, **Barış**, **Esirler**, **Savaş günlüğü**
+      dökümü); sağda **Mareşalin raporu**, **Barış**, **Esirler**, **Savaş günlüğü**
 - [ ] Satırların altındaki çubuklar iki krallığın renginde mi, oranlar mantıklı mı; yazılar taşıyor mu
 - [ ] "Savaştaki üstünlük" ve yorgunluk satırlarındaki sayıların üstüne gelince ipucu çıkıyor mu
 - [ ] Barış bölümü: iki tarafın tavrı ve "Barış teklif edebilirsin" ya da Diplomacy'nin nedeni (ör. savaş yeterince uzun sürmedi)
@@ -103,8 +103,8 @@ Diplomacy'nin "Factions" penceresi yerine bizimki açılıyor; katıl/ayrıl/isy
       anlaşmayı erken bitirince o da bitiyor
 - [ ] **Kur ve sevgililer** MCM'de ayrı anahtar; "Gizli ilişki sırları" kapalıyken kur yine çalışıyor
 - [ ] "Eşin seni aldatabilir" kapalıyken eşinin (Regard and Standing'in kurduğu) ilişkisini araştırabiliyorsun
-- [ ] **Savaş Raporu:** altta başkomutanın satırları (güç tahmini sol/sağ, sahadaki ordular, topraklarına yürüyen, tavsiye); başkomutan yoksa
-      "Başkomutanın yok" satırı; pencere satırlara göre uzuyor, kapat düğmesi yerinde
+- [ ] **Savaş Raporu:** altta mareşalin satırları (güç tahmini sol/sağ, sahadaki ordular, topraklarına yürüyen, tavsiye); mareşal yoksa
+      "Mareşalin yok" satırı; pencere satırlara göre uzuyor, kapat düğmesi yerinde
 - [ ] **Muhalefeti izle** raporunda (krallıkta isyancı grup varsa) "Örgütlü muhalefet": önde kim, kaç klan, istek, güç
 - [ ] **Ulak kartı:** ilk seçenek "Görüşme: Diplomacy habercisi (bedel, süre)" → Diplomacy'nin habercisi gidiyor, varınca konuşma;
       hediyeli ulak varınca "Hediyen ulaştı" kartı (artık bizim görüşme penceremiz açılmıyor)
@@ -253,7 +253,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
 ### P2.15 — Divan: kâhya (yeni)
-- [ ] Divan'da dört koltuk yan yana sığıyor mu (BAŞKOMUTAN, KÂHYA, HAZİNEDAR, SARAY HEKİMİ)? Küçük düğme yazıları okunuyor mu? Ekran görüntüsü at
+- [ ] Divan'da dört koltuk yan yana sığıyor mu (MAREŞAL, KÂHYA, HAZİNEDAR, SARAY HEKİMİ)? Küçük düğme yazıları okunuyor mu? Ekran görüntüsü at
 - [ ] Kâhya ata (Steward, yolsuz mu, sadakat katkısı) → kart: "Şehir ve kalelerinde sadakat günde +0,5"
 - [ ] Bir şehrinin sadakatine bak (oyunun şehir ekranında açıklama): "Kâhya (ad)" satırı var mı?
 - [ ] ŞEHİR VE KALELER: sadakat, güvenlik, refah, inşaat (kalan gün), günlük proje, günlük gelir; sorunlu olan kırmızı
@@ -263,16 +263,16 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Insert > Entrika > Divan > Kâhya: rapor metni, "Yönet: X"
 - [ ] Kaydet → yükle: kâhya duruyor
 
-### P2.14 — Divan: başkomutan (yeni)
-- [ ] Divan'da üç koltuk yan yana sığıyor mu (BAŞKOMUTAN, HAZİNEDAR, SARAY HEKİMİ)? Yazılar taşıyorsa ekran görüntüsü at
-- [ ] Başkomutan ata (Tactics, Scouting, tahmin payı) → kart: görüş menzili, erken uyarı yüzdesi; parti başındaki biri de olabiliyor
+### P2.14 — Divan: mareşal (yeni)
+- [ ] Divan'da üç koltuk yan yana sığıyor mu (MAREŞAL, HAZİNEDAR, SARAY HEKİMİ)? Yazılar taşıyorsa ekran görüntüsü at
+- [ ] Mareşal ata (Tactics, Scouting, tahmin payı) → kart: görüş menzili, erken uyarı yüzdesi; parti başındaki biri de olabiliyor
 - [ ] Savaştayken SAVAŞ MECLİSİ: krallık gücü (onlar / biz), oran, tavsiye
 - [ ] SAVUNMAN: şehir ve kalelerin garnizon, milis, sur, erzak; kuşatma altındaysa kırmızı
 - [ ] DÜŞMAN ORDULARI: kaç kişi, nerede, hedef ("Pravend'i kuşatmaya gidiyor"), sana kaç gün; "Haritada izle"
 - [ ] ZAYIF HEDEFLER: en zayıf beş düşman kalesi; birine git ve oyundaki garnizonla karşılaştır (Tactics düşükse sapmalı)
-- [ ] Bir ordu şehrine ya da köyüne yürürken (çoğu zaman) kuşatmadan önce "Başkomutanın uyarıyor" kartı geliyor mu, süre doğru mu?
-- [ ] Insert > Entrika > Divan > Başkomutan: rapor metni
-- [ ] Kaydet → yükle: başkomutan duruyor
+- [ ] Bir ordu şehrine ya da köyüne yürürken (çoğu zaman) kuşatmadan önce "Mareşalin uyarıyor" kartı geliyor mu, süre doğru mu?
+- [ ] Insert > Entrika > Divan > Mareşal: rapor metni
+- [ ] Kaydet → yükle: mareşal duruyor
 
 ### P2.13 — Divan: saray hekimi (yeni)
 - [ ] Divan sekmesinin üstünde iki koltuk kartı yan yana (HAZİNEDAR, SARAY HEKİMİ); boşsa açıklama ve "Ata"

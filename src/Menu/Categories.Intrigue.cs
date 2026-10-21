@@ -51,7 +51,7 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
-                MenuEntry.Submenu("Divan (başkomutan, kâhya, hazinedar, hekim)...", ShowCouncil),
+                MenuEntry.Submenu("Divan (mareşal, kâhya, hazinedar, hekim)...", ShowCouncil),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -86,14 +86,14 @@ namespace CheatMenu.Menu
                 + "Zorluk: " + SchemeMath.DifficultyName(SettingsStore.Current.IntrigueDifficulty) + " (Kurallar'dan değişir).");
         }
 
-        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 başkomutan, P2.15 kâhya) ----
+        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 mareşal, P2.15 kâhya) ----
 
         private static void ShowCouncil()
         {
             IntrigueState state = SchemeEngine.State;
             ShowCategory("Divan", new List<MenuEntry>
             {
-                MenuEntry.Submenu("Başkomutan: " + (Marshal.Current(state)?.Name.ToString() ?? "boş") + "...", ShowMarshal),
+                MenuEntry.Submenu("Mareşal: " + (Marshal.Current(state)?.Name.ToString() ?? "boş") + "...", ShowMarshal),
                 MenuEntry.Submenu("Kâhya: " + (Steward.Current(state)?.Name.ToString() ?? "boş") + "...", ShowSteward),
                 MenuEntry.Submenu("Hazinedar: " + (Treasury.Treasurer(state)?.Name.ToString() ?? "boş") + "...", ShowTreasury),
                 MenuEntry.Submenu("Saray hekimi: " + (Physician.Current(state)?.Name.ToString() ?? "boş") + "...", ShowPhysician),
@@ -106,18 +106,18 @@ namespace CheatMenu.Menu
             Hero marshal = Marshal.Current(state);
             var entries = new List<MenuEntry>
             {
-                MenuEntry.Submenu(marshal == null ? "Başkomutan ata..." : "Başkomutanı değiştir...", () => Picker.Pick("Başkomutan seç",
+                MenuEntry.Submenu(marshal == null ? "Mareşal ata..." : "Mareşali değiştir...", () => Picker.Pick("Mareşal seç",
                     Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
                     hero =>
                     {
-                        MenuUI.SafeRun("Başkomutan", () => Marshal.Assign(SchemeEngine.State, hero));
+                        MenuUI.SafeRun("Mareşal", () => Marshal.Assign(SchemeEngine.State, hero));
                         MenuUI.Defer(ShowMarshal);
                     }, ShowMarshal, HeroPortrait, sort: false)),
             };
-            if (marshal != null) entries.Add(MenuEntry.Simple("Başkomutanı görevden al", () => Marshal.Dismiss(SchemeEngine.State)));
-            ShowCategory("Divan: başkomutan", entries, ShowMarshal,
+            if (marshal != null) entries.Add(MenuEntry.Simple("Mareşali görevden al", () => Marshal.Dismiss(SchemeEngine.State)));
+            ShowCategory("Divan: mareşal", entries, ShowMarshal,
                 marshal == null
-                    ? "Klanından Tactics'i ve Scouting'i yüksek birini başkomutan yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
+                    ? "Klanından Tactics'i ve Scouting'i yüksek birini mareşal yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
                     : Marshal.ReportText(state) + "\n\nOrdular, zayıf hedefler ve savunman: Entrika ekranı > Divan.",
                 ShowCouncil);
         }

@@ -12,7 +12,7 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Savaş Raporu'nun alt bölümleri (tasarım: docs/superpowers/specs/2026-10-21-savas-raporu.md). Üst kısım (sancaklar, savaş yorgunluğu)
     /// Diplomacy'nin kendi ViewModel'iyle çizilir; buradakiler oyunun savaş kayıtlarından (StanceLink), oyunun diplomasi modelinden,
-    /// Diplomacy'nin yorgunluk dökümü ve barış koşullarından, başkomutandan ve oyunun savaş günlüğünden. Pencere: UI.WarReportScreen.
+    /// Diplomacy'nin yorgunluk dökümü ve barış koşullarından, mareşalden ve oyunun savaş günlüğünden. Pencere: UI.WarReportScreen.
     /// </summary>
     public static class WarReport
     {
@@ -47,10 +47,10 @@ namespace CheatMenu.Intrigue
             Safe("Savaş yorgunluğu (Diplomacy)", true, s => Exhaustion(s, diplomacyReport)),
         };
 
-        /// <summary>Sağ sütun: başkomutan, barış, esirler, savaş günlüğü.</summary>
+        /// <summary>Sağ sütun: mareşal, barış, esirler, savaş günlüğü.</summary>
         public static List<Section> Right(Kingdom ours, Kingdom enemy, object diplomacyReport) => new List<Section>
         {
-            Safe("Başkomutanın raporu", true, s => MarshalView(s, enemy)),
+            Safe("Mareşalin raporu", true, s => MarshalView(s, enemy)),
             Safe("Barış", false, s => Peace(s, ours, enemy, diplomacyReport)),
             Safe("Esirler", false, s => Prisoners(s, ours, enemy)),
             Safe("Savaş günlüğü", false, s => Log(s, ours, enemy)),
@@ -166,7 +166,7 @@ namespace CheatMenu.Intrigue
 
         private static string Exhausted(int count, string percent) => count > 0 ? count.ToString("N0") + "  ·  " + percent : percent;
 
-        // ---- Başkomutan ----
+        // ---- Mareşal ----
 
         private static void MarshalView(Section s, Kingdom enemy)
         {
