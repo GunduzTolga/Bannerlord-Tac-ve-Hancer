@@ -62,7 +62,7 @@ namespace CheatMenu.Intrigue
                     return h.IsLord || h.IsWanderer ? null : "casusluk yalnızca lord ve gezginlere yapılır";
                 case SchemeKind.Blackmail:
                     if (!h.IsLord) return "şantaj yalnızca lordlara yapılır";
-                    if (BestSecret(state, h) == null) return "elinde onun ifşa edilmemiş bir sırrı yok (önce casusluk)";
+                    if (BestSecret(state, h) == null) return "elinde onun ifşa edilmemiş, kozda kullanılmamış bir sırrı yok (önce casusluk)";
                     if (state.ActiveHook(h.StringId, Today) != null) return "zaten üzerinde bir kozun var";
                     return null;
             }
@@ -80,7 +80,7 @@ namespace CheatMenu.Intrigue
 
         /// <summary>Hedefin ifşa edilmemiş en ağır sırrı (şantajın gücü buna bağlı); yoksa null.</summary>
         public static Secret BestSecret(IntrigueState state, Hero h) =>
-            state.Secrets.Where(s => s.TargetId == h.StringId && !s.Exposed)
+            state.Secrets.Where(s => s.TargetId == h.StringId && !s.Exposed && !s.Spent)
                 .OrderByDescending(s => SecretRules.ExposurePenalty(s.Kind)).FirstOrDefault();
 
         /// <summary>null: hedef olabilir (türden bağımsız temel kurallar). Değilse neden.</summary>

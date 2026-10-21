@@ -74,6 +74,8 @@ namespace CheatMenu.Intrigue.Core
         public string ChildId;
         /// <summary>Herkese değil, yalnızca aldatılan eşe söylendi (Exposed da true: sır kullanıldı).</summary>
         public bool Whispered;
+        /// <summary>Şantajda koz olarak harcandı: aynı sırla yeniden şantaj yapılmaz (ifşa edilebilir).</summary>
+        public bool Spent;
     }
 
     /// <summary>Haritaya dönünce gösterilecek bilgi kartı. HeroId varsa portresi, Image varsa resmi (Module/Images) görünür.</summary>
@@ -397,6 +399,35 @@ namespace CheatMenu.Intrigue.Core
         public int Roll100() => SchemeRandom.Roll100(Seed, ref Rolls);
         public int Pick(int count) => SchemeRandom.Pick(Seed, ref Rolls, count);
 
+        /// <summary>
+        /// Oyuncu karakteri değişti (varis, çekilme): eski karakterin kişisel kayıtları (sevgililer, kurlar, eşle ilgili sayaçlar ve
+        /// eşin ilişkisi) silinir; yeni karakter koltuklardan, genelevdeki işlerden ve verdiğin rehinelikten çıkar. Gebelikler,
+        /// sırlar ve entrikalar kalır: onlar başkalarına ait. Kaç kaydın düştüğünü döner.
+        /// </summary>
+        public int ForgetPlayerCharacter(string newPlayerId)
+        {
+            int dropped = Lovers.Count + Courtships.Count + (SpouseAffair != null ? 1 : 0);
+            Lovers.Clear();
+            Courtships.Clear();
+            RomanceUntil.Clear();
+            SpouseAffair = null;
+            SpouseWatchUntil = 0;
+            SpouseApartWeeks = 0;
+            if (newPlayerId == null) return dropped;
+            if (SpymasterId == newPlayerId) { SpymasterId = null; Mission = SpymasterMission.None; RumorTargetId = null; dropped++; }
+            if (TreasurerId == newPlayerId) { TreasurerId = null; dropped++; }
+            if (PhysicianId == newPlayerId) { PhysicianId = null; dropped++; }
+            if (MarshalId == newPlayerId) { MarshalId = null; dropped++; }
+            if (StewardId == newPlayerId) { StewardId = null; dropped++; }
+            foreach (House house in Houses)
+            {
+                if (house.ManagerId == newPlayerId) { house.ManagerId = null; dropped++; }
+                dropped += house.Workers.RemoveAll(w => w.HeroId == newPlayerId);
+            }
+            dropped += Hostages.RemoveAll(d => d.GivenId == newPlayerId);
+            return dropped;
+        }
+
         public Scheme FindScheme(string targetId) => Schemes.FirstOrDefault(s => s.TargetId == targetId);
 
         public bool IsOnCooldown(string targetId, int today) => CooldownUntil.TryGetValue(targetId, out int until) && today < until;
@@ -478,7 +509,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (Secret s in Secrets)
                 records.Add(new TextRecord("secret")
                     .Add("target", s.TargetId).Add("kind", I((int)s.Kind)).Add("day", I(s.Day)).Add("exposed", B(s.Exposed))
-                    .Add("other", s.OtherId).Add("child", s.ChildId).Add("whisper", B(s.Whispered)));
+                    .Add("other", s.OtherId).Add("child", s.ChildId).Add("whisper", B(s.Whispered)).Add("spent", B(s.Spent)));
 
             foreach (KeyValuePair<string, int> p in CooldownUntil) records.Add(new TextRecord("cooldown").Add("target", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in AlertUntil) records.Add(new TextRecord("alert").Add("target", p.Key).Add("until", I(p.Value)));
@@ -614,6 +645,7 @@ namespace CheatMenu.Intrigue.Core
                         {
                             TargetId = r.Get("target"), Kind = (SecretKind)kind, Day = Int(r, "day"), Exposed = Bool(r, "exposed"),
                             OtherId = Empty(r.Get("other")), ChildId = Empty(r.Get("child")), Whispered = Bool(r, "whisper"),
+                            Spent = Bool(r, "spent"),
                         });
                         break;
                     case "cooldown":

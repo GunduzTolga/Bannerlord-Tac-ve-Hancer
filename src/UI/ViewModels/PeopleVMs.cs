@@ -352,7 +352,8 @@ namespace CheatMenu.UI.ViewModels
             Name = SecretRules.Name(secret.Kind);
             Description = RomanceSecrets.Describe(secret);
             StateText = secret.Whispered ? "Aldatılan eşe söylendi; saray bilmiyor"
-                : secret.Exposed ? "İfşa edildi: artık herkes biliyor" : "Yalnızca sen biliyorsun (gün " + secret.Day + ")";
+                : secret.Exposed ? "İfşa edildi: artık herkes biliyor"
+                : "Yalnızca sen biliyorsun (gün " + secret.Day + ")" + (secret.Spent ? "; kozda harcandı, yeniden şantaj olmaz" : "");
             string exposeHint = secret.Exposed ? "" : blackmailRunning ? "Şantaj sürerken ifşa edilemez" : "";
             CanExpose = !secret.Exposed && exposeHint.Length == 0;
             HasWhisper = SecretRules.IsRomantic(secret.Kind) && secret.OtherId != null;

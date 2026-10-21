@@ -107,6 +107,17 @@ namespace CheatMenu.Intrigue
             return HeirCandidates().Count == 0 ? "Klanında yetişkin bir varis yok" : null;
         }
 
+        /// <summary>
+        /// Oyuncu karakteri değişti (çekilme, ölüm sonrası varis): eski karakterin sevgilileri, kurları ve eşle ilgili kayıtları
+        /// düşer, yeni karakter koltuklardan ve evdeki işlerden çıkar (IntrigueState.ForgetPlayerCharacter).
+        /// </summary>
+        public static void OnPlayerCharacterChanged(IntrigueState state, Hero oldPlayer, Hero newPlayer)
+        {
+            if (state == null || newPlayer == null || newPlayer == oldPlayer) return;
+            int dropped = state.ForgetPlayerCharacter(newPlayer.StringId);
+            state.AddLog(SchemeFactors.Today, "Klanın başına " + newPlayer.Name + " geçti" + (dropped > 0 ? "; eski kişisel kayıtlar kapandı" : ""));
+        }
+
         /// <summary>Oyunun emeklilik işlemi: karakterin çekilir, oyuna varisinle devam edersin.</summary>
         public static void Abdicate(Hero heir)
         {

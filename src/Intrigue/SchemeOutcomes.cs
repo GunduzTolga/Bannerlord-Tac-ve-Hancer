@@ -130,13 +130,17 @@ namespace CheatMenu.Intrigue
         public static void BlackmailSucceeded(IntrigueState state, Scheme scheme, Hero spymaster, Hero target)
         {
             int today = SchemeFactors.Today;
+            // Sır kozda harcanır ve hedef tetikte olur: aynı sırla yeniden şantaj yapılamaz (yeni bir sır bulmak gerekir).
+            Secret used = SchemeFactors.BestSecret(state, target);
+            if (used != null) used.Spent = true;
+            state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
             state.Hooks.RemoveAll(h => h.TargetId == target.StringId);
             state.Hooks.Add(new Hook { TargetId = target.StringId, Day = today, Until = today + SchemeMath.HookDays });
             Relate(target, -SchemeMath.HookUseRelationPenalty);
             spymaster?.AddSkillXp(DefaultSkills.Roguery, SpySuccessXp);
 
             string text = target.Name + " sırrının ortaya çıkmasındansa sana boyun eğmeyi seçti. " + SchemeMath.HookDays
-                + " gün boyunca üzerinde bir kozun var.\n\nKullanmak için: Entrika ekranı > Kişiler, ya da onunla konuşup \"özel bir konu\" aç.";
+                + " gün boyunca üzerinde bir kozun var. Bu sır kozda harcandı; yeniden şantaj için yeni bir sır gerekir.\n\nKullanmak için: Entrika ekranı > Kişiler, ya da onunla konuşup \"özel bir konu\" aç.";
             int abandoned = state.AiPlots.RemoveAll(p => p.PlotterId == target.StringId);
             if (abandoned > 0) text += "\n\nSana karşı kurduğu entrikadan da vazgeçti.";
             Notify(state, "Şantaj tuttu: " + target.Name, text + "\n\nSonuç: " + target.Name + " ile ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target,

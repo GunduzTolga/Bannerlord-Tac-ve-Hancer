@@ -753,7 +753,7 @@ namespace CheatMenu.Intrigue
         internal static Hero Overhear(IntrigueState state, Settlement town, out string secretLine)
         {
             secretLine = "";
-            List<Hero> lords = LordsIn(town);
+            List<Hero> lords = LordsIn(state, town);
             if (lords.Count == 0) return null;
             Hero target = lords[SchemeRandom.Pick(state.Seed, ref state.Rolls, lords.Count)];
             IntelReport report = SchemeOutcomes.CreateReport(target, Today);
@@ -771,11 +771,16 @@ namespace CheatMenu.Intrigue
             return target;
         }
 
-        /// <summary>Şehirdeki (partisiyle ya da partisiz) yabancı lordlar; sıralı (tohumlu seçim kayıttan bağımsız olsun).</summary>
-        private static List<Hero> LordsIn(Settlement town) =>
+        /// <summary>
+        /// Şehirdeki (partisiyle ya da partisiz) yabancı lordlar; tetikte olanlar (entrikayı sezmiş ya da yeni şantaj yemiş) ağzını
+        /// sıkı tutar. Sıralı (tohumlu seçim kayıttan bağımsız olsun).
+        /// </summary>
+        private static List<Hero> LordsIn(IntrigueState state, Settlement town) =>
             town.HeroesWithoutParty
                 .Concat(town.Parties.Select(p => p.LeaderHero))
-                .Where(h => h != null && h.IsAlive && h.IsLord && !h.IsChild && h != Hero.MainHero && h.Clan != Clan.PlayerClan)
+                .Where(h => h != null && h.IsAlive && h.IsLord && !h.IsChild && h != Hero.MainHero && h.Clan != Clan.PlayerClan
+                    && !(state.CooldownUntil.TryGetValue(h.StringId, out int calm) && calm > Today)
+                    && !state.IsAlerted(h.StringId, Today))
                 .Distinct()
                 .OrderBy(h => h.StringId, StringComparer.Ordinal)
                 .ToList();

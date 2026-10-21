@@ -256,6 +256,10 @@ namespace CheatMenu.Intrigue
         {
             Hero hero = Hero.Find(lover.HeroId);
             if (hero == null || !hero.IsAlive) return "Hayatta değil";
+            // Kayıt başka bir karakterden kalmış olabilir (varis): akraba ya da reşit olmayanla asla.
+            if (hero == Hero.MainHero || RomanceSecrets.IsKin(Hero.MainHero, hero)) return "Akraba";
+            if (hero.IsChild || !SecretRules.IsAdult(RomanceSecrets.Age(hero)) || !SecretRules.IsAdult(RomanceSecrets.Age(Hero.MainHero)))
+                return "Yetişkin değil";
             if (Hero.MainHero.IsPrisoner) return "Esirken olmaz";
             if (hero.IsPrisoner) return "Esir";
             int today = SchemeFactors.Today;
@@ -268,7 +272,8 @@ namespace CheatMenu.Intrigue
         /// <summary>Gebelik ihtimali olan bir buluşma mı (karşı cins, anne yaşı, oyunun doğum ayarı).</summary>
         public static bool MayConceive(IntrigueState state, Hero a, Hero b)
         {
-            if (CampaignOptions.IsLifeDeathCycleDisabled || a.IsFemale == b.IsFemale) return false;
+            if (CampaignOptions.IsLifeDeathCycleDisabled || a == b || a.IsFemale == b.IsFemale) return false;
+            if (RomanceSecrets.IsKin(a, b) || !SecretRules.IsAdult(RomanceSecrets.Age(a)) || !SecretRules.IsAdult(RomanceSecrets.Age(b))) return false;
             if (state.NoChildren.Contains(a.StringId) || state.NoChildren.Contains(b.StringId)) return false;
             Hero mother = a.IsFemale ? a : b;
             return !mother.IsPregnant && RomanceRules.CanConceive(RomanceSecrets.Age(mother)) && state.Pregnancies.All(p => p.MotherId != mother.StringId);
