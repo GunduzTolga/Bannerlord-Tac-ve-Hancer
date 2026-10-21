@@ -41,6 +41,20 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Lordlar penceresi: yanına çağır ve ziyafet (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+- [ ] Klan > Entrika > Saray'da sağ üstte **Lordlar...** düğmesi (ve **İsyanlar...**); Insert > Entrika > "Lordlar: iletişim, ziyafet,
+      yanına çağır" de açıyor. Pencere: sekmeler (Krallığın / Tanıdıkların / Davetliler), sağ üstte Ziyafet ver ve Kapat
+- [ ] Lord kartı: portre, ad, klan, nerede ve kaç gün yol, seninle ilişki, hükümdarıyla arası, son görüşme, etiketler; yazılar taşmıyor
+- [ ] **Yanına çağır:** aynı krallıktan biri 20 nüfuz, başkası 800 altın; kabul ederse partisi haritada sana doğru geliyor (kartta
+      "sana doğru yolda"), yakına gelince "yanına geldi" mesajı → üstüne tıklayıp konuş. Reddederse bedelin yarısı geri dönüyor
+- [ ] Gelmeye çalışırken orduya katılır, esir düşer ya da 3 gün geçerse "Gelemedi" bildirimi; lord yeniden kendi işine dönüyor (takılı
+      kalmıyor mu, bak)
+- [ ] **Ziyafet:** kendi şehrinde ya da kalende, kartlardan en fazla 6 lord davet et → Ziyafet ver → olay kartı: gelenler, gelmeyenler,
+      ilişki artışı, nüfuz, bazen "şarap dilleri çözdü" (rapor, belki sır). Para düştü; 30 gün yeniden verilemiyor (düğme gri, nedeni yazıyor)
+- [ ] Kendi yerleşiminin dışında düğme gri ve nedeni yazıyor; davet listesi pencere kapanıp açılınca duruyor
+- [ ] Kayıt al, yükle: yolda olan çağrılan lord yine geliyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-lordlar.md`. Oylamada destek sözü yapılmadı (oyunun seçim kodu bulutta görünmüyor).
+
 ### İsyanlar ve iç savaş penceresi (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
 Diplomacy'nin "Factions" penceresi yerine bizimki açılıyor; katıl/ayrıl/isyan/destek düğmeleri yine Diplomacy'nin kuralıyla çalışıyor.
 - [ ] Krallık ekranında Diplomacy'nin grup (Factions) düğmesi → **İsyanlar ve İç Savaş** penceresi: başlık, krallık ve hükümdar,

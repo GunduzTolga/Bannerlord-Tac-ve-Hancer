@@ -151,6 +151,13 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Yanına çağrılan lord (LordContactRules): partisi sana doğru yolda; Until gününe kadar gelmezse vazgeçer.</summary>
+    public sealed class Summon
+    {
+        public string HeroId;
+        public int Until;
+    }
+
     /// <summary>Rehine anlaşması (P2.10): verdiğin ve/veya tuttuğun misafir. Biri null olabilir (tek taraflı teminat).</summary>
     public sealed class HostageDeal
     {
@@ -365,6 +372,9 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
+        /// <summary>Lordlarla iletişim: yanına çağrılanlar ve bir sonraki ziyafetin verilebileceği gün.</summary>
+        public List<Summon> Summons = new List<Summon>();
+        public int FeastUntil;
 
         // Genelev (müşteri olarak) ve hastalık
         /// <summary>Genelevde yeniden gece geçirilebileceği gün (günde bir kez).</summary>
@@ -486,7 +496,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId).Add("agents", I(Agents)).Add("agenttrain", I(AgentTraining))
                     .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
                     .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId).Add("steward", StewardId)
-                    .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil))
+                    .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil)).Add("feast", I(FeastUntil))
                     .Add("illsince", I(IllnessSince)).Add("illuntil", I(IllnessUntil)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
@@ -564,6 +574,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (CaravanLeg l in CaravanLegs)
                 records.Add(new TextRecord("caravanleg").Add("party", l.PartyId).Add("from", l.FromId).Add("to", l.ToId)
                     .Add("profit", I(l.Profit)).Add("days", I(l.Days)).Add("day", I(l.Day)));
+            foreach (Summon m in Summons) records.Add(new TextRecord("summon").Add("hero", m.HeroId).Add("until", I(m.Until)));
             foreach (HostageDeal h in Hostages)
                 records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
                     .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
@@ -618,6 +629,7 @@ namespace CheatMenu.Intrigue.Core
                         state.MarshalId = Empty(r.Get("marshal"));
                         state.StewardId = Empty(r.Get("steward"));
                         state.BrothelVisitUntil = Int(r, "brothelvisit");
+                        state.FeastUntil = Int(r, "feast");
                         state.TroopNightUntil = Int(r, "troopnight");
                         state.IllnessSince = Int(r, "illsince");
                         state.IllnessUntil = Math.Max(0, Int(r, "illuntil"));
@@ -743,6 +755,9 @@ namespace CheatMenu.Intrigue.Core
                             Discovered = Bool(r, "discovered"), Asked = Bool(r, "asked"), How = Empty(r.Get("how")),
                             ChildIds = (r.Get("children") ?? "").Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                         };
+                        break;
+                    case "summon":
+                        if (Empty(r.Get("hero")) != null) state.Summons.Add(new Summon { HeroId = r.Get("hero"), Until = Int(r, "until") });
                         break;
                     case "hostage":
                         if (Empty(r.Get("kingdom")) == null || (Empty(r.Get("given")) == null && Empty(r.Get("held")) == null)) break;

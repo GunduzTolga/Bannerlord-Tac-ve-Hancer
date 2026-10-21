@@ -183,6 +183,7 @@ namespace CheatMenu.Tests
             HouseTests();
             HeirTests();
             PrisonDeathTests();
+            LordContactTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -918,6 +919,27 @@ namespace CheatMenu.Tests
             CheckChance("recruit: calculating, bigger clan", RecruitRules.Chance(10, 0, 0, 1, 50, 5, 2, normal), 40);
             CheckChance("recruit: cap", RecruitRules.Chance(100, -100, -2, 2, 300, 6, 1, SchemeMath.EasyDifficulty), 75);
             CheckChance("recruit: hard", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, SchemeMath.HardDifficulty), 10);
+        }
+
+        /// <summary>Lordlarla iletişim: ziyafet ve yanına çağırma.</summary>
+        private static void LordContactTests()
+        {
+            Check("feast: cost", LordContactRules.FeastCost(0) == 400 && LordContactRules.FeastCost(4) == 1400 && LordContactRules.FeastCost(20) == 1900);
+            CheckChance("feast: friend nearby, same kingdom", LordContactRules.FeastAcceptChance(40, 1, true, false), 72);
+            CheckChance("feast: stranger far away", LordContactRules.FeastAcceptChance(0, 5, false, false), 10);
+            Check("feast: never at war, bounds", LordContactRules.FeastAcceptChance(100, 0, true, true) == 0
+                && LordContactRules.FeastAcceptChance(100, 0, true, false) == 95 && LordContactRules.FeastAcceptChance(-100, 9, false, false) == 5);
+            Check("feast: relation by Charm", LordContactRules.FeastRelationGain(0) == 5 && LordContactRules.FeastRelationGain(150) == 8
+                && LordContactRules.FeastRelationGain(600) == 10);
+            Check("feast: gossip by Roguery", LordContactRules.FeastGossipChance(0) == 20 && LordContactRules.FeastGossipChance(150) == 35
+                && LordContactRules.FeastGossipChance(900) == 50);
+            CheckChance("summon: vassal of yours", LordContactRules.SummonAcceptChance(10, true, true), 80);
+            CheckChance("summon: foreign stranger", LordContactRules.SummonAcceptChance(-30, false, false), 5);
+            var state = new IntrigueState { FeastUntil = 77 };
+            state.Summons.Add(new Summon { HeroId = "lord_5", Until = 64 });
+            IntrigueState back = IntrigueState.Parse(state.Write());
+            Check("lords: summons and feast cooldown are saved", back.FeastUntil == 77 && back.Summons.Count == 1 && back.Summons[0].HeroId == "lord_5"
+                && back.Summons[0].Until == 64);
         }
 
         /// <summary>Esirin gizli infazı: yönteme, Roguery'ye, esirin önemine göre şüphe; şüphenin bir kısmı ifşa.</summary>
