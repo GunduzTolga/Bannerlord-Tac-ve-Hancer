@@ -11,7 +11,7 @@ namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
     /// Savaş Raporu (UI.WarReportScreen). Üst kısım Diplomacy'nin kendi ViewModel'i (Report: sancaklar, savaş yorgunluğu, ilişki, tarih);
-    /// altında iki sütun bölüm (Intrigue.WarReport): solda gidişat, kuvvetler, yorgunluk dökümü; sağda serdar, barış, esirler, günlük.
+    /// altında iki sütun bölüm (Intrigue.WarReport): solda gidişat, kuvvetler, yorgunluk dökümü; sağda başkomutan, barış, esirler, günlük.
     /// </summary>
     public sealed class WarReportVM : TvhViewModel
     {
@@ -141,7 +141,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool HasTheirsHint { get; }
     }
 
-    /// <summary>Bölümdeki düz satır (serdarın uyarısı, barış durumu, esirler, günlük).</summary>
+    /// <summary>Bölümdeki düz satır (başkomutanın uyarısı, barış durumu, esirler, günlük).</summary>
     public sealed class WarLineVM : TvhViewModel
     {
         public WarLineVM(string text) => Text = text;

@@ -15,7 +15,7 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Divan sekmesi: üstte koltuklar (serdar P2.14, kâhya P2.15, hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
+    /// Divan sekmesi: üstte koltuklar (başkomutan P2.14, kâhya P2.15, hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
     /// tahminler ve ömür riskleri koltuk sahibinin gözüyle (becerisine göre hata payı). Casus başı sol sütunda kalır.
     /// </summary>
     public sealed class CouncilVM : TvhViewModel
@@ -26,9 +26,9 @@ namespace CheatMenu.UI.ViewModels
         public CouncilVM(Action changed)
         {
             _changed = changed;
-            _marshal = new CouncilSeatVM("SERDAR",
+            _marshal = new CouncilSeatVM("BAŞKOMUTAN",
                 "Tactics ve Scouting: düşmanın gücü, orduları, zayıf kaleleri; sana yürüyen ordulara erken uyarı. Sahada da çalışır.",
-                AssignMarshal, () => Dismiss("Serdar", Marshal.Dismiss), null);
+                AssignMarshal, () => Dismiss("Başkomutan", Marshal.Dismiss), null);
             _steward = new CouncilSeatVM("KÂHYA",
                 "Steward: bütün şehir ve kalelerin, uzaktan inşaat emri, isyan ve kıtlık uyarısı; sadakate günlük katkı. Düşükse yolsuzluk yapar.",
                 AssignSteward, () => Dismiss("Kâhya", Steward.Dismiss), null);
@@ -127,16 +127,16 @@ namespace CheatMenu.UI.ViewModels
                 Physician.Blocked(state) ?? "Görevde", false);
         }
 
-        // ---- Serdar ----
+        // ---- Başkomutan ----
 
         private void AddWar(IntrigueState state, Hero marshal)
         {
             List<Marshal.WarLine> wars = Marshal.Wars(state, marshal);
-            Rows.Add(CouncilRowVM.Header("SAVAŞ MECLİSİ (serdarın gözüyle)"));
+            Rows.Add(CouncilRowVM.Header("SAVAŞ MECLİSİ (başkomutanın gözüyle)"));
             if (wars.Count == 0) Rows.Add(CouncilRowVM.Note("Kimseyle savaşta değilsin."));
             foreach (Marshal.WarLine war in wars)
                 Rows.Add(new CouncilRowVM(war.Kingdom.Name + " ile savaş · güç: onlar ~" + war.Theirs + ", biz " + war.Ours + " · " + war.Armies + " ordu"
-                    + "\nSerdar: " + MarshalRules.Advice(war.Ratio), "oran " + war.Ratio.ToString("0.0", Tr.Culture),
+                    + "\nBaşkomutan: " + MarshalRules.Advice(war.Ratio), "oran " + war.Ratio.ToString("0.0", Tr.Culture),
                     MarshalRules.IsDangerous(war.Ratio), null, null, null));
 
             List<Marshal.FortLine> own = Marshal.OwnDefense(state, marshal);
@@ -159,7 +159,7 @@ namespace CheatMenu.UI.ViewModels
             if (wars.Count == 0) return;
             List<Marshal.ArmyLine> armies = Marshal.Armies(state, marshal);
             Rows.Add(CouncilRowVM.Header("DÜŞMAN ORDULARI (görüş " + (int)MarshalRules.KnownRange(Marshal.Scouting(marshal)) + ")"));
-            if (armies.Count == 0) Rows.Add(CouncilRowVM.Note("Serdarın görüş menzilinde düşman ordusu ya da büyük bir lord partisi yok."));
+            if (armies.Count == 0) Rows.Add(CouncilRowVM.Note("Başkomutanın görüş menzilinde düşman ordusu ya da büyük bir lord partisi yok."));
             foreach (Marshal.ArmyLine army in armies.Take(10))
             {
                 bool ours = army.Target != null && army.Target.OwnerClan == Clan.PlayerClan;
@@ -177,7 +177,7 @@ namespace CheatMenu.UI.ViewModels
 
             List<Marshal.FortLine> targets = Marshal.WeakTargets(state, marshal, 5);
             Rows.Add(CouncilRowVM.Header("ZAYIF HEDEFLER (kuşatma için)"));
-            if (targets.Count == 0) Rows.Add(CouncilRowVM.Note("Serdarın görüş menzilinde düşman şehri ya da kalesi yok."));
+            if (targets.Count == 0) Rows.Add(CouncilRowVM.Note("Başkomutanın görüş menzilinde düşman şehri ya da kalesi yok."));
             foreach (Marshal.FortLine fort in targets)
             {
                 Settlement shown = fort.Settlement;
@@ -342,8 +342,8 @@ namespace CheatMenu.UI.ViewModels
         private void AssignMarshal()
         {
             IntrigueState state = SchemeEngine.State;
-            Picker.Pick("Serdar seç", Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
-                hero => Run("Serdar", () =>
+            Picker.Pick("Başkomutan seç", Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
+                hero => Run("Başkomutan", () =>
                 {
                     Marshal.Assign(SchemeEngine.State, hero);
                     _changed();

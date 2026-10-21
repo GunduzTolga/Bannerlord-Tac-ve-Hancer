@@ -100,7 +100,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 45 | `sonuc_zimmet.png` | Divan: hazinedarın zimmeti ortaya çıktı, hesap sor (P2.12) | | ✅ |
 | 46 | `sonuc_hekim.png` | Divan: saray hekiminin uyarısı, sağlık (P2.13) | | ⏳ |
 | 47 | `sonuc_panzehir.png` | Hekim suikast kurbanını kurtardı (P2.13) | | ⏳ |
-| 48 | `sonuc_serdar.png` | Divan: serdarın erken uyarısı, düşman ordusu yürüyor (P2.14) | ★ | ✅ |
+| 48 | `sonuc_serdar.png` | Divan: başkomutanın erken uyarısı, düşman ordusu yürüyor (P2.14) | ★ | ✅ |
 | 49 | `sonuc_kahya.png` | Divan: kâhyanın uyarısı (isyan, kıtlık) ve uzaktan inşaat emri (P2.15) | ★ | ✅ |
 | 50 | `olay_genelev_gece.png` | Genelev: müşteri olarak bir gece (perde iner) | | ⏳ |
 | 51 | `olay_genelev_askerler.png` | Genelev: askerlere bir gece ısmarlamak (moral) | | ⏳ |
@@ -353,7 +353,7 @@ An elderly court physician in a dark wool robe examining an aging lord seated by
 A court physician kneeling beside a pale wounded noble on a bed in a candlelit bedchamber, pouring an antidote from a small vial into a cup, a bandaged arm, a knocked-over goblet on the floor, a worried family member at the door, no blood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
-**48 · `sonuc_serdar.png`** — serdarın uyarısı (savaş meclisi)
+**48 · `sonuc_serdar.png`** — başkomutanın uyarısı (savaş meclisi)
 
 ```
 A grizzled marshal in mail and a fur-lined cloak leaning over a large map table in a torch-lit war room, wooden army tokens pushed toward a castle, a dusty scout delivering news at his side, the lord listening grimly, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
@@ -1019,7 +1019,7 @@ A physician sniffing a poisoned cup at a feast table while guards seize a fleein
 A Khuzait shaman-physician sewing a wound on a sleeping chieftain inside a felt yurt by lamplight, an empty antidote flask and a broken dagger beside the bed, no blood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
-**`sonuc_serdar_2.png`** · `sonuc_serdar_3.png` — serdarın uyarısı
+**`sonuc_serdar_2.png`** · `sonuc_serdar_3.png` — başkomutanın uyarısı
 
 ```
 A lone Khuzait rider galloping at dusk toward a hilltop castle with beacon fires being lit along its walls, a dust cloud of a distant army on the horizon, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
