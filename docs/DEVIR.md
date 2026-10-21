@@ -1,6 +1,18 @@
 # Devir notu
 
-## En son durum — 21 Ekim 2026 (PC oturumu, telefona devir)
+## En son durum: 21 Ekim 2026 (bulut oturumu, telefondan)
+- **Genelev: adlı çalışanlar, yoldaş yönetici, yönetim kartı** (kullanıcı isteği; oyunda henüz denenmedi). Çalışanlar adlı ama kahraman
+  değil (kültürün ad listesi, yaş 19+, özellik: kulağı delik / gözde / sadık). Kullanıcı "yoldaş gönderebilelim, para kazanmak isterse
+  çalışsın" dedi; proje kuralı gereği (hiçbir kahraman müşteriye çıkmaz) yoldaş yalnızca **yönetici** olabiliyor: kendi kabul eder
+  (onurlu ya da sana güvenmeyen reddeder, eş/sevgili hiç olmaz), Charm kazancı, Roguery haberi ve güvenliği artırır, %10 kendi kesesine.
+  Yönetim kartı: kasaba menüsü > "Genelevini yönet", Gölgelerde iş çevir > "Genelevi yönet...", Entrika > Ağlar > "Genelev" düğmesi.
+  Tasarım: `docs/superpowers/specs/2026-10-19-p2-genelev.md`; test listesi: YAPILACAKLAR > Genelev.
+- **Bulutta derleme artık var:** Ubuntu'nun `dotnet-sdk-8.0` paketi ve NuGet referans DLL'leriyle mod derleniyor, testler ve GuiCheck
+  (oyunsuz) çalışıyor. Oyuna kurmak ve `--game` denetimi yine PC'de `build.ps1`.
+- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu geliştir, İsyanlar/İç Savaş penceresi, Krallık > Lordlar sekmesi,
+  kalan 15 kart resmi, Convivium / Diplomacy & Intrigue kararı.
+
+## 21 Ekim 2026 (PC oturumu, telefona devir)
 - **Git:** her şey `main`'de ve GitHub'da. Bulut dalı `ccr-be29c96c-8tfbau` da `main`'e getirildi. Yeni işe `main`'den başla.
   Repo herkese açık kalıyor (kullanıcı kararı); paketli modların kodu (DLL, XML) artık repoda, büyük içerik (.tpac, resim, ses) dışarıda.
 - **Bugün yapılanlar (oyunda henüz doğrulanmadı):**
@@ -15,7 +27,7 @@
   - 27 yeni kart resmi (49/64).
 - **Açık:** Klan ekranındaki Entrika sekmesi hâlâ boş olabilir. "Türetilmiş VM" teşhisi yanlış çıktı (aşağıda); kesin teşhis için oyundaki
   kırmızı mesaj (`ClanIntrigueTab.CheckBound`) bekleniyor. Karar bekleyen modlar: Convivium, Diplomacy & Intrigue (YAPILACAKLAR).
-- **Bulutta derleme yok:** oyun dosyaları yalnızca PC'de. Bulutta yazılan kod PC'de `build.ps1` ile derlenip oyuna kurulur.
+- **Bulutta oyun yok:** bulutta derleme ve testler çalışır, ama oyuna kurmak PC'de `build.ps1` ile olur.
 
 ## 20 Ekim akşamı (buluttaki oturumdan yerel oturuma) — tarihçe
 - PC'de `third_party\RegardStanding` repodakiyle çakışırsa (git "would be overwritten" der): PC'deki klasörü sil, repodaki yamalı.

@@ -315,7 +315,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Insert → Entrika → **Kur ve sevgililer**: kur yap / eşini gönder listesi, buluşma, bitir
 - [ ] Kaydet → yükle → kur, sevgili, gebelik aynı
 
-### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı eklendi)
+### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı, 21 Ekim'de adlı çalışanlar ve yoldaş yönetici eklendi)
 - [ ] MCM > Entrika > **Genelev (yetişkin teması)** aç
 - [ ] Herhangi bir şehirde kasaba menüsü > **Genelevine uğra** → resimli kart: sade oda (150), en iyi oda (400), askerlerine bir gece, Ayrıl
 - [ ] Geceyi geçir → "kapı ardından kapanıyor" kartı (içerisi anlatılmıyor); para düştü; aynı gün ikinci kez gri ("Bu gece zaten...")
@@ -323,15 +323,30 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Hastayken: can %70'in üstüne çıkmıyor; kartta "şehrin hekimine görün (500)" → 3 gün sonra "İyileştin" kartı
 - [ ] Saray hekimin varsa hastalık daha çabuk geçiyor (kartta gün sayısı ve hekimin adı)
 - [ ] Askerlerine bir gece ısmarla → "Askerlerin gecesi" kartı; parti morali +12; 7 gün gri
-- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Genelev aç (4.000, 2 gönüllü çalışan)" → açıldı; menü açıklamasında genelev satırı; o şehirde gece yarı fiyat
-- [ ] "Çalışan al" sınırı ağ seviyesine göre (4/6/8); pay seçenekleri (adil/standart/düşük) ayrılma oranlarıyla yazıyor
+- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Genelev aç (4.000, 2 gönüllü çalışan)" → açıldı, mesajda iki çalışanın **adı**;
+      menü açıklamasında genelev satırı; o şehirde gece yarı fiyat
+- [ ] **Yönetim kartı (21 Ekim, yeni):** o şehirde kasaba menüsü > **Genelevini yönet** → kart: yönetici, çalışanlar adlarıyla (yaş,
+      kulağı delik / gözde / sadık, kaç haftadır), haftalık hesap. Gölgelerde iş çevir > "Genelevi yönet..." ve Klan > Entrika > Ağlar >
+      şehrin kartındaki **Genelev** düğmesi de aynı kartı açıyor
+- [ ] Çalışan al... → kapıda 3 aday (ad, yaş, özellik) → birini seç → 300 düştü, kartta adı var. Şehir dışındayken gri ve nedeni yazıyor.
+      Sınır ağ seviyesine göre (4/6/8)
+- [ ] Çalışanların payı... → adil/standart/düşük, ayrılma oranlarıyla; şu anki gri
+- [ ] **Yönetici ata...** → yoldaş listesi (Charm, Roguery; istemeyenin yanında "[istemez: onurlu biri...]") → onurlu birini seç: "istemiyor"
+      kartı, ilişki değişmedi. İsteyen birini seç → "evi işletecek" kartı; yoldaş partinden çıktı ve o şehirde (şehrin kişilerinde görünüyor)
+- [ ] Yönetim kartında yönetici satırı: kazanç +%, duyulma %, haftalık payı. Bir hafta sonra yoldaşın altını arttı (Klan ekranında ya da
+      Editörler'de bak); senin gelirin kartta yazana yakın
+- [ ] Eşini ya da divandaki birini (casus başı vb.) yönetici yapamıyorsun; yöneticiyi casus başı yapmaya çalışınca "zaten genelev yöneticin"
+- [ ] Yöneticiyi geri çağır: şehirdeysen hemen partine katılıyor; uzaktaysan "yola çıktı" ve bir süre sonra partide
+- [ ] Şehirde yöneticiyle konuşup partine alırsan: haftalık kartta "ev artık yöneticisiz"
+- [ ] Eski bir kayıtta zaten açık genelev varsa: çalışanlara ad verildi (kartı aç ya da bir hafta bekle)
 - [ ] Bir hafta sonra "Genelevlerden haftalık gelir" mesajı; altın arttı; kronikte kayıt
 - [ ] Bir süre sonra "Genelevde duyulanlar: Lord" kartı (yeni resim); Kişiler'de o lordun güncel raporu (bazen sır)
-- [ ] Düşük payda birkaç hafta: "ayrılanlar" kartı, çalışan sayısı düştü
+- [ ] Düşük payda birkaç hafta: "ayrılanlar" kartı **adlarıyla** ("Lysa, Mira payını az bulup ayrıldı"), çalışan sayısı düştü; sadık olanlar daha geç gidiyor
+- [ ] "Genelevde duyulanlar" kartında haberi getiren çalışanın adı (varsa kulağı delik olan)
 - [ ] Entrika > Ağlar: şehrin kartında genelev satırı
 - [ ] Ağı dağıt → genelev de kapandı
 - [ ] Ayarı kapat → kasaba menüsünde "Genelevine uğra" ve işletme seçenekleri yok, haftalık gelir gelmiyor
-- [ ] Kaydet → yükle → ev, çalışan sayısı, pay, hastalık ve bekleme süreleri aynı
+- [ ] Kaydet → yükle → ev, çalışanların adları/yaşları/özellikleri, yönetici, pay, hastalık ve bekleme süreleri aynı
 - [ ] Resimler (32, 50–54) `TVH Resimler`'e konup "aktar" denince kartlarda görünüyor
 
 ### Herkesi biç ve doğum sahnesi (yeni, 19 Ekim)

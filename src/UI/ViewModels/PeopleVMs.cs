@@ -475,6 +475,7 @@ namespace CheatMenu.UI.ViewModels
                 + SchemeMath.NetworkDiscovery(network.Level, true) + "; aynı krallıkta yarısı";
             DescriptionText = town != null ? ShadowNetworks.Describe(state, town) : "";
             SinceText = "Gün " + network.Since + "'den beri";
+            HasHouse = NightHouses.Enabled && state.HouseIn(network.SettlementId) != null;
         }
 
         [DataSourceProperty] public string TownName { get; }
@@ -486,6 +487,14 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string DescriptionText { get; }
         [DataSourceProperty] public string SinceText { get; }
         [DataSourceProperty] public string DisbandText => "Dağıt";
+        [DataSourceProperty] public bool HasHouse { get; }
+        [DataSourceProperty] public string HouseText => "Genelev";
+
+        public void ExecuteHouse()
+        {
+            Settlement town = Settlement.Find(_settlementId);
+            if (town != null) NightHouses.ShowManage(town);
+        }
 
         public void ExecuteDisband()
         {
