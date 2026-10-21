@@ -12,7 +12,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 |---|---|---|
 | **Entrika** | Süren · Yeni entrika · Ağlar · Sana karşı | casus başının işleri (soldaki casus başı sütunu yalnızca burada) |
 | **Kişiler** | Kişiler · Lordlar · Esirler | insanlar: dosyalar, lordlarla iletişim (ulak, çağır, ziyafet), esirler |
-| **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, fief verme ve iade; divan koltukları ve raporları; olayların kaydı |
+| **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, toprak (şehir ve kale) verme ve iade; divan koltukları ve raporları; olayların kaydı |
 | **Savaş ve barış** | Savaşlar · İsyanlar | her savaşın durumu ve Barış Masası, isyan grupları |
 
 ## Ayrı pencere kalanlar (yalnızca bunlar)
@@ -28,7 +28,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 - Diplomacy'nin İsyanlar düğmesi (Krallık ekranı, ansiklopedi): Krallık ekranı ya da ansiklopedi kapanır, İsyanlar sekmesi o krallıkla açılır.
 - Elçi kartı "Barış Masası'na otur", Divan'daki "Barış Masası" düğmesi, Savaş Raporu: Savaşlar sekmesi o savaşla açılır.
 - Saray'daki "İsyanlar..." düğmesi: seçili krallığın isyan grupları.
-- Diplomacy'nin "Altın bağışla", "Fief ver" (Krallık > Klanlar, ansiklopedi) ve "Fief iade et" düğmeleri: Saray > Krallık, o klan
+- Diplomacy'nin "Altın Bağışla", "Tımar ver" (Krallık > Klanlar, ansiklopedi) ve "Return Fief" düğmeleri: Saray > Krallık, o klan
   seçili (`2026-10-21-krallik-sekmesi.md`).
 - Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`, `OpenRealm`; ViewModel'de `IntrigueScreenVM.FocusWar`,
   `FocusRebellions`, `FocusRealm`.

@@ -1,7 +1,11 @@
-# Saray > Krallık: bağış, fief verme, fief iadesi
+# Saray > Krallık: bağış, toprak verme, toprak iadesi
 
 21 Ekim 2026. Kullanıcı seçimi: "Diplomacy pencerelerini taşı" — yeni kural gereği (yeni özellik yeni pencere açmaz) Diplomacy'nin kalan
 ayrı pencereleri (altın bağışı, fief verme, fief iadesi) Entrika ekranına. Yeri: **Saray** bölümü, "Saray · Krallık · Divan · Kronik".
+
+**Terim:** "fief" Bannerlord'da bir klanın elindeki şehir ya da kale (köyler ona bağlı gelir). Kullanıcı kelimeyi bilmiyordu ("fief nedir");
+arayüzde Barış Masası'ndaki gibi **toprak** deniyor ("Toprak ver", "İade edilebilir topraklar"). Diplomacy'nin Türkçe çevirisi "tımar" diyor
+(Krallık ekranındaki düğmesi "Tımar ver"); kodda ve Diplomacy'nin tür adlarında Fief kalır.
 
 ## Ne var
 
@@ -13,7 +17,7 @@ Liste ve ayrıntı, Savaşlar sekmesi gibi:
 - **Sağda seçili klan:** liderin portresi ve bilgisi; altında iki sütun.
   - **Altın bağışla:** miktar basamaklı satır (`TvhStepRow`; basamaklar Barış Masası'ndaki "Altın ver" ile aynı:
     `PeaceTreatyRules.GiftSteps(kesen)`), liderle ilişki önizlemesi, "Bağışla". Herkes yapabilir (hükümdar olmak gerekmez).
-  - **Fief ver** (yalnızca hükümdar): kendi şehir ve kalelerin, her birinde liderle ilişki önizlemesi; kuşatma altındaki gri.
+  - **Toprak ver** (yalnızca hükümdar): kendi şehir ve kalelerin, her birinde liderle ilişki önizlemesi; kuşatma altındaki gri.
     Onay sorulur (geri alınamaz; daha az yeri olan klanların kıskançlığı yazılır). Paralı klana verilmez.
   - **İade edilebilir yerler** (yalnızca hükümdar): barışta olduğun krallıklardan aldığın, Diplomacy'nin kuralına uyan yerler
     ("Pravend, Vlandia'ya · ilişki +N"). Onay sorulur; eski sahibiyle ilişki, o krallığın öteki klanları memnun, yayılmacılık azalır.

@@ -39,8 +39,8 @@ namespace CheatMenu.UI.ViewModels
 
         [DataSourceProperty] public string ClansTitle => "KLANLAR";
         [DataSourceProperty] public string DonateTitle => "ALTIN BAĞIŞLA";
-        [DataSourceProperty] public string GrantTitle => "FİEF VER";
-        [DataSourceProperty] public string ReturnsTitle => "İADE EDİLEBİLİR YERLER";
+        [DataSourceProperty] public string GrantTitle => "TOPRAK VER";
+        [DataSourceProperty] public string ReturnsTitle => "İADE EDİLEBİLİR TOPRAKLAR";
         [DataSourceProperty] public string DonateText => "Bağışla";
         [DataSourceProperty] public string DonateNote => "Altın klanın komutanlarına paylaşılır; lideri sana minnet duyar. Cömertlik ününü artırır.";
         [DataSourceProperty] public MBBindingList<ClanItemVM> Clans { get; }
@@ -83,7 +83,7 @@ namespace CheatMenu.UI.ViewModels
             Clear(Returns);
             if (kingdom == null)
             {
-                EmptyText = "Bir krallıkta değilsin: klanlara bağış, fief verme ve iade bir krallığın içinde yapılır.";
+                EmptyText = "Bir krallıkta değilsin: klanlara bağış, toprak verme ve iade bir krallığın içinde yapılır.";
                 Subtitle = Summary = GrantNote = "";
                 HasSelection = HasReturns = IsRuler = false;
                 return;
@@ -142,9 +142,9 @@ namespace CheatMenu.UI.ViewModels
         private void RefreshGrants(Hero leader)
         {
             List<Town> fiefs = Clan.PlayerClan.Fiefs.Where(t => !t.IsOwnerUnassigned).OrderBy(t => t.IsCastle).ThenBy(t => t.Name.ToString()).ToList();
-            string blocked = !IsRuler ? "Fief vermek hükümdarın işi; sen bağış yapabilirsin."
+            string blocked = !IsRuler ? "Toprak (şehir ya da kale) vermek hükümdarın işi; sen bağış yapabilirsin."
                 : fiefs.Count == 0 ? "Verebileceğin bir şehrin ya da kalen yok."
-                : _selected.IsUnderMercenaryService || _selected.IsMinorFaction ? "Paralı klanlara fief verilmez."
+                : _selected.IsUnderMercenaryService || _selected.IsMinorFaction ? "Paralı klanlara toprak verilmez."
                 : !DiplomacyCompat.IsAvailable ? "Diplomacy paketli değil."
                 : DiplomacyCompat.GrantFiefBlocked(_selected);
             GrantNote = blocked ?? "Senden az yeri olan klanlar kıskanabilir: onlarla ilişkin biraz düşer.";

@@ -52,15 +52,15 @@ Lordlar, İsyanlar ve Barış Masası artık ayrı pencere değil, Entrika ekran
 - [ ] Insert > Entrika'daki Lordlar / İsyanlar / Barış Masası girişleri ilgili sekmeyi açıyor
 - [ ] Klan ekranının Entrika sekmesinde de, ayrı Entrika ekranında da aynı
 
-### Saray > Krallık: bağış, fief verme, iade (21 Ekim, yeni)
+### Saray > Krallık: bağış, toprak verme, iade (21 Ekim, yeni)
 Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Krallık sekmesi. Tasarım: `docs\superpowers\specs\2026-10-21-krallik-sekmesi.md`.
 - [ ] Saray bölümünde alt sekmeler: Saray · Krallık · Divan · Kronik. Krallık: solda klanlar (sancak, lider, ilişki, yer, güç), sağda seçili klan
 - [ ] Altın bağışla: miktarı +/- ile seç, "ilişki +N" önizlemesi Diplomacy'nin penceresindekiyle aynı mı; Bağışla → kese azalıyor, ilişki artıyor
-- [ ] Hükümdarsan: Fief ver listesinde şehir ve kalelerin; birine tıkla → onay → yer o klana geçiyor, ilişki artıyor; az yeri olanlar kıskanıyor
-- [ ] Hükümdar değilsen: "Fief vermek hükümdarın işi" notu; paralı klan seçince "Paralı klanlara fief verilmez"
+- [ ] Hükümdarsan: Toprak ver listesinde şehir ve kalelerin; birine tıkla → onay → yer o klana geçiyor, ilişki artıyor; az yeri olanlar kıskanıyor
+- [ ] Hükümdar değilsen: "Toprak vermek hükümdarın işi" notu; paralı klan seçince "Paralı klanlara toprak verilmez"
 - [ ] İade: barıştaki bir krallıktan aldığın yer listede mi; iade et → eski sahibine dönüyor, ilişki artıyor
-- [ ] Krallık ekranı > Klanlar'daki Diplomacy düğmeleri ("Altın bağışla", "Fief ver") ve ansiklopedideki "Fief ver": Krallık ekranı kapanıp
-      Krallık sekmesi o klan seçili açılıyor mu; Diplomasi'deki "fief iade et" düğmesi Krallık sekmesini açıyor mu
+- [ ] Krallık ekranı > Klanlar'daki Diplomacy düğmeleri ("Altın Bağışla", "Tımar ver") ve ansiklopedideki "Tımar ver": Krallık ekranı kapanıp
+      Krallık sekmesi o klan seçili açılıyor mu; Diplomasi'deki "Return Fief" düğmesi (çevirisi yok) Krallık sekmesini açıyor mu
 - [ ] Krallıkta değilken bu düğmeler Diplomacy'nin kendi penceresini açıyor (ya da hiç görünmüyor)
 
 ### Divan: diplomat (21 Ekim, yeni)
