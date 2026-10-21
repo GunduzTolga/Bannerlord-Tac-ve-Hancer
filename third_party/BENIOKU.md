@@ -32,7 +32,7 @@ Bunun yaması `src\Bundle\BundleShim.cs`'dedir; modun kök klasöründeki dosyal
 
 | Mod | Klasör | Not |
 |---|---|---|
-| Diplomacy | `Bannerlord.Diplomacy` | BUTR yükleyicisi oyunun sürümüne uygun DLL'i kendisi seçer. |
+| Diplomacy | `Bannerlord.Diplomacy` | BUTR yükleyicisi oyunun sürümüne uygun DLL'i kendisi seçer. **Türkçesi bizde tamamlandı** (21 Ekim): `ModuleData\Languages\TR`'de eksik 118 metin ve 5 mod yükleme uyarısı eklendi ("Taç ve Hançer: eksik çeviriler" yorumunun altında); "tımar" her yerde "toprak" yapıldı (kullanıcı kararı); isyan kurma metnine nüfuz bedeli geri kondu. Mod güncellenince yeni metin kimliklerini kökteki İngilizce dosyalarla ve DLL'deki `{=...}` metinleriyle karşılaştır, eksikleri aynı yere ekle. |
 | DLX Hair Layers | `HairAddons` | Dosyalarını DLL'in yanından bulur. |
 | Women in Calradia | `WomeninCalradia` | Ayar dosyası `Bundled\WomeninCalradia\config.xml`. |
 | AutoTrader | `AutoTrader` | Ayarları ve günlüğü Belgeler\...\Configs'te; oyun 1.4.6 için derlenmiş, 1.4.8'de bütün çağrıları karşılık buluyor. |

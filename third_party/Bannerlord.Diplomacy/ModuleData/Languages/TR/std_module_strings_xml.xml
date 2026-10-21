@@ -58,20 +58,20 @@
     <string id="cXfcwzPp" text="Ulak Gönder"/>
 
     <string id="N06wk0dB" text="Yerleşke ele geçirildi"/>
-    <string id="Zy0yjTha" text="{SETTLEMENT_NAME} fatihi olarak, ilk söz hakkına sahipsiniz. Bu tımar üzerinde hak iddia etmek ister misiniz?"/>
+    <string id="Zy0yjTha" text="{SETTLEMENT_NAME} fatihi olarak, ilk söz hakkına sahipsiniz. Bu toprak üzerinde hak iddia etmek ister misiniz?"/>
 
     <string id="IWZ91JVk" text="Yeterli altın yok!"/>
 
-    <string id="LpoyhORp" text="Tımar ver"/>
-    <string id="h3b1S5Wq" text="Tımarı {CLAN_NAME} klanına ver"/>
-    <string id="jznJfkfU" text="Tımar verildi"/>
+    <string id="LpoyhORp" text="Toprak ver"/>
+    <string id="h3b1S5Wq" text="Toprağı {CLAN_NAME} klanına ver"/>
+    <string id="jznJfkfU" text="Toprak verildi"/>
     <string id="cXbgaPSm" text="{SETTLEMENT_NAME}, {CLAN_NAME} klanına verildi."/>
 
-    <string id="FqeN0fmR" text="Kendi klanınıza tımar veremezsiniz."/>
+    <string id="FqeN0fmR" text="Kendi klanınıza toprak veremezsiniz."/>
     <string id="zdSYUnZQ" text="Krallığınızın hükümdarı değilsiniz."/>
-    <string id="D61vzEC7" text="Verebileceğiniz tımarınız yok."/>
-    <string id="98hwXUTp" text="Krallığınızdaki klanlara tımar verin"/>
-    <string id="Q7jRqnez" text="Paralı asker klanlarına tımar veremezsiniz."/>
+    <string id="D61vzEC7" text="Verebileceğiniz toprağınız yok."/>
+    <string id="98hwXUTp" text="Krallığınızdaki klanlara toprak verin"/>
+    <string id="Q7jRqnez" text="Paralı asker klanlarına toprak veremezsiniz."/>
 
     <string id="DrnXprup" text="Savaşın üzerinden yalnızca {ELAPSED_DAYS} gün geçti. İttifak yapabilmek için en az {REQUIRED_DAYS} gün geçmeli."/>
     <string id="KHJyWj9H" text="İttifakta iken olmaz."/>
@@ -94,7 +94,7 @@
 
     <string id="Q8ItogIP" text="Doğrudan {ENEMY_LEADER} ile barış yapmayı değerlendir  {WAR_REPARATIONS_AND_TRIBUTE}{FIEFS_TO_RETURN}"/>
     <string id="BC7823G2" text="{?REPARATIONS_PAY}, {REPARATIONS} savaş tazminatı ödüyorsunuz{?TRIBUTE_PAY} ve günde {TRIBUTE} haraç veriyorsunuz.{?}{?TRIBUTE_GET}, ama günde {TRIBUTE} haraç alıyorsunuz.{?}{\?}{\?}{?}{?REPARATIONS_GET}, {REPARATIONS} savaş tazminatı alıyorsunuz{?TRIBUTE_PAY}, ama günde {TRIBUTE} haraç veriyorsunuz.{?}{?TRIBUTE_GET} ve günde {TRIBUTE} haraç alıyorsunuz.{?}{\?}{\?}{?}{?TRIBUTE_PAY}, günde {TRIBUTE} haraç veriyorsunuz.{?}{?TRIBUTE_GET}, günde {TRIBUTE} haraç alıyorsunuz.{?}.{\?}{\?}{\?}{\?}"/>
-    <string id="9CvcPwJA" text="{?FIEFS_ANY} Ele geçirdiğiniz bazı tımarları geri vermek zorunda kalabilirsiniz!{?}{\?}"/>
+    <string id="9CvcPwJA" text="{?FIEFS_ANY} Ele geçirdiğiniz bazı toprakları geri vermek zorunda kalabilirsiniz!{?}{\?}"/>
 
     <!--Millions and thousands-->
     <string id="6xcW68Tw" text="{VALUE}M"/>
@@ -103,7 +103,7 @@
     <string id="XlL50Ha9" text="Aktif kuşatmanız varken bir krallıkla barış yapamazsınız."/>
 
     <string id="bCOCjOQM" text="İlişki"/>
-    <string id="RxawrCjg" text="Tımar Verilen Kişi İle İlişki Artışı"/>
+    <string id="RxawrCjg" text="Toprak Verilen Kişi İle İlişki Artışı"/>
 
     <string id="fXcEtO29" text="Aktif bir saldırmazlık antlaşmanız varken olmaz."/>
 
@@ -125,7 +125,7 @@
     <string id="pdI7Tjtj" text="Saldırmazlık Antlaşması Bitti"/>
     <string id="uWY09LJb" text="{KINGDOM} ile {OTHER_KINGDOM} arasındaki saldırmazlık antlaşması sona erdi."/>
 
-    <string id="dUCOV7km" text="Yolsuzluk (çok fazla tımar)"/>
+    <string id="dUCOV7km" text="Yolsuzluk (çok fazla toprak)"/>
     <string id="koTNaZUX" text="Nüfuz kaybı (çok fazla nüfuz)"/>
     <string id="uZc8Hg01" text="Maksimum Nüfuz Kaybı"/>
 
@@ -178,10 +178,10 @@
     <string id="sBw5Qzq3" text="Krallık Diplomasisi"/>
     <string id="tis8Ddzn" text="Oyuncunun, ele geçirdiği yerleşkelerin üzerinde hak iddia etmesine izin ver"/>
     <string id="TfxLCxcD" text="Oyuncuya, ele geçirdiği bir yerleşkeyi oylamaya gitmeden kendisi için talep etme seçeneği verir."/>
-    <string id="8VKC3jtN" text="Tımarsız Krallıkların Yok Edilmesini Etkinleştir"/>
-    <string id="TlymwwPZ" text="Etkinse, hiç tımarı olmayan krallıklar, dahil oldukları son savaşı bitiren bir barış antlaşması imzaladıklarında yok edilir. Varsayılan: etkin."/>
-    <string id="w8Hi9jJf" text="Tımarsız Krallıkların Yok Edilmesini Geciktir"/>
-    <string id="GDctI4Kd" text="Etkinse, tımarı kalmayan krallıklar, son katıldıkları savaş barışla bittikten sonra yok edilir; son tımarlarını kaybettikleri anda yok edilmezler. Varsayılan: etkin."/>      
+    <string id="8VKC3jtN" text="Topraksız Krallıkların Yok Edilmesini Etkinleştir"/>
+    <string id="TlymwwPZ" text="Etkinse, hiç toprağı olmayan krallıklar, dahil oldukları son savaşı bitiren bir barış antlaşması imzaladıklarında yok edilir. Varsayılan: etkin."/>
+    <string id="w8Hi9jJf" text="Topraksız Krallıkların Yok Edilmesini Geciktir"/>
+    <string id="GDctI4Kd" text="Etkinse, toprağı kalmayan krallıklar, son katıldıkları savaş barışla bittikten sonra yok edilir; son topraklarını kaybettikleri anda yok edilmezler. Varsayılan: etkin."/>      
     <string id="ZRlNvsev" text="Minimum Savaş Süresi (gün)"/>
     <string id="vuFT5ns8" text="Barış teklif edilmeden önce bir savaşın süreceği minimum gün sayısı. Varsayılan: 21 (oyun yılının çeyreği)."/>
     <string id="4MzQHMVj" text="Savaş İlanı Bekleme Süresi (gün)"/>
@@ -250,10 +250,10 @@
     <string id="ckYA36t8" text="Ulağın bir kişiye ulaşmasının her saati için eklenen altın maliyeti. Varsayılan: 1."/>
 
     <string id="OfEMJWiR" text="İlişki"/>
-    <string id="6l9QNMrB" text="Tımar Vermede Olumlu İlişki Çarpanı"/>
-    <string id="FQaghHo7" text="Tımar verdiğinizde alınan ilişki artışı için çarpan. Varsayılan: 1."/>
-    <string id="9qKclHq3" text="Tımar Vermede İlişki Cezası"/>
-    <string id="fgc8Dvg0" text="Başka bir klana tımar verdiğinizde uygulanan ilişki cezası. Varsayılan: -2."/>
+    <string id="6l9QNMrB" text="Toprak Vermede Olumlu İlişki Çarpanı"/>
+    <string id="FQaghHo7" text="Toprak verdiğinizde alınan ilişki artışı için çarpan. Varsayılan: 1."/>
+    <string id="9qKclHq3" text="Toprak Vermede İlişki Cezası"/>
+    <string id="fgc8Dvg0" text="Başka bir klana toprak verdiğinizde uygulanan ilişki cezası. Varsayılan: -2."/>
 
     <string id="8ZPKToTq" text="Nüfuz Dengesi"/>
     <string id="4jlYRUdZ" text="Nüfuz Dengesini Etkinleştir"/>
@@ -272,12 +272,12 @@
 
     <string id="e5fHDXgl" text="Yolsuzluk"/>
     <string id="KWAH0S4h" text="Yolsuzluğu Etkinleştir"/>
-    <string id="trgnZ0pn" text="Bir klanın çok fazla tımar tuttuğu durumlarda, her gün nüfuzunun yavaş yavaş azalmasına neden olur. Varsayılan: etkin."/>
+    <string id="trgnZ0pn" text="Bir klanın çok fazla toprak tuttuğu durumlarda, her gün nüfuzunun yavaş yavaş azalmasına neden olur. Varsayılan: etkin."/>
 
     <string id="ZqQaUIil" text="Yayılmacılık"/>
     <string id="2raR1ZHv" text="Koalisyonlar"/>
-    <string id="Pr4dcRKm" text="Tımar Başına Minimum Yayılmacılık"/>
-    <string id="9qcAWjI7" text="Bir tımarın eklediği minimum yayılmacılık miktarı. Varsayılan: 3."/>
+    <string id="Pr4dcRKm" text="Toprak Başına Minimum Yayılmacılık"/>
+    <string id="9qcAWjI7" text="Bir toprağın eklediği minimum yayılmacılık miktarı. Varsayılan: 3."/>
     <string id="MnhMW8iq" text="Kuşatma Başına Yayılmacılık"/>
     <string id="lCbie62E" text="Başarılı her kuşatmanın eklediği yayılmacılık miktarı. Varsayılan: 20."/>
     <string id="mEXGC0h3" text="Günlük Yayılmacılık Azalması"/>
@@ -296,5 +296,61 @@
     <string id="HSoZfvXH" text="Tahtı Ele Geçirme Özelliğini Etkinleştir"/>
     <string id="ZIAo4er4" text="Etkinse, oyuncunun bir krallığın tahtını ele geçirmesine izin verir. Bu özellik dengeli değildir, üzerinde yeniden çalışılacaktır ve bu yüzden önerilmez. Varsayılan: kapalı."/>
 	
+    <!-- Taç ve Hançer: eksik çeviriler (21 Ekim 2026) -->
+    <string id="8kQrWvN2" text="Toprak iadesi kapalı."/>
+    <string id="Bw6nRtLe" text="Savaştığınız bir krallığa toprak iade edemezsiniz."/>
+    <string id="Gm5tRvWc" text="{SETTLEMENT} kısa süre önce el değiştirdi. {DAYS} gün daha geçmeli."/>
+    <string id="Kb9sRmTy" text="{SETTLEMENT}, {KINGDOM} krallığından alınmadı."/>
+    <string id="Mf2hVqZa" text="{KINGDOM} krallığının öteki klanları bu jesti takdir etti. Liderleriyle ilişki +{CHANGE}."/>
+    <string id="Nd6pXtLw" text="Asi bir krallığa toprak iade edemezsiniz."/>
+    <string id="Qs3vLpXa" text="{SETTLEMENT} kuşatma altında, devredilemez."/>
+    <string id="Tq7wBnXe" text="Kendi krallığınıza toprak iade edemezsiniz."/>
+    <string id="Vc2rHkZs" text="O krallık artık yok."/>
+    <string id="Yj4mLpQd" text="Yalnızca kendi klanınızın elindeki toprakları iade edebilirsiniz."/>
+    <string id="Ld8vQmTc" text="Toprağı {KINGDOM_NAME} krallığına iade et"/>
+    <string id="Pw5jHnBq" text="Toprak İade Edildi"/>
+    <string id="Rt9kVdXm" text="{SETTLEMENT_NAME}, {CLAN_NAME} klanına iade edildi."/>
+    <string id="Cf6qWsNe" text="Elinizde {KINGDOM} krallığından alınmış toprak yok."/>
+    <string id="Hn2wKpRv" text="Onlardan aldığınız toprağı geri verin."/>
+    <string id="Zx4nKpWr" text="Toprağı iade et"/>
+    <string id="nkOVblQ4" text="Savaş İlan Et"/>
+    <string id="5R7twvD2" text="Barış Yap"/>
+    <string id="tsY4iHnO" text="Divanı toplamadan kendi kararını uygula"/>
+    <string id="ke94ceNo" text="Bu krallık yok edildi."/>
+    <string id="Y94H6XnK" text="Kabul et"/>
+    <string id="cOgmdp9e" text="Reddet"/>
+    <string id="ffjTMejn" text="İstatistikler"/>
+    <string id="eTw2aNV5" text="+"/>
+    <string id="T3mGu5K4" text="Ulağın gideceği kişi artık bulunamıyor."/>
+    <string id="kq3g73j2" text="Ulak Öldürüldü"/>
+    <string id="2RiYKRM8" text="Krallığınızın girdiği ittifak sayısı: {NUMBER_OF_ALLIES}/{MAX_NUMBER_OF_ALLIES}"/>
+    <string id="3YVDMg5X" text="Hükümdarlar arasındaki ilişki düşük."/>
+    <string id="Bu6YdMme" text="Krallıklar komşu değil."/>
+    <string id="S5lz4aHk" text="Krallığınız onların kültürüne ait toprakları elinde tutuyor."/>
+    <string id="VIkVcmaE" text="{RULER.NAME} onuruyla tanınmıyor."/>
+    <string id="Vb7cKfGe" text="İttifak eğilimi (Diplomacy ayarı)"/>
+    <string id="XnwKgWab" text="{KINGDOM_NAME} şu an krallığınızı olası bir müttefik olarak görmüyor."/>
+    <string id="Y20TbMLR" text="İttifak şu nedenle kurulamaz:{newline}{newline}{REASON}"/>
+    <string id="aUStIIWw" text="Krallığınız bir savaşın içinde."/>
+    <string id="cFYMdTcr" text="{KINGDOM_NAME} krallığının girdiği ittifak sayısı: {NUMBER_OF_ALLIES}/{MAX_NUMBER_OF_ALLIES}"/>
+    <string id="ml9bhOka" text="{KINGDOM_NAME} şu an ittifak aramıyor."/>
+    <string id="tT91z3AL" text="Krallığınız onların müttefikiyle savaşta."/>
+    <string id="tbH04aAX" text="{KINGDOM} şu nedenlerle krallığınızla ittifak düşünmüyor:{newline}{newline}{REASONS_BY_LINE}"/>
+    <string id="Hj2nWqYs" text="İttifaklar Diplomacy ayarlarında kapalı."/>
+    <string id="Jm3cXrDt" text="Aynı toprağın yeniden iade edilebilmesi için geçmesi gereken gün (bu arada yeniden alınmış olsa bile). Varsayılan değer 90."/>
+    <string id="Qk3vTzAe" text="İttifak Tehdit Eşiği"/>
+    <string id="Rm8xPdLu" text="Krallıklar ancak ikisinin de tehdit puanı bu değeri aşan bir komşusu varsa ittifak düşünür. Oyunun varsayılanı olan 430, kabaca 1,2 ile 1,9 kat güçlü bir komşu ister; dengeli bir haritada bu nadiren olur. İttifakları sıklaştırmak için düşürün; 0 her komşuyu sayar. Varsayılan değer 430."/>
+    <string id="Wq8nTpLv" text="Toprak İadesi Bekleme Süresi"/>
+    <string id="bZmT7HdA" text="Etkinse, fethettiğiniz bir toprağı alındığı krallığa geri verip ilişki kazanabilir ve yayılmacılığınızı düşürebilirsiniz. Varsayılan: etkin."/>
+    <string id="dF7sYkR3" text="Fethedilen bir toprak alındığı krallığa iade edilince düşen yayılmacılık. Varsayılan değer 20 (başarılı bir kuşatmanın kazandırdığı kadar)."/>
+    <string id="hW4mZpQj" text="Toprak İadesinde Yayılmacılık Azalması"/>
+    <string id="oPq3XkWv" text="Toprak İadesini Etkinleştir"/>
+    <string id="rTqK8wDm" text="Toprak İadesinde İlişki Çarpanı"/>
+    <string id="xNvP2bLc" text="Fethedilen bir toprak alındığı krallığa iade edilince kazanılan ilişki için çarpan. Varsayılan değer 2."/>
+    <string id="EvI6KPAqTT" text="Uyumsuz modül bulundu: {DENIED_MODULE}!"/>
+    <string id="FE6ya1gzZR" text="{REQUIRED_MODULE} modülü bulunamadı!"/>
+    <string id="FcR4BXnhx8" text="{MODULE} için {REQUIRED_MODULE} modülüne çelişen yükleme sırası kuralları verilmiş!"/>
+    <string id="UZ8zfvudMs" text="{MODULE}, {REQUIRED_MODULE} modülünden sonra yükleniyor!{NL}{MODULE} ondan önce yüklenmeli!"/>
+    <string id="5G9zffrgMh" text="{MODULE}, {REQUIRED_MODULE} modülünden önce yükleniyor!{NL}{MODULE} ondan sonra yüklenmeli!"/>
   </strings>
 </base>

@@ -52,6 +52,13 @@ Lordlar, İsyanlar ve Barış Masası artık ayrı pencere değil, Entrika ekran
 - [ ] Insert > Entrika'daki Lordlar / İsyanlar / Barış Masası girişleri ilgili sekmeyi açıyor
 - [ ] Klan ekranının Entrika sekmesinde de, ayrı Entrika ekranında da aynı
 
+### Diplomacy'nin Türkçesi (21 Ekim, yeni)
+Diplomacy'nin çevrilmemiş 118 metni ve mod yükleme uyarıları Türkçe; "tımar" yerine her yerde "toprak".
+- [ ] Oyun Türkçeyken Krallık > Diplomasi'de "Savaş İlan Et", "Barış Yap", "Toprağı iade et"; Krallık > Klanlar'da "Toprak ver" Türkçe mi
+- [ ] Mod Seçenekleri > Diplomacy: toprak iadesi, ittifak tehdit eşiği, isyana destekçi kazanma ayarları Türkçe mi
+- [ ] İsyan grubundayken klan liderine "Destekçi Kazan": konuşma satırları Türkçe mi, yazılar taşıyor mu
+- [ ] Hâlâ İngilizce kalan bir Diplomacy yazısı görürsen ekran görüntüsü at
+
 ### Savaş ve barış > Krallıklar: ittifak, ticaret, saldırmazlık, savaş ilanı (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
 Bütün krallıklar ve bağların tek sekmede. Tasarım: `docs\superpowers\specs\2026-10-21-kralliklar-sekmesi.md`.
 - [ ] Savaş ve barış bölümünde alt sekmeler: Krallıklar · Savaşlar · İsyanlar. Solda krallıklar (savaştıkların kırmızı, müttefik/saldırmazlık/ticaret altın)
@@ -70,8 +77,8 @@ Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Kr
 - [ ] Hükümdarsan: Toprak ver listesinde şehir ve kalelerin; birine tıkla → onay → yer o klana geçiyor, ilişki artıyor; az yeri olanlar kıskanıyor
 - [ ] Hükümdar değilsen: "Toprak vermek hükümdarın işi" notu; paralı klan seçince "Paralı klanlara toprak verilmez"
 - [ ] İade: barıştaki bir krallıktan aldığın yer listede mi; iade et → eski sahibine dönüyor, ilişki artıyor
-- [ ] Krallık ekranı > Klanlar'daki Diplomacy düğmeleri ("Altın Bağışla", "Tımar ver") ve ansiklopedideki "Tımar ver": Krallık ekranı kapanıp
-      Krallık sekmesi o klan seçili açılıyor mu; Diplomasi'deki "Return Fief" düğmesi (çevirisi yok) Krallık sekmesini açıyor mu
+- [ ] Krallık ekranı > Klanlar'daki Diplomacy düğmeleri ("Altın Bağışla", "Toprak ver") ve ansiklopedideki "Toprak ver": Krallık ekranı kapanıp
+      Krallık sekmesi o klan seçili açılıyor mu; Diplomasi'deki "Toprağı iade et" düğmesi Krallık sekmesini açıyor mu
 - [ ] Krallıkta değilken bu düğmeler Diplomacy'nin kendi penceresini açıyor (ya da hiç görünmüyor)
 
 ### Divan: diplomat (21 Ekim, yeni)

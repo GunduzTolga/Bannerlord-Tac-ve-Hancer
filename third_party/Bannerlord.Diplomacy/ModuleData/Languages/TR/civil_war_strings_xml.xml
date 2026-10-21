@@ -47,11 +47,11 @@
     <string id="TvSHYACm" text="Güç"/>
     <string id="dlANhHUd" text="İsyanlar ve İç Savaş"/>
     <string id="hBSo0Ziq" text="İsyan Başlat"/>
-    <string id="2PglxF8k" text="İsyan Talebini Seç"/>
+    <string id="2PglxF8k" text="İsyan kurmak için bir talep seçin.{newline}Bedeli: {INFLUENCE_COST}{INFLUENCE_ICON}"/>
     <string id="gypPPxUJ" text="İsyanlar"/>
     <string id="aWWzFITw" text="Bir Hükümdar Tahttan Çekiliyor"/>
     <string id="2Pv3DsVm" text="{PARENT_KINGDOM}, {REBELS} karşısında iç savaşı kaybetti. {LEADER} tahttan çekilecek. {PLAYER_PARTICIPATION}"/>
-    <string id="GkhKppOk" text="Yeterli Tımar Yok"/>
+    <string id="GkhKppOk" text="Yeterli Toprak Yok"/>
     <string id="Jc1mCVuY" text="Özellik: Çıkarcı"/>
     <string id="cjbVV7E3" text="Klan Seviyesi Çok Düşük"/>
     <string id="Vp9EcnuC" text="İsyan Eğilimi"/>
@@ -99,5 +99,74 @@
     <string id="7wK0mmw1" text="İsyan Eğilimi"/>
     <string id="aqvIdG7w" text="Klanların isyan başlatma veya isyanlara katılma eğilimini etkileyen puan çarpanı. Çarpanı artırmak isyanlara katılımı artırır. Varsayılan değer 0."/>
     
+    <!-- Taç ve Hançer: eksik çeviriler (21 Ekim 2026) -->
+    <string id="FRabdGen" text="Klanınızın hizmeti topraktan ve nüfuzdan daha adil bir payı hak ediyor. Bizimle olun."/>
+    <string id="FRabdHon" text="Krallığımız klanlarına saygı duyan bir hükümdarı hak ediyor. Daha iyi bir önder seçmemize yardım edin."/>
+    <string id="FRargOne" text="{FACTION_RECRUITMENT_ARGUMENT_0}"/>
+    <string id="FRargTwo" text="{FACTION_RECRUITMENT_ARGUMENT_1}"/>
+    <string id="FRargWin" text="İkna edici konuşuyorsunuz."/>
+    <string id="FRaskSup" text="Klanınız {RECRUITMENT_FACTION_NAME} saflarına katılıp talebimizi destekler mi?"/>
+    <string id="FRsecCal" text="Klanlarımız bağımsız bir krallık olarak gelişebilir. Geleceğimize kendimiz karar vermeliyiz."/>
+    <string id="FRsecVal" text="Klanlarımız birlikte kendi krallığını savunabilir. Omuz omuza duralım."/>
+    <string id="FRfailed" text="Beni ikna edemediniz. Klanım isyanınıza katılmayacak."/>
+    <string id="FRnotAct" text="Destekçi kazanmak yalnızca isyanınız destek toplarken mümkün."/>
+    <string id="FRnotLed" text="Destekçi kazanmak için bu isyana önderlik etmelisiniz."/>
+    <string id="FRonCool" text="Bu klana yeniden yaklaşmadan önce {DAYS} gün daha beklemelisiniz."/>
+    <string id="FRrecOff" text="Oyuncunun isyana destekçi kazanması kapalı."/>
+    <string id="FRrecBtn" text="Destekçi Kazan"/>
+    <string id="FRalready" text="Bu klan talebinizi zaten destekliyor. Desteğini doğrudan isteyin."/>
+    <string id="FRargLoss" text="Bu beni ikna etmedi."/>
+    <string id="FRcanDesc" text="Yaklaşacağınız klan liderini seçin. İsyanınızı desteklemesi için onunla yüz yüze ya da ansiklopedi sayfasındaki Ulak Gönder ile konuşun."/>
+    <string id="FRcanHint" text="Askeri güç: {STRENGTH}{newline}Destek: {SCORE} / {REQUIRED}{newline}Liderle ilişki: {RELATION}{newline}İknada ilişki etkisi: en fazla {RELATION_EFFECT} yüzde puanı{newline}{REASONS}"/>
+    <string id="FRcanName" text="{CLAN} - Destek: {SCORE} / {REQUIRED}"/>
+    <string id="FRcancelA" text="Şimdilik bu kadar."/>
+    <string id="FRchanged" text="Koşullar değişti. Bu klan artık kazanılamaz."/>
+    <string id="FRdaysTxt" text="{DAYS} gün"/>
+    <string id="FRdecision" text="Peki kararınız ne?"/>
+    <string id="FReliminated" text="Bu klan yok oldu."/>
+    <string id="FRgoodbye" text="Pekâlâ. Başka bir şeyden konuşalım."/>
+    <string id="FRhearArg" text="Bu riski neden sizinle göze alayım, anlatın."/>
+    <string id="FRhesitnt" text="Talebinizi desteklemeye hazır değilim. Beni ikna etmeniz gerekecek."/>
+    <string id="FRintroTx" text="{FACTION_RECRUITMENT_RESPONSE}"/>
+    <string id="FRreactTx" text="{FACTION_RECRUITMENT_RESPONSE}"/>
+    <string id="FRrespTxt" text="{FACTION_RECRUITMENT_RESPONSE}"/>
+    <string id="FRisMember" text="Bu klan zaten isyanınızı destekliyor."/>
+    <string id="FRjoinLog" text="{CLAN}, {FACTION} saflarına katıldı."/>
+    <string id="FRjoinNow" text="Klanım {FACTION_NAME} ile birlikte olacak."/>
+    <string id="FRjoinYou" text="{CLAN} isyanınıza katıldı: {FACTION}."/>
+    <string id="FRleadsOther" text="Bu klan {FACTION_NAME} isyanına önderlik ediyor, başka bir isyana katılamaz."/>
+    <string id="FRmakeCas" text="Size durumu anlatayım. (Bedeli: {RECRUITMENT_COST} nüfuz.)"/>
+    <string id="FRmercenary" text="Paralı asker klanları bir isyana katılamaz."/>
+    <string id="FRminor" text="Küçük gruplar bir isyana kazanılamaz."/>
+    <string id="FRnoClans" text="Şu an kazanılabilecek klan yok. Klanlarla ilişkinizi geliştirin, nüfuz toplayın ya da bekleme sürelerinin dolmasını bekleyin."/>
+    <string id="FRnoLeader" text="Bu klanın yaklaşılacak bir lideri yok."/>
+    <string id="FRopposed" text="Bu klan talebinize çok karşı. İkna etmeyi denemeden önce sizi desteklemesi için nedenlerini güçlendirin."/>
+    <string id="FRotherRealm" text="Bu klan başka bir krallığa bağlı."/>
+    <string id="FRpending" text="Bu klana zaten durumunuzu anlatıyorsunuz."/>
+    <string id="FRpledgeT" text="Kalan destek sözü"/>
+    <string id="FRpledged" text="Klanım {FACTION_NAME} ile birlikte olacak. {DAYS} gün desteğimize söz veriyorum."/>
+    <string id="FRprisoner" text="Bu klanın lideri esir, destek sözü veremez."/>
+    <string id="FRrebelRealm" text="Asi bir krallıktaki klanlar başka bir isyana katılamaz."/>
+    <string id="FRrebelling" text="İsyan başladıktan sonra klanlar ona katılamaz."/>
+    <string id="FRruler" text="Hükümdar klanı bir isyana katılamaz."/>
+    <string id="FRsecession" text="Bu klan bir ayrılık isyanı olan {FACTION_NAME} ile birlikte, başka bir isyana katılamaz."/>
+    <string id="FRunavailable" text="Bu klanın lideri şu an ulaşılamaz durumda."/>
+    <string id="FRviewLdr" text="Klan Liderini Gör"/>
+    <string id="FRsetBo1" text="İsyana Destekçi Kazanma: İkna Bonusu"/>
+    <string id="FRsetBo2" text="Başarılı iknanın, bir klanın isyana katılması için verdiği ek destek puanı. Toplam 100&#x27;e ulaşmalı. Yeni denemelerde geçerli. Varsayılan değer 25."/>
+    <string id="FRsetCd1" text="İsyana Destekçi Kazanma: Bekleme Süresi"/>
+    <string id="FRsetCd2" text="Aynı klana (hangi isyan için olursa olsun) yeniden yaklaşmadan önce geçmesi gereken gün. Yeni denemelerde geçerli. Varsayılan değer 14."/>
+    <string id="FRsetCo1" text="İsyana Destekçi Kazanma: Nüfuz Bedeli"/>
+    <string id="FRsetCo2" text="Her ikna denemesinde harcanan nüfuz (başarısız ya da yarıda bırakılan denemeler dahil). Zaten istekli bir klana sormak bedelsizdir. Varsayılan değer 25."/>
+    <string id="FRsetOn1" text="Oyuncunun İsyana Destekçi Kazanmasını Etkinleştir"/>
+    <string id="FRsetOn2" text="İsyan önderleri tahttan çekilme ve ayrılık talepleri için klanlardan destek isteyebilir ya da onları ikna edebilir. Kapatılırsa yeni destekçi kazanılmaz; verilmiş sözler süresi dolunca biter. Varsayılan: etkin."/>
+    <string id="FRsetPl1" text="İsyana Destekçi Kazanma: Söz Süresi"/>
+    <string id="FRsetPl2" text="Kazanılan klanın, olağan destek denetimleri yeniden başlamadan önce isyanda kalmaya söz verdiği gün sayısı. Lider, krallık ya da uygunluk değişirse söz erken biter. Yeni denemelerde geçerli. Varsayılan değer 30."/>
+    <string id="FRsetRe1" text="Destekçi Kazanmada İlişki Etkisini Etkinleştir"/>
+    <string id="FRsetRe2" text="Klan lideriyle ilişkiniz ikna şansını değiştirir. Charm ve kişilik özellikleri de etkiler. Varsayılan: etkin."/>
+    <string id="FRsetRw1" text="Destekçi Kazanmada İlişki Etkisi"/>
+    <string id="FRsetRw2" text="+100 ya da -100 ilişkide ikna şansındaki en büyük değişim (yüzde puanı). +50 ilişkide bu bonusun yarısı uygulanır; olumsuz ilişki ceza verir. Varsayılan değer 25 yüzde puanı."/>
+    <string id="kT4rWq8Z" text="Gereken İsyan Gücü"/>
+    <string id="mB2xNv6P" text="Yapay zekânın önderlik ettiği bir isyanın iç savaş başlatabilmesi için krallığın toplam gücünden alması gereken pay. Valor&#x27;u yüksek önderler 15 yüzde puanına kadar daha azıyla yetinir. İç savaşları seyrekleştirmek için artırın. Varsayılan değer %65."/>
   </strings>
 </base>

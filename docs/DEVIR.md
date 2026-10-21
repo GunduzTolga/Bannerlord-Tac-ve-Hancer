@@ -68,6 +68,10 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Diplomacy'nin Türkçesi tamamlandı (21 Ekim, kullanıcı isteği):** eksik 118 metin (toprak iadesi, ittifak nedenleri, isyana destekçi
+  kazanma konuşması ve uyarıları, Mod Seçenekleri'ndeki yeni ayarlar, Krallık > Diplomasi düğmeleri) ve 5 mod yükleme uyarısı çevrildi;
+  mevcut çevirideki "tımar" "toprak" oldu (ekleriyle: toprağı, topraksız). Terim kararı: fief = **toprak** ("tımar" denendi, beğenilmedi;
+  CLAUDE.md'de). Ayrıntı `third_party/BENIOKU.md`.
 - **Savaş ve barış > Krallıklar sekmesi (21 Ekim, kullanıcı seçimi):** bütün krallıklar tek listede (seninle durumu renkli), seçilinin
   kartı, DURUM (kalan günler, savaştıkları, müttefikleri, diplomatın gözüyle tutumu, ittifak/ticarete bakışı) ve hükümdarın işleri:
   ittifak, ticaret, saldırmazlık, savaş ilanı (divansız), savaşa çağırma, ittifakı bozma, ulak. Savaş ilanı ve saldırmazlık Diplomacy'nin

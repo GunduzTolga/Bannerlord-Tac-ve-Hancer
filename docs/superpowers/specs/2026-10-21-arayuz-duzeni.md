@@ -28,7 +28,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 - Diplomacy'nin İsyanlar düğmesi (Krallık ekranı, ansiklopedi): Krallık ekranı ya da ansiklopedi kapanır, İsyanlar sekmesi o krallıkla açılır.
 - Elçi kartı "Barış Masası'na otur", Divan'daki "Barış Masası" düğmesi, Savaş Raporu: Savaşlar sekmesi o savaşla açılır.
 - Saray'daki "İsyanlar..." düğmesi: seçili krallığın isyan grupları.
-- Diplomacy'nin "Altın Bağışla", "Tımar ver" (Krallık > Klanlar, ansiklopedi) ve "Return Fief" düğmeleri: Saray > Krallık, o klan
+- Diplomacy'nin "Altın Bağışla", "Toprak ver" (Krallık > Klanlar, ansiklopedi) ve "Toprağı iade et" düğmeleri: Saray > Krallık, o klan
   seçili (`2026-10-21-krallik-sekmesi.md`).
 - Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`, `OpenRealm`, `OpenKingdoms`; ViewModel'de
   `IntrigueScreenVM.FocusWar`, `FocusRebellions`, `FocusRealm`, `FocusKingdoms`.
