@@ -21,6 +21,7 @@ static class Program
         { "TvhIntrigueScreen", "CheatMenu.UI.ViewModels.IntrigueScreenVM" },
         { "TvhEventCard", "CheatMenu.UI.ViewModels.EventCardVM" },
         { "TvhRebellions", "CheatMenu.UI.ViewModels.RebellionsVM" },
+        { "TvhLords", "CheatMenu.UI.ViewModels.LordsVM" },
     };
 
     // Kullandığımız oyun sprite'ları: yalnızca HER ZAMAN YÜKLÜ kategorilerden (ui_group1, ui_textures). Başka bir ekranın
@@ -44,8 +45,8 @@ static class Program
         { "Standard.VerticalScrollbar", ("Widget", new[] { "Scrollbar" }) },
     };
 
-    // Ayrı ekranların (TvhIntrigueScreen, TvhRebellions) kendisi yüklediği kategori: Klan ekranı sekmeleri ve paneli oradan.
-    static readonly HashSet<string> ClanRoots = new HashSet<string> { "TvhIntrigueScreen", "TvhRebellions" };
+    // Ayrı ekranların (TvhIntrigueScreen, TvhRebellions, TvhLords) kendisi yüklediği kategori: Klan ekranı sekmeleri ve paneli oradan.
+    static readonly HashSet<string> ClanRoots = new HashSet<string> { "TvhIntrigueScreen", "TvhRebellions", "TvhLords" };
 
     // Oyunun her zaman yüklediği sprite kategorileri (SpriteData'da AlwaysLoad).
     static readonly HashSet<string> AlwaysLoadedCategories = new HashSet<string> { "ui_group1", "ui_textures", "ui_fonts", "ui_fullbackgrounds" };

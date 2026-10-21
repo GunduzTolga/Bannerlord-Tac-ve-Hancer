@@ -28,8 +28,13 @@
   (`RebelFactionItemVM`, `RebelFactionsVM`, reflection) çalışıyor; görünüş, Türkçe metinler, güç çubuğu, "en gönülsüz üye" notu ve
   hoşnutsuzlar bölümü (Saray kartları) bizim. Prefab'lar `TvhRebellions`, `TvhRebelFactionCard`. Oyunda henüz denenmedi.
 - **Kullanıcı eşini genelevde çalışan olarak sordu:** yapılmadı ("eşini pazarlamak" çizgisi); eş yalnızca kendi kararıyla yönetici olabilir.
-- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu daha da geliştir, Krallık > Lordlar sekmesi (Diplomacy habercisi üzerine), kalan
-  15 kart resmi + 3 yeni genelev resmi, Convivium / Diplomacy & Intrigue kararı.
+- **Lordlar penceresi (21 Ekim):** `UI.LordsScreen` (prefab `TvhLords`, `TvhLordCard`): krallığın ve tanıdığın lordlar tek yerde;
+  ulak ve hediye (Saray'daki düğme), **yanına çağır** (nüfuz ya da altın; kabul ederse partisi oyunun eşlik emriyle sana yürür, her
+  saat `LordContacts.Hourly`), **ziyafet** (kendi şehrinde ya da kalende, en fazla 6 davetli, 30 günde bir; ilişki, nüfuz, bazen rapor
+  ve sır). Kurallar `LordContactRules` (testli), tasarım `2026-10-21-lordlar.md`. Açılış: Saray > Lordlar..., Insert > Entrika.
+  **Oylamada destek sözü yapılmadı:** oyunun seçim kodunun gövdesi bulutta yok; PC'de oyunun DLL'lerini açıp oy ağırlığına kanca aranmalı.
+- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu daha da geliştir, oylamada destek (PC'de), kalan 15 kart resmi +
+  3 yeni genelev resmi, Convivium / Diplomacy & Intrigue kararı.
 
 ## 21 Ekim 2026 (PC oturumu, telefona devir)
 - **Git:** her şey `main`'de ve GitHub'da. Bulut dalı `ccr-be29c96c-8tfbau` da `main`'e getirildi. Yeni işe `main`'den başla.
@@ -92,11 +97,8 @@
 
 ## Kullanıcının istedikleri (sıradaki işler)
 - **Savaş Raporu (Diplomacy) ekranını geliştir:** kullanıcı çok beğendi (üst kısım güzel). Daha fazla bilgi ve oyun görünümü.
-- **İsyanlar ve İç Savaş penceresi (Diplomacy):** daha oyuna benzesin (şu an boş liste, düz kutu).
-- **Krallığın lordlarıyla iletişim sayfası** — önerilen: Krallık ekranında Diplomacy sekmelerinin yanına "Lordlar" sekmesi
-  (UIExtenderEx, Klan sekmemiz gibi). Liste: portre, klan, ilişki, konum, sana bakışı, son temas. Eylemler: haberci gönder (mevcut
-  `Messengers` sistemi; hal hatır/teşekkür/özür, karaktere göre ilişki, haftalık sınır), hediye (altın/eşya, karaktere göre),
-  ziyafete davet (şehrinde, birkaç lord), oylamada destek sözü iste, yanına çağır (lordun partisi gelir, konuşma oyunun diyaloğunda).
-  Bizim "Saray" alt sekmesi (`TvhCourtPanel`) zaten krallık lordlarını gösteriyor; oradan yararlan.
+- ~~İsyanlar ve İç Savaş penceresi~~ (21 Ekim yapıldı: `UI.RebellionsScreen`).
+- ~~Krallığın lordlarıyla iletişim sayfası~~ (21 Ekim yapıldı: `UI.LordsScreen`; ulak/hediye, yanına çağır, ziyafet). Kalan: **oylamada
+  destek sözü** (PC'de oyunun seçim kodu açılmalı) ve isteğe bağlı Krallık ekranına sekme (oyunun Krallık prefab'ı PC'de görülmeli).
 - Diplomacy ve diğer modların özelliklerini kendi ekranlarımıza taşıma (kullanıcının uzun vadeli isteği: tek mod, her şey bizim arayüzde).
 - Karar bekleyenler: Convivium, Diplomacy & Intrigue (YAPILACAKLAR).

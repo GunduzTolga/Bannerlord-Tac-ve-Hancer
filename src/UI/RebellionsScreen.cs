@@ -16,7 +16,8 @@ namespace CheatMenu.UI
     public static class RebellionsScreen
     {
         private const string Movie = "TvhRebellions";
-        private const int Order = 211;
+        // Ayrı Entrika ekranının (400) üstünde, olay kartlarının (410) altında.
+        private const int Order = 405;
 
         private static readonly MovieLayer Layer = new MovieLayer();
         private static readonly EscapeKey Escape = new EscapeKey();

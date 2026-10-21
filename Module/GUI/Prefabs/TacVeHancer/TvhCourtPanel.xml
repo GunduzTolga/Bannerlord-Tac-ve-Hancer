@@ -46,7 +46,18 @@
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@HostageText" />
               </Children>
             </ButtonWidget>
-            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="142" MarginRight="12" MarginTop="60" Brush="Tvh.Text.MutedTop" Text="@SourceText" />
+            <!-- Lordlar (iletişim, ziyafet, çağır) ve isyanlar pencereleri -->
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="112" SuggestedHeight="36" HorizontalAlignment="Right" MarginRight="130" MarginTop="54" Brush="Tvh.Button" Command.Click="ExecuteLords" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@LordsText" />
+              </Children>
+            </ButtonWidget>
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="112" SuggestedHeight="36" HorizontalAlignment="Right" MarginRight="12" MarginTop="54" Brush="Tvh.Button" Command.Click="ExecuteRebellions" IsEnabled="@CanRebellions" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@RebellionsText" />
+              </Children>
+            </ButtonWidget>
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginLeft="142" MarginRight="254" MarginTop="60" Brush="Tvh.Text.MutedTop" Text="@SourceText" />
           </Children>
         </Widget>
 
