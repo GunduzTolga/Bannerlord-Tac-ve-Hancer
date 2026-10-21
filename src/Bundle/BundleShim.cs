@@ -84,6 +84,24 @@ namespace CheatMenu.Bundle
             var refresh = AccessTools.Method("Diplomacy.ViewModel.DetailWarVM:RefreshValues");
             if (refresh != null)
                 harmony.Patch(refresh, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportMarshalRows)));
+            // İsyanlar ve iç savaş: Diplomacy'nin grup penceresi yerine bizimki (kuralları ve düğmeleri yine onun; UI.RebellionsScreen).
+            var factions = AccessTools.Method("Diplomacy.GauntletInterfaces.RebelFactionsInterface:ShowInterface");
+            if (factions != null)
+                harmony.Patch(factions, prefix: new HarmonyMethod(typeof(BundleShim), nameof(RebellionsWindow)));
+        }
+
+        /// <summary>false: Diplomacy'nin penceresi açılmaz, bizimki açıldı. Bizimki açılamazsa onunki açılır.</summary>
+        private static bool RebellionsWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom kingdom)
+        {
+            try
+            {
+                return !UI.RebellionsScreen.Open(kingdom, screenBase);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] rebellions window hook failed: " + ex);
+                return true;
+            }
         }
 
         private static void WarReportMarshalRows(object __instance)

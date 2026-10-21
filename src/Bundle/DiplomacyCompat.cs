@@ -125,6 +125,83 @@ namespace CheatMenu.Bundle
             return list;
         }
 
+        // ---- İsyanlar penceresi (UI.RebellionsScreen): Diplomacy'nin grupları ve kendi düğme mantığı ----
+
+        /// <summary>Krallıktaki isyancı grupların kendileri (Diplomacy.CivilWar.Factions.RebelFaction); yoksa boş.</summary>
+        internal static List<object> RawRebelFactions(Kingdom kingdom)
+        {
+            var list = new List<object>();
+            if (kingdom == null) return list;
+            try
+            {
+                MethodInfo get = AccessTools.TypeByName("Diplomacy.CivilWar.RebelFactionManager")
+                    ?.GetMethod("GetRebelFaction", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static, null, new[] { typeof(Kingdom) }, null);
+                if (get?.Invoke(null, new object[] { kingdom }) is IEnumerable factions) list.AddRange(factions.Cast<object>());
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy rebel factions could not be read: " + ex);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Diplomacy'nin bir grup için kendi ViewModel'i (Diplomacy.ViewModel.RebelFactionItemVM): katıl, ayrıl, isyanı başlat ve destek topla
+        /// onun kurallarıyla çalışsın. onComplete: pencere kapanmalıysa (ansiklopediye gidiş); refresh: grup değişti.
+        /// </summary>
+        internal static object CreateFactionItem(object faction, Action onComplete, Action refresh)
+        {
+            Type type = AccessTools.TypeByName("Diplomacy.ViewModel.RebelFactionItemVM");
+            return type == null || faction == null ? null : Activator.CreateInstance(type, faction, onComplete, refresh);
+        }
+
+        /// <summary>Krallığın grup penceresi ViewModel'i (Diplomacy.ViewModel.RebelFactionsVM): grup kurma kuralı ve seçimi onun.</summary>
+        internal static object CreateFactionsWindow(Kingdom kingdom, Action onComplete)
+        {
+            Type type = AccessTools.TypeByName("Diplomacy.ViewModel.RebelFactionsVM");
+            return type == null || kingdom == null ? null : Activator.CreateInstance(type, kingdom, onComplete);
+        }
+
+        /// <summary>Bir nesnenin özelliği (Diplomacy'nin iç türleri için); okunamazsa varsayılan.</summary>
+        internal static T Read<T>(object target, string property)
+        {
+            if (target == null) return default;
+            try
+            {
+                return Traverse.Create(target).Property(property).GetValue() is T value ? value : default;
+            }
+            catch
+            {
+                return default;
+            }
+        }
+
+        /// <summary>Diplomacy ViewModel'inin bir komutunu çalıştırır (OnJoin, OnLeave...).</summary>
+        internal static void Invoke(object target, string method)
+        {
+            MethodInfo info = target?.GetType().GetMethod(method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null);
+            if (info == null) throw new InvalidOperationException("Diplomacy komutu bulunamadı: " + method);
+            info.Invoke(target, null);
+        }
+
+        /// <summary>null: oyuncunun klanı bu gruba katılabilir; değilse Diplomacy'nin verdiği neden.</summary>
+        internal static string JoinBlocked(object faction)
+        {
+            try
+            {
+                MethodInfo can = AccessTools.TypeByName("Diplomacy.CivilWar.Actions.JoinFactionAction")?.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                    .FirstOrDefault(m => m.Name == "CanApply" && m.GetParameters().Length == 3);
+                if (can == null) return "Diplomacy kuralı bulunamadı";
+                object[] args = { Clan.PlayerClan, faction, null };
+                return (bool)can.Invoke(null, args) ? null : args[2]?.ToString() ?? "Katılamazsın";
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy join check failed: " + ex);
+                return "Diplomacy kuralına ulaşılamadı";
+            }
+        }
+
         /// <summary>
         /// Savaş Raporu'na (Diplomacy.ViewModel.DetailWarVM) satır ekler: orta sütun metin, iki yan sütun iki taraf. Diplomacy'nin kendi satır
         /// türü (WarExhaustionBreakdownVM) boş bir dökümle kurulup metinleri değiştirilir; pencerenin yüksekliği satır başına 16 artar.
