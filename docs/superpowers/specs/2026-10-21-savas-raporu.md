@@ -18,14 +18,14 @@
 | Savaşın gidişatı | oyunun `StanceLink`'i, `DiplomacyModel.GetWarProgressScore` | savaştaki üstünlük (oyunun puanı; üstüne gelince açıklaması), kayıplar, fethedilen şehir/kale, yağmalanan köy, esir düşen lordları, ödenen haraç |
 | Kuvvetler | krallık verisi | toplam güç, sahadaki ordular, klanlar (+paralı), lordlar, şehir/kale/köy, müttefikler, başka cepheler |
 | Savaş yorgunluğu | Diplomacy'nin dökümü | her olay türü için sayı ve yüzde; üstüne gelince olaylar |
-| Serdarın raporu | `Marshal` | tahmini güç, ordular, topraklarına yürüyenler, tavsiye; tehlikeler ve bu düşmanın zayıf kaleleri |
+| Başkomutanın raporu | `Marshal` | tahmini güç, ordular, topraklarına yürüyenler, tavsiye; tehlikeler ve bu düşmanın zayıf kaleleri |
 | Barış | oyunun barış puanı, Diplomacy'nin barış koşulları | iki tarafın barışa bakışı, tükenme uyarısı, şu an barış teklif edilebilir mi (değilse Diplomacy'nin nedeni) |
 | Esirler | kahramanlar | onların elindeki lordların ve senin elindekiler (nerede tutuldukları) |
 | Savaş günlüğü | oyunun günlüğü (`IWarLog`) | bu savaşın son 10 olayı, kaç gün önce |
 
 - Karşılaştırma satırı: solda biz, ortada ne, sağda onlar; altında iki krallığın renginde oran çubuğu (`WarReportRules.Bar`; koyu krallık
   rengi okunur hâle getirilir: `WarReportRules.Readable`). Bir bölüm okunamazsa pencere yine açılır, bölümde nedeni yazar.
-- Eskiden Diplomacy'nin raporuna eklenen serdar satırları (RefreshValues sonrası yaması) kalktı: artık kendi bölümünde.
+- Eskiden Diplomacy'nin raporuna eklenen başkomutan satırları (RefreshValues sonrası yaması) kalktı: artık kendi bölümünde.
 
 ## Denetim
 

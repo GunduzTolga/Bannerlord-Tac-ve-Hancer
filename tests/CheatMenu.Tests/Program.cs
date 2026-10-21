@@ -754,7 +754,7 @@ namespace CheatMenu.Tests
                 && Math.Abs(PhysicianRules.YearlyRisk(daily) - 0.3) < 1e-9);
         }
 
-        /// <summary>Divan, serdar (P2.14): hata payı, görüş, uyarı, savunma, erzak, yol, yuvarlama, tavsiye.</summary>
+        /// <summary>Divan, başkomutan (P2.14): hata payı, görüş, uyarı, savunma, erzak, yol, yuvarlama, tavsiye.</summary>
         private static void MarshalTests()
         {
             Check("marshal: error", MarshalRules.ErrorPercent(0) == 45 && MarshalRules.ErrorPercent(120) == 25 && MarshalRules.ErrorPercent(300) == 5);

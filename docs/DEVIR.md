@@ -17,7 +17,7 @@
   zaman izleniyor; sekme bağlanmazsa ayrı Entrika ekranına geçiliyor; ajan bonusu formüllerde ayrı ve tam; kâhya yalnızca valisiz
   yerleşimlerde; "Saray günü düzenle" adı; Entrika > Hanedan menüsü; kayıt testi düğmesi kalktı.
 - **Diplomacy bağlantıları (21 Ekim):** rehine anlaşması süresince Diplomacy saldırmazlık anlaşması (erken bitince o da biter);
-  "Muhalefeti izle" raporunda isyancı gruplar (önde kim, kaç klan, istek, güç); Savaş Raporu'nda serdarın satırları (güç tahmini,
+  "Muhalefeti izle" raporunda isyancı gruplar (önde kim, kaç klan, istek, güç); Savaş Raporu'nda başkomutanın satırları (güç tahmini,
   sahadaki ordular, topraklarına yürüyenler, tavsiye); ulak kartında yüz yüze görüşme Diplomacy habercisiyle, bizim ulak yalnızca
   hediye taşır. Hazinedar artık gerçek gelir veriyor: atölye ve kervan gelirine Trade/10 yüzde (en fazla %20), klan gelirinde
   "Hazinedar" satırı (`Cheats/Models/TreasurerFinanceModel`). API notları: Diplomacy kaynakları ilspycmd ile açıldı (yalnızca bulutta).
@@ -35,7 +35,7 @@
   **Oylamada destek sözü yapılmadı:** oyunun seçim kodunun gövdesi bulutta yok; PC'de oyunun DLL'lerini açıp oy ağırlığına kanca aranmalı.
 - **Savaş Raporu artık bizim pencere (21 Ekim):** Diplomacy'nin `DetailWarViewInterface.ShowInterface`'i ön yamayla `UI.WarReportScreen`'e
   yönleniyor (açılamazsa onunki). Üst kısım Diplomacy'nin prefab'ından aynen ve onun `DetailWarVM`'ine bağlı (`WarReportVM.Report`); altı
-  bizim iki sütun: gidişat (StanceLink, oyunun savaş puanı), kuvvetler, Diplomacy'nin yorgunluk dökümü, serdar, barış (oyunun barış puanı,
+  bizim iki sütun: gidişat (StanceLink, oyunun savaş puanı), kuvvetler, Diplomacy'nin yorgunluk dökümü, başkomutan, barış (oyunun barış puanı,
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
