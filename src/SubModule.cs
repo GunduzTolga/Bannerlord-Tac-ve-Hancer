@@ -168,6 +168,7 @@ namespace CheatMenu
             IntrigueScreen.Tick();
             RebellionsScreen.Tick();
             LordsScreen.Tick();
+            WarReportScreen.Tick();
             ClanIntrigueTab.Tick();
             CleanSaveGuard.Tick();
 

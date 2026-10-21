@@ -203,28 +203,63 @@ namespace CheatMenu.Bundle
         }
 
         /// <summary>
-        /// Savaş Raporu'na (Diplomacy.ViewModel.DetailWarVM) satır ekler: orta sütun metin, iki yan sütun iki taraf. Diplomacy'nin kendi satır
-        /// türü (WarExhaustionBreakdownVM) boş bir dökümle kurulup metinleri değiştirilir; pencerenin yüksekliği satır başına 16 artar.
+        /// Diplomacy'nin Savaş Raporu ViewModel'i (Diplomacy.ViewModel.DetailWarVM): bizim penceremizin üst kısmı (sancaklar, savaş
+        /// yorgunluğu, ilişki, tarih) olduğu gibi onunla çizilir (UI.WarReportScreen). onComplete: onun kapatma komutu.
         /// </summary>
-        internal static void AddWarReportRows(object detailWarVm, List<(string Text, string Ours, string Theirs)> rows)
+        internal static ViewModel CreateWarDetail(Kingdom enemy, Action onComplete)
         {
-            if (detailWarVm == null || rows == null || rows.Count == 0) return;
-            Type rowType = AccessTools.TypeByName("Diplomacy.ViewModel.WarExhaustionBreakdownVM");
-            Type dataType = AccessTools.TypeByName("Diplomacy.WarExhaustion.WarExhaustionManager+WarExhaustionBreakdown");
-            if (rowType == null || dataType == null) return;
-            Traverse vm = Traverse.Create(detailWarVm);
-            if (!(vm.Property("Breakdowns").GetValue() is IList list)) return;
-            foreach ((string text, string ours, string theirs) in rows)
+            Type type = AccessTools.TypeByName("Diplomacy.ViewModel.DetailWarVM");
+            return type == null || enemy == null ? null : Activator.CreateInstance(type, enemy, onComplete) as ViewModel;
+        }
+
+        /// <summary>Savaş yorgunluğu dökümünün bir satırı: olay türü, iki tarafın sayısı ve yüzdesi, olayların ipucu (BasicTooltipViewModel).</summary>
+        internal sealed class WarBreakdown
+        {
+            public string Text, OursPercent, TheirsPercent;
+            public int Ours, Theirs;
+            public object OursHint, TheirsHint;
+        }
+
+        /// <summary>DetailWarVM.Breakdowns: kayıplar, yağmalanan köy ve kervanlar, kaybedilen yerler, esir ve ölen lordlar, savaşın süresi.</summary>
+        internal static List<WarBreakdown> WarBreakdowns(object detailWarVm)
+        {
+            var list = new List<WarBreakdown>();
+            if (!(Read<object>(detailWarVm, "Breakdowns") is IEnumerable rows)) return list;
+            foreach (object row in rows)
+                list.Add(new WarBreakdown
+                {
+                    Text = Read<string>(row, "Text") ?? "",
+                    Ours = Read<int>(row, "ValueFaction1"),
+                    Theirs = Read<int>(row, "ValueFaction2"),
+                    OursPercent = Read<string>(row, "WarExhaustionValueFaction1") ?? "",
+                    TheirsPercent = Read<string>(row, "WarExhaustionValueFaction2") ?? "",
+                    OursHint = Read<object>(row, "Faction1ValueHint"),
+                    TheirsHint = Read<object>(row, "Faction2ValueHint"),
+                });
+            return list;
+        }
+
+        /// <summary>
+        /// Diplomacy'nin barış koşulları (MakePeaceConditions, oyuncu için bedelleriyle): boş liste = barış teklif edilebilir, değilse
+        /// nedenleri (Diplomacy'nin metinleri); okunamazsa null.
+        /// </summary>
+        internal static List<string> PeaceBlockers(Kingdom kingdom, Kingdom enemy)
+        {
+            try
             {
-                object row = Activator.CreateInstance(rowType, Activator.CreateInstance(dataType));
-                Traverse r = Traverse.Create(row);
-                r.Property("Text").SetValue(text ?? "");
-                r.Property("WarExhaustionValueFaction1").SetValue(ours ?? "");
-                r.Property("WarExhaustionValueFaction2").SetValue(theirs ?? "");
-                list.Add(row);
+                Type type = AccessTools.TypeByName("Diplomacy.DiplomaticAction.WarPeace.MakePeaceConditions");
+                object instance = AccessTools.Property(type, "Instance")?.GetValue(null);
+                MethodInfo check = instance?.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                    .FirstOrDefault(m => m.Name == "CanApplyExceptions" && m.GetParameters().Length == 4 && m.GetParameters()[0].ParameterType == typeof(Kingdom));
+                if (check == null || kingdom == null || enemy == null) return null;
+                return (check.Invoke(instance, new object[] { kingdom, enemy, true, false }) as IEnumerable)?.Cast<object>()
+                    .Select(t => t?.ToString()).Where(t => !string.IsNullOrEmpty(t)).ToList();
             }
-            Traverse height = vm.Property("ReportHeight");
-            height.SetValue(height.GetValue<int>() + 16 * rows.Count);
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy peace conditions failed: " + ex);
+                return null;
+            }
         }
 
         // ---- Haberci: yüz yüze görüşme Diplomacy'nin habercisiyle (onun bedeli, yolu ve salondaki konuşması) ----
@@ -314,10 +349,6 @@ namespace CheatMenu.Bundle
                 return false;
             }
         }
-
-        /// <summary>Savaş Raporu'nun karşı krallığı.</summary>
-        internal static Kingdom WarReportOpponent(object detailWarVm) =>
-            detailWarVm == null ? null : Traverse.Create(detailWarVm).Field("_opposingKingdom").GetValue() as Kingdom;
 
         private static void Resolve()
         {

@@ -184,6 +184,7 @@ namespace CheatMenu.Tests
             HeirTests();
             PrisonDeathTests();
             LordContactTests();
+            WarReportTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -922,6 +923,25 @@ namespace CheatMenu.Tests
         }
 
         /// <summary>Lordlarla iletişim: ziyafet ve yanına çağırma.</summary>
+        private static void WarReportTests()
+        {
+            var even = WarReportRules.Bar(0, 0, 100);
+            Check("war report: empty bar is split evenly", even.Ours == 50 && even.Theirs == 50);
+            var bar = WarReportRules.Bar(300, 100, 100);
+            Check("war report: bar follows the ratio", bar.Ours == 75 && bar.Theirs == 25);
+            var neg = WarReportRules.Bar(-20, 40, 100);
+            Check("war report: negative counts as zero", neg.Ours == 0 && neg.Theirs == 100);
+            Check("war report: bar parts fill the width", Math.Abs(WarReportRules.Bar(1, 2).Ours + WarReportRules.Bar(1, 2).Theirs - WarReportRules.BarWidth) < 0.01);
+            Check("war report: bright colour kept", WarReportRules.Readable(0xFFCC3322, 0xFF000000) == 0xFFCC3322);
+            Check("war report: dark colour falls back to a brighter second", WarReportRules.Readable(0xFF101020, 0xFFD0B060) == 0xFFD0B060);
+            uint lifted = WarReportRules.Readable(0xFF101020, 0xFF000000);
+            Check("war report: dark pair is lightened and opaque", WarReportRules.Luminance(lifted) > WarReportRules.Luminance(0xFF101020) && (lifted >> 24) == 0xFF);
+            Check("war report: ago texts", WarReportRules.Ago(0) == "bugün" && WarReportRules.Ago(1) == "dün" && WarReportRules.Ago(5) == "5 gün önce");
+            Check("war report: tags are stripped", WarReportRules.StripTags("<a style=\"Link.Hero\" href=\"event:x\"><b>Derthert</b></a>  took   Pen") == "Derthert took Pen");
+            Check("war report: names list", WarReportRules.Names(new[] { "A", "B", "C" }, 2) == "A, B +1" && WarReportRules.Names(new string[0], 2) == "yok");
+            Check("war report: peace mood", WarReportRules.PeaceMood(5) == "barışa yatkın" && WarReportRules.PeaceMood(-1) == "barışa yanaşmıyor");
+        }
+
         private static void LordContactTests()
         {
             Check("feast: cost", LordContactRules.FeastCost(0) == 400 && LordContactRules.FeastCost(4) == 1400 && LordContactRules.FeastCost(20) == 1900);

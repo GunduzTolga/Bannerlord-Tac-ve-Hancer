@@ -33,8 +33,14 @@
   saat `LordContacts.Hourly`), **ziyafet** (kendi şehrinde ya da kalende, en fazla 6 davetli, 30 günde bir; ilişki, nüfuz, bazen rapor
   ve sır). Kurallar `LordContactRules` (testli), tasarım `2026-10-21-lordlar.md`. Açılış: Saray > Lordlar..., Insert > Entrika.
   **Oylamada destek sözü yapılmadı:** oyunun seçim kodunun gövdesi bulutta yok; PC'de oyunun DLL'lerini açıp oy ağırlığına kanca aranmalı.
-- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu daha da geliştir, oylamada destek (PC'de), kalan 15 kart resmi +
-  3 yeni genelev resmi, Convivium / Diplomacy & Intrigue kararı.
+- **Savaş Raporu artık bizim pencere (21 Ekim):** Diplomacy'nin `DetailWarViewInterface.ShowInterface`'i ön yamayla `UI.WarReportScreen`'e
+  yönleniyor (açılamazsa onunki). Üst kısım Diplomacy'nin prefab'ından aynen ve onun `DetailWarVM`'ine bağlı (`WarReportVM.Report`); altı
+  bizim iki sütun: gidişat (StanceLink, oyunun savaş puanı), kuvvetler, Diplomacy'nin yorgunluk dökümü, serdar, barış (oyunun barış puanı,
+  Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
+  `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
+  Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): oylamada destek (PC'de), kalan 15 kart resmi + 3 yeni genelev resmi,
+  Convivium / Diplomacy & Intrigue kararı.
 
 ## 21 Ekim 2026 (PC oturumu, telefona devir)
 - **Git:** her şey `main`'de ve GitHub'da. Bulut dalı `ccr-be29c96c-8tfbau` da `main`'e getirildi. Yeni işe `main`'den başla.
@@ -96,7 +102,7 @@
    ekliyor) Diplomacy'ninkiyle çakışıyor olabilir — kontrol et.
 
 ## Kullanıcının istedikleri (sıradaki işler)
-- **Savaş Raporu (Diplomacy) ekranını geliştir:** kullanıcı çok beğendi (üst kısım güzel). Daha fazla bilgi ve oyun görünümü.
+- ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`). Kalan: pencereye barış teklifi düğmesi.
 - ~~İsyanlar ve İç Savaş penceresi~~ (21 Ekim yapıldı: `UI.RebellionsScreen`).
 - ~~Krallığın lordlarıyla iletişim sayfası~~ (21 Ekim yapıldı: `UI.LordsScreen`; ulak/hediye, yanına çağır, ziyafet). Kalan: **oylamada
   destek sözü** (PC'de oyunun seçim kodu açılmalı) ve isteğe bağlı Krallık ekranına sekme (oyunun Krallık prefab'ı PC'de görülmeli).

@@ -71,6 +71,15 @@ namespace CheatMenu.Menu
                     if (!UI.RebellionsScreen.Open(realm)) MenuUI.Error("İsyanlar penceresi açılamadı");
                 }))
                 : MenuEntry.Simple("İsyanlar ve iç savaş - " + rebellions, () => MenuUI.Error(rebellions)));
+            List<Kingdom> wars = realm == null ? new List<Kingdom>() : Marshal.Enemies();
+            string reports = rebellions ?? (wars.Count == 0 ? "kimseyle savaşta değilsin" : null);
+            entries.Add(reports == null
+                ? MenuEntry.Submenu("Savaş raporları (" + wars.Count + ")...", () => Picker.Pick("Hangi savaş?", wars, k => k.Name.ToString(),
+                    k => MenuUI.Defer(() =>
+                    {
+                        if (!UI.WarReportScreen.Open(k)) MenuUI.Error("Savaş Raporu açılamadı");
+                    }), ShowIntrigue))
+                : MenuEntry.Simple("Savaş raporları - " + reports, () => MenuUI.Error(reports)));
 
             ShowCategory("Entrika", entries, ShowIntrigue,
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")

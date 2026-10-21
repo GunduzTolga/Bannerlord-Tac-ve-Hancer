@@ -80,10 +80,10 @@ namespace CheatMenu.Bundle
             var reportHeight = AccessTools.PropertyGetter("Diplomacy.ViewModel.DetailWarVM:ReportHeight");
             if (reportHeight != null && reportHeight.ReturnType == typeof(int))
                 harmony.Patch(reportHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportHeight)));
-            // Savaş Raporu'na serdarın tahminleri: güç, sahadaki ordular, topraklarına yürüyenler, tavsiye (Intrigue.Marshal).
-            var refresh = AccessTools.Method("Diplomacy.ViewModel.DetailWarVM:RefreshValues");
-            if (refresh != null)
-                harmony.Patch(refresh, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportMarshalRows)));
+            // Savaş Raporu: Diplomacy'nin penceresi yerine bizimki (üst kısmı yine onun ViewModel'iyle; UI.WarReportScreen).
+            var warReport = AccessTools.Method("Diplomacy.GauntletInterfaces.DetailWarViewInterface:ShowInterface");
+            if (warReport != null)
+                harmony.Patch(warReport, prefix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportWindow)));
             // İsyanlar ve iç savaş: Diplomacy'nin grup penceresi yerine bizimki (kuralları ve düğmeleri yine onun; UI.RebellionsScreen).
             var factions = AccessTools.Method("Diplomacy.GauntletInterfaces.RebelFactionsInterface:ShowInterface");
             if (factions != null)
@@ -104,20 +104,21 @@ namespace CheatMenu.Bundle
             }
         }
 
-        private static void WarReportMarshalRows(object __instance)
+        /// <summary>false: Diplomacy'nin raporu açılmaz, bizimki açıldı. Bizimki açılamazsa onunki açılır.</summary>
+        private static bool WarReportWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom opposingKingdom)
         {
             try
             {
-                Kingdom enemy = DiplomacyCompat.WarReportOpponent(__instance);
-                if (enemy != null) DiplomacyCompat.AddWarReportRows(__instance, Intrigue.Marshal.WarReportRows(enemy));
+                return !UI.WarReportScreen.Open(opposingKingdom, screenBase);
             }
             catch (Exception ex)
             {
-                Debug.Print("[CheatMenu] war report marshal rows failed: " + ex);
+                Debug.Print("[CheatMenu] war report window hook failed: " + ex);
+                return true;
             }
         }
 
-        /// <summary>Savaş Raporu penceresinin büyütme oranı (yazılar 16'dan 20 puntoya).</summary>
+        /// <summary>Diplomacy'nin kendi Savaş Raporu penceresinin büyütme oranı (yazılar 16'dan 20 puntoya; bizimki açılamazsa o açılır).</summary>
         internal const float WarReportScale = 1.25f;
 
         private static void WarReportHeight(ref int __result) => __result = (int)Math.Round(__result * WarReportScale);
