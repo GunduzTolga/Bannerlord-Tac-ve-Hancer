@@ -13,7 +13,7 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Genelev, müşteri tarafı (tasarım: docs/superpowers/specs/2026-10-19-p2-genelev.md): herhangi bir şehrin genelevinde bir gece,
     /// askerlere bir gece ısmarlamak ve oradan kapılabilen hastalık. Yalnızca metin ve resimli kart: içerisi anlatılmaz, perde iner.
-    /// Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir (kahraman değil); hiçbir kahraman müşteriye çıkmaz. Kurallar'daki "Genelev"
+    /// Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir; yoldaşlar yalnızca kendi isteğiyle çalışır. Kurallar'daki "Genelev"
     /// ayarıyla açılır (varsayılan kapalı). İşletme tarafı ve yönetim kartı: NightHouses.
     /// </summary>
     public static class Brothels

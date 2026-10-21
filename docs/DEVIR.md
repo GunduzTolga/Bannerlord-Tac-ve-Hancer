@@ -11,6 +11,19 @@
   Tasarım: `docs/superpowers/specs/2026-10-19-p2-genelev.md`; test listesi: YAPILACAKLAR > Genelev.
 - **Bulutta derleme artık var:** Ubuntu'nun `dotnet-sdk-8.0` paketi ve NuGet referans DLL'leriyle mod derleniyor, testler ve GuiCheck
   (oyunsuz) çalışıyor. Oyuna kurmak ve `--game` denetimi yine PC'de `build.ps1`.
+- **Uyum denetimi (21 Ekim, kodda doğrulandı), düzeltilecekler:**
+  1. Oyuncu karakteri değişince (varis, `Dynasty.Abdicate`) sevgili/kur kayıtları ve koltuklar kalıyor; `Courtships.MeetBlocked` ve
+     `MayConceive` akrabalık ve yaş denetlemiyor (varis eski karakterin sevgilisini "devralıyor").
+  2. Şantaj: başarı sırrı harcamıyor, bekleme koymuyor; koz kullanılınca aynı sırla yeniden şantaj yapılabiliyor (para/nüfuz döngüsü).
+     Genelevdeki "duyulanlar" hedefin tetikte olmasına bakmıyor.
+  3. Tek bir "meşgul mü" denetimi yok: rehine giden divan üyesi çalışmaya devam ediyor; serdar, kâhya, genelev ve rehinenin "meşgul"
+     tanımları farklı. Tutulan rehineler entrikalarda "senin esirin" sayılıp +20 bonus veriyor.
+  4. "Eşin seni aldatabilir" kapalıyken Regard and Standing eşin ilişkilerini yine yürütüyor, sen öğrenemiyorsun
+     (`SpouseLife.Weekly` erken dönüyor); tek "romantik sırlar" anahtarı kendi kurlarını da kapatıyor.
+  5. `ClanIntrigueTab.CheckBound` sekme bağlanmazsa yalnızca hata yazıyor; ayrı Entrika ekranına geri dönmüyor (Home da boş sekmeye gider).
+  6. Çakışmalar: ulak/haberci Diplomacy'nin "Send Messenger"ıyla aynı işi yapıyor (planlanan Lordlar sekmesi üçüncüsü olur); ajan bonusu
+     kartta "her yerde +2" diyor ama formüllerde yarıya iniyor ya da ağ üst sınırında kayboluyor; kâhyanın sadakati valilerin üstüne
+     ekleniyor; "Divan" hem sekme hem saray günü adı. "Klanı devret" yalnızca hile editöründe; "Kayıt testi" düğmesi hâlâ menüde.
 - Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu geliştir, İsyanlar/İç Savaş penceresi, Krallık > Lordlar sekmesi,
   kalan 15 kart resmi, Convivium / Diplomacy & Intrigue kararı.
 
