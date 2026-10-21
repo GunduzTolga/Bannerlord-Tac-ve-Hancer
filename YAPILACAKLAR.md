@@ -315,7 +315,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Insert → Entrika → **Kur ve sevgililer**: kur yap / eşini gönder listesi, buluşma, bitir
 - [ ] Kaydet → yükle → kur, sevgili, gebelik aynı
 
-### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı, 21 Ekim'de adlı çalışanlar ve yoldaş yönetici eklendi)
+### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı, 21 Ekim'de adlı çalışanlar, yoldaş yönetici ve yoldaş çalışan eklendi)
 - [ ] MCM > Entrika > **Genelev (yetişkin teması)** aç
 - [ ] Herhangi bir şehirde kasaba menüsü > **Genelevine uğra** → resimli kart: sade oda (150), en iyi oda (400), askerlerine bir gece, Ayrıl
 - [ ] Geceyi geçir → "kapı ardından kapanıyor" kartı (içerisi anlatılmıyor); para düştü; aynı gün ikinci kez gri ("Bu gece zaten...")
@@ -331,8 +331,14 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Çalışan al... → kapıda 3 aday (ad, yaş, özellik) → birini seç → 300 düştü, kartta adı var. Şehir dışındayken gri ve nedeni yazıyor.
       Sınır ağ seviyesine göre (4/6/8)
 - [ ] Çalışanların payı... → adil/standart/düşük, ayrılma oranlarıyla; şu anki gri
-- [ ] **Yönetici ata...** → yoldaş listesi (Charm, Roguery; istemeyenin yanında "[istemez: onurlu biri...]") → onurlu birini seç: "istemiyor"
-      kartı, ilişki değişmedi. İsteyen birini seç → "evi işletecek" kartı; yoldaş partinden çıktı ve o şehirde (şehrin kişilerinde görünüyor)
+- [ ] Kart > **Yoldaşlar...** → **Yönetici ata...** → yoldaş listesi (Charm, Roguery; istemeyenin yanında "[istemez: onurlu biri...]") →
+      onurlu birini seç: "istemiyor" kartı, ilişki değişmedi. İsteyen birini seç → "evi işletecek" kartı; yoldaş partinden çıktı ve o
+      şehirde (şehrin kişilerinde görünüyor)
+- [ ] **Yoldaşlar... > Bir yoldaşına sor: evde çalışmak ister mi?** → listede "[isteyebilir]" ya da "[istemez: neden]". İstemeyene sor:
+      "Hayır" kartı, ilişki değişmedi. İsteyene sor: kabul kartı; partinden ayrıldı; kartta "(yoldaşın)" diye çalışanlar arasında
+- [ ] Bir hafta sonra yoldaşın altını arttı (kendi payı); pay "düşük"e çekilince bir süre sonra bırakıp sana dönüyor (kart)
+- [ ] **Çalışan yoldaşı geri çağır...**: şehirdeysen hemen partinde, uzaktaysan yola çıkıp geliyor
+- [ ] Ev kapanınca / baskında evdeki yoldaşlar sana dönüyor; evde çalışan yoldaşı casus başı yapamıyorsun ("zaten genelevde çalışıyor")
 - [ ] Yönetim kartında yönetici satırı: kazanç +%, duyulma %, haftalık payı. Bir hafta sonra yoldaşın altını arttı (Klan ekranında ya da
       Editörler'de bak); senin gelirin kartta yazana yakın
 - [ ] Eşini ya da divandaki birini (casus başı vb.) yönetici yapamıyorsun; yöneticiyi casus başı yapmaya çalışınca "zaten genelev yöneticin"
@@ -346,7 +352,9 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Entrika > Ağlar: şehrin kartında genelev satırı
 - [ ] Ağı dağıt → genelev de kapandı
 - [ ] Ayarı kapat → kasaba menüsünde "Genelevine uğra" ve işletme seçenekleri yok, haftalık gelir gelmiyor
-- [ ] Kaydet → yükle → ev, çalışanların adları/yaşları/özellikleri, yönetici, pay, hastalık ve bekleme süreleri aynı
+- [ ] Kaydet → yükle → ev, çalışanların adları/yaşları/özellikleri, evdeki yoldaşlar, yönetici, pay, hastalık ve bekleme süreleri aynı
+- [ ] Yeni resimler (65-67: adaylar, yönetici, yoldaş) yokken bu kartlarda genelevin dış cephesi görünüyor; eksik sabotaj/hastalık/olay
+      kartlarında da aynı konudan bir resim (portre değil)
 - [ ] Resimler (32, 50–54) `TVH Resimler`'e konup "aktar" denince kartlarda görünüyor
 
 ### Herkesi biç ve doğum sahnesi (yeni, 19 Ekim)

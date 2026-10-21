@@ -49,7 +49,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
 ## Kontrol listesi
 
-`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 49/64 tamamlandı** — 29 adet `★` öncelikli + 20 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
+`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 49/67 tamamlandı** — 29 adet `★` öncelikli + 20 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
 
 | # | Dosya | Nerede görünür | Öncelik | Durum |
 |---|---|---|---|---|
@@ -117,6 +117,9 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 62 | `olay_elebasi_yakalandi.png` | Olay: elebaşı yakalandı (kışkırtma, E3) | | ⏳ |
 | 63 | `olay_kacakci_tuneli.png` | Olay: kaçakçı tüneli (sabotaj, E3) | | ⏳ |
 | 64 | `olay_ekmek_kuyrugu.png` | Olay: ekmek kuyruğu (kışkırtma, E3) | | ⏳ |
+| 65 | `olay_genelev_adaylar.png` | Genelev: çalışan al, kapıya gelen adaylar | | ⏳ |
+| 66 | `sonuc_genelev_yonetici.png` | Genelev: evi işleten yoldaş (yönetici) | | ⏳ |
+| 67 | `sonuc_genelev_yoldas.png` | Genelev: evdeki yoldaşlar; kendi isteğiyle çalışan ya da ayrılan yoldaş | | ⏳ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -392,6 +395,24 @@ Town guards with torches and spears bursting through the door of a lantern-lit t
 
 ```
 A feverish nobleman lying in bed under heavy blankets in a stone chamber, pale and sweating, while an elderly physician in dark robes examines him and a servant holds a bowl of steaming herbs, candlelight, everyone clothed, somber mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**65 · `olay_genelev_adaylar.png`** — kapıya gelen adaylar (çalışan almak)
+
+```
+Three adults in their twenties waiting at the lantern-lit side door of a timber-framed townhouse in the evening, two women and a man from different Calradian cultures in plain wool dresses, tunics and travel cloaks with small bundles, a stern older hostess with a ledger and a quill looking them over from the doorway, everyone fully clothed, quiet businesslike mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**66 · `sonuc_genelev_yonetici.png`** — evi işleten yoldaş (yönetici)
+
+```
+A confident adult house manager in a fur-trimmed wool coat sitting at a heavy desk by the entrance hall of a candlelit townhouse, an open ledger, a ring of iron keys and a purse of coins in front of them, a burly doorman with a cudgel standing behind, curtains drawn over the inner doorways, everyone fully clothed, calm authoritative mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**67 · `sonuc_genelev_yoldas.png`** — evdeki yoldaş (kendi isteğiyle)
+
+```
+A cloaked adult traveler, a seasoned companion with a sword at the hip, standing in the warm doorway of a lantern-lit townhouse at night with a red cloth lantern above the door, looking back over the shoulder toward the dark street with a calm and decided expression, nothing shown inside beyond a curtain, fully clothed, quiet independent mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### E3: sabotaj ve kışkırtma
@@ -1056,6 +1077,36 @@ A guard captain barring the door of a shuttered townhouse with a wooden plank wh
 
 ```
 Aserai city watchmen escorting a defiant hostess and a few cloaked customers out of a house at night under torchlight, neighbors peering from latticed windows, everyone fully clothed, tense mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`olay_genelev_adaylar_2.png`** · `olay_genelev_adaylar_3.png` — kapıya gelen adaylar
+
+```
+An Aserai courtyard at dusk behind latticed screens, a veiled older hostess seated on cushions interviewing two adult women in modest robes and headscarves while a servant pours tea, everyone fully clothed, calm and businesslike, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A snowy Sturgian street at night, two adults in fur hoods knocking at the back door of a log townhouse with a red lantern, a burly doorkeeper opening it with a candle, everyone fully clothed, quiet hopeful mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_genelev_yonetici_2.png`** · `sonuc_genelev_yonetici_3.png` — evi işleten yoldaş
+
+```
+An adult house manager in a Vlandian wool doublet counting coins into small stacks at a back-room table by candlelight, a ledger and a stern doorman in the background, everyone fully clothed, shrewd businesslike mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An adult Khuzait house manager in a quilted deel standing at the top of a townhouse staircase with a lantern, overseeing the quiet entrance hall below where a cloaked guest is greeted, everyone fully clothed, watchful mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_genelev_yoldas_2.png`** · `sonuc_genelev_yoldas_3.png` — evdeki yoldaş
+
+```
+An adult Battanian companion with braided hair and a plaid cloak sitting on the windowsill of a lantern-lit upstairs room, counting a small purse of coins and smiling to themself, the street visible below, fully clothed, independent mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An adult Imperial companion in a travel cloak leaving a townhouse at dawn with a pack over the shoulder, the red lantern above the door being extinguished by the hostess, fully clothed, calm farewell mood, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 **`sonuc_hastalik_2.png`** · `sonuc_hastalik_3.png` — hastalık ve tedavi

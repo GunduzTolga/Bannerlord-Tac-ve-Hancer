@@ -34,6 +34,7 @@ denetim, git) **ona yaptırma, kendin yap**. Yalnızca oyunda bakılması gereke
 - Her değişiklikten sonra `build.ps1` (ya da en azından testler + GuiCheck) temiz geçmeli.
 - Arayüz metinleri yalnızca Latin-1 + ŞşİıĞğ.
 - Yetişkin içerik yalnızca metin ve perde kapanır; 18+ zorunlu. Reddedilenler: cariyelik; esirleri, eşleri ya da adlı karakterleri
-  zorla fuhşa sokmak; eşini pazarlamak. Genelev: adlı ama kahraman olmayan, gönüllü, ücretli yetişkin çalışanlar; hiçbir kahraman
-  müşteriye çıkmaz (yoldaş yalnızca kendi kabulüyle yönetici olur, eş ya da sevgili hiç olmaz); varsayılan kapalı.
+  zorla fuhşa sokmak; eşini pazarlamak. Genelev: adlı, gönüllü, ücretli yetişkin çalışanlar. Yoldaşlar da çalışan ya da yönetici
+  olabilir (21 Ekim, kullanıcı kararı) ama yalnızca kendi kararıyla: karakterine göre kabul ya da ret eder, istediği hafta bırakır,
+  payı kendi kesesine gider, zorlama yolu yok. Eş, sevgili, esir, aile ve lordlar asla; 19 yaş altı asla. Varsayılan kapalı.
 - Commit mesajları İngilizce, açıklayıcı; model adı yazma. Kullanıcı istemedikçe PR açma.

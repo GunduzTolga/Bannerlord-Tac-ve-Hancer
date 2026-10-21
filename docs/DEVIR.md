@@ -1,11 +1,13 @@
 # Devir notu
 
 ## En son durum: 21 Ekim 2026 (bulut oturumu, telefondan)
-- **Genelev: adlı çalışanlar, yoldaş yönetici, yönetim kartı** (kullanıcı isteği; oyunda henüz denenmedi). Çalışanlar adlı ama kahraman
-  değil (kültürün ad listesi, yaş 19+, özellik: kulağı delik / gözde / sadık). Kullanıcı "yoldaş gönderebilelim, para kazanmak isterse
-  çalışsın" dedi; proje kuralı gereği (hiçbir kahraman müşteriye çıkmaz) yoldaş yalnızca **yönetici** olabiliyor: kendi kabul eder
-  (onurlu ya da sana güvenmeyen reddeder, eş/sevgili hiç olmaz), Charm kazancı, Roguery haberi ve güvenliği artırır, %10 kendi kesesine.
+- **Genelev: adlı çalışanlar, yoldaş yönetici ve yoldaş çalışan, yönetim kartı** (kullanıcı isteği; oyunda henüz denenmedi).
+  Çalışanlar adlı (kültürün ad listesi, yaş 19+, özellik: kulağı delik / gözde / sadık). **Kural değişti (kullanıcı kararı):** yoldaşlar
+  çalışan da olabilir, ama yalnızca kendi kararıyla (karakterine göre kabul/ret, her hafta yeniden bakılır, payı kendi kesesine;
+  eş, sevgili, esir, aile, lord asla). Yönetici: Charm kazancı, Roguery haberi ve güvenliği artırır, %10 kendi kesesine.
   Yönetim kartı: kasaba menüsü > "Genelevini yönet", Gölgelerde iş çevir > "Genelevi yönet...", Entrika > Ağlar > "Genelev" düğmesi.
+- **Resim yedekleri:** kartın resmi yoksa aynı konudan var olan bir resim gösteriliyor (`CardImages.Fallbacks`), portre en son.
+  Yeni resim yerleri 65-67 (genelev adayları, yönetici, yoldaş); liste ve prompt'lar `docs/gorseller/olay-kartlari.md`.
   Tasarım: `docs/superpowers/specs/2026-10-19-p2-genelev.md`; test listesi: YAPILACAKLAR > Genelev.
 - **Bulutta derleme artık var:** Ubuntu'nun `dotnet-sdk-8.0` paketi ve NuGet referans DLL'leriyle mod derleniyor, testler ve GuiCheck
   (oyunsuz) çalışıyor. Oyuna kurmak ve `--game` denetimi yine PC'de `build.ps1`.

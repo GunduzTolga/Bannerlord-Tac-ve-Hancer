@@ -44,6 +44,12 @@ namespace CheatMenu.Intrigue.Core
         public const string BrothelGossip = "sonuc_genelev_dedikodu";
         /// <summary>Genelev baskını.</summary>
         public const string BrothelRaid = "olay_genelev_baskin";
+        /// <summary>Genelev: kapıya gelen adaylar (çalışan almak).</summary>
+        public const string BrothelCandidates = "olay_genelev_adaylar";
+        /// <summary>Genelev: evi işleten yoldaş (yönetici).</summary>
+        public const string BrothelManager = "sonuc_genelev_yonetici";
+        /// <summary>Genelev: evdeki yoldaşlar; kendi isteğiyle çalışan ya da ayrılan yoldaş.</summary>
+        public const string BrothelCompanion = "sonuc_genelev_yoldas";
         /// <summary>Hastalık ve tedavisi.</summary>
         public const string Illness = "sonuc_hastalik";
         /// <summary>Esir hizmetine katıldı: bağlılık yemini.</summary>
@@ -109,6 +115,45 @@ namespace CheatMenu.Intrigue.Core
             { 104, "olay_ekmek_kuyrugu" },
         };
 
+        /// <summary>
+        /// Resmi henüz yoksa yerine gösterilecek, aynı konudan bir resim (ör. genelev kartları için genelevin dış cephesi). Kart önce
+        /// kendi resmini, yoksa bunu, o da yoksa bunun yedeğini dener; hiçbiri yoksa kişinin portresi. Resim eklenince kendi resmi gelir.
+        /// </summary>
+        public static readonly IReadOnlyDictionary<string, string> Fallbacks = new Dictionary<string, string>
+        {
+            { BrothelNight, NightHouse },
+            { BrothelTroops, NightHouse },
+            { BrothelGossip, NightHouse },
+            { BrothelRaid, NightHouse },
+            { BrothelCandidates, NightHouse },
+            { BrothelManager, NightHouse },
+            { BrothelCompanion, NightHouse },
+            { Illness, Physician },
+            { Antidote, MurderPoison },
+            { WarCouncil, Marshal },
+            { Embezzle, Treasury },
+            { TailNight, Tail },
+            { SabotageFood, Sabotage },
+            { SabotageGarrison, Sabotage },
+            { SabotageWalls, Sabotage },
+            { Uprising, Incite },
+            { "olay_rusvetci_nobetci", "olay_rusvetci_hizmetkar" },
+            { "olay_elebasi_yakalandi", "olay_ajan_yakalandi" },
+            { "olay_kacakci_tuneli", Sabotage },
+            { "olay_ekmek_kuyrugu", Incite },
+        };
+
+        /// <summary>Kartın denenecek resimleri: kendisi, sonra yedekleri (döngüye girmez).</summary>
+        public static IEnumerable<string> WithFallbacks(string name)
+        {
+            var seen = new HashSet<string>();
+            while (!string.IsNullOrEmpty(name) && seen.Add(name))
+            {
+                yield return name;
+                name = Fallbacks.TryGetValue(name, out string next) ? next : null;
+            }
+        }
+
         /// <summary>Bir karta en fazla bu kadar resim sürümü: ad, ad_2 ... ad_5. Oyun var olanlardan rastgele birini gösterir.</summary>
         public const int MaxVariants = 5;
 
@@ -162,7 +207,7 @@ namespace CheatMenu.Intrigue.Core
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
                          Tail, TailNight, Treasury, Embezzle, Physician, Antidote, Marshal, Steward,
-                         BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, Illness,
+                         BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, BrothelCandidates, BrothelManager, BrothelCompanion, Illness,
                          Sabotage, Incite, SabotageFood, SabotageGarrison, SabotageWalls, Uprising,
                      })
                 yield return name;
