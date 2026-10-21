@@ -1,4 +1,6 @@
+using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace CheatMenu.Intrigue.Core
 {
@@ -30,6 +32,26 @@ namespace CheatMenu.Intrigue.Core
             if (string.IsNullOrEmpty(name)) return name;
             char last = char.ToLower(name[name.Length - 1], Turkish);
             return Suffix(name, (v, vowelEnd) => (HardConsonants.IndexOf(last) >= 0 ? "t" : "d") + TwoWay(v));
+        }
+
+        private static readonly Regex TimarWord = new Regex(@"\b(tımar|Tımar|TIMAR)(\w*)", RegexOptions.CultureInvariant);
+
+        /// <summary>
+        /// Oyunun Türkçesindeki "tımar"ı "toprak" yapar (kullanıcı kararı, CLAUDE.md > Terimler), ekleriyle ve büyük/küçük harfine göre:
+        /// Tımarlar → Topraklar, tımarı → toprağı, tımarsız → topraksız, TIMAR → TOPRAK. "tımar" geçmeyen metin olduğu gibi döner.
+        /// </summary>
+        public static string TimarToToprak(string text)
+        {
+            if (string.IsNullOrEmpty(text) || (text.IndexOf("ımar", StringComparison.Ordinal) < 0 && text.IndexOf("IMAR", StringComparison.Ordinal) < 0))
+                return text;
+            return TimarWord.Replace(text, m =>
+            {
+                string word = m.Groups[1].Value, rest = m.Groups[2].Value;
+                bool upper = word == "TIMAR";
+                string stem = upper ? "TOPRA" : word[0] == 'T' ? "Topra" : "topra";
+                bool softens = rest.Length > 0 && (Vowels + "AIOUEİÖÜÂÎÛ").IndexOf(rest[0]) >= 0;
+                return stem + (softens ? (upper ? "Ğ" : "ğ") : (upper ? "K" : "k")) + rest;
+            });
         }
 
         private static string Suffix(string name, System.Func<char, bool, string> suffix)

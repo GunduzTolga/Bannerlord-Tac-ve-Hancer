@@ -548,6 +548,12 @@ namespace CheatMenu.Tests
             ExpectSuffix(Tr.Genitive("Gölü"), "Gölü'nün");
             ExpectSuffix(Tr.Genitive("Ira"), "Ira'nın");
             ExpectSuffix(Tr.Dative("Derthert"), "Derthert'e");
+            Check("tr: timar to toprak", Tr.TimarToToprak("Tımarlar") == "Topraklar" && Tr.TimarToToprak("Tımar") == "Toprak"
+                && Tr.TimarToToprak("bu tımarı ver") == "bu toprağı ver" && Tr.TimarToToprak("tımarsız krallık") == "topraksız krallık"
+                && Tr.TimarToToprak("Tımarın, tımara") == "Toprağın, toprağa" && Tr.TimarToToprak("TIMARLAR") == "TOPRAKLAR"
+                && Tr.TimarToToprak("TIMARI") == "TOPRAĞI");
+            Check("tr: timar left alone elsewhere", Tr.TimarToToprak("Fiefs") == "Fiefs" && Tr.TimarToToprak("PRIMARY") == "PRIMARY"
+                && Tr.TimarToToprak("mimar") == "mimar" && Tr.TimarToToprak(null) == null && Tr.TimarToToprak("") == "");
             ExpectSuffix(Tr.Dative("Caladog"), "Caladog'a");
             ExpectSuffix(Tr.Dative("Rhagaea"), "Rhagaea'ya");
             ExpectSuffix(Tr.Accusative("Caladog"), "Caladog'u");

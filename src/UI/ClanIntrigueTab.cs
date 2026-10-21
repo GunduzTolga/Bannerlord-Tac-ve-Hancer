@@ -4,6 +4,7 @@ using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.Prefabs2;
 using Bannerlord.UIExtenderEx.ViewModels;
 using CheatMenu.Intrigue;
+using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using CheatMenu.UI.ViewModels;
 using SandBox.View.Map.Navigation;
@@ -17,7 +18,7 @@ using TaleWorlds.ScreenSystem;
 namespace CheatMenu.UI
 {
     /// <summary>
-    /// Entrika, Klan ekranının bir sekmesidir: Birlikler ile Tımarlar arasında (Diplomacy modunun Krallık ekranına sekme
+    /// Entrika, Klan ekranının bir sekmesidir: Birlikler ile Topraklar arasında (Diplomacy modunun Krallık ekranına sekme
     /// eklemesi gibi, UIExtenderEx ile). Oyunun arka planı, üst şeridi, sancak, lider portresi ve "Bitti" düğmesi aynen kalır;
     /// alt yarıda bizim panelimiz (TvhIntriguePanel) görünür. Harita çubuğundaki düğme, kısayol, Insert menüsü ve ansiklopedi
     /// Klan ekranını bu sekmede açar. UIExtenderEx kaydı tutmazsa (Registered false) eski ayrı ekran (IntrigueScreen) kullanılır.
@@ -235,6 +236,24 @@ namespace CheatMenu.UI
                 Debug.Print("[CheatMenu] intrigue tab could not be prepared: " + ex);
             }
             ClanIntrigueTab.Current = this;
+            RenameFiefsTab();
+        }
+
+        /// <summary>
+        /// Oyunun "Tımarlar" sekmesi "Topraklar" (kullanıcı kararı). Bütün oyun metinleri Patches.FiefWordPatch'ten geçer; bu, o yama
+        /// tutmasa da sekmenin adı doğru olsun diye.
+        /// </summary>
+        private void RenameFiefsTab()
+        {
+            try
+            {
+                string text = ViewModel.FiefsText, renamed = Tr.TimarToToprak(text);
+                if (renamed != text) ViewModel.FiefsText = renamed;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] fiefs tab could not be renamed: " + ex);
+            }
         }
 
         internal IntrigueScreenVM Intrigue => _intrigue;
@@ -252,6 +271,7 @@ namespace CheatMenu.UI
         public override void OnRefresh()
         {
             if (_isSelected) TvhIsIntrigueSelected = false;
+            RenameFiefsTab();
         }
 
         internal void Select()

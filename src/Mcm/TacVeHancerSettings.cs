@@ -132,7 +132,7 @@ namespace CheatMenu.Mcm
         public Dropdown<string> ScreenHotkey { get; set; } = new Dropdown<string>(ModSettings.ScreenHotkeyNames, ModSettings.DefaultScreenHotkey);
 
         [SettingPropertyBool("Harita çubuğunda Entrika düğmesi", Order = 1, RequireRestart = false,
-            HintText = "Oyunun sol alttaki harita çubuğunda, Klan ve Krallık düğmelerinin yanında Entrika düğmesi. Klan ekranını Entrika sekmesinde açar; sekme her zaman Klan ekranında, Birlikler ile Tımarlar arasında. Kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
+            HintText = "Oyunun sol alttaki harita çubuğunda, Klan ve Krallık düğmelerinin yanında Entrika düğmesi. Klan ekranını Entrika sekmesinde açar; sekme her zaman Klan ekranında, Birlikler ile Topraklar arasında. Kaydı yeniden yükleyince geçerli olur. Rozet: harekete geçmeye hazır entrika ve sezilen tehdit sayısı.")]
         [SettingPropertyGroup(UiGroup, GroupOrder = 3)]
         public bool MapBarButton { get; set; } = true;
 

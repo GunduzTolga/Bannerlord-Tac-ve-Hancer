@@ -68,6 +68,11 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Oyunun kendi "tımar"ı da "toprak" (21 Ekim, kullanıcı isteği "Klan ekranındaki Tımarlar'ı da Topraklar yap"):** oyunun dil dosyaları
+  bulutta yok, kimlikleri bilinmiyor; bu yüzden çeviri sözlüğünü değil, çevrilmiş metni düzeltiyoruz: `Patches/FiefWordPatch`
+  (`LocalizedTextManager.GetTranslatedText` son eki) içinde "tımar" geçen her metni ekleriyle "toprak" yapar (`Tr.TimarToToprak`, testli).
+  Klan ekranının sekmesi ayrıca `ClanIntrigueMixin`'de `FiefsText` ile değişir (yama tutmasa da). PC'de: Krallık ekranı ve ansiklopedide
+  de "toprak" mı, yama kapatıldı uyarısı var mı.
 - **Diplomacy'nin Türkçesi tamamlandı (21 Ekim, kullanıcı isteği):** eksik 118 metin (toprak iadesi, ittifak nedenleri, isyana destekçi
   kazanma konuşması ve uyarıları, Mod Seçenekleri'ndeki yeni ayarlar, Krallık > Diplomasi düğmeleri) ve 5 mod yükleme uyarısı çevrildi;
   mevcut çevirideki "tımar" "toprak" oldu (ekleriyle: toprağı, topraksız). Terim kararı: fief = **toprak** ("tımar" denendi, beğenilmedi;

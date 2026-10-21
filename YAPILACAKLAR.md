@@ -58,6 +58,9 @@ Diplomacy'nin çevrilmemiş 118 metni ve mod yükleme uyarıları Türkçe; "tı
 - [ ] Mod Seçenekleri > Diplomacy: toprak iadesi, ittifak tehdit eşiği, isyana destekçi kazanma ayarları Türkçe mi
 - [ ] İsyan grubundayken klan liderine "Destekçi Kazan": konuşma satırları Türkçe mi, yazılar taşıyor mu
 - [ ] Hâlâ İngilizce kalan bir Diplomacy yazısı görürsen ekran görüntüsü at
+- [ ] **Oyunun kendi "tımar"ı da "toprak":** Klan ekranında sekme "Topraklar"; Krallık ekranındaki sekme, ansiklopedi ve ipuçlarında da
+      "Tımar" kalmamış olmalı (bütün oyun metinleri `FiefWordPatch`'ten geçiyor). Bir yerde hâlâ "tımar" görürsen ekran görüntüsü at;
+      açılışta "uyuşmayan yama kapatıldı: FiefWordPatch" mesajı çıkarsa da yaz
 
 ### Savaş ve barış > Krallıklar: ittifak, ticaret, saldırmazlık, savaş ilanı (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
 Bütün krallıklar ve bağların tek sekmede. Tasarım: `docs\superpowers\specs\2026-10-21-kralliklar-sekmesi.md`.
@@ -272,9 +275,9 @@ Entrika hilelerinden "Süren entrikaların aşamalarını tamamla" ve "Entrikala
 - [x] **Ansiklopedi bağlantısı ve harita çubuğu düğmesi** PC'de yapıldı (19 Ekim); denemesi aşağıda
 
 ### Entrika artık Klan ekranının bir sekmesi (yeni, 19 Ekim; en çok ekran görüntüsü lazım)
-Entrika ayrı bir pencere değil: **Klan ekranında Birlikler ile Tımarlar arasında "Entrika" sekmesi** (Diplomacy modunun Krallık
+Entrika ayrı bir pencere değil: **Klan ekranında Birlikler ile Topraklar arasında "Entrika" sekmesi** (Diplomacy modunun Krallık
 ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun kendisi; düğmeler, sekmeler ve kartlar oyunun dokularıyla.
-- [ ] Klan ekranı (L): sekmeler Üyeler · Birlikler · **Entrika** · Tımarlar · Diğer; beşi üst şeride sığıyor, yazılar taşmıyor
+- [ ] Klan ekranı (L): sekmeler Üyeler · Birlikler · **Entrika** · Topraklar · Diğer; beşi üst şeride sığıyor, yazılar taşmıyor
 - [ ] Entrika sekmesine tıkla: sağdaki "Mali Durum" kutusu gizleniyor; solda casus başı kutusu (oyunun pencere çerçevesi), sağda alt sekmeler
 - [ ] Başka sekmeye geç (Üyeler vb.) → bizim panel kapanıyor, oyunun paneli geliyor; geri dönünce kaldığın alt sekme duruyor
 - [ ] Düğmeler oyunun pencere düğmeleri gibi; kartlar ve satırlar taş dokulu (harita olaylarının seçenekleri gibi)
