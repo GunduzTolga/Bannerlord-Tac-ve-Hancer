@@ -650,7 +650,7 @@ namespace CheatMenu.Menu
                     () => MenuUI.Info("Doğum yaklaşınca kartla haber gelir")));
             if (Courtships.Spouse != null)
             {
-                if (SpouseLife.Enabled)
+                if (SpouseLife.Watched)
                 {
                     string blocked = SpouseLife.InvestigateBlocked(state);
                     string label = "Eşini araştır (casus başı, " + SchemeFactors.Money(FidelityRules.InvestigationCost) + ", " + FidelityRules.InvestigationDays + " gün)";

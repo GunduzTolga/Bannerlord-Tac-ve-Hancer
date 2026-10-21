@@ -49,9 +49,14 @@ namespace CheatMenu
         public bool EventCards { get; set; } = true;
         /// <summary>Gizli ilişki ve gayrimeşru çocuk sırları (P2.4, sahnesiz). Kapalıyken bu sırlar bulunmaz.</summary>
         public bool RomanceSecrets { get; set; } = true;
+        /// <summary>Kur ve sevgililer (P2.6): kur yapmak, sevgiliyle buluşmak, eşini bilgi için göndermek. Sırlardan ayrı; varsayılan açık.</summary>
+        public bool Courtships { get; set; } = true;
         /// <summary>Genelev işletmesi: yetişkin teması, metin olarak. Varsayılan kapalı.</summary>
         public bool NightHouses { get; set; }
-        /// <summary>Eşin kendi başına sevgili edinebilir (araştırınca ortaya çıkar). Varsayılan açık; gizli ilişki ayarıyla birlikte çalışır.</summary>
+        /// <summary>
+        /// Eşin kendi başına sevgili edinebilir (araştırınca ortaya çıkar). Varsayılan açık; gizli ilişki ayarıyla birlikte çalışır.
+        /// Regard and Standing varken eşin ilişkilerini o yürütür; bu ayar yalnızca bizimkileri kapatır, onunkiler yine öğrenilebilir.
+        /// </summary>
         public bool SpouseInfidelity { get; set; } = true;
         /// <summary>Kendin takip et (P2.11): kartlar yerine oyunun şehirde gizli takip görevini aç. Deneysel, varsayılan kapalı.</summary>
         public bool TailInScene { get; set; }
@@ -107,6 +112,7 @@ namespace CheatMenu
                     case "ScreenHotkey": if (isNumber) settings.SetScreenHotkey(number); break;
                     case "EventCards": settings.EventCards = IsTrue(value); break;
                     case "RomanceSecrets": settings.RomanceSecrets = IsTrue(value); break;
+                    case "Courtships": settings.Courtships = IsTrue(value); break;
                     case "NightHouses": settings.NightHouses = IsTrue(value); break;
                     case "SpouseInfidelity": settings.SpouseInfidelity = IsTrue(value); break;
                     case "TailInScene": settings.TailInScene = IsTrue(value); break;
@@ -134,6 +140,7 @@ namespace CheatMenu
             + "ScreenHotkey=" + Invariant(ScreenHotkey) + "\n"
             + "EventCards=" + (EventCards ? "1" : "0") + "\n"
             + "RomanceSecrets=" + (RomanceSecrets ? "1" : "0") + "\n"
+            + "Courtships=" + (Courtships ? "1" : "0") + "\n"
             + "NightHouses=" + (NightHouses ? "1" : "0") + "\n"
             + "SpouseInfidelity=" + (SpouseInfidelity ? "1" : "0") + "\n"
             + "TailInScene=" + (TailInScene ? "1" : "0") + "\n"
