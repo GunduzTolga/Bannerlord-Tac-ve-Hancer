@@ -50,7 +50,7 @@ namespace CheatMenu.UI.ViewModels
     {
         private readonly Action<TabVM> _onSelect;
         private string _name;
-        private bool _isSelected;
+        private bool _isSelected, _isVisible = true;
 
         public TabVM(int index, string name, Action<TabVM> onSelect)
         {
@@ -66,6 +66,10 @@ namespace CheatMenu.UI.ViewModels
 
         [DataSourceProperty]
         public bool IsSelected { get => _isSelected; set => Set(ref _isSelected, value, nameof(IsSelected)); }
+
+        /// <summary>Alt sekme şeridinde yalnızca seçili bölümün sekmeleri görünür.</summary>
+        [DataSourceProperty]
+        public bool IsVisible { get => _isVisible; set => Set(ref _isVisible, value, nameof(IsVisible)); }
 
         public void ExecuteSelect() => _onSelect(this);
     }

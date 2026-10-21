@@ -59,11 +59,8 @@ namespace CheatMenu.UI.ViewModels
 
         public void ExecuteClose() => _close();
 
-        /// <summary>Barış Masası raporun üstünde açılır; barış imzalanırsa rapor da kapanır.</summary>
-        public void ExecutePeace() => Menu.MenuUI.Defer(() =>
-        {
-            if (!PeaceTableScreen.Open(_enemy, null, TaleWorlds.ScreenSystem.ScreenManager.TopScreen)) Menu.MenuUI.Error("Barış Masası açılamadı");
-        });
+        /// <summary>Rapor kapanır, Entrika ekranında bu savaşın Barış Masası açılır (Savaş ve barış > Savaşlar).</summary>
+        public void ExecutePeace() => IntrigueScreen.OpenWar(_enemy);
 
         public override void OnFinalize()
         {

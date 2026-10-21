@@ -41,6 +41,17 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Entrika ekranı yeni düzen: her şey tek yerde (21 Ekim, yeni; en çok ekran görüntüsü lazım)
+Lordlar, İsyanlar ve Barış Masası artık ayrı pencere değil, Entrika ekranının sekmeleri. Tasarım: `docs\superpowers\specs\2026-10-21-arayuz-duzeni.md`.
+- [ ] Üstte dört bölüm (Entrika / Kişiler / Saray / Savaş ve barış), altında o bölümün alt sekmeleri; bölüm değişince alt sekmeler değişiyor
+- [ ] Casus başı sütunu yalnızca Entrika bölümünde; ötekilerde içerik tam genişlik. Yazılar ve kartlar taşıyor mu
+- [ ] Kişiler > **Lordlar**, Savaş ve barış > **Savaşlar** (solda savaşlar, sağda Barış Masası) ve **İsyanlar** açılıyor
+- [ ] Haritadaki savaş yorgunluğu göstergesi → Savaş Raporu (pencere) → "Barış Masası..." → rapor kapanıp Savaşlar sekmesi o savaşla açılıyor
+- [ ] Krallık ekranındaki Diplomacy grup düğmesi → Krallık ekranı kapanıp İsyanlar sekmesi açılıyor (başka krallıkta "Kendi krallığın" düğmesi)
+- [ ] Saray'da seçili krallığın "İsyanlar..." düğmesi; Divan'daki "Barış Masası" düğmesi; elçi kartındaki "Barış Masası'na otur"
+- [ ] Insert > Entrika'daki Lordlar / İsyanlar / Barış Masası girişleri ilgili sekmeyi açıyor
+- [ ] Klan ekranının Entrika sekmesinde de, ayrı Entrika ekranında da aynı
+
 ### Divan: diplomat (21 Ekim, yeni)
 - [ ] Entrika ekranı > Divan: beş kart yan yana sığıyor mu (yazılar taşıyor mu, "Azlet" düğmesi), DİPLOMAT kartı: Charm, katkılar, görev
 - [ ] Ata (Charm'ı yüksek bir yoldaş) → raporda DİPLOMASİ: her krallık için "barış yanlısı / savaş konuşuluyor / sana savaş açmaya
@@ -53,10 +64,13 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - Tasarım: `docs\superpowers\specs\2026-10-21-divan-diplomat.md`
 
 ### Barış Masası: şartlı barış (21 Ekim, yeni; hükümdar olmalısın; ekran görüntüsü çok işe yarar)
-- [ ] Savaş Raporu'nda sağ üstte **Barış Masası...** düğmesi; raporun Barış bölümünde "Barış Masası'na oturabilirsin, pazarlık gücün N"
-      ya da neden olmadığı. Insert > Entrika > **Barış Masası...** de açıyor (savaş seçilir, olmayanların yanında nedeni)
-- [ ] Masa: üstte pazarlık gücün ve nedenleri (yorgunluk, güç oranı, başka cepheler, barışa yatkın mı); solda haraç, tazminat, asker ve
-      sınırına yakın şehir/kaleler (- / + ile), sağda verdiklerin; altta özet, **Kabul olasılığı: %X**. Şart ekledikçe olasılık düşüyor mu
+- [ ] Entrika ekranı > Savaş ve barış > **Savaşlar**: solda savaşların (sancak, kaç gündür, güç, yorgunluk, şartsız barış %), sağda seçilinin
+      masası. Savaş Raporu'ndaki **Barış Masası...** ve Insert > Entrika > **Barış Masası...** buraya getiriyor
+- [ ] Masa: üstte pazarlık gücün ve nedenleri; solda bölümlü istediklerin (**Para**: haraç, tazminat · **Asker ve esirler** · **Toprak**:
+      sınırına yakın şehir/kaleler · **Anlaşmalar**: rehine, saldırmazlık, ticaret, ittifak), sağda verdiklerin (altın, haraç, esirlerini
+      bırak); altta özet, **Kabul olasılığı: %X**. Şart ekledikçe olasılık düşüyor mu
+- [ ] Yeni şartlar: esir lordların serbest kaldı mı; rehine senin şehrine geldi mi (Saray'da rehine anlaşması görünüyor mu); saldırmazlık
+      kuruldu mu; ticaret anlaşması ve ittifak kuruldu mu (kurulamazsa sonuç kartında oyunun nedeni)
 - [ ] **Teklif et** → kabul: barış, kale/şehir senin (klanında), tazminat kesende, askerler partinde, haraç her gün geliyor (klan gelirinde);
       Savaş Raporu ve masa kapanıyor, sonuç kartı. Ret: kart, 7 gün yeniden teklif yok (masa nedenini yazıyor)
 - [ ] Kaybederken: "Altın ver" ya da "Haraç öde" ile şartsız barışın olasılığı artıyor mu
@@ -81,9 +95,9 @@ Haritadaki savaş yorgunluğu göstergesine tıklayınca Diplomacy'nin raporu ye
 - [ ] Pencere açılamazsa kırmızı mesaj ve Diplomacy'nin eski raporu açılıyor (olursa ekran görüntüsü ve `rgl_log`)
 - Tasarım: `docs\superpowers\specs\2026-10-21-savas-raporu.md`
 
-### Lordlar penceresi: yanına çağır ve ziyafet (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
-- [ ] Klan > Entrika > Saray'da sağ üstte **Lordlar...** düğmesi (ve **İsyanlar...**); Insert > Entrika > "Lordlar: iletişim, ziyafet,
-      yanına çağır" de açıyor. Pencere: sekmeler (Krallığın / Tanıdıkların / Davetliler), sağ üstte Ziyafet ver ve Kapat
+### Lordlar: yanına çağır ve ziyafet (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+- [ ] Entrika ekranı > Kişiler > **Lordlar** (Insert > Entrika > "Lordlar" de buraya): süzgeçler (Krallığın / Tanıdıkların / Davetliler),
+      sağ üstte Ziyafet ver ve koşulu
 - [ ] Lord kartı: portre, ad, klan, nerede ve kaç gün yol, seninle ilişki, hükümdarıyla arası, son görüşme, etiketler; yazılar taşmıyor
 - [ ] **Yanına çağır:** aynı krallıktan biri 20 nüfuz, başkası 800 altın; kabul ederse partisi haritada sana doğru geliyor (kartta
       "sana doğru yolda"), yakına gelince "yanına geldi" mesajı → üstüne tıklayıp konuş. Reddederse bedelin yarısı geri dönüyor
@@ -95,8 +109,9 @@ Haritadaki savaş yorgunluğu göstergesine tıklayınca Diplomacy'nin raporu ye
 - [ ] Kayıt al, yükle: yolda olan çağrılan lord yine geliyor
 - Tasarım: `docs\superpowers\specs\2026-10-21-lordlar.md`. Oylamada destek sözü yapılmadı (oyunun seçim kodu bulutta görünmüyor).
 
-### İsyanlar ve iç savaş penceresi (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
-Diplomacy'nin "Factions" penceresi yerine bizimki açılıyor; katıl/ayrıl/isyan/destek düğmeleri yine Diplomacy'nin kuralıyla çalışıyor.
+### İsyanlar ve iç savaş (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Diplomacy'nin "Factions" penceresi yerine Entrika ekranı > Savaş ve barış > **İsyanlar** açılıyor; katıl/ayrıl/isyan/destek düğmeleri yine
+Diplomacy'nin kuralıyla çalışıyor. (Aşağıdaki "pencere" maddeleri artık bu sekme için.)
 - [ ] Krallık ekranında Diplomacy'nin grup (Factions) düğmesi → **İsyanlar ve İç Savaş** penceresi: başlık, krallık ve hükümdar,
       özet ("N grup · en güçlüsü X: %57, gereken %65"), sağ üstte **Grup kur...** ve Kapat. Insert > Entrika > "İsyanlar ve iç savaş" da açıyor
 - [ ] Grup yoksa: grupların nasıl kurulduğunu anlatan metin (boş kutu değil)

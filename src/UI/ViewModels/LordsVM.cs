@@ -11,8 +11,8 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Lordlar penceresi (UI.LordsScreen): krallığının lordları, tanıdıkların ve ziyafet davetlileri. Her kartta ulak ve hediye,
-    /// yanına çağır, ziyafete davet, haritada izle ve kur. Üstte ziyafet (kendi şehrinde ya da kalende).
+    /// Kişiler > Lordlar paneli (Entrika ekranı): krallığının lordları, tanıdıkların ve ziyafet davetlileri. Her kartta ulak ve hediye,
+    /// yanına çağır, ziyafete davet, haritada izle ve kur. Üstte ziyafet (kendi şehrinde ya da kalende). Sekme açılınca kurulur.
     /// </summary>
     public sealed class LordsVM : TvhViewModel
     {
@@ -23,14 +23,12 @@ namespace CheatMenu.UI.ViewModels
         /// <summary>Ziyafet davet listesi: pencere kapanıp açılsa da oturum boyunca durur (kayda yazılmaz).</summary>
         private static readonly List<string> Guests = new List<string>();
 
-        private readonly Action _close;
         private int _tab;
         private bool _finalized, _canFeast, _hasNoLords;
         private string _subtitle, _feastText, _feastHint, _emptyText;
 
-        public LordsVM(Action close)
+        public LordsVM()
         {
-            _close = close;
             Tabs = new MBBindingList<TabVM>
             {
                 new TabVM(TabKingdom, "Krallığın", SelectTab),
@@ -39,10 +37,8 @@ namespace CheatMenu.UI.ViewModels
             };
             Lords = new MBBindingList<LordCardVM>();
             _tab = Clan.PlayerClan.Kingdom != null ? TabKingdom : TabKnown;
-            Refresh();
         }
 
-        [DataSourceProperty] public string Title => "Lordlar";
         [DataSourceProperty] public string Subtitle { get => _subtitle; set => Set(ref _subtitle, value, nameof(Subtitle)); }
         [DataSourceProperty] public MBBindingList<TabVM> Tabs { get; }
         [DataSourceProperty] public MBBindingList<LordCardVM> Lords { get; }
@@ -51,8 +47,6 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string FeastText { get => _feastText; set => Set(ref _feastText, value, nameof(FeastText)); }
         [DataSourceProperty] public bool CanFeast { get => _canFeast; set => Set(ref _canFeast, value, nameof(CanFeast)); }
         [DataSourceProperty] public string FeastHint { get => _feastHint; set => Set(ref _feastHint, value, nameof(FeastHint)); }
-        [DataSourceProperty] public string CloseText => "Kapat";
-
         private void SelectTab(TabVM tab)
         {
             _tab = tab.Index;
@@ -125,8 +119,6 @@ namespace CheatMenu.UI.ViewModels
                 RefreshLater();
             });
         }
-
-        public void ExecuteClose() => _close();
 
         public override void OnFinalize()
         {

@@ -14,27 +14,37 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// İsyanlar ve iç savaş penceresi (Diplomacy'nin grup penceresinin yerine; RebellionsScreen). Gruplar ve düğmelerin kuralı
+    /// Savaş ve barış > İsyanlar paneli (Entrika ekranı; Diplomacy'nin grup penceresi de buraya yönlenir). Gruplar ve düğmelerin kuralı
     /// Diplomacy'nin (onun ViewModel'leri arkada çalışır); görünüş ve hoşnutsuzlar bölümü (Saray'ın lord kartları) bizim.
+    /// Varsayılan kendi krallığın; Saray'dan ya da ansiklopediden başka bir krallığınki açılabilir.
     /// </summary>
     public sealed class RebellionsVM : TvhViewModel
     {
-        private readonly Kingdom _kingdom;
+        private Kingdom _kingdom;
         private readonly Action _close;
         private object _diplomacyWindow;
         private string _subtitle, _summary, _emptyText, _lordsEmptyText, _createHint;
-        private bool _hasNoFactions, _hasNoLords, _canCreateFaction, _finalized;
+        private bool _hasNoFactions, _hasNoLords, _canCreateFaction, _finalized, _isForeign;
 
-        public RebellionsVM(Kingdom kingdom, Action close)
+        /// <param name="close">Entrika ekranını kapatır (Diplomacy ansiklopediye giderken).</param>
+        public RebellionsVM(Action close)
         {
-            _kingdom = kingdom;
             _close = close;
             Factions = new MBBindingList<RebelFactionCardVM>();
             Lords = new MBBindingList<CourtLordItemVM>();
-            Refresh();
         }
 
-        [DataSourceProperty] public string Title => "İsyanlar ve İç Savaş";
+        /// <summary>Gösterilecek krallık (null: kendi krallığın). Sekme açılınca kurulur.</summary>
+        public void Show(Kingdom kingdom) => _kingdom = kingdom;
+
+        [DataSourceProperty] public bool IsForeign { get => _isForeign; set => Set(ref _isForeign, value, nameof(IsForeign)); }
+        [DataSourceProperty] public string OwnKingdomText => "Kendi krallığın";
+
+        public void ExecuteOwnKingdom()
+        {
+            _kingdom = null;
+            RefreshLater();
+        }
         [DataSourceProperty] public string Subtitle { get => _subtitle; set => Set(ref _subtitle, value, nameof(Subtitle)); }
         [DataSourceProperty] public string Summary { get => _summary; set => Set(ref _summary, value, nameof(Summary)); }
         [DataSourceProperty] public string FactionsHeader => "İSYANCI GRUPLAR";
@@ -48,18 +58,41 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string CreateFactionText => "Grup kur...";
         [DataSourceProperty] public bool CanCreateFaction { get => _canCreateFaction; set => Set(ref _canCreateFaction, value, nameof(CanCreateFaction)); }
         [DataSourceProperty] public string CreateFactionHint { get => _createHint; set => Set(ref _createHint, value, nameof(CreateFactionHint)); }
-        [DataSourceProperty] public string CloseText => "Kapat";
-
         public void Refresh()
         {
             IntrigueState state = SchemeEngine.State;
-            Hero ruler = _kingdom.Leader;
-            Subtitle = _kingdom.Name + (ruler != null ? "  ·  Hükümdar: " + ruler.Name : "")
-                + (Clan.PlayerClan.Kingdom == _kingdom ? "  ·  Sen: hükümdarla " + (ruler == Hero.MainHero ? "hükümdar sensin" : SchemeFactors.Signed(Court.RelationWithRuler(Hero.MainHero))) : "");
+            if (_kingdom != null && (_kingdom.IsEliminated || _kingdom == Clan.PlayerClan.Kingdom)) _kingdom = null;
+            Kingdom kingdom = _kingdom ?? Clan.PlayerClan.Kingdom;
+            IsForeign = _kingdom != null && Clan.PlayerClan.Kingdom != null;
+            if (kingdom == null || !DiplomacyCompat.IsAvailable)
+            {
+                Clear(Factions);
+                Clear(Lords);
+                HasNoFactions = true;
+                HasNoLords = false;
+                CanCreateFaction = false;
+                CreateFactionHint = "";
+                Subtitle = kingdom == null ? "Bir krallıkta değilsin" : kingdom.Name.ToString();
+                Summary = "";
+                EmptyText = kingdom == null
+                    ? "İsyan grupları bir krallığın içinde kurulur. Bir krallığa katılınca burada görürsün; başka bir krallığınkine Saray sekmesinden "
+                      + "(krallığı seç, \"İsyanlar...\") bakabilirsin."
+                    : "Diplomacy paketli değil: isyan grupları onun kuralıyla çalışır.";
+                LordsEmptyText = "";
+                return;
+            }
+            RefreshFor(state, kingdom);
+        }
+
+        private void RefreshFor(IntrigueState state, Kingdom kingdom)
+        {
+            Hero ruler = kingdom.Leader;
+            Subtitle = kingdom.Name + (ruler != null ? "  ·  Hükümdar: " + ruler.Name : "")
+                + (Clan.PlayerClan.Kingdom == kingdom ? "  ·  Sen: hükümdarla " + (ruler == Hero.MainHero ? "hükümdar sensin" : SchemeFactors.Signed(Court.RelationWithRuler(Hero.MainHero))) : "");
 
             Clear(Factions);
-            List<object> factions = DiplomacyCompat.RawRebelFactions(_kingdom);
-            foreach (object faction in factions) Factions.Add(new RebelFactionCardVM(_kingdom, faction, _close, RefreshLater));
+            List<object> factions = DiplomacyCompat.RawRebelFactions(kingdom);
+            foreach (object faction in factions) Factions.Add(new RebelFactionCardVM(kingdom, faction, _close, RefreshLater));
             HasNoFactions = Factions.Count == 0;
             RebelFactionCardVM strongest = Factions.OrderByDescending(f => f.Ratio).FirstOrDefault();
             Summary = Factions.Count == 0 ? "Örgütlü bir isyan grubu yok."
@@ -70,18 +103,18 @@ namespace CheatMenu.UI.ViewModels
                 + "tahttan indirme). Aşağıda hoşnutsuzları görüyorsun; casus başının söylentileri onları daha da küstürür.";
 
             Clear(Lords);
-            List<Hero> discontent = Court.ClanLeaders(_kingdom)
+            List<Hero> discontent = Court.ClanLeaders(kingdom)
                 .Where(h => Court.KnowledgeOf(state, h) != Court.Knowledge.Unknown && LetterRules.IsDiscontent(Court.RelationWithRuler(h)))
                 .OrderBy(Court.RelationWithRuler).Take(12).ToList();
             foreach (Hero lord in discontent) Lords.Add(new CourtLordItemVM(state, lord, RefreshLater, (kind, target) =>
                 MenuUI.Info("Casusluğu Entrika ekranından başlat (Klan > Entrika > Yeni entrika): " + target.Name)));
             HasNoLords = Lords.Count == 0;
-            LordsEmptyText = Court.ClanLeaders(_kingdom).Any(h => Court.KnowledgeOf(state, h) != Court.Knowledge.Unknown)
+            LordsEmptyText = Court.ClanLeaders(kingdom).Any(h => Court.KnowledgeOf(state, h) != Court.Knowledge.Unknown)
                 ? "Bildiğin kadarıyla hükümdarına küs bir klan lideri yok."
                 : "Bu sarayda kulağın yok: o krallıkta casusluk, sorgu ya da gölge ağı gerekir.";
 
             (_diplomacyWindow as ViewModel)?.OnFinalize();
-            _diplomacyWindow = DiplomacyCompat.CreateFactionsWindow(_kingdom, _close);
+            _diplomacyWindow = DiplomacyCompat.CreateFactionsWindow(kingdom, _close);
             CanCreateFaction = DiplomacyCompat.Read<bool>(_diplomacyWindow, "ShouldShowCreateFaction");
             string hint = DiplomacyCompat.Read<HintViewModel>(_diplomacyWindow, "CreateFactionHint")?.HintText?.ToString() ?? "";
             CreateFactionHint = CanCreateFaction ? "Bedel: " + DiplomacyCompat.Read<int>(_diplomacyWindow, "CreateFactionInfluenceCost") + " nüfuz"
@@ -98,8 +131,6 @@ namespace CheatMenu.UI.ViewModels
         {
             if (CanCreateFaction) Run("Grup kur", () => DiplomacyCompat.Invoke(_diplomacyWindow, "OnCreateFaction"));
         }
-
-        public void ExecuteClose() => _close();
 
         public override void OnFinalize()
         {

@@ -11,22 +11,22 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Barış Masası (UI.PeaceTableScreen): solda istediklerin (haraç, tazminat, asker, şehir ve kaleler), sağda verdiklerin (altın, haraç),
-    /// altta özet, kabul olasılığı ve Teklif et. Şartlar Intrigue.PeaceTreaties.Terms'te; satırlar yalnızca kendi değerini değiştirir
-    /// (liste tıklama sırasında değişmez).
+    /// Barış Masası (Savaş ve barış > Savaşlar'da seçili savaş): solda istediklerin, sağda verdiklerin, özet, kabul olasılığı ve Teklif et.
+    /// Şartlar Intrigue.PeaceTreaties.Terms'te; satırlar yalnızca kendi değerini değiştirir (liste tıklama sırasında değişmez).
     /// </summary>
     public sealed class PeaceTableVM : TvhViewModel
     {
         private readonly Kingdom _enemy;
-        private readonly Action _close;
+        private readonly Action _changed;
         private readonly PeaceTreaties.Terms _terms;
-        private string _leverageText, _summaryText, _chanceText, _weightText, _blockedText;
+        private string _leverageText, _summaryText, _chanceText, _weightText, _blockedText, _noteText = "";
         private bool _canPropose;
 
-        public PeaceTableVM(Kingdom enemy, PeaceTreaties.Terms initial, Action close)
+        /// <param name="changed">Barış imzalandı ya da teklif reddedildi: Entrika ekranı yenilensin.</param>
+        public PeaceTableVM(Kingdom enemy, PeaceTreaties.Terms initial, Action changed)
         {
             _enemy = enemy;
-            _close = close;
+            _changed = changed;
             _terms = initial ?? new PeaceTreaties.Terms();
             Demands = new MBBindingList<PeaceTermVM>();
             Offers = new MBBindingList<PeaceTermVM>();
@@ -34,9 +34,11 @@ namespace CheatMenu.UI.ViewModels
             Refresh();
         }
 
-        [DataSourceProperty] public string Title => "Barış Masası";
+        public Kingdom Enemy => _enemy;
+
+        [DataSourceProperty] public string Title => "Barış Masası: " + _enemy.Name;
         [DataSourceProperty] public string Subtitle =>
-            _enemy.Name + "  ·  hükümdarı " + _enemy.Leader?.Name + "  ·  kesesi " + SchemeFactors.Money(PeaceTreaties.Treasury(_enemy));
+            "Hükümdarı " + _enemy.Leader?.Name + "  ·  kesesi " + SchemeFactors.Money(PeaceTreaties.Treasury(_enemy));
         [DataSourceProperty] public string DemandsTitle => "İstediklerin";
         [DataSourceProperty] public string OffersTitle => "Verdiklerin";
         [DataSourceProperty] public MBBindingList<PeaceTermVM> Demands { get; }
@@ -47,32 +49,61 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string WeightText { get => _weightText; set => Set(ref _weightText, value, nameof(WeightText)); }
         [DataSourceProperty] public string BlockedText { get => _blockedText; set => Set(ref _blockedText, value, nameof(BlockedText)); }
         [DataSourceProperty] public bool CanPropose { get => _canPropose; set => Set(ref _canPropose, value, nameof(CanPropose)); }
+        [DataSourceProperty] public string NoteText { get => _noteText; set => Set(ref _noteText, value, nameof(NoteText)); }
         [DataSourceProperty] public string ProposeText => "Teklif et";
         [DataSourceProperty] public string ResetText => "Şartları sıfırla";
-        [DataSourceProperty] public string CloseText => "Kapat";
 
+        private static readonly List<int> Toggle = new List<int> { 0, 1 };
+
+        /// <summary>Şartlar bölümlere ayrılır: para, asker ve esirler, toprak, anlaşmalar; sağda verdiklerin.</summary>
         private void Build()
         {
+            IntrigueState state = SchemeEngine.State;
             int treasury = PeaceTreaties.Treasury(_enemy);
             List<int> tribute = Enumerable.Range(0, PeaceTreatyRules.TributeLevels.Count).ToList();
+            string Money(int v) => v == 0 ? "yok" : SchemeFactors.Money(v);
+            string YesNo(int v) => v == 1 ? "İSTENİYOR" : "istenmiyor";
+
+            Demands.Add(PeaceTermVM.Header("PARA"));
             Demands.Add(new PeaceTermVM("Haraç (onlar öder)", tribute, () => _terms.Tribute, v => _terms.Tribute = v, PeaceTreaties.TributeText, Changed));
             Demands.Add(new PeaceTermVM("Savaş tazminatı", WithCurrent(PeaceTreatyRules.GoldSteps(treasury), _terms.Gold), () => _terms.Gold, v => _terms.Gold = v,
-                v => v == 0 ? "yok" : SchemeFactors.Money(v), Changed));
+                Money, Changed));
+
+            Demands.Add(PeaceTermVM.Header("ASKER VE ESİRLER"));
             Demands.Add(new PeaceTermVM("Asker (garnizonlarından)", PeaceTreatyRules.TroopSteps(PeaceTreaties.TroopsAvailable(_enemy)), () => _terms.Troops,
                 v => _terms.Troops = v, v => v == 0 ? "yok" : v + " asker", Changed));
+            int ours = PeaceTreaties.OurLordsHeld(_enemy).Count;
+            Demands.Add(new PeaceTermVM("Esir lordlarımızı bıraksınlar (" + ours + ")", ours > 0 ? Toggle : new List<int> { 0 },
+                () => _terms.ReleaseOurs ? 1 : 0, v => _terms.ReleaseOurs = v == 1, YesNo, Changed));
+
+            Demands.Add(PeaceTermVM.Header("TOPRAK (sınırına en yakınlar)"));
             foreach (Town town in PeaceTreaties.FiefsOnTable(_enemy))
             {
                 string id = town.Settlement.StringId;
-                Demands.Add(new PeaceTermVM((town.IsTown ? "Şehir: " : "Kale: ") + town.Name, new List<int> { 0, 1 }, () => _terms.Fiefs.Contains(id) ? 1 : 0,
+                Demands.Add(new PeaceTermVM((town.IsTown ? "Şehir: " : "Kale: ") + town.Name, Toggle, () => _terms.Fiefs.Contains(id) ? 1 : 0,
                     v =>
                     {
                         if (v == 1) _terms.Fiefs.Add(id);
                         else _terms.Fiefs.Remove(id);
-                    }, v => v == 1 ? "İSTENİYOR" : "istenmiyor", Changed));
+                    }, YesNo, Changed));
             }
+
+            Demands.Add(PeaceTermVM.Header("ANLAŞMALAR"));
+            Hero hostage = PeaceTreaties.HostageCandidate(state, _enemy);
+            Demands.Add(new PeaceTermVM(hostage != null ? "Rehine: " + hostage.Name : "Rehine (verecek kimse yok)", hostage != null ? Toggle : new List<int> { 0 },
+                () => _terms.Hostage ? 1 : 0, v => _terms.Hostage = v == 1, YesNo, Changed));
+            if (Bundle.DiplomacyCompat.IsAvailable)
+                Demands.Add(new PeaceTermVM("Saldırmazlık anlaşması", PeaceTreatyRules.PactLevels.ToList(), () => _terms.PactDays, v => _terms.PactDays = v,
+                    v => v == 0 ? "yok" : v + " gün", Changed));
+            Demands.Add(new PeaceTermVM("Ticaret anlaşması", Toggle, () => _terms.Trade ? 1 : 0, v => _terms.Trade = v == 1, YesNo, Changed));
+            Demands.Add(new PeaceTermVM("İttifak", Toggle, () => _terms.Alliance ? 1 : 0, v => _terms.Alliance = v == 1, YesNo, Changed));
+
             Offers.Add(new PeaceTermVM("Altın ver", WithCurrent(PeaceTreatyRules.GiftSteps(Hero.MainHero.Gold), _terms.Gift), () => _terms.Gift, v => _terms.Gift = v,
-                v => v == 0 ? "yok" : SchemeFactors.Money(v), Changed));
+                Money, Changed));
             Offers.Add(new PeaceTermVM("Haraç öde", tribute, () => _terms.Pay, v => _terms.Pay = v, PeaceTreaties.TributeText, Changed));
+            int theirs = PeaceTreaties.TheirLordsHeld(_enemy).Count;
+            Offers.Add(new PeaceTermVM("Esirlerini bırak (" + theirs + ")", theirs > 0 ? Toggle : new List<int> { 0 },
+                () => _terms.ReleaseTheirs ? 1 : 0, v => _terms.ReleaseTheirs = v == 1, v => v == 1 ? "BIRAKILIYOR" : "hayır", Changed));
         }
 
         /// <summary>Elçinin getirdiği tutar basamaklarda yoksa araya eklenir.</summary>
@@ -89,6 +120,8 @@ namespace CheatMenu.UI.ViewModels
         {
             IntrigueState state = SchemeEngine.State;
             foreach (PeaceTermVM term in Demands.Concat(Offers)) term.Update();
+            NoteText = _terms.Trade || _terms.Alliance
+                ? "Ticaret ve ittifak barıştan sonra oyunun kendi kuralıyla kurulur; kurulamazsa sonuçta nedeni yazar." : "";
             string blocked = PeaceTreaties.Blocked(state, _enemy);
             PeaceTreaties.Leverage leverage = Clan.PlayerClan.Kingdom != null && _enemy.Leader != null ? SafeLeverage(state) : null;
             LeverageText = leverage == null ? "" : LeverageLine(leverage);
@@ -136,23 +169,16 @@ namespace CheatMenu.UI.ViewModels
                 var ok = new EventCards.CardOption { Label = "Tamam", Apply = () => { } };
                 MenuUI.Defer(() => EventCards.Show(outcome.Accepted ? "BARIŞ" : "TEKLİF REDDEDİLDİ", outcome.Accepted ? "Barış imzalandı" : _enemy.Name + " reddetti",
                     outcome.Text, outcome.Accepted ? CardImages.Treaty : CardImages.Envoy, _enemy.Leader, new List<EventCards.CardOption> { ok }, ok, null));
-                if (outcome.Accepted)
-                {
-                    MenuUI.Defer(WarReportScreen.Close);
-                    _close();
-                }
-                else Refresh();
+                if (outcome.Accepted) MenuUI.Defer(WarReportScreen.Close);
+                _changed();
             });
         }
 
         public void ExecuteReset()
         {
-            _terms.Tribute = _terms.Gold = _terms.Troops = _terms.Gift = _terms.Pay = 0;
-            _terms.Fiefs.Clear();
+            _terms.Reset();
             Refresh();
         }
-
-        public void ExecuteClose() => _close();
 
         public override void OnFinalize()
         {
@@ -173,6 +199,20 @@ namespace CheatMenu.UI.ViewModels
         private string _valueText;
         private bool _canLess, _canMore, _isOn;
 
+        /// <summary>Bölüm başlığı satırı (düğmesiz).</summary>
+        public static PeaceTermVM Header(string label) => new PeaceTermVM(label);
+
+        private PeaceTermVM(string label)
+        {
+            Label = label;
+            IsHeader = true;
+            _steps = new List<int> { 0 };
+            _get = () => 0;
+            _set = v => { };
+            _format = v => "";
+            _changed = () => { };
+        }
+
         public PeaceTermVM(string label, List<int> steps, Func<int> get, Action<int> set, Func<int, string> format, Action changed)
         {
             Label = label;
@@ -185,6 +225,9 @@ namespace CheatMenu.UI.ViewModels
         }
 
         [DataSourceProperty] public string Label { get; }
+        [DataSourceProperty] public bool IsHeader { get; }
+        [DataSourceProperty] public bool IsTerm => !IsHeader;
+        [DataSourceProperty] public float Height => IsHeader ? 34 : 46;
         [DataSourceProperty] public string ValueText { get => _valueText; set => Set(ref _valueText, value, nameof(ValueText)); }
         [DataSourceProperty] public bool CanLess { get => _canLess; set => Set(ref _canLess, value, nameof(CanLess)); }
         [DataSourceProperty] public bool CanMore { get => _canMore; set => Set(ref _canMore, value, nameof(CanMore)); }
@@ -196,6 +239,7 @@ namespace CheatMenu.UI.ViewModels
 
         public void Update()
         {
+            if (IsHeader) return;
             int value = _get();
             ValueText = _format(value);
             CanLess = Index > 0;

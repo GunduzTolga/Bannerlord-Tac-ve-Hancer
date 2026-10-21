@@ -18,7 +18,7 @@ namespace CheatMenu.Intrigue
     /// garnizonlarından asker iste; ya da altın, haraç ver. Karşı taraf pazarlık gücüne (savaş yorgunluğu, güç, başka cepheler, oyunun barış
     /// puanı) ve şartların ağırlığına göre kabul eder. Kaybeden taraf bazen elçi gönderip kendisi barış ister. Kurallar: PeaceTreatyRules.
     /// Yalnızca hükümdar antlaşma yapar. Diplomacy'nin barış koşullarına (en kısa savaş süresi, görev, kuşatma, isyancı krallık) uyulur.
-    /// Pencere: UI.PeaceTableScreen.
+    /// Arayüz: Entrika ekranı > Savaş ve barış > Savaşlar (WarsVM, PeaceTableVM).
     /// </summary>
     public static class PeaceTreaties
     {
@@ -42,8 +42,26 @@ namespace CheatMenu.Intrigue
             public int Gift;
             /// <summary>Senin ödeyeceğin haraç (sıra).</summary>
             public int Pay;
+            /// <summary>Ellerindeki lordlarını (senin krallığının) bıraksınlar.</summary>
+            public bool ReleaseOurs;
+            /// <summary>Klanının elindeki lordlarını bırakırsın.</summary>
+            public bool ReleaseTheirs;
+            /// <summary>Hanedanlarından barışın teminatı olarak sana gelecek rehine (Hostages).</summary>
+            public bool Hostage;
+            /// <summary>Saldırmazlık anlaşması (Diplomacy), gün; 0 yok.</summary>
+            public int PactDays;
+            /// <summary>Barıştan sonra ticaret anlaşması ve ittifak (oyunun kendi sistemi).</summary>
+            public bool Trade, Alliance;
 
-            public bool IsWhite => Tribute == 0 && Gold == 0 && Troops == 0 && Fiefs.Count == 0 && Gift == 0 && Pay == 0;
+            public bool IsWhite => Tribute == 0 && Gold == 0 && Troops == 0 && Fiefs.Count == 0 && Gift == 0 && Pay == 0
+                && !ReleaseOurs && !ReleaseTheirs && !Hostage && PactDays == 0 && !Trade && !Alliance;
+
+            public void Reset()
+            {
+                Tribute = Gold = Troops = Gift = Pay = PactDays = 0;
+                Fiefs.Clear();
+                ReleaseOurs = ReleaseTheirs = Hostage = Trade = Alliance = false;
+            }
         }
 
         public sealed class Leverage
@@ -104,6 +122,31 @@ namespace CheatMenu.Intrigue
             return enemy.Fiefs.Where(t => t.Settlement != null && !t.Settlement.IsUnderSiege).OrderBy(Distance).Take(MaxFiefsOnTable).ToList();
         }
 
+        /// <summary>Senin krallığının, onların elinde esir olan lordları.</summary>
+        public static List<Hero> OurLordsHeld(Kingdom enemy) =>
+            Mine.AliveLords.Where(h => h.IsPrisoner && h.PartyBelongedToAsPrisoner?.MapFaction == enemy).ToList();
+
+        /// <summary>Onların, senin klanının (partin ya da zindanların) elinde esir olan lordları.</summary>
+        public static List<Hero> TheirLordsHeld(Kingdom enemy) =>
+            enemy.AliveLords.Where(h => h.IsPrisoner && HeldByYourClan(h.PartyBelongedToAsPrisoner)).ToList();
+
+        private static bool HeldByYourClan(PartyBase party) =>
+            party != null && (party == PartyBase.MainParty || party.Settlement?.OwnerClan == Clan.PlayerClan || party.MobileParty?.ActualClan == Clan.PlayerClan);
+
+        /// <summary>Barışın teminatı olabilecek kişi (hükümdarın çocuğu önce); yoksa null.</summary>
+        public static Hero HostageCandidate(IntrigueState state, Kingdom enemy) =>
+            state == null || Hostages.OurSettlement() == null || state.HostageDealWith(enemy.StringId) != null ? null : Hostages.TheirCandidate(state, enemy);
+
+        private static bool IsRulersChild(Kingdom enemy, Hero hero) => hero != null && (hero.Father == enemy.Leader || hero.Mother == enemy.Leader);
+
+        /// <summary>Oyunun gözüyle bu krallık seninle ticaret anlaşması ister mi.</summary>
+        public static bool WantsTrade(Kingdom enemy) =>
+            Campaign.Current.Models.TradeAgreementModel.GetScoreOfStartingTradeAgreement(enemy, Mine, enemy.RulingClan, out _, false) > 0;
+
+        /// <summary>Oyunun gözüyle bu krallık seninle ittifak ister mi.</summary>
+        public static bool WantsAlliance(Kingdom enemy) =>
+            Campaign.Current.Models.AllianceModel.GetScoreOfStartingAlliance(enemy, Mine, out _, false).ResultNumber > 0;
+
         public static int FiefWeight(Kingdom enemy, Town town) =>
             PeaceTreatyRules.FiefWeight(town.IsTown, town.OwnerClan != null && town.OwnerClan == enemy.RulingClan, false);
 
@@ -117,7 +160,17 @@ namespace CheatMenu.Intrigue
             int weight = PeaceTreatyRules.TributeWeight(daily, days, treasury) + PeaceTreatyRules.GoldWeight(terms.Gold, treasury)
                 + PeaceTreatyRules.TroopWeight(terms.Troops) + fiefs.Sum(t => FiefWeight(enemy, t))
                 + (fiefs.Count > 0 && fiefs.Count >= enemy.Fiefs.Count ? PeaceTreatyRules.FiefWeight(false, false, true) - PeaceTreatyRules.FiefWeight(false, false, false) : 0)
-                - PeaceTreatyRules.GiftRelief(terms.Gift, treasury) - PeaceTreatyRules.TributeRelief(payDaily, payDays, treasury);
+                - PeaceTreatyRules.GiftRelief(terms.Gift, treasury) - PeaceTreatyRules.TributeRelief(payDaily, payDays, treasury)
+                + (terms.ReleaseOurs ? PeaceTreatyRules.PrisonerWeight(OurLordsHeld(enemy).Count) : 0)
+                - (terms.ReleaseTheirs ? PeaceTreatyRules.PrisonerWeight(TheirLordsHeld(enemy).Count) : 0)
+                + PeaceTreatyRules.PactWeight(terms.PactDays);
+            if (terms.Hostage)
+            {
+                Hero hostage = HostageCandidate(IntrigueBehavior.Current?.State, enemy);
+                if (hostage != null) weight += PeaceTreatyRules.HostageWeight(IsRulersChild(enemy, hostage));
+            }
+            if (terms.Trade) weight += PeaceTreatyRules.TradeWeight(WantsTrade(enemy));
+            if (terms.Alliance) weight += PeaceTreatyRules.AllianceWeight(WantsAlliance(enemy));
             return weight;
         }
 
@@ -146,6 +199,8 @@ namespace CheatMenu.Intrigue
             if (terms.Gold > Treasury(enemy)) return "Hükümdarlarının kesesi o kadar altına yetmez";
             if (terms.Gift > Hero.MainHero.Gold) return "Kesen o kadar altına yetmez";
             if (terms.Troops > TroopsAvailable(enemy)) return "O kadar askeri alamazsın (partinde yer ya da garnizonlarında asker yok)";
+            if (terms.Hostage && HostageCandidate(IntrigueBehavior.Current?.State, enemy) == null) return "Rehine verecek kimseleri yok ya da onu tutacak yerin yok";
+            if (terms.PactDays > 0 && !DiplomacyCompat.IsAvailable) return "Saldırmazlık anlaşması Diplomacy ister";
             return null;
         }
 
@@ -163,12 +218,22 @@ namespace CheatMenu.Intrigue
             if (terms.Gold > 0) theirs.Add(SchemeFactors.Money(terms.Gold) + " tazminat");
             if (terms.Troops > 0) theirs.Add(terms.Troops + " asker");
             theirs.AddRange(enemy.Fiefs.Where(t => terms.Fiefs.Contains(t.Settlement.StringId)).Select(t => t.Name + (t.IsTown ? " (şehir)" : " (kale)")));
+            if (terms.ReleaseOurs) theirs.Add("esir lordlarını bırakır");
+            if (terms.Hostage) theirs.Add("rehine verir");
             var ours = new List<string>();
             if (terms.Gift > 0) ours.Add(SchemeFactors.Money(terms.Gift));
             if (terms.Pay > 0) ours.Add("haraç " + TributeText(terms.Pay));
-            if (theirs.Count == 0 && ours.Count == 0) return "Şartsız barış.";
-            return (theirs.Count > 0 ? "Onlar verir: " + string.Join(", ", theirs) + "." : "")
-                + (ours.Count > 0 ? (theirs.Count > 0 ? " " : "") + "Sen verirsin: " + string.Join(", ", ours) + "." : "");
+            if (terms.ReleaseTheirs) ours.Add("esirlerini bırakırsın");
+            var both = new List<string>();
+            if (terms.PactDays > 0) both.Add(terms.PactDays + " gün saldırmazlık");
+            if (terms.Trade) both.Add("ticaret anlaşması");
+            if (terms.Alliance) both.Add("ittifak");
+            if (theirs.Count == 0 && ours.Count == 0 && both.Count == 0) return "Şartsız barış.";
+            var parts = new List<string>();
+            if (theirs.Count > 0) parts.Add("Onlar: " + string.Join(", ", theirs) + ".");
+            if (ours.Count > 0) parts.Add("Sen: " + string.Join(", ", ours) + ".");
+            if (both.Count > 0) parts.Add("Birlikte: " + string.Join(", ", both) + ".");
+            return string.Join(" ", parts);
         }
 
         // ---- Teklif ----
@@ -208,6 +273,7 @@ namespace CheatMenu.Intrigue
             var (payDaily, payDays) = PeaceTreatyRules.TributeLevels[terms.Pay];
             int weight = Weight(enemy, terms);
             List<Town> fiefs = enemy.Fiefs.Where(t => terms.Fiefs.Contains(t.Settlement.StringId)).ToList();
+            Hero hostage = terms.Hostage ? HostageCandidate(state, enemy) : null;
             var lines = new List<string>();
 
             if (daily > 0) MakePeaceAction.ApplyByKingdomDecision(enemy, mine, daily, days);
@@ -241,6 +307,24 @@ namespace CheatMenu.Intrigue
                 int moved = TakeTroops(enemy, Math.Min(terms.Troops, TroopsAvailable(enemy)));
                 lines.Add(moved > 0 ? "Garnizonlarından " + moved + " asker partine katıldı." : "Garnizonlarında verecek asker kalmamıştı.");
             }
+            if (terms.ReleaseOurs)
+            {
+                List<Hero> freed = OurLordsHeld(enemy);
+                foreach (Hero lord in freed) EndCaptivityAction.ApplyByPeace(lord, ruler);
+                if (freed.Count > 0) lines.Add("Esir lordların serbest: " + string.Join(", ", freed.Select(h => h.Name)) + ".");
+            }
+            if (terms.ReleaseTheirs)
+            {
+                List<Hero> freed = TheirLordsHeld(enemy);
+                foreach (Hero lord in freed) EndCaptivityAction.ApplyByPeace(lord, me);
+                if (freed.Count > 0) lines.Add("Esirlerini bıraktın: " + string.Join(", ", freed.Select(h => h.Name)) + ".");
+            }
+            if (terms.PactDays > 0)
+                lines.Add(DiplomacyCompat.FormNonAggressionPact(mine, enemy, terms.PactDays)
+                    ? terms.PactDays + " günlük saldırmazlık anlaşması." : "Saldırmazlık anlaşması kurulamadı (zaten var ya da Diplomacy izin vermedi).");
+            if (terms.Hostage) lines.Add(Hostages.TakeForTreaty(state, enemy, hostage));
+            if (terms.Trade) lines.Add(MakeTrade(mine, enemy));
+            if (terms.Alliance) lines.Add(MakeAlliance(mine, enemy));
             if (weight >= 40) SchemeOutcomes.Relate(ruler, -Math.Min(10, weight / 10));
 
             PeaceTalk talk = state.PeaceTalkWith(enemy.StringId);
@@ -248,6 +332,30 @@ namespace CheatMenu.Intrigue
             talk.AskedUntil = 0;
             state.AddLog(Today, enemy.Name + " ile barış: " + Describe(enemy, terms));
             return string.Join("\n", lines);
+        }
+
+        /// <summary>Barıştan sonra oyunun kendi ticaret anlaşması (oyun izin verirse); sonuç satırı.</summary>
+        private static string MakeTrade(Kingdom mine, Kingdom enemy)
+        {
+            var model = Campaign.Current.Models.TradeAgreementModel;
+            var trade = Campaign.Current.GetCampaignBehavior<TaleWorlds.CampaignSystem.CampaignBehaviors.ITradeAgreementsCampaignBehavior>();
+            if (trade == null) return "Ticaret anlaşması kurulamadı (oyunun sistemi yok).";
+            if (!model.CanMakeTradeAgreement(mine, enemy, false, out TaleWorlds.Localization.TextObject reason, true))
+                return "Ticaret anlaşması kurulamadı: " + reason + ".";
+            trade.MakeTradeAgreement(mine, enemy, model.GetTradeAgreementDurationInYears(mine, enemy));
+            return "Ticaret anlaşması imzalandı: kervanlar iki krallıkta da kazanç getirir.";
+        }
+
+        /// <summary>Barıştan sonra oyunun kendi ittifakı (oyun izin verirse); sonuç satırı.</summary>
+        private static string MakeAlliance(Kingdom mine, Kingdom enemy)
+        {
+            var model = Campaign.Current.Models.AllianceModel;
+            var alliance = Campaign.Current.GetCampaignBehavior<TaleWorlds.CampaignSystem.CampaignBehaviors.IAllianceCampaignBehavior>();
+            if (alliance == null) return "İttifak kurulamadı (oyunun sistemi yok).";
+            if (!model.CanMakeAlliance(mine, enemy, mine, out TaleWorlds.Localization.TextObject reason, true))
+                return "İttifak kurulamadı: " + reason + ".";
+            alliance.StartAlliance(mine, enemy);
+            return "İttifak kuruldu: birbirinizi savaşa çağırabilirsiniz.";
         }
 
         /// <summary>Garnizonlarından sağlam, yüksek kademeli askerleri önce alır; partine ekler. Taşınan sayı.</summary>
@@ -328,10 +436,7 @@ namespace CheatMenu.Intrigue
                 new UI.EventCards.CardOption
                 {
                     Label = "Barış Masası'na otur: daha fazlasını iste",
-                    Apply = () => MenuUI.Defer(() =>
-                    {
-                        if (!UI.PeaceTableScreen.Open(enemy, offer)) MenuUI.Error("Barış Masası açılamadı");
-                    }),
+                    Apply = () => UI.IntrigueScreen.OpenWar(enemy, offer),
                 },
                 refuse,
             };

@@ -979,6 +979,11 @@ namespace CheatMenu.Tests
             Check("peace: envoy brings gold it would accept", offer > 0 && PeaceTreatyRules.Chance(winning + PeaceTreatyRules.AskedBonus, PeaceTreatyRules.GoldWeight(offer, 100000)) >= PeaceTreatyRules.EnvoyOfferChance);
             Check("peace: envoy of an even war brings nothing", PeaceTreatyRules.EnvoyGold(even, 100000) == 0);
             Check("peace: tribute levels start at none", PeaceTreatyRules.TributeLevels[0].Daily == 0 && PeaceTreatyRules.TributeLevels.Count == 5);
+            Check("peace: prisoners weigh four each", PeaceTreatyRules.PrisonerWeight(3) == 12 && PeaceTreatyRules.PrisonerWeight(-1) == 0);
+            Check("peace: ruler's child is a dearer hostage", PeaceTreatyRules.HostageWeight(true) - PeaceTreatyRules.HostageWeight(false) == 15);
+            Check("peace: pact levels and weight", PeaceTreatyRules.PactLevels[0] == 0 && PeaceTreatyRules.PactWeight(240) == 6 && PeaceTreatyRules.PactWeight(0) == 0);
+            Check("peace: wanted agreements are cheap", PeaceTreatyRules.TradeWeight(true) < PeaceTreatyRules.TradeWeight(false)
+                && PeaceTreatyRules.AllianceWeight(true) < PeaceTreatyRules.AllianceWeight(false));
             var state = new IntrigueState();
             PeaceTalk talk = state.PeaceTalkWith("vlandia");
             talk.RefusedUntil = 12;

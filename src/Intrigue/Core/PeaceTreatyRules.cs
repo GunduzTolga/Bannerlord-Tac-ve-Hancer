@@ -69,6 +69,24 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Senin ödeyeceğin haraç ağırlığı düşürür (toplamın onların kesesine oranla %50'si).</summary>
         public static int TributeRelief(int daily, int days, int theirTreasury) => days <= 0 ? 0 : Share(50, (double)daily * days, theirTreasury);
 
+        /// <summary>Esir lord başına 4: bırakan taraf fidyesinden olur (onlar bırakırsa ağırlık, sen bırakırsan rahatlama).</summary>
+        public static int PrisonerWeight(int lords) => 4 * Math.Max(0, lords);
+
+        /// <summary>Hanedanlarından bir rehine: 20, hükümdarın kendi çocuğuysa +15.</summary>
+        public static int HostageWeight(bool rulersChild) => 20 + (rulersChild ? 15 : 0);
+
+        /// <summary>Saldırmazlık anlaşması (Diplomacy) seçenekleri, gün.</summary>
+        public static readonly IReadOnlyList<int> PactLevels = new[] { 0, 60, 120, 240 };
+
+        /// <summary>Saldırmazlık iki tarafı da bağlar: her 40 gün 1.</summary>
+        public static int PactWeight(int days) => Math.Max(0, days) / 40;
+
+        /// <summary>Ticaret anlaşması: oyunun gözüyle isterlerse 0, istemezlerse 8.</summary>
+        public static int TradeWeight(bool theyWantIt) => theyWantIt ? 0 : 8;
+
+        /// <summary>İttifak (savaşlarına girmek): oyunun gözüyle isterlerse 5, istemezlerse 25.</summary>
+        public static int AllianceWeight(bool theyWantIt) => theyWantIt ? 5 : 25;
+
         /// <summary>Toplu altın seçenekleri: 0, kesenin %5/15/30/50/75'i (500'e yuvarlanmış, 500'den azsa yok).</summary>
         public static List<int> GoldSteps(int treasury)
         {

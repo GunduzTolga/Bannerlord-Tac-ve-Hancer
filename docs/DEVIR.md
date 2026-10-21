@@ -14,7 +14,8 @@
 - **Oylamada destek sözü** (Lordlar penceresine "oylamada destek iste"): `KingdomElection` (`DetermineSupport`, `UpdateSupport`,
   `GetAiChoice`, `DetermineOfficialSupport`) ve `KingdomDecision.DetermineSupport` alt sınıfları; söz veren lordun oyunu senin
   istediğin sonuca bağlayacak güvenli kanca.
-- **Barış Masası doğrulamaları:** `MakePeaceAction.ApplyByKingdomDecision`'da haracın yönü (1'den 2'ye mi) ve kimin kesesinden ödendiği;
+- **Barış Masası doğrulamaları:** ticaret anlaşması ve ittifak barıştan hemen sonra kurulabiliyor mu (`CanMakeTradeAgreement`,
+  `CanMakeAlliance` "yeni barış" engeli koyuyor mu); `MakePeaceAction.ApplyByKingdomDecision`'da haracın yönü (1'den 2'ye mi) ve kimin kesesinden ödendiği;
   barışta esir lordlar serbest kalıyor mu (`EndCaptivityAction.ApplyByPeace` nereden çağrılıyor); `ChangeOwnerOfSettlementAction.ApplyByBarter`
   garnizonu ve bağlı köyleri nasıl devrediyor. `DiplomacyModel.GetWarProgressScore`'un ölçeği (Savaş Raporu'ndaki "üstünlük" satırı).
 - **Diplomat:** `DiplomacyModel.GetScoreOfDeclaringWar`'ın ölçeği ("savaş konuşuluyor" eşiği `DiplomatRules.WarTalkMargin` tahmin).
@@ -50,14 +51,14 @@
 - **Esiri gizlice öldürt (21 Ekim, kullanıcı isteği):** açık idam yerine hastalık/kaza/firar süsü; şüphe ve ifşa Roguery'ye, esirin
   önemine ve yakalanalı kaç gün olduğuna bağlı (`PrisonDeathRules`, `PrisonDeaths`, tasarım `2026-10-21-gizli-infaz.md`).
 - **İsyanlar ve iç savaş penceresi (21 Ekim):** Diplomacy'nin `RebelFactionsInterface.ShowInterface`'i Harmony ön yamasıyla bizim
-  `UI.RebellionsScreen`'e yönleniyor (açılamazsa onunki açılır). Gruplar ve düğmeler Diplomacy'nin kendi ViewModel'leriyle
+  bizim pencereye yönleniyordu (21 Ekim'den beri Entrika ekranının İsyanlar sekmesi). Gruplar ve düğmeler Diplomacy'nin kendi ViewModel'leriyle
   (`RebelFactionItemVM`, `RebelFactionsVM`, reflection) çalışıyor; görünüş, Türkçe metinler, güç çubuğu, "en gönülsüz üye" notu ve
   hoşnutsuzlar bölümü (Saray kartları) bizim. Prefab'lar `TvhRebellions`, `TvhRebelFactionCard`. Oyunda henüz denenmedi.
 - **Kullanıcı eşini genelevde çalışan olarak sordu:** yapılmadı ("eşini pazarlamak" çizgisi); eş yalnızca kendi kararıyla yönetici olabilir.
-- **Lordlar penceresi (21 Ekim):** `UI.LordsScreen` (prefab `TvhLords`, `TvhLordCard`): krallığın ve tanıdığın lordlar tek yerde;
+- **Lordlar (21 Ekim):** önce pencere, sonra Entrika ekranı > Kişiler > Lordlar (`LordsVM`, `TvhLordsPanel`, `TvhLordCard`): krallığın ve tanıdığın lordlar tek yerde;
   ulak ve hediye (Saray'daki düğme), **yanına çağır** (nüfuz ya da altın; kabul ederse partisi oyunun eşlik emriyle sana yürür, her
   saat `LordContacts.Hourly`), **ziyafet** (kendi şehrinde ya da kalende, en fazla 6 davetli, 30 günde bir; ilişki, nüfuz, bazen rapor
-  ve sır). Kurallar `LordContactRules` (testli), tasarım `2026-10-21-lordlar.md`. Açılış: Saray > Lordlar..., Insert > Entrika.
+  ve sır). Kurallar `LordContactRules` (testli), tasarım `2026-10-21-lordlar.md`. Açılış: Kişiler > Lordlar, Insert > Entrika.
   **Oylamada destek sözü yapılmadı:** oyunun seçim kodunun gövdesi bulutta yok; PC'de oyunun DLL'lerini açıp oy ağırlığına kanca aranmalı.
 - **Savaş Raporu artık bizim pencere (21 Ekim):** Diplomacy'nin `DetailWarViewInterface.ShowInterface`'i ön yamayla `UI.WarReportScreen`'e
   yönleniyor (açılamazsa onunki). Üst kısım Diplomacy'nin prefab'ından aynen ve onun `DetailWarVM`'ine bağlı (`WarReportVM.Report`); altı
@@ -70,11 +71,18 @@
 - **Barış Masası (21 Ekim, kullanıcı isteği):** savaştığın krallıktan haraç, savaş tazminatı, garnizonlarından asker, şehir ve kale iste;
   ya da altın/haraç ver. Kabul = %50 + pazarlık gücü (yorgunluk farkı, güç oranı, başka cepheler, oyunun barış puanı) - şartların
   ağırlığı. Kaybeden taraf bazen elçi gönderip kendisi barış ister. Yalnızca hükümdar; Diplomacy'nin barış koşullarına uyar.
-  `PeaceTreatyRules` (testli), `PeaceTreaties`, `UI.PeaceTableScreen`, tasarım `2026-10-21-baris-masasi.md`. Oyunda henüz denenmedi.
+  `PeaceTreatyRules` (testli), `PeaceTreaties`, Savaşlar sekmesi (`WarsVM`, `PeaceTableVM`), tasarım `2026-10-21-baris-masasi.md`. Oyunda henüz denenmedi.
 - **Divan: diplomat (21 Ekim, kullanıcı seçimi):** beşinci koltuk (Charm). Barış Masası pazarlığı, elçi sıklığı, çağrı/davet, hediye
   katkısı; haftalık "ilişkileri geliştir" görevi ve sana savaş açmaya hazırlanan krallığa erken uyarı (oyunun savaş ilanı puanı,
   diplomatın gözüyle). `DiplomatRules` (testli), `Diplomat`, tasarım `2026-10-21-divan-diplomat.md`. Divan kartları 248 piksele indi
   ("Azlet"). Oyunda henüz denenmedi.
+- **Entrika ekranı yeni düzen (21 Ekim, kullanıcı isteği: "her yerde farklı ekranlar olmasın, tasarım önemli"):** dört bölüm (Entrika,
+  Kişiler, Saray, Savaş ve barış) ve alt sekmeler; Lordlar, İsyanlar ve Barış Masası artık sekme (`TvhLordsPanel`, `TvhRebellionsPanel`,
+  `TvhWarsPanel` + `TvhPeaceTablePanel`); `LordsScreen`, `RebellionsScreen`, `PeaceTableScreen` kalktı. Ayrı pencere yalnızca olay kartları
+  ve Savaş Raporu. Her şey `IntrigueScreen.OpenAt/OpenTab/OpenWar/OpenRebellions` ile sekmeye yönlenir (Krallık ekranı ve ansiklopedi
+  önce kapanır). Kural CLAUDE.md'de; tasarım `2026-10-21-arayuz-duzeni.md`.
+- **Barış Masası'na yeni şartlar (21 Ekim):** esir lordlarını bıraksınlar / esirlerini bırak, rehine (`Hostages.TakeForTreaty`),
+  saldırmazlık (Diplomacy), ticaret anlaşması ve ittifak (oyunun 1.4.8 sistemi, barıştan sonra oyun izin verirse). Şartlar bölümlü.
 - Sıradaki işler: yukarıdaki "PC'ye geçince yapılacaklar". Bulutta yapılabilecekler bitince kullanıcıya sor.
 
 ## 21 Ekim 2026 (PC oturumu, telefona devir)
@@ -138,8 +146,8 @@
 
 ## Kullanıcının istedikleri (sıradaki işler)
 - ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`; barış için Barış Masası düğmesi).
-- ~~İsyanlar ve İç Savaş penceresi~~ (21 Ekim yapıldı: `UI.RebellionsScreen`).
-- ~~Krallığın lordlarıyla iletişim sayfası~~ (21 Ekim yapıldı: `UI.LordsScreen`; ulak/hediye, yanına çağır, ziyafet). Kalan: **oylamada
+- ~~İsyanlar ve İç Savaş penceresi~~ (21 Ekim yapıldı; artık Entrika ekranı > Savaş ve barış > İsyanlar).
+- ~~Krallığın lordlarıyla iletişim sayfası~~ (21 Ekim yapıldı: Entrika ekranı > Kişiler > Lordlar; ulak/hediye, yanına çağır, ziyafet). Kalan: **oylamada
   destek sözü** (PC'de oyunun seçim kodu açılmalı) ve isteğe bağlı Krallık ekranına sekme (oyunun Krallık prefab'ı PC'de görülmeli).
 - Diplomacy ve diğer modların özelliklerini kendi ekranlarımıza taşıma (kullanıcının uzun vadeli isteği: tek mod, her şey bizim arayüzde).
 - Karar bekleyenler: Convivium, Diplomacy & Intrigue (YAPILACAKLAR).

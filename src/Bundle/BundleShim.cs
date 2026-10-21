@@ -84,18 +84,20 @@ namespace CheatMenu.Bundle
             var warReport = AccessTools.Method("Diplomacy.GauntletInterfaces.DetailWarViewInterface:ShowInterface");
             if (warReport != null)
                 harmony.Patch(warReport, prefix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportWindow)));
-            // İsyanlar ve iç savaş: Diplomacy'nin grup penceresi yerine bizimki (kuralları ve düğmeleri yine onun; UI.RebellionsScreen).
+            // İsyanlar ve iç savaş: Diplomacy'nin grup penceresi yerine Entrika ekranının İsyanlar sekmesi (kuralları ve düğmeleri yine onun).
             var factions = AccessTools.Method("Diplomacy.GauntletInterfaces.RebelFactionsInterface:ShowInterface");
             if (factions != null)
                 harmony.Patch(factions, prefix: new HarmonyMethod(typeof(BundleShim), nameof(RebellionsWindow)));
         }
 
-        /// <summary>false: Diplomacy'nin penceresi açılmaz, bizimki açıldı. Bizimki açılamazsa onunki açılır.</summary>
+        /// <summary>false: Diplomacy'nin penceresi açılmaz, Entrika ekranının İsyanlar sekmesi açılır (Krallık ekranı ya da ansiklopedi kapanır).</summary>
         private static bool RebellionsWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom kingdom)
         {
             try
             {
-                return !UI.RebellionsScreen.Open(kingdom, screenBase);
+                if (kingdom == null || Intrigue.SchemeEngine.State == null) return true;
+                UI.IntrigueScreen.OpenRebellions(kingdom == Clan.PlayerClan.Kingdom ? null : kingdom);
+                return false;
             }
             catch (Exception ex)
             {

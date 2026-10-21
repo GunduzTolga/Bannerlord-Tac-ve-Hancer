@@ -134,6 +134,24 @@ namespace CheatMenu.Intrigue
             state.AddLog(Today, "Rehine değişimi: " + kingdom.Name + " (" + hero.Name + " / " + theirs.Name + ")");
         }
 
+        /// <summary>
+        /// Barış Masası'nın şartı: onların hanedanından biri barışın teminatı olarak senin sarayına gelir (tek taraflı). Barış yeni imzalandığı
+        /// için Blocked'daki "savaştasınız" engeli burada yok. Sonuç metni (antlaşma kartı için) döner.
+        /// </summary>
+        public static string TakeForTreaty(IntrigueState state, Kingdom kingdom, Hero theirs)
+        {
+            Settlement ours = OurSettlement();
+            if (theirs == null || !theirs.IsAlive || theirs.IsPrisoner || ours == null) return "Rehine gelemedi" + (ours == null ? ": onu tutacak şehrin ya da kalen yok." : ".");
+            if (state.HostageDealWith(kingdom.StringId) != null) return "Bu krallıkla zaten bir rehine anlaşman var; yeni rehine gelmedi.";
+            Send(theirs, ours);
+            state.Hostages.Add(new HostageDeal { KingdomId = kingdom.StringId, HeldId = theirs.StringId, Since = Today, Until = Today + HostageRules.DurationDays });
+            Relieve(state, kingdom);
+            string pact = FormPact(kingdom);
+            state.AddLog(Today, "Barış teminatı: " + theirs.Name + " (" + kingdom.Name + ") sarayında");
+            return theirs.Name + " barışın teminatı olarak " + ours.Name + " kentinde senin misafirin; " + HostageRules.DurationDays
+                + " gün sonra döner." + pact + " Barışı bozarlarsa esirin olur.";
+        }
+
         /// <summary>Anlaşmayı erken bitir: misafirler döner, hükümdar kırılır.</summary>
         public static void EndEarly(IntrigueState state, HostageDeal deal)
         {

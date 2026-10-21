@@ -125,7 +125,7 @@ namespace CheatMenu.Bundle
             return list;
         }
 
-        // ---- İsyanlar penceresi (UI.RebellionsScreen): Diplomacy'nin grupları ve kendi düğme mantığı ----
+        // ---- İsyanlar (Entrika ekranı > Savaş ve barış > İsyanlar): Diplomacy'nin grupları ve kendi düğme mantığı ----
 
         /// <summary>Krallıktaki isyancı grupların kendileri (Diplomacy.CivilWar.Factions.RebelFaction); yoksa boş.</summary>
         internal static List<object> RawRebelFactions(Kingdom kingdom)

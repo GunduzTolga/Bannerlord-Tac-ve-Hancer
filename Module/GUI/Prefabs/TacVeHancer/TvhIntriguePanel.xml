@@ -4,7 +4,9 @@
   - Klan ekranının "Entrika" sekmesi: alt yarıya yerleşir (ClanIntrigueTab.cs içindeki prefab eki); üst şerit, arka plan ve
     "Bitti" düğmesi oyunun kendisi.
   - Yedek ayrı ekran (TvhIntrigueScreen): UIExtenderEx kaydı tutmazsa.
-  Sol: casus başı (Tvh.Panel: oyunda Klan ekranının sol liste paneli). Sağ: sekmeler (oyunun Klan sekmeleri) ve sekmenin içeriği.
+  Üstte bölümler (TvhGroupTab: Entrika, Kişiler, Saray, Savaş ve barış) ve seçili bölümün alt sekmeleri (TvhSubTab). Her özellik tek bir
+  alt sekmede (tasarım: docs/superpowers/specs/2026-10-21-arayuz-duzeni.md). Casus başı sütunu (Tvh.Panel) yalnızca Entrika bölümünde;
+  öteki bölümlerde içerik tam genişlik (ContentMargin).
   Liste deseni: ScrollablePanel > ClipRect (ClipContents) > ListPanel (CoverChildren) + yanında oyunun Standard.VerticalScrollbar'ı.
   Sprite'lar her zaman yüklü (ui_group1) olanlardan; oyundan kopyalanan fırçalar Klan kategorisini de kullanabilir (TvhUi.GameLooks).
 -->
@@ -13,8 +15,23 @@
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
       <Children>
 
-        <!-- ===== Sol sütun: casus başı ===== -->
-        <BrushWidget DataSource="{Spymaster}" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="330" HorizontalAlignment="Left" MarginTop="6" MarginBottom="34" Brush="Tvh.Panel">
+        <!-- ===== Üst: bölümler ve alt sekmeler ===== -->
+        <ListPanel DataSource="{Groups}" WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="46" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <ItemTemplate>
+            <TvhGroupTab />
+          </ItemTemplate>
+        </ListPanel>
+        <ListPanel DataSource="{Tabs}" WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="38" MarginTop="54" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <ItemTemplate>
+            <TvhSubTab />
+          </ItemTemplate>
+        </ListPanel>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginTop="98" Sprite="SPGeneral\SPOptions\options_divider_flat" DoNotAcceptEvents="true" />
+
+        <!-- ===== Sol sütun: casus başı (yalnızca Entrika bölümünde) ===== -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="330" HorizontalAlignment="Left" MarginTop="108" MarginBottom="34" IsVisible="@IsIntrigueGroup">
+          <Children>
+        <BrushWidget DataSource="{Spymaster}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Panel">
           <Children>
             <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="10" Brush="Tvh.Text.PanelTitle" Text="Casus başı" />
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="23" MarginTop="44" MarginLeft="6" MarginRight="6" Sprite="StdAssets\Popup\divider" DoNotAcceptEvents="true" />
@@ -73,18 +90,13 @@
             </Widget>
           </Children>
         </BrushWidget>
+          </Children>
+        </Widget>
 
-        <!-- ===== Sağ: sekmeler ve paneller ===== -->
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="356" MarginBottom="34">
+        <!-- ===== Sekmenin içeriği ===== -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="@ContentMargin" MarginTop="108" MarginBottom="34">
           <Children>
-            <ListPanel DataSource="{Tabs}" WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="46" StackLayout.LayoutMethod="HorizontalLeftToRight">
-              <ItemTemplate>
-                <TvhTab />
-              </ItemTemplate>
-            </ListPanel>
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginTop="50" Sprite="SPGeneral\SPOptions\options_divider_flat" DoNotAcceptEvents="true" />
-
-            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="64">
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
               <Children>
 
                 <!-- ===== Süren entrikalar ===== -->
@@ -222,6 +234,27 @@
                       </Children>
                     </ScrollablePanel>
                     <Standard.VerticalScrollbar Id="PlotsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
+                  </Children>
+                </Widget>
+
+                <!-- ===== Lordlar ===== -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsLordsTab">
+                  <Children>
+                    <TvhLordsPanel DataSource="{Lords}" />
+                  </Children>
+                </Widget>
+
+                <!-- ===== Savaşlar ve Barış Masası ===== -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsWarsTab">
+                  <Children>
+                    <TvhWarsPanel DataSource="{Wars}" />
+                  </Children>
+                </Widget>
+
+                <!-- ===== İsyanlar ===== -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsRebellionsTab">
+                  <Children>
+                    <TvhRebellionsPanel DataSource="{Rebellions}" />
                   </Children>
                 </Widget>
 

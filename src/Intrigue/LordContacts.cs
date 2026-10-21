@@ -15,7 +15,7 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Lordlarla iletişim (tasarım: docs/superpowers/specs/2026-10-21-lordlar.md): bir lordu yanına çağırmak (partisi oyunun eşlik
     /// emriyle sana gelir; konuşma oyunun kendi diyaloğu) ve kendi şehrinde ya da kalende ziyafet vermek. Ulak ve hediye: Messengers.
-    /// Kurallar: LordContactRules. Pencere: UI.LordsScreen.
+    /// Kurallar: LordContactRules. Arayüz: Entrika ekranı > Kişiler > Lordlar (LordsVM).
     /// </summary>
     public static class LordContacts
     {
