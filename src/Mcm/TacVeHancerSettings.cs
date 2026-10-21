@@ -98,7 +98,7 @@ namespace CheatMenu.Mcm
         public bool RomanceSecrets { get; set; } = true;
 
         [SettingPropertyBool("Genelev (yetişkin teması)", Order = 4, RequireRestart = false,
-            HintText = "Şehirlerde genelev: müşteri olarak gece geçirmek (dedikodu duyma, hastalık kapma ve eşinin duyma ihtimaliyle), askerlerine bir gece ısmarlamak (moral) ve gölge ağın olan şehirde kendi genelevini işletmek (isimsiz, gönüllü ve ücretli çalışanlar; gelir ve müşterilerden duyulanlar). Yalnızca metin ve resimli kart, sahne yok. Kapalıyken hiçbiri görünmez; var olan işletmeler çalışmaz.")]
+            HintText = "Şehirlerde genelev: müşteri olarak gece geçirmek (dedikodu duyma, hastalık kapma ve eşinin duyma ihtimaliyle), askerlerine bir gece ısmarlamak (moral) ve gölge ağın olan şehirde kendi genelevini işletmek (adlı, gönüllü ve ücretli çalışanlar; yoldaşlar kendi isteğiyle yönetici ya da çalışan olabilir; gelir ve müşterilerden duyulanlar). Yalnızca metin ve resimli kart, sahne yok. Kapalıyken hiçbiri görünmez; var olan işletmeler çalışmaz.")]
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool NightHouses { get; set; }
 
