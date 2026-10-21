@@ -41,6 +41,20 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Barış Masası: şartlı barış (21 Ekim, yeni; hükümdar olmalısın; ekran görüntüsü çok işe yarar)
+- [ ] Savaş Raporu'nda sağ üstte **Barış Masası...** düğmesi; raporun Barış bölümünde "Barış Masası'na oturabilirsin, pazarlık gücün N"
+      ya da neden olmadığı. Insert > Entrika > **Barış Masası...** de açıyor (savaş seçilir, olmayanların yanında nedeni)
+- [ ] Masa: üstte pazarlık gücün ve nedenleri (yorgunluk, güç oranı, başka cepheler, barışa yatkın mı); solda haraç, tazminat, asker ve
+      sınırına yakın şehir/kaleler (- / + ile), sağda verdiklerin; altta özet, **Kabul olasılığı: %X**. Şart ekledikçe olasılık düşüyor mu
+- [ ] **Teklif et** → kabul: barış, kale/şehir senin (klanında), tazminat kesende, askerler partinde, haraç her gün geliyor (klan gelirinde);
+      Savaş Raporu ve masa kapanıyor, sonuç kartı. Ret: kart, 7 gün yeniden teklif yok (masa nedenini yazıyor)
+- [ ] Kaybederken: "Altın ver" ya da "Haraç öde" ile şartsız barışın olasılığı artıyor mu
+- [ ] **Elçi:** çok öndeyken birkaç hafta içinde "BARIŞ ELÇİSİ" kartı: tazminat teklifi; Kabul et / Barış Masası'na otur (pazarlık gücüne
+      +15) / Geri çevir
+- [ ] Diplomacy'nin kısa savaş sınırı varken masa "savaş yeterince uzun sürmedi" diyor; iç savaşta masa kurulmuyor
+- [ ] Devralınan kalenin garnizonu ve köyleri sana geçti mi; barıştan sonra esir lordların serbest kaldı mı (bak, yaz)
+- Tasarım: `docs\superpowers\specs\2026-10-21-baris-masasi.md`
+
 ### Savaş Raporu: yeni pencere (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
 Haritadaki savaş yorgunluğu göstergesine tıklayınca Diplomacy'nin raporu yerine bizimki açılıyor; üst kısım aynı, altı yeni.
 - [ ] Üst kısım eskisi gibi mi: iki büyük sancak, "Savaş Raporu" başlığı, iki tarafın savaş yorgunluğu, ilişki kutuları, tarih; yeni olarak

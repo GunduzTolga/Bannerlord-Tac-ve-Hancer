@@ -97,6 +97,11 @@
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@CloseText" />
               </Children>
             </ButtonWidget>
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="44" HorizontalAlignment="Right" MarginRight="44" MarginTop="74" Brush="Tvh.Button" Command.Click="ExecutePeace" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@PeaceText" />
+              </Children>
+            </ButtonWidget>
 
             <!-- ===== Alt kısım: bizim bölümler (Intrigue.WarReport), iki sütun ===== -->
             <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="330" MarginBottom="28" MarginLeft="40" MarginRight="40" Sprite="BlankWhiteSquare_9" Color="#0D0A07D9">

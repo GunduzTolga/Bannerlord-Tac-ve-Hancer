@@ -239,27 +239,54 @@ namespace CheatMenu.Bundle
             return list;
         }
 
-        /// <summary>
-        /// Diplomacy'nin barış koşulları (MakePeaceConditions, oyuncu için bedelleriyle): boş liste = barış teklif edilebilir, değilse
-        /// nedenleri (Diplomacy'nin metinleri); okunamazsa null.
-        /// </summary>
-        internal static List<string> PeaceBlockers(Kingdom kingdom, Kingdom enemy)
+        /// <summary>Diplomacy'nin savaş yorgunluğu (0-100): a'nın b ile savaşındaki yorgunluğu; okunamazsa -1.</summary>
+        internal static float WarExhaustion(Kingdom a, Kingdom b)
         {
             try
             {
-                Type type = AccessTools.TypeByName("Diplomacy.DiplomaticAction.WarPeace.MakePeaceConditions");
-                object instance = AccessTools.Property(type, "Instance")?.GetValue(null);
-                MethodInfo check = instance?.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                    .FirstOrDefault(m => m.Name == "CanApplyExceptions" && m.GetParameters().Length == 4 && m.GetParameters()[0].ParameterType == typeof(Kingdom));
-                if (check == null || kingdom == null || enemy == null) return null;
-                return (check.Invoke(instance, new object[] { kingdom, enemy, true, false }) as IEnumerable)?.Cast<object>()
-                    .Select(t => t?.ToString()).Where(t => !string.IsNullOrEmpty(t)).ToList();
+                object manager = AccessTools.Property("Diplomacy.WarExhaustion.WarExhaustionManager:Instance")?.GetValue(null);
+                MethodInfo get = manager?.GetType().GetMethod("GetWarExhaustion", new[] { typeof(Kingdom), typeof(Kingdom) });
+                return get != null && a != null && b != null ? (float)get.Invoke(manager, new object[] { a, b }) : -1f;
             }
             catch (Exception ex)
             {
-                Debug.Print("[CheatMenu] Diplomacy peace conditions failed: " + ex);
-                return null;
+                Debug.Print("[CheatMenu] Diplomacy war exhaustion failed: " + ex);
+                return -1f;
             }
+        }
+
+        /// <summary>
+        /// Barış Masası'nın uyduğu Diplomacy barış koşulları: savaşın en kısa süresi, görev bağı, oyuncunun kuşatması, isyancı krallık.
+        /// (Bedel ve yetki koşulları sayılmaz: bedel masadaki şartlar, yetkiyi masa kendisi denetler.)
+        /// </summary>
+        private static readonly string[] TreatyConditions =
+        {
+            "Diplomacy.DiplomaticAction.WarPeace.Conditions.HasEnoughTimeElapsedForPeaceCondition",
+            "Diplomacy.DiplomaticAction.WarPeace.Conditions.SatisfiesQuestConditionsForPeaceCondition",
+            "Diplomacy.DiplomaticAction.WarPeace.Conditions.NoPlayerSiegeCondition",
+            "Diplomacy.DiplomaticAction.GenericConditions.NotRebelKingdomCondition",
+        };
+
+        /// <summary>null: Diplomacy'nin bu koşulları barışa izin veriyor (ya da Diplomacy yok); değilse ilk engelin metni.</summary>
+        internal static string TreatyBlocked(Kingdom kingdom, Kingdom enemy)
+        {
+            foreach (string typeName in TreatyConditions)
+            {
+                try
+                {
+                    Type type = AccessTools.TypeByName(typeName);
+                    MethodInfo apply = type?.GetMethod("ApplyCondition", BindingFlags.Public | BindingFlags.Instance);
+                    if (apply == null || apply.GetParameters().Length != 5) continue;
+                    object condition = Activator.CreateInstance(type, true);
+                    object[] args = { kingdom, enemy, null, false, false };
+                    if (!(bool)apply.Invoke(condition, args)) return args[2]?.ToString() ?? "Diplomacy barışa izin vermiyor";
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("[CheatMenu] Diplomacy peace condition " + typeName + " failed: " + ex);
+                }
+            }
+            return null;
         }
 
         // ---- Haberci: yüz yüze görüşme Diplomacy'nin habercisiyle (onun bedeli, yolu ve salondaki konuşması) ----

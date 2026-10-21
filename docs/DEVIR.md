@@ -1,5 +1,30 @@
 # Devir notu
 
+## PC'ye geçince yapılacaklar (kullanıcı: "PC'ye geçince yaparız")
+**1. Kur ve oyunda bak (önce bunlar)**
+- `git checkout main; git pull origin ccr-561e2390-s83s0r; .\build.ps1` → temiz mi? Özellikle oyuna karşı arayüz denetimi (`--game`):
+  yeni pencerelerin (Lordlar, İsyanlar, Savaş Raporu, Barış Masası) oyun fırçaları ve sprite'ları. Savaş Raporu'nun üst kısmı
+  Diplomacy'nin prefab'ı olduğu için denetlenmiyor; oyunda göz ile bak.
+- Oyunda test listesi: YAPILACAKLAR'ın en üstündeki 21 Ekim bölümleri (Barış Masası, Savaş Raporu, Lordlar, İsyanlar, gizli infaz,
+  düzeltmeler, genelev). Bozuk görünen her pencerenin ekran görüntüsü + `rgl_log` + varsa `cokme_*.txt`.
+- Eski açık sorunlar (aşağıda "Açık sorunlar"): Klan ekranındaki Entrika sekmesi boş mu (kırmızı `CheckBound` mesajı), Companion
+  Autonomy'nin Klan > Birlikler'de üst üste binmesi, haritadaki "ENTRİKA" afişi, harita çubuğundaki Entrika simgesi.
+
+**2. Oyunun kodunu açarak (ILSpy/dnSpy: `<oyun>\bin\Win64_Shipping_Client\TaleWorlds.CampaignSystem.dll`; bulutta yalnızca imzalar var)**
+- **Oylamada destek sözü** (Lordlar penceresine "oylamada destek iste"): `KingdomElection` (`DetermineSupport`, `UpdateSupport`,
+  `GetAiChoice`, `DetermineOfficialSupport`) ve `KingdomDecision.DetermineSupport` alt sınıfları; söz veren lordun oyunu senin
+  istediğin sonuca bağlayacak güvenli kanca.
+- **Barış Masası doğrulamaları:** `MakePeaceAction.ApplyByKingdomDecision`'da haracın yönü (1'den 2'ye mi) ve kimin kesesinden ödendiği;
+  barışta esir lordlar serbest kalıyor mu (`EndCaptivityAction.ApplyByPeace` nereden çağrılıyor); `ChangeOwnerOfSettlementAction.ApplyByBarter`
+  garnizonu ve bağlı köyleri nasıl devrediyor. `DiplomacyModel.GetWarProgressScore`'un ölçeği (Savaş Raporu'ndaki "üstünlük" satırı).
+- **Krallık ekranına bağlamak:** Lordlar'ı Krallık ekranında sekme yapmak, Savaş Raporu'nu Krallık > Diplomasi'deki savaş listesinden de
+  açmak (oyunun `KingdomManagement` prefab'ları: `<oyun>\Modules\SandBox\GUI\Prefabs`).
+- Harita çubuğu Entrika simgesi: oyunun sprite sayfalarından uygun gri simge (yoksa kendi simgemizi çizeriz).
+
+**3. Kullanıcının kendisi**
+- Kart resimleri: 15 eski + 3 genelev + 2 barış (elçi, antlaşma). Prompt'lar `docs/gorseller/olay-kartlari.md`; `tools\resim-aktar.ps1`.
+- Mod kararları: Convivium, Diplomacy & Intrigue (YAPILACAKLAR > Karar bekleyen modlar).
+
 ## En son durum: 21 Ekim 2026 (bulut oturumu, telefondan)
 - **Genelev: adlı çalışanlar, yoldaş yönetici ve yoldaş çalışan, yönetim kartı** (kullanıcı isteği; oyunda henüz denenmedi).
   Çalışanlar adlı (kültürün ad listesi, yaş 19+, özellik: kulağı delik / gözde / sadık). **Kural değişti (kullanıcı kararı):** yoldaşlar
@@ -41,8 +66,11 @@
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
 - **Divan koltuğu "Serdar" artık "Mareşal" (kullanıcı kararı):** "Serdar" erkek adı gibi okunuyordu. Bütün metinler ve belgeler; resim
   dosyaları (`sonuc_serdar*.png`) ve kodda `Marshal` adı aynı. Kronik'teki eski satırlarda "Serdar" kalır.
-- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): oylamada destek (PC'de), kalan 15 kart resmi + 3 yeni genelev resmi,
-  Convivium / Diplomacy & Intrigue kararı.
+- **Barış Masası (21 Ekim, kullanıcı isteği):** savaştığın krallıktan haraç, savaş tazminatı, garnizonlarından asker, şehir ve kale iste;
+  ya da altın/haraç ver. Kabul = %50 + pazarlık gücü (yorgunluk farkı, güç oranı, başka cepheler, oyunun barış puanı) - şartların
+  ağırlığı. Kaybeden taraf bazen elçi gönderip kendisi barış ister. Yalnızca hükümdar; Diplomacy'nin barış koşullarına uyar.
+  `PeaceTreatyRules` (testli), `PeaceTreaties`, `UI.PeaceTableScreen`, tasarım `2026-10-21-baris-masasi.md`. Oyunda henüz denenmedi.
+- Sıradaki işler: yukarıdaki "PC'ye geçince yapılacaklar". Bulutta yapılabilecekler bitince kullanıcıya sor.
 
 ## 21 Ekim 2026 (PC oturumu, telefona devir)
 - **Git:** her şey `main`'de ve GitHub'da. Bulut dalı `ccr-be29c96c-8tfbau` da `main`'e getirildi. Yeni işe `main`'den başla.
@@ -104,7 +132,7 @@
    ekliyor) Diplomacy'ninkiyle çakışıyor olabilir — kontrol et.
 
 ## Kullanıcının istedikleri (sıradaki işler)
-- ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`). Kalan: pencereye barış teklifi düğmesi.
+- ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`; barış için Barış Masası düğmesi).
 - ~~İsyanlar ve İç Savaş penceresi~~ (21 Ekim yapıldı: `UI.RebellionsScreen`).
 - ~~Krallığın lordlarıyla iletişim sayfası~~ (21 Ekim yapıldı: `UI.LordsScreen`; ulak/hediye, yanına çağır, ziyafet). Kalan: **oylamada
   destek sözü** (PC'de oyunun seçim kodu açılmalı) ve isteğe bağlı Krallık ekranına sekme (oyunun Krallık prefab'ı PC'de görülmeli).
