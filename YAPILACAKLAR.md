@@ -41,6 +41,21 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Savaş Raporu: yeni pencere (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Haritadaki savaş yorgunluğu göstergesine tıklayınca Diplomacy'nin raporu yerine bizimki açılıyor; üst kısım aynı, altı yeni.
+- [ ] Üst kısım eskisi gibi mi: iki büyük sancak, "Savaş Raporu" başlığı, iki tarafın savaş yorgunluğu, ilişki kutuları, tarih; yeni olarak
+      "savaş N gündür sürüyor" satırı. Sağ üstte Kapat; Esc de kapatıyor
+- [ ] Altta iki sütun (kaydırılıyor): **Savaşın gidişatı** (üstünlük puanı, kayıplar, fethedilen yerler, yağmalar, esir lordlar),
+      **Kuvvetler** (güç, ordular, klanlar, lordlar, şehir/kale/köy, müttefikler, başka cepheler), **Savaş yorgunluğu** (Diplomacy'nin
+      dökümü); sağda **Serdarın raporu**, **Barış**, **Esirler**, **Savaş günlüğü**
+- [ ] Satırların altındaki çubuklar iki krallığın renginde mi, oranlar mantıklı mı; yazılar taşıyor mu
+- [ ] "Savaştaki üstünlük" ve yorgunluk satırlarındaki sayıların üstüne gelince ipucu çıkıyor mu
+- [ ] Barış bölümü: iki tarafın tavrı ve "Barış teklif edebilirsin" ya da Diplomacy'nin nedeni (ör. savaş yeterince uzun sürmedi)
+- [ ] Savaş günlüğünde bu savaşın olayları (savaş, kuşatma, esir alma) "N gün önce" ile
+- [ ] Insert > Entrika > **Savaş raporları** → savaştığın krallığı seç → aynı pencere
+- [ ] Pencere açılamazsa kırmızı mesaj ve Diplomacy'nin eski raporu açılıyor (olursa ekran görüntüsü ve `rgl_log`)
+- Tasarım: `docs\superpowers\specs\2026-10-21-savas-raporu.md`
+
 ### Lordlar penceresi: yanına çağır ve ziyafet (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
 - [ ] Klan > Entrika > Saray'da sağ üstte **Lordlar...** düğmesi (ve **İsyanlar...**); Insert > Entrika > "Lordlar: iletişim, ziyafet,
       yanına çağır" de açıyor. Pencere: sekmeler (Krallığın / Tanıdıkların / Davetliler), sağ üstte Ziyafet ver ve Kapat

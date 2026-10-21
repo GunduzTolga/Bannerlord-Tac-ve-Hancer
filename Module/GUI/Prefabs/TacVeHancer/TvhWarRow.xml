@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Savaş Raporu karşılaştırma satırı (ViewModel: WarRowVM): solda biz, ortada ne, sağda onlar (uzun metin alta kayar); altında iki
+  krallığın renginde oran çubuğu (genişlik WarReportRules.BarWidth = 270). Değerin üstüne gelince ipucu (Diplomacy'nin olay dökümü ya da
+  oyunun puan açıklaması). Satır genişliği 670: 200 + 270 + 200.
+-->
+<Prefab>
+  <Window>
+    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="7" StackLayout.LayoutMethod="VerticalTopToBottom">
+      <Children>
+        <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <Children>
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="200" VerticalAlignment="Center" Brush="Tvh.Text.StatValue" Text="@Ours">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasOursHint">
+                  <Children>
+                    <HintWidget DataSource="{OursHint}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" />
+                  </Children>
+                </Widget>
+              </Children>
+            </RichTextWidget>
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="270" VerticalAlignment="Center" Brush="Tvh.Text.StatLabel" Text="@Label" />
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="200" VerticalAlignment="Center" Brush="Tvh.Text.StatValue" Text="@Theirs">
+              <Children>
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasTheirsHint">
+                  <Children>
+                    <HintWidget DataSource="{TheirsHint}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" />
+                  </Children>
+                </Widget>
+              </Children>
+            </RichTextWidget>
+          </Children>
+        </ListPanel>
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="270" SuggestedHeight="6" HorizontalAlignment="Center" MarginTop="3" IsVisible="@HasBar" Sprite="BlankWhiteSquare_9" Color="#FFFFFF1F">
+          <Children>
+            <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" StackLayout.LayoutMethod="HorizontalLeftToRight">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@OurWidth" Sprite="BlankWhiteSquare_9" Color="@OurColor" />
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@TheirWidth" Sprite="BlankWhiteSquare_9" Color="@TheirColor" />
+              </Children>
+            </ListPanel>
+          </Children>
+        </Widget>
+      </Children>
+    </ListPanel>
+  </Window>
+</Prefab>
