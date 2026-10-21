@@ -51,6 +51,8 @@ namespace CheatMenu.Intrigue
             {
                 if (party != null && party.IsCaravan) MenuUI.SafeRun("Kervan defteri", () => Treasury.OnSettlementLeft(party, settlement));
             });
+            CampaignEvents.OnPlayerCharacterChangedEvent.AddNonSerializedListener(this, (oldPlayer, newPlayer, newParty, partyChanged) =>
+                MenuUI.SafeRun("Varis", () => Dynasty.OnPlayerCharacterChanged(State, oldPlayer, newPlayer)));
             CampaignEvents.WarDeclared.AddNonSerializedListener(this, (a, b, detail) =>
                 MenuUI.SafeRun("Rehine anlaşması (savaş)", () => Hostages.OnWarDeclared(a, b, detail)));
             CampaignEvents.WeeklyTickEvent.AddNonSerializedListener(this, () =>

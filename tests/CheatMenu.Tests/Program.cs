@@ -177,6 +177,7 @@ namespace CheatMenu.Tests
             RomanceTests();
             CrisisTests();
             HouseTests();
+            HeirTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -359,7 +360,7 @@ namespace CheatMenu.Tests
                 TargetId = "lord_1_1", TargetName = "Derthert", Day = 12, Location = "Pravend", Party = "120 asker",
                 Gold = "~20.000", Relations = "hükümdar: 10\tsen: -5", Traits = "Onur +1",
             });
-            state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true });
+            state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true, Spent = true });
             state.Secrets.Add(new Secret { TargetId = "lord_4", Kind = SecretKind.Bastard, Day = 30, OtherId = "lord_5", ChildId = "lord_6", Exposed = true, Whispered = true });
             state.CooldownUntil["lord_2"] = 200;
             state.AlertUntil["lord_3"] = 300;
@@ -442,7 +443,8 @@ namespace CheatMenu.Tests
             IntelReport r = back.Reports.Count == 1 ? back.Reports[0] : null;
             Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
             Check("state: secret", back.Secrets.Count == 2 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed
-                && back.Secrets[0].OtherId == null && back.Secrets[0].ChildId == null && !back.Secrets[0].Whispered);
+                && back.Secrets[0].OtherId == null && back.Secrets[0].ChildId == null && !back.Secrets[0].Whispered
+                && back.Secrets[0].Spent && !back.Secrets[1].Spent);
             Check("state: romance secret", back.Secrets.Count == 2 && back.Secrets[1].Kind == SecretKind.Bastard && back.Secrets[1].OtherId == "lord_5"
                 && back.Secrets[1].ChildId == "lord_6" && back.Secrets[1].Whispered && back.Secrets[1].Exposed);
             Check("state: cooldown/alert", back.CooldownUntil["lord_2"] == 200 && back.AlertUntil["lord_3"] == 300);
@@ -899,6 +901,31 @@ namespace CheatMenu.Tests
             CheckChance("recruit: calculating, bigger clan", RecruitRules.Chance(10, 0, 0, 1, 50, 5, 2, normal), 40);
             CheckChance("recruit: cap", RecruitRules.Chance(100, -100, -2, 2, 300, 6, 1, SchemeMath.EasyDifficulty), 75);
             CheckChance("recruit: hard", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, SchemeMath.HardDifficulty), 10);
+        }
+
+        /// <summary>Oyuncu karakteri değişince eski karakterin kişisel kayıtları düşer, yeni karakter koltuklardan çıkar.</summary>
+        private static void HeirTests()
+        {
+            var state = new IntrigueState { SpymasterId = "heir", Mission = SpymasterMission.SpreadRumors, RumorTargetId = "lord_1", TreasurerId = "other",
+                SpouseWatchUntil = 40, SpouseApartWeeks = 3, SpouseAffair = new SpouseAffair { SpouseId = "wife", LoverId = "lord_2" } };
+            state.Lovers.Add(new Lover { HeroId = "mother_of_heir" });
+            state.Courtships.Add(new Courtship { Id = 1, TargetId = "lady_1", AgentId = "main" });
+            state.RomanceUntil["lady_2"] = 90;
+            state.Pregnancies.Add(new Pregnancy { MotherId = "lady_3", FatherId = "main", DueDay = 70 });
+            var house = new House { TownId = "town_1", ManagerId = "heir" };
+            house.Workers.Add(new HouseWorker { HeroId = "heir", Name = "Heir" });
+            house.Workers.Add(new HouseWorker { Name = "Ira" });
+            state.Houses.Add(house);
+            state.Hostages.Add(new HostageDeal { KingdomId = "vlandia", GivenId = "heir" });
+            state.Hostages.Add(new HostageDeal { KingdomId = "empire", GivenId = "cousin" });
+            int dropped = state.ForgetPlayerCharacter("heir");
+            Check("heir: old character's romance is gone", state.Lovers.Count == 0 && state.Courtships.Count == 0 && state.RomanceUntil.Count == 0
+                && state.SpouseAffair == null && state.SpouseWatchUntil == 0 && state.SpouseApartWeeks == 0);
+            Check("heir: pregnancies stay", state.Pregnancies.Count == 1);
+            Check("heir: the new character leaves seats, the house and hostage deals", state.SpymasterId == null && state.Mission == SpymasterMission.None
+                && state.RumorTargetId == null && state.TreasurerId == "other" && house.ManagerId == null && house.Workers.Count == 1
+                && state.Hostages.Count == 1 && state.Hostages[0].GivenId == "cousin");
+            Check("heir: dropped count", dropped == 7);
         }
 
         /// <summary>Genelev: tasarımdaki sayılar.</summary>
