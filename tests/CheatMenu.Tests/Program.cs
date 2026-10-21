@@ -689,6 +689,10 @@ namespace CheatMenu.Tests
         /// <summary>Divan, hazinedar (P2.12): hata payı, fiyat gürültüsü, atölye tahmini, sefer defteri, zimmet.</summary>
         private static void TreasuryTests()
         {
+            CheckChance("treasury: income bonus by Trade", TreasuryRules.IncomeBonusPercent(120), 12);
+            CheckChance("treasury: income bonus cap", TreasuryRules.IncomeBonusPercent(400), 20);
+            CheckChance("treasury: income bonus gold", TreasuryRules.IncomeBonus(500, 100), 50);
+            CheckChance("treasury: no bonus on losses", TreasuryRules.IncomeBonus(-300, 200), 0);
             CheckChance("treasury: untrained", TreasuryRules.ErrorPercent(0, 0), 45);
             CheckChance("treasury: trader", TreasuryRules.ErrorPercent(120, 0), 25);
             CheckChance("treasury: calculating trader", TreasuryRules.ErrorPercent(150, 1), 15);

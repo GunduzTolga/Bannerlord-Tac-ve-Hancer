@@ -132,7 +132,10 @@ namespace CheatMenu.UI
             int cost = LetterRules.MessengerCost(days);
             bool counts = Messengers.GiftCounts(state, hero);
             string blocked = Messengers.AudienceBlocked(state, hero);
+            // Diplomacy varken yüz yüze görüşme onun habercisiyle (tek haberci sistemi); bizim ulak yalnızca hediye taşır.
+            bool diplomacy = Bundle.DiplomacyCompat.MessengerAvailable;
             List<CardOption> options = LetterRules.GiftOptions
+                .Where(gift => !diplomacy || gift > 0)
                 .Select(gift => new CardOption
                 {
                     Label = gift == 0
@@ -147,8 +150,33 @@ namespace CheatMenu.UI
                     },
                 })
                 .ToList();
+            if (diplomacy)
+            {
+                int gold = Bundle.DiplomacyCompat.MessengerGold(hero);
+                int hours = Bundle.DiplomacyCompat.MessengerHours(hero);
+                options.Insert(0, new CardOption
+                {
+                    Label = "Görüşme: Diplomacy habercisi" + (gold >= 0 ? " (" + SchemeFactors.Money(gold) + (hours >= 0 ? ", " + MarshalRules.TravelText(hours) : "") + ")" : ""),
+                    DisabledHint = Bundle.DiplomacyCompat.MessengerBlocked(hero),
+                    Apply = () =>
+                    {
+                        if (!Bundle.DiplomacyCompat.SendMessenger(hero)) throw new InvalidOperationException("Diplomacy habercisi gönderilemedi");
+                        afterwards?.Invoke();
+                    },
+                });
+            }
             var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
             options.Add(cancel);
+            if (diplomacy)
+            {
+                Show("ULAK", "Ulak gönder: " + hero.Name,
+                    "Yüz yüze görüşme Diplomacy'nin habercisiyle: varınca " + hero.Name + " seni salonunda ya da yolda kabul eder (oyunun kendi "
+                    + "konuşması: krallığa davet, evlilik, görev).\n\nHediye ise bizim ulakla gider: yaklaşık " + days + " günde varır, ilişkiyi artırır."
+                    + (counts ? "" : " Son hediyenden beri " + LetterRules.GiftCooldownDays + " gün geçmedi: bu kez hediye ilişki getirmez.")
+                    + " Sana çok düşmansa (ilişki " + LetterRules.AudienceRefuseRelation + " ya da kötü) hediyeni geri yollar.",
+                    CardImages.Messenger, hero, options, cancel, null);
+                return;
+            }
             Show("ULAK", "Ulak gönder: " + hero.Name,
                 "Ulağın yaklaşık " + days + " gün sonra " + Tr.Dative(hero.Name.ToString()) + " varır. Kabul ederse onunla haritadan konuşabilirsin: "
                 + "lordu bulmaya gitmeden krallığına davet edebilir (oyunun ikna turları), evlilik ya da görev konuşabilirsin.\n\n"

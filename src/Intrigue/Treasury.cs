@@ -48,7 +48,8 @@ namespace CheatMenu.Intrigue
         {
             string busy = SchemeFactors.SpymasterBusyReason(hero);
             return hero.Name + " - Trade " + Trade(hero) + ", Hesapçı " + SchemeFactors.Signed(hero.GetTraitLevel(DefaultTraits.Calculating))
-                + ", tahmin payı %" + Error(hero) + (busy != null ? "  [" + busy + "]" : "");
+                + ", tahmin payı %" + Error(hero) + ", atölye ve kervan geliri +%" + TreasuryRules.IncomeBonusPercent(Trade(hero))
+                + (busy != null ? "  [" + busy + "]" : "");
         }
 
         /// <summary>null: hazinedar çalışıyor; değilse neden (yok, esir, vali, parti lideri).</summary>
@@ -104,6 +105,20 @@ namespace CheatMenu.Intrigue
 
         /// <summary>Atölyelerin ve kervanların sana günlük getirisi.</summary>
         public static int DailyIncome() => Workshops().Sum(WorkshopIncome) + Caravans().Sum(CaravanIncome);
+
+        /// <summary>
+        /// Klan gelirine eklenen hazinedar satırı (TreasurerFinanceModel): çalışan hazinedar atölye ve kervan gelirini Trade/10 yüzde
+        /// (en fazla %20) artırır; alım satımı o yönetir. Hazinedar yoksa ya da meşgulse 0.
+        /// </summary>
+        public static int IncomeBonus(int workshopsAndCaravans, out string name)
+        {
+            name = "";
+            IntrigueState state = IntrigueBehavior.Current?.State;
+            Hero treasurer = state != null ? Treasurer(state) : null;
+            if (treasurer == null || SchemeFactors.SpymasterBusyReason(treasurer) != null) return 0;
+            name = treasurer.Name.ToString();
+            return TreasuryRules.IncomeBonus(workshopsAndCaravans, Trade(treasurer));
+        }
 
         // ---- Hazinedarın fiyat tahtası ----
 

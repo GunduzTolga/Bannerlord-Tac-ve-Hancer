@@ -92,10 +92,11 @@ namespace CheatMenu.Intrigue
             state.Hostages.Add(new HostageDeal { KingdomId = kingdom.StringId, GivenId = hero.StringId, Since = Today, Until = Today + HostageRules.DurationDays });
             SchemeOutcomes.Relate(kingdom.Leader, HostageRules.GiveRulerRelation);
             Relieve(state, kingdom);
+            string pact = FormPact(kingdom);
             SchemeOutcomes.Notify(state, "Rehine gönderildi: " + hero.Name,
                 hero.Name + ", barışın teminatı olarak " + kingdom.Leader.Name + " sarayında, " + host.Name + " kentinde misafir olarak yaşayacak. "
                 + "Bir yıl sonra döner; bu sürede ev sahibiyle yakınlaşır.\n\nSonuç: " + kingdom.Leader.Name + " ile ilişki +" + HostageRules.GiveRulerRelation
-                + ", casus gerilimi -" + HostageRules.TensionRelief + ". Barış bozulursa " + hero.Name + " onların esiri olur.",
+                + ", casus gerilimi -" + HostageRules.TensionRelief + "." + pact + " Barış bozulursa " + hero.Name + " onların esiri olur.",
                 hero, CardImages.Hostage);
             state.AddLog(Today, "Rehine gönderildi: " + hero.Name + ", " + kingdom.Name);
         }
@@ -124,10 +125,11 @@ namespace CheatMenu.Intrigue
             });
             SchemeOutcomes.Relate(kingdom.Leader, HostageRules.ExchangeRulerRelation);
             Relieve(state, kingdom);
+            string exchangePact = FormPact(kingdom);
             SchemeOutcomes.Notify(state, "Rehine değişimi: " + kingdom.Name,
                 hero.Name + " " + host.Name + " kentine, " + theirs.Name + " " + ours.Name + " kentine misafir olarak gitti. Bir yıl sonra ikisi de döner.\n\n"
                 + "Sonuç: " + kingdom.Leader.Name + " ile ilişki +" + HostageRules.ExchangeRulerRelation + ", casus gerilimi -" + HostageRules.TensionRelief
-                + ". Barışı bozan taraf misafirini esir olarak kaybeder.",
+                + "." + exchangePact + " Barışı bozan taraf misafirini esir olarak kaybeder.",
                 theirs, CardImages.Hostage);
             state.AddLog(Today, "Rehine değişimi: " + kingdom.Name + " (" + hero.Name + " / " + theirs.Name + ")");
         }
@@ -137,6 +139,7 @@ namespace CheatMenu.Intrigue
         {
             Kingdom kingdom = KingdomOf(deal);
             Close(state, deal);
+            if (Clan.PlayerClan.Kingdom != null) Bundle.DiplomacyCompat.EndNonAggressionPact(Clan.PlayerClan.Kingdom, kingdom);
             if (kingdom?.Leader != null && kingdom.Leader.IsAlive) SchemeOutcomes.Relate(kingdom.Leader, -HostageRules.EarlyEndPenalty);
             MenuUI.Success("Rehine anlaşması bitti; misafirler evlerine dönüyor" + (kingdom?.Leader != null ? " (" + kingdom.Leader.Name + " ile -" + HostageRules.EarlyEndPenalty + ")" : ""));
         }
@@ -236,6 +239,18 @@ namespace CheatMenu.Intrigue
         }
 
         // ---- Yardımcılar ----
+
+        /// <summary>
+        /// Rehine anlaşması süresince Diplomacy'de saldırmazlık anlaşması (krallığın varsa ve Diplomacy paketliyse); kartta söylenecek
+        /// cümle ya da boş. Anlaşma süresi dolunca kendiliğinden biter; erken bitirilirse onu da bitiririz.
+        /// </summary>
+        private static string FormPact(Kingdom kingdom)
+        {
+            Kingdom mine = Clan.PlayerClan.Kingdom;
+            if (mine == null || mine == kingdom) return "";
+            return Bundle.DiplomacyCompat.FormNonAggressionPact(mine, kingdom, HostageRules.DurationDays)
+                ? " Rehineler süresince " + HostageRules.DurationDays + " günlük saldırmazlık anlaşması." : "";
+        }
 
         private static void Send(Hero hero, Settlement settlement)
         {

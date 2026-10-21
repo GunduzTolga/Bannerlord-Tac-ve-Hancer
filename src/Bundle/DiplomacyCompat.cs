@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 
@@ -48,6 +52,195 @@ namespace CheatMenu.Bundle
                 return false;
             }
         }
+
+        /// <summary>
+        /// İki krallık arasında, bedelsiz ve soru sormadan, verilen gün kadar saldırmazlık anlaşması kurar (rehine anlaşması süresince).
+        /// Zaten bir anlaşma varsa ya da Diplomacy yoksa false.
+        /// </summary>
+        internal static bool FormNonAggressionPact(Kingdom a, Kingdom b, float days)
+        {
+            if (a == null || b == null || a == b || !IsAvailable) return false;
+            try
+            {
+                object[] check = { a, b, null };
+                if ((bool)_hasPact.Invoke(null, check)) return false;
+                Type action = AccessTools.TypeByName("Diplomacy.DiplomaticAction.NonAggressionPact.FormNonAggressionPactAction");
+                MethodInfo apply = action?.GetMethod("Apply", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy,
+                    null, new[] { typeof(Kingdom), typeof(Kingdom), typeof(bool), typeof(bool), typeof(float?), typeof(bool) }, null);
+                if (apply == null) return false;
+                // forcePlayerCharacterCosts: false, bypassCosts: true, süre, queryPlayer: false
+                apply.Invoke(null, new object[] { a, b, false, true, (float?)days, false });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy pact could not be formed: " + ex);
+                return false;
+            }
+        }
+
+        /// <summary>Diplomacy'nin bir krallıktaki isyancı grubu (iç savaş): kim, ne istiyor, ne kadar güçlü.</summary>
+        internal sealed class RebelFactionInfo
+        {
+            public string Name;
+            public Clan Sponsor;
+            public List<Clan> Clans = new List<Clan>();
+            /// <summary>"ayrılık" ya da "tahttan indirme".</summary>
+            public string Demand;
+            public float StrengthRatio;
+            public float RequiredRatio;
+            public bool AtWar;
+        }
+
+        /// <summary>Krallıktaki isyancı gruplar; Diplomacy yoksa ya da okunamazsa boş liste.</summary>
+        internal static List<RebelFactionInfo> RebelFactions(Kingdom kingdom)
+        {
+            var list = new List<RebelFactionInfo>();
+            if (kingdom == null) return list;
+            try
+            {
+                Type manager = AccessTools.TypeByName("Diplomacy.CivilWar.RebelFactionManager");
+                MethodInfo get = manager?.GetMethod("GetRebelFaction", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static, null, new[] { typeof(Kingdom) }, null);
+                if (!(get?.Invoke(null, new object[] { kingdom }) is IEnumerable factions)) return list;
+                foreach (object faction in factions)
+                {
+                    Traverse t = Traverse.Create(faction);
+                    var info = new RebelFactionInfo
+                    {
+                        Name = t.Property("Name").GetValue()?.ToString() ?? "",
+                        Sponsor = t.Property("SponsorClan").GetValue() as Clan,
+                        Demand = t.Property("RebelDemandType").GetValue()?.ToString() == "Abdication" ? "tahttan indirme" : "ayrılık",
+                        StrengthRatio = t.Property("StrengthRatio").GetValue() is float ratio ? ratio : 0f,
+                        RequiredRatio = t.Property("RequiredStrengthRatio").GetValue() is float required ? required : 0f,
+                        AtWar = t.Property("AtWar").GetValue() is bool atWar && atWar,
+                    };
+                    if (t.Property("Clans").GetValue() is IEnumerable clans) info.Clans.AddRange(clans.OfType<Clan>());
+                    list.Add(info);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy rebel factions could not be read: " + ex);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Savaş Raporu'na (Diplomacy.ViewModel.DetailWarVM) satır ekler: orta sütun metin, iki yan sütun iki taraf. Diplomacy'nin kendi satır
+        /// türü (WarExhaustionBreakdownVM) boş bir dökümle kurulup metinleri değiştirilir; pencerenin yüksekliği satır başına 16 artar.
+        /// </summary>
+        internal static void AddWarReportRows(object detailWarVm, List<(string Text, string Ours, string Theirs)> rows)
+        {
+            if (detailWarVm == null || rows == null || rows.Count == 0) return;
+            Type rowType = AccessTools.TypeByName("Diplomacy.ViewModel.WarExhaustionBreakdownVM");
+            Type dataType = AccessTools.TypeByName("Diplomacy.WarExhaustion.WarExhaustionManager+WarExhaustionBreakdown");
+            if (rowType == null || dataType == null) return;
+            Traverse vm = Traverse.Create(detailWarVm);
+            if (!(vm.Property("Breakdowns").GetValue() is IList list)) return;
+            foreach ((string text, string ours, string theirs) in rows)
+            {
+                object row = Activator.CreateInstance(rowType, Activator.CreateInstance(dataType));
+                Traverse r = Traverse.Create(row);
+                r.Property("Text").SetValue(text ?? "");
+                r.Property("WarExhaustionValueFaction1").SetValue(ours ?? "");
+                r.Property("WarExhaustionValueFaction2").SetValue(theirs ?? "");
+                list.Add(row);
+            }
+            Traverse height = vm.Property("ReportHeight");
+            height.SetValue(height.GetValue<int>() + 16 * rows.Count);
+        }
+
+        // ---- Haberci: yüz yüze görüşme Diplomacy'nin habercisiyle (onun bedeli, yolu ve salondaki konuşması) ----
+
+        private static object MessengerCost(Hero hero) =>
+            AccessTools.Method("Diplomacy.Costs.DiplomacyCostCalculator:DetermineCostForSendingMessenger", new[] { typeof(Hero) })?.Invoke(null, new object[] { hero });
+
+        /// <summary>Diplomacy'nin habercisi kullanılabiliyor mu (mod yüklü ve kampanyada olay nesnesi var).</summary>
+        internal static bool MessengerAvailable
+        {
+            get
+            {
+                try
+                {
+                    return AccessTools.Property("Diplomacy.Events.DiplomacyEvents:Instance")?.GetValue(null) != null
+                        && AccessTools.TypeByName("Diplomacy.Messengers.MessengerManager") != null;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>Habercinin bedeli (altın); okunamazsa -1.</summary>
+        internal static int MessengerGold(Hero hero)
+        {
+            try
+            {
+                object cost = MessengerCost(hero);
+                return cost != null ? (int)Math.Round(Traverse.Create(cost).Property("Value").GetValue<float>()) : -1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>Diplomacy'nin habercisi varış saati (yaklaşık); okunamazsa -1.</summary>
+        internal static int MessengerHours(Hero hero)
+        {
+            try
+            {
+                return AccessTools.Method("Diplomacy.Messengers.MessengerManager:GetHourToArrive", new[] { typeof(Hero) })?.Invoke(null, new object[] { hero }) is int hours
+                    ? hours : -1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>null: bu kişiye Diplomacy habercisi gönderilebilir (bedel dahil); değilse Diplomacy'nin verdiği neden.</summary>
+        internal static string MessengerBlocked(Hero hero)
+        {
+            try
+            {
+                object cost = MessengerCost(hero);
+                MethodInfo can = AccessTools.TypeByName("Diplomacy.Messengers.MessengerManager")?.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                    .FirstOrDefault(m => m.Name == "CanSendMessengerWithCost" && m.GetParameters().Length == 3);
+                if (cost == null || can == null) return "Diplomacy habercisi bulunamadı";
+                object[] args = { hero, cost, null };
+                return (bool)can.Invoke(null, args) ? null : args[2]?.ToString() ?? "Gönderilemez";
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy messenger check failed: " + ex);
+                return "Diplomacy habercisine ulaşılamadı";
+            }
+        }
+
+        /// <summary>Diplomacy'nin habercisini gönderir (ansiklopedideki düğmeyle aynı); gönderildiyse true.</summary>
+        internal static bool SendMessenger(Hero hero)
+        {
+            if (MessengerBlocked(hero) != null) return false;
+            try
+            {
+                object events = AccessTools.Property("Diplomacy.Events.DiplomacyEvents:Instance")?.GetValue(null);
+                MethodInfo sent = events?.GetType().GetMethod("OnMessengerSent", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(Hero) }, null);
+                if (sent == null) return false;
+                sent.Invoke(events, new object[] { hero });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy messenger could not be sent: " + ex);
+                return false;
+            }
+        }
+
+        /// <summary>Savaş Raporu'nun karşı krallığı.</summary>
+        internal static Kingdom WarReportOpponent(object detailWarVm) =>
+            detailWarVm == null ? null : Traverse.Create(detailWarVm).Field("_opposingKingdom").GetValue() as Kingdom;
 
         private static void Resolve()
         {

@@ -41,6 +41,26 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Düzeltmeler ve Diplomacy bağlantıları (21 Ekim, yeni; bulutta derlendi ve test edildi)
+- [ ] **Varis:** sevgilisi olan bir karakterle klanı devret (Entrika > **Hanedan**) → yeni karakterde eski sevgili ve kur yok, divan koltuğu
+      varisin kendisiyse boşaldı; Kronik'te "Klanın başına X geçti"
+- [ ] **Şantaj:** bir sırla şantaj tut → sır listesinde "kozda harcandı"; aynı lorda yeniden şantaj "kullanılmamış sırrı yok" diyor
+- [ ] **Rehine:** divandaki birini rehine olarak gönderemiyorsun (listede yok); misafir rehineye suikast/kaçırma "yeminini bozar" diyor;
+      rehine giderken partinden çıkıyor
+- [ ] Krallığın varken rehine anlaşması → kartta "N günlük saldırmazlık anlaşması"; Krallık > Diplomasi'de anlaşma görünüyor;
+      anlaşmayı erken bitirince o da bitiyor
+- [ ] **Kur ve sevgililer** MCM'de ayrı anahtar; "Gizli ilişki sırları" kapalıyken kur yine çalışıyor
+- [ ] "Eşin seni aldatabilir" kapalıyken eşinin (Regard and Standing'in kurduğu) ilişkisini araştırabiliyorsun
+- [ ] **Savaş Raporu:** altta serdarın satırları (güç tahmini sol/sağ, sahadaki ordular, topraklarına yürüyen, tavsiye); serdar yoksa
+      "Serdarın yok" satırı; pencere satırlara göre uzuyor, kapat düğmesi yerinde
+- [ ] **Muhalefeti izle** raporunda (krallıkta isyancı grup varsa) "Örgütlü muhalefet": önde kim, kaç klan, istek, güç
+- [ ] **Ulak kartı:** ilk seçenek "Görüşme: Diplomacy habercisi (bedel, süre)" → Diplomacy'nin habercisi gidiyor, varınca konuşma;
+      hediyeli ulak varınca "Hediyen ulaştı" kartı (artık bizim görüşme penceremiz açılmıyor)
+- [ ] **Hazinedar:** Klan > gelir açıklamasında "Hazinedar X" satırı; atölye+kervan gelirinin Trade/10 yüzdesi kadar (en fazla %20)
+- [ ] **Kâhya:** valisi olan şehirde sadakat açıklamasında kâhya satırı yok; valisizde var
+- [ ] Entrika menüsünde "Kayıt testi" yok, "Hanedan" var; şehir menüsünde "Saray günü düzenle (dilekçeler)"
+- [ ] Genelev > Yoldaşlar > Yönetici ata: listede **eşin** de var (isterse yönetir; çalışan olarak hiç sorulmaz)
+
 ### Casus başı: Ajan yetiştir (21 Ekim, yeni)
 - [ ] Yoldaşı casus başı ata (krallık gerekmez), Görev → **Ajan yetiştir**; iki hafta sonra "yeni ajan" mesajı, haftada 200 altın düştü
 - [ ] Görev satırında "· ajan N"; yeni entrikanın başarı yüzdesi ajan başına +2 arttı; bakım ajan başına haftada 50 altın
