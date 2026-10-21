@@ -68,6 +68,11 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Saray > Ticaret: AutoTrader'ın ayarları (21 Ekim, kullanıcı isteği "AutoTrader yapalım"):** Alt+A artık AutoTrader'ın penceresi yerine
+  Entrika > Saray > Ticaret'i açıyor (`BundleShim` ön yaması, 1,5 sn bekleme). Bütün ayarları -/+ satırlarla (`TradeVM`, `TvhTradePanel`;
+  basamaklar ve hazır ayarlar `TradeSettingsRules`, testli; okuma/yazma `AutoTraderCompat`, her değişiklikte onun `Save`'i). AutoTrader'ın
+  56 metni Türkçeleşti (`third_party/AutoTrader/ModuleData/Languages/TR`). Artık paketli modların hiçbirinin ayrı penceresi kalmadı
+  (bizim Savaş Raporu ve olay kartları hariç). Tasarım `2026-10-21-ticaret-sekmesi.md`. Oyunda henüz denenmedi.
 - **Oyunun kendi "tımar"ı da "toprak" (21 Ekim, kullanıcı isteği "Klan ekranındaki Tımarlar'ı da Topraklar yap"):** oyunun dil dosyaları
   bulutta yok, kimlikleri bilinmiyor; bu yüzden çeviri sözlüğünü değil, çevrilmiş metni düzeltiyoruz: `Patches/FiefWordPatch`
   (`LocalizedTextManager.GetTranslatedText` son eki) içinde "tımar" geçen her metni ekleriyle "toprak" yapar (`Tr.TimarToToprak`, testli).

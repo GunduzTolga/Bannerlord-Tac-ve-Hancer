@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Saray > Ticaret paneli (ViewModel: TradeVM): AutoTrader'ın ayarları, onun ayrı penceresi yerine (Alt+A buraya açılır). Üstte başlık,
+  nasıl çalıştığı ve hazır ayar düğmeleri; solda fiyat, yük ve elde tutulacaklar; sağda mal türlerine göre al/sat ve özel ayarlar
+  (TvhStepRow). Her değişiklik hemen kaydedilir. AutoTrader yoksa açıklama.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@IsUnavailable" />
+
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsAvailable">
+          <Children>
+            <!-- ===== Başlık şeridi: ad, açıklama, hazır ayarlar ===== -->
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginRight="700" Brush="Tvh.Text.Name" Text="@Title" />
+            <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="32" HorizontalAlignment="Right" StackLayout.LayoutMethod="HorizontalLeftToRight">
+              <Children>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="120" MarginRight="8" Brush="Tvh.Text.MutedRight" Text="@PresetsTitle" />
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="134" SuggestedHeight="32" MarginRight="6" Brush="Tvh.Button.Small" Command.Click="ExecutePreset0" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@Preset0Text" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="134" SuggestedHeight="32" MarginRight="6" Brush="Tvh.Button.Small" Command.Click="ExecutePreset1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@Preset1Text" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="134" SuggestedHeight="32" MarginRight="6" Brush="Tvh.Button.Small" Command.Click="ExecutePreset2" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@Preset2Text" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="134" SuggestedHeight="32" Brush="Tvh.Button.Small" Command.Click="ExecutePreset3" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@Preset3Text" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="44" MarginTop="36" Brush="Tvh.Text.SmallTop" Text="@InfoText" />
+
+            <!-- ===== Sol: fiyat, yük ve kese, elde tutulacaklar ===== -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="760" MarginTop="86" Sprite="BlankWhiteSquare_9" Color="#0D0A0799">
+              <Children>
+                <ScrollablePanel Id="SettingsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="6" MarginRight="22" MarginTop="4" MarginBottom="4" AutoHideScrollBars="true" ClipRect="SettingsClip" InnerPanel="SettingsClip\SettingsList" VerticalScrollbar="..\SettingsBar\Scrollbar">
+                  <Children>
+                    <Widget Id="SettingsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="SettingsList" DataSource="{Settings}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <ItemTemplate>
+                            <TvhStepRow />
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="SettingsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginRight="4" MarginTop="4" MarginBottom="4" />
+              </Children>
+            </Widget>
+
+            <!-- ===== Sağ: al / sat, özel ayarlar ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="780" MarginTop="86" Sprite="BlankWhiteSquare_9" Color="#0D0A0799">
+              <Children>
+                <ScrollablePanel Id="GoodsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="6" MarginRight="22" MarginTop="4" MarginBottom="4" AutoHideScrollBars="true" ClipRect="GoodsClip" InnerPanel="GoodsClip\GoodsList" VerticalScrollbar="..\GoodsBar\Scrollbar">
+                  <Children>
+                    <Widget Id="GoodsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="GoodsList" DataSource="{Goods}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <ItemTemplate>
+                            <TvhStepRow />
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="GoodsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginRight="4" MarginTop="4" MarginBottom="4" />
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

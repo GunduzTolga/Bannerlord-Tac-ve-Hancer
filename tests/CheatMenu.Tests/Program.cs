@@ -189,6 +189,7 @@ namespace CheatMenu.Tests
             DiplomatTests();
             RealmTests();
             KingdomsTests();
+            TradeSettingsTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -938,6 +939,24 @@ namespace CheatMenu.Tests
             Check("realm: donation follows the support ratio", RealmRules.DonationRelation(10000, 0.002f, 1, 2) == 10);
             Check("realm: nothing for nothing", RealmRules.DonationRelation(0, 0.002f, 1, 2) == 0 && RealmRules.DonationRelation(5000, 0.002f, 1, 0) == 0);
             Check("realm: rounding", RealmRules.DonationRelation(2600, 0.002f, 1, 2) == 3);
+        }
+
+        private static void TradeSettingsTests()
+        {
+            Check("trade: percent steps", TradeSettingsRules.Percent(200).Count == 41 && TradeSettingsRules.Percent(200)[40] == 200
+                && TradeSettingsRules.Percent(12).Last() == 10 && TradeSettingsRules.Percent(0).Single() == 0);
+            Check("trade: max never below min", TradeSettingsRules.GrainMax(120).First() == 120 && TradeSettingsRules.GrainMax(120).All(v => v >= 120)
+                && TradeSettingsRules.ConsumableMax(20).First() == 20 && TradeSettingsRules.GrainMax(0).First() == 0);
+            Check("trade: current value kept", TradeSettingsRules.WithCurrent(new List<int> { 0, 10, 20 }, 13).SequenceEqual(new[] { 0, 10, 13, 20 })
+                && TradeSettingsRules.WithCurrent(new List<int> { 0, 10 }, 10).Count == 2);
+            Check("trade: texts", TradeSettingsRules.RadiusText(1000) == "sınırsız" && TradeSettingsRules.RadiusText(300) == "300"
+                && TradeSettingsRules.GrainMaxText(500) == "hepsi" && TradeSettingsRules.GrainMaxText(1000) == "hepsi" && TradeSettingsRules.GrainMaxText(100) == "100");
+            Check("trade: buy and sell", TradeSettingsRules.BuySell(true, true) == 3 && TradeSettingsRules.BuySell(false, true) == 2
+                && TradeSettingsRules.BuySellText(1) == "yalnızca al" && TradeSettingsRules.BuySellText(0) == "dokunma");
+            Check("trade: presets like AutoTrader's", TradeSettingsRules.Preset(0).Count == 31 && TradeSettingsRules.Preset(0)["BuyThresholdValue"] == 85
+                && TradeSettingsRules.Preset(1)["JunkCattleValue"] == 1 && TradeSettingsRules.Preset(2)["SearchRadiusValue"] == 1000
+                && TradeSettingsRules.Preset(3)["UseWeightedValue"] == 1 && TradeSettingsRules.Preset(9).Count == 0
+                && TradeSettingsRules.PresetNames.Length == 4);
         }
 
         private static void KingdomsTests()

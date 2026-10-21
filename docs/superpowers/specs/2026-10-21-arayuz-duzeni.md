@@ -12,7 +12,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 |---|---|---|
 | **Entrika** | Süren · Yeni entrika · Ağlar · Sana karşı | casus başının işleri (soldaki casus başı sütunu yalnızca burada) |
 | **Kişiler** | Kişiler · Lordlar · Esirler | insanlar: dosyalar, lordlarla iletişim (ulak, çağır, ziyafet), esirler |
-| **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, toprak (şehir ve kale) verme ve iade; divan koltukları ve raporları; olayların kaydı |
+| **Saray** | Saray · Krallık · Divan · Ticaret · Kronik | krallığın sarayı; klanlara bağış, toprak (şehir ve kale) verme ve iade; divan koltukları ve raporları; AutoTrader'ın ayarları; olayların kaydı |
 | **Savaş ve barış** | Krallıklar · Savaşlar · İsyanlar | bütün krallıklar ve bağlar (ittifak, ticaret, saldırmazlık, savaş ilanı), her savaşın durumu ve Barış Masası, isyan grupları |
 
 ## Ayrı pencere kalanlar (yalnızca bunlar)
@@ -30,6 +30,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 - Saray'daki "İsyanlar..." düğmesi: seçili krallığın isyan grupları.
 - Diplomacy'nin "Altın Bağışla", "Toprak ver" (Krallık > Klanlar, ansiklopedi) ve "Toprağı iade et" düğmeleri: Saray > Krallık, o klan
   seçili (`2026-10-21-krallik-sekmesi.md`).
+- AutoTrader'ın Alt+A'sı: Saray > Ticaret (`2026-10-21-ticaret-sekmesi.md`).
 - Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`, `OpenRealm`, `OpenKingdoms`; ViewModel'de
   `IntrigueScreenVM.FocusWar`, `FocusRebellions`, `FocusRealm`, `FocusKingdoms`.
 
@@ -44,4 +45,5 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 
 `LordsScreen`, `RebellionsScreen`, `PeaceTableScreen` ve prefab'ları (`TvhLords`, `TvhRebellions`, `TvhPeaceTable`): yerlerine
 `TvhLordsPanel`, `TvhRebellionsPanel`, `TvhWarsPanel` + `TvhPeaceTablePanel`. Saray'daki "Lordlar..." düğmesi (Lordlar artık yan sekme).
-Diplomacy'nin bağış, fief verme ve iade pencereleri yönlendirildi (krallıkta değilsen ya da bir şey ters giderse yine onlar açılır).
+Diplomacy'nin bağış, toprak verme ve iade pencereleri yönlendirildi (krallıkta değilsen ya da bir şey ters giderse yine onlar açılır).
+AutoTrader'ın ayar penceresi (Alt+A) yönlendirildi; kampanya dışında yine o açılır.

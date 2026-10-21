@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <!-- Taç ve Hançer: AutoTrader'ın Türkçesi (21 Ekim 2026). Kimlikler ModuleData\Languages\module_strings.xml ile aynı. -->
+  <strings>
+    <string id="ATAll" text="Hepsi" />
+    <string id="ATAltAT" text="&lt;Alt + A&gt; yerine &lt;Alt + A + T&gt; kısayolunu kullan" />
+    <string id="ATBuy" text="Al" />
+    <string id="ATBuyThreshold" text="Ortalama fiyatın şu yüzdesinin altındaysa al" />
+    <string id="ATCancel" text="Vazgeç" />
+    <string id="ATCaravan" text="Mallarına bakmak istiyorum. (Otomatik ticaret)" />
+    <string id="ATConfig" text="AutoTrader Seçenekleri" />
+    <string id="ATDefault" text="Varsayılan: " />
+    <string id="ATDone" text="Tamam" />
+    <string id="ATHeaderBase" text="Temel Seçenekler" />
+    <string id="ATHeaderCustom" text="Tercihler" />
+    <string id="ATHeaderSpecial" text="Özel Seçenekler" />
+    <string id="ATHeaderTrade" text="Alım / Satım Seçenekleri" />
+    <string id="ATInf" text="Sınırsız" />
+    <string id="ATJunkCattle" text="Bütün sığırları her zaman sat" />
+    <string id="ATKeepConsumablesMax" text="Elde tutulacak öteki yiyeceklerin en çoğu" />
+    <string id="ATKeepConsumablesMin" text="Elde tutulacak öteki yiyeceklerin en azı" />
+    <string id="ATKeepGrainsMax" text="Elde tutulacak tahılın en çoğu" />
+    <string id="ATKeepGrainsMin" text="Elde tutulacak tahılın en azı" />
+    <string id="ATKeepSmelting" text="Eritilebilecek silahları tut" />
+    <string id="ATKeepWages" text="X günlük asker maaşına yetecek altını tut" />
+    <string id="ATLockHint" text="Satılmasını istemediğiniz eşyaları kilitleyin." />
+    <string id="ATMaxCapacity" text="Envanterin aynı malla dolabilecek en yüksek yüzdesi" />
+    <string id="ATNoFleet" text="Lordum! Tüccarlarınız şaşkın: malları gemilere yüklemelerini özellikle istediniz ama filomuz yok! Arabalara yüklemelerini söyledim, yine de emirlerinizi bir gözden geçirmek isteyebilirsiniz." />
+    <string id="ATNoFleetSpace" text="Lordum! Filomuza daha fazla mal yükleyemiyoruz! Sürümüz için de yer gerektiğini unutmayın." />
+    <string id="ATNoInventorySpace" text="Lordum! Envanterimize daha fazla mal sığmıyor!" />
+    <string id="ATOptions" text="AutoTrader Ayarları" />
+    <string id="ATPreDefault" text="Varsayılan" />
+    <string id="ATPreGlobal" text="Uzak Ticaret" />
+    <string id="ATPreLocal" text="Yakın Ticaret" />
+    <string id="ATPreSeller" text="Ganimet Satıcısı" />
+    <string id="ATPresets" text="Hazır Ayarlar" />
+    <string id="ATResupply" text="Yiyeceği &#x27;öteki yiyecekler&#x27; en az değerine tamamla" />
+    <string id="ATResupplyHardwood" text="Keresteyi &#x27;öteki yiyecekler&#x27; en az değerine tamamla" />
+    <string id="ATSearchRadius" text="Ortalama fiyat arama yarıçapı" />
+    <string id="ATSell" text="Sat" />
+    <string id="ATSellSmithing" text="Kömür ve külçeleri sat" />
+    <string id="ATSellThreshold" text="Ortalama fiyatın şu yüzdesinin üstündeyse sat" />
+    <string id="ATShowAdvanced" text="Gelişmiş ayarları göster" />
+    <string id="ATSimpleAI" text="Yeşil/kırmızı fiyata göre ticaret (ticaret söylentileriyle iyileşir)" />
+    <string id="ATStartup01" text="AutoTrader hazır! Ayarları (Entrika &gt; Saray &gt; Ticaret) açmak için &lt;ALT + A" />
+    <string id="ATStartup02" text="&gt; tuşlarına basın" />
+    <string id="ATTrade" text="Otomatik ticaret yap" />
+    <string id="ATTradeArmor" text="Zırh ticareti (X kademe ve altını satar)" />
+    <string id="ATTradeConsumables" text="Yiyecek ticareti" />
+    <string id="ATTradeGoods" text="Mal ticareti" />
+    <string id="ATTradeHorses" text="At ticareti (yalnızca yük atı alır)" />
+    <string id="ATTradeLivestock" text="Hayvan ticareti (sürü oluşabilir)" />
+    <string id="ATTradeWeapons" text="Silah ticareti (X kademe ve altını satar)" />
+    <string id="ATUseInventorySpace" text="Modun kullanabileceği toplam envanter yüzdesi" />
+    <string id="ATUseMaxFleetCapacity" text="Envanter yerine filo kapasitesini kullan" />
+    <string id="ATVersionMismatch01" text="AutoTrader " />
+    <string id="ATVersionMismatch02" text=" için yapılmış, Bannerlord ise " />
+    <string id="ATVersionMismatch03" text=". Sorun yaşarsanız mod sayfasında uygun bir sürüm arayın." />
+    <string id="ATWeaponsArmorTier" text="X kademe ve altındaki silah ve zırhları sat" />
+    <string id="ATWeightedRadius" text="Ortalama fiyatı mesafeye göre ağırlıklandır" />
+  </strings>
+</base>

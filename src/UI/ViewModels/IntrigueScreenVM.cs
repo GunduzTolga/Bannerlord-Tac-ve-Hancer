@@ -18,7 +18,7 @@ namespace CheatMenu.UI.ViewModels
     public sealed class IntrigueScreenVM : TvhViewModel
     {
         public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabCourt = 4, TabCouncil = 5, TabNetworks = 6, TabPlots = 7,
-            TabLog = 8, TabLords = 9, TabWars = 10, TabRebellions = 11, TabRealm = 12, TabKingdoms = 13;
+            TabLog = 8, TabLords = 9, TabWars = 10, TabRebellions = 11, TabRealm = 12, TabKingdoms = 13, TabTrade = 14;
 
         /// <summary>
         /// Bölümler (üst sekmeler) ve alt sekmeleri (tasarım: docs/superpowers/specs/2026-10-21-arayuz-duzeni.md). Her özellik tek bir yerde:
@@ -29,11 +29,11 @@ namespace CheatMenu.UI.ViewModels
         {
             new[] { TabSchemes, TabNew, TabNetworks, TabPlots },
             new[] { TabPeople, TabLords, TabPrisoners },
-            new[] { TabCourt, TabRealm, TabCouncil, TabLog },
+            new[] { TabCourt, TabRealm, TabCouncil, TabTrade, TabLog },
             new[] { TabKingdoms, TabWars, TabRebellions },
         };
         private static readonly string[] TabNames =
-            { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Divan", "Ağlar", "Sana karşı", "Kronik", "Lordlar", "Savaşlar", "İsyanlar", "Krallık", "Krallıklar" };
+            { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Divan", "Ağlar", "Sana karşı", "Kronik", "Lordlar", "Savaşlar", "İsyanlar", "Krallık", "Krallıklar", "Ticaret" };
 
         public static int GroupOf(int tab)
         {
@@ -47,7 +47,7 @@ namespace CheatMenu.UI.ViewModels
         private bool _dirty;
         private string _subtitle = "", _status = "";
         private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isCourtTab, _isCouncilTab, _isNetworksTab, _isPlotsTab, _isLogTab;
-        private bool _isLordsTab, _isWarsTab, _isRebellionsTab, _isRealmTab, _isKingdomsTab, _isIntrigueGroup;
+        private bool _isLordsTab, _isWarsTab, _isRebellionsTab, _isRealmTab, _isKingdomsTab, _isTradeTab, _isIntrigueGroup;
         private float _contentMargin;
         /// <summary>Her bölümde en son açık alt sekme (bölüme dönünce oraya).</summary>
         private readonly int[] _lastInGroup = new int[4];
@@ -71,6 +71,7 @@ namespace CheatMenu.UI.ViewModels
             Rebellions = new RebellionsVM(close);
             Realm = new RealmVM(MarkDirty);
             Kingdoms = new KingdomsVM(MarkDirty, enemy => FocusWar(enemy, null));
+            Trade = new TradeVM(MarkDirty);
             Schemes = new MBBindingList<SchemeItemVM>();
             Letters = new MBBindingList<LetterItemVM>();
             Romances = new MBBindingList<RomanceRowVM>();
@@ -109,11 +110,13 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool IsRebellionsTab { get => _isRebellionsTab; set => Set(ref _isRebellionsTab, value, nameof(IsRebellionsTab)); }
         [DataSourceProperty] public bool IsRealmTab { get => _isRealmTab; set => Set(ref _isRealmTab, value, nameof(IsRealmTab)); }
         [DataSourceProperty] public bool IsKingdomsTab { get => _isKingdomsTab; set => Set(ref _isKingdomsTab, value, nameof(IsKingdomsTab)); }
+        [DataSourceProperty] public bool IsTradeTab { get => _isTradeTab; set => Set(ref _isTradeTab, value, nameof(IsTradeTab)); }
         [DataSourceProperty] public LordsVM Lords { get; }
         [DataSourceProperty] public WarsVM Wars { get; }
         [DataSourceProperty] public RebellionsVM Rebellions { get; }
         [DataSourceProperty] public RealmVM Realm { get; }
         [DataSourceProperty] public KingdomsVM Kingdoms { get; }
+        [DataSourceProperty] public TradeVM Trade { get; }
 
         [DataSourceProperty] public bool IsSchemesTab { get => _isSchemesTab; set => Set(ref _isSchemesTab, value, nameof(IsSchemesTab)); }
         [DataSourceProperty] public bool IsNewTab { get => _isNewTab; set => Set(ref _isNewTab, value, nameof(IsNewTab)); }
@@ -258,6 +261,7 @@ namespace CheatMenu.UI.ViewModels
             IsRebellionsTab = _tab == TabRebellions;
             IsRealmTab = _tab == TabRealm;
             IsKingdomsTab = _tab == TabKingdoms;
+            IsTradeTab = _tab == TabTrade;
             IsSchemesTab = _tab == TabSchemes;
             IsNewTab = _tab == TabNew;
             IsPeopleTab = _tab == TabPeople;
@@ -329,6 +333,9 @@ namespace CheatMenu.UI.ViewModels
                 case TabKingdoms:
                     Kingdoms.Refresh();
                     break;
+                case TabTrade:
+                    Trade.Refresh();
+                    break;
             }
         }
 
@@ -384,6 +391,7 @@ namespace CheatMenu.UI.ViewModels
             Rebellions.OnFinalize();
             Realm.OnFinalize();
             Kingdoms.OnFinalize();
+            Trade.OnFinalize();
         }
     }
 }

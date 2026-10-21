@@ -258,6 +258,13 @@
                   </Children>
                 </Widget>
 
+                <!-- ===== Ticaret (AutoTrader) ===== -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsTradeTab">
+                  <Children>
+                    <TvhTradePanel DataSource="{Trade}" />
+                  </Children>
+                </Widget>
+
                 <!-- ===== Krallıklar ===== -->
                 <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsKingdomsTab">
                   <Children>

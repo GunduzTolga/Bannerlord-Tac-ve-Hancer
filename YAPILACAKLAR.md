@@ -30,7 +30,7 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] Karakter düzenleyicide DLX saç katmanları paneli; envanterde "Hair under helmet" düğmesi
 - [ ] Yeni kampanyada Women in Calradia yoldaşları tavernalarda; **yüzleri düzgün** (doku bozuksa ekran görüntüsü at)
 - [ ] Mod Seçenekleri'nde Women in Calradia ayarları
-- [ ] **AutoTrader** (20 Ekim'de eklendi): kasaba/köy menüsünde "Automatically trade wares" seçeneği; **Alt+A** ayar ekranını açıyor;
+- [ ] **AutoTrader** (20 Ekim'de eklendi): kasaba/köy menüsünde "Otomatik ticaret yap" seçeneği; **Alt+A** Entrika > Saray > Ticaret sekmesini açıyor;
       bir kasabada otomatik al-sat yapıyor. Açılışta "1.4.6 için" uyarısı çıkabilir, önemsiz
 - [ ] **Regard and Standing** (20 Ekim'de eklendi; lordlar arası gizli ilişkilerin sahibi o, bizim casus başımız onun gerçek
       ilişkilerini buluyor): Mod Seçenekleri'nde "Regard and Standing" sayfası; turnuva davet mektupları; klanındaki bir evlilik onay
@@ -51,6 +51,14 @@ Lordlar, İsyanlar ve Barış Masası artık ayrı pencere değil, Entrika ekran
 - [ ] Saray'da seçili krallığın "İsyanlar..." düğmesi; Divan'daki "Barış Masası" düğmesi; elçi kartındaki "Barış Masası'na otur"
 - [ ] Insert > Entrika'daki Lordlar / İsyanlar / Barış Masası girişleri ilgili sekmeyi açıyor
 - [ ] Klan ekranının Entrika sekmesinde de, ayrı Entrika ekranında da aynı
+
+### Saray > Ticaret: AutoTrader'ın ayarları (21 Ekim, yeni)
+AutoTrader'ın ayrı ayar penceresi artık Entrika ekranının bir sekmesi; AutoTrader'ın yazıları Türkçe. Tasarım: `docs\superpowers\specs\2026-10-21-ticaret-sekmesi.md`.
+- [ ] Haritada **Alt+A** → Klan ekranı Entrika > Saray > **Ticaret** sekmesiyle açılıyor (AutoTrader'ın eski penceresi açılmıyor, iki kez açılmıyor)
+- [ ] Solda fiyat / yük ve kese / elde tutulacaklar, sağda al-sat ve özel ayarlar; -/+ ile değişiyor, yazılar taşıyor mu
+- [ ] Bir ayarı değiştir, oyunu kaydet-çık-gir: ayar kalmış mı (`Belgeler\...\Configs\AutoTraderConfig.xml`)
+- [ ] "Fiyat yöntemi"ni ortalama fiyata çevirince ağırlık ve arama yarıçapı satırları çıkıyor; hazır ayar düğmeleri onay sorup uyguluyor
+- [ ] Kasaba menüsünde "Otomatik ticaret yap", kervanda "Mallarına bakmak istiyorum. (Otomatik ticaret)" Türkçe; ticaret ayarlara göre yapılıyor
 
 ### Diplomacy'nin Türkçesi (21 Ekim, yeni)
 Diplomacy'nin çevrilmemiş 118 metni ve mod yükleme uyarıları Türkçe; "tımar" yerine her yerde "toprak".

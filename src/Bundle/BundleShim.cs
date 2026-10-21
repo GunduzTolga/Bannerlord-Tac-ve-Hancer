@@ -99,6 +99,33 @@ namespace CheatMenu.Bundle
             var giveBack = AccessTools.Method("Diplomacy.GauntletInterfaces.ReturnFiefInterface:ShowReturnFiefInterface", new[] { screen, typeof(Kingdom), typeof(Action) });
             if (giveBack != null)
                 harmony.Patch(giveBack, prefix: new HarmonyMethod(typeof(BundleShim), nameof(ReturnFiefWindow)));
+            // AutoTrader'ın ayar penceresi (Alt+A) yerine Entrika ekranının Saray > Ticaret sekmesi (ayarlar yine onun dosyasında).
+            var autoTrader = AccessTools.Method("AutoTrader.AutoTraderSubModule:OpenSettingsMenu");
+            if (autoTrader != null)
+                harmony.Patch(autoTrader, prefix: new HarmonyMethod(typeof(BundleShim), nameof(AutoTraderWindow)));
+        }
+
+        private static DateTime _autoTraderOpened = DateTime.MinValue;
+
+        /// <summary>
+        /// false: AutoTrader'ın penceresi açılmaz, Ticaret sekmesi açılır. AutoTrader tuşları basılı kaldıkça her karede çağırır; ekran açılana
+        /// kadar (birkaç kare) yeniden açmayalım. Kampanya durumu yoksa onunki açılır.
+        /// </summary>
+        private static bool AutoTraderWindow()
+        {
+            try
+            {
+                if (Intrigue.SchemeEngine.State == null) return true;
+                if ((DateTime.UtcNow - _autoTraderOpened).TotalMilliseconds < 1500) return false;
+                _autoTraderOpened = DateTime.UtcNow;
+                UI.IntrigueScreen.OpenTab(UI.ViewModels.IntrigueScreenVM.TabTrade);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] AutoTrader window hook failed: " + ex);
+                return true;
+            }
         }
 
         /// <summary>false: Diplomacy'nin penceresi açılmaz, Krallık sekmesi açılır (bu klan seçili). Krallıkta değilsen onunki açılır.</summary>
