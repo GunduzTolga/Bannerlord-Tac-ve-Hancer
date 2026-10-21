@@ -66,6 +66,11 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Saray > Krallık sekmesi (21 Ekim, kullanıcı seçimi "Diplomacy pencerelerini taşı"):** Diplomacy'nin altın bağışı, fief verme ve
+  fief iadesi pencereleri ön yamalarla Entrika ekranının Krallık sekmesine yönleniyor (`RealmVM`, `TvhRealmPanel`, `TvhClanItem`; işlemler
+  `DiplomacyCompat` ile Diplomacy'nin). Solda krallığın klanları, sağda seçili klana bağış (basamaklı miktar, ilişki önizlemesi) ve fief
+  verme; altında iade edilebilir yerler. Tasarım `2026-10-21-krallik-sekmesi.md`. Oyunda henüz denenmedi. Artık Diplomacy'nin ayrı penceresi
+  olarak yalnızca Savaş Raporu (bizim) kaldı; Diplomacy'nin kendi pencereleri yalnızca yedek.
 - **Divan koltuğu "Serdar" artık "Mareşal" (kullanıcı kararı):** "Serdar" erkek adı gibi okunuyordu. Bütün metinler ve belgeler; resim
   dosyaları (`sonuc_serdar*.png`) ve kodda `Marshal` adı aynı. Kronik'teki eski satırlarda "Serdar" kalır.
 - **Barış Masası (21 Ekim, kullanıcı isteği):** savaştığın krallıktan haraç, savaş tazminatı, garnizonlarından asker, şehir ve kale iste;

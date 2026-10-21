@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Barış Masası'ndaki satır (ViewModel: PeaceTermVM): bölüm başlığı ya da şart (ad, azalt, değer, arttır; masadaysa değer altın renkte).
+  Basamaklı satır (ViewModel: StepRowVM): bölüm başlığı ya da ad, azalt, değer, arttır (seçiliyse değer altın renkte). Barış Masası'nın
+  şartları, Krallık'taki bağış miktarı.
   Genişliğe uyar (en az 540).
 -->
 <Prefab>

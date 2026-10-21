@@ -187,6 +187,7 @@ namespace CheatMenu.Tests
             WarReportTests();
             PeaceTreatyTests();
             DiplomatTests();
+            RealmTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -925,6 +926,13 @@ namespace CheatMenu.Tests
         }
 
         /// <summary>Lordlarla iletişim: ziyafet ve yanına çağırma.</summary>
+        private static void RealmTests()
+        {
+            Check("realm: donation follows the support ratio", RealmRules.DonationRelation(10000, 0.002f, 1, 2) == 10);
+            Check("realm: nothing for nothing", RealmRules.DonationRelation(0, 0.002f, 1, 2) == 0 && RealmRules.DonationRelation(5000, 0.002f, 1, 0) == 0);
+            Check("realm: rounding", RealmRules.DonationRelation(2600, 0.002f, 1, 2) == 3);
+        }
+
         private static void DiplomatTests()
         {
             Check("diplomat: peace bonus", DiplomatRules.PeaceBonus(0) == 0 && DiplomatRules.PeaceBonus(200) == 10 && DiplomatRules.PeaceBonus(900) == 15);
