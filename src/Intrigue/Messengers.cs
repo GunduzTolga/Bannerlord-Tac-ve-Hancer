@@ -159,6 +159,15 @@ namespace CheatMenu.Intrigue
                 }
             }
             state.Audiences.RemoveAll(a => a.HeroId == target.StringId);
+            if (Bundle.DiplomacyCompat.MessengerAvailable)
+            {
+                // Görüşme Diplomacy'nin habercisiyle yapılır; bizim ulak yalnızca hediyeyi götürdü.
+                SchemeOutcomes.Notify(state, "Hediyen ulaştı: " + target.Name,
+                    target.Name + " hediyeni kabul etti" + (relation > 0 ? ": ilişki +" + relation + "." : ".")
+                    + " Görüşmek istersen Diplomacy habercisi gönder (ulak kartı ya da ansiklopedideki düğme).", target, CardImages.Messenger);
+                state.AddLog(today, "Hediye ulaştı: " + target.Name + (gift > 0 ? " (" + SchemeFactors.Money(gift) + ")" : ""));
+                return;
+            }
             state.Audiences.Add(new Audience { HeroId = target.StringId, Until = today + LetterRules.AudienceWaitDays, Relation = relation });
             state.AddLog(today, "Ulak kabul edildi: " + target.Name + (gift > 0 ? " (hediye " + SchemeFactors.Money(gift) + ")" : ""));
         }

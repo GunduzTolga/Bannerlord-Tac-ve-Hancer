@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using HarmonyLib;
+using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
@@ -79,6 +80,23 @@ namespace CheatMenu.Bundle
             var reportHeight = AccessTools.PropertyGetter("Diplomacy.ViewModel.DetailWarVM:ReportHeight");
             if (reportHeight != null && reportHeight.ReturnType == typeof(int))
                 harmony.Patch(reportHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportHeight)));
+            // Savaş Raporu'na serdarın tahminleri: güç, sahadaki ordular, topraklarına yürüyenler, tavsiye (Intrigue.Marshal).
+            var refresh = AccessTools.Method("Diplomacy.ViewModel.DetailWarVM:RefreshValues");
+            if (refresh != null)
+                harmony.Patch(refresh, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportMarshalRows)));
+        }
+
+        private static void WarReportMarshalRows(object __instance)
+        {
+            try
+            {
+                Kingdom enemy = DiplomacyCompat.WarReportOpponent(__instance);
+                if (enemy != null) DiplomacyCompat.AddWarReportRows(__instance, Intrigue.Marshal.WarReportRows(enemy));
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] war report marshal rows failed: " + ex);
+            }
         }
 
         /// <summary>Savaş Raporu penceresinin büyütme oranı (yazılar 16'dan 20 puntoya).</summary>

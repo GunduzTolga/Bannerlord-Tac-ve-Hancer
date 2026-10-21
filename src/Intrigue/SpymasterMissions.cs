@@ -86,12 +86,12 @@ namespace CheatMenu.Intrigue
                         + " (şu an %" + MissionRules.Detection(true, roguery, mission) + ").";
                 case SpymasterMission.WatchDissent:
                     return "Her hafta krallığındaki en hoşnutsuz " + MissionRules.DissentReportsPerWeek(roguery)
-                        + " klan lideri hakkında rapor: kim kralına küs, kim isyana yakın.";
+                        + " klan lideri hakkında rapor: kim kralına küs, kim isyana yakın; isyancı gruplar varsa onların gücü ve isteği.";
                 case SpymasterMission.SpreadRumors:
                     return "Seçtiğin lordun hükümdarıyla ilişkisi haftada -" + MissionRules.RumorRelationLoss(roguery) + "; ücret haftada "
                         + SchemeFactors.Money(MissionRules.RumorWeeklyCost) + ". Haftalık yakalanma %" + MissionRules.RumorDiscovery(roguery, difficulty)
                         + ": o zaman lordla -" + MissionRules.RumorExposedTargetPenalty + ", hükümdarıyla -" + MissionRules.RumorExposedRulerPenalty
-                        + " ve görev biter.";
+                        + " ve görev biter. Hükümdarına küsen lord isyancı gruplara (Diplomacy) daha kolay katılır.";
                 case SpymasterMission.TrainAgents:
                     return "Her " + AgentRules.WeeksPerAgent + " haftada bir ajan; eğitim haftada " + SchemeFactors.Money(AgentRules.TrainingWeeklyCost)
                         + ". Kadro en fazla " + AgentRules.MaxAgents(roguery) + " (Roguery'ye göre). Her ajan bütün entrikalara +%"
@@ -137,7 +137,14 @@ namespace CheatMenu.Intrigue
                 .OrderBy(Court.RelationWithRuler)
                 .Take(MissionRules.DissentReportsPerWeek(roguery))
                 .ToList();
-            if (found.Count == 0) return;
+            string factions = RebelFactionLines(kingdom);
+            if (found.Count == 0)
+            {
+                // Küs lord yoksa da örgütlü muhalefet (Diplomacy'nin isyancı grupları) varsa bildirilir.
+                if (factions.Length > 0)
+                    SchemeOutcomes.Notify(state, "Muhalefet raporu", "Casus başın sarayda kulak kabarttı." + factions, null, CardImages.Spy);
+                return;
+            }
             foreach (Hero lord in found)
             {
                 state.Reports.RemoveAll(r => r.TargetId == lord.StringId);
@@ -147,8 +154,22 @@ namespace CheatMenu.Intrigue
                 + LetterRules.MoodName(Court.RelationWithRuler(h)) + " (" + SchemeFactors.Signed(Court.RelationWithRuler(h)) + ")"));
             SchemeOutcomes.Notify(state, "Muhalefet raporu",
                 "Casus başın sarayda kulak kabarttı. Hükümdarına küs olanlar:\n\n" + lines
-                + "\n\nHer biri için güncel rapor Kişiler sekmesinde.", found[0], CardImages.Spy);
+                + "\n\nHer biri için güncel rapor Kişiler sekmesinde." + factions, found[0], CardImages.Spy);
             state.AddLog(today, "Muhalefet raporu: " + string.Join(", ", found.Select(h => h.Name.ToString())));
+        }
+
+        /// <summary>
+        /// Diplomacy'nin isyancı grupları (iç savaş): kim önde, kaç klan, ne istiyor, isyan için gücü yetiyor mu. Diplomacy yoksa ya da
+        /// grup yoksa boş.
+        /// </summary>
+        public static string RebelFactionLines(Kingdom kingdom)
+        {
+            List<Bundle.DiplomacyCompat.RebelFactionInfo> factions = Bundle.DiplomacyCompat.RebelFactions(kingdom);
+            if (factions.Count == 0) return "";
+            return "\n\nÖrgütlü muhalefet (isyancı gruplar):\n" + string.Join("\n", factions.Select(f =>
+                "- " + (f.Sponsor?.Name.ToString() ?? f.Name) + " önde, " + f.Clans.Count + " klan; istek: " + f.Demand
+                + "; güç " + (int)Math.Round(f.StrengthRatio * 100) + "/" + (int)Math.Round(f.RequiredRatio * 100)
+                + (f.AtWar ? " (isyan başladı)" : f.StrengthRatio >= f.RequiredRatio ? " (isyana hazır)" : "")));
         }
 
         private static void SpreadRumors(IntrigueState state, int roguery)

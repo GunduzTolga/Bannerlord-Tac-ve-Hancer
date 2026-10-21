@@ -84,6 +84,33 @@ namespace CheatMenu.Intrigue
             Kingdom.All.Where(k => !k.IsEliminated && Mine != null && k != Mine && FactionManager.IsAtWarAgainstFaction(k, Mine))
                 .OrderBy(k => k.StringId, StringComparer.Ordinal).ToList();
 
+        /// <summary>
+        /// Diplomacy'nin Savaş Raporu'na eklenen satırlar (BundleShim): orta sütunda başlık, solda biz, sağda onlar. Serdar yoksa tek satır.
+        /// Satırlar kısa tutulur: rapor penceresinin genişliği sabit.
+        /// </summary>
+        public static List<(string Text, string Ours, string Theirs)> WarReportRows(Kingdom enemy)
+        {
+            var rows = new List<(string Text, string Ours, string Theirs)>();
+            IntrigueState state = IntrigueBehavior.Current?.State;
+            if (state == null || enemy == null || Mine == null) return rows;
+            Hero marshal = Working(state);
+            if (marshal == null)
+            {
+                rows.Add((Current(state) == null ? "Serdarın yok (Divan'dan ata)" : "Serdarın haber alamıyor", "", ""));
+                return rows;
+            }
+            WarLine war = Wars(state, marshal).FirstOrDefault(w => w.Kingdom == enemy);
+            rows.Add(("Serdar " + marshal.Name + " (tahmin payı %" + MarshalRules.ErrorPercent(Tactics(marshal)) + ")", "", ""));
+            if (war == null) return rows;
+            int ourArmies = Mine is Kingdom kingdom ? kingdom.Armies.Count : 0;
+            rows.Add(("Güç (serdarın tahmini)", "~" + war.Ours, "~" + war.Theirs));
+            rows.Add(("Sahadaki ordular", ourArmies.ToString(), war.Armies.ToString()));
+            List<ArmyLine> threats = Threats(state, marshal).Where(a => a.Party?.MapFaction == enemy).ToList();
+            rows.Add(("Topraklarına yürüyen", "", threats.Count == 0 ? "yok" : threats.Count + ", " + MarshalRules.TravelText(threats.Min(a => a.HoursToTarget))));
+            rows.Add((MarshalRules.Advice(war.Ratio), "", ""));
+            return rows;
+        }
+
         private static bool IsEnemy(IFaction faction) => faction != null && Mine != null && faction != Mine && FactionManager.IsAtWarAgainstFaction(faction, Mine);
 
         /// <summary>Serdarın gördüğü sayı: gerçeği ± hata payı (haftalık sabit), yuvarlanmış.</summary>

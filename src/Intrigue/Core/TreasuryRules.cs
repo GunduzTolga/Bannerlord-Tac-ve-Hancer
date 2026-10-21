@@ -60,6 +60,12 @@ namespace CheatMenu.Intrigue.Core
         public const int EmbezzleForgiveRelation = 5;
 
         /// <summary>Tahminlerin hata payı (%): Trade her 6 puanda 1, Hesapçı her seviyede 5 düşürür; %5–60.</summary>
+        /// <summary>Hazinedarın atölye ve kervan gelirine katkısı: Trade/10 yüzde, en fazla %20.</summary>
+        public static int IncomeBonusPercent(int trade) => SchemeMath.Clamp(Math.Max(0, trade) / 10, 0, 20);
+
+        /// <summary>Günlük atölye ve kervan gelirine göre hazinedarın getirdiği ek altın (gelir eksiyse 0).</summary>
+        public static int IncomeBonus(int dailyIncome, int trade) => Math.Max(0, dailyIncome) * IncomeBonusPercent(trade) / 100;
+
         public static int ErrorPercent(int trade, int calculating) => SchemeMath.Clamp(45 - Math.Max(0, trade) / 6 - 5 * calculating, 5, 60);
 
         public static string Confidence(int error) =>
