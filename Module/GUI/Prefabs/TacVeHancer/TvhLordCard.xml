@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Lord kartı (ViewModel: LordCardVM): portre, ad, klan ve krallık, nerede (yaklaşık yol), seninle ve hükümdarıyla ilişki, son görüşme,
+  etiketler; altında eylemler (ulak ve hediye, yanına çağır, ziyafete davet, haritada izle, kur).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="8">
+      <Children>
+        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" />
+        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="104" SuggestedHeight="78" MarginLeft="12" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                  </Children>
+                </Widget>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="480" SuggestedHeight="28" MarginLeft="132" MarginTop="10" Brush="Tvh.Text.Name" Text="@Name" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="480" SuggestedHeight="22" MarginLeft="132" MarginTop="40" Brush="Tvh.Text.Small" Text="@ClanText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="480" SuggestedHeight="22" MarginLeft="132" MarginTop="66" Brush="Tvh.Text.Gold" Text="@WhereText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="520" SuggestedHeight="24" MarginLeft="640" MarginTop="12" Brush="Tvh.Text.Small" Text="@RelationText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="520" SuggestedHeight="22" MarginLeft="640" MarginTop="40" Brush="Tvh.Text.Muted" Text="@LastText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="520" SuggestedHeight="22" MarginLeft="640" MarginTop="66" Brush="Tvh.Text.Good" Text="@TagsText" />
+              </Children>
+            </Widget>
+            <ListPanel DataSource="{Actions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="132" MarginRight="12" MarginBottom="8" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <ItemTemplate>
+                <TvhActionRow />
+              </ItemTemplate>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

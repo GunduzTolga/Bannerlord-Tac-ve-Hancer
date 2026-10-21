@@ -98,12 +98,17 @@ namespace CheatMenu.Mcm
         public bool RomanceSecrets { get; set; } = true;
 
         [SettingPropertyBool("Genelev (yetişkin teması)", Order = 4, RequireRestart = false,
-            HintText = "Şehirlerde genelev: müşteri olarak gece geçirmek (dedikodu duyma, hastalık kapma ve eşinin duyma ihtimaliyle), askerlerine bir gece ısmarlamak (moral) ve gölge ağın olan şehirde kendi genelevini işletmek (isimsiz, gönüllü ve ücretli çalışanlar; gelir ve müşterilerden duyulanlar). Yalnızca metin ve resimli kart, sahne yok. Kapalıyken hiçbiri görünmez; var olan işletmeler çalışmaz.")]
+            HintText = "Şehirlerde genelev: müşteri olarak gece geçirmek (dedikodu duyma, hastalık kapma ve eşinin duyma ihtimaliyle), askerlerine bir gece ısmarlamak (moral) ve gölge ağın olan şehirde kendi genelevini işletmek (adlı, gönüllü ve ücretli çalışanlar; yoldaşlar kendi isteğiyle yönetici ya da çalışan olabilir; gelir ve müşterilerden duyulanlar). Yalnızca metin ve resimli kart, sahne yok. Kapalıyken hiçbiri görünmez; var olan işletmeler çalışmaz.")]
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool NightHouses { get; set; }
 
+        [SettingPropertyBool("Kur ve sevgililer", Order = 7, RequireRestart = false,
+            HintText = "Kur yapmak, sevgiliyle buluşmak, eşini kendi kabulüyle bilgi için kura göndermek ve bunlardan gebelik. Gizli ilişki sırlarından ayrı: biri kapalıyken öbürü çalışır. İki taraf da yetişkin, akraba değil. Yalnızca metin.")]
+        [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
+        public bool Courtships { get; set; } = true;
+
         [SettingPropertyBool("Eşin seni aldatabilir", Order = 5, RequireRestart = false,
-            HintText = "Eşin, seninle arası bozuksa ya da uzun süre ayrı kalırsanız, kendi başına bir sevgili edinebilir; gebelik de olabilir. Casus başına araştırtırsan ortaya çıkar. Gizli ilişki ayarı da açık olmalı. Yalnızca metin.")]
+            HintText = "Eşin, seninle arası bozuksa ya da uzun süre ayrı kalırsanız, kendi başına bir sevgili edinebilir; gebelik de olabilir. Casus başına araştırtırsan ortaya çıkar. Gizli ilişki ayarı da açık olmalı. Regard and Standing varken eşinin ilişkilerini o yürütür: bu ayar yalnızca bizimkileri kapatır, onunkileri yine öğrenebilirsin. Yalnızca metin.")]
         [SettingPropertyGroup(IntrigueGroup, GroupOrder = 1)]
         public bool SpouseInfidelity { get; set; } = true;
 
@@ -198,6 +203,7 @@ namespace CheatMenu.Mcm
             AiIntrigue.SelectedIndex = SchemeMath.Clamp(s.AiIntrigue, 0, AiNames.Length - 1);
             PlayerCanBeTargeted = s.PlayerCanBeTargeted;
             RomanceSecrets = s.RomanceSecrets;
+            Courtships = s.Courtships;
             NightHouses = s.NightHouses;
             SpouseInfidelity = s.SpouseInfidelity;
             TailInScene = s.TailInScene;
@@ -221,6 +227,7 @@ namespace CheatMenu.Mcm
             s.SetAiIntrigue(AiIntrigue.SelectedIndex);
             s.PlayerCanBeTargeted = PlayerCanBeTargeted;
             s.RomanceSecrets = RomanceSecrets;
+            s.Courtships = Courtships;
             s.NightHouses = NightHouses;
             s.SpouseInfidelity = SpouseInfidelity;
             s.TailInScene = TailInScene;

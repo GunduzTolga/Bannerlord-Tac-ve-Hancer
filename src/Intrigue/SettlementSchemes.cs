@@ -341,7 +341,7 @@ namespace CheatMenu.Intrigue
             spymaster?.AddSkillXp(DefaultSkills.Roguery, SuccessXp);
 
             string text = "Elebaşların meydanlarda halkı " + Tr.Genitive(s.OwnerClan.Name.ToString()) + " adamlarına karşı ayağa kaldırdı: sadakat "
-                + (int)Math.Round(before) + " → " + (int)Math.Round(town.Loyalty) + ", güvenlik -" + SettlementSchemeRules.SecurityOnSuccess + ".";
+                + (int)Math.Round(town.Loyalty) + " (önce " + (int)Math.Round(before) + "), güvenlik -" + SettlementSchemeRules.SecurityOnSuccess + ".";
             // İz önce: isyan çıkarsa şehrin sahibi değişir.
             bool traced = !CheatState.IntrigueNeverDiscovered && scheme.Roll100() <= SettlementSchemeRules.TraceChance(discovery);
             string exposure = traced

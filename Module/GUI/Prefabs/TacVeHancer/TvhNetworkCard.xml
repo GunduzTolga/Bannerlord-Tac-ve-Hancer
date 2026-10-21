@@ -20,7 +20,13 @@
             <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="24" MarginLeft="420" MarginTop="14" Brush="Tvh.Text.Good" Text="@BonusText" />
             <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="104" MarginLeft="420" MarginTop="44" Brush="Tvh.Text.MutedTop" Text="@DescriptionText" />
 
-            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="16" Brush="Tvh.Button.Danger" Command.Click="ExecuteDisband" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+            <!-- Genelev varsa yönetim kartı (NightHouses.ShowManage) -->
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="16" MarginTop="22" Brush="Tvh.Button" Command.Click="ExecuteHouse" IsVisible="@HasHouse" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@HouseText" />
+              </Children>
+            </ButtonWidget>
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="16" MarginBottom="22" Brush="Tvh.Button.Danger" Command.Click="ExecuteDisband" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
               <Children>
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@DisbandText" />
               </Children>

@@ -18,13 +18,39 @@ namespace CheatMenu.UI.ViewModels
     public sealed class IntrigueScreenVM : TvhViewModel
     {
         public const int TabSchemes = 0, TabNew = 1, TabPeople = 2, TabPrisoners = 3, TabCourt = 4, TabCouncil = 5, TabNetworks = 6, TabPlots = 7,
-            TabLog = 8;
+            TabLog = 8, TabLords = 9, TabWars = 10, TabRebellions = 11, TabRealm = 12;
+
+        /// <summary>
+        /// Bölümler (üst sekmeler) ve alt sekmeleri (tasarım: docs/superpowers/specs/2026-10-21-arayuz-duzeni.md). Her özellik tek bir yerde:
+        /// entrika işleri, insanlar, saray ve divan, savaş ve barış. Casus başı sütunu yalnızca Entrika bölümünde.
+        /// </summary>
+        private static readonly string[] GroupNames = { "Entrika", "Kişiler", "Saray", "Savaş ve barış" };
+        private static readonly int[][] GroupTabs =
+        {
+            new[] { TabSchemes, TabNew, TabNetworks, TabPlots },
+            new[] { TabPeople, TabLords, TabPrisoners },
+            new[] { TabCourt, TabRealm, TabCouncil, TabLog },
+            new[] { TabWars, TabRebellions },
+        };
+        private static readonly string[] TabNames =
+            { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Divan", "Ağlar", "Sana karşı", "Kronik", "Lordlar", "Savaşlar", "İsyanlar", "Krallık" };
+
+        public static int GroupOf(int tab)
+        {
+            for (int g = 0; g < GroupTabs.Length; g++)
+                if (Array.IndexOf(GroupTabs[g], tab) >= 0) return g;
+            return 0;
+        }
 
         private readonly Action _close;
         private int _tab;
         private bool _dirty;
         private string _subtitle = "", _status = "";
         private bool _isSchemesTab, _isNewTab, _isPeopleTab, _isPrisonersTab, _isCourtTab, _isCouncilTab, _isNetworksTab, _isPlotsTab, _isLogTab;
+        private bool _isLordsTab, _isWarsTab, _isRebellionsTab, _isRealmTab, _isIntrigueGroup;
+        private float _contentMargin;
+        /// <summary>Her bölümde en son açık alt sekme (bölüme dönünce oraya).</summary>
+        private readonly int[] _lastInGroup = new int[4];
         private bool _hasRomances;
         private bool _hasNothingRunning, _hasLetters, _hasNoPrisoners, _hasNoNetworks, _hasNoPlots, _hasNoLog;
 
@@ -32,14 +58,23 @@ namespace CheatMenu.UI.ViewModels
         {
             _close = close;
             Spymaster = new SpymasterVM(MarkDirty);
+            Groups = new MBBindingList<TabVM>();
+            for (int g = 0; g < GroupNames.Length; g++)
+            {
+                Groups.Add(new TabVM(g, GroupNames[g], t => SelectTab(_lastInGroup[t.Index])));
+                _lastInGroup[g] = GroupTabs[g][0];
+            }
             Tabs = new MBBindingList<TabVM>();
-            string[] names = { "Süren", "Yeni entrika", "Kişiler", "Esirler", "Saray", "Divan", "Ağlar", "Sana karşı", "Kronik" };
-            for (int i = 0; i < names.Length; i++) Tabs.Add(new TabVM(i, names[i], t => SelectTab(t.Index)));
+            for (int i = 0; i < TabNames.Length; i++) Tabs.Add(new TabVM(i, TabNames[i], t => SelectTab(t.Index)));
+            Lords = new LordsVM();
+            Wars = new WarsVM(MarkDirty);
+            Rebellions = new RebellionsVM(close);
+            Realm = new RealmVM(MarkDirty);
             Schemes = new MBBindingList<SchemeItemVM>();
             Letters = new MBBindingList<LetterItemVM>();
             Romances = new MBBindingList<RomanceRowVM>();
-            Court = new CourtVM(MarkDirty, StartSchemeOn);
-            Council = new CouncilVM(MarkDirty);
+            Court = new CourtVM(MarkDirty, StartSchemeOn, FocusRebellions);
+            Council = new CouncilVM(MarkDirty, enemy => FocusWar(enemy, null));
             NewScheme = new NewSchemeVM(() =>
             {
                 _tab = TabSchemes;
@@ -63,7 +98,19 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string ClassicMenuText => "Liste menüsü";
 
         [DataSourceProperty] public SpymasterVM Spymaster { get; }
+        [DataSourceProperty] public MBBindingList<TabVM> Groups { get; }
         [DataSourceProperty] public MBBindingList<TabVM> Tabs { get; }
+        /// <summary>Entrika bölümü: solda casus başı sütunu, içerik onun sağında.</summary>
+        [DataSourceProperty] public bool IsIntrigueGroup { get => _isIntrigueGroup; set => Set(ref _isIntrigueGroup, value, nameof(IsIntrigueGroup)); }
+        [DataSourceProperty] public float ContentMargin { get => _contentMargin; set => Set(ref _contentMargin, value, nameof(ContentMargin)); }
+        [DataSourceProperty] public bool IsLordsTab { get => _isLordsTab; set => Set(ref _isLordsTab, value, nameof(IsLordsTab)); }
+        [DataSourceProperty] public bool IsWarsTab { get => _isWarsTab; set => Set(ref _isWarsTab, value, nameof(IsWarsTab)); }
+        [DataSourceProperty] public bool IsRebellionsTab { get => _isRebellionsTab; set => Set(ref _isRebellionsTab, value, nameof(IsRebellionsTab)); }
+        [DataSourceProperty] public bool IsRealmTab { get => _isRealmTab; set => Set(ref _isRealmTab, value, nameof(IsRealmTab)); }
+        [DataSourceProperty] public LordsVM Lords { get; }
+        [DataSourceProperty] public WarsVM Wars { get; }
+        [DataSourceProperty] public RebellionsVM Rebellions { get; }
+        [DataSourceProperty] public RealmVM Realm { get; }
 
         [DataSourceProperty] public bool IsSchemesTab { get => _isSchemesTab; set => Set(ref _isSchemesTab, value, nameof(IsSchemesTab)); }
         [DataSourceProperty] public bool IsNewTab { get => _isNewTab; set => Set(ref _isNewTab, value, nameof(IsNewTab)); }
@@ -122,8 +169,29 @@ namespace CheatMenu.UI.ViewModels
 
         public void SelectTab(int tab)
         {
-            _tab = tab;
+            _tab = tab >= 0 && tab < TabNames.Length ? tab : TabSchemes;
             Refresh();
+        }
+
+        /// <summary>Savaş ve barış > Savaşlar: o savaş seçili, masada verilen şartlar (elçinin teklifi; null: boş masa).</summary>
+        public void FocusWar(Kingdom enemy, PeaceTreaties.Terms terms)
+        {
+            Wars.Select(enemy, terms);
+            SelectTab(TabWars);
+        }
+
+        /// <summary>Savaş ve barış > İsyanlar: bu krallığın grupları (null: kendi krallığın).</summary>
+        public void FocusRebellions(Kingdom kingdom)
+        {
+            Rebellions.Show(kingdom);
+            SelectTab(TabRebellions);
+        }
+
+        /// <summary>Saray > Krallık: bu klan seçili (null: son seçili ya da ilk klan).</summary>
+        public void FocusRealm(Clan clan)
+        {
+            Realm.Focus(clan);
+            SelectTab(TabRealm);
         }
 
         /// <summary>Kişi dosyasından: "Yeni entrika" sekmesini tür ve hedef seçili açar.</summary>
@@ -165,7 +233,20 @@ namespace CheatMenu.UI.ViewModels
             Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count + Courtships.Rows(state).Count()) + ")";
             Tabs[TabNetworks].Name = "Ağlar (" + state.Networks.Count + ")";
             Tabs[TabPlots].Name = "Sana karşı (" + detected + ")";
-            foreach (TabVM tab in Tabs) tab.IsSelected = tab.Index == _tab;
+            int group = GroupOf(_tab);
+            _lastInGroup[group] = _tab;
+            foreach (TabVM g in Groups) g.IsSelected = g.Index == group;
+            foreach (TabVM tab in Tabs)
+            {
+                tab.IsSelected = tab.Index == _tab;
+                tab.IsVisible = Array.IndexOf(GroupTabs[group], tab.Index) >= 0;
+            }
+            IsIntrigueGroup = group == 0;
+            ContentMargin = IsIntrigueGroup ? 356 : 0;
+            IsLordsTab = _tab == TabLords;
+            IsWarsTab = _tab == TabWars;
+            IsRebellionsTab = _tab == TabRebellions;
+            IsRealmTab = _tab == TabRealm;
             IsSchemesTab = _tab == TabSchemes;
             IsNewTab = _tab == TabNew;
             IsPeopleTab = _tab == TabPeople;
@@ -222,6 +303,18 @@ namespace CheatMenu.UI.ViewModels
                     foreach (LogEntry entry in Enumerable.Reverse(state.Log)) Log.Add(new LogItemVM("Gün " + entry.Day, entry.Text));
                     HasNoLog = Log.Count == 0;
                     break;
+                case TabLords:
+                    Lords.Refresh();
+                    break;
+                case TabWars:
+                    Wars.Refresh();
+                    break;
+                case TabRebellions:
+                    Rebellions.Refresh();
+                    break;
+                case TabRealm:
+                    Realm.Refresh();
+                    break;
             }
         }
 
@@ -272,6 +365,10 @@ namespace CheatMenu.UI.ViewModels
             People.OnFinalize();
             Court.OnFinalize();
             Council.OnFinalize();
+            Lords.OnFinalize();
+            Wars.OnFinalize();
+            Rebellions.OnFinalize();
+            Realm.OnFinalize();
         }
     }
 }

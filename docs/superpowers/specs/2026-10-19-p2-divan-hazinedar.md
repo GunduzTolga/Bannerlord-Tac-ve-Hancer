@@ -74,4 +74,4 @@ Hazinedar, zimmet, kervanların son çıkışı ("caravanbook") ve sefer defteri
 
 ## Sonraki koltuklar
 
-Saray hekimi (Medicine), serdar (Leadership/Tactics), kâhya (Steward): aynı divan sekmesine koltuk olarak eklenecek.
+Saray hekimi (Medicine), mareşal (Leadership/Tactics), kâhya (Steward): aynı divan sekmesine koltuk olarak eklenecek.

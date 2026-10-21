@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using HarmonyLib;
+using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
@@ -79,9 +80,80 @@ namespace CheatMenu.Bundle
             var reportHeight = AccessTools.PropertyGetter("Diplomacy.ViewModel.DetailWarVM:ReportHeight");
             if (reportHeight != null && reportHeight.ReturnType == typeof(int))
                 harmony.Patch(reportHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportHeight)));
+            // Savaş Raporu: Diplomacy'nin penceresi yerine bizimki (üst kısmı yine onun ViewModel'iyle; UI.WarReportScreen).
+            var warReport = AccessTools.Method("Diplomacy.GauntletInterfaces.DetailWarViewInterface:ShowInterface");
+            if (warReport != null)
+                harmony.Patch(warReport, prefix: new HarmonyMethod(typeof(BundleShim), nameof(WarReportWindow)));
+            // İsyanlar ve iç savaş: Diplomacy'nin grup penceresi yerine Entrika ekranının İsyanlar sekmesi (kuralları ve düğmeleri yine onun).
+            var factions = AccessTools.Method("Diplomacy.GauntletInterfaces.RebelFactionsInterface:ShowInterface");
+            if (factions != null)
+                harmony.Patch(factions, prefix: new HarmonyMethod(typeof(BundleShim), nameof(RebellionsWindow)));
+            // Altın bağışı, fief verme, fief iadesi: Diplomacy'nin pencereleri yerine Entrika ekranının Krallık sekmesi (işlemler yine onun).
+            Type screen = typeof(TaleWorlds.ScreenSystem.ScreenBase);
+            var donate = AccessTools.Method("Diplomacy.GauntletInterfaces.DonateGoldInterface:ShowInterface", new[] { screen, typeof(Clan) });
+            if (donate != null)
+                harmony.Patch(donate, prefix: new HarmonyMethod(typeof(BundleShim), nameof(DonateGoldWindow)));
+            var grant = AccessTools.Method("Diplomacy.GauntletInterfaces.GrantFiefInterface:ShowFiefInterface", new[] { screen, typeof(Hero), typeof(Action) });
+            if (grant != null)
+                harmony.Patch(grant, prefix: new HarmonyMethod(typeof(BundleShim), nameof(GrantFiefWindow)));
+            var giveBack = AccessTools.Method("Diplomacy.GauntletInterfaces.ReturnFiefInterface:ShowReturnFiefInterface", new[] { screen, typeof(Kingdom), typeof(Action) });
+            if (giveBack != null)
+                harmony.Patch(giveBack, prefix: new HarmonyMethod(typeof(BundleShim), nameof(ReturnFiefWindow)));
         }
 
-        /// <summary>Savaş Raporu penceresinin büyütme oranı (yazılar 16'dan 20 puntoya).</summary>
+        /// <summary>false: Diplomacy'nin penceresi açılmaz, Krallık sekmesi açılır (bu klan seçili). Krallıkta değilsen onunki açılır.</summary>
+        private static bool RealmTab(Clan clan, string what)
+        {
+            try
+            {
+                if (Clan.PlayerClan?.Kingdom == null || Intrigue.SchemeEngine.State == null) return true;
+                UI.IntrigueScreen.OpenRealm(clan != null && clan.Kingdom == Clan.PlayerClan.Kingdom ? clan : null);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] " + what + " window hook failed: " + ex);
+                return true;
+            }
+        }
+
+        private static bool DonateGoldWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Clan clan) => RealmTab(clan, "donate gold");
+
+        private static bool GrantFiefWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Hero hero, Action refreshAction) => RealmTab(hero?.Clan, "grant fief");
+
+        private static bool ReturnFiefWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom targetKingdom, Action refreshAction) => RealmTab(null, "return fief");
+
+        /// <summary>false: Diplomacy'nin penceresi açılmaz, Entrika ekranının İsyanlar sekmesi açılır (Krallık ekranı ya da ansiklopedi kapanır).</summary>
+        private static bool RebellionsWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom kingdom)
+        {
+            try
+            {
+                if (kingdom == null || Intrigue.SchemeEngine.State == null) return true;
+                UI.IntrigueScreen.OpenRebellions(kingdom == Clan.PlayerClan.Kingdom ? null : kingdom);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] rebellions window hook failed: " + ex);
+                return true;
+            }
+        }
+
+        /// <summary>false: Diplomacy'nin raporu açılmaz, bizimki açıldı. Bizimki açılamazsa onunki açılır.</summary>
+        private static bool WarReportWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom opposingKingdom)
+        {
+            try
+            {
+                return !UI.WarReportScreen.Open(opposingKingdom, screenBase);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] war report window hook failed: " + ex);
+                return true;
+            }
+        }
+
+        /// <summary>Diplomacy'nin kendi Savaş Raporu penceresinin büyütme oranı (yazılar 16'dan 20 puntoya; bizimki açılamazsa o açılır).</summary>
         internal const float WarReportScale = 1.25f;
 
         private static void WarReportHeight(ref int __result) => __result = (int)Math.Round(__result * WarReportScale);

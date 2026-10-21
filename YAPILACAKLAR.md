@@ -41,6 +41,129 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Entrika ekranı yeni düzen: her şey tek yerde (21 Ekim, yeni; en çok ekran görüntüsü lazım)
+Lordlar, İsyanlar ve Barış Masası artık ayrı pencere değil, Entrika ekranının sekmeleri. Tasarım: `docs\superpowers\specs\2026-10-21-arayuz-duzeni.md`.
+- [ ] Üstte dört bölüm (Entrika / Kişiler / Saray / Savaş ve barış), altında o bölümün alt sekmeleri; bölüm değişince alt sekmeler değişiyor
+- [ ] Casus başı sütunu yalnızca Entrika bölümünde; ötekilerde içerik tam genişlik. Yazılar ve kartlar taşıyor mu
+- [ ] Kişiler > **Lordlar**, Savaş ve barış > **Savaşlar** (solda savaşlar, sağda Barış Masası) ve **İsyanlar** açılıyor
+- [ ] Haritadaki savaş yorgunluğu göstergesi → Savaş Raporu (pencere) → "Barış Masası..." → rapor kapanıp Savaşlar sekmesi o savaşla açılıyor
+- [ ] Krallık ekranındaki Diplomacy grup düğmesi → Krallık ekranı kapanıp İsyanlar sekmesi açılıyor (başka krallıkta "Kendi krallığın" düğmesi)
+- [ ] Saray'da seçili krallığın "İsyanlar..." düğmesi; Divan'daki "Barış Masası" düğmesi; elçi kartındaki "Barış Masası'na otur"
+- [ ] Insert > Entrika'daki Lordlar / İsyanlar / Barış Masası girişleri ilgili sekmeyi açıyor
+- [ ] Klan ekranının Entrika sekmesinde de, ayrı Entrika ekranında da aynı
+
+### Saray > Krallık: bağış, toprak verme, iade (21 Ekim, yeni)
+Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Krallık sekmesi. Tasarım: `docs\superpowers\specs\2026-10-21-krallik-sekmesi.md`.
+- [ ] Saray bölümünde alt sekmeler: Saray · Krallık · Divan · Kronik. Krallık: solda klanlar (sancak, lider, ilişki, yer, güç), sağda seçili klan
+- [ ] Altın bağışla: miktarı +/- ile seç, "ilişki +N" önizlemesi Diplomacy'nin penceresindekiyle aynı mı; Bağışla → kese azalıyor, ilişki artıyor
+- [ ] Hükümdarsan: Toprak ver listesinde şehir ve kalelerin; birine tıkla → onay → yer o klana geçiyor, ilişki artıyor; az yeri olanlar kıskanıyor
+- [ ] Hükümdar değilsen: "Toprak vermek hükümdarın işi" notu; paralı klan seçince "Paralı klanlara toprak verilmez"
+- [ ] İade: barıştaki bir krallıktan aldığın yer listede mi; iade et → eski sahibine dönüyor, ilişki artıyor
+- [ ] Krallık ekranı > Klanlar'daki Diplomacy düğmeleri ("Altın Bağışla", "Tımar ver") ve ansiklopedideki "Tımar ver": Krallık ekranı kapanıp
+      Krallık sekmesi o klan seçili açılıyor mu; Diplomasi'deki "Return Fief" düğmesi (çevirisi yok) Krallık sekmesini açıyor mu
+- [ ] Krallıkta değilken bu düğmeler Diplomacy'nin kendi penceresini açıyor (ya da hiç görünmüyor)
+
+### Divan: diplomat (21 Ekim, yeni)
+- [ ] Entrika ekranı > Divan: beş kart yan yana sığıyor mu (yazılar taşıyor mu, "Azlet" düğmesi), DİPLOMAT kartı: Charm, katkılar, görev
+- [ ] Ata (Charm'ı yüksek bir yoldaş) → raporda DİPLOMASİ: her krallık için "barış yanlısı / savaş konuşuluyor / sana savaş açmaya
+      hazırlanıyor" ve hükümdarıyla ilişkin; savaştıkların için pazarlık gücün ve **Barış Masası** düğmesi
+- [ ] Bütün krallıklar hep aynı basamakta mı görünüyor? (öyleyse yaz: eşik ayarlanacak)
+- [ ] "İlişki görevi..." → bir hükümdar seç → her hafta ilişki artıyor (kartta "Görevi: X"); 60'a varınca bildirim
+- [ ] Barış Masası'nda "diplomatın (+N)" görünüyor; Lordlar penceresinde çağır/davet olasılıkları diplomatla yükseliyor
+- [ ] Bir krallık savaşa hazırlanınca "Diplomatın uyarıyor: X" kartı
+- [ ] Insert > Entrika > Divan > Diplomat menüsü çalışıyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-divan-diplomat.md`
+
+### Barış Masası: şartlı barış (21 Ekim, yeni; hükümdar olmalısın; ekran görüntüsü çok işe yarar)
+- [ ] Entrika ekranı > Savaş ve barış > **Savaşlar**: solda savaşların (sancak, kaç gündür, güç, yorgunluk, şartsız barış %), sağda seçilinin
+      masası. Savaş Raporu'ndaki **Barış Masası...** ve Insert > Entrika > **Barış Masası...** buraya getiriyor
+- [ ] Masa: üstte pazarlık gücün ve nedenleri; solda bölümlü istediklerin (**Para**: haraç, tazminat · **Asker ve esirler** · **Toprak**:
+      sınırına yakın şehir/kaleler · **Anlaşmalar**: rehine, saldırmazlık, ticaret, ittifak), sağda verdiklerin (altın, haraç, esirlerini
+      bırak); altta özet, **Kabul olasılığı: %X**. Şart ekledikçe olasılık düşüyor mu
+- [ ] Yeni şartlar: esir lordların serbest kaldı mı; rehine senin şehrine geldi mi (Saray'da rehine anlaşması görünüyor mu); saldırmazlık
+      kuruldu mu; ticaret anlaşması ve ittifak kuruldu mu (kurulamazsa sonuç kartında oyunun nedeni)
+- [ ] **Teklif et** → kabul: barış, kale/şehir senin (klanında), tazminat kesende, askerler partinde, haraç her gün geliyor (klan gelirinde);
+      Savaş Raporu ve masa kapanıyor, sonuç kartı. Ret: kart, 7 gün yeniden teklif yok (masa nedenini yazıyor)
+- [ ] Kaybederken: "Altın ver" ya da "Haraç öde" ile şartsız barışın olasılığı artıyor mu
+- [ ] **Elçi:** çok öndeyken birkaç hafta içinde "BARIŞ ELÇİSİ" kartı: tazminat teklifi; Kabul et / Barış Masası'na otur (pazarlık gücüne
+      +15) / Geri çevir
+- [ ] Diplomacy'nin kısa savaş sınırı varken masa "savaş yeterince uzun sürmedi" diyor; iç savaşta masa kurulmuyor
+- [ ] Devralınan kalenin garnizonu ve köyleri sana geçti mi; barıştan sonra esir lordların serbest kaldı mı (bak, yaz)
+- Tasarım: `docs\superpowers\specs\2026-10-21-baris-masasi.md`
+
+### Savaş Raporu: yeni pencere (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Haritadaki savaş yorgunluğu göstergesine tıklayınca Diplomacy'nin raporu yerine bizimki açılıyor; üst kısım aynı, altı yeni.
+- [ ] Üst kısım eskisi gibi mi: iki büyük sancak, "Savaş Raporu" başlığı, iki tarafın savaş yorgunluğu, ilişki kutuları, tarih; yeni olarak
+      "savaş N gündür sürüyor" satırı. Sağ üstte Kapat; Esc de kapatıyor
+- [ ] Altta iki sütun (kaydırılıyor): **Savaşın gidişatı** (üstünlük puanı, kayıplar, fethedilen yerler, yağmalar, esir lordlar),
+      **Kuvvetler** (güç, ordular, klanlar, lordlar, şehir/kale/köy, müttefikler, başka cepheler), **Savaş yorgunluğu** (Diplomacy'nin
+      dökümü); sağda **Mareşalin raporu**, **Barış**, **Esirler**, **Savaş günlüğü**
+- [ ] Satırların altındaki çubuklar iki krallığın renginde mi, oranlar mantıklı mı; yazılar taşıyor mu
+- [ ] "Savaştaki üstünlük" ve yorgunluk satırlarındaki sayıların üstüne gelince ipucu çıkıyor mu
+- [ ] Barış bölümü: iki tarafın tavrı ve "Barış teklif edebilirsin" ya da Diplomacy'nin nedeni (ör. savaş yeterince uzun sürmedi)
+- [ ] Savaş günlüğünde bu savaşın olayları (savaş, kuşatma, esir alma) "N gün önce" ile
+- [ ] Insert > Entrika > **Savaş raporları** → savaştığın krallığı seç → aynı pencere
+- [ ] Pencere açılamazsa kırmızı mesaj ve Diplomacy'nin eski raporu açılıyor (olursa ekran görüntüsü ve `rgl_log`)
+- Tasarım: `docs\superpowers\specs\2026-10-21-savas-raporu.md`
+
+### Lordlar: yanına çağır ve ziyafet (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+- [ ] Entrika ekranı > Kişiler > **Lordlar** (Insert > Entrika > "Lordlar" de buraya): süzgeçler (Krallığın / Tanıdıkların / Davetliler),
+      sağ üstte Ziyafet ver ve koşulu
+- [ ] Lord kartı: portre, ad, klan, nerede ve kaç gün yol, seninle ilişki, hükümdarıyla arası, son görüşme, etiketler; yazılar taşmıyor
+- [ ] **Yanına çağır:** aynı krallıktan biri 20 nüfuz, başkası 800 altın; kabul ederse partisi haritada sana doğru geliyor (kartta
+      "sana doğru yolda"), yakına gelince "yanına geldi" mesajı → üstüne tıklayıp konuş. Reddederse bedelin yarısı geri dönüyor
+- [ ] Gelmeye çalışırken orduya katılır, esir düşer ya da 3 gün geçerse "Gelemedi" bildirimi; lord yeniden kendi işine dönüyor (takılı
+      kalmıyor mu, bak)
+- [ ] **Ziyafet:** kendi şehrinde ya da kalende, kartlardan en fazla 6 lord davet et → Ziyafet ver → olay kartı: gelenler, gelmeyenler,
+      ilişki artışı, nüfuz, bazen "şarap dilleri çözdü" (rapor, belki sır). Para düştü; 30 gün yeniden verilemiyor (düğme gri, nedeni yazıyor)
+- [ ] Kendi yerleşiminin dışında düğme gri ve nedeni yazıyor; davet listesi pencere kapanıp açılınca duruyor
+- [ ] Kayıt al, yükle: yolda olan çağrılan lord yine geliyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-lordlar.md`. Oylamada destek sözü yapılmadı (oyunun seçim kodu bulutta görünmüyor).
+
+### İsyanlar ve iç savaş (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Diplomacy'nin "Factions" penceresi yerine Entrika ekranı > Savaş ve barış > **İsyanlar** açılıyor; katıl/ayrıl/isyan/destek düğmeleri yine
+Diplomacy'nin kuralıyla çalışıyor. (Aşağıdaki "pencere" maddeleri artık bu sekme için.)
+- [ ] Krallık ekranında Diplomacy'nin grup (Factions) düğmesi → **İsyanlar ve İç Savaş** penceresi: başlık, krallık ve hükümdar,
+      özet ("N grup · en güçlüsü X: %57, gereken %65"), sağ üstte **Grup kur...** ve Kapat. Insert > Entrika > "İsyanlar ve iç savaş" da açıyor
+- [ ] Grup yoksa: grupların nasıl kurulduğunu anlatan metin (boş kutu değil)
+- [ ] Grup kartı: önderin portresi, "X önderliğinde: ayrılık / tahttan indirme", istek, durum (destek topluyor / isyana hazır / iç savaş),
+      katılanlar ve hükümdarla ilişkileri, güç çubuğu (kırmızı dolgu = grubun payı, açık çizgi = gereken pay), "en gönülsüz üye" notu
+- [ ] Düğmeler: Gruba katıl (olmuyorsa nedeni yanında) / Gruptan ayrıl / İsyanı başlat (önder sensen; onay soruyor) / Destek topla
+- [ ] **Hoşnutsuzlar** bölümü: Saray'daki lord kartları (hükümdarına küs olanlar), ulak, haritada izle, söylenti yay düğmeleriyle
+- [ ] Grup kur... → Diplomacy'nin seçimi (ayrılık / tahttan indirme, nüfuz bedeli) → pencere yenileniyor, yeni grup kartı geliyor
+- [ ] Esc ve Kapat pencereyi kapatıyor (Krallık ekranı açık kalıyor mu, bak); yazılar taşmıyor, kaydırma çalışıyor
+- [ ] Ansiklopedide bir krallığın sayfasındaki grup düğmesi de bu pencereyi açıyor
+
+### Esiri gizlice öldürt (21 Ekim, yeni)
+- [ ] Klan > Entrika > Esirler: her esirde kırmızı **Gizlice öldürt...** düğmesi → kart: işi kim ayarlıyor (Roguery), üç yöntem
+      (Zindan hastalığı 1.500 / Kaza 1.000 / Kaçarken öldürüldü 500), her birinde "şüphe %X, ifşa %Y"
+- [ ] Esir kartı > **Kaderini belirle...** > Hizmetine davet et ve Gizlice öldürt aynı yerde
+- [ ] Yöntem seç → para düştü, esir öldü (oyunun ölüm mesajı: hastalıkta doğal ölüm, ötekilerde yaralar); sonuç kartında temiz / şüphe /
+      ifşa ve ilişki değişimleri; Merhamet düştü
+- [ ] Roguery'si yüksek casus başıyla yüzdeler düşüyor; yeni yakalanan, hükümdar ya da partindeki esirde yükseliyor
+- [ ] Uzaktaki bir zindandaki esirde de çalışıyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-gizli-infaz.md`
+
+### Düzeltmeler ve Diplomacy bağlantıları (21 Ekim, yeni; bulutta derlendi ve test edildi)
+- [ ] **Varis:** sevgilisi olan bir karakterle klanı devret (Entrika > **Hanedan**) → yeni karakterde eski sevgili ve kur yok, divan koltuğu
+      varisin kendisiyse boşaldı; Kronik'te "Klanın başına X geçti"
+- [ ] **Şantaj:** bir sırla şantaj tut → sır listesinde "kozda harcandı"; aynı lorda yeniden şantaj "kullanılmamış sırrı yok" diyor
+- [ ] **Rehine:** divandaki birini rehine olarak gönderemiyorsun (listede yok); misafir rehineye suikast/kaçırma "yeminini bozar" diyor;
+      rehine giderken partinden çıkıyor
+- [ ] Krallığın varken rehine anlaşması → kartta "N günlük saldırmazlık anlaşması"; Krallık > Diplomasi'de anlaşma görünüyor;
+      anlaşmayı erken bitirince o da bitiyor
+- [ ] **Kur ve sevgililer** MCM'de ayrı anahtar; "Gizli ilişki sırları" kapalıyken kur yine çalışıyor
+- [ ] "Eşin seni aldatabilir" kapalıyken eşinin (Regard and Standing'in kurduğu) ilişkisini araştırabiliyorsun
+- [ ] **Savaş Raporu:** altta mareşalin satırları (güç tahmini sol/sağ, sahadaki ordular, topraklarına yürüyen, tavsiye); mareşal yoksa
+      "Mareşalin yok" satırı; pencere satırlara göre uzuyor, kapat düğmesi yerinde
+- [ ] **Muhalefeti izle** raporunda (krallıkta isyancı grup varsa) "Örgütlü muhalefet": önde kim, kaç klan, istek, güç
+- [ ] **Ulak kartı:** ilk seçenek "Görüşme: Diplomacy habercisi (bedel, süre)" → Diplomacy'nin habercisi gidiyor, varınca konuşma;
+      hediyeli ulak varınca "Hediyen ulaştı" kartı (artık bizim görüşme penceremiz açılmıyor)
+- [ ] **Hazinedar:** Klan > gelir açıklamasında "Hazinedar X" satırı; atölye+kervan gelirinin Trade/10 yüzdesi kadar (en fazla %20)
+- [ ] **Kâhya:** valisi olan şehirde sadakat açıklamasında kâhya satırı yok; valisizde var
+- [ ] Entrika menüsünde "Kayıt testi" yok, "Hanedan" var; şehir menüsünde "Saray günü düzenle (dilekçeler)"
+- [ ] Genelev > Yoldaşlar > Yönetici ata: listede **eşin** de var (isterse yönetir; çalışan olarak hiç sorulmaz)
+
 ### Casus başı: Ajan yetiştir (21 Ekim, yeni)
 - [ ] Yoldaşı casus başı ata (krallık gerekmez), Görev → **Ajan yetiştir**; iki hafta sonra "yeni ajan" mesajı, haftada 200 altın düştü
 - [ ] Görev satırında "· ajan N"; yeni entrikanın başarı yüzdesi ajan başına +2 arttı; bakım ajan başına haftada 50 altın
@@ -181,7 +304,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Görev sürerken kaydet → yükle → görev ve hedef duruyor
 
 ### P2.15 — Divan: kâhya (yeni)
-- [ ] Divan'da dört koltuk yan yana sığıyor mu (SERDAR, KÂHYA, HAZİNEDAR, SARAY HEKİMİ)? Küçük düğme yazıları okunuyor mu? Ekran görüntüsü at
+- [ ] Divan'da dört koltuk yan yana sığıyor mu (MAREŞAL, KÂHYA, HAZİNEDAR, SARAY HEKİMİ)? Küçük düğme yazıları okunuyor mu? Ekran görüntüsü at
 - [ ] Kâhya ata (Steward, yolsuz mu, sadakat katkısı) → kart: "Şehir ve kalelerinde sadakat günde +0,5"
 - [ ] Bir şehrinin sadakatine bak (oyunun şehir ekranında açıklama): "Kâhya (ad)" satırı var mı?
 - [ ] ŞEHİR VE KALELER: sadakat, güvenlik, refah, inşaat (kalan gün), günlük proje, günlük gelir; sorunlu olan kırmızı
@@ -191,16 +314,16 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Insert > Entrika > Divan > Kâhya: rapor metni, "Yönet: X"
 - [ ] Kaydet → yükle: kâhya duruyor
 
-### P2.14 — Divan: serdar (yeni)
-- [ ] Divan'da üç koltuk yan yana sığıyor mu (SERDAR, HAZİNEDAR, SARAY HEKİMİ)? Yazılar taşıyorsa ekran görüntüsü at
-- [ ] Serdar ata (Tactics, Scouting, tahmin payı) → kart: görüş menzili, erken uyarı yüzdesi; parti başındaki biri de olabiliyor
+### P2.14 — Divan: mareşal (yeni)
+- [ ] Divan'da üç koltuk yan yana sığıyor mu (MAREŞAL, HAZİNEDAR, SARAY HEKİMİ)? Yazılar taşıyorsa ekran görüntüsü at
+- [ ] Mareşal ata (Tactics, Scouting, tahmin payı) → kart: görüş menzili, erken uyarı yüzdesi; parti başındaki biri de olabiliyor
 - [ ] Savaştayken SAVAŞ MECLİSİ: krallık gücü (onlar / biz), oran, tavsiye
 - [ ] SAVUNMAN: şehir ve kalelerin garnizon, milis, sur, erzak; kuşatma altındaysa kırmızı
 - [ ] DÜŞMAN ORDULARI: kaç kişi, nerede, hedef ("Pravend'i kuşatmaya gidiyor"), sana kaç gün; "Haritada izle"
 - [ ] ZAYIF HEDEFLER: en zayıf beş düşman kalesi; birine git ve oyundaki garnizonla karşılaştır (Tactics düşükse sapmalı)
-- [ ] Bir ordu şehrine ya da köyüne yürürken (çoğu zaman) kuşatmadan önce "Serdarın uyarıyor" kartı geliyor mu, süre doğru mu?
-- [ ] Insert > Entrika > Divan > Serdar: rapor metni
-- [ ] Kaydet → yükle: serdar duruyor
+- [ ] Bir ordu şehrine ya da köyüne yürürken (çoğu zaman) kuşatmadan önce "Mareşalin uyarıyor" kartı geliyor mu, süre doğru mu?
+- [ ] Insert > Entrika > Divan > Mareşal: rapor metni
+- [ ] Kaydet → yükle: mareşal duruyor
 
 ### P2.13 — Divan: saray hekimi (yeni)
 - [ ] Divan sekmesinin üstünde iki koltuk kartı yan yana (HAZİNEDAR, SARAY HEKİMİ); boşsa açıklama ve "Ata"
@@ -253,7 +376,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Vasalken düğme kapalı ("Yalnızca hükümdar ya da bağımsız klan lideri")
 
 ### P2.9 — Saray günü (yeni)
-- [ ] Kendi şehrinde → şehir menüsünde "Divan kur (saray günü)" → üç kart ("DİVAN 1/3"...); dilekçe sahibinin portresi
+- [ ] Kendi şehrinde → şehir menüsünde "Saray günü düzenle (dilekçeler)" → üç kart ("DİVAN 1/3"...); dilekçe sahibinin portresi
 - [ ] Seçenek düğmelerinde sonuçlar yazıyor; parası yetmeyen seçenek kapalı
 - [ ] Seçince şehir ekranında sadakat/güvenlik/refah/erzak değişti; kişilik özelliğine küçük puan (oyunun bildirimi)
 - [ ] Sonda "Divan dağıldı" özeti
@@ -315,7 +438,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Insert → Entrika → **Kur ve sevgililer**: kur yap / eşini gönder listesi, buluşma, bitir
 - [ ] Kaydet → yükle → kur, sevgili, gebelik aynı
 
-### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı eklendi)
+### Genelev (eski adı gece evi; varsayılan kapalı; 19 Ekim'de müşteri tarafı, 21 Ekim'de adlı çalışanlar, yoldaş yönetici ve yoldaş çalışan eklendi)
 - [ ] MCM > Entrika > **Genelev (yetişkin teması)** aç
 - [ ] Herhangi bir şehirde kasaba menüsü > **Genelevine uğra** → resimli kart: sade oda (150), en iyi oda (400), askerlerine bir gece, Ayrıl
 - [ ] Geceyi geçir → "kapı ardından kapanıyor" kartı (içerisi anlatılmıyor); para düştü; aynı gün ikinci kez gri ("Bu gece zaten...")
@@ -323,15 +446,38 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Hastayken: can %70'in üstüne çıkmıyor; kartta "şehrin hekimine görün (500)" → 3 gün sonra "İyileştin" kartı
 - [ ] Saray hekimin varsa hastalık daha çabuk geçiyor (kartta gün sayısı ve hekimin adı)
 - [ ] Askerlerine bir gece ısmarla → "Askerlerin gecesi" kartı; parti morali +12; 7 gün gri
-- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Genelev aç (4.000, 2 gönüllü çalışan)" → açıldı; menü açıklamasında genelev satırı; o şehirde gece yarı fiyat
-- [ ] "Çalışan al" sınırı ağ seviyesine göre (4/6/8); pay seçenekleri (adil/standart/düşük) ayrılma oranlarıyla yazıyor
+- [ ] Gölge ağın olan şehirde > Gölgelerde iş çevir: "Genelev aç (4.000, 2 gönüllü çalışan)" → açıldı, mesajda iki çalışanın **adı**;
+      menü açıklamasında genelev satırı; o şehirde gece yarı fiyat
+- [ ] **Yönetim kartı (21 Ekim, yeni):** o şehirde kasaba menüsü > **Genelevini yönet** → kart: yönetici, çalışanlar adlarıyla (yaş,
+      kulağı delik / gözde / sadık, kaç haftadır), haftalık hesap. Gölgelerde iş çevir > "Genelevi yönet..." ve Klan > Entrika > Ağlar >
+      şehrin kartındaki **Genelev** düğmesi de aynı kartı açıyor
+- [ ] Çalışan al... → kapıda 3 aday (ad, yaş, özellik) → birini seç → 300 düştü, kartta adı var. Şehir dışındayken gri ve nedeni yazıyor.
+      Sınır ağ seviyesine göre (4/6/8)
+- [ ] Çalışanların payı... → adil/standart/düşük, ayrılma oranlarıyla; şu anki gri
+- [ ] Kart > **Yoldaşlar...** → **Yönetici ata...** → yoldaş listesi (Charm, Roguery; istemeyenin yanında "[istemez: onurlu biri...]") →
+      onurlu birini seç: "istemiyor" kartı, ilişki değişmedi. İsteyen birini seç → "evi işletecek" kartı; yoldaş partinden çıktı ve o
+      şehirde (şehrin kişilerinde görünüyor)
+- [ ] **Yoldaşlar... > Bir yoldaşına sor: evde çalışmak ister mi?** → listede "[isteyebilir]" ya da "[istemez: neden]". İstemeyene sor:
+      "Hayır" kartı, ilişki değişmedi. İsteyene sor: kabul kartı; partinden ayrıldı; kartta "(yoldaşın)" diye çalışanlar arasında
+- [ ] Bir hafta sonra yoldaşın altını arttı (kendi payı); pay "düşük"e çekilince bir süre sonra bırakıp sana dönüyor (kart)
+- [ ] **Çalışan yoldaşı geri çağır...**: şehirdeysen hemen partinde, uzaktaysan yola çıkıp geliyor
+- [ ] Ev kapanınca / baskında evdeki yoldaşlar sana dönüyor; evde çalışan yoldaşı casus başı yapamıyorsun ("zaten genelevde çalışıyor")
+- [ ] Yönetim kartında yönetici satırı: kazanç +%, duyulma %, haftalık payı. Bir hafta sonra yoldaşın altını arttı (Klan ekranında ya da
+      Editörler'de bak); senin gelirin kartta yazana yakın
+- [ ] Eşini ya da divandaki birini (casus başı vb.) yönetici yapamıyorsun; yöneticiyi casus başı yapmaya çalışınca "zaten genelev yöneticin"
+- [ ] Yöneticiyi geri çağır: şehirdeysen hemen partine katılıyor; uzaktaysan "yola çıktı" ve bir süre sonra partide
+- [ ] Şehirde yöneticiyle konuşup partine alırsan: haftalık kartta "ev artık yöneticisiz"
+- [ ] Eski bir kayıtta zaten açık genelev varsa: çalışanlara ad verildi (kartı aç ya da bir hafta bekle)
 - [ ] Bir hafta sonra "Genelevlerden haftalık gelir" mesajı; altın arttı; kronikte kayıt
 - [ ] Bir süre sonra "Genelevde duyulanlar: Lord" kartı (yeni resim); Kişiler'de o lordun güncel raporu (bazen sır)
-- [ ] Düşük payda birkaç hafta: "ayrılanlar" kartı, çalışan sayısı düştü
+- [ ] Düşük payda birkaç hafta: "ayrılanlar" kartı **adlarıyla** ("Lysa, Mira payını az bulup ayrıldı"), çalışan sayısı düştü; sadık olanlar daha geç gidiyor
+- [ ] "Genelevde duyulanlar" kartında haberi getiren çalışanın adı (varsa kulağı delik olan)
 - [ ] Entrika > Ağlar: şehrin kartında genelev satırı
 - [ ] Ağı dağıt → genelev de kapandı
 - [ ] Ayarı kapat → kasaba menüsünde "Genelevine uğra" ve işletme seçenekleri yok, haftalık gelir gelmiyor
-- [ ] Kaydet → yükle → ev, çalışan sayısı, pay, hastalık ve bekleme süreleri aynı
+- [ ] Kaydet → yükle → ev, çalışanların adları/yaşları/özellikleri, evdeki yoldaşlar, yönetici, pay, hastalık ve bekleme süreleri aynı
+- [ ] Yeni resimler (65-67: adaylar, yönetici, yoldaş) yokken bu kartlarda genelevin dış cephesi görünüyor; eksik sabotaj/hastalık/olay
+      kartlarında da aynı konudan bir resim (portre değil)
 - [ ] Resimler (32, 50–54) `TVH Resimler`'e konup "aktar" denince kartlarda görünüyor
 
 ### Herkesi biç ve doğum sahnesi (yeni, 19 Ekim)

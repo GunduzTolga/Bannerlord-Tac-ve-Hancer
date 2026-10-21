@@ -82,6 +82,48 @@ namespace CheatMenu.Intrigue
             state.AddLog(SchemeFactors.Today, "Suikast: " + victim.Name + " öldürüldü" + (traced ? " (iz kaldı)" : ""));
         }
 
+        // ---- Esirin gizli infazı (PrisonDeaths) ----
+
+        /// <summary>
+        /// Esir öldürülür, ölümü yönteme göre gösterilir (hastalık: doğal ölüm; kaza ve firar: yaralardan). Şüphe: ölenin klanı ve
+        /// hükümdarı seni görür. İfşa: suikast izi gibi ağır sonuçlar. Her durumda Merhamet düşer. Sonuç metnini döner.
+        /// </summary>
+        public static string PrisonDeath(IntrigueState state, Hero prisoner, PrisonDeathMethod method, bool suspected, bool proven)
+        {
+            Victim victim = Victim.Of(prisoner);
+            Hero ruler = prisoner.Clan?.Kingdom?.Leader;
+            if (method == PrisonDeathMethod.Illness) KillCharacterAction.ApplyByOldAge(prisoner, true);
+            else KillCharacterAction.ApplyByWounds(prisoner, true);
+            TraitLevelingHelper.OnIncidentResolved(DefaultTraits.Mercy, MercyOnMurder);
+
+            string text = victim.Name + " " + PrisonDeathText(method) + ".";
+            if (proven)
+                text += "\n\nGardiyanlardan biri konuştu ve kanıt da çıktı: herkes bunun bir infaz olduğunu biliyor.\n\nSonuç: "
+                    + ApplyHeavyExposure(state, victim, false, false);
+            else if (suspected)
+            {
+                var parts = new List<string>();
+                foreach (Hero hero in victim.ClanAdults.Where(h => h.IsAlive)) Relate(hero, -PrisonDeathRules.SuspicionClanPenalty);
+                if (victim.ClanAdults.Count > 0) parts.Add(victim.ClanName + " klanıyla ilişki -" + PrisonDeathRules.SuspicionClanPenalty);
+                if (ruler != null && ruler.IsAlive && ruler.Clan != victim.Clan)
+                {
+                    Relate(ruler, -PrisonDeathRules.SuspicionRulerPenalty);
+                    parts.Add(ruler.Name + " ile -" + PrisonDeathRules.SuspicionRulerPenalty);
+                }
+                text += "\n\nKanıt yok, ama " + victim.ClanName + " klanı bu ölümün arkasında seni görüyor; başkaları yalnızca fısıldıyor."
+                    + (parts.Count > 0 ? "\n\nSonuç: " + string.Join(", ", parts) + ". Merhamet -." : " Merhamet -.");
+            }
+            else text += "\n\nKimse bir şey sormuyor; açık bir idamın bedelini ödemedin. Vicdanın ise o kadar sessiz değil (Merhamet -).";
+            state.AddLog(SchemeFactors.Today, "Gizli infaz: " + victim.Name + " (" + PrisonDeathRules.Name(method).ToLower(Tr.Culture) + ")"
+                + (proven ? ", ifşa oldu" : suspected ? ", şüphe" : ""));
+            return text;
+        }
+
+        private static string PrisonDeathText(PrisonDeathMethod method) =>
+            method == PrisonDeathMethod.Illness ? "zindanda ateşlendi ve birkaç gün içinde öldü; hekimler zindan hastalığı dedi"
+            : method == PrisonDeathMethod.Accident ? "zindanın taş merdiveninden düştü ve bir daha kalkmadı"
+            : "gece kaçmaya kalktı; gardiyanlar onu surun dibinde buldu";
+
         /// <summary>Suikast ya da kaçırma tutmadı: hedef kurtuldu (suikastta yaralı), adamların yakalanmış olabilir.</summary>
         public static void StrikeFailed(IntrigueState state, Scheme scheme, Hero spymaster, Hero target, int roguery)
         {
@@ -130,13 +172,17 @@ namespace CheatMenu.Intrigue
         public static void BlackmailSucceeded(IntrigueState state, Scheme scheme, Hero spymaster, Hero target)
         {
             int today = SchemeFactors.Today;
+            // Sır kozda harcanır ve hedef tetikte olur: aynı sırla yeniden şantaj yapılamaz (yeni bir sır bulmak gerekir).
+            Secret used = SchemeFactors.BestSecret(state, target);
+            if (used != null) used.Spent = true;
+            state.CooldownUntil[target.StringId] = today + SchemeMath.CooldownDays;
             state.Hooks.RemoveAll(h => h.TargetId == target.StringId);
             state.Hooks.Add(new Hook { TargetId = target.StringId, Day = today, Until = today + SchemeMath.HookDays });
             Relate(target, -SchemeMath.HookUseRelationPenalty);
             spymaster?.AddSkillXp(DefaultSkills.Roguery, SpySuccessXp);
 
             string text = target.Name + " sırrının ortaya çıkmasındansa sana boyun eğmeyi seçti. " + SchemeMath.HookDays
-                + " gün boyunca üzerinde bir kozun var.\n\nKullanmak için: Entrika ekranı > Kişiler, ya da onunla konuşup \"özel bir konu\" aç.";
+                + " gün boyunca üzerinde bir kozun var. Bu sır kozda harcandı; yeniden şantaj için yeni bir sır gerekir.\n\nKullanmak için: Entrika ekranı > Kişiler, ya da onunla konuşup \"özel bir konu\" aç.";
             int abandoned = state.AiPlots.RemoveAll(p => p.PlotterId == target.StringId);
             if (abandoned > 0) text += "\n\nSana karşı kurduğu entrikadan da vazgeçti.";
             Notify(state, "Şantaj tuttu: " + target.Name, text + "\n\nSonuç: " + target.Name + " ile ilişki -" + SchemeMath.HookUseRelationPenalty + ".", target,

@@ -284,7 +284,7 @@ namespace CheatMenu.UI.ViewModels
         /// <summary>Eşin için: araştır, yüzleş, boşa.</summary>
         private IEnumerable<ActionItemVM> SpouseActions(IntrigueState state)
         {
-            if (SpouseLife.Enabled)
+            if (SpouseLife.Watched)
                 yield return new ActionItemVM("Eşini araştır (casus başı, " + SchemeFactors.Money(FidelityRules.InvestigationCost) + ", "
                     + FidelityRules.InvestigationDays + " gün)", SpouseLife.InvestigateBlocked(state), () =>
                     {
@@ -352,7 +352,8 @@ namespace CheatMenu.UI.ViewModels
             Name = SecretRules.Name(secret.Kind);
             Description = RomanceSecrets.Describe(secret);
             StateText = secret.Whispered ? "Aldatılan eşe söylendi; saray bilmiyor"
-                : secret.Exposed ? "İfşa edildi: artık herkes biliyor" : "Yalnızca sen biliyorsun (gün " + secret.Day + ")";
+                : secret.Exposed ? "İfşa edildi: artık herkes biliyor"
+                : "Yalnızca sen biliyorsun (gün " + secret.Day + ")" + (secret.Spent ? "; kozda harcandı, yeniden şantaj olmaz" : "");
             string exposeHint = secret.Exposed ? "" : blackmailRunning ? "Şantaj sürerken ifşa edilemez" : "";
             CanExpose = !secret.Exposed && exposeHint.Length == 0;
             HasWhisper = SecretRules.IsRomantic(secret.Kind) && secret.OtherId != null;
@@ -449,6 +450,10 @@ namespace CheatMenu.UI.ViewModels
             if (CanInterrogate) EventCards.ShowInterrogation(_prisoner, _changed);
         }
 
+        [DataSourceProperty] public string SecretDeathText => "Gizlice öldürt...";
+
+        public void ExecuteSecretDeath() => EventCards.ShowSecretDeath(_prisoner, _changed);
+
         public override void OnFinalize()
         {
             base.OnFinalize();
@@ -475,6 +480,7 @@ namespace CheatMenu.UI.ViewModels
                 + SchemeMath.NetworkDiscovery(network.Level, true) + "; aynı krallıkta yarısı";
             DescriptionText = town != null ? ShadowNetworks.Describe(state, town) : "";
             SinceText = "Gün " + network.Since + "'den beri";
+            HasHouse = NightHouses.Enabled && state.HouseIn(network.SettlementId) != null;
         }
 
         [DataSourceProperty] public string TownName { get; }
@@ -486,6 +492,14 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string DescriptionText { get; }
         [DataSourceProperty] public string SinceText { get; }
         [DataSourceProperty] public string DisbandText => "Dağıt";
+        [DataSourceProperty] public bool HasHouse { get; }
+        [DataSourceProperty] public string HouseText => "Genelev";
+
+        public void ExecuteHouse()
+        {
+            Settlement town = Settlement.Find(_settlementId);
+            if (town != null) NightHouses.ShowManage(town);
+        }
 
         public void ExecuteDisband()
         {

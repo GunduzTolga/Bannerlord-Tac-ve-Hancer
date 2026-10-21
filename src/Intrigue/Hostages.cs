@@ -35,12 +35,13 @@ namespace CheatMenu.Intrigue
             return null;
         }
 
-        /// <summary>Gönderebileceğin aile üyeleri: klanındaki hayattaki, esir olmayan, parti yönetmeyen, eşin olmayan kişiler.</summary>
+        /// <summary>Gönderebileceğin aile üyeleri: klanındaki hayattaki, esir olmayan, parti yönetmeyen, eşin olmayan, divanda ya da genelevde işi olmayan kişiler.</summary>
         public static List<Hero> OurCandidates(IntrigueState state) =>
             Clan.PlayerClan.Heroes
                 .Where(h => h.IsAlive && h != Hero.MainHero && h != Hero.MainHero.Spouse && !h.IsPrisoner && !h.IsPregnant
                     && !(h.PartyBelongedTo != null && h.PartyBelongedTo.LeaderHero == h && h.PartyBelongedTo != MobileParty.MainParty)
-                    && !state.Hostages.Any(d => d.GivenId == h.StringId || d.HeldId == h.StringId))
+                    && !state.Hostages.Any(d => d.GivenId == h.StringId || d.HeldId == h.StringId)
+                    && Council.SeatOf(state, h) == null)
                 .OrderBy(h => h.Age)
                 .ToList();
 
@@ -91,10 +92,11 @@ namespace CheatMenu.Intrigue
             state.Hostages.Add(new HostageDeal { KingdomId = kingdom.StringId, GivenId = hero.StringId, Since = Today, Until = Today + HostageRules.DurationDays });
             SchemeOutcomes.Relate(kingdom.Leader, HostageRules.GiveRulerRelation);
             Relieve(state, kingdom);
+            string pact = FormPact(kingdom);
             SchemeOutcomes.Notify(state, "Rehine gönderildi: " + hero.Name,
                 hero.Name + ", barışın teminatı olarak " + kingdom.Leader.Name + " sarayında, " + host.Name + " kentinde misafir olarak yaşayacak. "
                 + "Bir yıl sonra döner; bu sürede ev sahibiyle yakınlaşır.\n\nSonuç: " + kingdom.Leader.Name + " ile ilişki +" + HostageRules.GiveRulerRelation
-                + ", casus gerilimi -" + HostageRules.TensionRelief + ". Barış bozulursa " + hero.Name + " onların esiri olur.",
+                + ", casus gerilimi -" + HostageRules.TensionRelief + "." + pact + " Barış bozulursa " + hero.Name + " onların esiri olur.",
                 hero, CardImages.Hostage);
             state.AddLog(Today, "Rehine gönderildi: " + hero.Name + ", " + kingdom.Name);
         }
@@ -123,12 +125,31 @@ namespace CheatMenu.Intrigue
             });
             SchemeOutcomes.Relate(kingdom.Leader, HostageRules.ExchangeRulerRelation);
             Relieve(state, kingdom);
+            string exchangePact = FormPact(kingdom);
             SchemeOutcomes.Notify(state, "Rehine değişimi: " + kingdom.Name,
                 hero.Name + " " + host.Name + " kentine, " + theirs.Name + " " + ours.Name + " kentine misafir olarak gitti. Bir yıl sonra ikisi de döner.\n\n"
                 + "Sonuç: " + kingdom.Leader.Name + " ile ilişki +" + HostageRules.ExchangeRulerRelation + ", casus gerilimi -" + HostageRules.TensionRelief
-                + ". Barışı bozan taraf misafirini esir olarak kaybeder.",
+                + "." + exchangePact + " Barışı bozan taraf misafirini esir olarak kaybeder.",
                 theirs, CardImages.Hostage);
             state.AddLog(Today, "Rehine değişimi: " + kingdom.Name + " (" + hero.Name + " / " + theirs.Name + ")");
+        }
+
+        /// <summary>
+        /// Barış Masası'nın şartı: onların hanedanından biri barışın teminatı olarak senin sarayına gelir (tek taraflı). Barış yeni imzalandığı
+        /// için Blocked'daki "savaştasınız" engeli burada yok. Sonuç metni (antlaşma kartı için) döner.
+        /// </summary>
+        public static string TakeForTreaty(IntrigueState state, Kingdom kingdom, Hero theirs)
+        {
+            Settlement ours = OurSettlement();
+            if (theirs == null || !theirs.IsAlive || theirs.IsPrisoner || ours == null) return "Rehine gelemedi" + (ours == null ? ": onu tutacak şehrin ya da kalen yok." : ".");
+            if (state.HostageDealWith(kingdom.StringId) != null) return "Bu krallıkla zaten bir rehine anlaşman var; yeni rehine gelmedi.";
+            Send(theirs, ours);
+            state.Hostages.Add(new HostageDeal { KingdomId = kingdom.StringId, HeldId = theirs.StringId, Since = Today, Until = Today + HostageRules.DurationDays });
+            Relieve(state, kingdom);
+            string pact = FormPact(kingdom);
+            state.AddLog(Today, "Barış teminatı: " + theirs.Name + " (" + kingdom.Name + ") sarayında");
+            return theirs.Name + " barışın teminatı olarak " + ours.Name + " kentinde senin misafirin; " + HostageRules.DurationDays
+                + " gün sonra döner." + pact + " Barışı bozarlarsa esirin olur.";
         }
 
         /// <summary>Anlaşmayı erken bitir: misafirler döner, hükümdar kırılır.</summary>
@@ -136,6 +157,7 @@ namespace CheatMenu.Intrigue
         {
             Kingdom kingdom = KingdomOf(deal);
             Close(state, deal);
+            if (Clan.PlayerClan.Kingdom != null) Bundle.DiplomacyCompat.EndNonAggressionPact(Clan.PlayerClan.Kingdom, kingdom);
             if (kingdom?.Leader != null && kingdom.Leader.IsAlive) SchemeOutcomes.Relate(kingdom.Leader, -HostageRules.EarlyEndPenalty);
             MenuUI.Success("Rehine anlaşması bitti; misafirler evlerine dönüyor" + (kingdom?.Leader != null ? " (" + kingdom.Leader.Name + " ile -" + HostageRules.EarlyEndPenalty + ")" : ""));
         }
@@ -236,9 +258,24 @@ namespace CheatMenu.Intrigue
 
         // ---- Yardımcılar ----
 
+        /// <summary>
+        /// Rehine anlaşması süresince Diplomacy'de saldırmazlık anlaşması (krallığın varsa ve Diplomacy paketliyse); kartta söylenecek
+        /// cümle ya da boş. Anlaşma süresi dolunca kendiliğinden biter; erken bitirilirse onu da bitiririz.
+        /// </summary>
+        private static string FormPact(Kingdom kingdom)
+        {
+            Kingdom mine = Clan.PlayerClan.Kingdom;
+            if (mine == null || mine == kingdom) return "";
+            return Bundle.DiplomacyCompat.FormNonAggressionPact(mine, kingdom, HostageRules.DurationDays)
+                ? " Rehineler süresince " + HostageRules.DurationDays + " günlük saldırmazlık anlaşması." : "";
+        }
+
         private static void Send(Hero hero, Settlement settlement)
         {
             if (hero.GovernorOf != null) ChangeGovernorAction.RemoveGovernorOf(hero);
+            // Partindeyse önce partiden çıkar (genelevdeki yoldaşlar gibi); yoksa hem partide hem sarayda görünür.
+            if (hero.PartyBelongedTo != null && hero.PartyBelongedTo.LeaderHero != hero)
+                hero.PartyBelongedTo.MemberRoster.AddToCounts(hero.CharacterObject, -1);
             TeleportHeroAction.ApplyImmediateTeleportToSettlement(hero, settlement);
         }
 

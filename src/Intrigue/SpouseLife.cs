@@ -20,7 +20,14 @@ namespace CheatMenu.Intrigue
     /// </summary>
     public static class SpouseLife
     {
+        /// <summary>Bizim sistemimiz eşine kendi başına ilişki başlatır mı ("Eşin seni aldatabilir").</summary>
         public static bool Enabled => RomanceSecrets.Enabled && SettingsStore.Current.SpouseInfidelity;
+
+        /// <summary>
+        /// Eşinin ilişkisi izlenir ve öğrenilebilir mi (araştırma, karşı casusluk, yüzleşme): bizim ayarımız açıksa ya da Regard and
+        /// Standing ilişkileri kendisi yürütüyorsa (onunkiler bizim ayarımızdan bağımsız yaşanır).
+        /// </summary>
+        public static bool Watched => RomanceSecrets.Enabled && (SettingsStore.Current.SpouseInfidelity || RomanceSecrets.FromRegardStanding);
 
         private static int Today => SchemeFactors.Today;
 
@@ -57,15 +64,19 @@ namespace CheatMenu.Intrigue
                 return;
             }
             state.SpouseApartWeeks = Together(spouse) ? 0 : state.SpouseApartWeeks + 1;
-            if (!Enabled || spouse.IsPrisoner) return;
+            if (spouse.IsPrisoner) return;
 
             SpouseAffair affair;
             if (RomanceSecrets.FromRegardStanding)
             {
+                // Regard and Standing eşin ilişkilerini bizim ayarımızdan bağımsız yürütür: "Eşin seni aldatabilir" kapalı olsa da
+                // izlenir ki öğrenebilesin (yalnızca gizli ilişki sırları kapalıysa izlenmez).
+                if (!Watched) return;
                 affair = FollowRegardStanding(state, spouse);
                 if (affair != null) CounterIntel(state, affair);
                 return;
             }
+            if (!Enabled) return;
 
             affair = state.SpouseAffair;
             if (affair == null)
@@ -134,7 +145,7 @@ namespace CheatMenu.Intrigue
 
         public static string InvestigateBlocked(IntrigueState state)
         {
-            if (!Enabled) return "Kurallar'dan kapalı (\"Eşin seni aldatabilir\")";
+            if (!Watched) return "Kurallar'dan kapalı (\"Eşin seni aldatabilir\")";
             Hero spouse = Courtships.Spouse;
             if (spouse == null) return "Klanında hayatta bir eşin yok";
             Hero spymaster = SchemeFactors.Spymaster(state);

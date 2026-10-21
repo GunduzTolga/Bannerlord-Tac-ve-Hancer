@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Basamaklı satır (ViewModel: StepRowVM): bölüm başlığı ya da ad, azalt, değer, arttır (seçiliyse değer altın renkte). Barış Masası'nın
+  şartları, Krallık'taki bağış miktarı.
+  Genişliğe uyar (en az 540).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="@Height">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="6" MarginTop="6" Brush="Tvh.Text.Caption" Text="@Label" IsVisible="@IsHeader" />
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsTerm">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="14" MarginRight="316" Brush="Tvh.Text.Option" Text="@Label" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="36" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="260" Brush="Tvh.Button.Small" Command.Click="ExecuteLess" IsEnabled="@CanLess" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="-" />
+              </Children>
+            </ButtonWidget>
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="200" HorizontalAlignment="Right" MarginRight="56" Brush="Tvh.Text.GoldCenter" Text="@ValueText" IsVisible="@IsOn" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="200" HorizontalAlignment="Right" MarginRight="56" Brush="Tvh.Text.StatLabel" Text="@ValueText" IsVisible="@IsOff" />
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="36" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="6" Brush="Tvh.Button.Small" Command.Click="ExecuteMore" IsEnabled="@CanMore" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="+" />
+              </Children>
+            </ButtonWidget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

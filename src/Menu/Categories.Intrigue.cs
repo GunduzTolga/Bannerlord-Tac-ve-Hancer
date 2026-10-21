@@ -51,36 +51,51 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
-                MenuEntry.Submenu("Divan (serdar, kâhya, hazinedar, hekim)...", ShowCouncil),
+                MenuEntry.Submenu("Divan (mareşal, kâhya, hazinedar, hekim, diplomat)...", ShowCouncil),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
                 MenuEntry.Submenu("Geçmiş...", ShowIntrigueLog),
             };
             if (spymaster != null) entries.Add(MenuEntry.Simple("Casus başını görevden al", SchemeEngine.DismissSpymaster));
-            entries.Add(MenuEntry.Simple("Kayıt testi: işaret bırak (geçici)", () =>
-            {
-                state.SaveTestMarker = "gün " + SchemeFactors.Today;
-                MenuUI.Success("İşaret bırakıldı: " + state.SaveTestMarker + ". Şimdi kaydet ve kaydı yeniden yükle.");
-            }));
+            entries.Add(MenuEntry.Submenu("Hanedan: meşrulaştırma ve klanı devretme...", ShowDynasty));
+            entries.Add(MenuEntry.Simple("Lordlar: iletişim, ziyafet, yanına çağır", () => UI.IntrigueScreen.OpenTab(UI.ViewModels.IntrigueScreenVM.TabLords)));
+            Kingdom realm = Clan.PlayerClan.Kingdom;
+            string rebellions = realm == null ? "bir krallıkta değilsin" : !Bundle.DiplomacyCompat.IsAvailable ? "Diplomacy paketli değil" : null;
+            entries.Add(rebellions == null
+                ? MenuEntry.Simple("İsyanlar ve iç savaş: " + realm.Name, () => UI.IntrigueScreen.OpenRebellions(null))
+                : MenuEntry.Simple("İsyanlar ve iç savaş - " + rebellions, () => MenuUI.Error(rebellions)));
+            List<Kingdom> wars = realm == null ? new List<Kingdom>() : Marshal.Enemies();
+            string reports = rebellions ?? (wars.Count == 0 ? "kimseyle savaşta değilsin" : null);
+            entries.Add(reports == null
+                ? MenuEntry.Submenu("Savaş raporları (" + wars.Count + ")...", () => Picker.Pick("Hangi savaş?", wars, k => k.Name.ToString(),
+                    k => MenuUI.Defer(() =>
+                    {
+                        if (!UI.WarReportScreen.Open(k)) MenuUI.Error("Savaş Raporu açılamadı");
+                    }), ShowIntrigue))
+                : MenuEntry.Simple("Savaş raporları - " + reports, () => MenuUI.Error(reports)));
+            if (reports == null)
+                entries.Add(MenuEntry.Submenu("Barış Masası...", () => Picker.Pick("Kiminle barış?", wars,
+                    k => k.Name + (PeaceTreaties.Blocked(state, k) is string why ? "  [" + why + "]" : ""),
+                    k => UI.IntrigueScreen.OpenWar(k), ShowIntrigue)));
 
             ShowCategory("Entrika", entries, ShowIntrigue,
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")
-                + "Zorluk: " + SchemeMath.DifficultyName(SettingsStore.Current.IntrigueDifficulty) + " (Kurallar'dan değişir). "
-                + "Kayıt testi işareti: " + (state.SaveTestMarker ?? "yok"));
+                + "Zorluk: " + SchemeMath.DifficultyName(SettingsStore.Current.IntrigueDifficulty) + " (Kurallar'dan değişir).");
         }
 
-        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 serdar, P2.15 kâhya) ----
+        // ---- Divan (P2.12 hazinedar, P2.13 hekim, P2.14 mareşal, P2.15 kâhya) ----
 
         private static void ShowCouncil()
         {
             IntrigueState state = SchemeEngine.State;
             ShowCategory("Divan", new List<MenuEntry>
             {
-                MenuEntry.Submenu("Serdar: " + (Marshal.Current(state)?.Name.ToString() ?? "boş") + "...", ShowMarshal),
+                MenuEntry.Submenu("Mareşal: " + (Marshal.Current(state)?.Name.ToString() ?? "boş") + "...", ShowMarshal),
                 MenuEntry.Submenu("Kâhya: " + (Steward.Current(state)?.Name.ToString() ?? "boş") + "...", ShowSteward),
                 MenuEntry.Submenu("Hazinedar: " + (Treasury.Treasurer(state)?.Name.ToString() ?? "boş") + "...", ShowTreasury),
                 MenuEntry.Submenu("Saray hekimi: " + (Physician.Current(state)?.Name.ToString() ?? "boş") + "...", ShowPhysician),
+                MenuEntry.Submenu("Diplomat: " + (Diplomat.Current(state)?.Name.ToString() ?? "boş") + "...", ShowDiplomat),
             }, ShowCouncil, "Casus başı Entrika menüsünde. Ayrıntılı raporlar: Entrika ekranı > Divan.", ShowIntrigue);
         }
 
@@ -90,19 +105,53 @@ namespace CheatMenu.Menu
             Hero marshal = Marshal.Current(state);
             var entries = new List<MenuEntry>
             {
-                MenuEntry.Submenu(marshal == null ? "Serdar ata..." : "Serdarı değiştir...", () => Picker.Pick("Serdar seç",
+                MenuEntry.Submenu(marshal == null ? "Mareşal ata..." : "Mareşali değiştir...", () => Picker.Pick("Mareşal seç",
                     Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
                     hero =>
                     {
-                        MenuUI.SafeRun("Serdar", () => Marshal.Assign(SchemeEngine.State, hero));
+                        MenuUI.SafeRun("Mareşal", () => Marshal.Assign(SchemeEngine.State, hero));
                         MenuUI.Defer(ShowMarshal);
                     }, ShowMarshal, HeroPortrait, sort: false)),
             };
-            if (marshal != null) entries.Add(MenuEntry.Simple("Serdarı görevden al", () => Marshal.Dismiss(SchemeEngine.State)));
-            ShowCategory("Divan: serdar", entries, ShowMarshal,
+            if (marshal != null) entries.Add(MenuEntry.Simple("Mareşali görevden al", () => Marshal.Dismiss(SchemeEngine.State)));
+            ShowCategory("Divan: mareşal", entries, ShowMarshal,
                 marshal == null
-                    ? "Klanından Tactics'i ve Scouting'i yüksek birini serdar yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
+                    ? "Klanından Tactics'i ve Scouting'i yüksek birini mareşal yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
                     : Marshal.ReportText(state) + "\n\nOrdular, zayıf hedefler ve savunman: Entrika ekranı > Divan.",
+                ShowCouncil);
+        }
+
+        private static void ShowDiplomat()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero diplomat = Diplomat.Current(state);
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu(diplomat == null ? "Diplomat ata..." : "Diplomatı değiştir...", () => Picker.Pick("Diplomat seç",
+                    Diplomat.Candidates(state).OrderByDescending(Diplomat.Charm).ToList(), Diplomat.Label,
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Diplomat", () => Diplomat.Assign(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowDiplomat);
+                    }, ShowDiplomat, HeroPortrait, sort: false)),
+            };
+            if (diplomat != null)
+            {
+                entries.Add(MenuEntry.Submenu("Görev: ilişkileri geliştir...", () => Picker.Pick("Kiminle?", Diplomat.TargetCandidates(),
+                    h => h.Name + " (" + h.Clan?.Name + ", ilişki " + SchemeFactors.Signed(Hero.MainHero.GetRelation(h)) + ")"
+                        + (Diplomat.TargetBlocked(state, h) is string why ? "  [" + why + "]" : ""),
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Diplomat görevi", () => Diplomat.SetTarget(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowDiplomat);
+                    }, ShowDiplomat, HeroPortrait, sort: false)));
+                if (Diplomat.Target(state) != null) entries.Add(MenuEntry.Simple("Görevi bitir", () => Diplomat.ClearTarget(SchemeEngine.State)));
+                entries.Add(MenuEntry.Simple("Diplomatı görevden al", () => Diplomat.Dismiss(SchemeEngine.State)));
+            }
+            ShowCategory("Divan: diplomat", entries, ShowDiplomat,
+                diplomat == null
+                    ? "Klanından Charm'ı yüksek birini diplomat yap: Barış Masası'nda pazarlık gücü, elçiler, çağrı ve ziyafet, hediyeler; sana savaş açmaya hazırlanan krallığa erken uyarı."
+                    : Diplomat.ReportText(state),
                 ShowCouncil);
         }
 
@@ -650,7 +699,7 @@ namespace CheatMenu.Menu
                     () => MenuUI.Info("Doğum yaklaşınca kartla haber gelir")));
             if (Courtships.Spouse != null)
             {
-                if (SpouseLife.Enabled)
+                if (SpouseLife.Watched)
                 {
                     string blocked = SpouseLife.InvestigateBlocked(state);
                     string label = "Eşini araştır (casus başı, " + SchemeFactors.Money(FidelityRules.InvestigationCost) + ", " + FidelityRules.InvestigationDays + " gün)";
@@ -761,7 +810,7 @@ namespace CheatMenu.Menu
                 inTown ? (Action)null : ShowNetworks, ShadowNetworks.Describe(state, town));
         }
 
-        /// <summary>Genelev: açmak ve çalışan almak şehirdeyken; payı değiştirmek ve kapatmak uzaktan da.</summary>
+        /// <summary>Genelev: açmak şehirdeyken; yönetim kartı (çalışanlar, pay, yönetici, kapatma) her yerden.</summary>
         private static void AddHouseEntries(IntrigueState state, Settlement town, bool inTown, List<MenuEntry> entries)
         {
             House house = state.HouseIn(town.StringId);
@@ -775,23 +824,8 @@ namespace CheatMenu.Menu
                     : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
                 return;
             }
-            if (inTown)
-            {
-                string blocked = NightHouses.HireBlocked(state, town);
-                string label = "Çalışan al (" + SchemeFactors.Money(HouseRules.HireCost) + "; " + house.Staff + "/" + NightHouses.MaxStaff(state, town) + ")";
-                entries.Add(blocked == null
-                    ? MenuEntry.Simple(label, () => NightHouses.Hire(state, town))
-                    : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
-            }
-            foreach (HouseShare share in new[] { HouseShare.Fair, HouseShare.Standard, HouseShare.Low })
-            {
-                if (share == house.Share) continue;
-                entries.Add(MenuEntry.Simple("Çalışanların payı: " + HouseRules.ShareName(share)
-                    + (HouseRules.LeaveChance(share) > 0 ? " (ayrılma %" + HouseRules.LeaveChance(share) + "/hafta)" : " (kimse ayrılmaz, daha çok haber)"),
-                    () => NightHouses.SetShare(state, town, share)));
-            }
-            entries.Add(MenuEntry.Submenu("Genelevi kapat...", () => MenuUI.Confirm("Genelevi kapat", "Açılış parası geri gelmez. Kapatılsın mı?",
-                () => NightHouses.Close(state, town), () => ShowShadowTown(town, inTown))));
+            entries.Add(MenuEntry.Submenu("Genelevi yönet... (" + house.Staff + "/" + NightHouses.MaxStaff(state, town) + " çalışan)",
+                () => MenuUI.Defer(() => NightHouses.ShowManage(town))));
         }
 
         // ---- Sana karşı entrikalar ----

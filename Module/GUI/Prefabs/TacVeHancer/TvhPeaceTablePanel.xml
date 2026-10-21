@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Barış Masası (ViewModel: PeaceTableVM; Savaş ve barış > Savaşlar'da seçili savaş). Başlık şeridi: masa adı, hükümdar ve kesesi,
+  pazarlık gücün ve nedenleri. Solda istediklerin (bölümlü, kaydırılır), sağda verdiklerin, özet, kabul olasılığı ve Teklif et.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <!-- ===== Başlık şeridi ===== -->
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginRight="460" Brush="Tvh.Text.Name" Text="@Title" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="450" SuggestedHeight="30" HorizontalAlignment="Right" Brush="Tvh.Text.MutedRight" Text="@Subtitle" />
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="44" MarginTop="34" Brush="Tvh.Text.SmallTop" Text="@LeverageText" />
+
+        <!-- ===== Sol: istediklerin ===== -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="84" MarginRight="560">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@DemandsTitle" />
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="36" Sprite="BlankWhiteSquare_9" Color="#0D0A0799">
+              <Children>
+                <ScrollablePanel Id="DemandsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="6" MarginRight="22" MarginTop="4" MarginBottom="4" AutoHideScrollBars="true" ClipRect="DemandsClip" InnerPanel="DemandsClip\DemandsList" VerticalScrollbar="..\DemandsBar\Scrollbar">
+                  <Children>
+                    <Widget Id="DemandsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="DemandsList" DataSource="{Demands}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <ItemTemplate>
+                            <TvhStepRow />
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="DemandsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginRight="4" MarginTop="4" MarginBottom="4" />
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+
+        <!-- ===== Sağ: verdiklerin, özet, olasılık, teklif ===== -->
+        <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="540" HorizontalAlignment="Right" MarginTop="84" StackLayout.LayoutMethod="VerticalTopToBottom">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@OffersTitle" />
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginTop="4" Sprite="BlankWhiteSquare_9" Color="#0D0A0799">
+              <Children>
+                <ListPanel DataSource="{Offers}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="6" MarginRight="6" MarginTop="4" MarginBottom="4" StackLayout.LayoutMethod="VerticalTopToBottom">
+                  <ItemTemplate>
+                    <TvhStepRow />
+                  </ItemTemplate>
+                </ListPanel>
+              </Children>
+            </Widget>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="23" MarginTop="12" Sprite="StdAssets\Popup\divider" DoNotAcceptEvents="true" />
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="8" MarginRight="8" MarginTop="6" Brush="Tvh.Text.Body" Text="@SummaryText" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46" MarginTop="10" Brush="Tvh.Text.PanelTitle" Text="@ChanceText" />
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" Brush="Tvh.Text.StatLabel" Text="@WeightText" />
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="8" MarginRight="8" MarginTop="6" Brush="Tvh.Text.MutedTop" Text="@NoteText" />
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="8" MarginRight="8" MarginTop="6" Brush="Tvh.Text.Bad" Text="@BlockedText" />
+            <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" MarginTop="12" StackLayout.LayoutMethod="HorizontalLeftToRight">
+              <Children>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="210" SuggestedHeight="44" MarginRight="14" Brush="Tvh.Button" Command.Click="ExecuteReset" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ResetText" />
+                  </Children>
+                </ButtonWidget>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="210" SuggestedHeight="44" Brush="Tvh.Button.Primary" Command.Click="ExecutePropose" IsEnabled="@CanPropose" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@ProposeText" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

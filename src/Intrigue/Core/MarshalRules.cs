@@ -3,7 +3,7 @@ using System;
 namespace CheatMenu.Intrigue.Core
 {
     /// <summary>
-    /// Divan: serdar (P2.14, tasarım: docs/superpowers/specs/2026-10-19-p2-divan-serdar.md). Savaş meclisi: düşmanın gücü, orduları,
+    /// Divan: mareşal (P2.14, tasarım: docs/superpowers/specs/2026-10-19-p2-divan-maresal.md). Savaş meclisi: düşmanın gücü, orduları,
     /// zayıf kaleleri, kendi savunman ve sana yürüyen ordulara erken uyarı. Tactics tahminlerin isabetini, Scouting ne kadar uzağı
     /// gördüğünü ve uyarının olasılığını belirler. Saf: formüller; oyunsuz test edilir.
     /// </summary>
@@ -46,7 +46,7 @@ namespace CheatMenu.Intrigue.Core
             return (int)(Math.Round(Math.Max(0, value) / step, MidpointRounding.AwayFromZero) * step);
         }
 
-        /// <summary>Onların gücü / bizim gücümüz oranına göre serdarın tavsiyesi.</summary>
+        /// <summary>Onların gücü / bizim gücümüz oranına göre mareşalin tavsiyesi.</summary>
         public static string Advice(double ratio)
         {
             if (ratio >= 1.5) return "Bizden çok güçlüler: barışı düşün";

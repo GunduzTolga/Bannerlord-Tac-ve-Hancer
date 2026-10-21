@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  İsyancı grup kartı (ViewModel: RebelFactionCardVM). Solda önderin portresi, grubun adı, isteği, durumu ve katılanlar; sağda güç
+  dengesi: çubuk 300 piksel (RebelFactionCardVM.BarWidth ile aynı olmalı), dolgu grubun payı, açık çizgi isyan için gereken pay.
+  Altında Diplomacy'nin düğmeleri (katıl, ayrıl, isyanı başlat, destek topla).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="10">
+      <Children>
+        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" />
+        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="146">
+              <Children>
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="104" SuggestedHeight="78" MarginLeft="12" MarginTop="14" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{Portrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                  </Children>
+                </Widget>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="28" MarginLeft="132" MarginTop="10" Brush="Tvh.Text.Name" Text="@Name" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="22" MarginLeft="132" MarginTop="40" Brush="Tvh.Text.Small" Text="@DemandText" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="22" MarginLeft="132" MarginTop="64" Brush="Tvh.Text.Gold" Text="@StatusText" IsVisible="@IsNotAtWar" />
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="22" MarginLeft="132" MarginTop="64" Brush="Tvh.Text.Bad" Text="@StatusText" IsVisible="@IsWar" />
+                <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="48" MarginLeft="132" MarginTop="92" Brush="Tvh.Text.MutedTop" Text="@ParticipantsText" />
+
+                <!-- Güç dengesi -->
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="24" MarginLeft="720" MarginTop="12" Brush="Tvh.Text.Gold" Text="@RatioText" />
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="12" MarginLeft="720" MarginTop="46" Sprite="BlankWhiteSquare_9" Color="#3A2D1FFF">
+                  <Children>
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="@FillWidth" Sprite="BlankWhiteSquare_9" Color="#A8463AFF" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="3" SuggestedHeight="20" MarginLeft="@MarkerOffset" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#E8D9A8FF" />
+                  </Children>
+                </Widget>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="420" SuggestedHeight="22" MarginLeft="720" MarginTop="66" Brush="Tvh.Text.Small" Text="@StrengthText" />
+                <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="440" SuggestedHeight="48" MarginLeft="720" MarginTop="92" Brush="Tvh.Text.MutedTop" Text="@NoteText" />
+              </Children>
+            </Widget>
+            <ListPanel DataSource="{Actions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="132" MarginRight="12" MarginBottom="8" StackLayout.LayoutMethod="VerticalTopToBottom">
+              <ItemTemplate>
+                <TvhActionRow />
+              </ItemTemplate>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

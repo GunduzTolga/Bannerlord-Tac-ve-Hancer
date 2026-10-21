@@ -23,10 +23,13 @@ namespace CheatMenu.UI.ViewModels
         private bool _hasKingdom, _hasNoLords, _canSwitch;
         private ImageIdentifierVM _rulerPortrait;
 
-        public CourtVM(Action changed, Action<SchemeKind, Hero> startScheme)
+        private readonly Action<Kingdom> _showRebellions;
+
+        public CourtVM(Action changed, Action<SchemeKind, Hero> startScheme, Action<Kingdom> showRebellions)
         {
             _changed = changed;
             _startScheme = startScheme;
+            _showRebellions = showRebellions;
             Lords = new MBBindingList<CourtLordItemVM>();
             _rulerPortrait = PortraitOf(null);
         }
@@ -58,6 +61,15 @@ namespace CheatMenu.UI.ViewModels
         public void ExecuteHostage()
         {
             if (_kingdom != null && CanHostage) EventCards.ShowHostage(_kingdom, _changed);
+        }
+
+        [DataSourceProperty] public string RebellionsText => "İsyanlar...";
+        [DataSourceProperty] public bool CanRebellions => Bundle.DiplomacyCompat.IsAvailable;
+
+        /// <summary>Seçili krallığın isyan grupları: Savaş ve barış > İsyanlar sekmesinde.</summary>
+        public void ExecuteRebellions()
+        {
+            if (_kingdom != null && CanRebellions) _showRebellions(_kingdom);
         }
         [DataSourceProperty] public string PrevText => "« Önceki";
         [DataSourceProperty] public string NextText => "Sonraki »";

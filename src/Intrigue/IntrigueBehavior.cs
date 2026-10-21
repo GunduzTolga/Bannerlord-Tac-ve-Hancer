@@ -39,7 +39,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika günlük (eşin)", SpouseLife.DailyTick);
                 MenuUI.SafeRun("Aile editörü (yaşlanma)", Cheats.FamilyEditor.DailyTick);
                 MenuUI.SafeRun("Divan günlük (kervan defteri)", Treasury.DailyTick);
-                MenuUI.SafeRun("Divan günlük (serdarın uyarıları)", Marshal.Daily);
+                MenuUI.SafeRun("Divan günlük (mareşalin uyarıları)", Marshal.Daily);
                 MenuUI.SafeRun("Divan günlük (kâhyanın uyarıları)", Steward.Daily);
                 MenuUI.SafeRun("Genelev günlük (hastalık)", Brothels.Daily);
             });
@@ -51,6 +51,10 @@ namespace CheatMenu.Intrigue
             {
                 if (party != null && party.IsCaravan) MenuUI.SafeRun("Kervan defteri", () => Treasury.OnSettlementLeft(party, settlement));
             });
+            CampaignEvents.HourlyTickEvent.AddNonSerializedListener(this, () =>
+                MenuUI.SafeRun("Lordlar (çağrılanlar)", LordContacts.Hourly));
+            CampaignEvents.OnPlayerCharacterChangedEvent.AddNonSerializedListener(this, (oldPlayer, newPlayer, newParty, partyChanged) =>
+                MenuUI.SafeRun("Varis", () => Dynasty.OnPlayerCharacterChanged(State, oldPlayer, newPlayer)));
             CampaignEvents.WarDeclared.AddNonSerializedListener(this, (a, b, detail) =>
                 MenuUI.SafeRun("Rehine anlaşması (savaş)", () => Hostages.OnWarDeclared(a, b, detail)));
             CampaignEvents.WeeklyTickEvent.AddNonSerializedListener(this, () =>
@@ -62,10 +66,12 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (eşin)", SpouseLife.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (rehineler)", Hostages.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
+                MenuUI.SafeRun("Barış Masası (elçiler)", PeaceTreaties.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hazinedar)", Treasury.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hekim)", Physician.Weekly);
-                MenuUI.SafeRun("Divan haftalık (serdar)", Marshal.Weekly);
+                MenuUI.SafeRun("Divan haftalık (mareşal)", Marshal.Weekly);
                 MenuUI.SafeRun("Divan haftalık (kâhya)", Steward.Weekly);
+                MenuUI.SafeRun("Divan haftalık (diplomat)", Diplomat.Weekly);
             });
         }
 

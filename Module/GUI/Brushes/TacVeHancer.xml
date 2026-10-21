@@ -135,6 +135,28 @@
     </Styles>
   </Brush>
 
+  <!-- Savaş Raporu (TvhWarReport): bölüm başlığı, karşılaştırma değerleri ve satır adı, iki tarafın adı -->
+  <Brush Name="Tvh.Text.SectionCenter" Font="Galahad" FontSize="24" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#DDC3A1FF" TextOutlineAmount="0.01" TextGlowRadius="0" TextBlur="0.3" />
+    </Styles>
+  </Brush>
+  <Brush Name="Tvh.Text.StatValue" FontSize="19" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#F4E1C4FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+    </Styles>
+  </Brush>
+  <Brush Name="Tvh.Text.StatLabel" FontSize="17" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#C9B696FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+    </Styles>
+  </Brush>
+  <Brush Name="Tvh.Text.GoldCenter" FontSize="18" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#E4C59BFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />
+    </Styles>
+  </Brush>
+
   <Brush Name="Tvh.Text.Caption" FontSize="16" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
       <Style Name="Default" FontColor="#C9A45EFF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" />

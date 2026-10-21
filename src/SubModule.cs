@@ -96,6 +96,8 @@ namespace CheatMenu
                 starter.AddModel<HeroDeathProbabilityCalculationModel>(new Cheats.Models.PhysicianDeathModel());
                 // Divan, kâhya: klanının yerleşimlerinde günlük sadakate kâhyanın satırı.
                 starter.AddModel<SettlementLoyaltyModel>(new Cheats.Models.StewardLoyaltyModel());
+                // Divan, hazinedar: atölye ve kervan gelirine hazinedarın satırı.
+                starter.AddModel<ClanFinanceModel>(new Cheats.Models.TreasurerFinanceModel());
                 // Oyun açılışında değil burada: kayıt, oyunun ansiklopedi kodunu derletir ve bu, oyun metinlerini isteyen
                 // CampaignUIHelper'ın başlangıcını çalıştırır. Metinler ancak bir oyun başlayınca yüklüdür; açılışta yapılan
                 // kayıt CampaignUIHelper'ı bozuyor, karakter oluşturma çöküyordu.
@@ -164,6 +166,7 @@ namespace CheatMenu
             IntriguePopups.Tick();
             EventCards.Tick();
             IntrigueScreen.Tick();
+            WarReportScreen.Tick();
             ClanIntrigueTab.Tick();
             CleanSaveGuard.Tick();
 

@@ -112,6 +112,9 @@ namespace CheatMenu.Tests
             Check("settings: romance secrets off", !ModSettings.Parse("RomanceSecrets=0").RomanceSecrets);
             Check("settings: night houses default off", !ModSettings.Parse("").NightHouses);
             Check("settings: night houses on", ModSettings.Parse("NightHouses=1").NightHouses);
+            Check("settings: courtships default on, separate from secrets", ModSettings.Parse("").Courtships
+                && ModSettings.Parse("RomanceSecrets=0").Courtships && !ModSettings.Parse("Courtships=0").Courtships
+                && ModSettings.Parse("Courtships=0").RomanceSecrets);
             Check("settings: spouse infidelity default on", ModSettings.Parse("").SpouseInfidelity);
             Check("settings: spouse infidelity off", !ModSettings.Parse("SpouseInfidelity=0").SpouseInfidelity);
             Check("settings: tail in scene default off", !ModSettings.Parse("").TailInScene);
@@ -132,6 +135,7 @@ namespace CheatMenu.Tests
             full.SetScreenHotkey(5);
             full.EventCards = false;
             full.RomanceSecrets = false;
+            full.Courtships = false;
             full.NightHouses = true;
             full.SpouseInfidelity = false;
             full.TailInScene = true;
@@ -140,7 +144,7 @@ namespace CheatMenu.Tests
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
                 && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && !back.MapBarButton && back.ScreenHotkey == 5
-                && !back.EventCards && !back.RomanceSecrets && back.NightHouses && !back.SpouseInfidelity && back.TailInScene);
+                && !back.EventCards && !back.RomanceSecrets && !back.Courtships && back.NightHouses && !back.SpouseInfidelity && back.TailInScene);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";
@@ -177,6 +181,13 @@ namespace CheatMenu.Tests
             RomanceTests();
             CrisisTests();
             HouseTests();
+            HeirTests();
+            PrisonDeathTests();
+            LordContactTests();
+            WarReportTests();
+            PeaceTreatyTests();
+            DiplomatTests();
+            RealmTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -359,7 +370,7 @@ namespace CheatMenu.Tests
                 TargetId = "lord_1_1", TargetName = "Derthert", Day = 12, Location = "Pravend", Party = "120 asker",
                 Gold = "~20.000", Relations = "hükümdar: 10\tsen: -5", Traits = "Onur +1",
             });
-            state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true });
+            state.Secrets.Add(new Secret { TargetId = "lord_1_1", Kind = SecretKind.Bribery, Day = 12, Exposed = true, Spent = true });
             state.Secrets.Add(new Secret { TargetId = "lord_4", Kind = SecretKind.Bastard, Day = 30, OtherId = "lord_5", ChildId = "lord_6", Exposed = true, Whispered = true });
             state.CooldownUntil["lord_2"] = 200;
             state.AlertUntil["lord_3"] = 300;
@@ -418,7 +429,11 @@ namespace CheatMenu.Tests
             state.SpouseApartWeeks = 3;
             state.RomanceUntil["lord_10"] = 220;
             state.NextCourtshipId = 5;
-            state.Houses.Add(new House { TownId = "town_V1", Staff = 5, Share = HouseShare.Fair, Since = 120 });
+            var savedHouse = new House { TownId = "town_V1", Share = HouseShare.Fair, Since = 120, ManagerId = "companion_3", ManagerSince = 130 };
+            for (int i = 0; i < 5; i++)
+                savedHouse.Workers.Add(new HouseWorker { Name = "Lysa" + i, Female = i != 2, Age = 20 + i, Trait = (WorkerTrait)(i % 4), Since = 120 + i,
+                    HeroId = i == 4 ? "companion_7" : null });
+            state.Houses.Add(savedHouse);
             state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
             state.Mission = SpymasterMission.SpreadRumors;
@@ -438,7 +453,8 @@ namespace CheatMenu.Tests
             IntelReport r = back.Reports.Count == 1 ? back.Reports[0] : null;
             Check("state: report", r != null && r.TargetName == "Derthert" && r.Day == 12 && r.Relations == "hükümdar: 10\tsen: -5");
             Check("state: secret", back.Secrets.Count == 2 && back.Secrets[0].Kind == SecretKind.Bribery && back.Secrets[0].Exposed
-                && back.Secrets[0].OtherId == null && back.Secrets[0].ChildId == null && !back.Secrets[0].Whispered);
+                && back.Secrets[0].OtherId == null && back.Secrets[0].ChildId == null && !back.Secrets[0].Whispered
+                && back.Secrets[0].Spent && !back.Secrets[1].Spent);
             Check("state: romance secret", back.Secrets.Count == 2 && back.Secrets[1].Kind == SecretKind.Bastard && back.Secrets[1].OtherId == "lord_5"
                 && back.Secrets[1].ChildId == "lord_6" && back.Secrets[1].Whispered && back.Secrets[1].Exposed);
             Check("state: cooldown/alert", back.CooldownUntil["lord_2"] == 200 && back.AlertUntil["lord_3"] == 300);
@@ -487,7 +503,13 @@ namespace CheatMenu.Tests
             Check("state: romance cooldown", back.RomanceUntil["lord_10"] == 220);
             Check("state: recruit cooldown", back.RecruitUntil.Count == 1 && back.RecruitUntil["lord_7"] == 210);
             Check("state: house", back.Houses.Count == 1 && back.HouseIn("town_V1") != null && back.Houses[0].Staff == 5
-                && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null);
+                && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null
+                && back.Houses[0].ManagerId == "companion_3" && back.Houses[0].ManagerSince == 130);
+            HouseWorker savedWorker = back.Houses[0].Workers[2];
+            Check("state: house workers keep names and details", back.Houses[0].Workers.Select(w => w.Name).SequenceEqual(new[] { "Lysa0", "Lysa1", "Lysa2", "Lysa3", "Lysa4" })
+                && !savedWorker.Female && savedWorker.Age == 22 && savedWorker.Trait == WorkerTrait.Favorite && savedWorker.Since == 122
+                && back.Houses[0].Workers[1].Female && back.Houses[0].Workers[3].Trait == WorkerTrait.Loyal
+                && back.Houses[0].Workers[4].HeroId == "companion_7" && back.Houses[0].Workers.Take(4).All(w => w.HeroId == null));
             Check("state: tension", back.TensionWith("vlandia") == 55 && !back.Tension.ContainsKey("empire") && back.TensionWith("nope") == 0);
             Check("state: crisis", back.Crises.Count == 1 && back.Crises[0].KingdomId == "vlandia" && back.Crises[0].TownId == "town_V1"
                 && back.Crises[0].Level == 2 && back.Crises[0].Day == 140 && back.Crises[0].Crime == 30 && back.Crises[0].OwnerId == "lord_4_1");
@@ -594,6 +616,14 @@ namespace CheatMenu.Tests
             var withAgents = new SettlementSchemeInputs { CompletedPhases = 2, Roguery = 100, Agents = 3 };
             CheckChance("agents: incite success +6", SettlementSchemeRules.InciteSuccess(withAgents) - SettlementSchemeRules.InciteSuccess(withoutAgents), 6);
             CheckChance("agents: incite discovery -3", SettlementSchemeRules.InciteDiscovery(withoutAgents) - SettlementSchemeRules.InciteDiscovery(withAgents), 3);
+            // Ajanlar kişi hedefli entrikalarda da tam eklenir: gölge ağının sınırına takılmaz, yarıya inmez.
+            var netCapped = new SchemeInputs { Roguery = 60, TargetRoguery = 20, NetworkSuccess = 15, NetworkDiscovery = 6 };
+            var netAndAgents = new SchemeInputs { Roguery = 60, TargetRoguery = 20, NetworkSuccess = 15, NetworkDiscovery = 6, AgentSuccess = 6, AgentDiscovery = 3 };
+            CheckChance("agents: murder success past the network cap", SchemeMath.MurderSuccess(netAndAgents) - SchemeMath.MurderSuccess(netCapped), 6);
+            var noisy = new SchemeInputs { TargetRoguery = 20, NetworkDiscovery = 6 };
+            var noisyWithAgents = new SchemeInputs { TargetRoguery = 20, NetworkDiscovery = 6, AgentDiscovery = 3 };
+            CheckChance("agents: murder discovery past the network cap", SchemeMath.MurderDiscovery(noisy) - SchemeMath.MurderDiscovery(noisyWithAgents), 3);
+            CheckChance("agents: spy success not halved", SchemeMath.SpySuccess(netAndAgents) - SchemeMath.SpySuccess(netCapped), 6);
             Check("court: moods", LetterRules.MoodName(-40) == "düşmanca" && LetterRules.MoodName(-10) == "hoşnutsuz"
                 && LetterRules.MoodName(-9) == "kayıtsız" && LetterRules.MoodName(10) == "hoşnut" && LetterRules.MoodName(30) == "sadık");
             Check("court: discontent threshold", LetterRules.IsDiscontent(-10) && !LetterRules.IsDiscontent(-9));
@@ -665,6 +695,10 @@ namespace CheatMenu.Tests
         /// <summary>Divan, hazinedar (P2.12): hata payı, fiyat gürültüsü, atölye tahmini, sefer defteri, zimmet.</summary>
         private static void TreasuryTests()
         {
+            CheckChance("treasury: income bonus by Trade", TreasuryRules.IncomeBonusPercent(120), 12);
+            CheckChance("treasury: income bonus cap", TreasuryRules.IncomeBonusPercent(400), 20);
+            CheckChance("treasury: income bonus gold", TreasuryRules.IncomeBonus(500, 100), 50);
+            CheckChance("treasury: no bonus on losses", TreasuryRules.IncomeBonus(-300, 200), 0);
             CheckChance("treasury: untrained", TreasuryRules.ErrorPercent(0, 0), 45);
             CheckChance("treasury: trader", TreasuryRules.ErrorPercent(120, 0), 25);
             CheckChance("treasury: calculating trader", TreasuryRules.ErrorPercent(150, 1), 15);
@@ -723,7 +757,7 @@ namespace CheatMenu.Tests
                 && Math.Abs(PhysicianRules.YearlyRisk(daily) - 0.3) < 1e-9);
         }
 
-        /// <summary>Divan, serdar (P2.14): hata payı, görüş, uyarı, savunma, erzak, yol, yuvarlama, tavsiye.</summary>
+        /// <summary>Divan, mareşal (P2.14): hata payı, görüş, uyarı, savunma, erzak, yol, yuvarlama, tavsiye.</summary>
         private static void MarshalTests()
         {
             Check("marshal: error", MarshalRules.ErrorPercent(0) == 45 && MarshalRules.ErrorPercent(120) == 25 && MarshalRules.ErrorPercent(300) == 5);
@@ -891,6 +925,168 @@ namespace CheatMenu.Tests
             CheckChance("recruit: hard", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, SchemeMath.HardDifficulty), 10);
         }
 
+        /// <summary>Lordlarla iletişim: ziyafet ve yanına çağırma.</summary>
+        private static void RealmTests()
+        {
+            Check("realm: donation follows the support ratio", RealmRules.DonationRelation(10000, 0.002f, 1, 2) == 10);
+            Check("realm: nothing for nothing", RealmRules.DonationRelation(0, 0.002f, 1, 2) == 0 && RealmRules.DonationRelation(5000, 0.002f, 1, 0) == 0);
+            Check("realm: rounding", RealmRules.DonationRelation(2600, 0.002f, 1, 2) == 3);
+        }
+
+        private static void DiplomatTests()
+        {
+            Check("diplomat: peace bonus", DiplomatRules.PeaceBonus(0) == 0 && DiplomatRules.PeaceBonus(200) == 10 && DiplomatRules.PeaceBonus(900) == 15);
+            Check("diplomat: envoy and invite bonus", DiplomatRules.EnvoyBonus(150) == 5 && DiplomatRules.EnvoyBonus(600) == 10
+                && DiplomatRules.InviteBonus(100) == 4 && DiplomatRules.InviteBonus(1000) == 12);
+            Check("diplomat: gift bonus", DiplomatRules.GiftBonus(99) == 0 && DiplomatRules.GiftBonus(100) == 1 && DiplomatRules.GiftBonus(330) == 2);
+            Check("diplomat: relation per week", DiplomatRules.RelationPerWeek(0) == 1 && DiplomatRules.RelationPerWeek(150) == 3 && DiplomatRules.RelationPerWeek(600) == 4);
+            Check("diplomat: error and warning", DiplomatRules.ErrorPercent(0) == 40 && DiplomatRules.ErrorPercent(300) == 5
+                && DiplomatRules.WarningChance(0) == 30 && DiplomatRules.WarningChance(400) == 95);
+            Check("diplomat: threat levels", DiplomatRules.Threat(10) == 2 && DiplomatRules.Threat(-100) == 1 && DiplomatRules.Threat(-DiplomatRules.WarTalkMargin - 1) == 0);
+            Check("diplomat: sharp eye sees right", DiplomatRules.SeenThreat(2, 300, 6) == 2);
+            Check("diplomat: dull eye can misread", DiplomatRules.SeenThreat(1, 0, 10) == 2 && DiplomatRules.SeenThreat(1, 0, 11) == 0
+                && DiplomatRules.SeenThreat(2, 0, 2) == 2 && DiplomatRules.SeenThreat(0, 0, 3) == 0);
+            Check("diplomat: threat texts", DiplomatRules.ThreatText(2).Contains("savaş") && DiplomatRules.ThreatText(0) == "barış yanlısı");
+            var state = new IntrigueState { DiplomatId = "comp_1", DiplomatTargetId = "lord_9" };
+            state.DiplomatWarned["vlandia"] = 30;
+            IntrigueState back = IntrigueState.Parse(state.Write());
+            Check("diplomat: seat, mission and warnings are saved", back.DiplomatId == "comp_1" && back.DiplomatTargetId == "lord_9" && back.DiplomatWarned["vlandia"] == 30);
+            Check("diplomat: heir change frees the seat", state.ForgetPlayerCharacter("comp_1") >= 1 && state.DiplomatId == null && state.DiplomatTargetId == null);
+            Check("peace: diplomat adds to leverage", PeaceTreatyRules.Willingness(0, 0, 1, 0, true, false, 10) - PeaceTreatyRules.Willingness(0, 0, 1, 0, true, false) == 10);
+        }
+
+        private static void PeaceTreatyTests()
+        {
+            int winning = PeaceTreatyRules.Willingness(80, 20, 1.5, 0, true, false);
+            int even = PeaceTreatyRules.Willingness(30, 30, 1.0, 0, false, false);
+            int losing = PeaceTreatyRules.Willingness(10, 70, 0.6, 0, false, false);
+            Check("peace: winning side has leverage", winning > 60 && even < 0 && losing < even);
+            Check("peace: strength ratio is capped", PeaceTreatyRules.Willingness(0, 0, 100, 0, false, false) == 40 - 15);
+            Check("peace: other fronts add up to 3", PeaceTreatyRules.Willingness(0, 0, 1, 9, false, false) == PeaceTreatyRules.Willingness(0, 0, 1, 3, false, false));
+            Check("peace: envoy bonus", PeaceTreatyRules.Willingness(0, 0, 1, 0, false, true) - PeaceTreatyRules.Willingness(0, 0, 1, 0, false, false) == PeaceTreatyRules.AskedBonus);
+            Check("peace: bad ratio input is neutral", PeaceTreatyRules.Willingness(0, 0, double.NaN, 0, true, false) == 15);
+            Check("peace: white peace easy when winning", PeaceTreatyRules.Chance(winning, 0) == 95);
+            Check("peace: castle and some gold still likely when winning", PeaceTreatyRules.Chance(winning, PeaceTreatyRules.FiefWeight(false, false, false) + PeaceTreatyRules.GoldWeight(12500, 50000)) >= 80);
+            Check("peace: greed lowers the chance", PeaceTreatyRules.Chance(winning, PeaceTreatyRules.FiefWeight(true, true, false) * 2 + 50) < 30);
+            Check("peace: chance bounds", PeaceTreatyRules.Chance(-500, 0) == 3 && PeaceTreatyRules.Chance(500, 0) == 95);
+            Check("peace: gold weight is a share of the purse", PeaceTreatyRules.GoldWeight(25000, 50000) == 50 && PeaceTreatyRules.GoldWeight(0, 50000) == 0);
+            Check("peace: poor ruler uses the minimum purse", PeaceTreatyRules.GoldWeight(2000, 100) == 10);
+            Check("peace: tribute is lighter than the same lump sum", PeaceTreatyRules.TributeWeight(250, 60, 50000) < PeaceTreatyRules.GoldWeight(15000, 50000));
+            Check("peace: town weighs more than castle", PeaceTreatyRules.FiefWeight(true, false, false) > PeaceTreatyRules.FiefWeight(false, false, false));
+            Check("peace: last fief is dear", PeaceTreatyRules.FiefWeight(false, false, true) - PeaceTreatyRules.FiefWeight(false, false, false) == 50);
+            Check("peace: troops weigh by four", PeaceTreatyRules.TroopWeight(100) == 25 && PeaceTreatyRules.TroopWeight(-5) == 0);
+            Check("peace: gifts relieve", PeaceTreatyRules.GiftRelief(10000, 50000) == 16 && PeaceTreatyRules.TributeRelief(100, 60, 50000) == 6);
+            List<int> gold = PeaceTreatyRules.GoldSteps(100000);
+            Check("peace: gold steps", gold.SequenceEqual(new[] { 0, 5000, 15000, 30000, 50000, 75000 }));
+            Check("peace: tiny purse has no gold step", PeaceTreatyRules.GoldSteps(600).SequenceEqual(new[] { 0 }) && PeaceTreatyRules.GoldSteps(5000).SequenceEqual(new[] { 0, 500, 1500, 2500, 3500 }));
+            Check("peace: gift steps fit your purse", PeaceTreatyRules.GiftSteps(12000).SequenceEqual(new[] { 0, 1000, 5000, 10000 }));
+            Check("peace: troop steps fit the space", PeaceTreatyRules.TroopSteps(70).SequenceEqual(new[] { 0, 20, 50, 70 })
+                && PeaceTreatyRules.TroopSteps(0).SequenceEqual(new[] { 0 }) && PeaceTreatyRules.TroopSteps(500).Last() == 150);
+            Check("peace: envoy only when they are losing", PeaceTreatyRules.EnvoyChance(20) == 0 && PeaceTreatyRules.EnvoyChance(30) == 10 && PeaceTreatyRules.EnvoyChance(200) == 45);
+            int offer = PeaceTreatyRules.EnvoyGold(winning + PeaceTreatyRules.AskedBonus, 100000);
+            Check("peace: envoy brings gold it would accept", offer > 0 && PeaceTreatyRules.Chance(winning + PeaceTreatyRules.AskedBonus, PeaceTreatyRules.GoldWeight(offer, 100000)) >= PeaceTreatyRules.EnvoyOfferChance);
+            Check("peace: envoy of an even war brings nothing", PeaceTreatyRules.EnvoyGold(even, 100000) == 0);
+            Check("peace: tribute levels start at none", PeaceTreatyRules.TributeLevels[0].Daily == 0 && PeaceTreatyRules.TributeLevels.Count == 5);
+            Check("peace: prisoners weigh four each", PeaceTreatyRules.PrisonerWeight(3) == 12 && PeaceTreatyRules.PrisonerWeight(-1) == 0);
+            Check("peace: ruler's child is a dearer hostage", PeaceTreatyRules.HostageWeight(true) - PeaceTreatyRules.HostageWeight(false) == 15);
+            Check("peace: pact levels and weight", PeaceTreatyRules.PactLevels[0] == 0 && PeaceTreatyRules.PactWeight(240) == 6 && PeaceTreatyRules.PactWeight(0) == 0);
+            Check("peace: wanted agreements are cheap", PeaceTreatyRules.TradeWeight(true) < PeaceTreatyRules.TradeWeight(false)
+                && PeaceTreatyRules.AllianceWeight(true) < PeaceTreatyRules.AllianceWeight(false));
+            var state = new IntrigueState();
+            PeaceTalk talk = state.PeaceTalkWith("vlandia");
+            talk.RefusedUntil = 12;
+            talk.EnvoyUntil = 40;
+            talk.AskedUntil = 9;
+            Check("peace: talk is found again", state.PeaceTalkWith("vlandia") == talk && state.PeaceTalks.Count == 1);
+            PeaceTalk back = IntrigueState.Parse(state.Write()).PeaceTalkWith("vlandia");
+            Check("peace: talks are saved", back.RefusedUntil == 12 && back.EnvoyUntil == 40 && back.AskedUntil == 9);
+        }
+
+        private static void WarReportTests()
+        {
+            var even = WarReportRules.Bar(0, 0, 100);
+            Check("war report: empty bar is split evenly", even.Ours == 50 && even.Theirs == 50);
+            var bar = WarReportRules.Bar(300, 100, 100);
+            Check("war report: bar follows the ratio", bar.Ours == 75 && bar.Theirs == 25);
+            var neg = WarReportRules.Bar(-20, 40, 100);
+            Check("war report: negative counts as zero", neg.Ours == 0 && neg.Theirs == 100);
+            Check("war report: bar parts fill the width", Math.Abs(WarReportRules.Bar(1, 2).Ours + WarReportRules.Bar(1, 2).Theirs - WarReportRules.BarWidth) < 0.01);
+            Check("war report: bright colour kept", WarReportRules.Readable(0xFFCC3322, 0xFF000000) == 0xFFCC3322);
+            Check("war report: dark colour falls back to a brighter second", WarReportRules.Readable(0xFF101020, 0xFFD0B060) == 0xFFD0B060);
+            uint lifted = WarReportRules.Readable(0xFF101020, 0xFF000000);
+            Check("war report: dark pair is lightened and opaque", WarReportRules.Luminance(lifted) > WarReportRules.Luminance(0xFF101020) && (lifted >> 24) == 0xFF);
+            Check("war report: ago texts", WarReportRules.Ago(0) == "bugün" && WarReportRules.Ago(1) == "dün" && WarReportRules.Ago(5) == "5 gün önce");
+            Check("war report: tags are stripped", WarReportRules.StripTags("<a style=\"Link.Hero\" href=\"event:x\"><b>Derthert</b></a>  took   Pen") == "Derthert took Pen");
+            Check("war report: names list", WarReportRules.Names(new[] { "A", "B", "C" }, 2) == "A, B +1" && WarReportRules.Names(new string[0], 2) == "yok");
+            Check("war report: peace mood", WarReportRules.PeaceMood(5) == "barışa yatkın" && WarReportRules.PeaceMood(-1) == "barışa yanaşmıyor");
+        }
+
+        private static void LordContactTests()
+        {
+            Check("feast: cost", LordContactRules.FeastCost(0) == 400 && LordContactRules.FeastCost(4) == 1400 && LordContactRules.FeastCost(20) == 1900);
+            CheckChance("feast: friend nearby, same kingdom", LordContactRules.FeastAcceptChance(40, 1, true, false), 72);
+            CheckChance("feast: stranger far away", LordContactRules.FeastAcceptChance(0, 5, false, false), 10);
+            Check("feast: never at war, bounds", LordContactRules.FeastAcceptChance(100, 0, true, true) == 0
+                && LordContactRules.FeastAcceptChance(100, 0, true, false) == 95 && LordContactRules.FeastAcceptChance(-100, 9, false, false) == 5);
+            Check("feast: relation by Charm", LordContactRules.FeastRelationGain(0) == 5 && LordContactRules.FeastRelationGain(150) == 8
+                && LordContactRules.FeastRelationGain(600) == 10);
+            Check("feast: gossip by Roguery", LordContactRules.FeastGossipChance(0) == 20 && LordContactRules.FeastGossipChance(150) == 35
+                && LordContactRules.FeastGossipChance(900) == 50);
+            CheckChance("summon: vassal of yours", LordContactRules.SummonAcceptChance(10, true, true), 80);
+            CheckChance("summon: foreign stranger", LordContactRules.SummonAcceptChance(-30, false, false), 5);
+            var state = new IntrigueState { FeastUntil = 77 };
+            state.Summons.Add(new Summon { HeroId = "lord_5", Until = 64 });
+            IntrigueState back = IntrigueState.Parse(state.Write());
+            Check("lords: summons and feast cooldown are saved", back.FeastUntil == 77 && back.Summons.Count == 1 && back.Summons[0].HeroId == "lord_5"
+                && back.Summons[0].Until == 64);
+        }
+
+        /// <summary>Esirin gizli infazı: yönteme, Roguery'ye, esirin önemine göre şüphe; şüphenin bir kısmı ifşa.</summary>
+        private static void PrisonDeathTests()
+        {
+            const int normal = SchemeMath.NormalDifficulty;
+            CheckChance("prison death: illness, untrained, a minor lord held long", PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 0, 2, false, 30, false, normal), 24);
+            CheckChance("prison death: escape is the loudest", PrisonDeathRules.Suspicion(PrisonDeathMethod.Escape, 0, 2, false, 30, false, normal), 40);
+            CheckChance("prison death: Roguery hides it (cap 25)", PrisonDeathRules.Suspicion(PrisonDeathMethod.Accident, 400, 2, false, 30, false, normal), 7);
+            CheckChance("prison death: a fresh captive in your party, a ruler", PrisonDeathRules.Suspicion(PrisonDeathMethod.Accident, 80, 6, true, 2, true, normal), 60);
+            Check("prison death: difficulty", PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 0, 0, false, 30, false, SchemeMath.EasyDifficulty)
+                < PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 0, 0, false, 30, false, SchemeMath.HardDifficulty));
+            Check("prison death: bounds", PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 999, 0, false, 99, false, SchemeMath.EasyDifficulty) == 5
+                && PrisonDeathRules.Suspicion(PrisonDeathMethod.Escape, 0, 9, true, 0, true, SchemeMath.HardDifficulty) <= 90);
+            Check("prison death: proof by Roguery", PrisonDeathRules.ProofChance(0) == 45 && PrisonDeathRules.ProofChance(120) == 30
+                && PrisonDeathRules.ProofChance(800) == 10);
+            CheckChance("prison death: expose chance", PrisonDeathRules.ExposeChance(40, 30), 12);
+            Check("prison death: cheaper means louder", PrisonDeathRules.Cost(PrisonDeathMethod.Escape) < PrisonDeathRules.Cost(PrisonDeathMethod.Accident)
+                && PrisonDeathRules.Cost(PrisonDeathMethod.Accident) < PrisonDeathRules.Cost(PrisonDeathMethod.Illness)
+                && PrisonDeathRules.BaseSuspicion(PrisonDeathMethod.Escape) > PrisonDeathRules.BaseSuspicion(PrisonDeathMethod.Illness));
+            Check("prison death: every method has an image", PrisonDeathRules.Methods.All(m => CardImages.All().Contains(CardImages.ForPrisonDeath(m))));
+        }
+
+        /// <summary>Oyuncu karakteri değişince eski karakterin kişisel kayıtları düşer, yeni karakter koltuklardan çıkar.</summary>
+        private static void HeirTests()
+        {
+            var state = new IntrigueState { SpymasterId = "heir", Mission = SpymasterMission.SpreadRumors, RumorTargetId = "lord_1", TreasurerId = "other",
+                SpouseWatchUntil = 40, SpouseApartWeeks = 3, SpouseAffair = new SpouseAffair { SpouseId = "wife", LoverId = "lord_2" } };
+            state.Lovers.Add(new Lover { HeroId = "mother_of_heir" });
+            state.Courtships.Add(new Courtship { Id = 1, TargetId = "lady_1", AgentId = "main" });
+            state.RomanceUntil["lady_2"] = 90;
+            state.Pregnancies.Add(new Pregnancy { MotherId = "lady_3", FatherId = "main", DueDay = 70 });
+            var house = new House { TownId = "town_1", ManagerId = "heir" };
+            house.Workers.Add(new HouseWorker { HeroId = "heir", Name = "Heir" });
+            house.Workers.Add(new HouseWorker { Name = "Ira" });
+            state.Houses.Add(house);
+            state.Hostages.Add(new HostageDeal { KingdomId = "vlandia", GivenId = "heir" });
+            state.Hostages.Add(new HostageDeal { KingdomId = "empire", GivenId = "cousin" });
+            int dropped = state.ForgetPlayerCharacter("heir");
+            Check("heir: old character's romance is gone", state.Lovers.Count == 0 && state.Courtships.Count == 0 && state.RomanceUntil.Count == 0
+                && state.SpouseAffair == null && state.SpouseWatchUntil == 0 && state.SpouseApartWeeks == 0);
+            Check("heir: pregnancies stay", state.Pregnancies.Count == 1);
+            Check("heir: the new character leaves seats, the house and hostage deals", state.SpymasterId == null && state.Mission == SpymasterMission.None
+                && state.RumorTargetId == null && state.TreasurerId == "other" && house.ManagerId == null && house.Workers.Count == 1
+                && state.Hostages.Count == 1 && state.Hostages[0].GivenId == "cousin");
+            Check("heir: dropped count", dropped == 7);
+        }
+
         /// <summary>Genelev: tasarımdaki sayılar.</summary>
         private static void HouseTests()
         {
@@ -904,6 +1100,80 @@ namespace CheatMenu.Tests
                 && HouseRules.LeaveChance(HouseShare.Fair) == 0);
             Check("house: intel chance", HouseRules.IntelChance(4, HouseShare.Standard) == 20 && HouseRules.IntelChance(4, HouseShare.Fair) == 30
                 && HouseRules.IntelChance(20, HouseShare.Fair) == 60 && HouseRules.IntelChance(0, HouseShare.Fair) == 0);
+
+            // Adlı çalışanlar: özellikler, yaş, adaylar; yoldaş yönetici
+            Check("house: favorites earn half again", HouseRules.WeeklyGross(4, 5000f, 1) == 405 && HouseRules.WeeklyGross(2, 5000f, 9) == 270);
+            Check("house: manager raises income by Charm, takes a cut", HouseRules.ManagerIncomeBonus(-1) == 0 && HouseRules.ManagerIncomeBonus(120) == 30
+                && HouseRules.ManagerIncomeBonus(400) == 50 && HouseRules.WeeklyGross(4, 5000f, 0, 120) == 468
+                && HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard, 0, 120) == 234 && HouseRules.ManagerPay(468) == 46);
+            Check("house: a weak manager costs you money", HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard, 0, 0) < HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard));
+            Check("house: listeners and the manager hear more", HouseRules.IntelChance(4, HouseShare.Standard, 2) == 30
+                && HouseRules.IntelChance(4, HouseShare.Standard, 0, 100) == 25 && HouseRules.IntelChance(4, HouseShare.Standard, 0, 900) == 30
+                && HouseRules.IntelChance(8, HouseShare.Fair, 8, 300) == 60);
+            Check("house: the manager's Roguery hides the house", HouseRules.ExposeChanceWith(-1) == 3 && HouseRules.ExposeChanceWith(0) == 3
+                && HouseRules.ExposeChanceWith(80) == 2 && HouseRules.ExposeChanceWith(500) == 1);
+            Check("house: loyal workers rarely leave", HouseRules.LeaveChance(HouseShare.Low, WorkerTrait.Loyal) == 5
+                && HouseRules.LeaveChance(HouseShare.Standard, WorkerTrait.Loyal) == 1 && HouseRules.LeaveChance(HouseShare.Low, WorkerTrait.Listener) == 15
+                && HouseRules.LeaveChance(HouseShare.Fair, WorkerTrait.None) == 0);
+            var traitHouse = new House();
+            traitHouse.Workers.Add(new HouseWorker { Name = "A", Trait = WorkerTrait.Favorite });
+            traitHouse.Workers.Add(new HouseWorker { Name = "B", Trait = WorkerTrait.Listener });
+            traitHouse.Workers.Add(new HouseWorker { Name = "C" });
+            Check("house: totals from the workers", HouseRules.Gross(traitHouse, 5000f, -1) == 315 && HouseRules.Intel(traitHouse, -1) == 20
+                && HouseRules.Net(traitHouse, 5000f, -1) == 189);
+
+            var rng = new Random(7);
+            Func<int, int> roll = n => rng.Next(n);
+            var candidates = new List<HouseWorker>();
+            var takenNames = new List<string>();
+            for (int i = 0; i < 200; i++)
+            {
+                HouseWorker c = HouseRules.NewWorker(new[] { "Ira", "Mira", "Zoe" }, new[] { "Corin" }, roll, 50, takenNames);
+                candidates.Add(c);
+            }
+            Check("house: candidates are adults", candidates.All(c => c.Age >= HouseRules.MinAge && c.Age <= HouseRules.MaxHireAge && c.Since == 50));
+            Check("house: candidates have names from the lists", candidates.All(c => c.Female ? new[] { "Ira", "Mira", "Zoe" }.Contains(c.Name) : c.Name == "Corin"));
+            Check("house: candidates are mostly women, some men", candidates.Count(c => c.Female) > 100 && candidates.Any(c => !c.Female));
+            Check("house: all traits appear", Enum.GetValues(typeof(WorkerTrait)).Cast<WorkerTrait>().All(t => candidates.Any(c => c.Trait == t)));
+            HouseWorker fallback = HouseRules.NewWorker(new string[0], null, n => 0, 1, null);
+            Check("house: fallback names when the culture has none", !string.IsNullOrEmpty(fallback.Name) && fallback.Age == HouseRules.MinAge);
+            int namePicks = 0;
+            HouseWorker unique = HouseRules.NewWorker(new[] { "Ira", "Mira" }, new[] { "Corin" }, n => n == 4 ? 1 : n == 2 ? (namePicks++ == 0 ? 0 : 1) : 0, 1,
+                new List<string> { "Ira" });
+            Check("house: a new name is tried when one is taken", unique.Name == "Mira");
+            Check("house: age grows with the years", HouseRules.AgeOn(new HouseWorker { Age = 20, Since = 10 }, 10 + 2 * HouseRules.DaysPerYear) == 22
+                && HouseRules.AgeOn(new HouseWorker { Age = 0, Since = 10 }, 0) == HouseRules.MinAge);
+            Check("house: worker line", HouseRules.WorkerLine(new HouseWorker { Name = "Lysa", Age = 23, Trait = WorkerTrait.Listener, Since = 5 }, 5) == "Lysa, 23 · kulağı delik"
+                && HouseRules.WorkerLine(new HouseWorker { Name = "Mira", Age = 30, Since = 5 }, 5) == "Mira, 30");
+
+            var legacy = IntrigueState.Parse("house\ttown=town_A1\tstaff=3\tshare=2\tsince=40\n");
+            Check("house: old saves keep the head count, unnamed", legacy.HouseIn("town_A1")?.Staff == 3 && legacy.Houses[0].Workers.All(w => w.Name == null && w.Since == 40));
+            int named = HouseRules.NameUnnamed(legacy.Houses[0], new[] { "Ira", "Mira", "Zoe", "Sera" }, new[] { "Corin" }, roll);
+            Check("house: unnamed workers get names and keep their start day", named == 3 && legacy.Houses[0].Workers.All(w => w.Name != null
+                && w.Age >= HouseRules.MinAge && w.Since == 40) && HouseRules.NameUnnamed(legacy.Houses[0], null, null, n => 0) == 0);
+
+            Check("house: manager decides for themself", HouseRules.ManagerRefusal(30, 0, 10) == null && HouseRules.ManagerRefusal(30, 1, 50) != null
+                && HouseRules.ManagerRefusal(30, -1, -5) != null && HouseRules.ManagerRefusal(30, -2, 0) == null);
+            Check("house: never a minor as manager", HouseRules.ManagerRefusal(17, -2, 100) != null);
+
+            // Yoldaş çalışan: kendi isteğiyle
+            Check("house: a companion works only if they want to", HouseRules.CompanionWorkRefusal(25, false, 0, 1, 0, 0) == null
+                && HouseRules.CompanionWorkRefusal(25, false, 0, 0, 60, 0) == null && HouseRules.CompanionWorkRefusal(25, false, -1, 0, 0, 0) == null
+                && HouseRules.CompanionWorkRefusal(25, false, 0, 0, 10, 50) != null);
+            Check("house: honor or distrust says no", HouseRules.CompanionWorkRefusal(25, false, 1, 2, 200, 50) != null
+                && HouseRules.CompanionWorkRefusal(25, false, -2, 2, 200, -1) != null);
+            Check("house: never a spouse, lover or anyone under 19", HouseRules.CompanionWorkRefusal(25, true, -2, 2, 200, 100) != null
+                && HouseRules.CompanionWorkRefusal(18, false, -2, 2, 200, 100) != null && HouseRules.CompanionWorkRefusal(19, false, -2, 2, 200, 100) == null);
+            Check("house: companion trait from skills", HouseRules.CompanionTrait(80, 200) == WorkerTrait.Favorite
+                && HouseRules.CompanionTrait(10, 75) == WorkerTrait.Listener && HouseRules.CompanionTrait(74, 74) == WorkerTrait.None);
+            Check("house: a worker's own pay", HouseRules.WorkerPay(HouseShare.Standard, WorkerTrait.None, 5000f, -1) == 36
+                && HouseRules.WorkerPay(HouseShare.Fair, WorkerTrait.Favorite, 5000f, -1) == 81 && HouseRules.WorkerPay(HouseShare.Low, WorkerTrait.None, 5000f, 120) == 29);
+            var heroWorker = new HouseWorker { HeroId = "companion_1", Name = "Ayla", Age = 27, Trait = WorkerTrait.Favorite, Since = 10 };
+            Check("house: a companion's line and age come from the hero", HouseRules.WorkerLine(heroWorker, 10 + 5 * HouseRules.DaysPerYear) == "Ayla (yoldaşın), 27 · gözde");
+            var mixed = new House();
+            mixed.Workers.Add(heroWorker);
+            mixed.Workers.Add(new HouseWorker { Since = 3 });
+            Check("house: naming skips companions", HouseRules.NameUnnamed(mixed, new[] { "Ira" }, null, n => 0) == 1 && mixed.Workers[0].Name == "Ayla");
 
             // Müşteri olarak (genelev ziyareti), askerlerin gecesi, hastalık
             Check("brothel: visit cost, half in your own house", HouseRules.VisitCost(false, false) == 150 && HouseRules.VisitCost(true, false) == 400
@@ -1014,6 +1284,10 @@ namespace CheatMenu.Tests
             Check("images: kind mapping", CardImages.ForKind(SchemeKind.Kidnap) == CardImages.Kidnap && CardImages.ForKind(SchemeKind.Spy) == CardImages.Spy);
             Check("images: method mapping", CardImages.ForMurderMethod(SchemeMethod.Poison) == CardImages.MurderPoison
                 && CardImages.ForMurderMethod(SchemeMethod.None) == CardImages.MurderDagger);
+            Check("images: fallbacks point at real cards", CardImages.Fallbacks.All(f => names.Contains(f.Key) && names.Contains(f.Value) && f.Key != f.Value));
+            Check("images: fallback chain", CardImages.WithFallbacks(CardImages.BrothelCompanion).SequenceEqual(new[] { CardImages.BrothelCompanion, CardImages.NightHouse })
+                && CardImages.WithFallbacks(CardImages.Spy).SequenceEqual(new[] { CardImages.Spy }) && !CardImages.WithFallbacks(null).Any()
+                && CardImages.WithFallbacks(CardImages.Illness).Count() == 2);
 
             string doc = FindRepoFile(System.IO.Path.Combine("docs", "gorseller", "olay-kartlari.md"));
             if (doc == null)

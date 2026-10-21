@@ -37,11 +37,11 @@ güvenlikte milis eğitimi) gösterir ve iki uzaktan emir sunar (her biri 100 di
 Her gün bakılır; aynı yer ve aynı tür için 14 günde bir:
 
 - "Kâhyan uyarıyor: huzursuzluk" (eşiğe 10 gün kala) ve önerisi.
-- "Kâhyan uyarıyor: kıtlık" (erzak 5 günden az; kuşatma altındaysa serdar ve oyun zaten haber verir).
+- "Kâhyan uyarıyor: kıtlık" (erzak 5 günden az; kuşatma altındaysa mareşal ve oyun zaten haber verir).
 
 ## Divan düzeni
 
-Dört koltuk yan yana: serdar, kâhya, hazinedar, hekim (kartlar daraltıldı, düğmeler küçük yazıyla). Raporlar: savaş meclisi, şehir ve
+Dört koltuk yan yana: mareşal, kâhya, hazinedar, hekim (kartlar daraltıldı, düğmeler küçük yazıyla). Raporlar: savaş meclisi, şehir ve
 kaleler, sağlık, hazine.
 
 ## Kayıt

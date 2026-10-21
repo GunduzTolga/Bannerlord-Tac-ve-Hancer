@@ -74,6 +74,8 @@ namespace CheatMenu.Intrigue.Core
         public string ChildId;
         /// <summary>Herkese değil, yalnızca aldatılan eşe söylendi (Exposed da true: sır kullanıldı).</summary>
         public bool Whispered;
+        /// <summary>Şantajda koz olarak harcandı: aynı sırla yeniden şantaj yapılmaz (ifşa edilebilir).</summary>
+        public bool Spent;
     }
 
     /// <summary>Haritaya dönünce gösterilecek bilgi kartı. HeroId varsa portresi, Image varsa resmi (Module/Images) görünür.</summary>
@@ -149,6 +151,25 @@ namespace CheatMenu.Intrigue.Core
         public int ArriveDay;
     }
 
+    /// <summary>Yanına çağrılan lord (LordContactRules): partisi sana doğru yolda; Until gününe kadar gelmezse vazgeçer.</summary>
+    public sealed class Summon
+    {
+        public string HeroId;
+        public int Until;
+    }
+
+    /// <summary>
+    /// Bir krallıkla barış pazarlığının süreleri (PeaceTreatyRules): reddettiği tekliften sonra bekleme, elçisinin yeniden gelebileceği gün,
+    /// elçi gönderdiyse masada elinin zayıf olduğu son gün.
+    /// </summary>
+    public sealed class PeaceTalk
+    {
+        public string KingdomId;
+        public int RefusedUntil;
+        public int EnvoyUntil;
+        public int AskedUntil;
+    }
+
     /// <summary>Rehine anlaşması (P2.10): verdiğin ve/veya tuttuğun misafir. Biri null olabilir (tek taraflı teminat).</summary>
     public sealed class HostageDeal
     {
@@ -213,12 +234,34 @@ namespace CheatMenu.Intrigue.Core
         public List<string> ChildIds = new List<string>();
     }
 
-    /// <summary>Gölge ağı olan bir şehirdeki genelev. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
+    /// <summary>
+    /// Gölge ağı olan bir şehirdeki genelev (HouseRules). Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir; çoğu oyunun kahramanı
+    /// değildir, ama bir yoldaş da kendi isteğiyle çalışabilir. Yönetici bir yoldaş olabilir: evi işletir.
+    /// </summary>
     public sealed class House
     {
         public string TownId;
-        public int Staff;
+        public List<HouseWorker> Workers = new List<HouseWorker>();
+        public int Staff => Workers.Count;
         public HouseShare Share = HouseShare.Standard;
+        public int Since;
+        /// <summary>Evi işleten yoldaş (yalnızca işletme; müşteriye çıkmaz); yoksa null.</summary>
+        public string ManagerId;
+        public int ManagerSince;
+    }
+
+    /// <summary>
+    /// Genelevde çalışan biri. Çoğu kahraman değildir, yalnızca bu evde vardır (ad null ise eski kayıttan gelir; oyun katmanı ad verir).
+    /// HeroId doluysa kendi isteğiyle çalışan bir yoldaştır: adı, yaşı ve özelliği oyun katmanında ondan güncellenir.
+    /// </summary>
+    public sealed class HouseWorker
+    {
+        public string HeroId;
+        public string Name;
+        public bool Female;
+        /// <summary>İşe girdiği gündeki yaşı (HouseRules.MinAge ve üstü).</summary>
+        public int Age;
+        public WorkerTrait Trait;
         public int Since;
     }
 
@@ -329,7 +372,7 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Klanındaki annelerin (oyunun kendi gebeliği) gebe kaldığı gün: doğuma kalan süre için.</summary>
         public Dictionary<string, int> Conceived = new Dictionary<string, int>();
 
-        // P2.14: divan, serdar
+        // P2.14: divan, mareşal
         public string MarshalId;
         /// <summary>Uyarısı sorulmuş "ordu|hedef" çiftleri → yeniden sorulabileceği gün.</summary>
         public Dictionary<string, int> MarshalWarned = new Dictionary<string, int>();
@@ -338,9 +381,28 @@ namespace CheatMenu.Intrigue.Core
         public string StewardId;
         /// <summary>Kâhyanın uyarıları: "yerleşim|tür" → yeniden uyarabileceği gün.</summary>
         public Dictionary<string, int> StewardWarned = new Dictionary<string, int>();
+
+        // Divan, diplomat
+        public string DiplomatId;
+        /// <summary>Diplomatın "ilişkileri geliştir" görevinin hedefi (kahraman); boşsa görev yok.</summary>
+        public string DiplomatTargetId;
+        /// <summary>Diplomatın savaş uyarısı: krallık → yeniden uyarabileceği gün.</summary>
+        public Dictionary<string, int> DiplomatWarned = new Dictionary<string, int>();
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
+        /// <summary>Lordlarla iletişim: yanına çağrılanlar ve bir sonraki ziyafetin verilebileceği gün.</summary>
+        public List<Summon> Summons = new List<Summon>();
+        public List<PeaceTalk> PeaceTalks = new List<PeaceTalk>();
+
+        /// <summary>Krallıkla barış pazarlığının kaydı; yoksa eklenir.</summary>
+        public PeaceTalk PeaceTalkWith(string kingdomId)
+        {
+            PeaceTalk talk = PeaceTalks.FirstOrDefault(t => t.KingdomId == kingdomId);
+            if (talk == null) PeaceTalks.Add(talk = new PeaceTalk { KingdomId = kingdomId });
+            return talk;
+        }
+        public int FeastUntil;
 
         // Genelev (müşteri olarak) ve hastalık
         /// <summary>Genelevde yeniden gece geçirilebileceği gün (günde bir kez).</summary>
@@ -373,6 +435,38 @@ namespace CheatMenu.Intrigue.Core
         public string SaveTestMarker { get; set; }
 
         public int Roll100() => SchemeRandom.Roll100(Seed, ref Rolls);
+        public int Pick(int count) => SchemeRandom.Pick(Seed, ref Rolls, count);
+
+        /// <summary>
+        /// Oyuncu karakteri değişti (varis, çekilme): eski karakterin kişisel kayıtları (sevgililer, kurlar, eşle ilgili sayaçlar ve
+        /// eşin ilişkisi) silinir; yeni karakter koltuklardan, genelevdeki işlerden ve verdiğin rehinelikten çıkar. Gebelikler,
+        /// sırlar ve entrikalar kalır: onlar başkalarına ait. Kaç kaydın düştüğünü döner.
+        /// </summary>
+        public int ForgetPlayerCharacter(string newPlayerId)
+        {
+            int dropped = Lovers.Count + Courtships.Count + (SpouseAffair != null ? 1 : 0);
+            Lovers.Clear();
+            Courtships.Clear();
+            RomanceUntil.Clear();
+            SpouseAffair = null;
+            SpouseWatchUntil = 0;
+            SpouseApartWeeks = 0;
+            if (newPlayerId == null) return dropped;
+            if (SpymasterId == newPlayerId) { SpymasterId = null; Mission = SpymasterMission.None; RumorTargetId = null; dropped++; }
+            if (TreasurerId == newPlayerId) { TreasurerId = null; dropped++; }
+            if (PhysicianId == newPlayerId) { PhysicianId = null; dropped++; }
+            if (MarshalId == newPlayerId) { MarshalId = null; dropped++; }
+            if (StewardId == newPlayerId) { StewardId = null; dropped++; }
+            if (DiplomatId == newPlayerId) { DiplomatId = null; DiplomatTargetId = null; dropped++; }
+            if (DiplomatTargetId == newPlayerId) DiplomatTargetId = null;
+            foreach (House house in Houses)
+            {
+                if (house.ManagerId == newPlayerId) { house.ManagerId = null; dropped++; }
+                dropped += house.Workers.RemoveAll(w => w.HeroId == newPlayerId);
+            }
+            dropped += Hostages.RemoveAll(d => d.GivenId == newPlayerId);
+            return dropped;
+        }
 
         public Scheme FindScheme(string targetId) => Schemes.FirstOrDefault(s => s.TargetId == targetId);
 
@@ -414,6 +508,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in TailUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) TailUntil.Remove(id);
             foreach (string id in MarshalWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) MarshalWarned.Remove(id);
             foreach (string id in StewardWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) StewardWarned.Remove(id);
+            foreach (string id in DiplomatWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DiplomatWarned.Remove(id);
             foreach (string id in CourtDayUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CourtDayUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
@@ -432,7 +527,8 @@ namespace CheatMenu.Intrigue.Core
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId).Add("agents", I(Agents)).Add("agenttrain", I(AgentTraining))
                     .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
                     .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId).Add("steward", StewardId)
-                    .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil))
+                    .Add("diplomat", DiplomatId).Add("diptarget", DiplomatTargetId)
+                    .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil)).Add("feast", I(FeastUntil))
                     .Add("illsince", I(IllnessSince)).Add("illuntil", I(IllnessUntil)),
             };
             if (!string.IsNullOrEmpty(SaveTestMarker)) records.Add(new TextRecord("savetest").Add("marker", SaveTestMarker));
@@ -455,7 +551,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (Secret s in Secrets)
                 records.Add(new TextRecord("secret")
                     .Add("target", s.TargetId).Add("kind", I((int)s.Kind)).Add("day", I(s.Day)).Add("exposed", B(s.Exposed))
-                    .Add("other", s.OtherId).Add("child", s.ChildId).Add("whisper", B(s.Whispered)));
+                    .Add("other", s.OtherId).Add("child", s.ChildId).Add("whisper", B(s.Whispered)).Add("spent", B(s.Spent)));
 
             foreach (KeyValuePair<string, int> p in CooldownUntil) records.Add(new TextRecord("cooldown").Add("target", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in AlertUntil) records.Add(new TextRecord("alert").Add("target", p.Key).Add("until", I(p.Value)));
@@ -504,12 +600,17 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in Conceived) records.Add(new TextRecord("conceived").Add("hero", p.Key).Add("day", I(p.Value)));
             foreach (KeyValuePair<string, int> p in MarshalWarned) records.Add(new TextRecord("marshalwarn").Add("key", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in StewardWarned) records.Add(new TextRecord("stewardwarn").Add("key", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in DiplomatWarned) records.Add(new TextRecord("diplomatwarn").Add("key", p.Key).Add("until", I(p.Value)));
             foreach (CaravanBook b in CaravanBooks)
                 records.Add(new TextRecord("caravanbook").Add("party", b.PartyId).Add("town", b.TownId).Add("worth", I(b.Worth))
                     .Add("day", I(b.Day)).Add("sent", I(b.SentHome)));
             foreach (CaravanLeg l in CaravanLegs)
                 records.Add(new TextRecord("caravanleg").Add("party", l.PartyId).Add("from", l.FromId).Add("to", l.ToId)
                     .Add("profit", I(l.Profit)).Add("days", I(l.Days)).Add("day", I(l.Day)));
+            foreach (Summon m in Summons) records.Add(new TextRecord("summon").Add("hero", m.HeroId).Add("until", I(m.Until)));
+            foreach (PeaceTalk t in PeaceTalks)
+                records.Add(new TextRecord("peacetalk").Add("kingdom", t.KingdomId).Add("refused", I(t.RefusedUntil)).Add("envoy", I(t.EnvoyUntil))
+                    .Add("asked", I(t.AskedUntil)));
             foreach (HostageDeal h in Hostages)
                 records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
                     .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
@@ -519,7 +620,13 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("spouse").Add("watch", I(SpouseWatchUntil)).Add("apart", I(SpouseApartWeeks)));
             foreach (KeyValuePair<string, int> p in RomanceUntil) records.Add(new TextRecord("romancecd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (House h in Houses)
-                records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since)));
+            {
+                records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since))
+                    .Add("manager", h.ManagerId).Add("managersince", I(h.ManagerSince)));
+                foreach (HouseWorker w in h.Workers.Where(w => w.Name != null))
+                    records.Add(new TextRecord("hworker").Add("town", h.TownId).Add("hero", w.HeroId).Add("name", w.Name).Add("female", B(w.Female)).Add("age", I(w.Age))
+                        .Add("trait", I((int)w.Trait)).Add("since", I(w.Since)));
+            }
             foreach (Crisis c in Crises)
                 records.Add(new TextRecord("crisis").Add("kingdom", c.KingdomId).Add("town", c.TownId).Add("level", I(c.Level))
                     .Add("day", I(c.Day)).Add("crime", I(c.Crime)).Add("owner", c.OwnerId));
@@ -557,7 +664,10 @@ namespace CheatMenu.Intrigue.Core
                         state.PhysicianWarnUntil = Int(r, "physicianwarn");
                         state.MarshalId = Empty(r.Get("marshal"));
                         state.StewardId = Empty(r.Get("steward"));
+                        state.DiplomatId = Empty(r.Get("diplomat"));
+                        state.DiplomatTargetId = Empty(r.Get("diptarget"));
                         state.BrothelVisitUntil = Int(r, "brothelvisit");
+                        state.FeastUntil = Int(r, "feast");
                         state.TroopNightUntil = Int(r, "troopnight");
                         state.IllnessSince = Int(r, "illsince");
                         state.IllnessUntil = Math.Max(0, Int(r, "illuntil"));
@@ -585,6 +695,7 @@ namespace CheatMenu.Intrigue.Core
                         {
                             TargetId = r.Get("target"), Kind = (SecretKind)kind, Day = Int(r, "day"), Exposed = Bool(r, "exposed"),
                             OtherId = Empty(r.Get("other")), ChildId = Empty(r.Get("child")), Whispered = Bool(r, "whisper"),
+                            Spent = Bool(r, "spent"),
                         });
                         break;
                     case "cooldown":
@@ -683,6 +794,16 @@ namespace CheatMenu.Intrigue.Core
                             ChildIds = (r.Get("children") ?? "").Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                         };
                         break;
+                    case "summon":
+                        if (Empty(r.Get("hero")) != null) state.Summons.Add(new Summon { HeroId = r.Get("hero"), Until = Int(r, "until") });
+                        break;
+                    case "peacetalk":
+                        if (Empty(r.Get("kingdom")) != null)
+                            state.PeaceTalks.Add(new PeaceTalk
+                            {
+                                KingdomId = r.Get("kingdom"), RefusedUntil = Int(r, "refused"), EnvoyUntil = Int(r, "envoy"), AskedUntil = Int(r, "asked"),
+                            });
+                        break;
                     case "hostage":
                         if (Empty(r.Get("kingdom")) == null || (Empty(r.Get("given")) == null && Empty(r.Get("held")) == null)) break;
                         state.Hostages.Add(new HostageDeal
@@ -705,6 +826,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "marshalwarn":
                         if (Empty(r.Get("key")) != null) state.MarshalWarned[r.Get("key")] = Int(r, "until");
+                        break;
+                    case "diplomatwarn":
+                        if (Empty(r.Get("key")) != null) state.DiplomatWarned[r.Get("key")] = Int(r, "until");
                         break;
                     case "conceived":
                         if (Empty(r.Get("hero")) != null) state.Conceived[r.Get("hero")] = Int(r, "day");
@@ -740,11 +864,34 @@ namespace CheatMenu.Intrigue.Core
                     case "house":
                         int share = Int(r, "share");
                         if (Empty(r.Get("town")) == null || state.HouseIn(r.Get("town")) != null) break;
-                        state.Houses.Add(new House
+                        var house = new House
                         {
-                            TownId = r.Get("town"), Staff = SchemeMath.Clamp(Int(r, "staff"), 0, HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel)),
+                            TownId = r.Get("town"),
                             Share = Enum.IsDefined(typeof(HouseShare), share) ? (HouseShare)share : HouseShare.Standard, Since = Int(r, "since"),
-                        });
+                            ManagerId = Empty(r.Get("manager")), ManagerSince = Int(r, "managersince"),
+                        };
+                        // Adsız yer tutucular: ardından gelen "hworker" kayıtları doldurur; eski kayıtlarda (yalnızca sayı) adsız kalırlar.
+                        int staff = SchemeMath.Clamp(Int(r, "staff"), 0, HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel));
+                        for (int i = 0; i < staff; i++) house.Workers.Add(new HouseWorker { Since = house.Since });
+                        state.Houses.Add(house);
+                        break;
+                    case "hworker":
+                        House home = state.HouseIn(r.Get("town"));
+                        if (home == null || Empty(r.Get("name")) == null) break;
+                        int trait = Int(r, "trait");
+                        HouseWorker worker = home.Workers.FirstOrDefault(w => w.Name == null);
+                        if (worker == null)
+                        {
+                            if (home.Staff >= HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel)) break;
+                            worker = new HouseWorker();
+                            home.Workers.Add(worker);
+                        }
+                        worker.HeroId = Empty(r.Get("hero"));
+                        worker.Name = r.Get("name");
+                        worker.Female = Bool(r, "female");
+                        worker.Age = Math.Max(HouseRules.MinAge, Int(r, "age"));
+                        worker.Trait = Enum.IsDefined(typeof(WorkerTrait), trait) ? (WorkerTrait)trait : WorkerTrait.None;
+                        worker.Since = Int(r, "since");
                         break;
                     case "crisis":
                         if (Empty(r.Get("kingdom")) == null) break;

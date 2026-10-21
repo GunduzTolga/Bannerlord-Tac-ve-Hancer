@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Entrika ekranının alt sekmesi (ViewModel: TabVM): yalnızca seçili bölümünkiler görünür (IsVisible). -->
+<Prefab>
+  <Window>
+    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="176" SuggestedHeight="36" MarginRight="6" Brush="Tvh.Button" IsSelected="@IsSelected" IsVisible="@IsVisible" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Text.ButtonSmall" Text="@Name" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

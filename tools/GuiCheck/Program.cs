@@ -20,6 +20,7 @@ static class Program
     {
         { "TvhIntrigueScreen", "CheatMenu.UI.ViewModels.IntrigueScreenVM" },
         { "TvhEventCard", "CheatMenu.UI.ViewModels.EventCardVM" },
+        { "TvhWarReport", "CheatMenu.UI.ViewModels.WarReportVM" },
     };
 
     // Kullandığımız oyun sprite'ları: yalnızca HER ZAMAN YÜKLÜ kategorilerden (ui_group1, ui_textures). Başka bir ekranın
@@ -43,8 +44,8 @@ static class Program
         { "Standard.VerticalScrollbar", ("Widget", new[] { "Scrollbar" }) },
     };
 
-    // Yedek ayrı ekranın (TvhIntrigueScreen) kendisi yüklediği kategori: Klan ekranı sekmeleri ve paneli oradan.
-    static readonly HashSet<string> ClanRoots = new HashSet<string> { "TvhIntrigueScreen" };
+    // Ayrı ekranların (TvhIntrigueScreen, TvhWarReport) kendisi yüklediği kategori: Klan ekranı sekmeleri ve paneli oradan.
+    static readonly HashSet<string> ClanRoots = new HashSet<string> { "TvhIntrigueScreen", "TvhWarReport" };
 
     // Oyunun her zaman yüklediği sprite kategorileri (SpriteData'da AlwaysLoad).
     static readonly HashSet<string> AlwaysLoadedCategories = new HashSet<string> { "ui_group1", "ui_textures", "ui_fonts", "ui_fullbackgrounds" };
@@ -61,6 +62,8 @@ static class Program
     static readonly Dictionary<string, HashSet<string>> BrushRoots = new Dictionary<string, HashSet<string>>();
     static readonly List<(string Ours, string Game)> GameLooks = new List<(string, string)>();
     static string CurrentRoot;
+    // Türü yalnızca çalışırken belli olan veri kaynakları (bkz. CheckElement): denetlenmeden geçilen alt ağaç sayısı.
+    static int Foreign;
     static Type WidgetBase, BindingListType, ViewModelType, DataSourceAttr;
 
     static int Main(string[] args)
@@ -134,6 +137,7 @@ static class Program
         else Console.WriteLine("Oyun klasörü verilmedi: oyun sprite, fırça ve prefab'ları yalnızca izinli listeye göre denetlendi");
 
         foreach (string e in Errors) Console.WriteLine("HATA " + e);
+        if (Foreign > 0) Console.WriteLine(Foreign + " alt ağaç başka bir modun ViewModel'ine bağlı (o modun prefab'ından alındı): denetlenmedi");
         Console.WriteLine(Errors.Count == 0 ? "ARAYÜZ DENETİMİ GEÇTİ (" + Prefabs.Count + " prefab, " + Brushes.Count + " fırça)" : Errors.Count + " hata");
         return Errors.Count == 0 ? 0 : 1;
     }
@@ -263,6 +267,13 @@ static class Program
                 PropertyInfo p = VmProperty(vm, ds.Substring(1, ds.Length - 2));
                 if (p == null) Error(where, vm.Name + " içinde [DataSourceProperty] yok: " + ds);
                 else if (IsBindingList(p.PropertyType)) { listItem = p.PropertyType.GetGenericArguments()[0]; contextVm = null; }
+                else if (p.PropertyType == ViewModelType)
+                {
+                    // Başka bir modun ViewModel'i (ör. Diplomacy'nin DetailWarVM'i, türü iç tür olduğundan "ViewModel" olarak verilir):
+                    // bu alt ağaç o modun kendi prefab'ından aynen alınır ve onun parçalarını, fırçalarını kullanır; burada denetlenmez.
+                    Foreign++;
+                    return;
+                }
                 else if (!IsViewModel(p.PropertyType)) Error(where, ds + " bir ViewModel değil (" + p.PropertyType.Name + ")");
                 else contextVm = p.PropertyType;
             }

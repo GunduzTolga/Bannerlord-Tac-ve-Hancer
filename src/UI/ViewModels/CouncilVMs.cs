@@ -15,20 +15,24 @@ using TaleWorlds.Library;
 namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
-    /// Divan sekmesi: üstte koltuklar (serdar P2.14, kâhya P2.15, hazinedar P2.12, hekim P2.13), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
+    /// Divan sekmesi: üstte koltuklar (mareşal P2.14, kâhya P2.15, hazinedar P2.12, hekim P2.13, diplomat), altında raporları. Gelirler oyunun kendi hesabı (kesin); fiyatlar,
     /// tahminler ve ömür riskleri koltuk sahibinin gözüyle (becerisine göre hata payı). Casus başı sol sütunda kalır.
     /// </summary>
     public sealed class CouncilVM : TvhViewModel
     {
         private readonly Action _changed;
-        private readonly CouncilSeatVM _marshal, _steward, _treasurer, _physician;
+        private readonly CouncilSeatVM _marshal, _steward, _treasurer, _physician, _diplomat;
 
-        public CouncilVM(Action changed)
+        private readonly Action<Kingdom> _openWar;
+
+        /// <param name="openWar">Savaş ve barış > Savaşlar'da bu savaşın Barış Masası.</param>
+        public CouncilVM(Action changed, Action<Kingdom> openWar)
         {
             _changed = changed;
-            _marshal = new CouncilSeatVM("SERDAR",
+            _openWar = openWar;
+            _marshal = new CouncilSeatVM("MAREŞAL",
                 "Tactics ve Scouting: düşmanın gücü, orduları, zayıf kaleleri; sana yürüyen ordulara erken uyarı. Sahada da çalışır.",
-                AssignMarshal, () => Dismiss("Serdar", Marshal.Dismiss), null);
+                AssignMarshal, () => Dismiss("Mareşal", Marshal.Dismiss), null);
             _steward = new CouncilSeatVM("KÂHYA",
                 "Steward: bütün şehir ve kalelerin, uzaktan inşaat emri, isyan ve kıtlık uyarısı; sadakate günlük katkı. Düşükse yolsuzluk yapar.",
                 AssignSteward, () => Dismiss("Kâhya", Steward.Dismiss), null);
@@ -38,7 +42,10 @@ namespace CheatMenu.UI.ViewModels
             _physician = new CouncilSeatVM("SARAY HEKİMİ",
                 "Medicine: doğumda ve yaşlılıktan ölümü azaltır, suikastte kurtarabilir, gizli gebeliği fark eder. 30'un altı şarlatan.",
                 AssignPhysician, () => Dismiss("Hekim", Physician.Dismiss), null);
-            Seats = new MBBindingList<CouncilSeatVM> { _marshal, _steward, _treasurer, _physician };
+            _diplomat = new CouncilSeatVM("DİPLOMAT",
+                "Charm: Barış Masası'nda pazarlık, elçiler, çağrı ve ziyafet, hediyeler; sana savaş açmaya hazırlanana erken uyarı; ilişki görevi.",
+                AssignDiplomat, () => Dismiss("Diplomat", Diplomat.Dismiss), null);
+            Seats = new MBBindingList<CouncilSeatVM> { _marshal, _steward, _treasurer, _physician, _diplomat };
             Rows = new MBBindingList<CouncilRowVM>();
         }
 
@@ -52,11 +59,14 @@ namespace CheatMenu.UI.ViewModels
             RefreshStewardSeat(state);
             RefreshTreasurerSeat(state);
             RefreshPhysicianSeat(state);
-            if (Marshal.Current(state) == null && Steward.Current(state) == null && Treasury.Treasurer(state) == null && Physician.Current(state) == null)
+            RefreshDiplomatSeat(state);
+            if (Marshal.Current(state) == null && Steward.Current(state) == null && Treasury.Treasurer(state) == null && Physician.Current(state) == null
+                && Diplomat.Current(state) == null)
                 Rows.Add(CouncilRowVM.Note("Divanda koltuklar boş. Yukarıdan klanından birini ata; raporları burada görünür."));
             if (Marshal.Working(state) is Hero marshal) AddWar(state, marshal);
             if (Steward.Working(state) != null) AddFiefs();
             if (Physician.Working(state) != null) AddHealth(state);
+            if (Diplomat.Working(state) is Hero diplomat) AddDiplomacy(state, diplomat);
             if (Treasury.Blocked(state) == null)
             {
                 Treasury.Board board = Treasury.CurrentBoard(state);
@@ -106,9 +116,9 @@ namespace CheatMenu.UI.ViewModels
             _treasurer.Show(treasurer,
                 "Trade " + Treasury.Trade(treasurer) + "  ·  Hesapçı " + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Calculating)),
                 "Tahmin payı %" + error + " (" + TreasuryRules.Confidence(error) + ")",
-                state.EmbezzleFound ? "Zimmet ortaya çıktı: " + SchemeFactors.Money(state.Embezzled) + ". Hesabını sor."
-                    : blocked ?? (treasurer.GetTraitLevel(DefaultTraits.Honor) < 0 ? "Görevde. Onuru düşük (" + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Honor))
-                        + "): kasadan çalabilir." : "Görevde"),
+                state.EmbezzleFound ? "Zimmet: " + SchemeFactors.Money(state.Embezzled) + ". Hesap sor."
+                    : blocked ?? (treasurer.GetTraitLevel(DefaultTraits.Honor) < 0 ? "Onuru düşük (" + SchemeFactors.Signed(treasurer.GetTraitLevel(DefaultTraits.Honor))
+                        + "): çalabilir" : "Görevde"),
                 state.EmbezzleFound, "Hesap sor");
         }
 
@@ -123,20 +133,82 @@ namespace CheatMenu.UI.ViewModels
             int medicine = Physician.Medicine(physician);
             _physician.Show(physician,
                 "Medicine " + medicine + (PhysicianRules.IsQuack(medicine) ? " (şarlatan)" : "") + "  ·  tahmin payı %" + PhysicianRules.ErrorPercent(medicine),
-                Physician.ProtectionText(physician),
+                PhysicianRules.IsQuack(medicine) ? "Şarlatan: doğum ve yaşlılıkta ölüm artar"
+                    : "Doğum -%" + PhysicianRules.LaborPercent(medicine) + " · yaşlılık -%" + PhysicianRules.LongevityPercent(medicine)
+                        + " · zehir %" + PhysicianRules.PoisonSaveChance(medicine),
                 Physician.Blocked(state) ?? "Görevde", false);
         }
 
-        // ---- Serdar ----
+        private void RefreshDiplomatSeat(IntrigueState state)
+        {
+            Hero diplomat = Diplomat.Current(state);
+            if (diplomat == null)
+            {
+                _diplomat.Show(null, "", "", "", false);
+                return;
+            }
+            Hero target = Diplomat.Target(state);
+            _diplomat.Show(diplomat, "Charm " + Diplomat.Charm(diplomat), Diplomat.CardText(diplomat),
+                Diplomat.Blocked(state) ?? (target != null ? "Görevi: " + target.Name : "Görevde"), false);
+        }
+
+        // ---- Diplomat ----
+
+        private void AddDiplomacy(IntrigueState state, Hero diplomat)
+        {
+            Rows.Add(CouncilRowVM.Header("DİPLOMASİ (diplomatın gözüyle)"));
+            Hero target = Diplomat.Target(state);
+            Rows.Add(new CouncilRowVM(Diplomat.MissionText(state), null, false, target == null ? "İlişki görevi..." : "Görevi bitir", null, () =>
+            {
+                if (target != null) Diplomat.ClearTarget(SchemeEngine.State);
+                else Picker.Pick("Kiminle ilişkileri geliştirsin?", Diplomat.TargetCandidates(),
+                    h => h.Name + " (" + h.Clan?.Name + ", ilişki " + SchemeFactors.Signed(Hero.MainHero.GetRelation(h)) + ")"
+                        + (Diplomat.TargetBlocked(SchemeEngine.State, h) is string why ? "  [" + why + "]" : ""),
+                    hero => Run("Diplomat görevi", () =>
+                    {
+                        Diplomat.SetTarget(SchemeEngine.State, hero);
+                        _changed();
+                    }), null, hero => Categories.HeroPortrait(hero), sort: false);
+                _changed();
+            }));
+
+            foreach (Diplomat.ThreatLine threat in Diplomat.Threats(state, diplomat))
+            {
+                Hero ruler = threat.Kingdom.Leader;
+                Rows.Add(new CouncilRowVM(threat.Kingdom.Name + " · hükümdarı " + ruler?.Name + " (ilişki " + SchemeFactors.Signed(ruler?.GetRelation(Hero.MainHero) ?? 0) + ")"
+                        + "\nDiplomat: " + DiplomatRules.ThreatText(threat.Seen),
+                    threat.Seen >= 2 ? "tehlike" : threat.Seen == 1 ? "dikkat" : "sakin", threat.Seen >= 2,
+                    "İlişki görevi", ruler == null ? "Hükümdarı yok" : Diplomat.TargetBlocked(state, ruler), () =>
+                    {
+                        Diplomat.SetTarget(SchemeEngine.State, ruler);
+                        _changed();
+                    }));
+            }
+
+            List<Kingdom> wars = Marshal.Enemies();
+            if (wars.Count == 0 || Clan.PlayerClan.Kingdom == null) return;
+            Rows.Add(CouncilRowVM.Header("SAVAŞTAKİLER: BARIŞ"));
+            foreach (Kingdom enemy in wars)
+            {
+                string blocked = PeaceTreaties.Blocked(state, enemy);
+                PeaceTreaties.Leverage leverage = PeaceTreaties.LeverageOf(state, enemy);
+                Kingdom shown = enemy;
+                Rows.Add(new CouncilRowVM(enemy.Name + " · " + (leverage.GameLeans ? "barışa yatkın" : "barışa yanaşmıyor") + " · pazarlık gücün " + leverage.Willingness
+                        + "\nŞartsız barışı kabul etme olasılıkları %" + PeaceTreatyRules.Chance(leverage.Willingness, 0),
+                    null, false, "Barış Masası", blocked, () => MenuUI.Defer(() => _openWar(shown))));
+            }
+        }
+
+        // ---- Mareşal ----
 
         private void AddWar(IntrigueState state, Hero marshal)
         {
             List<Marshal.WarLine> wars = Marshal.Wars(state, marshal);
-            Rows.Add(CouncilRowVM.Header("SAVAŞ MECLİSİ (serdarın gözüyle)"));
+            Rows.Add(CouncilRowVM.Header("SAVAŞ MECLİSİ (mareşalin gözüyle)"));
             if (wars.Count == 0) Rows.Add(CouncilRowVM.Note("Kimseyle savaşta değilsin."));
             foreach (Marshal.WarLine war in wars)
                 Rows.Add(new CouncilRowVM(war.Kingdom.Name + " ile savaş · güç: onlar ~" + war.Theirs + ", biz " + war.Ours + " · " + war.Armies + " ordu"
-                    + "\nSerdar: " + MarshalRules.Advice(war.Ratio), "oran " + war.Ratio.ToString("0.0", Tr.Culture),
+                    + "\nMareşal: " + MarshalRules.Advice(war.Ratio), "oran " + war.Ratio.ToString("0.0", Tr.Culture),
                     MarshalRules.IsDangerous(war.Ratio), null, null, null));
 
             List<Marshal.FortLine> own = Marshal.OwnDefense(state, marshal);
@@ -159,7 +231,7 @@ namespace CheatMenu.UI.ViewModels
             if (wars.Count == 0) return;
             List<Marshal.ArmyLine> armies = Marshal.Armies(state, marshal);
             Rows.Add(CouncilRowVM.Header("DÜŞMAN ORDULARI (görüş " + (int)MarshalRules.KnownRange(Marshal.Scouting(marshal)) + ")"));
-            if (armies.Count == 0) Rows.Add(CouncilRowVM.Note("Serdarın görüş menzilinde düşman ordusu ya da büyük bir lord partisi yok."));
+            if (armies.Count == 0) Rows.Add(CouncilRowVM.Note("Mareşalin görüş menzilinde düşman ordusu ya da büyük bir lord partisi yok."));
             foreach (Marshal.ArmyLine army in armies.Take(10))
             {
                 bool ours = army.Target != null && army.Target.OwnerClan == Clan.PlayerClan;
@@ -177,7 +249,7 @@ namespace CheatMenu.UI.ViewModels
 
             List<Marshal.FortLine> targets = Marshal.WeakTargets(state, marshal, 5);
             Rows.Add(CouncilRowVM.Header("ZAYIF HEDEFLER (kuşatma için)"));
-            if (targets.Count == 0) Rows.Add(CouncilRowVM.Note("Serdarın görüş menzilinde düşman şehri ya da kalesi yok."));
+            if (targets.Count == 0) Rows.Add(CouncilRowVM.Note("Mareşalin görüş menzilinde düşman şehri ya da kalesi yok."));
             foreach (Marshal.FortLine fort in targets)
             {
                 Settlement shown = fort.Settlement;
@@ -342,8 +414,8 @@ namespace CheatMenu.UI.ViewModels
         private void AssignMarshal()
         {
             IntrigueState state = SchemeEngine.State;
-            Picker.Pick("Serdar seç", Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
-                hero => Run("Serdar", () =>
+            Picker.Pick("Mareşal seç", Marshal.Candidates(state).OrderByDescending(h => Marshal.Tactics(h) + Marshal.Scouting(h)).ToList(), Marshal.Label,
+                hero => Run("Mareşal", () =>
                 {
                     Marshal.Assign(SchemeEngine.State, hero);
                     _changed();
@@ -358,6 +430,18 @@ namespace CheatMenu.UI.ViewModels
                 hero => Run("Kâhya", () =>
                 {
                     Steward.Assign(SchemeEngine.State, hero);
+                    _changed();
+                }),
+                null, hero => Categories.HeroPortrait(hero), sort: false);
+        }
+
+        private void AssignDiplomat()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Picker.Pick("Diplomat seç", Diplomat.Candidates(state).OrderByDescending(Diplomat.Charm).ToList(), Diplomat.Label,
+                hero => Run("Diplomat", () =>
+                {
+                    Diplomat.Assign(SchemeEngine.State, hero);
                     _changed();
                 }),
                 null, hero => Categories.HeroPortrait(hero), sort: false);
@@ -382,6 +466,7 @@ namespace CheatMenu.UI.ViewModels
             _steward.OnFinalize();
             _treasurer.OnFinalize();
             _physician.OnFinalize();
+            _diplomat.OnFinalize();
             Clear(Rows);
         }
     }
@@ -417,7 +502,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public string SpecialText { get => _specialText; set => Set(ref _specialText, value, nameof(SpecialText)); }
         [DataSourceProperty] public string AssignText => "Ata";
         [DataSourceProperty] public string ChangeText => "Değiştir";
-        [DataSourceProperty] public string DismissText => "Görevden al";
+        [DataSourceProperty] public string DismissText => "Azlet";
 
         public void Show(Hero hero, string skill, string detail, string status, bool special, string specialText = "")
         {

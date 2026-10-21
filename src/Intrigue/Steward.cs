@@ -61,8 +61,8 @@ namespace CheatMenu.Intrigue
         {
             int steward = Skill(hero);
             return StewardRules.IsCorrupt(steward)
-                ? "Yolsuz: şehir ve kalelerinde sadakat günde " + StewardRules.Signed(StewardRules.LoyaltyBonus(steward), Tr.Culture)
-                : "Şehir ve kalelerinde sadakat günde " + StewardRules.Signed(StewardRules.LoyaltyBonus(steward), Tr.Culture);
+                ? "Yolsuz: valisiz şehir ve kalelerinde sadakat günde " + StewardRules.Signed(StewardRules.LoyaltyBonus(steward), Tr.Culture)
+                : "Valisiz şehir ve kalelerinde sadakat günde " + StewardRules.Signed(StewardRules.LoyaltyBonus(steward), Tr.Culture);
         }
 
         public static void Assign(IntrigueState state, Hero hero)
@@ -86,11 +86,14 @@ namespace CheatMenu.Intrigue
 
         // ---- Oyunun sadakat modeline bağlanan etki ----
 
-        /// <summary>Klanının bir yerleşimiyse ve kâhya çalışıyorsa günlük sadakat etkisi; değilse 0.</summary>
+        /// <summary>
+        /// Klanının bir yerleşimiyse, valisi yoksa ve kâhya çalışıyorsa günlük sadakat etkisi; değilse 0. Valisi olan yerleşimi vali
+        /// yönetir: kâhyanın etkisi onun üstüne eklenmez (yolsuz kâhyanın cezası da).
+        /// </summary>
         public static float LoyaltyEffect(Town town, out string name)
         {
             name = "";
-            if (town == null || Clan.PlayerClan == null || town.OwnerClan != Clan.PlayerClan) return 0f;
+            if (town == null || Clan.PlayerClan == null || town.OwnerClan != Clan.PlayerClan || town.Governor != null) return 0f;
             Hero steward = Working(IntrigueBehavior.Current?.State);
             if (steward == null) return 0f;
             name = steward.Name.ToString();

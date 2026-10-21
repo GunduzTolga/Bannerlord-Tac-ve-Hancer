@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CheatMenu.Intrigue.Core;
 using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
@@ -50,7 +51,7 @@ namespace CheatMenu.UI.ViewModels
     {
         private readonly Action<TabVM> _onSelect;
         private string _name;
-        private bool _isSelected;
+        private bool _isSelected, _isVisible = true;
 
         public TabVM(int index, string name, Action<TabVM> onSelect)
         {
@@ -66,6 +67,10 @@ namespace CheatMenu.UI.ViewModels
 
         [DataSourceProperty]
         public bool IsSelected { get => _isSelected; set => Set(ref _isSelected, value, nameof(IsSelected)); }
+
+        /// <summary>Alt sekme şeridinde yalnızca seçili bölümün sekmeleri görünür.</summary>
+        [DataSourceProperty]
+        public bool IsVisible { get => _isVisible; set => Set(ref _isVisible, value, nameof(IsVisible)); }
 
         public void ExecuteSelect() => _onSelect(this);
     }
@@ -108,5 +113,88 @@ namespace CheatMenu.UI.ViewModels
 
         [DataSourceProperty] public string DayText { get; }
         [DataSourceProperty] public string Text { get; }
+    }
+
+    /// <summary>
+    /// Basamaklı satır (TvhStepRow): ad, azalt, değer, arttır; ya da düğmesiz bölüm başlığı. Barış Masası'nın şartları ve Krallık'taki
+    /// bağış miktarı gibi. Değerler basamaklıdır (aç/kapa iki basamak); değişince yalnızca kendi alanları güncellenir.
+    /// </summary>
+    public sealed class StepRowVM : TvhViewModel
+    {
+        private readonly List<int> _steps;
+        private readonly Func<int> _get;
+        private readonly Action<int> _set;
+        private readonly Func<int, string> _format;
+        private readonly Action _changed;
+        private string _valueText;
+        private bool _canLess, _canMore, _isOn;
+
+        /// <summary>Bölüm başlığı satırı (düğmesiz).</summary>
+        public static StepRowVM Header(string label) => new StepRowVM(label);
+
+        private StepRowVM(string label)
+        {
+            Label = label;
+            IsHeader = true;
+            _steps = new List<int> { 0 };
+            _get = () => 0;
+            _set = v => { };
+            _format = v => "";
+            _changed = () => { };
+        }
+
+        public StepRowVM(string label, List<int> steps, Func<int> get, Action<int> set, Func<int, string> format, Action changed)
+        {
+            Label = label;
+            _steps = new List<int>(steps.Count > 0 ? steps : new List<int> { 0 });
+            _get = get;
+            _set = set;
+            _format = format;
+            _changed = changed;
+            Update();
+        }
+
+        [DataSourceProperty] public string Label { get; }
+        [DataSourceProperty] public bool IsHeader { get; }
+        [DataSourceProperty] public bool IsTerm => !IsHeader;
+        [DataSourceProperty] public float Height => IsHeader ? 34 : 46;
+        [DataSourceProperty] public string ValueText { get => _valueText; set => Set(ref _valueText, value, nameof(ValueText)); }
+        [DataSourceProperty] public bool CanLess { get => _canLess; set => Set(ref _canLess, value, nameof(CanLess)); }
+        [DataSourceProperty] public bool CanMore { get => _canMore; set => Set(ref _canMore, value, nameof(CanMore)); }
+        /// <summary>Şart masada (değeri sıfırdan büyük): değer altın renkte.</summary>
+        [DataSourceProperty] public bool IsOn { get => _isOn; set => Set(ref _isOn, value, nameof(IsOn)); }
+        [DataSourceProperty] public bool IsOff => !IsOn;
+
+        private int Index => Math.Max(0, _steps.IndexOf(_get()));
+
+        public void Update()
+        {
+            if (IsHeader) return;
+            int value = _get();
+            ValueText = _format(value);
+            CanLess = Index > 0;
+            CanMore = Index < _steps.Count - 1;
+            IsOn = value > 0;
+            OnPropertyChanged(nameof(IsOff));
+        }
+
+        /// <summary>Basamaklar değişti (kese değişince bağış miktarları gibi).</summary>
+        public void SetSteps(List<int> steps)
+        {
+            _steps.Clear();
+            _steps.AddRange(steps.Count > 0 ? steps : new List<int> { 0 });
+            Update();
+        }
+
+        public void ExecuteLess() => Step(-1);
+
+        public void ExecuteMore() => Step(1);
+
+        private void Step(int delta)
+        {
+            int next = SchemeMath.Clamp(Index + delta, 0, _steps.Count - 1);
+            _set(_steps[next]);
+            _changed();
+        }
     }
 }

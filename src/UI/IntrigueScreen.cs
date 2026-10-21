@@ -105,6 +105,44 @@ namespace CheatMenu.UI
             });
         }
 
+        /// <summary>
+        /// Entrika ekranını bir odakla açar (sekmeyse Klan ekranında, değilse ayrı ekranda); başka yerden (ansiklopedi, Krallık ekranı,
+        /// Savaş Raporu) gelindiyse önce onlar kapanır. Her özellik tek yerde: pencereler buraya yönlenir.
+        /// </summary>
+        public static void OpenAt(Action<IntrigueScreenVM> focus)
+        {
+            MapEncyclopediaView encyclopedia = MapScreen.Instance?.EncyclopediaScreenManager;
+            if (encyclopedia != null && encyclopedia.IsEncyclopediaOpen) encyclopedia.CloseEncyclopedia();
+            WarReportScreen.Close();
+            // Krallık ekranından geliniyorsa önce o kapanır (Entrika yalnızca haritada ya da Klan ekranında açılır); açılış bir sonraki karede.
+            MenuUI.Defer(() =>
+            {
+                GameStateManager states = Game.Current?.GameStateManager;
+                if (states?.ActiveState is KingdomState) states.PopState();
+                MenuUI.Defer(() =>
+                {
+                    if (ClanIntrigueTab.Registered)
+                    {
+                        ClanIntrigueTab.Open(focus);
+                        return;
+                    }
+                    if (!IsOpen) Open();
+                    if (IsOpen && Layer.DataSource is IntrigueScreenVM vm) focus(vm);
+                });
+            });
+        }
+
+        public static void OpenTab(int tab) => OpenAt(vm => vm.SelectTab(tab));
+
+        /// <summary>Savaş ve barış > Savaşlar, bu savaşın Barış Masası (terms: masaya konacak şartlar; null: boş).</summary>
+        public static void OpenWar(Kingdom enemy, PeaceTreaties.Terms terms = null) => OpenAt(vm => vm.FocusWar(enemy, terms));
+
+        /// <summary>Savaş ve barış > İsyanlar, bu krallığın grupları (null: kendi krallığın).</summary>
+        public static void OpenRebellions(Kingdom kingdom) => OpenAt(vm => vm.FocusRebellions(kingdom));
+
+        /// <summary>Saray > Krallık, bu klan seçili (null: son seçili ya da ilk klan).</summary>
+        public static void OpenRealm(Clan clan) => OpenAt(vm => vm.FocusRealm(clan));
+
         public static void Close()
         {
             if (!IsOpen) return;

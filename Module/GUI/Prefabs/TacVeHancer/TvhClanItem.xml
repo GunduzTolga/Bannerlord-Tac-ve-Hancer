@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Krallık sekmesinde bir klan (ViewModel: ClanItemVM): tıklanınca seçilir (bağış ve fief verme sağda). Sancak, ad ve kademe,
+  lideri ve ilişkin, yerleri ve gücü; hükümdar klanı ya da paralı asker etiketi. Yazılar tıklamayı alta (kartın kendisine) geçirir.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="96" MarginBottom="6">
+      <Children>
+        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.ListItem" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true" />
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="56" SuggestedHeight="76" MarginLeft="12" VerticalAlignment="Center" DoNotAcceptEvents="true">
+          <Children>
+            <ImageIdentifierWidget DataSource="{Banner}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" DoNotAcceptEvents="true" />
+          </Children>
+        </Widget>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="82" MarginRight="10" MarginTop="8" Brush="Tvh.Text.Name" Text="@Name" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="82" MarginRight="10" MarginTop="38" Brush="Tvh.Text.Small" Text="@Info" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="82" MarginRight="10" MarginTop="62" Brush="Tvh.Text.Gold" Text="@Tag" DoNotAcceptEvents="true" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

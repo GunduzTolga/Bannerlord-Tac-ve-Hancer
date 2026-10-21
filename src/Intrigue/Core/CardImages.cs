@@ -44,6 +44,12 @@ namespace CheatMenu.Intrigue.Core
         public const string BrothelGossip = "sonuc_genelev_dedikodu";
         /// <summary>Genelev baskını.</summary>
         public const string BrothelRaid = "olay_genelev_baskin";
+        /// <summary>Genelev: kapıya gelen adaylar (çalışan almak).</summary>
+        public const string BrothelCandidates = "olay_genelev_adaylar";
+        /// <summary>Genelev: evi işleten yoldaş (yönetici).</summary>
+        public const string BrothelManager = "sonuc_genelev_yonetici";
+        /// <summary>Genelev: evdeki yoldaşlar; kendi isteğiyle çalışan ya da ayrılan yoldaş.</summary>
+        public const string BrothelCompanion = "sonuc_genelev_yoldas";
         /// <summary>Hastalık ve tedavisi.</summary>
         public const string Illness = "sonuc_hastalik";
         /// <summary>Esir hizmetine katıldı: bağlılık yemini.</summary>
@@ -75,7 +81,7 @@ namespace CheatMenu.Intrigue.Core
         public const string Physician = "sonuc_hekim";
         /// <summary>Hekim suikast kurbanını kurtardı.</summary>
         public const string Antidote = "sonuc_panzehir";
-        /// <summary>Divan: serdarın savaş meclisi ve erken uyarısı (P2.14).</summary>
+        /// <summary>Divan: mareşalin savaş meclisi ve erken uyarısı (P2.14).</summary>
         public const string Marshal = "sonuc_serdar";
         /// <summary>Divan: kâhyanın uyarısı ve uzaktan emir (P2.15).</summary>
         public const string Steward = "sonuc_kahya";
@@ -88,6 +94,12 @@ namespace CheatMenu.Intrigue.Core
         public const string SabotageWalls = "sonuc_sabotaj_sur";
         /// <summary>Kışkırtma tuttu: halk meydanda, belki oyunun kendi isyanı.</summary>
         public const string Uprising = "sonuc_isyan";
+        /// <summary>Barış Masası: kaybeden tarafın elçisi barış istiyor.</summary>
+        public const string Envoy = "sonuc_baris_elcisi";
+        /// <summary>Barış Masası: antlaşma imzalandı.</summary>
+        public const string Treaty = "sonuc_baris_antlasmasi";
+        /// <summary>Divan: diplomatın uyarısı ve başarısı.</summary>
+        public const string Diplomat = "sonuc_diplomat";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -108,6 +120,48 @@ namespace CheatMenu.Intrigue.Core
             { 103, "olay_kacakci_tuneli" },
             { 104, "olay_ekmek_kuyrugu" },
         };
+
+        /// <summary>
+        /// Resmi henüz yoksa yerine gösterilecek, aynı konudan bir resim (ör. genelev kartları için genelevin dış cephesi). Kart önce
+        /// kendi resmini, yoksa bunu, o da yoksa bunun yedeğini dener; hiçbiri yoksa kişinin portresi. Resim eklenince kendi resmi gelir.
+        /// </summary>
+        public static readonly IReadOnlyDictionary<string, string> Fallbacks = new Dictionary<string, string>
+        {
+            { BrothelNight, NightHouse },
+            { BrothelTroops, NightHouse },
+            { BrothelGossip, NightHouse },
+            { BrothelRaid, NightHouse },
+            { BrothelCandidates, NightHouse },
+            { BrothelManager, NightHouse },
+            { BrothelCompanion, NightHouse },
+            { Illness, Physician },
+            { Antidote, MurderPoison },
+            { WarCouncil, Marshal },
+            { Embezzle, Treasury },
+            { TailNight, Tail },
+            { SabotageFood, Sabotage },
+            { SabotageGarrison, Sabotage },
+            { SabotageWalls, Sabotage },
+            { Uprising, Incite },
+            { Envoy, Messenger },
+            { Treaty, Envoy },
+            { Diplomat, Messenger },
+            { "olay_rusvetci_nobetci", "olay_rusvetci_hizmetkar" },
+            { "olay_elebasi_yakalandi", "olay_ajan_yakalandi" },
+            { "olay_kacakci_tuneli", Sabotage },
+            { "olay_ekmek_kuyrugu", Incite },
+        };
+
+        /// <summary>Kartın denenecek resimleri: kendisi, sonra yedekleri (döngüye girmez).</summary>
+        public static IEnumerable<string> WithFallbacks(string name)
+        {
+            var seen = new HashSet<string>();
+            while (!string.IsNullOrEmpty(name) && seen.Add(name))
+            {
+                yield return name;
+                name = Fallbacks.TryGetValue(name, out string next) ? next : null;
+            }
+        }
 
         /// <summary>Bir karta en fazla bu kadar resim sürümü: ad, ad_2 ... ad_5. Oyun var olanlardan rastgele birini gösterir.</summary>
         public const int MaxVariants = 5;
@@ -150,6 +204,10 @@ namespace CheatMenu.Intrigue.Core
         public static string ForSabotage(SchemeMethod method) =>
             method == SchemeMethod.SabotageGarrison ? SabotageGarrison : method == SchemeMethod.SabotageWalls ? SabotageWalls : SabotageFood;
 
+        /// <summary>Gizli infazın sonucu: hastalık zehir, kaza kaza, firar hançer resmiyle.</summary>
+        public static string ForPrisonDeath(PrisonDeathMethod method) =>
+            method == PrisonDeathMethod.Illness ? MurderPoison : method == PrisonDeathMethod.Accident ? MurderAccident : MurderDagger;
+
         public static string ForMurderMethod(SchemeMethod method) =>
             method == SchemeMethod.Poison ? MurderPoison : method == SchemeMethod.Accident ? MurderAccident : MurderDagger;
 
@@ -162,8 +220,8 @@ namespace CheatMenu.Intrigue.Core
                          LiegeDemand, PlotDetected, ShadowNetwork, HookUsed, Interrogation, Messenger, SecretAffair, Scandal, Whisper,
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
                          Tail, TailNight, Treasury, Embezzle, Physician, Antidote, Marshal, Steward,
-                         BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, Illness,
-                         Sabotage, Incite, SabotageFood, SabotageGarrison, SabotageWalls, Uprising,
+                         BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, BrothelCandidates, BrothelManager, BrothelCompanion, Illness,
+                         Sabotage, Incite, SabotageFood, SabotageGarrison, SabotageWalls, Uprising, Envoy, Treaty, Diplomat,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

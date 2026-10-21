@@ -18,7 +18,8 @@ namespace CheatMenu.Intrigue
     public static class Courtships
     {
         /// <summary>Gizli ilişki ayarıyla birlikte açılıp kapanır (yetişkin teması tek ayarda).</summary>
-        public static bool Enabled => RomanceSecrets.Enabled;
+        /// <summary>Kendi ayarı var ("Kur ve sevgililer"): gizli ilişki sırları kapalıyken de çalışır.</summary>
+        public static bool Enabled => SettingsStore.Current.Courtships;
 
         /// <summary>Klanındaki hayattaki eşin; yoksa null.</summary>
         public static Hero Spouse
@@ -42,7 +43,7 @@ namespace CheatMenu.Intrigue
         public static string StartBlocked(IntrigueState state, Hero target, CourtshipMode mode)
         {
             int today = SchemeFactors.Today;
-            if (!Enabled) return "Kurallar'dan kapalı (gizli ilişki ayarı)";
+            if (!Enabled) return "Kurallar'dan kapalı (\"Kur ve sevgililer\")";
             Hero agent = AgentFor(mode);
             if (agent == null) return "Klanında hayatta bir eşin yok";
             if (agent.IsPrisoner) return mode == CourtshipMode.Lover ? "Esirken olmaz" : "Eşin esir";
@@ -256,6 +257,10 @@ namespace CheatMenu.Intrigue
         {
             Hero hero = Hero.Find(lover.HeroId);
             if (hero == null || !hero.IsAlive) return "Hayatta değil";
+            // Kayıt başka bir karakterden kalmış olabilir (varis): akraba ya da reşit olmayanla asla.
+            if (hero == Hero.MainHero || RomanceSecrets.IsKin(Hero.MainHero, hero)) return "Akraba";
+            if (hero.IsChild || !SecretRules.IsAdult(RomanceSecrets.Age(hero)) || !SecretRules.IsAdult(RomanceSecrets.Age(Hero.MainHero)))
+                return "Yetişkin değil";
             if (Hero.MainHero.IsPrisoner) return "Esirken olmaz";
             if (hero.IsPrisoner) return "Esir";
             int today = SchemeFactors.Today;
@@ -268,7 +273,8 @@ namespace CheatMenu.Intrigue
         /// <summary>Gebelik ihtimali olan bir buluşma mı (karşı cins, anne yaşı, oyunun doğum ayarı).</summary>
         public static bool MayConceive(IntrigueState state, Hero a, Hero b)
         {
-            if (CampaignOptions.IsLifeDeathCycleDisabled || a.IsFemale == b.IsFemale) return false;
+            if (CampaignOptions.IsLifeDeathCycleDisabled || a == b || a.IsFemale == b.IsFemale) return false;
+            if (RomanceSecrets.IsKin(a, b) || !SecretRules.IsAdult(RomanceSecrets.Age(a)) || !SecretRules.IsAdult(RomanceSecrets.Age(b))) return false;
             if (state.NoChildren.Contains(a.StringId) || state.NoChildren.Contains(b.StringId)) return false;
             Hero mother = a.IsFemale ? a : b;
             return !mother.IsPregnant && RomanceRules.CanConceive(RomanceSecrets.Age(mother)) && state.Pregnancies.All(p => p.MotherId != mother.StringId);

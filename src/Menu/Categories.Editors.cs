@@ -99,16 +99,7 @@ namespace CheatMenu.Menu
                 entries.Add(MenuEntry.Simple("Yetişkinlik yaşına getir (" + FamilyEditor.ComesOfAge + ")", () => FamilyEditor.Grow(hero, FamilyEditor.ComesOfAge)));
             }
             entries.Add(MenuEntry.Toggle("Yaşlanmayı dondur", () => FamilyEditor.IsFrozen(hero), v => FamilyEditor.SetFrozen(hero, v)));
-            if (hero == Hero.MainHero)
-            {
-                IntrigueState state = SchemeEngine.State;
-                List<Hero> bastards = Dynasty.Bastards(state);
-                if (bastards.Count > 0)
-                    entries.Add(MenuEntry.Submenu("Gayrimeşru çocuğunu meşrulaştır (" + bastards.Count + ")...", () => PickBastard(hero)));
-                string abdicate = Dynasty.AbdicateBlocked();
-                entries.Add(abdicate == null ? MenuEntry.Submenu("Klanı devret: çekil ve varisinle devam et...", () => PickHeir(hero))
-                    : MenuEntry.Simple("Klanı devret - " + abdicate, () => MenuUI.Error(abdicate)));
-            }
+            if (hero == Hero.MainHero) AddDynastyEntries(entries, () => ShowFamily(hero));
 
             List<Hero> children = hero.Children.Where(c => c.IsAlive).ToList();
             MenuUI.ShowList("Aile: " + hero.Name, entries, () => ShowFamily(hero), "Geri", ShowFamilyPick,
@@ -117,7 +108,26 @@ namespace CheatMenu.Menu
                 + "Evlilik ve gebelik oyunun kendi kurallarıyla olur: yaş, akrabalık, Doğum ve Ölüm ayarı.");
         }
 
-        private static void PickBastard(Hero hero)
+        /// <summary>Hanedan: gayrimeşru çocuğu meşrulaştırmak ve klanı devretmek (Aile editörü ve Entrika > Hanedan).</summary>
+        private static void AddDynastyEntries(List<MenuEntry> entries, Action back)
+        {
+            List<Hero> bastards = Dynasty.Bastards(SchemeEngine.State);
+            if (bastards.Count > 0)
+                entries.Add(MenuEntry.Submenu("Gayrimeşru çocuğunu meşrulaştır (" + bastards.Count + ")...", () => PickBastard(back)));
+            string abdicate = Dynasty.AbdicateBlocked();
+            entries.Add(abdicate == null ? MenuEntry.Submenu("Klanı devret: çekil ve varisinle devam et...", () => PickHeir(back))
+                : MenuEntry.Simple("Klanı devret - " + abdicate, () => MenuUI.Error(abdicate)));
+        }
+
+        private static void ShowDynasty()
+        {
+            var entries = new List<MenuEntry>();
+            AddDynastyEntries(entries, ShowDynasty);
+            MenuUI.ShowList("Hanedan", entries, ShowDynasty, "Geri", ShowIntrigue,
+                "Gayrimeşru çocuklarını meşrulaştır ya da klanı bir varise devredip onunla devam et (oyunun emeklilik işlemi).");
+        }
+
+        private static void PickBastard(Action back)
         {
             IntrigueState state = SchemeEngine.State;
             Picker.Pick("Meşrulaştır (" + Dynasty.CostText() + ")", Dynasty.Bastards(state),
@@ -125,19 +135,19 @@ namespace CheatMenu.Menu
                 c => MenuUI.Confirm("Meşrulaştır: " + c.Name,
                     c.Name + " klanına katılır ve senin çocuğun olarak anılır. Bedeli " + Dynasty.CostText() + ". Babalığın herkesçe bilinir: "
                     + "annesi ve onun ailesi skandala sürüklenir (gayrimeşru çocuk ifşasının sonuçları). Aile ağacında resmî ebeveyni değişmez. Onaylıyor musun?",
-                    () => Dynasty.Legitimize(SchemeEngine.State, c), () => ShowFamily(hero)),
-                () => ShowFamily(hero), sort: false);
+                    () => Dynasty.Legitimize(SchemeEngine.State, c), back),
+                back, sort: false);
         }
 
-        private static void PickHeir(Hero hero)
+        private static void PickHeir(Action back)
         {
             Picker.Pick("Varisini seç (oyunun varis sıralamasıyla)", Dynasty.HeirCandidates(),
                 h => h.Name + ", " + (int)h.Age + " yaş" + (h == Hero.MainHero.Spouse ? " (eşin)" : h.Father == Hero.MainHero || h.Mother == Hero.MainHero ? " (çocuğun)" : ""),
                 h => MenuUI.Confirm("Klanı devret: " + h.Name,
                     "Karakterin emekliye ayrılır ve oyundan çekilir; oyuna " + h.Name + " olarak devam edersin. Bu oyunun kendi emeklilik işlemidir ve "
                     + "geri alınamaz. Önce kayıt al. Devredilsin mi?",
-                    () => Dynasty.Abdicate(h), () => ShowFamily(hero)),
-                () => ShowFamily(hero), sort: false);
+                    () => Dynasty.Abdicate(h), back),
+                back, sort: false);
         }
 
         private static void PickSpouseFor(Hero hero)

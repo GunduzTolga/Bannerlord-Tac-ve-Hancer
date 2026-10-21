@@ -28,7 +28,13 @@
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@InterrogateText" />
               </Children>
             </ButtonWidget>
-            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="44" HorizontalAlignment="Right" MarginRight="16" MarginTop="82" Brush="Tvh.Text.BadTop" Text="@Hint" />
+            <!-- Gizli infaz (PrisonDeaths): esir uzaktayken de yapılır, o yüzden sorgu düğmesinden bağımsız -->
+            <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="180" SuggestedHeight="40" HorizontalAlignment="Right" MarginRight="16" MarginTop="84" Brush="Tvh.Button.Danger" Command.Click="ExecuteSecretDeath" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@SecretDeathText" />
+              </Children>
+            </ButtonWidget>
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="44" HorizontalAlignment="Right" MarginRight="206" MarginTop="82" Brush="Tvh.Text.BadTop" Text="@Hint" />
           </Children>
         </Widget>
       </Children>
