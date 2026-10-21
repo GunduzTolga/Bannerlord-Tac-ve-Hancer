@@ -9,7 +9,7 @@ para + asker gibi şeyler eklersek güzel olur. Oyunda sadece haraç alma var di
 - Diplomacy: bir taraf savaş yorgunluğunda %100'e varınca barış zorla gelir; kaybeden savaş tazminatı ve 5 yıl haraç öder, bu savaşta
   aldığı yerleri geri verir. Barış Masası bunun yerine geçmez; tükenmeden önce pazarlık etmeyi sağlar.
 
-## Masa (Entrika ekranı > Savaş ve barış > Savaşlar: `WarsVM`, `PeaceTableVM`, prefab `TvhWarsPanel` + `TvhPeaceTablePanel` + `TvhPeaceTerm`)
+## Masa (Entrika ekranı > Savaş ve barış > Savaşlar: `WarsVM`, `PeaceTableVM`, prefab `TvhWarsPanel` + `TvhPeaceTablePanel` + `TvhStepRow`)
 
 - Solda savaşların (sancak, süre, güç oranı, yorgunluk, şartsız barış olasılığı, Savaş Raporu düğmesi), sağda seçilinin masası.
 - Açılış: Savaş Raporu'nun sağ üstündeki **Barış Masası...**, Insert > Entrika > **Barış Masası...**, elçi kartındaki "Barış Masası'na

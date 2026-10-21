@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Saray > Krallık paneli (ViewModel: RealmVM). Üstte krallık ve hükümdar, kesen ve yerlerin. Solda krallığının klanları (TvhClanItem);
+  sağda seçili klanın lideri, altında iki sütun: altın bağışı (miktar basamaklı, ilişki önizlemesi) ve fief verme; onun altında
+  barıştaki krallıklara iade edilebilecek yerler (yalnızca hükümdara). Krallıkta değilsen açıklama.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoKingdom" />
+
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasKingdom">
+          <Children>
+            <!-- ===== Başlık şeridi ===== -->
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginRight="520" Brush="Tvh.Text.Name" Text="@Subtitle" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="510" SuggestedHeight="30" HorizontalAlignment="Right" Brush="Tvh.Text.MutedRight" Text="@Summary" />
+
+            <!-- ===== Sol: klanlar ===== -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="420" MarginTop="40">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@ClansTitle" />
+                <ScrollablePanel Id="ClansScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="36" MarginRight="18" AutoHideScrollBars="true" ClipRect="ClansClip" InnerPanel="ClansClip\ClansList" VerticalScrollbar="..\ClansBar\Scrollbar">
+                  <Children>
+                    <Widget Id="ClansClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="ClansList" DataSource="{Clans}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <ItemTemplate>
+                            <TvhClanItem />
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="ClansBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginTop="36" />
+              </Children>
+            </Widget>
+
+            <!-- ===== Sağ: seçili klan ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="444" MarginTop="40" IsVisible="@HasSelection">
+              <Children>
+                <!-- Lider kartı -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="104">
+                  <Children>
+                    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" DoNotAcceptEvents="true" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="116" SuggestedHeight="88" MarginLeft="10" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+                      <Children>
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                          <Children>
+                            <ImageIdentifierWidget DataSource="{LeaderPortrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </Widget>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="142" MarginRight="16" MarginTop="16" Brush="Tvh.Text.Name" Text="@SelectedName" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="142" MarginRight="16" MarginTop="52" Brush="Tvh.Text.Small" Text="@SelectedInfo" />
+                  </Children>
+                </Widget>
+
+                <!-- Sol sütun: altın bağışı -->
+                <ListPanel WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="470" MarginTop="118" StackLayout.LayoutMethod="VerticalTopToBottom">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@DonateTitle" />
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginTop="4" Sprite="BlankWhiteSquare_9" Color="#0D0A0799">
+                      <Children>
+                        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="6" MarginRight="6" MarginTop="4" MarginBottom="4" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <Children>
+                            <TvhStepRow DataSource="{Donation}" />
+                          </Children>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="8" MarginTop="8" Brush="Tvh.Text.Gold" Text="@DonatePreview" />
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="8" MarginRight="8" MarginTop="4" Brush="Tvh.Text.MutedTop" Text="@DonateNote" />
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="210" SuggestedHeight="44" HorizontalAlignment="Center" MarginTop="14" Brush="Tvh.Button.Primary" Command.Click="ExecuteDonate" IsEnabled="@CanDonate" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@DonateText" />
+                      </Children>
+                    </ButtonWidget>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginTop="6" Brush="Tvh.Text.StatLabel" Text="@DonateHint" />
+                  </Children>
+                </ListPanel>
+
+                <!-- Sağ sütun: fief verme ve iade (kaydırılır) -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="494" MarginTop="118">
+                  <Children>
+                    <ScrollablePanel Id="FiefsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="18" AutoHideScrollBars="true" ClipRect="FiefsClip" InnerPanel="FiefsClip\FiefsList" VerticalScrollbar="..\FiefsBar\Scrollbar">
+                      <Children>
+                        <Widget Id="FiefsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                          <Children>
+                            <ListPanel Id="FiefsList" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                              <Children>
+                                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@GrantTitle" />
+                                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="8" MarginRight="8" MarginTop="4" MarginBottom="6" Brush="Tvh.Text.MutedTop" Text="@GrantNote" />
+                                <ListPanel DataSource="{Grants}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="6" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                  <ItemTemplate>
+                                    <TvhActionRow />
+                                  </ItemTemplate>
+                                </ListPanel>
+
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginTop="16" IsVisible="@IsRuler">
+                                  <Children>
+                                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                      <Children>
+                                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@ReturnsTitle" />
+                                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="8" MarginRight="8" MarginTop="4" Brush="Tvh.Text.MutedTop" Text="@NoReturnsText" IsVisible="@HasNoReturns" />
+                                        <ListPanel DataSource="{Returns}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="6" MarginTop="4" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                          <ItemTemplate>
+                                            <TvhActionRow />
+                                          </ItemTemplate>
+                                        </ListPanel>
+                                      </Children>
+                                    </ListPanel>
+                                  </Children>
+                                </Widget>
+                              </Children>
+                            </ListPanel>
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </ScrollablePanel>
+                    <Standard.VerticalScrollbar Id="FiefsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

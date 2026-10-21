@@ -12,7 +12,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 |---|---|---|
 | **Entrika** | Süren · Yeni entrika · Ağlar · Sana karşı | casus başının işleri (soldaki casus başı sütunu yalnızca burada) |
 | **Kişiler** | Kişiler · Lordlar · Esirler | insanlar: dosyalar, lordlarla iletişim (ulak, çağır, ziyafet), esirler |
-| **Saray** | Saray · Divan · Kronik | krallığın sarayı, divan koltukları ve raporları, olayların kaydı |
+| **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, fief verme ve iade; divan koltukları ve raporları; olayların kaydı |
 | **Savaş ve barış** | Savaşlar · İsyanlar | her savaşın durumu ve Barış Masası, isyan grupları |
 
 ## Ayrı pencere kalanlar (yalnızca bunlar)
@@ -28,7 +28,10 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 - Diplomacy'nin İsyanlar düğmesi (Krallık ekranı, ansiklopedi): Krallık ekranı ya da ansiklopedi kapanır, İsyanlar sekmesi o krallıkla açılır.
 - Elçi kartı "Barış Masası'na otur", Divan'daki "Barış Masası" düğmesi, Savaş Raporu: Savaşlar sekmesi o savaşla açılır.
 - Saray'daki "İsyanlar..." düğmesi: seçili krallığın isyan grupları.
-- Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`; ViewModel'de `IntrigueScreenVM.FocusWar`, `FocusRebellions`.
+- Diplomacy'nin "Altın bağışla", "Fief ver" (Krallık > Klanlar, ansiklopedi) ve "Fief iade et" düğmeleri: Saray > Krallık, o klan
+  seçili (`2026-10-21-krallik-sekmesi.md`).
+- Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`, `OpenRealm`; ViewModel'de `IntrigueScreenVM.FocusWar`,
+  `FocusRebellions`, `FocusRealm`.
 
 ## Görünüş kuralları
 
@@ -41,3 +44,4 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 
 `LordsScreen`, `RebellionsScreen`, `PeaceTableScreen` ve prefab'ları (`TvhLords`, `TvhRebellions`, `TvhPeaceTable`): yerlerine
 `TvhLordsPanel`, `TvhRebellionsPanel`, `TvhWarsPanel` + `TvhPeaceTablePanel`. Saray'daki "Lordlar..." düğmesi (Lordlar artık yan sekme).
+Diplomacy'nin bağış, fief verme ve iade pencereleri yönlendirildi (krallıkta değilsen ya da bir şey ters giderse yine onlar açılır).

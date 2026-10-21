@@ -28,8 +28,8 @@ namespace CheatMenu.UI.ViewModels
             _enemy = enemy;
             _changed = changed;
             _terms = initial ?? new PeaceTreaties.Terms();
-            Demands = new MBBindingList<PeaceTermVM>();
-            Offers = new MBBindingList<PeaceTermVM>();
+            Demands = new MBBindingList<StepRowVM>();
+            Offers = new MBBindingList<StepRowVM>();
             Build();
             Refresh();
         }
@@ -41,8 +41,8 @@ namespace CheatMenu.UI.ViewModels
             "Hükümdarı " + _enemy.Leader?.Name + "  ·  kesesi " + SchemeFactors.Money(PeaceTreaties.Treasury(_enemy));
         [DataSourceProperty] public string DemandsTitle => "İstediklerin";
         [DataSourceProperty] public string OffersTitle => "Verdiklerin";
-        [DataSourceProperty] public MBBindingList<PeaceTermVM> Demands { get; }
-        [DataSourceProperty] public MBBindingList<PeaceTermVM> Offers { get; }
+        [DataSourceProperty] public MBBindingList<StepRowVM> Demands { get; }
+        [DataSourceProperty] public MBBindingList<StepRowVM> Offers { get; }
         [DataSourceProperty] public string LeverageText { get => _leverageText; set => Set(ref _leverageText, value, nameof(LeverageText)); }
         [DataSourceProperty] public string SummaryText { get => _summaryText; set => Set(ref _summaryText, value, nameof(SummaryText)); }
         [DataSourceProperty] public string ChanceText { get => _chanceText; set => Set(ref _chanceText, value, nameof(ChanceText)); }
@@ -64,23 +64,23 @@ namespace CheatMenu.UI.ViewModels
             string Money(int v) => v == 0 ? "yok" : SchemeFactors.Money(v);
             string YesNo(int v) => v == 1 ? "İSTENİYOR" : "istenmiyor";
 
-            Demands.Add(PeaceTermVM.Header("PARA"));
-            Demands.Add(new PeaceTermVM("Haraç (onlar öder)", tribute, () => _terms.Tribute, v => _terms.Tribute = v, PeaceTreaties.TributeText, Changed));
-            Demands.Add(new PeaceTermVM("Savaş tazminatı", WithCurrent(PeaceTreatyRules.GoldSteps(treasury), _terms.Gold), () => _terms.Gold, v => _terms.Gold = v,
+            Demands.Add(StepRowVM.Header("PARA"));
+            Demands.Add(new StepRowVM("Haraç (onlar öder)", tribute, () => _terms.Tribute, v => _terms.Tribute = v, PeaceTreaties.TributeText, Changed));
+            Demands.Add(new StepRowVM("Savaş tazminatı", WithCurrent(PeaceTreatyRules.GoldSteps(treasury), _terms.Gold), () => _terms.Gold, v => _terms.Gold = v,
                 Money, Changed));
 
-            Demands.Add(PeaceTermVM.Header("ASKER VE ESİRLER"));
-            Demands.Add(new PeaceTermVM("Asker (garnizonlarından)", PeaceTreatyRules.TroopSteps(PeaceTreaties.TroopsAvailable(_enemy)), () => _terms.Troops,
+            Demands.Add(StepRowVM.Header("ASKER VE ESİRLER"));
+            Demands.Add(new StepRowVM("Asker (garnizonlarından)", PeaceTreatyRules.TroopSteps(PeaceTreaties.TroopsAvailable(_enemy)), () => _terms.Troops,
                 v => _terms.Troops = v, v => v == 0 ? "yok" : v + " asker", Changed));
             int ours = PeaceTreaties.OurLordsHeld(_enemy).Count;
-            Demands.Add(new PeaceTermVM("Esir lordlarımızı bıraksınlar (" + ours + ")", ours > 0 ? Toggle : new List<int> { 0 },
+            Demands.Add(new StepRowVM("Esir lordlarımızı bıraksınlar (" + ours + ")", ours > 0 ? Toggle : new List<int> { 0 },
                 () => _terms.ReleaseOurs ? 1 : 0, v => _terms.ReleaseOurs = v == 1, YesNo, Changed));
 
-            Demands.Add(PeaceTermVM.Header("TOPRAK (sınırına en yakınlar)"));
+            Demands.Add(StepRowVM.Header("TOPRAK (sınırına en yakınlar)"));
             foreach (Town town in PeaceTreaties.FiefsOnTable(_enemy))
             {
                 string id = town.Settlement.StringId;
-                Demands.Add(new PeaceTermVM((town.IsTown ? "Şehir: " : "Kale: ") + town.Name, Toggle, () => _terms.Fiefs.Contains(id) ? 1 : 0,
+                Demands.Add(new StepRowVM((town.IsTown ? "Şehir: " : "Kale: ") + town.Name, Toggle, () => _terms.Fiefs.Contains(id) ? 1 : 0,
                     v =>
                     {
                         if (v == 1) _terms.Fiefs.Add(id);
@@ -88,21 +88,21 @@ namespace CheatMenu.UI.ViewModels
                     }, YesNo, Changed));
             }
 
-            Demands.Add(PeaceTermVM.Header("ANLAŞMALAR"));
+            Demands.Add(StepRowVM.Header("ANLAŞMALAR"));
             Hero hostage = PeaceTreaties.HostageCandidate(state, _enemy);
-            Demands.Add(new PeaceTermVM(hostage != null ? "Rehine: " + hostage.Name : "Rehine (verecek kimse yok)", hostage != null ? Toggle : new List<int> { 0 },
+            Demands.Add(new StepRowVM(hostage != null ? "Rehine: " + hostage.Name : "Rehine (verecek kimse yok)", hostage != null ? Toggle : new List<int> { 0 },
                 () => _terms.Hostage ? 1 : 0, v => _terms.Hostage = v == 1, YesNo, Changed));
             if (Bundle.DiplomacyCompat.IsAvailable)
-                Demands.Add(new PeaceTermVM("Saldırmazlık anlaşması", PeaceTreatyRules.PactLevels.ToList(), () => _terms.PactDays, v => _terms.PactDays = v,
+                Demands.Add(new StepRowVM("Saldırmazlık anlaşması", PeaceTreatyRules.PactLevels.ToList(), () => _terms.PactDays, v => _terms.PactDays = v,
                     v => v == 0 ? "yok" : v + " gün", Changed));
-            Demands.Add(new PeaceTermVM("Ticaret anlaşması", Toggle, () => _terms.Trade ? 1 : 0, v => _terms.Trade = v == 1, YesNo, Changed));
-            Demands.Add(new PeaceTermVM("İttifak", Toggle, () => _terms.Alliance ? 1 : 0, v => _terms.Alliance = v == 1, YesNo, Changed));
+            Demands.Add(new StepRowVM("Ticaret anlaşması", Toggle, () => _terms.Trade ? 1 : 0, v => _terms.Trade = v == 1, YesNo, Changed));
+            Demands.Add(new StepRowVM("İttifak", Toggle, () => _terms.Alliance ? 1 : 0, v => _terms.Alliance = v == 1, YesNo, Changed));
 
-            Offers.Add(new PeaceTermVM("Altın ver", WithCurrent(PeaceTreatyRules.GiftSteps(Hero.MainHero.Gold), _terms.Gift), () => _terms.Gift, v => _terms.Gift = v,
+            Offers.Add(new StepRowVM("Altın ver", WithCurrent(PeaceTreatyRules.GiftSteps(Hero.MainHero.Gold), _terms.Gift), () => _terms.Gift, v => _terms.Gift = v,
                 Money, Changed));
-            Offers.Add(new PeaceTermVM("Haraç öde", tribute, () => _terms.Pay, v => _terms.Pay = v, PeaceTreaties.TributeText, Changed));
+            Offers.Add(new StepRowVM("Haraç öde", tribute, () => _terms.Pay, v => _terms.Pay = v, PeaceTreaties.TributeText, Changed));
             int theirs = PeaceTreaties.TheirLordsHeld(_enemy).Count;
-            Offers.Add(new PeaceTermVM("Esirlerini bırak (" + theirs + ")", theirs > 0 ? Toggle : new List<int> { 0 },
+            Offers.Add(new StepRowVM("Esirlerini bırak (" + theirs + ")", theirs > 0 ? Toggle : new List<int> { 0 },
                 () => _terms.ReleaseTheirs ? 1 : 0, v => _terms.ReleaseTheirs = v == 1, v => v == 1 ? "BIRAKILIYOR" : "hayır", Changed));
         }
 
@@ -119,7 +119,7 @@ namespace CheatMenu.UI.ViewModels
         public void Refresh()
         {
             IntrigueState state = SchemeEngine.State;
-            foreach (PeaceTermVM term in Demands.Concat(Offers)) term.Update();
+            foreach (StepRowVM term in Demands.Concat(Offers)) term.Update();
             NoteText = _terms.Trade || _terms.Alliance
                 ? "Ticaret ve ittifak barıştan sonra oyunun kendi kuralıyla kurulur; kurulamazsa sonuçta nedeni yazar." : "";
             string blocked = PeaceTreaties.Blocked(state, _enemy);
@@ -185,78 +185,6 @@ namespace CheatMenu.UI.ViewModels
             base.OnFinalize();
             Clear(Demands);
             Clear(Offers);
-        }
-    }
-
-    /// <summary>Masadaki bir şart: ad, değer, azalt/arttır düğmeleri, ağırlığı. Değerler basamaklıdır (aç/kapa iki basamak).</summary>
-    public sealed class PeaceTermVM : TvhViewModel
-    {
-        private readonly List<int> _steps;
-        private readonly Func<int> _get;
-        private readonly Action<int> _set;
-        private readonly Func<int, string> _format;
-        private readonly Action _changed;
-        private string _valueText;
-        private bool _canLess, _canMore, _isOn;
-
-        /// <summary>Bölüm başlığı satırı (düğmesiz).</summary>
-        public static PeaceTermVM Header(string label) => new PeaceTermVM(label);
-
-        private PeaceTermVM(string label)
-        {
-            Label = label;
-            IsHeader = true;
-            _steps = new List<int> { 0 };
-            _get = () => 0;
-            _set = v => { };
-            _format = v => "";
-            _changed = () => { };
-        }
-
-        public PeaceTermVM(string label, List<int> steps, Func<int> get, Action<int> set, Func<int, string> format, Action changed)
-        {
-            Label = label;
-            _steps = steps.Count > 0 ? steps : new List<int> { 0 };
-            _get = get;
-            _set = set;
-            _format = format;
-            _changed = changed;
-            Update();
-        }
-
-        [DataSourceProperty] public string Label { get; }
-        [DataSourceProperty] public bool IsHeader { get; }
-        [DataSourceProperty] public bool IsTerm => !IsHeader;
-        [DataSourceProperty] public float Height => IsHeader ? 34 : 46;
-        [DataSourceProperty] public string ValueText { get => _valueText; set => Set(ref _valueText, value, nameof(ValueText)); }
-        [DataSourceProperty] public bool CanLess { get => _canLess; set => Set(ref _canLess, value, nameof(CanLess)); }
-        [DataSourceProperty] public bool CanMore { get => _canMore; set => Set(ref _canMore, value, nameof(CanMore)); }
-        /// <summary>Şart masada (değeri sıfırdan büyük): değer altın renkte.</summary>
-        [DataSourceProperty] public bool IsOn { get => _isOn; set => Set(ref _isOn, value, nameof(IsOn)); }
-        [DataSourceProperty] public bool IsOff => !IsOn;
-
-        private int Index => Math.Max(0, _steps.IndexOf(_get()));
-
-        public void Update()
-        {
-            if (IsHeader) return;
-            int value = _get();
-            ValueText = _format(value);
-            CanLess = Index > 0;
-            CanMore = Index < _steps.Count - 1;
-            IsOn = value > 0;
-            OnPropertyChanged(nameof(IsOff));
-        }
-
-        public void ExecuteLess() => Step(-1);
-
-        public void ExecuteMore() => Step(1);
-
-        private void Step(int delta)
-        {
-            int next = SchemeMath.Clamp(Index + delta, 0, _steps.Count - 1);
-            _set(_steps[next]);
-            _changed();
         }
     }
 }

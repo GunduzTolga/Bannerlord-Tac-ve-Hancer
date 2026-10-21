@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Library;
 
 namespace CheatMenu.Bundle
@@ -287,6 +288,109 @@ namespace CheatMenu.Bundle
                 }
             }
             return null;
+        }
+
+        // ---- Krallık sekmesi: Diplomacy'nin altın bağışı, fief verme ve fief iadesi (kuralları ve ilişki hesapları onun) ----
+
+        private static MethodInfo Static(string type, string method, int parameters) =>
+            AccessTools.TypeByName(type)?.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                .FirstOrDefault(m => m.Name == method && m.GetParameters().Length == parameters);
+
+        /// <summary>
+        /// Klana altın bağışlar: Diplomacy'nin bağış penceresinin kendi işlemi (altın klanın komutanlarına paylaşılır, liderle ilişki,
+        /// Cömert/Hesapçı izi). Bağışlandıysa true.
+        /// </summary>
+        internal static bool DonateGold(Clan clan, int amount)
+        {
+            try
+            {
+                Type type = AccessTools.TypeByName("Diplomacy.ViewModel.DonateGoldVM");
+                if (type == null || clan == null || amount <= 0) return false;
+                object vm = Activator.CreateInstance(type, clan, (Action)(() => { }));
+                Traverse.Create(vm).Property("IntValue").SetValue(amount);
+                Invoke(vm, "ExecutePropose");
+                (vm as ViewModel)?.OnFinalize();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy gold donation failed: " + ex);
+                return false;
+            }
+        }
+
+        /// <summary>null: bu klana fief verilebilir; değilse Diplomacy'nin nedeni (kendi klanın, hükümdar değilsin, paralı, fiefin yok).</summary>
+        internal static string GrantFiefBlocked(Clan clan)
+        {
+            try
+            {
+                MethodInfo can = Static("Diplomacy.Actions.GrantFiefAction", "CanGrantFief", 2);
+                if (can == null) return "Diplomacy'nin fief verme kuralı bulunamadı";
+                object[] args = { clan, null };
+                return (bool)can.Invoke(null, args) ? null : args[1] as string ?? "Verilemez";
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy grant fief check failed: " + ex);
+                return "Diplomacy'nin kuralına ulaşılamadı";
+            }
+        }
+
+        /// <summary>Fief verilirse alanın liderleyle ilişki artışı (Diplomacy'nin önizlemesi); okunamazsa -1.</summary>
+        internal static int GrantFiefPreview(Settlement settlement, Hero hero)
+        {
+            try
+            {
+                return Static("Diplomacy.Actions.GrantFiefAction", "PreviewPositiveRelationChange", 2)?.Invoke(null, new object[] { settlement, hero }) is int value ? value : -1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>Fiefi klana verir (Diplomacy: ilişki, daha az fiefi olan klanların kıskançlığı, iz).</summary>
+        internal static void GrantFief(Settlement settlement, Clan clan)
+        {
+            MethodInfo apply = Static("Diplomacy.Actions.GrantFiefAction", "Apply", 2)
+                ?? throw new InvalidOperationException("Diplomacy'nin fief verme işlemi bulunamadı");
+            apply.Invoke(null, new object[] { settlement, clan });
+        }
+
+        /// <summary>Bu krallığa iade edilebilecek, ondan alınmış yerlerin (Diplomacy'nin kuralıyla); Diplomacy yoksa boş.</summary>
+        internal static List<Settlement> ReturnableFiefs(Kingdom kingdom)
+        {
+            try
+            {
+                return (Static("Diplomacy.Actions.ReturnFiefAction", "GetReturnableFiefs", 1)?.Invoke(null, new object[] { kingdom }) as IEnumerable)?
+                    .OfType<Settlement>().ToList() ?? new List<Settlement>();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy returnable fiefs failed: " + ex);
+                return new List<Settlement>();
+            }
+        }
+
+        /// <summary>İade edilirse eski sahibiyle ilişki artışı (Diplomacy'nin önizlemesi); okunamazsa -1.</summary>
+        internal static int ReturnFiefPreview(Settlement settlement, Kingdom kingdom)
+        {
+            try
+            {
+                return Static("Diplomacy.Actions.ReturnFiefAction", "PreviewRelationChange", 2)?.Invoke(null, new object[] { settlement, kingdom }) is int value ? value : -1;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>Fiefi alındığı krallığa iade eder (Diplomacy: eski sahibine, ilişki, o krallığın klanlarının onayı, yayılmacılık azalır).</summary>
+        internal static void ReturnFief(Settlement settlement, Kingdom kingdom)
+        {
+            MethodInfo apply = Static("Diplomacy.Actions.ReturnFiefAction", "Apply", 2)
+                ?? throw new InvalidOperationException("Diplomacy'nin iade işlemi bulunamadı");
+            apply.Invoke(null, new object[] { settlement, kingdom });
         }
 
         // ---- Haberci: yüz yüze görüşme Diplomacy'nin habercisiyle (onun bedeli, yolu ve salondaki konuşması) ----

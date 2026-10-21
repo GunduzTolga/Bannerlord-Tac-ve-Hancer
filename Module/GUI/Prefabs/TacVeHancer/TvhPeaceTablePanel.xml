@@ -24,7 +24,7 @@
                       <Children>
                         <ListPanel Id="DemandsList" DataSource="{Demands}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
                           <ItemTemplate>
-                            <TvhPeaceTerm />
+                            <TvhStepRow />
                           </ItemTemplate>
                         </ListPanel>
                       </Children>
@@ -45,7 +45,7 @@
               <Children>
                 <ListPanel DataSource="{Offers}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="6" MarginRight="6" MarginTop="4" MarginBottom="4" StackLayout.LayoutMethod="VerticalTopToBottom">
                   <ItemTemplate>
-                    <TvhPeaceTerm />
+                    <TvhStepRow />
                   </ItemTemplate>
                 </ListPanel>
               </Children>

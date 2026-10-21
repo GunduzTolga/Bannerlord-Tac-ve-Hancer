@@ -88,7 +88,40 @@ namespace CheatMenu.Bundle
             var factions = AccessTools.Method("Diplomacy.GauntletInterfaces.RebelFactionsInterface:ShowInterface");
             if (factions != null)
                 harmony.Patch(factions, prefix: new HarmonyMethod(typeof(BundleShim), nameof(RebellionsWindow)));
+            // Altın bağışı, fief verme, fief iadesi: Diplomacy'nin pencereleri yerine Entrika ekranının Krallık sekmesi (işlemler yine onun).
+            Type screen = typeof(TaleWorlds.ScreenSystem.ScreenBase);
+            var donate = AccessTools.Method("Diplomacy.GauntletInterfaces.DonateGoldInterface:ShowInterface", new[] { screen, typeof(Clan) });
+            if (donate != null)
+                harmony.Patch(donate, prefix: new HarmonyMethod(typeof(BundleShim), nameof(DonateGoldWindow)));
+            var grant = AccessTools.Method("Diplomacy.GauntletInterfaces.GrantFiefInterface:ShowFiefInterface", new[] { screen, typeof(Hero), typeof(Action) });
+            if (grant != null)
+                harmony.Patch(grant, prefix: new HarmonyMethod(typeof(BundleShim), nameof(GrantFiefWindow)));
+            var giveBack = AccessTools.Method("Diplomacy.GauntletInterfaces.ReturnFiefInterface:ShowReturnFiefInterface", new[] { screen, typeof(Kingdom), typeof(Action) });
+            if (giveBack != null)
+                harmony.Patch(giveBack, prefix: new HarmonyMethod(typeof(BundleShim), nameof(ReturnFiefWindow)));
         }
+
+        /// <summary>false: Diplomacy'nin penceresi açılmaz, Krallık sekmesi açılır (bu klan seçili). Krallıkta değilsen onunki açılır.</summary>
+        private static bool RealmTab(Clan clan, string what)
+        {
+            try
+            {
+                if (Clan.PlayerClan?.Kingdom == null || Intrigue.SchemeEngine.State == null) return true;
+                UI.IntrigueScreen.OpenRealm(clan != null && clan.Kingdom == Clan.PlayerClan.Kingdom ? clan : null);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] " + what + " window hook failed: " + ex);
+                return true;
+            }
+        }
+
+        private static bool DonateGoldWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Clan clan) => RealmTab(clan, "donate gold");
+
+        private static bool GrantFiefWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Hero hero, Action refreshAction) => RealmTab(hero?.Clan, "grant fief");
+
+        private static bool ReturnFiefWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom targetKingdom, Action refreshAction) => RealmTab(null, "return fief");
 
         /// <summary>false: Diplomacy'nin penceresi açılmaz, Entrika ekranının İsyanlar sekmesi açılır (Krallık ekranı ya da ansiklopedi kapanır).</summary>
         private static bool RebellionsWindow(TaleWorlds.ScreenSystem.ScreenBase screenBase, Kingdom kingdom)
