@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Savaş Raporu bölümündeki düz satır (ViewModel: WarLineVM): başkomutanın uyarısı, barış durumu, esirler, günlük. -->
+<!-- Savaş Raporu bölümündeki düz satır (ViewModel: WarLineVM): mareşalin uyarısı, barış durumu, esirler, günlük. -->
 <Prefab>
   <Window>
     <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="14" MarginRight="10" MarginBottom="5" Brush="Tvh.Text.SmallTop" Text="@Text" />

@@ -32,7 +32,7 @@ namespace CheatMenu.Intrigue
 
         /// <summary>
         /// null: kişi bir divan koltuğunda çalışabilir. Değilse neden (esir, rehine, vali, parti lideri, genelevde). Casus başı,
-        /// hazinedar, hekim ve kâhya için ortak tanım; başkomutan parti başındayken de çalışır (Marshal), ama esir ya da rehineyken değil.
+        /// hazinedar, hekim ve kâhya için ortak tanım; mareşal parti başındayken de çalışır (Marshal), ama esir ya da rehineyken değil.
         /// </summary>
         public static string SpymasterBusyReason(Hero hero)
         {

@@ -81,7 +81,7 @@ namespace CheatMenu.Intrigue.Core
         public const string Physician = "sonuc_hekim";
         /// <summary>Hekim suikast kurbanını kurtardı.</summary>
         public const string Antidote = "sonuc_panzehir";
-        /// <summary>Divan: başkomutanın savaş meclisi ve erken uyarısı (P2.14).</summary>
+        /// <summary>Divan: mareşalin savaş meclisi ve erken uyarısı (P2.14).</summary>
         public const string Marshal = "sonuc_serdar";
         /// <summary>Divan: kâhyanın uyarısı ve uzaktan emir (P2.15).</summary>
         public const string Steward = "sonuc_kahya";

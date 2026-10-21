@@ -12,14 +12,14 @@ using TaleWorlds.Library;
 namespace CheatMenu.Intrigue
 {
     /// <summary>
-    /// Divan: başkomutan (P2.14, tasarım: docs/superpowers/specs/2026-10-19-p2-divan-baskomutan.md). Savaş meclisi: savaştığın krallıkların gücü
-    /// ve başkomutanın tavsiyesi, düşman orduları (nerede, kaç kişi, nereye), zayıf düşman kaleleri, kendi savunman; şehrine, kalene ya da
-    /// köyüne yürüyen bir orduya erken uyarı. Sayılar başkomutanın gözüyle: Tactics düşükse yanılır; Scouting ne kadar uzağı gördüğünü ve
-    /// uyarının olasılığını belirler. Başkomutan sahadayken de (parti başında) çalışır; yalnızca esirken durur.
+    /// Divan: mareşal (P2.14, tasarım: docs/superpowers/specs/2026-10-19-p2-divan-maresal.md). Savaş meclisi: savaştığın krallıkların gücü
+    /// ve mareşalin tavsiyesi, düşman orduları (nerede, kaç kişi, nereye), zayıf düşman kaleleri, kendi savunman; şehrine, kalene ya da
+    /// köyüne yürüyen bir orduya erken uyarı. Sayılar mareşalin gözüyle: Tactics düşükse yanılır; Scouting ne kadar uzağı gördüğünü ve
+    /// uyarının olasılığını belirler. Mareşal sahadayken de (parti başında) çalışır; yalnızca esirken durur.
     /// </summary>
     public static class Marshal
     {
-        public const string Seat = "başkomutanın";
+        public const string Seat = "mareşalin";
         private static int Today => SchemeFactors.Today;
 
         // ---- Koltuk ----
@@ -40,7 +40,7 @@ namespace CheatMenu.Intrigue
         public static string Blocked(IntrigueState state)
         {
             Hero hero = Current(state);
-            if (hero == null) return "Başkomutanın yok";
+            if (hero == null) return "Mareşalin yok";
             if (hero.IsPrisoner) return hero.Name + " esir; haber alamıyor";
             return SchemeFactors.IsHostageAbroad(hero) ? hero.Name + " rehine olarak yabancı sarayda; haber alamıyor" : null;
         }
@@ -61,22 +61,22 @@ namespace CheatMenu.Intrigue
         public static void Assign(IntrigueState state, Hero hero)
         {
             Council.EnsureFree(state, hero, Seat);
-            if (hero.IsPrisoner) throw new InvalidOperationException(hero.Name + " esir; başkomutan olamaz");
+            if (hero.IsPrisoner) throw new InvalidOperationException(hero.Name + " esir; mareşal olamaz");
             state.MarshalId = hero.StringId;
-            state.AddLog(Today, hero.Name + " başkomutan oldu");
-            MenuUI.Success(hero.Name + " artık başkomutanın");
+            state.AddLog(Today, hero.Name + " mareşal oldu");
+            MenuUI.Success(hero.Name + " artık mareşalin");
         }
 
         public static void Dismiss(IntrigueState state)
         {
-            if (state.MarshalId == null) throw new InvalidOperationException("Başkomutanın yok");
+            if (state.MarshalId == null) throw new InvalidOperationException("Mareşalin yok");
             Hero old = Current(state);
             state.MarshalId = null;
-            state.AddLog(Today, (old?.Name.ToString() ?? "Başkomutan") + " görevden alındı");
-            MenuUI.Success("Başkomutan görevden alındı");
+            state.AddLog(Today, (old?.Name.ToString() ?? "Mareşal") + " görevden alındı");
+            MenuUI.Success("Mareşal görevden alındı");
         }
 
-        // ---- Başkomutanın gözü ----
+        // ---- Mareşalin gözü ----
 
         private static IFaction Mine => Clan.PlayerClan.MapFaction;
 
@@ -85,7 +85,7 @@ namespace CheatMenu.Intrigue
                 .OrderBy(k => k.StringId, StringComparer.Ordinal).ToList();
 
         /// <summary>
-        /// Diplomacy'nin Savaş Raporu'na eklenen satırlar (BundleShim): orta sütunda başlık, solda biz, sağda onlar. Başkomutan yoksa tek satır.
+        /// Diplomacy'nin Savaş Raporu'na eklenen satırlar (BundleShim): orta sütunda başlık, solda biz, sağda onlar. Mareşal yoksa tek satır.
         /// Satırlar kısa tutulur: rapor penceresinin genişliği sabit.
         /// </summary>
         public static List<(string Text, string Ours, string Theirs)> WarReportRows(Kingdom enemy)
@@ -96,14 +96,14 @@ namespace CheatMenu.Intrigue
             Hero marshal = Working(state);
             if (marshal == null)
             {
-                rows.Add((Current(state) == null ? "Başkomutanın yok (Divan'dan ata)" : "Başkomutanın haber alamıyor", "", ""));
+                rows.Add((Current(state) == null ? "Mareşalin yok (Divan'dan ata)" : "Mareşalin haber alamıyor", "", ""));
                 return rows;
             }
             WarLine war = Wars(state, marshal).FirstOrDefault(w => w.Kingdom == enemy);
-            rows.Add(("Başkomutan " + marshal.Name + " (tahmin payı %" + MarshalRules.ErrorPercent(Tactics(marshal)) + ")", "", ""));
+            rows.Add(("Mareşal " + marshal.Name + " (tahmin payı %" + MarshalRules.ErrorPercent(Tactics(marshal)) + ")", "", ""));
             if (war == null) return rows;
             int ourArmies = Mine is Kingdom kingdom ? kingdom.Armies.Count : 0;
-            rows.Add(("Güç (başkomutanın tahmini)", "~" + war.Ours, "~" + war.Theirs));
+            rows.Add(("Güç (mareşalin tahmini)", "~" + war.Ours, "~" + war.Theirs));
             rows.Add(("Sahadaki ordular", ourArmies.ToString(), war.Armies.ToString()));
             List<ArmyLine> threats = Threats(state, marshal).Where(a => a.Party?.MapFaction == enemy).ToList();
             rows.Add(("Topraklarına yürüyen", "", threats.Count == 0 ? "yok" : threats.Count + ", " + MarshalRules.TravelText(threats.Min(a => a.HoursToTarget))));
@@ -113,7 +113,7 @@ namespace CheatMenu.Intrigue
 
         private static bool IsEnemy(IFaction faction) => faction != null && Mine != null && faction != Mine && FactionManager.IsAtWarAgainstFaction(faction, Mine);
 
-        /// <summary>Başkomutanın gördüğü sayı: gerçeği ± hata payı (haftalık sabit), yuvarlanmış.</summary>
+        /// <summary>Mareşalin gördüğü sayı: gerçeği ± hata payı (haftalık sabit), yuvarlanmış.</summary>
         public static int Seen(IntrigueState state, Hero marshal, double value, string key)
         {
             int roll = TreasuryRules.WeeklyRoll(state.Seed, Today / 7, marshal.StringId + "|war|" + key);
@@ -157,7 +157,7 @@ namespace CheatMenu.Intrigue
             public int HoursToTarget;
         }
 
-        /// <summary>Düşman orduları ve ordusuz büyük lord partileri (100+), başkomutanın görüş menzilinde; sana en yakından.</summary>
+        /// <summary>Düşman orduları ve ordusuz büyük lord partileri (100+), mareşalin görüş menzilinde; sana en yakından.</summary>
         public static List<ArmyLine> Armies(IntrigueState state, Hero marshal)
         {
             float range = Range(marshal);
@@ -222,7 +222,7 @@ namespace CheatMenu.Intrigue
             public List<string> Threats = new List<string>();
         }
 
-        /// <summary>Menzildeki düşman şehir ve kaleleri, en zayıftan; sayılar başkomutanın gözüyle.</summary>
+        /// <summary>Menzildeki düşman şehir ve kaleleri, en zayıftan; sayılar mareşalin gözüyle.</summary>
         public static List<FortLine> WeakTargets(IntrigueState state, Hero marshal, int count)
         {
             float range = Range(marshal);
@@ -243,7 +243,7 @@ namespace CheatMenu.Intrigue
                 .OrderBy(f => f.Defense).Take(count).ToList();
         }
 
-        /// <summary>Klanının şehir ve kaleleri (kesin sayılar) ve onlara yürüyen, başkomutanın gördüğü ordular.</summary>
+        /// <summary>Klanının şehir ve kaleleri (kesin sayılar) ve onlara yürüyen, mareşalin gördüğü ordular.</summary>
         public static List<FortLine> OwnDefense(IntrigueState state, Hero marshal)
         {
             List<ArmyLine> threats = Threats(state, marshal);
@@ -291,13 +291,13 @@ namespace CheatMenu.Intrigue
                 if (state.Roll100() > MarshalRules.WarningChance(Scouting(marshal))) continue;
                 marshal.AddSkillXp(DefaultSkills.Scouting, MarshalRules.WarningXp);
                 Settlement fief = threat.Target.IsVillage ? threat.Target.Village.Bound : threat.Target;
-                SchemeOutcomes.Notify(state, "Başkomutanın uyarıyor: " + threat.Target.Name,
+                SchemeOutcomes.Notify(state, "Mareşalin uyarıyor: " + threat.Target.Name,
                     marshal.Name + " gözcülerinden haber aldı: " + threat.Name + " (~" + threat.Men + " kişi) " + Goal(threat)
                     + " geliyor; " + MarshalRules.TravelText(threat.HoursToTarget)
                     + " uzakta.\n\n" + fief.Name + ": garnizon " + (fief.Town?.GarrisonParty?.MemberRoster.TotalManCount ?? 0) + ", milis "
                     + (int)(fief.Town?.Militia ?? 0) + ", erzak " + FoodText(fief) + ".\n\nAsker gönder, garnizonu doldur ya da yardım çağır.",
                     threat.Party.LeaderHero, CardImages.Marshal);
-                state.AddLog(Today, "Başkomutan uyardı: " + threat.Name + ", " + Goal(threat));
+                state.AddLog(Today, "Mareşal uyardı: " + threat.Name + ", " + Goal(threat));
             }
         }
 
@@ -315,7 +315,7 @@ namespace CheatMenu.Intrigue
             if (Current(state) == null)
             {
                 Hero lost = Hero.Find(state.MarshalId);
-                state.AddLog(Today, "Başkomutan koltuğu boşaldı" + (lost != null ? ": " + lost.Name + (lost.IsAlive ? " artık klanında değil" : " öldü") : ""));
+                state.AddLog(Today, "Mareşal koltuğu boşaldı" + (lost != null ? ": " + lost.Name + (lost.IsAlive ? " artık klanında değil" : " öldü") : ""));
                 state.MarshalId = null;
                 return;
             }

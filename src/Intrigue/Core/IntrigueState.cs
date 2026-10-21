@@ -360,7 +360,7 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Klanındaki annelerin (oyunun kendi gebeliği) gebe kaldığı gün: doğuma kalan süre için.</summary>
         public Dictionary<string, int> Conceived = new Dictionary<string, int>();
 
-        // P2.14: divan, başkomutan
+        // P2.14: divan, mareşal
         public string MarshalId;
         /// <summary>Uyarısı sorulmuş "ordu|hedef" çiftleri → yeniden sorulabileceği gün.</summary>
         public Dictionary<string, int> MarshalWarned = new Dictionary<string, int>();
