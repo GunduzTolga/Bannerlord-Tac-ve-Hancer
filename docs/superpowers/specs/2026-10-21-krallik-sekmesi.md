@@ -1,11 +1,12 @@
-# Saray > Krallık: bağış, tımar verme, tımar iadesi
+# Saray > Krallık: bağış, toprak verme, toprak iadesi
 
 21 Ekim 2026. Kullanıcı seçimi: "Diplomacy pencerelerini taşı" — yeni kural gereği (yeni özellik yeni pencere açmaz) Diplomacy'nin kalan
 ayrı pencereleri (altın bağışı, fief verme, fief iadesi) Entrika ekranına. Yeri: **Saray** bölümü, "Saray · Krallık · Divan · Kronik".
 
 **Terim:** "fief" Bannerlord'da bir klanın elindeki şehir ya da kale (köyler ona bağlı gelir). Kullanıcı kelimeyi bilmiyordu ("fief nedir");
-arayüzde önce "toprak" dendi, kullanıcı **tımar**ı seçti ("Tımar daha iyi"): oyunun Türkçesi (Klan > Tımarlar) ve Diplomacy'nin çevirisi
-("Tımar ver") de öyle. Arayüzde "Tımar ver", "İade edilebilir tımarlar", sayılarda "N tımar"; kodda ve Diplomacy'nin tür adlarında Fief kalır.
+arayüzde Barış Masası'ndaki gibi **toprak** deniyor ("Toprak ver", "İade edilebilir topraklar"). "Tımar" da denendi (oyunun Türkçesi öyle),
+kullanıcı "tam olmadı" dedi ve toprakta karar kıldı; Diplomacy'nin Türkçe çevirisindeki "Tımar ver" de "Toprak ver" yapıldı. Kodda ve
+Diplomacy'nin tür adlarında Fief kalır.
 
 ## Ne var
 
@@ -17,7 +18,7 @@ Liste ve ayrıntı, Savaşlar sekmesi gibi:
 - **Sağda seçili klan:** liderin portresi ve bilgisi; altında iki sütun.
   - **Altın bağışla:** miktar basamaklı satır (`TvhStepRow`; basamaklar Barış Masası'ndaki "Altın ver" ile aynı:
     `PeaceTreatyRules.GiftSteps(kesen)`), liderle ilişki önizlemesi, "Bağışla". Herkes yapabilir (hükümdar olmak gerekmez).
-  - **Tımar ver** (yalnızca hükümdar): kendi şehir ve kalelerin, her birinde liderle ilişki önizlemesi; kuşatma altındaki gri.
+  - **Toprak ver** (yalnızca hükümdar): kendi şehir ve kalelerin, her birinde liderle ilişki önizlemesi; kuşatma altındaki gri.
     Onay sorulur (geri alınamaz; daha az yeri olan klanların kıskançlığı yazılır). Paralı klana verilmez.
   - **İade edilebilir yerler** (yalnızca hükümdar): barışta olduğun krallıklardan aldığın, Diplomacy'nin kuralına uyan yerler
     ("Pravend, Vlandia'ya · ilişki +N"). Onay sorulur; eski sahibiyle ilişki, o krallığın öteki klanları memnun, yayılmacılık azalır.

@@ -76,7 +76,7 @@ namespace CheatMenu.UI.ViewModels
             Demands.Add(new StepRowVM("Esir lordlarımızı bıraksınlar (" + ours + ")", ours > 0 ? Toggle : new List<int> { 0 },
                 () => _terms.ReleaseOurs ? 1 : 0, v => _terms.ReleaseOurs = v == 1, YesNo, Changed));
 
-            Demands.Add(StepRowVM.Header("TIMARLAR (sınırına en yakınlar)"));
+            Demands.Add(StepRowVM.Header("TOPRAK (sınırına en yakınlar)"));
             foreach (Town town in PeaceTreaties.FiefsOnTable(_enemy))
             {
                 string id = town.Settlement.StringId;

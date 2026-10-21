@@ -272,7 +272,7 @@ namespace CheatMenu.UI.ViewModels
             Banner = new BannerImageIdentifierVM(kingdom.Banner, true);
             Name = kingdom.Name.ToString();
             Info = kingdom.Leader.Name + "  ·  seninle " + SchemeFactors.Signed(kingdom.Leader.GetRelation(Hero.MainHero)) + "  ·  "
-                + kingdom.Fiefs.Count + " tımar  ·  güç " + ((int)kingdom.CurrentTotalStrength).ToString("N0");
+                + kingdom.Fiefs.Count + " yer  ·  güç " + ((int)kingdom.CurrentTotalStrength).ToString("N0");
             StanceText = KingdomTies.StanceText(kingdom);
             bool war = KingdomTies.AtWar(kingdom);
             IsHostile = war;
