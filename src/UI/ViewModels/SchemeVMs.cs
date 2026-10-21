@@ -173,6 +173,7 @@ namespace CheatMenu.UI.ViewModels
                 if (scheme.Method != SchemeMethod.None) tags += "Yöntem: " + MethodName(scheme.Method) + "   ";
                 if (scheme.FeastRisk) tags += "Ziyafette vurulacak (ifşa cezası 1,5 kat)   ";
                 if (inputs.NetworkSuccess > 0) tags += "Gölge ağı: +" + inputs.NetworkSuccess + " başarı   ";
+                if (inputs.AgentSuccess > 0) tags += "Ajanlar: +" + inputs.AgentSuccess + " başarı   ";
                 if (inputs.HasReport && SchemeRules.IsStrike(scheme.Kind)) tags += "Güncel rapor: +10   ";
                 if (inputs.TargetAlerted) tags += "Hedef tetikte: -15";
                 TagsText = tags.Trim();

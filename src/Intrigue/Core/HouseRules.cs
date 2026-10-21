@@ -200,13 +200,12 @@ namespace CheatMenu.Intrigue.Core
         public static int ManagerPay(int gross) => System.Math.Max(0, gross) * ManagerCutPercent / 100;
 
         /// <summary>
-        /// Yoldaş yöneticiliği kabul eder mi? null: kabul; değilse nedeni. Kendi kararıdır: onurlu biri ya da sana güvenmeyen reddeder,
-        /// zorlamanın yolu yok. Eşin ya da sevgilin bu işe hiç koşulmaz.
+        /// Yoldaş ya da eşin evi işletmeyi kabul eder mi? null: kabul; değilse nedeni. Kendi kararıdır: onurlu biri ya da sana güvenmeyen
+        /// reddeder, zorlamanın yolu yok. Yöneticilik müşteriye çıkmak değildir: eşin de isterse yönetebilir (çalışan olarak asla sorulmaz).
         /// </summary>
-        public static string ManagerRefusal(int age, bool isPartner, int honor, int relation)
+        public static string ManagerRefusal(int age, int honor, int relation)
         {
             if (age < 18) return "yetişkin değil";
-            if (isPartner) return "eşin ya da sevgilin: bu ev ona göre değil";
             if (honor >= 1) return "onurlu biri: böyle bir evi işletmez";
             if (relation < 0) return "sana güvenmiyor (ilişki " + relation + ")";
             return null;

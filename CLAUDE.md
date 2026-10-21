@@ -36,5 +36,7 @@ denetim, git) **ona yaptırma, kendin yap**. Yalnızca oyunda bakılması gereke
 - Yetişkin içerik yalnızca metin ve perde kapanır; 18+ zorunlu. Reddedilenler: cariyelik; esirleri, eşleri ya da adlı karakterleri
   zorla fuhşa sokmak; eşini pazarlamak. Genelev: adlı, gönüllü, ücretli yetişkin çalışanlar. Yoldaşlar da çalışan ya da yönetici
   olabilir (21 Ekim, kullanıcı kararı) ama yalnızca kendi kararıyla: karakterine göre kabul ya da ret eder, istediği hafta bırakır,
-  payı kendi kesesine gider, zorlama yolu yok. Eş, sevgili, esir, aile ve lordlar asla; 19 yaş altı asla. Varsayılan kapalı.
+  payı kendi kesesine gider, zorlama yolu yok. Eş, sevgili, esir, aile ve lordlar çalışan olarak asla; 19 yaş altı asla. Eşin
+  yalnızca yönetici olabilir, o da kendi kararıyla (kullanıcı eşini çalışan olarak sordu; "eşini pazarlamak" çizgisi gereği yapılmadı).
+  Varsayılan kapalı.
 - Commit mesajları İngilizce, açıklayıcı; model adı yazma. Kullanıcı istemedikçe PR açma.

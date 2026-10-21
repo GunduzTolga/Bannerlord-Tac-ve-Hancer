@@ -55,6 +55,7 @@ namespace CheatMenu.Intrigue
                 lines.Add("Her aşamada yakalanma: %" + SchemeMath.Discovery(kind, inputs));
                 if (inputs.HasHook) lines.Add("Üzerinde kozun var: +10 başarı.");
                 if (inputs.NetworkSuccess > 0) lines.Add("Gölge ağı desteği: başarı +" + inputs.NetworkSuccess + ", yakalanma -" + inputs.NetworkDiscovery + ".");
+                if (inputs.AgentSuccess > 0) lines.Add("Ajanların: başarı +" + inputs.AgentSuccess + ", yakalanma -" + inputs.AgentDiscovery + ".");
                 lines.Add(state.HasValidReport(target.StringId, today)
                     ? "Güncel istihbarat raporun var: +10 başarı."
                     : "Güncel raporun yok: önce casusluk yaparsan +10 başarı.");

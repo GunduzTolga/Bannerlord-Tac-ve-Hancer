@@ -253,7 +253,7 @@ ekranına sekme eklemesi gibi). Arka plan, üst şerit, sancak ve "Bitti" oyunun
 - [ ] Vasalken düğme kapalı ("Yalnızca hükümdar ya da bağımsız klan lideri")
 
 ### P2.9 — Saray günü (yeni)
-- [ ] Kendi şehrinde → şehir menüsünde "Divan kur (saray günü)" → üç kart ("DİVAN 1/3"...); dilekçe sahibinin portresi
+- [ ] Kendi şehrinde → şehir menüsünde "Saray günü düzenle (dilekçeler)" → üç kart ("DİVAN 1/3"...); dilekçe sahibinin portresi
 - [ ] Seçenek düğmelerinde sonuçlar yazıyor; parası yetmeyen seçenek kapalı
 - [ ] Seçince şehir ekranında sadakat/güvenlik/refah/erzak değişti; kişilik özelliğine küçük puan (oyunun bildirimi)
 - [ ] Sonda "Divan dağıldı" özeti
