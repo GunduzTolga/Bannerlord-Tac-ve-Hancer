@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Barış Masası'ndaki şart satırı (ViewModel: PeaceTermVM): ad, azalt, değer (masadaysa altın renkte), arttır. Genişliğe uyar (en az 560). -->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="46">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="10" MarginRight="316" Brush="Tvh.Text.Option" Text="@Label" />
+        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="36" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="260" Brush="Tvh.Button.Small" Command.Click="ExecuteLess" IsEnabled="@CanLess" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="-" />
+          </Children>
+        </ButtonWidget>
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="200" HorizontalAlignment="Right" MarginRight="56" Brush="Tvh.Text.GoldCenter" Text="@ValueText" IsVisible="@IsOn" />
+        <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="200" HorizontalAlignment="Right" MarginRight="56" Brush="Tvh.Text.StatLabel" Text="@ValueText" IsVisible="@IsOff" />
+        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="44" SuggestedHeight="36" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="6" Brush="Tvh.Button.Small" Command.Click="ExecuteMore" IsEnabled="@CanMore" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="+" />
+          </Children>
+        </ButtonWidget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -193,9 +193,16 @@ namespace CheatMenu.Intrigue
                 s.Lines.Add("Krallığın bu savaşta tükenmek üzere: barış yakında kaçınılmaz olabilir.");
             if (DiplomacyCompat.Read<bool>(diplomacyReport, "OpponentWarExhaustionIsCritical"))
                 s.Lines.Add(enemy.Name + " tükenmek üzere: barışa zorlanabilirler.");
-            List<string> blockers = DiplomacyCompat.PeaceBlockers(ours, enemy);
-            if (blockers == null) return;
-            s.Lines.Add(blockers.Count == 0 ? "Barış teklif edebilirsin: Krallık > Diplomasi." : "Barış teklifi şimdi olmaz: " + string.Join(" ", blockers));
+            IntrigueState state = IntrigueBehavior.Current?.State;
+            string blocked = PeaceTreaties.Blocked(state, enemy);
+            if (blocked != null)
+            {
+                s.Lines.Add("Barış Masası şimdi kurulmaz: " + blocked + ".");
+                return;
+            }
+            PeaceTreaties.Leverage leverage = PeaceTreaties.LeverageOf(state, enemy);
+            s.Lines.Add("Barış Masası'na oturabilirsin (sağ üstteki düğme). Pazarlık gücün " + leverage.Willingness + ": şartsız barışı kabul etme olasılıkları %"
+                + PeaceTreatyRules.Chance(leverage.Willingness, 0) + ".");
         }
 
         // ---- Esirler ----

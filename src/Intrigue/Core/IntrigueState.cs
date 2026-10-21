@@ -158,6 +158,18 @@ namespace CheatMenu.Intrigue.Core
         public int Until;
     }
 
+    /// <summary>
+    /// Bir krallıkla barış pazarlığının süreleri (PeaceTreatyRules): reddettiği tekliften sonra bekleme, elçisinin yeniden gelebileceği gün,
+    /// elçi gönderdiyse masada elinin zayıf olduğu son gün.
+    /// </summary>
+    public sealed class PeaceTalk
+    {
+        public string KingdomId;
+        public int RefusedUntil;
+        public int EnvoyUntil;
+        public int AskedUntil;
+    }
+
     /// <summary>Rehine anlaşması (P2.10): verdiğin ve/veya tuttuğun misafir. Biri null olabilir (tek taraflı teminat).</summary>
     public sealed class HostageDeal
     {
@@ -374,6 +386,15 @@ namespace CheatMenu.Intrigue.Core
         public List<HostageDeal> Hostages = new List<HostageDeal>();
         /// <summary>Lordlarla iletişim: yanına çağrılanlar ve bir sonraki ziyafetin verilebileceği gün.</summary>
         public List<Summon> Summons = new List<Summon>();
+        public List<PeaceTalk> PeaceTalks = new List<PeaceTalk>();
+
+        /// <summary>Krallıkla barış pazarlığının kaydı; yoksa eklenir.</summary>
+        public PeaceTalk PeaceTalkWith(string kingdomId)
+        {
+            PeaceTalk talk = PeaceTalks.FirstOrDefault(t => t.KingdomId == kingdomId);
+            if (talk == null) PeaceTalks.Add(talk = new PeaceTalk { KingdomId = kingdomId });
+            return talk;
+        }
         public int FeastUntil;
 
         // Genelev (müşteri olarak) ve hastalık
@@ -575,6 +596,9 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("caravanleg").Add("party", l.PartyId).Add("from", l.FromId).Add("to", l.ToId)
                     .Add("profit", I(l.Profit)).Add("days", I(l.Days)).Add("day", I(l.Day)));
             foreach (Summon m in Summons) records.Add(new TextRecord("summon").Add("hero", m.HeroId).Add("until", I(m.Until)));
+            foreach (PeaceTalk t in PeaceTalks)
+                records.Add(new TextRecord("peacetalk").Add("kingdom", t.KingdomId).Add("refused", I(t.RefusedUntil)).Add("envoy", I(t.EnvoyUntil))
+                    .Add("asked", I(t.AskedUntil)));
             foreach (HostageDeal h in Hostages)
                 records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
                     .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
@@ -758,6 +782,13 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "summon":
                         if (Empty(r.Get("hero")) != null) state.Summons.Add(new Summon { HeroId = r.Get("hero"), Until = Int(r, "until") });
+                        break;
+                    case "peacetalk":
+                        if (Empty(r.Get("kingdom")) != null)
+                            state.PeaceTalks.Add(new PeaceTalk
+                            {
+                                KingdomId = r.Get("kingdom"), RefusedUntil = Int(r, "refused"), EnvoyUntil = Int(r, "envoy"), AskedUntil = Int(r, "asked"),
+                            });
                         break;
                     case "hostage":
                         if (Empty(r.Get("kingdom")) == null || (Empty(r.Get("given")) == null && Empty(r.Get("held")) == null)) break;

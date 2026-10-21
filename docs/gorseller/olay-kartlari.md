@@ -49,7 +49,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
 ## Kontrol listesi
 
-`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 49/67 tamamlandı** — 29 adet `★` öncelikli + 20 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
+`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 49/69 tamamlandı** — 29 adet `★` öncelikli + 20 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
 
 | # | Dosya | Nerede görünür | Öncelik | Durum |
 |---|---|---|---|---|
@@ -120,6 +120,8 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 65 | `olay_genelev_adaylar.png` | Genelev: çalışan al, kapıya gelen adaylar | | ⏳ |
 | 66 | `sonuc_genelev_yonetici.png` | Genelev: evi işleten yoldaş (yönetici) | | ⏳ |
 | 67 | `sonuc_genelev_yoldas.png` | Genelev: evdeki yoldaşlar; kendi isteğiyle çalışan ya da ayrılan yoldaş | | ⏳ |
+| 68 | `sonuc_baris_elcisi.png` | Barış Masası: köşeye sıkışan krallığın elçisi barış istiyor; reddedilen teklif | | ⏳ |
+| 69 | `sonuc_baris_antlasmasi.png` | Barış Masası: antlaşma imzalandı (tazminat, kale, şehir, asker) | ★ | ⏳ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -475,6 +477,20 @@ A weathered smuggler holding a lantern at the mouth of a hidden stone tunnel ben
 
 ```
 A long angry line of poor townsfolk with empty baskets outside a bakery at dawn, the baker shaking his head in the doorway, empty bread racks behind him, cold mist, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+### Barış Masası
+
+**68 · `sonuc_baris_elcisi.png`** — barış elçisi
+
+```
+A weary envoy in a travel-stained cloak kneeling before a ruler's high seat in a torchlit hall, holding out a sealed letter, a small chest of coins at his side, guards watching from the shadows, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**69 · `sonuc_baris_antlasmasi.png`** — barış antlaşması
+
+```
+Two rival rulers seated across a heavy oak table inside a large tent at dusk, a scribe pressing a wax seal onto a parchment treaty, a chest of silver and a ring of castle keys laid on the table, their banners on either side, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -1217,4 +1233,24 @@ A Battanian millhouse where farmers argue with a steward over a nearly empty gra
 
 ```
 An Aserai bazaar, an angry crowd haggling at a nearly empty bread stall, a merchant raising his hands, dust and harsh light, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_baris_elcisi_2.png`** · `sonuc_baris_elcisi_3.png` — barış elçisi
+
+```
+A Vlandian herald carrying a white flag of truce riding slowly into an enemy army camp at dawn, soldiers lowering their spears as he passes between the tents, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+An Aserai emissary bowing in a sunlit palace courtyard, servants behind him carrying gift chests and rolled carpets, a ruler listening from a shaded dais, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_baris_antlasmasi_2.png`** · `sonuc_baris_antlasmasi_3.png` — barış antlaşması
+
+```
+Sturgian and Imperial nobles clasping forearms on a wooden river bridge between two waiting armies, a priest holding up the treaty scroll, banners lowered, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A defeated lord handing the keys of a castle gate to a victorious ruler before the castle walls, the old garrison filing out under an overcast sky, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

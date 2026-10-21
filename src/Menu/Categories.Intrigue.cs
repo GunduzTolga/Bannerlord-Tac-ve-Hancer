@@ -80,6 +80,13 @@ namespace CheatMenu.Menu
                         if (!UI.WarReportScreen.Open(k)) MenuUI.Error("Savaş Raporu açılamadı");
                     }), ShowIntrigue))
                 : MenuEntry.Simple("Savaş raporları - " + reports, () => MenuUI.Error(reports)));
+            if (reports == null)
+                entries.Add(MenuEntry.Submenu("Barış Masası...", () => Picker.Pick("Kiminle barış?", wars,
+                    k => k.Name + (PeaceTreaties.Blocked(state, k) is string why ? "  [" + why + "]" : ""),
+                    k => MenuUI.Defer(() =>
+                    {
+                        if (!UI.PeaceTableScreen.Open(k)) MenuUI.Error("Barış Masası açılamadı");
+                    }), ShowIntrigue)));
 
             ShowCategory("Entrika", entries, ShowIntrigue,
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")

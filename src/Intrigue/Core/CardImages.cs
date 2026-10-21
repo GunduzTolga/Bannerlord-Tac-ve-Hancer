@@ -94,6 +94,10 @@ namespace CheatMenu.Intrigue.Core
         public const string SabotageWalls = "sonuc_sabotaj_sur";
         /// <summary>Kışkırtma tuttu: halk meydanda, belki oyunun kendi isyanı.</summary>
         public const string Uprising = "sonuc_isyan";
+        /// <summary>Barış Masası: kaybeden tarafın elçisi barış istiyor.</summary>
+        public const string Envoy = "sonuc_baris_elcisi";
+        /// <summary>Barış Masası: antlaşma imzalandı.</summary>
+        public const string Treaty = "sonuc_baris_antlasmasi";
 
         /// <summary>Aşamalar arası olayların resimleri (IntrigueEvents'teki olay numarasıyla).</summary>
         public static readonly IReadOnlyDictionary<int, string> Events = new Dictionary<int, string>
@@ -137,6 +141,8 @@ namespace CheatMenu.Intrigue.Core
             { SabotageGarrison, Sabotage },
             { SabotageWalls, Sabotage },
             { Uprising, Incite },
+            { Envoy, Messenger },
+            { Treaty, Envoy },
             { "olay_rusvetci_nobetci", "olay_rusvetci_hizmetkar" },
             { "olay_elebasi_yakalandi", "olay_ajan_yakalandi" },
             { "olay_kacakci_tuneli", Sabotage },
@@ -212,7 +218,7 @@ namespace CheatMenu.Intrigue.Core
                          Crisis, WarCouncil, NightHouse, Oath, Courtship, Birth, Betrayal, Divorce, Duel, Legitimize, CourtDay, Hostage,
                          Tail, TailNight, Treasury, Embezzle, Physician, Antidote, Marshal, Steward,
                          BrothelNight, BrothelTroops, BrothelGossip, BrothelRaid, BrothelCandidates, BrothelManager, BrothelCompanion, Illness,
-                         Sabotage, Incite, SabotageFood, SabotageGarrison, SabotageWalls, Uprising,
+                         Sabotage, Incite, SabotageFood, SabotageGarrison, SabotageWalls, Uprising, Envoy, Treaty,
                      })
                 yield return name;
             foreach (string name in Events.Values) yield return name;

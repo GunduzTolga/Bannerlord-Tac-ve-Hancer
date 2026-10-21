@@ -185,6 +185,7 @@ namespace CheatMenu.Tests
             PrisonDeathTests();
             LordContactTests();
             WarReportTests();
+            PeaceTreatyTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -923,6 +924,48 @@ namespace CheatMenu.Tests
         }
 
         /// <summary>Lordlarla iletişim: ziyafet ve yanına çağırma.</summary>
+        private static void PeaceTreatyTests()
+        {
+            int winning = PeaceTreatyRules.Willingness(80, 20, 1.5, 0, true, false);
+            int even = PeaceTreatyRules.Willingness(30, 30, 1.0, 0, false, false);
+            int losing = PeaceTreatyRules.Willingness(10, 70, 0.6, 0, false, false);
+            Check("peace: winning side has leverage", winning > 60 && even < 0 && losing < even);
+            Check("peace: strength ratio is capped", PeaceTreatyRules.Willingness(0, 0, 100, 0, false, false) == 40 - 15);
+            Check("peace: other fronts add up to 3", PeaceTreatyRules.Willingness(0, 0, 1, 9, false, false) == PeaceTreatyRules.Willingness(0, 0, 1, 3, false, false));
+            Check("peace: envoy bonus", PeaceTreatyRules.Willingness(0, 0, 1, 0, false, true) - PeaceTreatyRules.Willingness(0, 0, 1, 0, false, false) == PeaceTreatyRules.AskedBonus);
+            Check("peace: bad ratio input is neutral", PeaceTreatyRules.Willingness(0, 0, double.NaN, 0, true, false) == 15);
+            Check("peace: white peace easy when winning", PeaceTreatyRules.Chance(winning, 0) == 95);
+            Check("peace: castle and some gold still likely when winning", PeaceTreatyRules.Chance(winning, PeaceTreatyRules.FiefWeight(false, false, false) + PeaceTreatyRules.GoldWeight(12500, 50000)) >= 80);
+            Check("peace: greed lowers the chance", PeaceTreatyRules.Chance(winning, PeaceTreatyRules.FiefWeight(true, true, false) * 2 + 50) < 30);
+            Check("peace: chance bounds", PeaceTreatyRules.Chance(-500, 0) == 3 && PeaceTreatyRules.Chance(500, 0) == 95);
+            Check("peace: gold weight is a share of the purse", PeaceTreatyRules.GoldWeight(25000, 50000) == 50 && PeaceTreatyRules.GoldWeight(0, 50000) == 0);
+            Check("peace: poor ruler uses the minimum purse", PeaceTreatyRules.GoldWeight(2000, 100) == 10);
+            Check("peace: tribute is lighter than the same lump sum", PeaceTreatyRules.TributeWeight(250, 60, 50000) < PeaceTreatyRules.GoldWeight(15000, 50000));
+            Check("peace: town weighs more than castle", PeaceTreatyRules.FiefWeight(true, false, false) > PeaceTreatyRules.FiefWeight(false, false, false));
+            Check("peace: last fief is dear", PeaceTreatyRules.FiefWeight(false, false, true) - PeaceTreatyRules.FiefWeight(false, false, false) == 50);
+            Check("peace: troops weigh by four", PeaceTreatyRules.TroopWeight(100) == 25 && PeaceTreatyRules.TroopWeight(-5) == 0);
+            Check("peace: gifts relieve", PeaceTreatyRules.GiftRelief(10000, 50000) == 16 && PeaceTreatyRules.TributeRelief(100, 60, 50000) == 6);
+            List<int> gold = PeaceTreatyRules.GoldSteps(100000);
+            Check("peace: gold steps", gold.SequenceEqual(new[] { 0, 5000, 15000, 30000, 50000, 75000 }));
+            Check("peace: tiny purse has no gold step", PeaceTreatyRules.GoldSteps(600).SequenceEqual(new[] { 0 }) && PeaceTreatyRules.GoldSteps(5000).SequenceEqual(new[] { 0, 500, 1500, 2500, 3500 }));
+            Check("peace: gift steps fit your purse", PeaceTreatyRules.GiftSteps(12000).SequenceEqual(new[] { 0, 1000, 5000, 10000 }));
+            Check("peace: troop steps fit the space", PeaceTreatyRules.TroopSteps(70).SequenceEqual(new[] { 0, 20, 50, 70 })
+                && PeaceTreatyRules.TroopSteps(0).SequenceEqual(new[] { 0 }) && PeaceTreatyRules.TroopSteps(500).Last() == 150);
+            Check("peace: envoy only when they are losing", PeaceTreatyRules.EnvoyChance(20) == 0 && PeaceTreatyRules.EnvoyChance(30) == 10 && PeaceTreatyRules.EnvoyChance(200) == 45);
+            int offer = PeaceTreatyRules.EnvoyGold(winning + PeaceTreatyRules.AskedBonus, 100000);
+            Check("peace: envoy brings gold it would accept", offer > 0 && PeaceTreatyRules.Chance(winning + PeaceTreatyRules.AskedBonus, PeaceTreatyRules.GoldWeight(offer, 100000)) >= PeaceTreatyRules.EnvoyOfferChance);
+            Check("peace: envoy of an even war brings nothing", PeaceTreatyRules.EnvoyGold(even, 100000) == 0);
+            Check("peace: tribute levels start at none", PeaceTreatyRules.TributeLevels[0].Daily == 0 && PeaceTreatyRules.TributeLevels.Count == 5);
+            var state = new IntrigueState();
+            PeaceTalk talk = state.PeaceTalkWith("vlandia");
+            talk.RefusedUntil = 12;
+            talk.EnvoyUntil = 40;
+            talk.AskedUntil = 9;
+            Check("peace: talk is found again", state.PeaceTalkWith("vlandia") == talk && state.PeaceTalks.Count == 1);
+            PeaceTalk back = IntrigueState.Parse(state.Write()).PeaceTalkWith("vlandia");
+            Check("peace: talks are saved", back.RefusedUntil == 12 && back.EnvoyUntil == 40 && back.AskedUntil == 9);
+        }
+
         private static void WarReportTests()
         {
             var even = WarReportRules.Bar(0, 0, 100);

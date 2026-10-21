@@ -34,6 +34,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public MBBindingList<WarSectionVM> LeftSections { get; }
         [DataSourceProperty] public MBBindingList<WarSectionVM> RightSections { get; }
         [DataSourceProperty] public string CloseText => "Kapat";
+        [DataSourceProperty] public string PeaceText => "Barış Masası...";
 
         public void Refresh()
         {
@@ -57,6 +58,12 @@ namespace CheatMenu.UI.ViewModels
         private static Color ColorOf(Kingdom kingdom) => Color.FromUint(WarReportRules.Readable(kingdom.Color, kingdom.Color2));
 
         public void ExecuteClose() => _close();
+
+        /// <summary>Barış Masası raporun üstünde açılır; barış imzalanırsa rapor da kapanır.</summary>
+        public void ExecutePeace() => Menu.MenuUI.Defer(() =>
+        {
+            if (!PeaceTableScreen.Open(_enemy, null, TaleWorlds.ScreenSystem.ScreenManager.TopScreen)) Menu.MenuUI.Error("Barış Masası açılamadı");
+        });
 
         public override void OnFinalize()
         {

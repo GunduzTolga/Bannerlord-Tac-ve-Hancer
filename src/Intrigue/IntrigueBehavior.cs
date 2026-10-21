@@ -66,6 +66,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Entrika haftalık (eşin)", SpouseLife.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (rehineler)", Hostages.Weekly);
                 MenuUI.SafeRun("Entrika haftalık (casus başı görevi)", SpymasterMissions.Weekly);
+                MenuUI.SafeRun("Barış Masası (elçiler)", PeaceTreaties.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hazinedar)", Treasury.Weekly);
                 MenuUI.SafeRun("Divan haftalık (hekim)", Physician.Weekly);
                 MenuUI.SafeRun("Divan haftalık (mareşal)", Marshal.Weekly);
