@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <!-- Taç ve Hançer: Türkçe çeviri (21 Ekim 2026); kimlikler RU dosyasıyla ve DLL'deki metinlerle aynı. -->
+  <strings>
+    <string id="scx_base_none" text="Taban: yok" />
+    <string id="scx_base_scar" text="Taban: yara izi" />
+    <string id="scx_base_tattoo" text="Taban: dövme / makyaj" />
+    <string id="scx_blind_l" text="(sol göz kör)" />
+    <string id="scx_blind_r" text="(sağ göz kör)" />
+    <string id="scx_e_bigger" text="Büyüt" />
+    <string id="scx_e_color" text="Renk" />
+    <string id="scx_e_denser" text="Güçlendir" />
+    <string id="scx_e_lighter" text="Zayıflat" />
+    <string id="scx_e_mirror" text="Aynala" />
+    <string id="scx_e_mirrored" text="aynalı" />
+    <string id="scx_e_opacity" text="Belirginlik" />
+    <string id="scx_e_orig" text="Özgün" />
+    <string id="scx_e_reset" text="Sıfırla" />
+    <string id="scx_e_rotl" text="Çevir -" />
+    <string id="scx_e_rotr" text="Çevir +" />
+    <string id="scx_e_size" text="Boyut" />
+    <string id="scx_e_smaller" text="Küçült" />
+    <string id="scx_failed" text="Birleştirilemedi, kayda bak" />
+    <string id="scx_loading" text="Dövme yükleniyor..." />
+    <string id="scx_notscar" text="Ek yara izleri yalnızca tabandaki bir yara iziyle birleşir" />
+    <string id="scx_same" text="Bu yara izi zaten taban" />
+    <string id="scx_tab_makeup" text="Makyaj" />
+    <string id="scx_tab_paint" text="Boya" />
+    <string id="scx_tab_scars" text="Yara izleri" />
+    <string id="scx_tab_skin" text="Ten" />
+    <string id="scx_title" text="Ek yara izleri" />
+  </strings>
+</base>

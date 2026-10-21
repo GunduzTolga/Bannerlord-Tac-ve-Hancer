@@ -68,6 +68,11 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Paketli modların Türkçesi (21 Ekim, kullanıcı seçimi "Kalan modları Türkçeleştir"):** DLX Hair Layers (80 metin) ve Extra Complexion
+  (27) hiç Türkçe değildi, çevrildi (`third_party/<mod>/ModuleData/Languages/TR`). Companion Autonomy (143) ve Regard and Standing (322)
+  zaten tamdı; Women in Calradia'nın "eksik" 13 metni oyunun kendi kimlikleri (oyunun Türkçesi çeviriyor). Böylece paketli modların
+  hepsi Türkçe (AutoTrader ve Diplomacy dahil). Denetim betiği bulutta: DLL'leri ilspycmd ile açıp `{=id}` ve `T("id", "...")`
+  metinlerini dil dosyalarıyla karşılaştırıyor.
 - **Saray > Ticaret: AutoTrader'ın ayarları (21 Ekim, kullanıcı isteği "AutoTrader yapalım"):** Alt+A artık AutoTrader'ın penceresi yerine
   Entrika > Saray > Ticaret'i açıyor (`BundleShim` ön yaması, 1,5 sn bekleme). Bütün ayarları -/+ satırlarla (`TradeVM`, `TvhTradePanel`;
   basamaklar ve hazır ayarlar `TradeSettingsRules`, testli; okuma/yazma `AutoTraderCompat`, her değişiklikte onun `Save`'i). AutoTrader'ın

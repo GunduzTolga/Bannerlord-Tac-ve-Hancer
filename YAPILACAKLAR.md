@@ -66,6 +66,9 @@ Diplomacy'nin çevrilmemiş 118 metni ve mod yükleme uyarıları Türkçe; "tı
 - [ ] Mod Seçenekleri > Diplomacy: toprak iadesi, ittifak tehdit eşiği, isyana destekçi kazanma ayarları Türkçe mi
 - [ ] İsyan grubundayken klan liderine "Destekçi Kazan": konuşma satırları Türkçe mi, yazılar taşıyor mu
 - [ ] Hâlâ İngilizce kalan bir Diplomacy yazısı görürsen ekran görüntüsü at
+- [ ] **DLX saç katmanları ve Extra Complexion da Türkçe** (21 Ekim): karakter düzenleyicide "Saç Katmanları" paneli (Kakül, Tutamlar,
+      Saç modelleri, Takımlar) ve "Ek yara izleri" paneli (Yara izleri, Makyaj, Boya, Ten); envanterde "Kaskın altında saç". Yazılar
+      dar düğmelere sığıyor mu (taşan varsa ekran görüntüsü at, kısaltırım)
 - [ ] **Oyunun kendi "tımar"ı da "toprak":** Klan ekranında sekme "Topraklar"; Krallık ekranındaki sekme, ansiklopedi ve ipuçlarında da
       "Tımar" kalmamış olmalı (bütün oyun metinleri `FiefWordPatch`'ten geçiyor). Bir yerde hâlâ "tımar" görürsen ekran görüntüsü at;
       açılışta "uyuşmayan yama kapatıldı: FiefWordPatch" mesajı çıkarsa da yaz

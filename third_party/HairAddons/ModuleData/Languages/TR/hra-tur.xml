@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Türkçe" />
+  </tags>
+  <!-- Taç ve Hançer: Türkçe çeviri (21 Ekim 2026); kimlikler RU dosyasıyla ve DLL'deki metinlerle aynı. -->
+  <strings>
+    <string id="hra_c0" text="siyah" />
+    <string id="hra_c1" text="koyu kestane" />
+    <string id="hra_c2" text="kestane" />
+    <string id="hra_c3" text="kızıl kestane" />
+    <string id="hra_c4" text="açık kumral" />
+    <string id="hra_c5" text="koyu sarı" />
+    <string id="hra_c6" text="sarı" />
+    <string id="hra_c7" text="platin" />
+    <string id="hra_c8" text="bakır" />
+    <string id="hra_c9" text="kızıl" />
+    <string id="hra_c10" text="kır" />
+    <string id="hra_c11" text="beyaz" />
+    <string id="hra_clear" text="Hepsini kaldır" />
+    <string id="hra_color" text="Renk" />
+    <string id="hra_fit" text="Oturtma" />
+    <string id="hra_h_back" text="Geri (enseye)" />
+    <string id="hra_h_bigger" text="Büyüt" />
+    <string id="hra_h_cooler" text="Soğut (küllü)" />
+    <string id="hra_h_darker" text="Koyulaştır" />
+    <string id="hra_h_down" text="Aşağı" />
+    <string id="hra_h_fwd" text="İleri (yüze)" />
+    <string id="hra_h_left" text="Sola" />
+    <string id="hra_h_lighter" text="Açıklaştır" />
+    <string id="hra_h_link" text="Kahramanın saçıyla aynı renk" />
+    <string id="hra_h_mirror" text="Aynala" />
+    <string id="hra_h_notint" text="Boyasız: dokunun kendi rengi" />
+    <string id="hra_h_reset" text="Konumu sıfırla" />
+    <string id="hra_h_right" text="Sağa" />
+    <string id="hra_h_smaller" text="Küçült" />
+    <string id="hra_h_tiltb" text="Geriye eğ" />
+    <string id="hra_h_tiltf" text="Öne eğ" />
+    <string id="hra_h_toall" text="Bu rengi bütün parçalara ver" />
+    <string id="hra_h_up" text="Yukarı" />
+    <string id="hra_h_warmer" text="Isıt (kızıla)" />
+    <string id="hra_helmslot" text="Hairstyles_dlx_HelmSlot açık: onun saç parçaları DLX Hair Layers&#x27;ta zaten var. Kask eşyalarına ihtiyacın yoksa HelmSlot&#x27;u kapat." />
+    <string id="hra_info_empty" text="Sol tık: ekle (sekme başına en fazla 2), sağ tık: kaldır" />
+    <string id="hra_inv_auto" text="otomatik" />
+    <string id="hra_inv_bangs" text="Kakül" />
+    <string id="hra_inv_button" text="Kaskın altında saç" />
+    <string id="hra_inv_close" text="Kapat" />
+    <string id="hra_inv_hide" text="gizle" />
+    <string id="hra_inv_locks" text="Tutamlar" />
+    <string id="hra_inv_nohelmet" text="Kask takılı değil" />
+    <string id="hra_inv_show" text="göster" />
+    <string id="hra_inv_style" text="Saç modeli" />
+    <string id="hra_match" text="saçla aynı" />
+    <string id="hra_mirrored" text="aynalı" />
+    <string id="hra_none" text="Yok" />
+    <string id="hra_note_author" text="Kendi dokusu: kel bir tabanda ya da benzer parçalarla en iyi görünür" />
+    <string id="hra_p_b" text="+S" />
+    <string id="hra_p_bald" text="kel" />
+    <string id="hra_p_base" text="taban saç" />
+    <string id="hra_p_beard" text="sakallı" />
+    <string id="hra_p_defname" text="Takım" />
+    <string id="hra_p_delask" text="Takımı sil" />
+    <string id="hra_p_delete" text="Sil" />
+    <string id="hra_p_deltitle" text="Takımı sil" />
+    <string id="hra_p_empty" text="Kaydedecek bir şey yok: önce parça ekle" />
+    <string id="hra_p_f" text="K" />
+    <string id="hra_p_female" text="kadın" />
+    <string id="hra_p_help" text="Sol tık: uygula (tabanla birlikte: saç, sakal, renk), sağ tık: sil. Üzerine gel: içindekiler. +S: sakallı." />
+    <string id="hra_p_m" text="E" />
+    <string id="hra_p_male" text="erkek" />
+    <string id="hra_p_nametext" text="Bir ad gir (olduğu gibi bırakabilirsin):" />
+    <string id="hra_p_nametitle" text="Takımın adı" />
+    <string id="hra_p_nobase" text="Taban saç uygulanmadı: takım başka bir cinsiyet ya da ırk için yapılmış" />
+    <string id="hra_p_nohair" text="Takımdaki taban saç bu kahramanda bulunamadı (başka cinsiyet/ırk ya da o saçın modu kurulu değil)" />
+    <string id="hra_p_pick" text="Önce seçmek için bir takıma tıkla" />
+    <string id="hra_p_rename" text="Yeniden adlandır" />
+    <string id="hra_p_save" text="Şu ankini kaydet" />
+    <string id="hra_p_tabfemale" text="Kadın" />
+    <string id="hra_p_tabmale" text="Erkek" />
+    <string id="hra_t_light" text="açıklık" />
+    <string id="hra_t_warm" text="sıcaklık" />
+    <string id="hra_tab_bangs" text="Kakül" />
+    <string id="hra_tab_locks" text="Tutamlar" />
+    <string id="hra_tab_presets" text="Takımlar" />
+    <string id="hra_tab_styles" text="Saç modelleri" />
+    <string id="hra_texture" text="boyasız" />
+    <string id="hra_title" text="Saç Katmanları" />
+  </strings>
+</base>
