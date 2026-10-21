@@ -613,13 +613,8 @@ namespace CheatMenu.UI
                 .ToList();
             options.Add(new CardOption
             {
-                Label = "Hizmetine davet et (%" + Recruitment.Chance(hero) + "): kabul ederse klanına katılır",
-                DisabledHint = Recruitment.Blocked(state, prisoner),
-                Apply = () =>
-                {
-                    Recruitment.Offer(SchemeEngine.State, prisoner);
-                    afterwards?.Invoke();
-                },
+                Label = "Kaderini belirle: hizmetine davet et ya da gizlice öldürt...",
+                Apply = () => MenuUI.Defer(() => ShowPrisonerFate(prisoner, afterwards)),
             });
             var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
             options.Add(cancel);
@@ -627,8 +622,74 @@ namespace CheatMenu.UI
                 hero.Name + " (" + SchemeFactors.Affiliation(hero) + ") " + prisoner.WhereText.ToLower(Tr.Culture) + ".\n\n"
                 + "Konuşursa hakkında rapor alırsın; belki bir sırrını, belki efendisi hakkında bilgi de kaçırır. "
                 + "Aynı esir " + InterrogationRules.CooldownDays + " günde bir sorgulanabilir.\n\n"
-                + "Ya da hizmetine davet et: kendi isteğiyle kabul ederse klanına katılır, eski klanı bunu ihanet sayar. "
-                + "Reddederse esir kalır (fidye oyunun kendi sistemi). Klan liderleri ve evliler kabul etmez.",
+                + "Ya da kaderini belirle: hizmetine davet et ya da açık idamın ağır bedelini ödemeden gizlice öldürt.",
+                CardImages.Interrogation, hero, options, cancel, null);
+        }
+
+        /// <summary>Esirin kaderi: hizmete davet ya da gizli infaz.</summary>
+        public static void ShowPrisonerFate(Interrogation.Prisoner prisoner, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero hero = prisoner.Hero;
+            var back = new CardOption { Label = "Geri", Apply = () => MenuUI.Defer(() => ShowInterrogation(prisoner, afterwards)) };
+            var options = new List<CardOption>
+            {
+                new CardOption
+                {
+                    Label = "Hizmetine davet et (%" + Recruitment.Chance(hero) + "): kabul ederse klanına katılır",
+                    DisabledHint = Recruitment.Blocked(state, prisoner),
+                    Apply = () =>
+                    {
+                        Recruitment.Offer(SchemeEngine.State, prisoner);
+                        afterwards?.Invoke();
+                    },
+                },
+                new CardOption { Label = "Gizlice öldürt...", Apply = () => MenuUI.Defer(() => ShowSecretDeath(prisoner, afterwards)) },
+                back,
+            };
+            Show("ESİR", "Kaderi: " + hero.Name,
+                "Hizmetine davet et: kendi isteğiyle kabul ederse klanına katılır, eski klanı bunu ihanet sayar. Reddederse esir kalır "
+                + "(fidye oyunun kendi sistemi). Klan liderleri ve evliler kabul etmez.\n\n"
+                + "Gizlice öldürt: ölümü hastalık, kaza ya da firar gibi görünür. Açık idamın lordlarla ilişki kaybı olmaz; ama gardiyanlar "
+                + "konuşabilir.",
+                CardImages.Interrogation, hero, options, back, null);
+        }
+
+        /// <summary>Gizli infaz: yöntem seçimi, şüphe ve ifşa olasılıkları.</summary>
+        public static void ShowSecretDeath(Interrogation.Prisoner prisoner, Action afterwards)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero hero = prisoner.Hero;
+            Hero spymaster = SchemeFactors.Spymaster(state);
+            bool byYou = spymaster == null || spymaster.IsPrisoner || SchemeFactors.Roguery(spymaster) <= Hero.MainHero.GetSkillValue(DefaultSkills.Roguery);
+            var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
+            List<CardOption> options = PrisonDeathRules.Methods
+                .Select(method => new CardOption
+                {
+                    Label = PrisonDeaths.OptionLabel(state, prisoner, method),
+                    DisabledHint = PrisonDeaths.Blocked(state, prisoner, method),
+                    Apply = () =>
+                    {
+                        string result = PrisonDeaths.Execute(SchemeEngine.State, prisoner, method);
+                        afterwards?.Invoke();
+                        var ok = new CardOption { Label = "Tamam", Apply = () => { } };
+                        MenuUI.Defer(() => Show("GİZLİ İNFAZ", hero.Name + " öldü", result, CardImages.ForPrisonDeath(method), null,
+                            new List<CardOption> { ok }, ok, null));
+                    },
+                })
+                .ToList();
+            options.Add(cancel);
+            int days = PrisonDeaths.DaysHeld(hero);
+            Show("ESİR", "Gizli infaz: " + hero.Name,
+                hero.Name + " " + prisoner.WhereText.ToLower(Tr.Culture) + ", " + days + " gündür esir. İşi "
+                + (byYou ? "sen" : "casus başın " + spymaster.Name) + " ayarlıyor (Roguery " + Interrogation.Roguery(state) + ").\n\n"
+                + "Açık idamın lordlarla ilişki kaybı olmaz; ama gardiyanlar konuşabilir:\n"
+                + "· Şüphe: " + SchemeFactors.Affiliation(hero) + " seni görür (klanıyla -" + PrisonDeathRules.SuspicionClanPenalty
+                + ", hükümdarıyla -" + PrisonDeathRules.SuspicionRulerPenalty + ").\n"
+                + "· İfşa: herkes bilir; bir suikastin izi kadar ağır (klanı, krallığı, onurlu lordlar, suç, kan davası).\n"
+                + "Her durumda Merhamet düşer.\n\n"
+                + "Önemli esirin ölümü daha çok dikkat çeker; yeni yakalanan birinin (" + PrisonDeathRules.FreshCaptiveDays + " günden az) ölümü "
+                + "şüpheli bulunur; partindeki esiri askerlerin görür. Roguery yükseldikçe ikisi de düşer.",
                 CardImages.Interrogation, hero, options, cancel, null);
         }
 

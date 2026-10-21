@@ -41,6 +41,16 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Esiri gizlice öldürt (21 Ekim, yeni)
+- [ ] Klan > Entrika > Esirler: her esirde kırmızı **Gizlice öldürt...** düğmesi → kart: işi kim ayarlıyor (Roguery), üç yöntem
+      (Zindan hastalığı 1.500 / Kaza 1.000 / Kaçarken öldürüldü 500), her birinde "şüphe %X, ifşa %Y"
+- [ ] Esir kartı > **Kaderini belirle...** > Hizmetine davet et ve Gizlice öldürt aynı yerde
+- [ ] Yöntem seç → para düştü, esir öldü (oyunun ölüm mesajı: hastalıkta doğal ölüm, ötekilerde yaralar); sonuç kartında temiz / şüphe /
+      ifşa ve ilişki değişimleri; Merhamet düştü
+- [ ] Roguery'si yüksek casus başıyla yüzdeler düşüyor; yeni yakalanan, hükümdar ya da partindeki esirde yükseliyor
+- [ ] Uzaktaki bir zindandaki esirde de çalışıyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-gizli-infaz.md`
+
 ### Düzeltmeler ve Diplomacy bağlantıları (21 Ekim, yeni; bulutta derlendi ve test edildi)
 - [ ] **Varis:** sevgilisi olan bir karakterle klanı devret (Entrika > **Hanedan**) → yeni karakterde eski sevgili ve kur yok, divan koltuğu
       varisin kendisiyse boşaldı; Kronik'te "Klanın başına X geçti"
