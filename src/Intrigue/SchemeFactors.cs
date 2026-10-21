@@ -30,15 +30,32 @@ namespace CheatMenu.Intrigue
             return hero != null && hero.IsAlive && hero.Clan == Clan.PlayerClan ? hero : null;
         }
 
-        /// <summary>null: casus başı çalışabilir. Değilse neden (esir, vali, parti lideri).</summary>
+        /// <summary>
+        /// null: kişi bir divan koltuğunda çalışabilir. Değilse neden (esir, rehine, vali, parti lideri, genelevde). Casus başı,
+        /// hazinedar, hekim ve kâhya için ortak tanım; serdar parti başındayken de çalışır (Marshal), ama esir ya da rehineyken değil.
+        /// </summary>
         public static string SpymasterBusyReason(Hero hero)
         {
             if (hero.IsPrisoner) return "esir";
+            if (IsHostageAbroad(hero)) return "rehine olarak yabancı sarayda";
             if (hero.GovernorOf != null) return "vali";
             MobileParty party = hero.PartyBelongedTo;
             if (party != null && party.LeaderHero == hero && !party.IsMainParty) return "parti lideri";
+            IntrigueState state = IntrigueBehavior.Current?.State;
+            if (state != null && NightHouses.RoleOf(state, hero) != null) return NightHouses.RoleOf(state, hero);
             return null;
         }
+
+        /// <summary>Rehine anlaşmasıyla başka bir krallığın sarayına gönderdiğin kişi.</summary>
+        public static bool IsHostageAbroad(Hero hero)
+        {
+            IntrigueState state = IntrigueBehavior.Current?.State;
+            return hero != null && state != null && state.Hostages.Any(d => d.GivenId == hero.StringId);
+        }
+
+        /// <summary>Rehine anlaşmasıyla senin yanında misafir olan kişi: ona el kaldırmak yemini bozar.</summary>
+        public static bool IsHeldGuest(IntrigueState state, Hero hero) =>
+            hero != null && state != null && state.Hostages.Any(d => d.HeldId == hero.StringId);
 
         public static int Roguery(Hero hero) => hero?.GetSkillValue(DefaultSkills.Roguery) ?? 0;
 
@@ -91,6 +108,7 @@ namespace CheatMenu.Intrigue
             if (h.IsChild) return "çocuklara dokunulmaz";
             if (h.IsDisabled) return "hedef şu an oyunda değil";
             if (state.FindScheme(h.StringId) != null) return "bu hedefe zaten bir entrika sürüyor";
+            if (IsHeldGuest(state, h)) return "rehine anlaşmasıyla misafirin: ona dokunmak yeminini bozar";
             if (state.IsOnCooldown(h.StringId, Today))
                 return "bu hedef tetikte; " + (state.CooldownUntil[h.StringId] - Today) + " gün sonra tekrar dene";
             return null;
@@ -101,6 +119,7 @@ namespace CheatMenu.Intrigue
         /// <summary>Senin esirin ya da senin yerleşiminde (tasarım 5.3: başarı +20, iz bırakma ×2).</summary>
         public static bool IsPlayersCaptive(Hero h)
         {
+            if (IsHeldGuest(IntrigueBehavior.Current?.State, h)) return false;
             if (h.IsPrisoner)
             {
                 PartyBase captor = h.PartyBelongedToAsPrisoner;
