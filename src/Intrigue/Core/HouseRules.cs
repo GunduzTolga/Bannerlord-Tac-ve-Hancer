@@ -29,8 +29,8 @@ namespace CheatMenu.Intrigue.Core
 
     /// <summary>
     /// Genelev işletmesi: formüller (tasarım: docs/superpowers/specs/2026-10-19-p2-genelev.md). Saf: oyunsuz test edilir.
-    /// Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir ama oyunun kahramanı değildir; hiçbir kahraman (esir, eş, aile, yoldaş, lord)
-    /// müşteriye çıkarılamaz. Bir yoldaş yalnızca evi işletebilir (yönetici): kendisi kabul eder, kazancın bir payı kendi kesesine gider.
+    /// Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir. Bir yoldaş da kendi isteğiyle çalışabilir ya da evi işletebilir (yönetici):
+    /// kendisi karar verir, istediği gün bırakır, payı kendi kesesine gider. Esir, eş, sevgili, aile ve lordlar asla.
     /// </summary>
     public static class HouseRules
     {
@@ -117,9 +117,9 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Çalışan alırken kapıya gelen aday sayısı.</summary>
         public const int Candidates = 3;
 
-        /// <summary>Bugünkü yaşı: işe girdiği yaş ve o günden beri geçen yıllar.</summary>
+        /// <summary>Bugünkü yaşı: işe girdiği yaş ve o günden beri geçen yıllar. Yoldaşın yaşını oyun katmanı güncel tutar.</summary>
         public static int AgeOn(HouseWorker worker, int today) =>
-            System.Math.Max(MinAge, worker.Age) + System.Math.Max(0, today - worker.Since) / DaysPerYear;
+            worker.HeroId != null ? worker.Age : System.Math.Max(MinAge, worker.Age) + System.Math.Max(0, today - worker.Since) / DaysPerYear;
 
         public static string TraitName(WorkerTrait trait) =>
             trait == WorkerTrait.Listener ? "kulağı delik" : trait == WorkerTrait.Favorite ? "gözde" : trait == WorkerTrait.Loyal ? "sadık" : "";
@@ -129,11 +129,19 @@ namespace CheatMenu.Intrigue.Core
             : trait == WorkerTrait.Favorite ? "daha çok kazandırır"
             : trait == WorkerTrait.Loyal ? "kolay kolay ayrılmaz" : "";
 
-        /// <summary>Kartta: "Lysa, 23 · kulağı delik".</summary>
+        /// <summary>Kartta: "Lysa, 23 · kulağı delik"; yoldaşsa "Ayla (yoldaşın), 26 · gözde".</summary>
         public static string WorkerLine(HouseWorker worker, int today)
         {
             string trait = TraitName(worker.Trait);
-            return (worker.Name ?? "?") + ", " + AgeOn(worker, today) + (trait.Length > 0 ? " · " + trait : "");
+            return (worker.Name ?? "?") + (worker.HeroId != null ? " (yoldaşın)" : "") + ", " + AgeOn(worker, today) + (trait.Length > 0 ? " · " + trait : "");
+        }
+
+        /// <summary>Bir çalışanın haftalık kazancı (gözdeyse yarısı kadar fazla, yöneticinin bonusuyla) ve bunun kendisine kalan payı.</summary>
+        public static int WorkerPay(HouseShare share, WorkerTrait trait, float prosperity, int managerCharm)
+        {
+            int each = 40 + (int)(System.Math.Max(0f, prosperity) / 100f);
+            if (trait == WorkerTrait.Favorite) each += each / 2;
+            return each * (100 + ManagerIncomeBonus(managerCharm)) / 100 * SharePercent(share) / 100;
         }
 
         /// <summary>Şehrin kültüründe ad listesi yoksa kullanılan adlar.</summary>
@@ -169,7 +177,7 @@ namespace CheatMenu.Intrigue.Core
         public static int NameUnnamed(House house, IList<string> femaleNames, IList<string> maleNames, Func<int, int> pick)
         {
             int named = 0;
-            foreach (HouseWorker worker in house.Workers.Where(w => w.Name == null).ToList())
+            foreach (HouseWorker worker in house.Workers.Where(w => w.Name == null && w.HeroId == null).ToList())
             {
                 HouseWorker fresh = NewWorker(femaleNames, maleNames, pick, worker.Since, house.Workers.Select(w => w.Name).ToList());
                 worker.Name = fresh.Name;
@@ -202,6 +210,28 @@ namespace CheatMenu.Intrigue.Core
             if (honor >= 1) return "onurlu biri: böyle bir evi işletmez";
             if (relation < 0) return "sana güvenmiyor (ilişki " + relation + ")";
             return null;
+        }
+
+        // ---- Yoldaş çalışan: kendi isteğiyle (kahraman olan tek çalışan türü) ----
+
+        /// <summary>Yoldaşın evde çalışırken öne çıkan yanı: Charm 75+ gözde, değilse Roguery 75+ kulağı delik.</summary>
+        public static WorkerTrait CompanionTrait(int charm, int roguery) =>
+            charm >= 75 ? WorkerTrait.Favorite : roguery >= 75 ? WorkerTrait.Listener : WorkerTrait.None;
+
+        /// <summary>
+        /// Yoldaş evde çalışmak ister mi? null: ister; değilse nedeni. Karar onun karakterinden gelir, sana olan sevgisinden değil:
+        /// onurlu biri (Onur 1+) istemez; hesapçı (Calculating 1+), sokağı bilen (Roguery 50+) ya da onuru düşük (Onur -1 ve altı) biri
+        /// ister; sana güvenmeyen (ilişki eksi) istemez. Eş, sevgili ve 19 yaşından küçük biri hiç sorulmaz. Her hafta yeniden bakılır:
+        /// isteği geçerse bırakır.
+        /// </summary>
+        public static string CompanionWorkRefusal(int age, bool isPartner, int honor, int calculating, int roguery, int relation)
+        {
+            if (age < MinAge) return MinAge + " yaşından küçük";
+            if (isPartner) return "eşin ya da sevgilin: bunu ona soramazsın";
+            if (honor >= 1) return "onurlu biri: bu işi yapmaz";
+            if (relation < 0) return "sana güvenmiyor (ilişki " + relation + ")";
+            if (calculating >= 1 || roguery >= 50 || honor <= -1) return null;
+            return "bu iş ona göre değil";
         }
 
         // ---- Müşteri olarak: herhangi bir şehrin genelevinde bir gece (yalnızca metin, perde iner) ----

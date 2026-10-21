@@ -420,7 +420,8 @@ namespace CheatMenu.Tests
             state.NextCourtshipId = 5;
             var savedHouse = new House { TownId = "town_V1", Share = HouseShare.Fair, Since = 120, ManagerId = "companion_3", ManagerSince = 130 };
             for (int i = 0; i < 5; i++)
-                savedHouse.Workers.Add(new HouseWorker { Name = "Lysa" + i, Female = i != 2, Age = 20 + i, Trait = (WorkerTrait)(i % 4), Since = 120 + i });
+                savedHouse.Workers.Add(new HouseWorker { Name = "Lysa" + i, Female = i != 2, Age = 20 + i, Trait = (WorkerTrait)(i % 4), Since = 120 + i,
+                    HeroId = i == 4 ? "companion_7" : null });
             state.Houses.Add(savedHouse);
             state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
@@ -495,7 +496,8 @@ namespace CheatMenu.Tests
             HouseWorker savedWorker = back.Houses[0].Workers[2];
             Check("state: house workers keep names and details", back.Houses[0].Workers.Select(w => w.Name).SequenceEqual(new[] { "Lysa0", "Lysa1", "Lysa2", "Lysa3", "Lysa4" })
                 && !savedWorker.Female && savedWorker.Age == 22 && savedWorker.Trait == WorkerTrait.Favorite && savedWorker.Since == 122
-                && back.Houses[0].Workers[1].Female && back.Houses[0].Workers[3].Trait == WorkerTrait.Loyal);
+                && back.Houses[0].Workers[1].Female && back.Houses[0].Workers[3].Trait == WorkerTrait.Loyal
+                && back.Houses[0].Workers[4].HeroId == "companion_7" && back.Houses[0].Workers.Take(4).All(w => w.HeroId == null));
             Check("state: tension", back.TensionWith("vlandia") == 55 && !back.Tension.ContainsKey("empire") && back.TensionWith("nope") == 0);
             Check("state: crisis", back.Crises.Count == 1 && back.Crises[0].KingdomId == "vlandia" && back.Crises[0].TownId == "town_V1"
                 && back.Crises[0].Level == 2 && back.Crises[0].Day == 140 && back.Crises[0].Crime == 30 && back.Crises[0].OwnerId == "lord_4_1");
@@ -968,6 +970,25 @@ namespace CheatMenu.Tests
                 && HouseRules.ManagerRefusal(30, false, -1, -5) != null && HouseRules.ManagerRefusal(30, false, -2, 0) == null);
             Check("house: never a spouse, lover or minor", HouseRules.ManagerRefusal(30, true, -2, 100) != null && HouseRules.ManagerRefusal(17, false, -2, 100) != null);
 
+            // Yoldaş çalışan: kendi isteğiyle
+            Check("house: a companion works only if they want to", HouseRules.CompanionWorkRefusal(25, false, 0, 1, 0, 0) == null
+                && HouseRules.CompanionWorkRefusal(25, false, 0, 0, 60, 0) == null && HouseRules.CompanionWorkRefusal(25, false, -1, 0, 0, 0) == null
+                && HouseRules.CompanionWorkRefusal(25, false, 0, 0, 10, 50) != null);
+            Check("house: honor or distrust says no", HouseRules.CompanionWorkRefusal(25, false, 1, 2, 200, 50) != null
+                && HouseRules.CompanionWorkRefusal(25, false, -2, 2, 200, -1) != null);
+            Check("house: never a spouse, lover or anyone under 19", HouseRules.CompanionWorkRefusal(25, true, -2, 2, 200, 100) != null
+                && HouseRules.CompanionWorkRefusal(18, false, -2, 2, 200, 100) != null && HouseRules.CompanionWorkRefusal(19, false, -2, 2, 200, 100) == null);
+            Check("house: companion trait from skills", HouseRules.CompanionTrait(80, 200) == WorkerTrait.Favorite
+                && HouseRules.CompanionTrait(10, 75) == WorkerTrait.Listener && HouseRules.CompanionTrait(74, 74) == WorkerTrait.None);
+            Check("house: a worker's own pay", HouseRules.WorkerPay(HouseShare.Standard, WorkerTrait.None, 5000f, -1) == 36
+                && HouseRules.WorkerPay(HouseShare.Fair, WorkerTrait.Favorite, 5000f, -1) == 81 && HouseRules.WorkerPay(HouseShare.Low, WorkerTrait.None, 5000f, 120) == 29);
+            var heroWorker = new HouseWorker { HeroId = "companion_1", Name = "Ayla", Age = 27, Trait = WorkerTrait.Favorite, Since = 10 };
+            Check("house: a companion's line and age come from the hero", HouseRules.WorkerLine(heroWorker, 10 + 5 * HouseRules.DaysPerYear) == "Ayla (yoldaşın), 27 · gözde");
+            var mixed = new House();
+            mixed.Workers.Add(heroWorker);
+            mixed.Workers.Add(new HouseWorker { Since = 3 });
+            Check("house: naming skips companions", HouseRules.NameUnnamed(mixed, new[] { "Ira" }, null, n => 0) == 1 && mixed.Workers[0].Name == "Ayla");
+
             // Müşteri olarak (genelev ziyareti), askerlerin gecesi, hastalık
             Check("brothel: visit cost, half in your own house", HouseRules.VisitCost(false, false) == 150 && HouseRules.VisitCost(true, false) == 400
                 && HouseRules.VisitCost(true, true) == 200 && HouseRules.VisitCost(false, true) == 75);
@@ -1077,6 +1098,10 @@ namespace CheatMenu.Tests
             Check("images: kind mapping", CardImages.ForKind(SchemeKind.Kidnap) == CardImages.Kidnap && CardImages.ForKind(SchemeKind.Spy) == CardImages.Spy);
             Check("images: method mapping", CardImages.ForMurderMethod(SchemeMethod.Poison) == CardImages.MurderPoison
                 && CardImages.ForMurderMethod(SchemeMethod.None) == CardImages.MurderDagger);
+            Check("images: fallbacks point at real cards", CardImages.Fallbacks.All(f => names.Contains(f.Key) && names.Contains(f.Value) && f.Key != f.Value));
+            Check("images: fallback chain", CardImages.WithFallbacks(CardImages.BrothelCompanion).SequenceEqual(new[] { CardImages.BrothelCompanion, CardImages.NightHouse })
+                && CardImages.WithFallbacks(CardImages.Spy).SequenceEqual(new[] { CardImages.Spy }) && !CardImages.WithFallbacks(null).Any()
+                && CardImages.WithFallbacks(CardImages.Illness).Count() == 2);
 
             string doc = FindRepoFile(System.IO.Path.Combine("docs", "gorseller", "olay-kartlari.md"));
             if (doc == null)

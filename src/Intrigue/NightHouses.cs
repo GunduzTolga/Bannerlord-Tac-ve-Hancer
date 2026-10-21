@@ -16,17 +16,18 @@ namespace CheatMenu.Intrigue
 {
     /// <summary>
     /// Genelev işletmesi (tasarım: docs/superpowers/specs/2026-10-19-p2-genelev.md). Gölge ağın olan şehirde çete lideri
-    /// üzerinden açılır. Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir ama oyunun kahramanı değildir: pay düşükse ayrılırlar.
-    /// Bir yoldaş evi işletebilir (yönetici, müşteriye çıkmaz); kendisi kabul eder, payı kendi kesesine gider. Haftalık gelir ve
-    /// müşterilerden duyulanlar (rapor, bazen sır) getirir. Yalnızca metin; ayardan açılır (varsayılan kapalı).
+    /// üzerinden açılır. Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir: pay düşükse ayrılırlar. Yoldaşlar da kendi isteğiyle
+    /// çalışabilir ya da evi işletebilir (yönetici): kendileri karar verir, istedikleri gün bırakır, payları kendi keselerine gider.
+    /// Haftalık gelir ve müşterilerden duyulanlar (rapor, bazen sır) getirir. Yalnızca metin, perde iner; ayardan açılır (varsayılan kapalı).
     /// Yönetim kartı (ShowManage): kasaba menüsü, Gölgelerde iş çevir ve Entrika > Ağlar'dan açılır.
     /// </summary>
     public static class NightHouses
     {
         public static bool Enabled => SettingsStore.Current.NightHouses;
 
-        /// <summary>Divan koltuklarıyla aynı kural: yönetici başka bir koltukta oturamaz (Council.SeatOf).</summary>
+        /// <summary>Divan koltuklarıyla aynı kural: yönetici ya da çalışan yoldaş başka bir koltukta oturamaz (Council.SeatOf).</summary>
         public const string Seat = "genelev yöneticin";
+        public const string WorkerSeat = "genelevde çalışıyor";
 
         private static int Today => SchemeFactors.Today;
 
@@ -86,18 +87,18 @@ namespace CheatMenu.Intrigue
         public static void Close(IntrigueState state, Settlement town)
         {
             House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada genelevin yok");
-            string freed = ReleaseManager(house, town);
+            string freed = ReleaseCompanions(house, town);
             state.Houses.Remove(house);
             state.AddLog(Today, Tr.Locative(town.Name.ToString()) + " genelev kapatıldı");
             MenuUI.Success(Tr.Locative(town.Name.ToString()) + " genelev kapatıldı" + (freed != null ? "; " + freed : ""));
         }
 
-        /// <summary>Ağ çöker ya da dağılırsa genelev de kapanır (çete işletiyordu); yönetici şehirde kalır.</summary>
+        /// <summary>Ağ çöker ya da dağılırsa genelev de kapanır (çete işletiyordu); evdeki yoldaşlar sana döner.</summary>
         public static void OnNetworkLost(IntrigueState state, string townId)
         {
             House house = state.HouseIn(townId);
             if (house == null) return;
-            ReleaseManager(house, Settlement.Find(townId));
+            ReleaseCompanions(house, Settlement.Find(townId));
             state.Houses.Remove(house);
         }
 
@@ -108,7 +109,9 @@ namespace CheatMenu.Intrigue
             if (house == null) return Enabled ? "Genelev: yok (" + SchemeFactors.Money(HouseRules.OpenCost) + " ile açılır)." : null;
             Hero manager = Manager(house);
             float prosperity = town.Town?.Prosperity ?? 0f;
-            return "Genelev: " + house.Staff + "/" + MaxStaff(state, town) + " çalışan, payları " + HouseRules.ShareName(house.Share)
+            int companions = house.Workers.Count(w => w.HeroId != null);
+            return "Genelev: " + house.Staff + "/" + MaxStaff(state, town) + " çalışan" + (companions > 0 ? " (" + companions + " yoldaşın)" : "")
+                + ", payları " + HouseRules.ShareName(house.Share)
                 + (manager != null ? ", yönetici " + manager.Name : "")
                 + ", haftalık sana ~" + SchemeFactors.Money(HouseRules.Net(house, prosperity, Charm(manager)))
                 + ", müşterilerden haber %" + HouseRules.Intel(house, Roguery(manager))
@@ -137,17 +140,21 @@ namespace CheatMenu.Intrigue
             }
         }
 
-        // ---- Yönetici (evi işleten yoldaş) ----
+        // ---- Evdeki yoldaşlar: yönetici ve kendi isteğiyle çalışanlar ----
 
         /// <summary>Evi şu an işleten yoldaş: hayatta, klanında, esir değil ve bir partide değil; yoksa null.</summary>
         public static Hero Manager(House house)
         {
             Hero hero = house?.ManagerId != null ? Hero.Find(house.ManagerId) : null;
-            return hero != null && ManagerGoneReason(hero) == null ? hero : null;
+            return hero != null && GoneReason(hero) == null ? hero : null;
         }
 
-        /// <summary>null: yönetici hâlâ evin başında. Değilse neden ayrıldığı.</summary>
-        private static string ManagerGoneReason(Hero hero)
+        /// <summary>Evde çalışan yoldaşlar (kayıttaki sırayla).</summary>
+        private static List<(HouseWorker Worker, Hero Hero)> CompanionWorkers(House house) =>
+            house.Workers.Where(w => w.HeroId != null).Select(w => (w, Hero.Find(w.HeroId))).ToList();
+
+        /// <summary>null: yoldaş hâlâ evde. Değilse neden ayrıldığı.</summary>
+        private static string GoneReason(Hero hero)
         {
             if (!hero.IsAlive) return "artık hayatta değil";
             if (hero.Clan != Clan.PlayerClan) return "artık klanında değil";
@@ -157,15 +164,21 @@ namespace CheatMenu.Intrigue
             return null;
         }
 
-        public static House HouseManagedBy(IntrigueState state, Hero hero) =>
-            hero == null ? null : state.Houses.FirstOrDefault(h => h.ManagerId == hero.StringId);
+        /// <summary>Kahramanın evdeki işi (Seat ya da WorkerSeat); evde değilse null. Divan koltuklarıyla birlikte tek iş kuralı.</summary>
+        public static string RoleOf(IntrigueState state, Hero hero)
+        {
+            if (hero == null) return null;
+            if (state.Houses.Any(h => h.ManagerId == hero.StringId)) return Seat;
+            if (state.Houses.Any(h => h.Workers.Any(w => w.HeroId == hero.StringId))) return WorkerSeat;
+            return null;
+        }
 
         private static int Charm(Hero manager) => manager?.GetSkillValue(DefaultSkills.Charm) ?? -1;
 
         private static int Roguery(Hero manager) => manager?.GetSkillValue(DefaultSkills.Roguery) ?? -1;
 
-        /// <summary>Yönetici adayları: klanındaki yetişkin yoldaşlar; parti lideri, vali, divan üyesi ya da rehine olmayanlar.</summary>
-        public static List<Hero> ManagerCandidates(IntrigueState state) =>
+        /// <summary>Evde iş alabilecek yoldaşlar: klanındaki yetişkinler; parti lideri, vali, divan üyesi, rehine ya da zaten evde olmayanlar.</summary>
+        public static List<Hero> CompanionCandidates(IntrigueState state) =>
             Clan.PlayerClan.Companions
                 .Where(h => h.IsAlive && !h.IsChild && !h.IsPrisoner && h != Hero.MainHero && h.GovernorOf == null
                     && !(h.PartyBelongedTo != null && h.PartyBelongedTo.LeaderHero == h)
@@ -173,12 +186,43 @@ namespace CheatMenu.Intrigue
                 .OrderBy(h => h.Name.ToString())
                 .ToList();
 
-        /// <summary>null: yoldaş kabul eder; değilse nedeni (kendi kararı).</summary>
-        public static string Refusal(IntrigueState state, Hero hero)
+        private static bool IsPartner(IntrigueState state, Hero hero)
         {
             Hero me = Hero.MainHero;
-            bool partner = hero == me.Spouse || hero.Spouse == me || state.Lovers.Any(l => l.HeroId == hero.StringId);
-            return HouseRules.ManagerRefusal((int)hero.Age, partner, hero.GetTraitLevel(DefaultTraits.Honor), hero.GetRelation(me));
+            return hero == me.Spouse || hero.Spouse == me || state.Lovers.Any(l => l.HeroId == hero.StringId);
+        }
+
+        /// <summary>null: yoldaş evi işletmeyi kabul eder; değilse nedeni (kendi kararı).</summary>
+        public static string Refusal(IntrigueState state, Hero hero) =>
+            HouseRules.ManagerRefusal((int)hero.Age, IsPartner(state, hero), hero.GetTraitLevel(DefaultTraits.Honor), hero.GetRelation(Hero.MainHero));
+
+        /// <summary>null: yoldaş evde çalışmak ister; değilse nedeni (kendi karakteri).</summary>
+        public static string WorkRefusal(IntrigueState state, Hero hero) =>
+            HouseRules.CompanionWorkRefusal((int)hero.Age, IsPartner(state, hero), hero.GetTraitLevel(DefaultTraits.Honor),
+                hero.GetTraitLevel(DefaultTraits.Calculating), hero.GetSkillValue(DefaultSkills.Roguery), hero.GetRelation(Hero.MainHero));
+
+        /// <summary>Yoldaşı partiden çıkarıp şehre koyar (rehineler gibi hemen); valiliği varsa bırakır.</summary>
+        private static void PlaceInTown(Hero hero, Settlement town)
+        {
+            if (hero.GovernorOf != null) ChangeGovernorAction.RemoveGovernorOf(hero);
+            if (hero.PartyBelongedTo != null && hero.PartyBelongedTo.LeaderHero != hero)
+                hero.PartyBelongedTo.MemberRoster.AddToCounts(hero.CharacterObject, -1);
+            if (hero.CurrentSettlement != town) TeleportHeroAction.ApplyImmediateTeleportToSettlement(hero, town);
+        }
+
+        /// <summary>Evden ayrılan yoldaş sana döner: şehirdeysen hemen partine katılır, değilse yola çıkar. Kartta söylenecek cümle.</summary>
+        private static string SendBack(Hero hero, Settlement town)
+        {
+            if (hero == null || !hero.IsAlive || hero.IsPrisoner || hero.PartyBelongedTo != null || hero.Clan != Clan.PlayerClan)
+                return null;
+            if (MobileParty.MainParty == null) return hero.Name + " " + (town != null ? Tr.Locative(town.Name.ToString()) : "şehirde") + " kaldı";
+            if (town != null && Settlement.CurrentSettlement == town && hero.CurrentSettlement == town)
+            {
+                AddHeroToPartyAction.Apply(hero, MobileParty.MainParty, true);
+                return hero.Name + " partine katıldı";
+            }
+            TeleportHeroAction.ApplyDelayedTeleportToParty(hero, MobileParty.MainParty);
+            return hero.Name + " sana katılmak için yola çıktı";
         }
 
         public static void SetManager(IntrigueState state, Settlement town, Hero hero)
@@ -188,60 +232,123 @@ namespace CheatMenu.Intrigue
             string refusal = Refusal(state, hero);
             if (refusal != null) throw new InvalidOperationException(hero.Name + " istemiyor: " + refusal);
             Council.EnsureFree(state, hero, Seat);
-            if (hero.GovernorOf != null) ChangeGovernorAction.RemoveGovernorOf(hero);
-            // Partideyse (lideri değil) önce partiden çıkar, sonra şehre (rehineler gibi hemen).
-            if (hero.PartyBelongedTo != null && hero.PartyBelongedTo.LeaderHero != hero)
-                hero.PartyBelongedTo.MemberRoster.AddToCounts(hero.CharacterObject, -1);
-            if (hero.CurrentSettlement != town) TeleportHeroAction.ApplyImmediateTeleportToSettlement(hero, town);
+            PlaceInTown(hero, town);
             house.ManagerId = hero.StringId;
             house.ManagerSince = Today;
             state.AddLog(Today, Tr.Locative(town.Name.ToString()) + " genelevi artık " + hero.Name + " işletiyor");
         }
 
-        /// <summary>Yöneticiyi geri çağırır: şehirdeysen hemen partine katılır, değilse sana doğru yola çıkar.</summary>
+        /// <summary>Yöneticiyi geri çağırır: sana döner.</summary>
         public static string RecallManager(IntrigueState state, Settlement town)
         {
             House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada genelevin yok");
             Hero hero = Manager(house) ?? throw new InvalidOperationException("Evin yöneticisi yok");
             house.ManagerId = null;
             house.ManagerSince = 0;
-            state.AddLog(Today, hero.Name + " genelevden ayrıldı");
-            if (MobileParty.MainParty == null) return hero.Name + " evden ayrıldı ve " + Tr.Locative(town.Name.ToString()) + " kaldı.";
-            if (Settlement.CurrentSettlement == town && hero.CurrentSettlement == town)
-            {
-                AddHeroToPartyAction.Apply(hero, MobileParty.MainParty, true);
-                return hero.Name + " evi bıraktı ve partine katıldı.";
-            }
-            TeleportHeroAction.ApplyDelayedTeleportToParty(hero, MobileParty.MainParty);
-            return hero.Name + " evi bıraktı ve sana katılmak için yola çıktı.";
+            state.AddLog(Today, hero.Name + " genelevin yöneticiliğini bıraktı");
+            return hero.Name + " evi bıraktı; " + (SendBack(hero, town) ?? "şehirde kaldı") + ".";
         }
 
-        /// <summary>Ev kapanınca yönetici şehirde kalır (partisi yok); kartta söylenecek cümle ya da null.</summary>
-        private static string ReleaseManager(House house, Settlement town)
+        public static string StartWorkBlocked(IntrigueState state, Settlement town)
         {
-            Hero hero = Manager(house);
-            house.ManagerId = null;
-            if (hero == null) return null;
-            return hero.Name + " " + (town != null ? Tr.Locative(town.Name.ToString()) : "şehirde") + " seni bekliyor";
+            House house = state.HouseIn(town.StringId);
+            if (house == null) return "Burada genelevin yok";
+            if (house.Staff >= MaxStaff(state, town)) return "Ev dolu (en fazla " + MaxStaff(state, town) + "; ağı güçlendir)";
+            return CompanionCandidates(state).Count == 0 ? "Sorabileceğin bir yoldaşın yok (divanda, valilikte, parti başında ya da evde olmayan)" : null;
         }
 
-        /// <summary>Yönetici ayrıldıysa (partiye katıldı, esir düştü...) kaydı temizler ve bildirir.</summary>
-        private static void CheckManager(IntrigueState state, House house, Settlement town)
+        /// <summary>Yoldaş kendi isteğiyle evde çalışmaya başlar: partiden ayrılır, şehirde kalır; payı kendi kesesine.</summary>
+        public static void StartWork(IntrigueState state, Settlement town, Hero hero)
         {
-            if (house.ManagerId == null) return;
-            Hero hero = Hero.Find(house.ManagerId);
-            string gone = hero == null ? "artık yok" : ManagerGoneReason(hero);
-            if (gone == null)
-            {
-                // Yolda değilse ve şehirden ayrıldıysa geri döner (evin başında durur).
-                if (hero.HeroState != Hero.CharacterStates.Traveling && hero.CurrentSettlement != town && !hero.IsPrisoner)
-                    TeleportHeroAction.ApplyImmediateTeleportToSettlement(hero, town);
-                return;
-            }
+            House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada genelevin yok");
+            if (house.Staff >= MaxStaff(state, town)) throw new InvalidOperationException("Ev dolu");
+            string refusal = WorkRefusal(state, hero);
+            if (refusal != null) throw new InvalidOperationException(hero.Name + " istemiyor: " + refusal);
+            Council.EnsureFree(state, hero, WorkerSeat);
+            PlaceInTown(hero, town);
+            var worker = new HouseWorker { HeroId = hero.StringId, Since = Today };
+            Sync(worker, hero);
+            house.Workers.Add(worker);
+            state.AddLog(Today, hero.Name + " kendi isteğiyle " + Tr.Locative(town.Name.ToString()) + " genelevde çalışmaya başladı");
+        }
+
+        /// <summary>Çalışan yoldaşı geri çağırır: sana döner.</summary>
+        public static string RecallWorker(IntrigueState state, Settlement town, Hero hero)
+        {
+            House house = state.HouseIn(town.StringId) ?? throw new InvalidOperationException("Burada genelevin yok");
+            HouseWorker worker = house.Workers.FirstOrDefault(w => w.HeroId == hero.StringId) ?? throw new InvalidOperationException(hero.Name + " bu evde çalışmıyor");
+            house.Workers.Remove(worker);
+            state.AddLog(Today, hero.Name + " genelevde çalışmayı bıraktı");
+            return hero.Name + " evden ayrıldı; " + (SendBack(hero, town) ?? "şehirde kaldı") + ".";
+        }
+
+        /// <summary>Çalışan yoldaşın adı, yaşı ve evdeki öne çıkan yanı ondan güncellenir.</summary>
+        private static void Sync(HouseWorker worker, Hero hero)
+        {
+            if (hero == null) return;
+            worker.Name = hero.Name.ToString();
+            worker.Female = hero.IsFemale;
+            worker.Age = (int)hero.Age;
+            worker.Trait = HouseRules.CompanionTrait(hero.GetSkillValue(DefaultSkills.Charm), hero.GetSkillValue(DefaultSkills.Roguery));
+        }
+
+        /// <summary>Ev kapanınca evdeki yoldaşlar sana döner; kartta söylenecek cümle ya da null.</summary>
+        private static string ReleaseCompanions(House house, Settlement town)
+        {
+            var heroes = new List<Hero>();
+            Hero manager = Manager(house);
+            if (manager != null) heroes.Add(manager);
+            heroes.AddRange(CompanionWorkers(house).Where(c => c.Hero != null && GoneReason(c.Hero) == null).Select(c => c.Hero));
             house.ManagerId = null;
-            house.ManagerSince = 0;
-            SchemeOutcomes.Notify(state, "Genelevin yöneticisi yok: " + town.Name,
-                (hero?.Name.ToString() ?? "Yöneticin") + " " + gone + "; " + Tr.Locative(town.Name.ToString()) + " ev artık yöneticisiz.", hero, CardImages.NightHouse);
+            house.Workers.RemoveAll(w => w.HeroId != null);
+            List<string> back = heroes.Select(h => SendBack(h, town)).Where(line => line != null).ToList();
+            return back.Count > 0 ? string.Join(", ", back) : null;
+        }
+
+        /// <summary>
+        /// Evdeki yoldaşlara bakar: ayrılan (partiye katılan, esir düşen...) kayıttan düşer ve bildirilir; kalanlar şehirde tutulur ve
+        /// çalışanların adı, yaşı, öne çıkan yanı güncellenir.
+        /// </summary>
+        private static void CheckCompanions(IntrigueState state, House house, Settlement town)
+        {
+            var gone = new List<string>();
+            Hero shown = null;
+            if (house.ManagerId != null)
+            {
+                Hero hero = Hero.Find(house.ManagerId);
+                string reason = hero == null ? "artık yok" : GoneReason(hero);
+                if (reason == null) Keep(hero, town);
+                else
+                {
+                    house.ManagerId = null;
+                    house.ManagerSince = 0;
+                    gone.Add((hero?.Name.ToString() ?? "Yöneticin") + " (yönetici) " + reason);
+                    shown = hero;
+                }
+            }
+            foreach ((HouseWorker worker, Hero hero) in CompanionWorkers(house))
+            {
+                string reason = hero == null ? "artık yok" : GoneReason(hero);
+                if (reason == null)
+                {
+                    Keep(hero, town);
+                    Sync(worker, hero);
+                    continue;
+                }
+                house.Workers.Remove(worker);
+                gone.Add((hero?.Name.ToString() ?? worker.Name) + " " + reason);
+                shown = shown ?? hero;
+            }
+            if (gone.Count > 0)
+                SchemeOutcomes.Notify(state, "Genelevden ayrılan yoldaşlar: " + town.Name,
+                    string.Join("; ", gone) + ". " + Tr.Locative(town.Name.ToString()) + " evde artık değiller.", shown, CardImages.BrothelCompanion);
+        }
+
+        /// <summary>Yolda değilse ve şehirden ayrıldıysa geri döner (evdeki işinin başında durur).</summary>
+        private static void Keep(Hero hero, Settlement town)
+        {
+            if (hero.HeroState != Hero.CharacterStates.Traveling && hero.CurrentSettlement != town && !hero.IsPrisoner)
+                TeleportHeroAction.ApplyImmediateTeleportToSettlement(hero, town);
         }
 
         // ---- Yönetim kartı ----
@@ -257,7 +364,7 @@ namespace CheatMenu.Intrigue
                 return;
             }
             EnsureNamed(state);
-            CheckManager(state, house, town);
+            CheckCompanions(state, house, town);
             Hero manager = Manager(house);
             float prosperity = town.Town?.Prosperity ?? 0f;
             int gross = HouseRules.Gross(house, prosperity, Charm(manager));
@@ -266,11 +373,11 @@ namespace CheatMenu.Intrigue
 
             var lines = new List<string>();
             if (manager != null)
-                lines.Add("Yönetici: " + manager.Name + ". Evin işini görür, müşteriye çıkmaz. Charm " + Charm(manager) + ": kazanç +%" + HouseRules.ManagerIncomeBonus(Charm(manager))
+                lines.Add("Yönetici: " + manager.Name + ". Evin hesabını ve kapısını tutar. Charm " + Charm(manager) + ": kazanç +%" + HouseRules.ManagerIncomeBonus(Charm(manager))
                     + "; Roguery " + Roguery(manager) + ": duyulma %" + HouseRules.ExposeChanceWith(Roguery(manager))
                     + ". Kazancın %" + HouseRules.ManagerCutPercent + "'u kendi kesesine (haftada ~" + SchemeFactors.Money(managerPay) + ").");
             else
-                lines.Add("Yönetici yok. Bir yoldaşın evi işletebilir: kazanç ve güvenlik artar, kendi kesesine para kazanır (isterse).");
+                lines.Add("Yönetici yok. Bir yoldaşın evi işletebilir: kazanç ve güvenlik artar, kendi kesesine para kazanır (isterse). Yoldaşlar...");
             lines.Add("");
             lines.Add("Çalışanlar (" + house.Staff + "/" + MaxStaff(state, town) + "), payları " + HouseRules.ShareName(house.Share) + ":");
             if (house.Staff == 0) lines.Add("  kimse kalmadı");
@@ -282,7 +389,7 @@ namespace CheatMenu.Intrigue
             lines.Add("Müşterilerden haber %" + HouseRules.Intel(house, Roguery(manager)) + ", duyulma %" + HouseRules.ExposeChanceWith(Roguery(manager))
                 + ", ayrılma %" + HouseRules.LeaveChance(house.Share) + "/hafta (sadık olanlar daha az).");
             lines.Add("");
-            lines.Add("Burada çalışanlar kendi istekleriyle ve parasıyla çalışır; payı az bulan gider.");
+            lines.Add("Burada çalışanlar kendi istekleriyle ve parasıyla çalışır; payı az bulan gider. Yoldaşların payı kendi keselerine.");
 
             var options = new List<EventCards.CardOption>
             {
@@ -293,22 +400,7 @@ namespace CheatMenu.Intrigue
                     Apply = () => MenuUI.Defer(() => ShowHire(town)),
                 },
                 new EventCards.CardOption { Label = "Çalışanların payı...", Apply = () => MenuUI.Defer(() => ShowShare(town)) },
-                manager != null
-                    ? new EventCards.CardOption
-                    {
-                        Label = "Yöneticiyi geri çağır: " + manager.Name,
-                        Apply = () =>
-                        {
-                            MenuUI.Success(RecallManager(SchemeEngine.State, town));
-                            MenuUI.Defer(() => ShowManage(town));
-                        },
-                    }
-                    : new EventCards.CardOption
-                    {
-                        Label = "Yönetici ata...",
-                        DisabledHint = ManagerCandidates(state).Count == 0 ? "Yönetebilecek bir yoldaşın yok (divanda, valilikte ya da parti başında olmayan)" : null,
-                        Apply = () => MenuUI.Defer(() => PickManager(town)),
-                    },
+                new EventCards.CardOption { Label = "Yoldaşlar: yönetici ve çalışmak isteyenler...", Apply = () => MenuUI.Defer(() => ShowCompanions(town)) },
                 new EventCards.CardOption
                 {
                     Label = "Genelevi kapat...",
@@ -349,7 +441,7 @@ namespace CheatMenu.Intrigue
             }
             var back = new EventCards.CardOption { Label = "Kimseyi alma", Apply = () => MenuUI.Defer(() => ShowManage(town)) };
             options.Add(back);
-            EventCards.Show("Genelev", "Çalışan al: " + town.Name, string.Join("\n", lines), CardImages.NightHouse, null, options, back, null);
+            EventCards.Show("Genelev", "Çalışan al: " + town.Name, string.Join("\n", lines), CardImages.BrothelCandidates, null, options, back, null);
         }
 
         private static void ShowShare(Settlement town)
@@ -381,7 +473,7 @@ namespace CheatMenu.Intrigue
         private static void PickManager(Settlement town)
         {
             IntrigueState state = SchemeEngine.State;
-            Picker.Pick("Genelevi kim işletsin?", ManagerCandidates(state),
+            Picker.Pick("Genelevi kim işletsin?", CompanionCandidates(state),
                 h => h.Name + " - Charm " + h.GetSkillValue(DefaultSkills.Charm) + ", Roguery " + h.GetSkillValue(DefaultSkills.Roguery)
                     + (Refusal(state, h) is string why ? "  [istemez: " + why + "]" : ""),
                 h => MenuUI.Defer(() => AskManager(town, h)),
@@ -404,9 +496,123 @@ namespace CheatMenu.Intrigue
             SetManager(state, town, hero);
             EventCards.Show("Genelev", hero.Name + " evi işletecek",
                 hero.Name + " teklifi tartıyor, sonra gülümsüyor: \"Hesabı ben tutarım, kapıda da ben dururum. Kimse kimseyi zorlamaz, "
-                + "kimse parasını kaptırmaz.\"\n\n" + hero.Name + " " + Tr.Locative(town.Name.ToString()) + " evin başına geçti; müşteriye çıkmaz, evi işletir."
-                + " Kazancın %" + HouseRules.ManagerCutPercent + "'u kendi kesesine gider. Geri çağırmak için genelevin kartı.",
-                CardImages.NightHouse, hero, new List<EventCards.CardOption> { ok }, ok, null);
+                + "kimse parasını kaptırmaz.\"\n\n" + hero.Name + " " + Tr.Locative(town.Name.ToString()) + " evin başına geçti."
+                + " Kazancın %" + HouseRules.ManagerCutPercent + "'u kendi kesesine gider. Geri çağırmak için genelevin kartı > Yoldaşlar.",
+                CardImages.BrothelManager, hero, new List<EventCards.CardOption> { ok }, ok, null);
+        }
+
+        /// <summary>Evdeki yoldaşlar: yönetici, kendi isteğiyle çalışanlar; ata, sor, geri çağır.</summary>
+        private static void ShowCompanions(Settlement town)
+        {
+            IntrigueState state = SchemeEngine.State;
+            House house = state.HouseIn(town.StringId);
+            if (house == null) return;
+            CheckCompanions(state, house, town);
+            Hero manager = Manager(house);
+            List<Hero> working = CompanionWorkers(house).Where(c => c.Hero != null).Select(c => c.Hero).ToList();
+            float prosperity = town.Town?.Prosperity ?? 0f;
+
+            var lines = new List<string>
+            {
+                "Yönetici: " + (manager != null ? manager.Name.ToString() : "yok") + ".",
+                "Evde çalışan yoldaşların: " + (working.Count > 0 ? string.Join(", ", working.Select(h => h.Name)) : "yok") + ".",
+                "",
+                "Yönetici evin hesabını ve kapısını tutar: Charm kazancı, Roguery haberleri ve gizliliği artırır; kazancın %"
+                    + HouseRules.ManagerCutPercent + "'u kendi kesesine.",
+                "",
+                "Bir yoldaşına evde çalışmak isteyip istemediğini sorabilirsin. Karar onun: onurlu biri ya da sana güvenmeyen istemez; hesapçı, "
+                    + "sokağı bilen (Roguery 50+) ya da onuru düşük biri isteyebilir. Eşin ve sevgilin hiç sorulmaz. Çalışırsa partinden ayrılır, "
+                    + "şehirde kalır; kazancının payı (şu an %" + HouseRules.SharePercent(house.Share) + ", haftada ~"
+                    + SchemeFactors.Money(HouseRules.WorkerPay(house.Share, WorkerTrait.None, prosperity, Charm(manager))) + ") kendi kesesine gider. "
+                    + "İstediği hafta bırakır; sen de istediğin an geri çağırırsın.",
+            };
+            var options = new List<EventCards.CardOption>
+            {
+                manager != null
+                    ? new EventCards.CardOption
+                    {
+                        Label = "Yöneticiyi geri çağır: " + manager.Name,
+                        Apply = () =>
+                        {
+                            MenuUI.Success(RecallManager(SchemeEngine.State, town));
+                            MenuUI.Defer(() => ShowCompanions(town));
+                        },
+                    }
+                    : new EventCards.CardOption
+                    {
+                        Label = "Yönetici ata...",
+                        DisabledHint = CompanionCandidates(state).Count == 0 ? "Sorabileceğin bir yoldaşın yok (divanda, valilikte, parti başında ya da evde olmayan)" : null,
+                        Apply = () => MenuUI.Defer(() => PickManager(town)),
+                    },
+                new EventCards.CardOption
+                {
+                    Label = "Bir yoldaşına sor: evde çalışmak ister mi?...",
+                    DisabledHint = StartWorkBlocked(state, town),
+                    Apply = () => MenuUI.Defer(() => PickWorker(town)),
+                },
+                new EventCards.CardOption
+                {
+                    Label = "Çalışan yoldaşı geri çağır...",
+                    DisabledHint = working.Count == 0 ? "Evde çalışan yoldaşın yok" : null,
+                    Apply = () => MenuUI.Defer(() => PickRecall(town)),
+                },
+            };
+            var back = new EventCards.CardOption { Label = "Geri", Apply = () => MenuUI.Defer(() => ShowManage(town)) };
+            options.Add(back);
+            EventCards.Show("Genelev", "Yoldaşlar: " + town.Name, string.Join("\n", lines), CardImages.BrothelCompanion, manager ?? working.FirstOrDefault(),
+                options, back, null);
+        }
+
+        /// <summary>Kime sorulsun: istemeyecek olanın nedeni listede yazar; karar yine onun.</summary>
+        private static void PickWorker(Settlement town)
+        {
+            IntrigueState state = SchemeEngine.State;
+            Picker.Pick("Kime sorulsun: evde çalışmak ister mi?", CompanionCandidates(state),
+                h => h.Name + ", " + (int)h.Age + " - Charm " + h.GetSkillValue(DefaultSkills.Charm) + ", Roguery " + h.GetSkillValue(DefaultSkills.Roguery)
+                    + (WorkRefusal(state, h) is string why ? "  [istemez: " + why + "]" : "  [isteyebilir]"),
+                h => MenuUI.Defer(() => AskWork(town, h)),
+                () => MenuUI.Defer(() => ShowCompanions(town)), h => Categories.HeroPortrait(h), sort: false);
+        }
+
+        /// <summary>Yoldaşa sorulur: isterse kendi kuralıyla çalışır, istemezse hiçbir şey değişmez.</summary>
+        private static void AskWork(Settlement town, Hero hero)
+        {
+            IntrigueState state = SchemeEngine.State;
+            var ok = new EventCards.CardOption { Label = "Tamam", Apply = () => MenuUI.Defer(() => ShowCompanions(town)) };
+            string refusal = WorkRefusal(state, hero);
+            if (refusal != null)
+            {
+                EventCards.Show("Genelev", hero.Name + " istemiyor",
+                    hero.Name + " sözünü bitirmeni beklemiyor: \"Hayır.\" (" + refusal + ")\n\nKimse zorlanmaz; ilişkiniz değişmedi, bir daha da sorulmaz "
+                    + "sanma: fikri değişirse kendisi söyler.",
+                    null, hero, new List<EventCards.CardOption> { ok }, ok, null);
+                return;
+            }
+            StartWork(state, town, hero);
+            HouseWorker worker = state.HouseIn(town.StringId).Workers.First(w => w.HeroId == hero.StringId);
+            string trait = HouseRules.TraitName(worker.Trait);
+            EventCards.Show("Genelev", hero.Name + " evde çalışacak",
+                hero.Name + " bir süre düşünüyor, sonra omuz silkiyor: \"Parası iyiyse olur. Ama kuralı ben koyarım: istemediğim kimse olmaz, "
+                + "istediğim gün bırakırım.\"\n\n" + hero.Name + " kendi isteğiyle " + Tr.Locative(town.Name.ToString()) + " evde çalışmaya başladı; "
+                + "kapı ardından kapanır, gerisi onun işi. Partinden ayrıldı, şehirde kalıyor."
+                + (trait.Length > 0 ? " Evde " + trait + " biri olarak tanınacak (" + HouseRules.TraitHint(worker.Trait) + ")." : "")
+                + " Kazancının payı (%" + HouseRules.SharePercent(state.HouseIn(town.StringId).Share) + ") kendi kesesine gider; pay düşerse ya da "
+                + "isteği geçerse bırakır. Geri çağırmak için genelevin kartı > Yoldaşlar.",
+                CardImages.BrothelCompanion, hero, new List<EventCards.CardOption> { ok }, ok, null);
+        }
+
+        private static void PickRecall(Settlement town)
+        {
+            House house = SchemeEngine.State.HouseIn(town.StringId);
+            if (house == null) return;
+            Picker.Pick("Kim geri gelsin?", CompanionWorkers(house).Where(c => c.Hero != null).Select(c => c.Hero).ToList(),
+                h => h.Name.ToString(),
+                h => MenuUI.SafeRun("Genelev", () =>
+                {
+                    MenuUI.Success(RecallWorker(SchemeEngine.State, town, h));
+                    MenuUI.Defer(() => ShowCompanions(town));
+                }),
+                () => MenuUI.Defer(() => ShowCompanions(town)), h => Categories.HeroPortrait(h), sort: false);
         }
 
         // ---- Haftalık ----
@@ -422,15 +628,18 @@ namespace CheatMenu.Intrigue
                 Settlement town = Settlement.Find(house.TownId);
                 if (town == null || state.Network(house.TownId) == null)
                 {
-                    if (town != null) ReleaseManager(house, town);
+                    if (town != null) ReleaseCompanions(house, town);
                     state.Houses.Remove(house);
                     continue;
                 }
-                CheckManager(state, house, town);
+                CheckCompanions(state, house, town);
                 Hero manager = Manager(house);
                 float prosperity = town.Town?.Prosperity ?? 0f;
                 income += HouseRules.Net(house, prosperity, Charm(manager));
                 if (manager != null) manager.ChangeHeroGold(HouseRules.ManagerPay(HouseRules.Gross(house, prosperity, Charm(manager))));
+                // Çalışan yoldaşların payı kendi keselerine (öbür çalışanlarınki gibi, yalnızca burada bir kahramanın altınına yazılır).
+                foreach ((HouseWorker worker, Hero hero) in CompanionWorkers(house))
+                    hero?.ChangeHeroGold(HouseRules.WorkerPay(house.Share, worker.Trait, prosperity, Charm(manager)));
                 Leavers(state, house, town);
                 if (state.Roll100() <= HouseRules.ExposeChanceWith(Roguery(manager)))
                 {
@@ -447,16 +656,35 @@ namespace CheatMenu.Intrigue
             }
         }
 
-        /// <summary>Payını az bulanlar ayrılır (gönüllüler: kimse tutulamaz); sadık olanlar daha az.</summary>
+        /// <summary>
+        /// Payını az bulanlar ayrılır (gönüllüler: kimse tutulamaz); sadık olanlar daha az. Çalışan yoldaş ayrıca isteği geçince
+        /// (karakteri ya da sana güveni değişince) bırakır ve sana döner.
+        /// </summary>
         private static void Leavers(IntrigueState state, House house, Settlement town)
         {
-            List<HouseWorker> left = house.Workers.Where(w => HouseRules.LeaveChance(house.Share, w.Trait) > 0
-                && state.Roll100() <= HouseRules.LeaveChance(house.Share, w.Trait)).ToList();
+            var left = new List<HouseWorker>();
+            var reasons = new List<string>();
+            Hero shown = null;
+            foreach (HouseWorker worker in house.Workers.ToList())
+            {
+                Hero hero = worker.HeroId != null ? Hero.Find(worker.HeroId) : null;
+                string changed = hero != null ? WorkRefusal(state, hero) : null;
+                bool underpaid = HouseRules.LeaveChance(house.Share, worker.Trait) > 0 && state.Roll100() <= HouseRules.LeaveChance(house.Share, worker.Trait);
+                if (changed == null && !underpaid) continue;
+                house.Workers.Remove(worker);
+                left.Add(worker);
+                if (hero == null) continue;
+                shown = hero;
+                reasons.Add(hero.Name + (changed != null ? " artık istemiyor (" + changed + ")" : " payını az buldu") + "; " + (SendBack(hero, town) ?? "şehirde kaldı"));
+            }
             if (left.Count == 0) return;
-            foreach (HouseWorker worker in left) house.Workers.Remove(worker);
-            SchemeOutcomes.Notify(state, "Genelevden ayrılanlar: " + town.Name,
-                string.Join(", ", left.Select(w => w.Name)) + " payını az bulup ayrıldı; kalan " + house.Staff + ". Pay artarsa kimse ayrılmaz.",
-                null, CardImages.NightHouse);
+            List<string> others = left.Where(w => w.HeroId == null).Select(w => w.Name).ToList();
+            var text = new List<string>();
+            if (others.Count > 0) text.Add(string.Join(", ", others) + " payını az bulup ayrıldı.");
+            text.AddRange(reasons.Select(r => r + "."));
+            text.Add("Kalan " + house.Staff + ". Pay artarsa kimse ayrılmaz.");
+            SchemeOutcomes.Notify(state, "Genelevden ayrılanlar: " + town.Name, string.Join(" ", text), shown,
+                shown != null ? CardImages.BrothelCompanion : CardImages.NightHouse);
             state.AddLog(Today, Tr.Locative(town.Name.ToString()) + " genelevden ayrılanlar: " + string.Join(", ", left.Select(w => w.Name)));
         }
 
@@ -479,9 +707,10 @@ namespace CheatMenu.Intrigue
                 state.AddLog(Today, Tr.Locative(town.Name.ToString()) + " genelev dedikodusu");
                 return;
             }
-            string freed = ReleaseManager(house, town);
+            List<string> scattered = house.Workers.Select(w => w.Name).ToList();
+            string freed = ReleaseCompanions(house, town);
             state.Houses.Remove(house);
-            var parts = new List<string> { "ev kapandı; " + (house.Staff > 0 ? string.Join(", ", house.Workers.Select(w => w.Name)) + " dağıldı" : "kimse kalmamıştı") };
+            var parts = new List<string> { "ev kapandı; " + (scattered.Count > 0 ? string.Join(", ", scattered) + " dağıldı" : "kimse kalmamıştı") };
             if (freed != null) parts.Add(freed);
             Hero lord = owner?.Leader;
             if (lord != null && lord.IsAlive)

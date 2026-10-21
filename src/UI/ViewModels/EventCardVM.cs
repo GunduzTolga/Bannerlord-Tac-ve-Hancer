@@ -15,7 +15,13 @@ namespace CheatMenu.UI.ViewModels
             Caption = caption ?? "";
             Title = title ?? "";
             Text = text ?? "";
+            // Kartın kendi resmi yoksa aynı konudan bir yedeği (CardImages.Fallbacks), o da yoksa portre.
             string chosen = TvhImages.PickVariant(image);
+            foreach (string candidate in Intrigue.Core.CardImages.WithFallbacks(image))
+            {
+                chosen = TvhImages.PickVariant(candidate);
+                if (TvhImages.Get(chosen) != null) break;
+            }
             HasImage = TvhImages.Get(chosen) != null;
             ImageName = HasImage ? chosen : "";
             HasPortrait = !HasImage && hero != null;

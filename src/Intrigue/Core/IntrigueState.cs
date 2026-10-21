@@ -214,8 +214,8 @@ namespace CheatMenu.Intrigue.Core
     }
 
     /// <summary>
-    /// Gölge ağı olan bir şehirdeki genelev (HouseRules). Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir ama oyunun kahramanı
-    /// değildir. Yönetici bir yoldaş olabilir: evi işletir, müşteriye çıkmaz.
+    /// Gölge ağı olan bir şehirdeki genelev (HouseRules). Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir; çoğu oyunun kahramanı
+    /// değildir, ama bir yoldaş da kendi isteğiyle çalışabilir. Yönetici bir yoldaş olabilir: evi işletir.
     /// </summary>
     public sealed class House
     {
@@ -229,9 +229,13 @@ namespace CheatMenu.Intrigue.Core
         public int ManagerSince;
     }
 
-    /// <summary>Genelevde çalışan biri: kahraman değil, yalnızca bu evde var. Ad null ise eski kayıttan gelir; oyun katmanı ad verir.</summary>
+    /// <summary>
+    /// Genelevde çalışan biri. Çoğu kahraman değildir, yalnızca bu evde vardır (ad null ise eski kayıttan gelir; oyun katmanı ad verir).
+    /// HeroId doluysa kendi isteğiyle çalışan bir yoldaştır: adı, yaşı ve özelliği oyun katmanında ondan güncellenir.
+    /// </summary>
     public sealed class HouseWorker
     {
+        public string HeroId;
         public string Name;
         public bool Female;
         /// <summary>İşe girdiği gündeki yaşı (HouseRules.MinAge ve üstü).</summary>
@@ -542,7 +546,7 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since))
                     .Add("manager", h.ManagerId).Add("managersince", I(h.ManagerSince)));
                 foreach (HouseWorker w in h.Workers.Where(w => w.Name != null))
-                    records.Add(new TextRecord("hworker").Add("town", h.TownId).Add("name", w.Name).Add("female", B(w.Female)).Add("age", I(w.Age))
+                    records.Add(new TextRecord("hworker").Add("town", h.TownId).Add("hero", w.HeroId).Add("name", w.Name).Add("female", B(w.Female)).Add("age", I(w.Age))
                         .Add("trait", I((int)w.Trait)).Add("since", I(w.Since)));
             }
             foreach (Crisis c in Crises)
@@ -787,6 +791,7 @@ namespace CheatMenu.Intrigue.Core
                             worker = new HouseWorker();
                             home.Workers.Add(worker);
                         }
+                        worker.HeroId = Empty(r.Get("hero"));
                         worker.Name = r.Get("name");
                         worker.Female = Bool(r, "female");
                         worker.Age = Math.Max(HouseRules.MinAge, Int(r, "age"));

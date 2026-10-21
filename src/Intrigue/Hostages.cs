@@ -35,12 +35,13 @@ namespace CheatMenu.Intrigue
             return null;
         }
 
-        /// <summary>Gönderebileceğin aile üyeleri: klanındaki hayattaki, esir olmayan, parti yönetmeyen, eşin olmayan kişiler.</summary>
+        /// <summary>Gönderebileceğin aile üyeleri: klanındaki hayattaki, esir olmayan, parti yönetmeyen, eşin olmayan, genelevde işi olmayan kişiler.</summary>
         public static List<Hero> OurCandidates(IntrigueState state) =>
             Clan.PlayerClan.Heroes
                 .Where(h => h.IsAlive && h != Hero.MainHero && h != Hero.MainHero.Spouse && !h.IsPrisoner && !h.IsPregnant
                     && !(h.PartyBelongedTo != null && h.PartyBelongedTo.LeaderHero == h && h.PartyBelongedTo != MobileParty.MainParty)
-                    && !state.Hostages.Any(d => d.GivenId == h.StringId || d.HeldId == h.StringId))
+                    && !state.Hostages.Any(d => d.GivenId == h.StringId || d.HeldId == h.StringId)
+                    && NightHouses.RoleOf(state, h) == null)
                 .OrderBy(h => h.Age)
                 .ToList();
 
