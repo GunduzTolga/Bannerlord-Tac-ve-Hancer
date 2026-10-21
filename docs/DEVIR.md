@@ -21,6 +21,8 @@
   sahadaki ordular, topraklarına yürüyenler, tavsiye); ulak kartında yüz yüze görüşme Diplomacy habercisiyle, bizim ulak yalnızca
   hediye taşır. Hazinedar artık gerçek gelir veriyor: atölye ve kervan gelirine Trade/10 yüzde (en fazla %20), klan gelirinde
   "Hazinedar" satırı (`Cheats/Models/TreasurerFinanceModel`). API notları: Diplomacy kaynakları ilspycmd ile açıldı (yalnızca bulutta).
+- **Esiri gizlice öldürt (21 Ekim, kullanıcı isteği):** açık idam yerine hastalık/kaza/firar süsü; şüphe ve ifşa Roguery'ye, esirin
+  önemine ve yakalanalı kaç gün olduğuna bağlı (`PrisonDeathRules`, `PrisonDeaths`, tasarım `2026-10-21-gizli-infaz.md`).
 - **Kullanıcı eşini genelevde çalışan olarak sordu:** yapılmadı ("eşini pazarlamak" çizgisi); eş yalnızca kendi kararıyla yönetici olabilir.
 - Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu daha da geliştir, İsyanlar/İç Savaş penceresi (Diplomacy'nin
   `RebelFactionsInterface`'i ve `RebelFactionManager` verisi hazır), Krallık > Lordlar sekmesi (Diplomacy habercisi üzerine), kalan

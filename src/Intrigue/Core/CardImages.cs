@@ -195,6 +195,10 @@ namespace CheatMenu.Intrigue.Core
         public static string ForSabotage(SchemeMethod method) =>
             method == SchemeMethod.SabotageGarrison ? SabotageGarrison : method == SchemeMethod.SabotageWalls ? SabotageWalls : SabotageFood;
 
+        /// <summary>Gizli infazın sonucu: hastalık zehir, kaza kaza, firar hançer resmiyle.</summary>
+        public static string ForPrisonDeath(PrisonDeathMethod method) =>
+            method == PrisonDeathMethod.Illness ? MurderPoison : method == PrisonDeathMethod.Accident ? MurderAccident : MurderDagger;
+
         public static string ForMurderMethod(SchemeMethod method) =>
             method == SchemeMethod.Poison ? MurderPoison : method == SchemeMethod.Accident ? MurderAccident : MurderDagger;
 

@@ -182,6 +182,7 @@ namespace CheatMenu.Tests
             CrisisTests();
             HouseTests();
             HeirTests();
+            PrisonDeathTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -917,6 +918,27 @@ namespace CheatMenu.Tests
             CheckChance("recruit: calculating, bigger clan", RecruitRules.Chance(10, 0, 0, 1, 50, 5, 2, normal), 40);
             CheckChance("recruit: cap", RecruitRules.Chance(100, -100, -2, 2, 300, 6, 1, SchemeMath.EasyDifficulty), 75);
             CheckChance("recruit: hard", RecruitRules.Chance(0, 0, 0, 0, 100, 3, 3, SchemeMath.HardDifficulty), 10);
+        }
+
+        /// <summary>Esirin gizli infazı: yönteme, Roguery'ye, esirin önemine göre şüphe; şüphenin bir kısmı ifşa.</summary>
+        private static void PrisonDeathTests()
+        {
+            const int normal = SchemeMath.NormalDifficulty;
+            CheckChance("prison death: illness, untrained, a minor lord held long", PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 0, 2, false, 30, false, normal), 24);
+            CheckChance("prison death: escape is the loudest", PrisonDeathRules.Suspicion(PrisonDeathMethod.Escape, 0, 2, false, 30, false, normal), 40);
+            CheckChance("prison death: Roguery hides it (cap 25)", PrisonDeathRules.Suspicion(PrisonDeathMethod.Accident, 400, 2, false, 30, false, normal), 7);
+            CheckChance("prison death: a fresh captive in your party, a ruler", PrisonDeathRules.Suspicion(PrisonDeathMethod.Accident, 80, 6, true, 2, true, normal), 60);
+            Check("prison death: difficulty", PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 0, 0, false, 30, false, SchemeMath.EasyDifficulty)
+                < PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 0, 0, false, 30, false, SchemeMath.HardDifficulty));
+            Check("prison death: bounds", PrisonDeathRules.Suspicion(PrisonDeathMethod.Illness, 999, 0, false, 99, false, SchemeMath.EasyDifficulty) == 5
+                && PrisonDeathRules.Suspicion(PrisonDeathMethod.Escape, 0, 9, true, 0, true, SchemeMath.HardDifficulty) <= 90);
+            Check("prison death: proof by Roguery", PrisonDeathRules.ProofChance(0) == 45 && PrisonDeathRules.ProofChance(120) == 30
+                && PrisonDeathRules.ProofChance(800) == 10);
+            CheckChance("prison death: expose chance", PrisonDeathRules.ExposeChance(40, 30), 12);
+            Check("prison death: cheaper means louder", PrisonDeathRules.Cost(PrisonDeathMethod.Escape) < PrisonDeathRules.Cost(PrisonDeathMethod.Accident)
+                && PrisonDeathRules.Cost(PrisonDeathMethod.Accident) < PrisonDeathRules.Cost(PrisonDeathMethod.Illness)
+                && PrisonDeathRules.BaseSuspicion(PrisonDeathMethod.Escape) > PrisonDeathRules.BaseSuspicion(PrisonDeathMethod.Illness));
+            Check("prison death: every method has an image", PrisonDeathRules.Methods.All(m => CardImages.All().Contains(CardImages.ForPrisonDeath(m))));
         }
 
         /// <summary>Oyuncu karakteri değişince eski karakterin kişisel kayıtları düşer, yeni karakter koltuklardan çıkar.</summary>

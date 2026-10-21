@@ -450,6 +450,10 @@ namespace CheatMenu.UI.ViewModels
             if (CanInterrogate) EventCards.ShowInterrogation(_prisoner, _changed);
         }
 
+        [DataSourceProperty] public string SecretDeathText => "Gizlice öldürt...";
+
+        public void ExecuteSecretDeath() => EventCards.ShowSecretDeath(_prisoner, _changed);
+
         public override void OnFinalize()
         {
             base.OnFinalize();
