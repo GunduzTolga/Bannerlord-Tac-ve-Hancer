@@ -761,7 +761,7 @@ namespace CheatMenu.Menu
                 inTown ? (Action)null : ShowNetworks, ShadowNetworks.Describe(state, town));
         }
 
-        /// <summary>Genelev: açmak ve çalışan almak şehirdeyken; payı değiştirmek ve kapatmak uzaktan da.</summary>
+        /// <summary>Genelev: açmak şehirdeyken; yönetim kartı (çalışanlar, pay, yönetici, kapatma) her yerden.</summary>
         private static void AddHouseEntries(IntrigueState state, Settlement town, bool inTown, List<MenuEntry> entries)
         {
             House house = state.HouseIn(town.StringId);
@@ -775,23 +775,8 @@ namespace CheatMenu.Menu
                     : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
                 return;
             }
-            if (inTown)
-            {
-                string blocked = NightHouses.HireBlocked(state, town);
-                string label = "Çalışan al (" + SchemeFactors.Money(HouseRules.HireCost) + "; " + house.Staff + "/" + NightHouses.MaxStaff(state, town) + ")";
-                entries.Add(blocked == null
-                    ? MenuEntry.Simple(label, () => NightHouses.Hire(state, town))
-                    : MenuEntry.Simple(label + " - " + blocked, () => MenuUI.Error(blocked)));
-            }
-            foreach (HouseShare share in new[] { HouseShare.Fair, HouseShare.Standard, HouseShare.Low })
-            {
-                if (share == house.Share) continue;
-                entries.Add(MenuEntry.Simple("Çalışanların payı: " + HouseRules.ShareName(share)
-                    + (HouseRules.LeaveChance(share) > 0 ? " (ayrılma %" + HouseRules.LeaveChance(share) + "/hafta)" : " (kimse ayrılmaz, daha çok haber)"),
-                    () => NightHouses.SetShare(state, town, share)));
-            }
-            entries.Add(MenuEntry.Submenu("Genelevi kapat...", () => MenuUI.Confirm("Genelevi kapat", "Açılış parası geri gelmez. Kapatılsın mı?",
-                () => NightHouses.Close(state, town), () => ShowShadowTown(town, inTown))));
+            entries.Add(MenuEntry.Submenu("Genelevi yönet... (" + house.Staff + "/" + NightHouses.MaxStaff(state, town) + " çalışan)",
+                () => MenuUI.Defer(() => NightHouses.ShowManage(town))));
         }
 
         // ---- Sana karşı entrikalar ----

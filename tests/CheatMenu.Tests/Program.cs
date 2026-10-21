@@ -418,7 +418,10 @@ namespace CheatMenu.Tests
             state.SpouseApartWeeks = 3;
             state.RomanceUntil["lord_10"] = 220;
             state.NextCourtshipId = 5;
-            state.Houses.Add(new House { TownId = "town_V1", Staff = 5, Share = HouseShare.Fair, Since = 120 });
+            var savedHouse = new House { TownId = "town_V1", Share = HouseShare.Fair, Since = 120, ManagerId = "companion_3", ManagerSince = 130 };
+            for (int i = 0; i < 5; i++)
+                savedHouse.Workers.Add(new HouseWorker { Name = "Lysa" + i, Female = i != 2, Age = 20 + i, Trait = (WorkerTrait)(i % 4), Since = 120 + i });
+            state.Houses.Add(savedHouse);
             state.Crises.Add(new Crisis { KingdomId = "vlandia", TownId = "town_V1", Level = 2, Day = 140, Crime = 30, OwnerId = "lord_4_1" });
             state.Letters.Add(new Letter { Id = 6, Kind = LetterKind.Audience, TargetId = "lord_15", Use = 3000, SentDay = 102, ArriveDay = 105 });
             state.Mission = SpymasterMission.SpreadRumors;
@@ -487,7 +490,12 @@ namespace CheatMenu.Tests
             Check("state: romance cooldown", back.RomanceUntil["lord_10"] == 220);
             Check("state: recruit cooldown", back.RecruitUntil.Count == 1 && back.RecruitUntil["lord_7"] == 210);
             Check("state: house", back.Houses.Count == 1 && back.HouseIn("town_V1") != null && back.Houses[0].Staff == 5
-                && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null);
+                && back.Houses[0].Share == HouseShare.Fair && back.Houses[0].Since == 120 && back.HouseIn("town_X") == null
+                && back.Houses[0].ManagerId == "companion_3" && back.Houses[0].ManagerSince == 130);
+            HouseWorker savedWorker = back.Houses[0].Workers[2];
+            Check("state: house workers keep names and details", back.Houses[0].Workers.Select(w => w.Name).SequenceEqual(new[] { "Lysa0", "Lysa1", "Lysa2", "Lysa3", "Lysa4" })
+                && !savedWorker.Female && savedWorker.Age == 22 && savedWorker.Trait == WorkerTrait.Favorite && savedWorker.Since == 122
+                && back.Houses[0].Workers[1].Female && back.Houses[0].Workers[3].Trait == WorkerTrait.Loyal);
             Check("state: tension", back.TensionWith("vlandia") == 55 && !back.Tension.ContainsKey("empire") && back.TensionWith("nope") == 0);
             Check("state: crisis", back.Crises.Count == 1 && back.Crises[0].KingdomId == "vlandia" && back.Crises[0].TownId == "town_V1"
                 && back.Crises[0].Level == 2 && back.Crises[0].Day == 140 && back.Crises[0].Crime == 30 && back.Crises[0].OwnerId == "lord_4_1");
@@ -904,6 +912,61 @@ namespace CheatMenu.Tests
                 && HouseRules.LeaveChance(HouseShare.Fair) == 0);
             Check("house: intel chance", HouseRules.IntelChance(4, HouseShare.Standard) == 20 && HouseRules.IntelChance(4, HouseShare.Fair) == 30
                 && HouseRules.IntelChance(20, HouseShare.Fair) == 60 && HouseRules.IntelChance(0, HouseShare.Fair) == 0);
+
+            // Adlı çalışanlar: özellikler, yaş, adaylar; yoldaş yönetici
+            Check("house: favorites earn half again", HouseRules.WeeklyGross(4, 5000f, 1) == 405 && HouseRules.WeeklyGross(2, 5000f, 9) == 270);
+            Check("house: manager raises income by Charm, takes a cut", HouseRules.ManagerIncomeBonus(-1) == 0 && HouseRules.ManagerIncomeBonus(120) == 30
+                && HouseRules.ManagerIncomeBonus(400) == 50 && HouseRules.WeeklyGross(4, 5000f, 0, 120) == 468
+                && HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard, 0, 120) == 234 && HouseRules.ManagerPay(468) == 46);
+            Check("house: a weak manager costs you money", HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard, 0, 0) < HouseRules.WeeklyNet(4, 5000f, HouseShare.Standard));
+            Check("house: listeners and the manager hear more", HouseRules.IntelChance(4, HouseShare.Standard, 2) == 30
+                && HouseRules.IntelChance(4, HouseShare.Standard, 0, 100) == 25 && HouseRules.IntelChance(4, HouseShare.Standard, 0, 900) == 30
+                && HouseRules.IntelChance(8, HouseShare.Fair, 8, 300) == 60);
+            Check("house: the manager's Roguery hides the house", HouseRules.ExposeChanceWith(-1) == 3 && HouseRules.ExposeChanceWith(0) == 3
+                && HouseRules.ExposeChanceWith(80) == 2 && HouseRules.ExposeChanceWith(500) == 1);
+            Check("house: loyal workers rarely leave", HouseRules.LeaveChance(HouseShare.Low, WorkerTrait.Loyal) == 5
+                && HouseRules.LeaveChance(HouseShare.Standard, WorkerTrait.Loyal) == 1 && HouseRules.LeaveChance(HouseShare.Low, WorkerTrait.Listener) == 15
+                && HouseRules.LeaveChance(HouseShare.Fair, WorkerTrait.None) == 0);
+            var traitHouse = new House();
+            traitHouse.Workers.Add(new HouseWorker { Name = "A", Trait = WorkerTrait.Favorite });
+            traitHouse.Workers.Add(new HouseWorker { Name = "B", Trait = WorkerTrait.Listener });
+            traitHouse.Workers.Add(new HouseWorker { Name = "C" });
+            Check("house: totals from the workers", HouseRules.Gross(traitHouse, 5000f, -1) == 315 && HouseRules.Intel(traitHouse, -1) == 20
+                && HouseRules.Net(traitHouse, 5000f, -1) == 189);
+
+            var rng = new Random(7);
+            Func<int, int> roll = n => rng.Next(n);
+            var candidates = new List<HouseWorker>();
+            var takenNames = new List<string>();
+            for (int i = 0; i < 200; i++)
+            {
+                HouseWorker c = HouseRules.NewWorker(new[] { "Ira", "Mira", "Zoe" }, new[] { "Corin" }, roll, 50, takenNames);
+                candidates.Add(c);
+            }
+            Check("house: candidates are adults", candidates.All(c => c.Age >= HouseRules.MinAge && c.Age <= HouseRules.MaxHireAge && c.Since == 50));
+            Check("house: candidates have names from the lists", candidates.All(c => c.Female ? new[] { "Ira", "Mira", "Zoe" }.Contains(c.Name) : c.Name == "Corin"));
+            Check("house: candidates are mostly women, some men", candidates.Count(c => c.Female) > 100 && candidates.Any(c => !c.Female));
+            Check("house: all traits appear", Enum.GetValues(typeof(WorkerTrait)).Cast<WorkerTrait>().All(t => candidates.Any(c => c.Trait == t)));
+            HouseWorker fallback = HouseRules.NewWorker(new string[0], null, n => 0, 1, null);
+            Check("house: fallback names when the culture has none", !string.IsNullOrEmpty(fallback.Name) && fallback.Age == HouseRules.MinAge);
+            int namePicks = 0;
+            HouseWorker unique = HouseRules.NewWorker(new[] { "Ira", "Mira" }, new[] { "Corin" }, n => n == 4 ? 1 : n == 2 ? (namePicks++ == 0 ? 0 : 1) : 0, 1,
+                new List<string> { "Ira" });
+            Check("house: a new name is tried when one is taken", unique.Name == "Mira");
+            Check("house: age grows with the years", HouseRules.AgeOn(new HouseWorker { Age = 20, Since = 10 }, 10 + 2 * HouseRules.DaysPerYear) == 22
+                && HouseRules.AgeOn(new HouseWorker { Age = 0, Since = 10 }, 0) == HouseRules.MinAge);
+            Check("house: worker line", HouseRules.WorkerLine(new HouseWorker { Name = "Lysa", Age = 23, Trait = WorkerTrait.Listener, Since = 5 }, 5) == "Lysa, 23 · kulağı delik"
+                && HouseRules.WorkerLine(new HouseWorker { Name = "Mira", Age = 30, Since = 5 }, 5) == "Mira, 30");
+
+            var legacy = IntrigueState.Parse("house\ttown=town_A1\tstaff=3\tshare=2\tsince=40\n");
+            Check("house: old saves keep the head count, unnamed", legacy.HouseIn("town_A1")?.Staff == 3 && legacy.Houses[0].Workers.All(w => w.Name == null && w.Since == 40));
+            int named = HouseRules.NameUnnamed(legacy.Houses[0], new[] { "Ira", "Mira", "Zoe", "Sera" }, new[] { "Corin" }, roll);
+            Check("house: unnamed workers get names and keep their start day", named == 3 && legacy.Houses[0].Workers.All(w => w.Name != null
+                && w.Age >= HouseRules.MinAge && w.Since == 40) && HouseRules.NameUnnamed(legacy.Houses[0], null, null, n => 0) == 0);
+
+            Check("house: manager decides for themself", HouseRules.ManagerRefusal(30, false, 0, 10) == null && HouseRules.ManagerRefusal(30, false, 1, 50) != null
+                && HouseRules.ManagerRefusal(30, false, -1, -5) != null && HouseRules.ManagerRefusal(30, false, -2, 0) == null);
+            Check("house: never a spouse, lover or minor", HouseRules.ManagerRefusal(30, true, -2, 100) != null && HouseRules.ManagerRefusal(17, false, -2, 100) != null);
 
             // Müşteri olarak (genelev ziyareti), askerlerin gecesi, hastalık
             Check("brothel: visit cost, half in your own house", HouseRules.VisitCost(false, false) == 150 && HouseRules.VisitCost(true, false) == 400

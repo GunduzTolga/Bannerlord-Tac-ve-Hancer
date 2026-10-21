@@ -213,12 +213,30 @@ namespace CheatMenu.Intrigue.Core
         public List<string> ChildIds = new List<string>();
     }
 
-    /// <summary>Gölge ağı olan bir şehirdeki genelev. Çalışanlar isimsiz ve gönüllü: yalnızca sayı (HouseRules).</summary>
+    /// <summary>
+    /// Gölge ağı olan bir şehirdeki genelev (HouseRules). Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir ama oyunun kahramanı
+    /// değildir. Yönetici bir yoldaş olabilir: evi işletir, müşteriye çıkmaz.
+    /// </summary>
     public sealed class House
     {
         public string TownId;
-        public int Staff;
+        public List<HouseWorker> Workers = new List<HouseWorker>();
+        public int Staff => Workers.Count;
         public HouseShare Share = HouseShare.Standard;
+        public int Since;
+        /// <summary>Evi işleten yoldaş (yalnızca işletme; müşteriye çıkmaz); yoksa null.</summary>
+        public string ManagerId;
+        public int ManagerSince;
+    }
+
+    /// <summary>Genelevde çalışan biri: kahraman değil, yalnızca bu evde var. Ad null ise eski kayıttan gelir; oyun katmanı ad verir.</summary>
+    public sealed class HouseWorker
+    {
+        public string Name;
+        public bool Female;
+        /// <summary>İşe girdiği gündeki yaşı (HouseRules.MinAge ve üstü).</summary>
+        public int Age;
+        public WorkerTrait Trait;
         public int Since;
     }
 
@@ -373,6 +391,7 @@ namespace CheatMenu.Intrigue.Core
         public string SaveTestMarker { get; set; }
 
         public int Roll100() => SchemeRandom.Roll100(Seed, ref Rolls);
+        public int Pick(int count) => SchemeRandom.Pick(Seed, ref Rolls, count);
 
         public Scheme FindScheme(string targetId) => Schemes.FirstOrDefault(s => s.TargetId == targetId);
 
@@ -519,7 +538,13 @@ namespace CheatMenu.Intrigue.Core
                 records.Add(new TextRecord("spouse").Add("watch", I(SpouseWatchUntil)).Add("apart", I(SpouseApartWeeks)));
             foreach (KeyValuePair<string, int> p in RomanceUntil) records.Add(new TextRecord("romancecd").Add("hero", p.Key).Add("until", I(p.Value)));
             foreach (House h in Houses)
-                records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since)));
+            {
+                records.Add(new TextRecord("house").Add("town", h.TownId).Add("staff", I(h.Staff)).Add("share", I((int)h.Share)).Add("since", I(h.Since))
+                    .Add("manager", h.ManagerId).Add("managersince", I(h.ManagerSince)));
+                foreach (HouseWorker w in h.Workers.Where(w => w.Name != null))
+                    records.Add(new TextRecord("hworker").Add("town", h.TownId).Add("name", w.Name).Add("female", B(w.Female)).Add("age", I(w.Age))
+                        .Add("trait", I((int)w.Trait)).Add("since", I(w.Since)));
+            }
             foreach (Crisis c in Crises)
                 records.Add(new TextRecord("crisis").Add("kingdom", c.KingdomId).Add("town", c.TownId).Add("level", I(c.Level))
                     .Add("day", I(c.Day)).Add("crime", I(c.Crime)).Add("owner", c.OwnerId));
@@ -740,11 +765,33 @@ namespace CheatMenu.Intrigue.Core
                     case "house":
                         int share = Int(r, "share");
                         if (Empty(r.Get("town")) == null || state.HouseIn(r.Get("town")) != null) break;
-                        state.Houses.Add(new House
+                        var house = new House
                         {
-                            TownId = r.Get("town"), Staff = SchemeMath.Clamp(Int(r, "staff"), 0, HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel)),
+                            TownId = r.Get("town"),
                             Share = Enum.IsDefined(typeof(HouseShare), share) ? (HouseShare)share : HouseShare.Standard, Since = Int(r, "since"),
-                        });
+                            ManagerId = Empty(r.Get("manager")), ManagerSince = Int(r, "managersince"),
+                        };
+                        // Adsız yer tutucular: ardından gelen "hworker" kayıtları doldurur; eski kayıtlarda (yalnızca sayı) adsız kalırlar.
+                        int staff = SchemeMath.Clamp(Int(r, "staff"), 0, HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel));
+                        for (int i = 0; i < staff; i++) house.Workers.Add(new HouseWorker { Since = house.Since });
+                        state.Houses.Add(house);
+                        break;
+                    case "hworker":
+                        House home = state.HouseIn(r.Get("town"));
+                        if (home == null || Empty(r.Get("name")) == null) break;
+                        int trait = Int(r, "trait");
+                        HouseWorker worker = home.Workers.FirstOrDefault(w => w.Name == null);
+                        if (worker == null)
+                        {
+                            if (home.Staff >= HouseRules.MaxStaff(SchemeMath.MaxNetworkLevel)) break;
+                            worker = new HouseWorker();
+                            home.Workers.Add(worker);
+                        }
+                        worker.Name = r.Get("name");
+                        worker.Female = Bool(r, "female");
+                        worker.Age = Math.Max(HouseRules.MinAge, Int(r, "age"));
+                        worker.Trait = Enum.IsDefined(typeof(WorkerTrait), trait) ? (WorkerTrait)trait : WorkerTrait.None;
+                        worker.Since = Int(r, "since");
                         break;
                     case "crisis":
                         if (Empty(r.Get("kingdom")) == null) break;

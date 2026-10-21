@@ -13,8 +13,8 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Genelev, müşteri tarafı (tasarım: docs/superpowers/specs/2026-10-19-p2-genelev.md): herhangi bir şehrin genelevinde bir gece,
     /// askerlere bir gece ısmarlamak ve oradan kapılabilen hastalık. Yalnızca metin ve resimli kart: içerisi anlatılmaz, perde iner.
-    /// Çalışanlar isimsiz, gönüllü ve ücretli yetişkinlerdir; hiçbir kahraman orada çalışmaz. Kurallar'daki "Genelev" ayarıyla açılır
-    /// (varsayılan kapalı). İşletme tarafı: NightHouses.
+    /// Çalışanlar adlı, gönüllü ve ücretli yetişkinlerdir (kahraman değil); hiçbir kahraman müşteriye çıkmaz. Kurallar'daki "Genelev"
+    /// ayarıyla açılır (varsayılan kapalı). İşletme tarafı ve yönetim kartı: NightHouses.
     /// </summary>
     public static class Brothels
     {
@@ -30,6 +30,16 @@ namespace CheatMenu.Intrigue
                 },
                 _ => MenuUI.SafeRun("Genelev", () => Show(Settlement.CurrentSettlement)),
                 false, 8);
+            // Kendi genelevin bu şehirdeyse: yönetim kartı (çalışanlar, pay, yönetici).
+            starter.AddGameMenuOption("town", "tvh_brothel_manage", "Genelevini yönet",
+                args =>
+                {
+                    args.optionLeaveType = GameMenuOption.LeaveType.Manage;
+                    Settlement town = Settlement.CurrentSettlement;
+                    return NightHouses.Enabled && town != null && SchemeEngine.State?.HouseIn(town.StringId) != null;
+                },
+                _ => MenuUI.SafeRun("Genelev", () => NightHouses.ShowManage(Settlement.CurrentSettlement)),
+                false, 8);
         }
 
         /// <summary>Kapıdaki kart: gece, askerler, (hastaysan) hekim.</summary>
@@ -38,6 +48,7 @@ namespace CheatMenu.Intrigue
             IntrigueState state = SchemeEngine.State;
             if (town == null || state == null) return;
             bool own = state.HouseIn(town.StringId) != null;
+            Hero manager = own ? NightHouses.Manager(state.HouseIn(town.StringId)) : null;
             int troops = Troops();
             var options = new List<EventCards.CardOption>
             {
@@ -72,7 +83,8 @@ namespace CheatMenu.Intrigue
 
             string text = "Kırmızı fenerin altında aralık bir kapı; içeride lavta, şarap ve alçak sesle konuşmalar. Kapıdaki kadın parayı sayar, "
                 + "adını sormaz. Burada çalışanlar kendi istekleriyle ve parasıyla çalışır."
-                + (own ? "\n\nBu ev senin: gece yarı fiyatına." : "")
+                + (own ? "\n\nBu ev senin: gece yarı fiyatına." + (manager != null ? " Evi " + manager.Name + " işletiyor; seni kapıda karşılıyor." : "")
+                    + " Çalışanlar, pay ve yönetici için kasaba menüsünde \"Genelevini yönet\"." : "")
                 + (state.IsIll(Today) ? "\n\n" + IllnessStatus(state) : "");
             EventCards.Show("Genelev", town.Name + " genelevi", text, CardImages.NightHouse, null, options, leave, null);
         }
