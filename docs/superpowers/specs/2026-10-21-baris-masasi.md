@@ -19,7 +19,7 @@ para + asker gibi şeyler eklersek güzel olur. Oyunda sadece haraç alma var di
   kademeliler önce), sınırına en yakın 8 şehir ve kale (her biri ayrı ayrı istenir).
 - **Verdiklerin:** altın (keseden 1.000-50.000), haraç ödemek (kaybederken barış almak için), elindeki lordlarını bırakmak. Hem haraç
   alıp hem verilemez.
-- Şartlar bölümlü: **Para** (haraç, tazminat), **Asker ve esirler** (asker, esir lordlarını bıraksınlar), **Toprak**, **Anlaşmalar**
+- Şartlar bölümlü: **Para** (haraç, tazminat), **Asker ve esirler** (asker, esir lordlarını bıraksınlar), **Tımarlar**, **Anlaşmalar**
   (rehine, saldırmazlık, ticaret, ittifak).
 
 ## Anlaşmalar ve esirler (21 Ekim, ikinci adım)

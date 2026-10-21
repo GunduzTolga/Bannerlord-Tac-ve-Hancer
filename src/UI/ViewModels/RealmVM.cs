@@ -14,7 +14,7 @@ namespace CheatMenu.UI.ViewModels
 {
     /// <summary>
     /// Saray > Krallık paneli (tasarım: docs/superpowers/specs/2026-10-21-krallik-sekmesi.md): krallığının klanları solda; seçili klana
-    /// altın bağışı ve (hükümdarsan) fief verme sağda; altında barıştaki krallıklara iade edilebilecek yerler. İşlemler Diplomacy'nin
+    /// altın bağışı ve (hükümdarsan) fief verme sağda; altında barıştaki krallıklara iade edilebilecek tımarlar. İşlemler Diplomacy'nin
     /// (bağış, fief verme ve iade pencereleri buraya yönlenir: BundleShim); geri alınamayanlar onay ister.
     /// </summary>
     public sealed class RealmVM : TvhViewModel
@@ -39,8 +39,8 @@ namespace CheatMenu.UI.ViewModels
 
         [DataSourceProperty] public string ClansTitle => "KLANLAR";
         [DataSourceProperty] public string DonateTitle => "ALTIN BAĞIŞLA";
-        [DataSourceProperty] public string GrantTitle => "TOPRAK VER";
-        [DataSourceProperty] public string ReturnsTitle => "İADE EDİLEBİLİR TOPRAKLAR";
+        [DataSourceProperty] public string GrantTitle => "TIMAR VER";
+        [DataSourceProperty] public string ReturnsTitle => "İADE EDİLEBİLİR TIMARLAR";
         [DataSourceProperty] public string DonateText => "Bağışla";
         [DataSourceProperty] public string DonateNote => "Altın klanın komutanlarına paylaşılır; lideri sana minnet duyar. Cömertlik ününü artırır.";
         [DataSourceProperty] public MBBindingList<ClanItemVM> Clans { get; }
@@ -64,7 +64,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty] public bool IsRuler { get => _isRuler; set => Set(ref _isRuler, value, nameof(IsRuler)); }
         [DataSourceProperty] public bool HasReturns { get => _hasReturns; set { if (Set(ref _hasReturns, value, nameof(HasReturns))) OnPropertyChanged(nameof(HasNoReturns)); } }
         [DataSourceProperty] public bool HasNoReturns => !_hasReturns;
-        [DataSourceProperty] public string NoReturnsText => "Şu an iade edilebilecek yer yok: barışta olduğun bir krallıktan aldığın şehir ve kaleler burada görünür.";
+        [DataSourceProperty] public string NoReturnsText => "Şu an iade edilebilecek tımar yok: barışta olduğun bir krallıktan aldığın şehir ve kaleler burada görünür.";
 
         /// <summary>Bu klan seçili açılsın (Diplomacy'nin bağış ve fief verme düğmelerinden).</summary>
         public void Focus(Clan clan)
@@ -83,7 +83,7 @@ namespace CheatMenu.UI.ViewModels
             Clear(Returns);
             if (kingdom == null)
             {
-                EmptyText = "Bir krallıkta değilsin: klanlara bağış, toprak verme ve iade bir krallığın içinde yapılır.";
+                EmptyText = "Bir krallıkta değilsin: klanlara bağış, tımar verme ve iade bir krallığın içinde yapılır.";
                 Subtitle = Summary = GrantNote = "";
                 HasSelection = HasReturns = IsRuler = false;
                 return;
@@ -93,7 +93,7 @@ namespace CheatMenu.UI.ViewModels
             List<Clan> clans = kingdom.Clans.Where(c => c != Clan.PlayerClan && !c.IsEliminated && c.Leader != null)
                 .OrderByDescending(c => c == kingdom.RulingClan).ThenBy(c => c.IsUnderMercenaryService).ThenByDescending(c => c.Tier)
                 .ThenBy(c => c.Name.ToString()).ToList();
-            Summary = clans.Count + " klan  ·  kesende " + SchemeFactors.Money(Hero.MainHero.Gold) + "  ·  " + Clan.PlayerClan.Fiefs.Count + " yerin";
+            Summary = clans.Count + " klan  ·  kesende " + SchemeFactors.Money(Hero.MainHero.Gold) + "  ·  " + Clan.PlayerClan.Fiefs.Count + " tımarın";
 
             if (_selected == null || !clans.Contains(_selected))
             {
@@ -129,7 +129,7 @@ namespace CheatMenu.UI.ViewModels
             }
             SelectedName = _selected.Name + " klanı";
             SelectedInfo = "Lideri " + leader.Name + "  ·  seninle " + SchemeFactors.Signed(leader.GetRelation(Hero.MainHero)) + "  ·  kademe " + _selected.Tier
-                + "  ·  " + _selected.Fiefs.Count + " yer" + (_selected.IsUnderMercenaryService ? "  ·  paralı asker" : "")
+                + "  ·  " + _selected.Fiefs.Count + " tımar" + (_selected.IsUnderMercenaryService ? "  ·  paralı asker" : "")
                 + (_selected == _selected.Kingdom?.RulingClan ? "  ·  hükümdar klanı" : "");
 
             List<int> steps = PeaceTreatyRules.GiftSteps(Hero.MainHero.Gold);
@@ -142,12 +142,12 @@ namespace CheatMenu.UI.ViewModels
         private void RefreshGrants(Hero leader)
         {
             List<Town> fiefs = Clan.PlayerClan.Fiefs.Where(t => !t.IsOwnerUnassigned).OrderBy(t => t.IsCastle).ThenBy(t => t.Name.ToString()).ToList();
-            string blocked = !IsRuler ? "Toprak (şehir ya da kale) vermek hükümdarın işi; sen bağış yapabilirsin."
+            string blocked = !IsRuler ? "Tımar (şehir ya da kale) vermek hükümdarın işi; sen bağış yapabilirsin."
                 : fiefs.Count == 0 ? "Verebileceğin bir şehrin ya da kalen yok."
-                : _selected.IsUnderMercenaryService || _selected.IsMinorFaction ? "Paralı klanlara toprak verilmez."
+                : _selected.IsUnderMercenaryService || _selected.IsMinorFaction ? "Paralı klanlara tımar verilmez."
                 : !DiplomacyCompat.IsAvailable ? "Diplomacy paketli değil."
                 : DiplomacyCompat.GrantFiefBlocked(_selected);
-            GrantNote = blocked ?? "Senden az yeri olan klanlar kıskanabilir: onlarla ilişkin biraz düşer.";
+            GrantNote = blocked ?? "Senden az tımarı olan klanlar kıskanabilir: onlarla ilişkin biraz düşer.";
             if (blocked != null) return;
             Clan target = _selected;
             string clanName = target.Name.ToString();
@@ -160,7 +160,7 @@ namespace CheatMenu.UI.ViewModels
                     settlement.IsUnderSiege ? "Kuşatma altında" : null,
                     () => MenuUI.Confirm(town.Name + " " + Tr.Dative(clanName) + " verilsin mi?",
                         place + " artık " + clanName + " klanının olacak; geri alınamaz.\n\n" + leader.Name + " ile ilişki +" + Math.Max(0, preview)
-                        + ". Senden az yeri olan klanlar kıskanabilir (onlarla ilişkin biraz düşer).",
+                        + ". Senden az tımarı olan klanlar kıskanabilir (onlarla ilişkin biraz düşer).",
                         () =>
                         {
                             DiplomacyCompat.GrantFief(settlement, target);
@@ -236,7 +236,7 @@ namespace CheatMenu.UI.ViewModels
         }
     }
 
-    /// <summary>Krallığının bir klanı: sancak, ad ve kademe, lideri ve ilişkin, yerleri ve gücü; tıklanınca seçilir.</summary>
+    /// <summary>Krallığının bir klanı: sancak, ad ve kademe, lideri ve ilişkin, tımarları ve gücü; tıklanınca seçilir.</summary>
     public sealed class ClanItemVM : TvhViewModel
     {
         private readonly Clan _clan;
@@ -249,7 +249,7 @@ namespace CheatMenu.UI.ViewModels
             IsSelected = selected;
             Banner = new BannerImageIdentifierVM(clan.Banner, true);
             Name = clan.Name + "  ·  kademe " + clan.Tier;
-            Info = clan.Leader.Name + "  ·  seninle " + SchemeFactors.Signed(clan.Leader.GetRelation(Hero.MainHero)) + "  ·  " + clan.Fiefs.Count + " yer"
+            Info = clan.Leader.Name + "  ·  seninle " + SchemeFactors.Signed(clan.Leader.GetRelation(Hero.MainHero)) + "  ·  " + clan.Fiefs.Count + " tımar"
                 + "  ·  güç " + ((int)clan.CurrentTotalStrength).ToString("N0");
             Tag = clan == clan.Kingdom?.RulingClan ? "hükümdar klanı" : clan.IsUnderMercenaryService ? "paralı asker" : "";
         }

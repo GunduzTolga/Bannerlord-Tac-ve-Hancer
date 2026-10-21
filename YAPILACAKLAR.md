@@ -63,12 +63,12 @@ Bütün krallıklar ve bağların tek sekmede. Tasarım: `docs\superpowers\specs
 - [ ] Hükümdar değilken yalnızca ulak ve "anlaşmaları hükümdarın yapar" notu; krallığın yokken de liste ve ulak
 - [ ] Insert > Entrika > "Krallıklar" sekmeyi açıyor
 
-### Saray > Krallık: bağış, toprak verme, iade (21 Ekim, yeni)
+### Saray > Krallık: bağış, tımar verme, iade (21 Ekim, yeni)
 Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Krallık sekmesi. Tasarım: `docs\superpowers\specs\2026-10-21-krallik-sekmesi.md`.
 - [ ] Saray bölümünde alt sekmeler: Saray · Krallık · Divan · Kronik. Krallık: solda klanlar (sancak, lider, ilişki, yer, güç), sağda seçili klan
 - [ ] Altın bağışla: miktarı +/- ile seç, "ilişki +N" önizlemesi Diplomacy'nin penceresindekiyle aynı mı; Bağışla → kese azalıyor, ilişki artıyor
-- [ ] Hükümdarsan: Toprak ver listesinde şehir ve kalelerin; birine tıkla → onay → yer o klana geçiyor, ilişki artıyor; az yeri olanlar kıskanıyor
-- [ ] Hükümdar değilsen: "Toprak vermek hükümdarın işi" notu; paralı klan seçince "Paralı klanlara toprak verilmez"
+- [ ] Hükümdarsan: Tımar ver listesinde şehir ve kalelerin; birine tıkla → onay → yer o klana geçiyor, ilişki artıyor; az yeri olanlar kıskanıyor
+- [ ] Hükümdar değilsen: "Tımar vermek hükümdarın işi" notu; paralı klan seçince "Paralı klanlara tımar verilmez"
 - [ ] İade: barıştaki bir krallıktan aldığın yer listede mi; iade et → eski sahibine dönüyor, ilişki artıyor
 - [ ] Krallık ekranı > Klanlar'daki Diplomacy düğmeleri ("Altın Bağışla", "Tımar ver") ve ansiklopedideki "Tımar ver": Krallık ekranı kapanıp
       Krallık sekmesi o klan seçili açılıyor mu; Diplomasi'deki "Return Fief" düğmesi (çevirisi yok) Krallık sekmesini açıyor mu
@@ -88,7 +88,7 @@ Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Kr
 ### Barış Masası: şartlı barış (21 Ekim, yeni; hükümdar olmalısın; ekran görüntüsü çok işe yarar)
 - [ ] Entrika ekranı > Savaş ve barış > **Savaşlar**: solda savaşların (sancak, kaç gündür, güç, yorgunluk, şartsız barış %), sağda seçilinin
       masası. Savaş Raporu'ndaki **Barış Masası...** ve Insert > Entrika > **Barış Masası...** buraya getiriyor
-- [ ] Masa: üstte pazarlık gücün ve nedenleri; solda bölümlü istediklerin (**Para**: haraç, tazminat · **Asker ve esirler** · **Toprak**:
+- [ ] Masa: üstte pazarlık gücün ve nedenleri; solda bölümlü istediklerin (**Para**: haraç, tazminat · **Asker ve esirler** · **Tımarlar**:
       sınırına yakın şehir/kaleler · **Anlaşmalar**: rehine, saldırmazlık, ticaret, ittifak), sağda verdiklerin (altın, haraç, esirlerini
       bırak); altta özet, **Kabul olasılığı: %X**. Şart ekledikçe olasılık düşüyor mu
 - [ ] Yeni şartlar: esir lordların serbest kaldı mı; rehine senin şehrine geldi mi (Saray'da rehine anlaşması görünüyor mu); saldırmazlık

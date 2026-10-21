@@ -12,7 +12,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 |---|---|---|
 | **Entrika** | Süren · Yeni entrika · Ağlar · Sana karşı | casus başının işleri (soldaki casus başı sütunu yalnızca burada) |
 | **Kişiler** | Kişiler · Lordlar · Esirler | insanlar: dosyalar, lordlarla iletişim (ulak, çağır, ziyafet), esirler |
-| **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, toprak (şehir ve kale) verme ve iade; divan koltukları ve raporları; olayların kaydı |
+| **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, tımar (şehir ve kale) verme ve iade; divan koltukları ve raporları; olayların kaydı |
 | **Savaş ve barış** | Krallıklar · Savaşlar · İsyanlar | bütün krallıklar ve bağlar (ittifak, ticaret, saldırmazlık, savaş ilanı), her savaşın durumu ve Barış Masası, isyan grupları |
 
 ## Ayrı pencere kalanlar (yalnızca bunlar)

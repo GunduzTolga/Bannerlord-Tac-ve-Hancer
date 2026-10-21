@@ -34,6 +34,8 @@ denetim, git) **ona yaptırma, kendin yap**. Yalnızca oyunda bakılması gereke
 ## Kurallar
 - Her değişiklikten sonra `build.ps1` (ya da en azından testler + GuiCheck) temiz geçmeli.
 - Arayüz metinleri yalnızca Latin-1 + ŞşİıĞğ.
+- Terimler (kullanıcı kararları, 21 Ekim): fief = **tımar** (oyunun Türkçesi de öyle; "toprak" ya da "fief" yazma), Divan'ın savaş koltuğu
+  **Mareşal** ("Serdar" değil).
 - Yeni özellik yeni pencere açmaz: Entrika ekranının bir alt sekmesine girer (kullanıcı isteği, 21 Ekim). Ayrı pencere yalnızca olay
   kartları ve Savaş Raporu (Diplomacy'nin harita girişi).
 - Yetişkin içerik yalnızca metin ve perde kapanır; 18+ zorunlu. Reddedilenler: cariyelik; esirleri, eşleri ya da adlı karakterleri

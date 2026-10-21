@@ -325,7 +325,7 @@ namespace CheatMenu.Bundle
             try
             {
                 MethodInfo can = Static("Diplomacy.Actions.GrantFiefAction", "CanGrantFief", 2);
-                if (can == null) return "Diplomacy'nin toprak verme kuralı bulunamadı";
+                if (can == null) return "Diplomacy'nin tımar verme kuralı bulunamadı";
                 object[] args = { clan, null };
                 return (bool)can.Invoke(null, args) ? null : args[1] as string ?? "Verilemez";
             }
@@ -353,7 +353,7 @@ namespace CheatMenu.Bundle
         internal static void GrantFief(Settlement settlement, Clan clan)
         {
             MethodInfo apply = Static("Diplomacy.Actions.GrantFiefAction", "Apply", 2)
-                ?? throw new InvalidOperationException("Diplomacy'nin toprak verme işlemi bulunamadı");
+                ?? throw new InvalidOperationException("Diplomacy'nin tımar verme işlemi bulunamadı");
             apply.Invoke(null, new object[] { settlement, clan });
         }
 
