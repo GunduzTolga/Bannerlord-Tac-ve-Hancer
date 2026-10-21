@@ -34,14 +34,15 @@ namespace CheatMenu.Intrigue
         public static Hero Working(IntrigueState state)
         {
             Hero hero = Current(state);
-            return hero != null && !hero.IsPrisoner ? hero : null;
+            return hero != null && !hero.IsPrisoner && !SchemeFactors.IsHostageAbroad(hero) ? hero : null;
         }
 
         public static string Blocked(IntrigueState state)
         {
             Hero hero = Current(state);
             if (hero == null) return "Serdarın yok";
-            return hero.IsPrisoner ? hero.Name + " esir; haber alamıyor" : null;
+            if (hero.IsPrisoner) return hero.Name + " esir; haber alamıyor";
+            return SchemeFactors.IsHostageAbroad(hero) ? hero.Name + " rehine olarak yabancı sarayda; haber alamıyor" : null;
         }
 
         public static int Tactics(Hero hero) => hero?.GetSkillValue(DefaultSkills.Tactics) ?? 0;

@@ -35,13 +35,13 @@ namespace CheatMenu.Intrigue
             return null;
         }
 
-        /// <summary>Gönderebileceğin aile üyeleri: klanındaki hayattaki, esir olmayan, parti yönetmeyen, eşin olmayan, genelevde işi olmayan kişiler.</summary>
+        /// <summary>Gönderebileceğin aile üyeleri: klanındaki hayattaki, esir olmayan, parti yönetmeyen, eşin olmayan, divanda ya da genelevde işi olmayan kişiler.</summary>
         public static List<Hero> OurCandidates(IntrigueState state) =>
             Clan.PlayerClan.Heroes
                 .Where(h => h.IsAlive && h != Hero.MainHero && h != Hero.MainHero.Spouse && !h.IsPrisoner && !h.IsPregnant
                     && !(h.PartyBelongedTo != null && h.PartyBelongedTo.LeaderHero == h && h.PartyBelongedTo != MobileParty.MainParty)
                     && !state.Hostages.Any(d => d.GivenId == h.StringId || d.HeldId == h.StringId)
-                    && NightHouses.RoleOf(state, h) == null)
+                    && Council.SeatOf(state, h) == null)
                 .OrderBy(h => h.Age)
                 .ToList();
 
@@ -240,6 +240,9 @@ namespace CheatMenu.Intrigue
         private static void Send(Hero hero, Settlement settlement)
         {
             if (hero.GovernorOf != null) ChangeGovernorAction.RemoveGovernorOf(hero);
+            // Partindeyse önce partiden çıkar (genelevdeki yoldaşlar gibi); yoksa hem partide hem sarayda görünür.
+            if (hero.PartyBelongedTo != null && hero.PartyBelongedTo.LeaderHero != hero)
+                hero.PartyBelongedTo.MemberRoster.AddToCounts(hero.CharacterObject, -1);
             TeleportHeroAction.ApplyImmediateTeleportToSettlement(hero, settlement);
         }
 
