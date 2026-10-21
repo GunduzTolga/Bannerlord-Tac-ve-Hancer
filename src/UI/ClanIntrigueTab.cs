@@ -172,7 +172,8 @@ namespace CheatMenu.UI
         }
 
         /// <summary>
-        /// Klan ekranı açık ama sekmemizin ViewModel eki oluşmadıysa (düğme boş ve tıklanmaz) bir kez nedenini yazar.
+        /// Klan ekranı açık ama sekmemizin ViewModel eki oluşmadıysa (düğme boş ve tıklanmaz) bir kez nedenini yazar ve bu oturumda
+        /// ayrı Entrika ekranına (IntrigueScreen) geçer.
         /// </summary>
         private static void CheckBound()
         {
@@ -186,8 +187,11 @@ namespace CheatMenu.UI
             object vm = (ScreenManager.TopScreen as SandBox.GauntletUI.GauntletClanScreen)?._dataSource;
             string type = vm?.GetType().FullName ?? "(ekran bulunamadı: " + ScreenManager.TopScreen?.GetType().FullName + ")";
             Debug.Print("[CheatMenu] clan intrigue mixin missing; clan view model: " + type + " from " + vm?.GetType().Assembly.GetName().Name);
+            // Sekme boş kalacak: bu oturumda Home, harita çubuğu, ansiklopedi ve Insert ayrı Entrika ekranını açsın.
+            Registered = false;
             MenuUI.Error("Entrika sekmesi Klan ekranına bağlanamadı (ekran: " + type
-                + (vm != null ? ", " + vm.GetType().Assembly.GetName().Name : "") + "). Bu satırın ekran görüntüsünü at; Insert menüsü çalışır.");
+                + (vm != null ? ", " + vm.GetType().Assembly.GetName().Name : "") + "). Bu satırın ekran görüntüsünü at. Bu oturumda Home ve "
+                + "harita düğmesi ayrı Entrika ekranını açar.");
         }
 
         /// <summary>Kampanya kapanırken.</summary>
