@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Savaş ve barış > Krallıklar paneli (ViewModel: KingdomsVM). Üstte krallığın ve yetkin, sağda savaş ve müttefik sayısı, nüfuzun, kesen.
+  Solda bütün krallıklar (TvhKingdomItem); sağda seçilinin kartı (sancak, hükümdar portresi, güç, seninle durumu), altında iki sütun:
+  DURUM (bağlar, kalan süreler, savaştıkları, müttefikleri, diplomatın gözüyle tutumu, ittifak ve ticarete bakışı) ve
+  NE YAPABİLİRSİN (TvhActionRow: ittifak, ticaret, saldırmazlık, savaşa çağırma, ittifakı bozma, savaş ilanı, ulak; savaştaysan
+  Barış Masası ve Savaş Raporu). Yapılamayanın nedeni düğmenin yanında.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="80" MarginRight="80" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoKingdoms" />
+
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@HasKingdoms">
+          <Children>
+            <!-- ===== Başlık şeridi ===== -->
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginRight="560" Brush="Tvh.Text.Name" Text="@Subtitle" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="550" SuggestedHeight="30" HorizontalAlignment="Right" Brush="Tvh.Text.MutedRight" Text="@Summary" />
+
+            <!-- ===== Sol: krallıklar ===== -->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="420" MarginTop="40">
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@ListTitle" />
+                <ScrollablePanel Id="KingdomsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="36" MarginRight="18" AutoHideScrollBars="true" ClipRect="KingdomsClip" InnerPanel="KingdomsClip\KingdomsList" VerticalScrollbar="..\KingdomsBar\Scrollbar">
+                  <Children>
+                    <Widget Id="KingdomsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="KingdomsList" DataSource="{Items}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <ItemTemplate>
+                            <TvhKingdomItem />
+                          </ItemTemplate>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="KingdomsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginTop="36" />
+              </Children>
+            </Widget>
+
+            <!-- ===== Sağ: seçili krallık ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="444" MarginTop="40" IsVisible="@HasSelection">
+              <Children>
+                <!-- Kart: sancak, hükümdar, güç, seninle durumu -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="112">
+                  <Children>
+                    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Card" DoNotAcceptEvents="true" />
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="64" SuggestedHeight="86" MarginLeft="12" VerticalAlignment="Center">
+                      <Children>
+                        <ImageIdentifierWidget DataSource="{Banner}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                      </Children>
+                    </Widget>
+                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="116" SuggestedHeight="88" MarginLeft="88" VerticalAlignment="Center" Sprite="BlankWhiteSquare_9" Color="#8C6D3FFF">
+                      <Children>
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" MarginTop="2" MarginBottom="2" Sprite="BlankWhiteSquare_9" Color="#0E0B08FF">
+                          <Children>
+                            <ImageIdentifierWidget DataSource="{RulerPortrait}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" />
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </Widget>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginLeft="220" MarginRight="260" MarginTop="10" Brush="Tvh.Text.Name" Text="@SelectedName" />
+                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="240" SuggestedHeight="30" HorizontalAlignment="Right" MarginRight="16" MarginTop="10" Brush="Tvh.Text.Bad" Text="@StanceLine" IsVisible="@IsHostile" />
+                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="240" SuggestedHeight="30" HorizontalAlignment="Right" MarginRight="16" MarginTop="10" Brush="Tvh.Text.Gold" Text="@StanceLine" IsVisible="@IsFriendly" />
+                    <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="240" SuggestedHeight="30" HorizontalAlignment="Right" MarginRight="16" MarginTop="10" Brush="Tvh.Text.Muted" Text="@StanceLine" IsVisible="@IsNeutral" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="220" MarginRight="16" MarginTop="46" Brush="Tvh.Text.Small" Text="@RulerLine" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginLeft="220" MarginRight="16" MarginTop="74" Brush="Tvh.Text.Small" Text="@StatsLine" />
+                  </Children>
+                </Widget>
+
+                <!-- Sol sütun: durum -->
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="500" MarginTop="126">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@LinesTitle" />
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="36" Sprite="BlankWhiteSquare_9" Color="#0D0A0799">
+                      <Children>
+                        <ScrollablePanel Id="LinesScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="18" MarginTop="8" MarginBottom="8" AutoHideScrollBars="true" ClipRect="LinesClip" InnerPanel="LinesClip\LinesList" VerticalScrollbar="..\LinesBar\Scrollbar">
+                          <Children>
+                            <Widget Id="LinesClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                              <Children>
+                                <ListPanel Id="LinesList" DataSource="{Lines}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                                  <ItemTemplate>
+                                    <TvhWarLine />
+                                  </ItemTemplate>
+                                </ListPanel>
+                              </Children>
+                            </Widget>
+                          </Children>
+                        </ScrollablePanel>
+                        <Standard.VerticalScrollbar Id="LinesBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginRight="4" MarginTop="8" MarginBottom="8" />
+                      </Children>
+                    </Widget>
+                  </Children>
+                </Widget>
+
+                <!-- Sağ sütun: yapılabilecekler -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="524" MarginTop="126">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginLeft="6" Brush="Tvh.Text.Section" Text="@ActionsTitle" />
+                    <ScrollablePanel Id="ActionsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="40" MarginRight="18" AutoHideScrollBars="true" ClipRect="ActionsClip" InnerPanel="ActionsClip\ActionsList" VerticalScrollbar="..\ActionsBar\Scrollbar">
+                      <Children>
+                        <Widget Id="ActionsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                          <Children>
+                            <ListPanel Id="ActionsList" DataSource="{Actions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="6" StackLayout.LayoutMethod="VerticalTopToBottom">
+                              <ItemTemplate>
+                                <TvhActionRow />
+                              </ItemTemplate>
+                            </ListPanel>
+                          </Children>
+                        </Widget>
+                      </Children>
+                    </ScrollablePanel>
+                    <Standard.VerticalScrollbar Id="ActionsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginTop="40" />
+                  </Children>
+                </Widget>
+              </Children>
+            </Widget>
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

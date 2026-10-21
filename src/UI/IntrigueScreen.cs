@@ -143,6 +143,9 @@ namespace CheatMenu.UI
         /// <summary>Saray > Krallık, bu klan seçili (null: son seçili ya da ilk klan).</summary>
         public static void OpenRealm(Clan clan) => OpenAt(vm => vm.FocusRealm(clan));
 
+        /// <summary>Savaş ve barış > Krallıklar, bu krallık seçili (null: son seçili ya da ilk).</summary>
+        public static void OpenKingdoms(Kingdom kingdom) => OpenAt(vm => vm.FocusKingdoms(kingdom));
+
         public static void Close()
         {
             if (!IsOpen) return;

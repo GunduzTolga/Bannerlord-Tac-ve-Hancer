@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Krallıklar listesinde bir krallık (ViewModel: KingdomItemVM): tıklanınca seçilir. Sancak, ad, hükümdar ve ilişkin, yerleri ve gücü;
+  seninle durumu (savaş kırmızı; ittifak, saldırmazlık, ticaret altın; barış soluk). Yazılar tıklamayı alta (kartın kendisine) geçirir.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="96" MarginBottom="6">
+      <Children>
+        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.ListItem" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true" />
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="56" SuggestedHeight="76" MarginLeft="12" VerticalAlignment="Center" DoNotAcceptEvents="true">
+          <Children>
+            <ImageIdentifierWidget DataSource="{Banner}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" DoNotAcceptEvents="true" />
+          </Children>
+        </Widget>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="82" MarginRight="10" MarginTop="8" Brush="Tvh.Text.Name" Text="@Name" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="82" MarginRight="10" MarginTop="38" Brush="Tvh.Text.Small" Text="@Info" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="82" MarginRight="10" MarginTop="62" Brush="Tvh.Text.Bad" Text="@StanceText" IsVisible="@IsHostile" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="82" MarginRight="10" MarginTop="62" Brush="Tvh.Text.Gold" Text="@StanceText" IsVisible="@IsFriendly" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="82" MarginRight="10" MarginTop="62" Brush="Tvh.Text.Muted" Text="@StanceText" IsVisible="@IsNeutral" DoNotAcceptEvents="true" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -52,6 +52,17 @@ Lordlar, İsyanlar ve Barış Masası artık ayrı pencere değil, Entrika ekran
 - [ ] Insert > Entrika'daki Lordlar / İsyanlar / Barış Masası girişleri ilgili sekmeyi açıyor
 - [ ] Klan ekranının Entrika sekmesinde de, ayrı Entrika ekranında da aynı
 
+### Savaş ve barış > Krallıklar: ittifak, ticaret, saldırmazlık, savaş ilanı (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Bütün krallıklar ve bağların tek sekmede. Tasarım: `docs\superpowers\specs\2026-10-21-kralliklar-sekmesi.md`.
+- [ ] Savaş ve barış bölümünde alt sekmeler: Krallıklar · Savaşlar · İsyanlar. Solda krallıklar (savaştıkların kırmızı, müttefik/saldırmazlık/ticaret altın)
+- [ ] Sağda seçilinin kartı (sancak, hükümdar portresi, güç, yayılmacılık), DURUM satırları ve NE YAPABİLİRSİN düğmeleri; yazılar taşıyor mu
+- [ ] Hükümdarken: İttifak öner (kabul etmiyorsa nedeni yanında), Ticaret anlaşması öner, Saldırmazlık öner, Savaş ilan et; bedeller (nüfuz/altın) düşüyor mu
+- [ ] Müttefikle: "Savaşa çağır: X" → müttefik savaşa giriyor mu, **altın bir kez mi düşüyor** (iki kez ya da hiç düşmüyorsa yaz); "İttifakı boz"
+- [ ] Kalan günler doğru mu (ittifak, ticaret, saldırmazlık); Krallık ekranı > Diplomasi'dekiyle karşılaştır
+- [ ] Savaştığın krallıkta "Barış Masası'na otur" Savaşlar sekmesini o savaşla açıyor; "Savaş Raporu" açılıyor
+- [ ] Hükümdar değilken yalnızca ulak ve "anlaşmaları hükümdarın yapar" notu; krallığın yokken de liste ve ulak
+- [ ] Insert > Entrika > "Krallıklar" sekmeyi açıyor
+
 ### Saray > Krallık: bağış, toprak verme, iade (21 Ekim, yeni)
 Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Krallık sekmesi. Tasarım: `docs\superpowers\specs\2026-10-21-krallik-sekmesi.md`.
 - [ ] Saray bölümünde alt sekmeler: Saray · Krallık · Divan · Kronik. Krallık: solda klanlar (sancak, lider, ilişki, yer, güç), sağda seçili klan

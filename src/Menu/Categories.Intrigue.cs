@@ -60,6 +60,7 @@ namespace CheatMenu.Menu
             if (spymaster != null) entries.Add(MenuEntry.Simple("Casus başını görevden al", SchemeEngine.DismissSpymaster));
             entries.Add(MenuEntry.Submenu("Hanedan: meşrulaştırma ve klanı devretme...", ShowDynasty));
             entries.Add(MenuEntry.Simple("Lordlar: iletişim, ziyafet, yanına çağır", () => UI.IntrigueScreen.OpenTab(UI.ViewModels.IntrigueScreenVM.TabLords)));
+            entries.Add(MenuEntry.Simple("Krallıklar: ittifak, ticaret, saldırmazlık, savaş ilanı", () => UI.IntrigueScreen.OpenKingdoms(null)));
             Kingdom realm = Clan.PlayerClan.Kingdom;
             string rebellions = realm == null ? "bir krallıkta değilsin" : !Bundle.DiplomacyCompat.IsAvailable ? "Diplomacy paketli değil" : null;
             entries.Add(rebellions == null

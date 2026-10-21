@@ -258,6 +258,13 @@
                   </Children>
                 </Widget>
 
+                <!-- ===== Krallıklar ===== -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsKingdomsTab">
+                  <Children>
+                    <TvhKingdomsPanel DataSource="{Kingdoms}" />
+                  </Children>
+                </Widget>
+
                 <!-- ===== Krallık ===== -->
                 <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" IsVisible="@IsRealmTab">
                   <Children>

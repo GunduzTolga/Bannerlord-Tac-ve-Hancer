@@ -393,6 +393,162 @@ namespace CheatMenu.Bundle
             apply.Invoke(null, new object[] { settlement, kingdom });
         }
 
+        // ---- Krallıklar sekmesi: Diplomacy'nin doğrudan savaş ilanı, saldırmazlık anlaşması, ittifak bedeli ve yayılmacılık ----
+
+        /// <summary>Diplomacy'nin bir bedeli: nüfuz ve altın (biri sıfır olabilir); ödemesi de onun.</summary>
+        internal sealed class Cost
+        {
+            internal object Raw;
+            public int Influence, Gold;
+
+            public bool CanPay
+            {
+                get
+                {
+                    try
+                    {
+                        return Raw?.GetType().GetMethod("CanPayCost", Type.EmptyTypes)?.Invoke(Raw, null) is bool can && can;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            public void Pay()
+            {
+                MethodInfo apply = Raw?.GetType().GetMethod("ApplyCost", Type.EmptyTypes) ?? throw new InvalidOperationException("Diplomacy'nin bedeli ödenemedi");
+                apply.Invoke(Raw, null);
+            }
+        }
+
+        private static int Value(object cost) => cost == null ? 0 : (int)Math.Round(Read<float>(cost, "Value"));
+
+        /// <summary>Diplomacy'nin bedel hesabı (DiplomacyCostCalculator, oyuncu öder); okunamazsa null.</summary>
+        private static Cost CostOf(string method, params object[] args)
+        {
+            try
+            {
+                object raw = Static("Diplomacy.Costs.DiplomacyCostCalculator", method, args.Length)?.Invoke(null, args);
+                if (raw == null) return null;
+                string kind = raw.GetType().Name;
+                return kind == "InfluenceCost" ? new Cost { Raw = raw, Influence = Value(raw) }
+                    : kind == "GoldCost" ? new Cost { Raw = raw, Gold = Value(raw) }
+                    : new Cost { Raw = raw, Influence = Value(Read<object>(raw, "InfluenceCost")), Gold = Value(Read<object>(raw, "GoldCost")) };
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy cost " + method + " failed: " + ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Diplomacy'nin bir koşul değerlendiricisinin (DeclareWarConditions gibi; yetki ve bedel dahil, oyuncu öder) ilk engeli; geçiyorsa null.
+        /// </summary>
+        private static string FirstException(string evaluator, Kingdom kingdom, Kingdom other, string what)
+        {
+            try
+            {
+                Type type = AccessTools.TypeByName(evaluator);
+                object instance = type?.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)?.GetValue(null);
+                MethodInfo method = instance?.GetType().GetMethod("CanApplyExceptions", BindingFlags.Public | BindingFlags.Instance, null,
+                    new[] { typeof(Kingdom), typeof(Kingdom), typeof(bool), typeof(bool) }, null);
+                if (method == null) return "Diplomacy'nin " + what + " kuralı bulunamadı";
+                return (method.Invoke(instance, new object[] { kingdom, other, true, false }) as IEnumerable)?.Cast<object>()
+                    .Select(t => t?.ToString()).FirstOrDefault(t => !string.IsNullOrEmpty(t));
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy " + what + " conditions failed: " + ex);
+                return "Diplomacy'nin " + what + " kuralına ulaşılamadı";
+            }
+        }
+
+        /// <summary>null: doğrudan savaş ilan edilebilir (yetki, nüfuz, anlaşma, ittifak, süre, ilişki: Diplomacy'nin koşulları); değilse ilk engel.</summary>
+        internal static string DeclareWarBlocked(Kingdom mine, Kingdom other) =>
+            FirstException("Diplomacy.DiplomaticAction.WarPeace.DeclareWarConditions", mine, other, "savaş ilanı");
+
+        internal static Cost DeclareWarCost(Kingdom mine) => CostOf("DetermineCostForDeclaringWar", mine, true);
+
+        /// <summary>Divanı toplamadan savaş ilanı (Diplomacy'nin Krallık ekranındaki düğmesiyle aynı): nüfuz ödenir, savaş krallık kararıyla.</summary>
+        internal static void DeclareWar(Kingdom mine, Kingdom other)
+        {
+            Cost cost = DeclareWarCost(mine) ?? throw new InvalidOperationException("Diplomacy'nin savaş bedeli okunamadı");
+            cost.Pay();
+            TaleWorlds.CampaignSystem.Actions.DeclareWarAction.ApplyByKingdomDecision(mine, other);
+        }
+
+        /// <summary>null: saldırmazlık önerilebilir (barış, ittifak yok, bedel, karşı tarafın isteği: Diplomacy'nin koşulları); değilse ilk engel.</summary>
+        internal static string PactBlocked(Kingdom mine, Kingdom other) =>
+            FirstException("Diplomacy.DiplomaticAction.NonAggressionPact.NonAggressionPactConditions", mine, other, "saldırmazlık");
+
+        internal static Cost PactCost(Kingdom mine, Kingdom other) => CostOf("DetermineCostForFormingNonAggressionPact", mine, other, true);
+
+        /// <summary>Oyuncunun önerdiği saldırmazlık anlaşması (Diplomacy'nin düğmesiyle aynı: bedel oyuncudan, süre ayardan).</summary>
+        internal static void ProposePact(Kingdom mine, Kingdom other)
+        {
+            Type action = AccessTools.TypeByName("Diplomacy.DiplomaticAction.NonAggressionPact.FormNonAggressionPactAction");
+            MethodInfo apply = action?.GetMethod("Apply", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy,
+                null, new[] { typeof(Kingdom), typeof(Kingdom), typeof(bool), typeof(bool), typeof(float?), typeof(bool) }, null)
+                ?? throw new InvalidOperationException("Diplomacy'nin saldırmazlık işlemi bulunamadı");
+            // forcePlayerCharacterCosts: true, bypassCosts: false, süre: ayardaki, queryPlayer: false
+            apply.Invoke(null, new object[] { mine, other, true, false, null, false });
+        }
+
+        /// <summary>Saldırmazlık anlaşmasının kalan günü; anlaşma yoksa -1.</summary>
+        internal static float PactDaysLeft(Kingdom a, Kingdom b)
+        {
+            if (a == null || b == null || a == b || !IsAvailable) return -1f;
+            try
+            {
+                object[] args = { a, b, null };
+                if (!(bool)_hasPact.Invoke(null, args) || args[2] == null) return -1f;
+                return Traverse.Create(args[2]).Property("EndDate").GetValue() is CampaignTime end ? Math.Max(0f, end.RemainingDaysFromNow) : 0f;
+            }
+            catch
+            {
+                return -1f;
+            }
+        }
+
+        /// <summary>Diplomacy'nin ittifak bedeli (nüfuz ve altın; divansız kurulan ittifak için); okunamazsa null.</summary>
+        internal static Cost AllianceCost(Kingdom mine, Kingdom other) => CostOf("DetermineCostForFormingAlliance", mine, other, true);
+
+        /// <summary>Diplomacy'nin yayılmacılığı (kuşatmayla artar, günde azalır); okunamazsa -1.</summary>
+        internal static float Expansionism(Kingdom kingdom)
+        {
+            try
+            {
+                object manager = AccessTools.Property("Diplomacy.ExpansionismManager:Instance")?.GetValue(null);
+                MethodInfo get = manager?.GetType().GetMethod("GetExpansionism", new[] { typeof(IFaction) });
+                return get != null && kingdom != null ? (float)get.Invoke(manager, new object[] { kingdom }) : -1f;
+            }
+            catch
+            {
+                return -1f;
+            }
+        }
+
+        /// <summary>Diplomacy ayarındaki kritik yayılmacılık (varsayılan 100); okunamazsa 0.</summary>
+        internal static float CriticalExpansionism
+        {
+            get
+            {
+                try
+                {
+                    object settings = AccessTools.TypeByName("Diplomacy.Settings")?
+                        .GetProperty("Instance", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)?.GetValue(null);
+                    return Read<int>(settings, "CriticalExpansionism");
+                }
+                catch
+                {
+                    return 0f;
+                }
+            }
+        }
+
         // ---- Haberci: yüz yüze görüşme Diplomacy'nin habercisiyle (onun bedeli, yolu ve salondaki konuşması) ----
 
         private static object MessengerCost(Hero hero) =>

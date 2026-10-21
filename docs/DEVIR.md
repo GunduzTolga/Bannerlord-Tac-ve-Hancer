@@ -18,6 +18,8 @@
   `CanMakeAlliance` "yeni barış" engeli koyuyor mu); `MakePeaceAction.ApplyByKingdomDecision`'da haracın yönü (1'den 2'ye mi) ve kimin kesesinden ödendiği;
   barışta esir lordlar serbest kalıyor mu (`EndCaptivityAction.ApplyByPeace` nereden çağrılıyor); `ChangeOwnerOfSettlementAction.ApplyByBarter`
   garnizonu ve bağlı köyleri nasıl devrediyor. `DiplomacyModel.GetWarProgressScore`'un ölçeği (Savaş Raporu'ndaki "üstünlük" satırı).
+- **Krallıklar sekmesi:** `AllianceCampaignBehavior.StartCallToWarAgreement` `isPlayerPaying: true` iken altını kendisi alıyor mu (biz
+  almıyoruz); `CanMakeAlliance`'ın `evaluatingFaction`'ı; `GetAllianceEndDate` ve `GetTradeAgreementEndDate` kalan günü doğru mu.
 - **Diplomat:** `DiplomacyModel.GetScoreOfDeclaringWar`'ın ölçeği ("savaş konuşuluyor" eşiği `DiplomatRules.WarTalkMargin` tahmin).
 - **Krallık ekranına bağlamak:** Lordlar'ı Krallık ekranında sekme yapmak, Savaş Raporu'nu Krallık > Diplomasi'deki savaş listesinden de
   açmak (oyunun `KingdomManagement` prefab'ları: `<oyun>\Modules\SandBox\GUI\Prefabs`).
@@ -66,6 +68,11 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Savaş ve barış > Krallıklar sekmesi (21 Ekim, kullanıcı seçimi):** bütün krallıklar tek listede (seninle durumu renkli), seçilinin
+  kartı, DURUM (kalan günler, savaştıkları, müttefikleri, diplomatın gözüyle tutumu, ittifak/ticarete bakışı) ve hükümdarın işleri:
+  ittifak, ticaret, saldırmazlık, savaş ilanı (divansız), savaşa çağırma, ittifakı bozma, ulak. Savaş ilanı ve saldırmazlık Diplomacy'nin
+  (koşulları ve bedeli onun), ittifak/ticaret/savaşa çağırma oyunun kendi sistemi (`Intrigue/KingdomTies`, `KingdomsVM`, `TvhKingdomsPanel`,
+  `KingdomsRules` testli). Tasarım `2026-10-21-kralliklar-sekmesi.md` (sonunda PC'de doğrulanacaklar). Oyunda henüz denenmedi.
 - **Saray > Krallık sekmesi (21 Ekim, kullanıcı seçimi "Diplomacy pencerelerini taşı"):** Diplomacy'nin altın bağışı, fief verme ve
   fief iadesi pencereleri ön yamalarla Entrika ekranının Krallık sekmesine yönleniyor (`RealmVM`, `TvhRealmPanel`, `TvhClanItem`; işlemler
   `DiplomacyCompat` ile Diplomacy'nin). Solda krallığın klanları, sağda seçili klana bağış (basamaklı miktar, ilişki önizlemesi) ve fief

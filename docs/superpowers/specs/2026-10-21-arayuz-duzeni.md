@@ -13,7 +13,7 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 | **Entrika** | Süren · Yeni entrika · Ağlar · Sana karşı | casus başının işleri (soldaki casus başı sütunu yalnızca burada) |
 | **Kişiler** | Kişiler · Lordlar · Esirler | insanlar: dosyalar, lordlarla iletişim (ulak, çağır, ziyafet), esirler |
 | **Saray** | Saray · Krallık · Divan · Kronik | krallığın sarayı; klanlara bağış, toprak (şehir ve kale) verme ve iade; divan koltukları ve raporları; olayların kaydı |
-| **Savaş ve barış** | Savaşlar · İsyanlar | her savaşın durumu ve Barış Masası, isyan grupları |
+| **Savaş ve barış** | Krallıklar · Savaşlar · İsyanlar | bütün krallıklar ve bağlar (ittifak, ticaret, saldırmazlık, savaş ilanı), her savaşın durumu ve Barış Masası, isyan grupları |
 
 ## Ayrı pencere kalanlar (yalnızca bunlar)
 
@@ -24,14 +24,14 @@ bölümün alt sekmeleri vardır; her özellik tek bir alt sekmede durur. **Yeni
 ## Yönlendirmeler
 
 - Haritadaki Entrika düğmesi ve kısayol tuşu: en son açık sekme.
-- Insert > Entrika (liste menüsü): girişler ilgili sekmeyi açar (Lordlar, İsyanlar, Barış Masası).
+- Insert > Entrika (liste menüsü): girişler ilgili sekmeyi açar (Lordlar, Krallıklar, İsyanlar, Barış Masası).
 - Diplomacy'nin İsyanlar düğmesi (Krallık ekranı, ansiklopedi): Krallık ekranı ya da ansiklopedi kapanır, İsyanlar sekmesi o krallıkla açılır.
 - Elçi kartı "Barış Masası'na otur", Divan'daki "Barış Masası" düğmesi, Savaş Raporu: Savaşlar sekmesi o savaşla açılır.
 - Saray'daki "İsyanlar..." düğmesi: seçili krallığın isyan grupları.
 - Diplomacy'nin "Altın Bağışla", "Tımar ver" (Krallık > Klanlar, ansiklopedi) ve "Return Fief" düğmeleri: Saray > Krallık, o klan
   seçili (`2026-10-21-krallik-sekmesi.md`).
-- Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`, `OpenRealm`; ViewModel'de `IntrigueScreenVM.FocusWar`,
-  `FocusRebellions`, `FocusRealm`.
+- Kod: `IntrigueScreen.OpenAt(focus)`, `OpenTab`, `OpenWar`, `OpenRebellions`, `OpenRealm`, `OpenKingdoms`; ViewModel'de
+  `IntrigueScreenVM.FocusWar`, `FocusRebellions`, `FocusRealm`, `FocusKingdoms`.
 
 ## Görünüş kuralları
 

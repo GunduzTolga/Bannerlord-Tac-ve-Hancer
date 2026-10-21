@@ -188,6 +188,7 @@ namespace CheatMenu.Tests
             PeaceTreatyTests();
             DiplomatTests();
             RealmTests();
+            KingdomsTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -931,6 +932,19 @@ namespace CheatMenu.Tests
             Check("realm: donation follows the support ratio", RealmRules.DonationRelation(10000, 0.002f, 1, 2) == 10);
             Check("realm: nothing for nothing", RealmRules.DonationRelation(0, 0.002f, 1, 2) == 0 && RealmRules.DonationRelation(5000, 0.002f, 1, 0) == 0);
             Check("realm: rounding", RealmRules.DonationRelation(2600, 0.002f, 1, 2) == 3);
+        }
+
+        private static void KingdomsTests()
+        {
+            Check("kingdoms: order", KingdomsRules.Order(true, true, false, false) == 0 && KingdomsRules.Order(false, true, true, true) == 1
+                && KingdomsRules.Order(false, false, true, false) == 2 && KingdomsRules.Order(false, false, false, true) == 3 && KingdomsRules.Order(false, false, false, false) == 4);
+            Check("kingdoms: stance text", KingdomsRules.StanceText(true, false, true, true) == "Savaşta" && KingdomsRules.StanceText(false, false, false, false) == "Barış"
+                && KingdomsRules.StanceText(false, true, false, true) == "Müttefik · Ticaret");
+            Check("kingdoms: days left", KingdomsRules.DaysLeft(0.4f) == "bugün bitiyor" && KingdomsRules.DaysLeft(12.2f) == "13 gün kaldı");
+            Check("kingdoms: expansion", KingdomsRules.Expansion(10, 100) == "düşük" && KingdomsRules.Expansion(40, 100) == "orta"
+                && KingdomsRules.Expansion(70, 100) == "yüksek" && KingdomsRules.Expansion(100, 100) == "kritik" && KingdomsRules.Expansion(50, 0) == "");
+            Check("kingdoms: compact reason", KingdomsRules.Compact("Vlandia is not considering:\n\nLow relations.\nAt war.") == "Low relations.; At war."
+                && KingdomsRules.Compact("Not neighbors.") == "Not neighbors." && KingdomsRules.Compact(null) == "" && KingdomsRules.Compact("A:") == "A:");
         }
 
         private static void DiplomatTests()
