@@ -284,7 +284,7 @@ namespace CheatMenu.UI.ViewModels
         /// <summary>Eşin için: araştır, yüzleş, boşa.</summary>
         private IEnumerable<ActionItemVM> SpouseActions(IntrigueState state)
         {
-            if (SpouseLife.Enabled)
+            if (SpouseLife.Watched)
                 yield return new ActionItemVM("Eşini araştır (casus başı, " + SchemeFactors.Money(FidelityRules.InvestigationCost) + ", "
                     + FidelityRules.InvestigationDays + " gün)", SpouseLife.InvestigateBlocked(state), () =>
                     {

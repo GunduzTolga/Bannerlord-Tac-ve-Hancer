@@ -112,6 +112,9 @@ namespace CheatMenu.Tests
             Check("settings: romance secrets off", !ModSettings.Parse("RomanceSecrets=0").RomanceSecrets);
             Check("settings: night houses default off", !ModSettings.Parse("").NightHouses);
             Check("settings: night houses on", ModSettings.Parse("NightHouses=1").NightHouses);
+            Check("settings: courtships default on, separate from secrets", ModSettings.Parse("").Courtships
+                && ModSettings.Parse("RomanceSecrets=0").Courtships && !ModSettings.Parse("Courtships=0").Courtships
+                && ModSettings.Parse("Courtships=0").RomanceSecrets);
             Check("settings: spouse infidelity default on", ModSettings.Parse("").SpouseInfidelity);
             Check("settings: spouse infidelity off", !ModSettings.Parse("SpouseInfidelity=0").SpouseInfidelity);
             Check("settings: tail in scene default off", !ModSettings.Parse("").TailInScene);
@@ -132,6 +135,7 @@ namespace CheatMenu.Tests
             full.SetScreenHotkey(5);
             full.EventCards = false;
             full.RomanceSecrets = false;
+            full.Courtships = false;
             full.NightHouses = true;
             full.SpouseInfidelity = false;
             full.TailInScene = true;
@@ -140,7 +144,7 @@ namespace CheatMenu.Tests
                 && back.TroopXpMultiplier == 5 && back.PartySizeBonus == 100 && back.NoLearningLimit && back.NoCompanionLimit
                 && back.PartyLimitBonus == 4 && back.NoPartyLimit && back.IntrigueDifficulty == 0
                 && back.AiIntrigue == 2 && back.PlayerCanBeTargeted && !back.MapBarButton && back.ScreenHotkey == 5
-                && !back.EventCards && !back.RomanceSecrets && back.NightHouses && !back.SpouseInfidelity && back.TailInScene);
+                && !back.EventCards && !back.RomanceSecrets && !back.Courtships && back.NightHouses && !back.SpouseInfidelity && back.TailInScene);
 
             // TextRecords: kaçışlı satır biçimi, bozuk metne dayanıklılık.
             string tricky = "a\tb\nc\\d=e\r";

@@ -18,7 +18,8 @@ namespace CheatMenu.Intrigue
     public static class Courtships
     {
         /// <summary>Gizli ilişki ayarıyla birlikte açılıp kapanır (yetişkin teması tek ayarda).</summary>
-        public static bool Enabled => RomanceSecrets.Enabled;
+        /// <summary>Kendi ayarı var ("Kur ve sevgililer"): gizli ilişki sırları kapalıyken de çalışır.</summary>
+        public static bool Enabled => SettingsStore.Current.Courtships;
 
         /// <summary>Klanındaki hayattaki eşin; yoksa null.</summary>
         public static Hero Spouse
@@ -42,7 +43,7 @@ namespace CheatMenu.Intrigue
         public static string StartBlocked(IntrigueState state, Hero target, CourtshipMode mode)
         {
             int today = SchemeFactors.Today;
-            if (!Enabled) return "Kurallar'dan kapalı (gizli ilişki ayarı)";
+            if (!Enabled) return "Kurallar'dan kapalı (\"Kur ve sevgililer\")";
             Hero agent = AgentFor(mode);
             if (agent == null) return "Klanında hayatta bir eşin yok";
             if (agent.IsPrisoner) return mode == CourtshipMode.Lover ? "Esirken olmaz" : "Eşin esir";

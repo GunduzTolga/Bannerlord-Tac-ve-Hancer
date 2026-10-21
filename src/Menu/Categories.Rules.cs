@@ -38,6 +38,8 @@ namespace CheatMenu.Menu
                     v => Rules.Change(s => s.PlayerCanBeTargeted = v, null)),
                 MenuEntry.Toggle("Gizli ilişki ve gayrimeşru çocuk sırları", () => Rules.Settings.RomanceSecrets,
                     v => Rules.Change(s => s.RomanceSecrets = v, null)),
+                MenuEntry.Toggle("Kur ve sevgililer", () => Rules.Settings.Courtships,
+                    v => Rules.Change(s => s.Courtships = v, null)),
                 MenuEntry.Toggle("Genelev (yetişkin teması)", () => Rules.Settings.NightHouses,
                     v => Rules.Change(s => s.NightHouses = v, null)),
                 MenuEntry.Toggle("Eşin seni aldatabilir", () => Rules.Settings.SpouseInfidelity,
