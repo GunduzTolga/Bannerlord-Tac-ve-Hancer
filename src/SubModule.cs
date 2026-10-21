@@ -166,6 +166,7 @@ namespace CheatMenu
             IntriguePopups.Tick();
             EventCards.Tick();
             IntrigueScreen.Tick();
+            RebellionsScreen.Tick();
             ClanIntrigueTab.Tick();
             CleanSaveGuard.Tick();
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  İsyanlar ve iç savaş penceresi (ViewModel: CheatMenu.UI.ViewModels.RebellionsVM; UI.RebellionsScreen). Diplomacy'nin grup penceresinin
+  yerine açılır. Üstte krallık ve özet, gövdede isyancı gruplar (TvhRebelFactionCard) ve hoşnutsuz klan liderleri (Saray'ın kartı:
+  TvhCourtLordCard). Pencere 1300x900 (oyun 1920x1080'e göre ölçekler).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+
+        <!-- Karartma: alttaki ekrana tıklanmasın -->
+        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Backdrop" DoNotPassEventsToChildren="true" />
+
+        <!-- Pencere: oyunun açılır pencere tuvali ve çerçevesi -->
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="1300" SuggestedHeight="900" HorizontalAlignment="Center" VerticalAlignment="Center" Sprite="StdAssets\Popup\canvas">
+          <Children>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="StdAssets\Popup\canvas_gradient" DoNotAcceptEvents="true" />
+
+            <!-- ===== Başlık ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="84" VerticalAlignment="Top">
+              <Children>
+                <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="640" SuggestedHeight="52" MarginLeft="34" MarginTop="14" Brush="Tvh.Text.Title" Text="@Title" />
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="30" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="44" MarginRight="14" Brush="Tvh.Button" Command.Click="ExecuteCreateFaction" IsEnabled="@CanCreateFaction" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@CreateFactionText" />
+                      </Children>
+                    </ButtonWidget>
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="160" SuggestedHeight="44" Brush="Tvh.Button.Primary" Command.Click="ExecuteClose" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.Button" Text="@CloseText" />
+                      </Children>
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
+              </Children>
+            </Widget>
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="23" VerticalAlignment="Top" MarginTop="76" MarginLeft="22" MarginRight="22" Sprite="StdAssets\Popup\divider" DoNotAcceptEvents="true" />
+
+            <!-- Krallık, özet ve grup kurma koşulu -->
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="760" SuggestedHeight="28" MarginLeft="34" MarginTop="102" Brush="Tvh.Text.Subtitle" Text="@Subtitle" />
+            <TextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="760" SuggestedHeight="24" MarginLeft="34" MarginTop="132" Brush="Tvh.Text.Gold" Text="@Summary" />
+            <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="430" SuggestedHeight="52" HorizontalAlignment="Right" MarginRight="30" MarginTop="102" Brush="Tvh.Text.MutedRight" Text="@CreateFactionHint" />
+
+            <!-- ===== Gövde: gruplar ve hoşnutsuzlar ===== -->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="168" MarginBottom="24" MarginLeft="28" MarginRight="28">
+              <Children>
+                <ScrollablePanel Id="RebelScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="16" AutoHideScrollBars="true" ClipRect="RebelClip" InnerPanel="RebelClip\RebelInner" VerticalScrollbar="..\RebelBar\Scrollbar">
+                  <Children>
+                    <Widget Id="RebelClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                      <Children>
+                        <ListPanel Id="RebelInner" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" Brush="Tvh.Text.Section" Text="@FactionsHeader" />
+                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="10" Brush="Tvh.Text.Body" Text="@EmptyText" IsVisible="@HasNoFactions" />
+                            <ListPanel DataSource="{Factions}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                              <ItemTemplate>
+                                <TvhRebelFactionCard />
+                              </ItemTemplate>
+                            </ListPanel>
+
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="34" MarginTop="12" Brush="Tvh.Text.Section" Text="@LordsHeader" />
+                            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginBottom="10" Brush="Tvh.Text.Body" Text="@LordsEmptyText" IsVisible="@HasNoLords" />
+                            <ListPanel DataSource="{Lords}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                              <ItemTemplate>
+                                <TvhCourtLordCard />
+                              </ItemTemplate>
+                            </ListPanel>
+                          </Children>
+                        </ListPanel>
+                      </Children>
+                    </Widget>
+                  </Children>
+                </ScrollablePanel>
+                <Standard.VerticalScrollbar Id="RebelBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
+              </Children>
+            </Widget>
+
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Frame" DoNotAcceptEvents="true" />
+          </Children>
+        </Widget>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

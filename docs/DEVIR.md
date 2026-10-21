@@ -23,9 +23,12 @@
   "Hazinedar" satırı (`Cheats/Models/TreasurerFinanceModel`). API notları: Diplomacy kaynakları ilspycmd ile açıldı (yalnızca bulutta).
 - **Esiri gizlice öldürt (21 Ekim, kullanıcı isteği):** açık idam yerine hastalık/kaza/firar süsü; şüphe ve ifşa Roguery'ye, esirin
   önemine ve yakalanalı kaç gün olduğuna bağlı (`PrisonDeathRules`, `PrisonDeaths`, tasarım `2026-10-21-gizli-infaz.md`).
+- **İsyanlar ve iç savaş penceresi (21 Ekim):** Diplomacy'nin `RebelFactionsInterface.ShowInterface`'i Harmony ön yamasıyla bizim
+  `UI.RebellionsScreen`'e yönleniyor (açılamazsa onunki açılır). Gruplar ve düğmeler Diplomacy'nin kendi ViewModel'leriyle
+  (`RebelFactionItemVM`, `RebelFactionsVM`, reflection) çalışıyor; görünüş, Türkçe metinler, güç çubuğu, "en gönülsüz üye" notu ve
+  hoşnutsuzlar bölümü (Saray kartları) bizim. Prefab'lar `TvhRebellions`, `TvhRebelFactionCard`. Oyunda henüz denenmedi.
 - **Kullanıcı eşini genelevde çalışan olarak sordu:** yapılmadı ("eşini pazarlamak" çizgisi); eş yalnızca kendi kararıyla yönetici olabilir.
-- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu daha da geliştir, İsyanlar/İç Savaş penceresi (Diplomacy'nin
-  `RebelFactionsInterface`'i ve `RebelFactionManager` verisi hazır), Krallık > Lordlar sekmesi (Diplomacy habercisi üzerine), kalan
+- Sıradaki işler (kullanıcı "sırayla yapalım" dedi): Savaş Raporu'nu daha da geliştir, Krallık > Lordlar sekmesi (Diplomacy habercisi üzerine), kalan
   15 kart resmi + 3 yeni genelev resmi, Convivium / Diplomacy & Intrigue kararı.
 
 ## 21 Ekim 2026 (PC oturumu, telefona devir)

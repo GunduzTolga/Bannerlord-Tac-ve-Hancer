@@ -41,6 +41,19 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### İsyanlar ve iç savaş penceresi (21 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Diplomacy'nin "Factions" penceresi yerine bizimki açılıyor; katıl/ayrıl/isyan/destek düğmeleri yine Diplomacy'nin kuralıyla çalışıyor.
+- [ ] Krallık ekranında Diplomacy'nin grup (Factions) düğmesi → **İsyanlar ve İç Savaş** penceresi: başlık, krallık ve hükümdar,
+      özet ("N grup · en güçlüsü X: %57, gereken %65"), sağ üstte **Grup kur...** ve Kapat. Insert > Entrika > "İsyanlar ve iç savaş" da açıyor
+- [ ] Grup yoksa: grupların nasıl kurulduğunu anlatan metin (boş kutu değil)
+- [ ] Grup kartı: önderin portresi, "X önderliğinde: ayrılık / tahttan indirme", istek, durum (destek topluyor / isyana hazır / iç savaş),
+      katılanlar ve hükümdarla ilişkileri, güç çubuğu (kırmızı dolgu = grubun payı, açık çizgi = gereken pay), "en gönülsüz üye" notu
+- [ ] Düğmeler: Gruba katıl (olmuyorsa nedeni yanında) / Gruptan ayrıl / İsyanı başlat (önder sensen; onay soruyor) / Destek topla
+- [ ] **Hoşnutsuzlar** bölümü: Saray'daki lord kartları (hükümdarına küs olanlar), ulak, haritada izle, söylenti yay düğmeleriyle
+- [ ] Grup kur... → Diplomacy'nin seçimi (ayrılık / tahttan indirme, nüfuz bedeli) → pencere yenileniyor, yeni grup kartı geliyor
+- [ ] Esc ve Kapat pencereyi kapatıyor (Krallık ekranı açık kalıyor mu, bak); yazılar taşmıyor, kaydırma çalışıyor
+- [ ] Ansiklopedide bir krallığın sayfasındaki grup düğmesi de bu pencereyi açıyor
+
 ### Esiri gizlice öldürt (21 Ekim, yeni)
 - [ ] Klan > Entrika > Esirler: her esirde kırmızı **Gizlice öldürt...** düğmesi → kart: işi kim ayarlıyor (Roguery), üç yöntem
       (Zindan hastalığı 1.500 / Kaza 1.000 / Kaçarken öldürüldü 500), her birinde "şüphe %X, ifşa %Y"

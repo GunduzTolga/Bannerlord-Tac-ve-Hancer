@@ -59,6 +59,14 @@ namespace CheatMenu.Menu
             };
             if (spymaster != null) entries.Add(MenuEntry.Simple("Casus başını görevden al", SchemeEngine.DismissSpymaster));
             entries.Add(MenuEntry.Submenu("Hanedan: meşrulaştırma ve klanı devretme...", ShowDynasty));
+            Kingdom realm = Clan.PlayerClan.Kingdom;
+            string rebellions = realm == null ? "bir krallıkta değilsin" : !Bundle.DiplomacyCompat.IsAvailable ? "Diplomacy paketli değil" : null;
+            entries.Add(rebellions == null
+                ? MenuEntry.Simple("İsyanlar ve iç savaş: " + realm.Name, () => MenuUI.Defer(() =>
+                {
+                    if (!UI.RebellionsScreen.Open(realm)) MenuUI.Error("İsyanlar penceresi açılamadı");
+                }))
+                : MenuEntry.Simple("İsyanlar ve iç savaş - " + rebellions, () => MenuUI.Error(rebellions)));
 
             ShowCategory("Entrika", entries, ShowIntrigue,
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")
