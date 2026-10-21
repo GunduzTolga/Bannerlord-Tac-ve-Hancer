@@ -41,6 +41,17 @@ yükleyicisi kendini buluyor, bütün DLL'ler yükleniyor, Women in Calradia aya
 - [ ] **Companion Autonomy** (20 Ekim'de eklendi): Klan > Birlikler'de yoldaş partisinin satırında harçlık ve ayarlar; bir hafta sonra
       yoldaş kendi kesesinden teçhizat ya da asker almış mı (mesajlar); Mod Seçenekleri'nde ayar sayfası
 
+### Divan: diplomat (21 Ekim, yeni)
+- [ ] Entrika ekranı > Divan: beş kart yan yana sığıyor mu (yazılar taşıyor mu, "Azlet" düğmesi), DİPLOMAT kartı: Charm, katkılar, görev
+- [ ] Ata (Charm'ı yüksek bir yoldaş) → raporda DİPLOMASİ: her krallık için "barış yanlısı / savaş konuşuluyor / sana savaş açmaya
+      hazırlanıyor" ve hükümdarıyla ilişkin; savaştıkların için pazarlık gücün ve **Barış Masası** düğmesi
+- [ ] Bütün krallıklar hep aynı basamakta mı görünüyor? (öyleyse yaz: eşik ayarlanacak)
+- [ ] "İlişki görevi..." → bir hükümdar seç → her hafta ilişki artıyor (kartta "Görevi: X"); 60'a varınca bildirim
+- [ ] Barış Masası'nda "diplomatın (+N)" görünüyor; Lordlar penceresinde çağır/davet olasılıkları diplomatla yükseliyor
+- [ ] Bir krallık savaşa hazırlanınca "Diplomatın uyarıyor: X" kartı
+- [ ] Insert > Entrika > Divan > Diplomat menüsü çalışıyor
+- Tasarım: `docs\superpowers\specs\2026-10-21-divan-diplomat.md`
+
 ### Barış Masası: şartlı barış (21 Ekim, yeni; hükümdar olmalısın; ekran görüntüsü çok işe yarar)
 - [ ] Savaş Raporu'nda sağ üstte **Barış Masası...** düğmesi; raporun Barış bölümünde "Barış Masası'na oturabilirsin, pazarlık gücün N"
       ya da neden olmadığı. Insert > Entrika > **Barış Masası...** de açıyor (savaş seçilir, olmayanların yanında nedeni)

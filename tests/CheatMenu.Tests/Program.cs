@@ -186,6 +186,7 @@ namespace CheatMenu.Tests
             LordContactTests();
             WarReportTests();
             PeaceTreatyTests();
+            DiplomatTests();
             RecruitTests();
             CourtshipTests();
             FidelityTests();
@@ -924,6 +925,28 @@ namespace CheatMenu.Tests
         }
 
         /// <summary>Lordlarla iletişim: ziyafet ve yanına çağırma.</summary>
+        private static void DiplomatTests()
+        {
+            Check("diplomat: peace bonus", DiplomatRules.PeaceBonus(0) == 0 && DiplomatRules.PeaceBonus(200) == 10 && DiplomatRules.PeaceBonus(900) == 15);
+            Check("diplomat: envoy and invite bonus", DiplomatRules.EnvoyBonus(150) == 5 && DiplomatRules.EnvoyBonus(600) == 10
+                && DiplomatRules.InviteBonus(100) == 4 && DiplomatRules.InviteBonus(1000) == 12);
+            Check("diplomat: gift bonus", DiplomatRules.GiftBonus(99) == 0 && DiplomatRules.GiftBonus(100) == 1 && DiplomatRules.GiftBonus(330) == 2);
+            Check("diplomat: relation per week", DiplomatRules.RelationPerWeek(0) == 1 && DiplomatRules.RelationPerWeek(150) == 3 && DiplomatRules.RelationPerWeek(600) == 4);
+            Check("diplomat: error and warning", DiplomatRules.ErrorPercent(0) == 40 && DiplomatRules.ErrorPercent(300) == 5
+                && DiplomatRules.WarningChance(0) == 30 && DiplomatRules.WarningChance(400) == 95);
+            Check("diplomat: threat levels", DiplomatRules.Threat(10) == 2 && DiplomatRules.Threat(-100) == 1 && DiplomatRules.Threat(-DiplomatRules.WarTalkMargin - 1) == 0);
+            Check("diplomat: sharp eye sees right", DiplomatRules.SeenThreat(2, 300, 6) == 2);
+            Check("diplomat: dull eye can misread", DiplomatRules.SeenThreat(1, 0, 10) == 2 && DiplomatRules.SeenThreat(1, 0, 11) == 0
+                && DiplomatRules.SeenThreat(2, 0, 2) == 2 && DiplomatRules.SeenThreat(0, 0, 3) == 0);
+            Check("diplomat: threat texts", DiplomatRules.ThreatText(2).Contains("savaş") && DiplomatRules.ThreatText(0) == "barış yanlısı");
+            var state = new IntrigueState { DiplomatId = "comp_1", DiplomatTargetId = "lord_9" };
+            state.DiplomatWarned["vlandia"] = 30;
+            IntrigueState back = IntrigueState.Parse(state.Write());
+            Check("diplomat: seat, mission and warnings are saved", back.DiplomatId == "comp_1" && back.DiplomatTargetId == "lord_9" && back.DiplomatWarned["vlandia"] == 30);
+            Check("diplomat: heir change frees the seat", state.ForgetPlayerCharacter("comp_1") >= 1 && state.DiplomatId == null && state.DiplomatTargetId == null);
+            Check("peace: diplomat adds to leverage", PeaceTreatyRules.Willingness(0, 0, 1, 0, true, false, 10) - PeaceTreatyRules.Willingness(0, 0, 1, 0, true, false) == 10);
+        }
+
         private static void PeaceTreatyTests()
         {
             int winning = PeaceTreatyRules.Willingness(80, 20, 1.5, 0, true, false);

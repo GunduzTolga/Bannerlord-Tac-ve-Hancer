@@ -123,6 +123,7 @@ namespace CheatMenu.UI.ViewModels
             if (l.OtherWars > 0) parts.Add(l.OtherWars + " başka cephede savaşıyorlar");
             parts.Add(l.GameLeans ? "barışa yatkınlar" : "barışa yanaşmıyorlar");
             if (l.Asked) parts.Add("elçi gönderdiler (+" + PeaceTreatyRules.AskedBonus + ")");
+            if (l.Diplomat > 0) parts.Add("diplomatın (+" + l.Diplomat + ")");
             return "Pazarlık gücün " + l.Willingness + ": " + string.Join(", ", parts) + ".";
         }
 

@@ -153,7 +153,7 @@ namespace CheatMenu.Intrigue
                 target.ChangeHeroGold(gift);
                 if (GiftCounts(state, target))
                 {
-                    relation = LetterRules.GiftRelation(gift);
+                    relation = LetterRules.GiftRelation(gift) + Diplomat.GiftBonus();
                     SchemeOutcomes.Relate(target, relation);
                     state.GiftUntil[target.StringId] = today + LetterRules.GiftCooldownDays;
                 }

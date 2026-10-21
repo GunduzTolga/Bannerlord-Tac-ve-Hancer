@@ -17,6 +17,7 @@
 - **Barış Masası doğrulamaları:** `MakePeaceAction.ApplyByKingdomDecision`'da haracın yönü (1'den 2'ye mi) ve kimin kesesinden ödendiği;
   barışta esir lordlar serbest kalıyor mu (`EndCaptivityAction.ApplyByPeace` nereden çağrılıyor); `ChangeOwnerOfSettlementAction.ApplyByBarter`
   garnizonu ve bağlı köyleri nasıl devrediyor. `DiplomacyModel.GetWarProgressScore`'un ölçeği (Savaş Raporu'ndaki "üstünlük" satırı).
+- **Diplomat:** `DiplomacyModel.GetScoreOfDeclaringWar`'ın ölçeği ("savaş konuşuluyor" eşiği `DiplomatRules.WarTalkMargin` tahmin).
 - **Krallık ekranına bağlamak:** Lordlar'ı Krallık ekranında sekme yapmak, Savaş Raporu'nu Krallık > Diplomasi'deki savaş listesinden de
   açmak (oyunun `KingdomManagement` prefab'ları: `<oyun>\Modules\SandBox\GUI\Prefabs`).
 - Harita çubuğu Entrika simgesi: oyunun sprite sayfalarından uygun gri simge (yoksa kendi simgemizi çizeriz).
@@ -70,6 +71,10 @@
   ya da altın/haraç ver. Kabul = %50 + pazarlık gücü (yorgunluk farkı, güç oranı, başka cepheler, oyunun barış puanı) - şartların
   ağırlığı. Kaybeden taraf bazen elçi gönderip kendisi barış ister. Yalnızca hükümdar; Diplomacy'nin barış koşullarına uyar.
   `PeaceTreatyRules` (testli), `PeaceTreaties`, `UI.PeaceTableScreen`, tasarım `2026-10-21-baris-masasi.md`. Oyunda henüz denenmedi.
+- **Divan: diplomat (21 Ekim, kullanıcı seçimi):** beşinci koltuk (Charm). Barış Masası pazarlığı, elçi sıklığı, çağrı/davet, hediye
+  katkısı; haftalık "ilişkileri geliştir" görevi ve sana savaş açmaya hazırlanan krallığa erken uyarı (oyunun savaş ilanı puanı,
+  diplomatın gözüyle). `DiplomatRules` (testli), `Diplomat`, tasarım `2026-10-21-divan-diplomat.md`. Divan kartları 248 piksele indi
+  ("Azlet"). Oyunda henüz denenmedi.
 - Sıradaki işler: yukarıdaki "PC'ye geçince yapılacaklar". Bulutta yapılabilecekler bitince kullanıcıya sor.
 
 ## 21 Ekim 2026 (PC oturumu, telefona devir)

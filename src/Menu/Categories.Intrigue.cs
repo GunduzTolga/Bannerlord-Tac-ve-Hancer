@@ -51,7 +51,7 @@ namespace CheatMenu.Menu
                         + (Hostages.Blocked(state, k) is string why && state.HostageDealWith(k.StringId) == null ? "  [" + why + "]" : ""),
                     k => UI.EventCards.ShowHostage(k, null), ShowIntrigue)),
                 MenuEntry.Submenu("Casus başı görevi: " + SpymasterMissions.StatusText(state) + "...", () => UI.EventCards.ShowMissionChoice(null)),
-                MenuEntry.Submenu("Divan (mareşal, kâhya, hazinedar, hekim)...", ShowCouncil),
+                MenuEntry.Submenu("Divan (mareşal, kâhya, hazinedar, hekim, diplomat)...", ShowCouncil),
                 MenuEntry.Submenu("Gölge ağları (" + state.Networks.Count + "/" + SchemeMath.MaxNetworks(SchemeFactors.Roguery(spymaster)) + ")...",
                     ShowNetworks),
                 MenuEntry.Submenu("Sana karşı entrikalar (" + state.AiPlots.Count(p => p.Detected) + " sezilen)...", ShowPlotsAgainstMe),
@@ -104,6 +104,7 @@ namespace CheatMenu.Menu
                 MenuEntry.Submenu("Kâhya: " + (Steward.Current(state)?.Name.ToString() ?? "boş") + "...", ShowSteward),
                 MenuEntry.Submenu("Hazinedar: " + (Treasury.Treasurer(state)?.Name.ToString() ?? "boş") + "...", ShowTreasury),
                 MenuEntry.Submenu("Saray hekimi: " + (Physician.Current(state)?.Name.ToString() ?? "boş") + "...", ShowPhysician),
+                MenuEntry.Submenu("Diplomat: " + (Diplomat.Current(state)?.Name.ToString() ?? "boş") + "...", ShowDiplomat),
             }, ShowCouncil, "Casus başı Entrika menüsünde. Ayrıntılı raporlar: Entrika ekranı > Divan.", ShowIntrigue);
         }
 
@@ -126,6 +127,40 @@ namespace CheatMenu.Menu
                 marshal == null
                     ? "Klanından Tactics'i ve Scouting'i yüksek birini mareşal yap: savaş meclisi ve sana yürüyen ordulara erken uyarı. Ayrıntılar Entrika ekranı > Divan'da."
                     : Marshal.ReportText(state) + "\n\nOrdular, zayıf hedefler ve savunman: Entrika ekranı > Divan.",
+                ShowCouncil);
+        }
+
+        private static void ShowDiplomat()
+        {
+            IntrigueState state = SchemeEngine.State;
+            Hero diplomat = Diplomat.Current(state);
+            var entries = new List<MenuEntry>
+            {
+                MenuEntry.Submenu(diplomat == null ? "Diplomat ata..." : "Diplomatı değiştir...", () => Picker.Pick("Diplomat seç",
+                    Diplomat.Candidates(state).OrderByDescending(Diplomat.Charm).ToList(), Diplomat.Label,
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Diplomat", () => Diplomat.Assign(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowDiplomat);
+                    }, ShowDiplomat, HeroPortrait, sort: false)),
+            };
+            if (diplomat != null)
+            {
+                entries.Add(MenuEntry.Submenu("Görev: ilişkileri geliştir...", () => Picker.Pick("Kiminle?", Diplomat.TargetCandidates(),
+                    h => h.Name + " (" + h.Clan?.Name + ", ilişki " + SchemeFactors.Signed(Hero.MainHero.GetRelation(h)) + ")"
+                        + (Diplomat.TargetBlocked(state, h) is string why ? "  [" + why + "]" : ""),
+                    hero =>
+                    {
+                        MenuUI.SafeRun("Diplomat görevi", () => Diplomat.SetTarget(SchemeEngine.State, hero));
+                        MenuUI.Defer(ShowDiplomat);
+                    }, ShowDiplomat, HeroPortrait, sort: false)));
+                if (Diplomat.Target(state) != null) entries.Add(MenuEntry.Simple("Görevi bitir", () => Diplomat.ClearTarget(SchemeEngine.State)));
+                entries.Add(MenuEntry.Simple("Diplomatı görevden al", () => Diplomat.Dismiss(SchemeEngine.State)));
+            }
+            ShowCategory("Divan: diplomat", entries, ShowDiplomat,
+                diplomat == null
+                    ? "Klanından Charm'ı yüksek birini diplomat yap: Barış Masası'nda pazarlık gücü, elçiler, çağrı ve ziyafet, hediyeler; sana savaş açmaya hazırlanan krallığa erken uyarı."
+                    : Diplomat.ReportText(state),
                 ShowCouncil);
         }
 

@@ -54,6 +54,8 @@ namespace CheatMenu.Intrigue
             public double Ratio;
             public int OtherWars;
             public bool GameLeans, Asked;
+            /// <summary>Diplomatın katkısı (sarayda değilse 0).</summary>
+            public int Diplomat;
         }
 
         // ---- Okumalar ----
@@ -70,9 +72,10 @@ namespace CheatMenu.Intrigue
                 OtherWars = Kingdom.All.Count(k => k != mine && k != enemy && !k.IsEliminated && FactionManager.IsAtWarAgainstFaction(k, enemy)),
                 GameLeans = Campaign.Current.Models.DiplomacyModel.GetScoreOfDeclaringPeace(enemy, mine) > 0,
                 Asked = state != null && state.PeaceTalkWith(enemy.StringId).AskedUntil >= Today,
+                Diplomat = Intrigue.Diplomat.PeaceBonus(),
             };
             leverage.Willingness = PeaceTreatyRules.Willingness(Math.Max(0, theirs), Math.Max(0, ours), leverage.Ratio, leverage.OtherWars,
-                leverage.GameLeans, leverage.Asked);
+                leverage.GameLeans, leverage.Asked, leverage.Diplomat);
             return leverage;
         }
 
@@ -285,7 +288,8 @@ namespace CheatMenu.Intrigue
                 PeaceTalk talk = state.PeaceTalkWith(enemy.StringId);
                 if (talk.EnvoyUntil > Today) continue;
                 int willingness = LeverageOf(state, enemy).Willingness;
-                if (state.Roll100() > PeaceTreatyRules.EnvoyChance(willingness)) continue;
+                int chance = PeaceTreatyRules.EnvoyChance(willingness);
+                if (chance <= 0 || state.Roll100() > chance + Intrigue.Diplomat.EnvoyBonus()) continue;
                 talk.EnvoyUntil = Today + PeaceTreatyRules.EnvoyCooldownDays;
                 talk.AskedUntil = Today + PeaceTreatyRules.AskedDays;
                 ShowEnvoy(state, enemy);
