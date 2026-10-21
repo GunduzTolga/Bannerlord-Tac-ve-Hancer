@@ -71,6 +71,7 @@ namespace CheatMenu.Intrigue
                 MenuUI.SafeRun("Divan haftalık (hekim)", Physician.Weekly);
                 MenuUI.SafeRun("Divan haftalık (mareşal)", Marshal.Weekly);
                 MenuUI.SafeRun("Divan haftalık (kâhya)", Steward.Weekly);
+                MenuUI.SafeRun("Divan haftalık (diplomat)", Diplomat.Weekly);
             });
         }
 

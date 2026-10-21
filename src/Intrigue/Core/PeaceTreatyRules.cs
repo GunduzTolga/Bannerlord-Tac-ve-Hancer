@@ -8,7 +8,7 @@ namespace CheatMenu.Intrigue.Core
     /// Barış Masası (tasarım: docs/superpowers/specs/2026-10-21-baris-masasi.md): pazarlık gücü, şartların ağırlığı, kabul olasılığı,
     /// elçinin getirdiği teklif. Saf: oyunsuz test edilir.
     /// Pazarlık gücü (puan): onların savaş yorgunluğu - seninki, güç oranı (en fazla ±40), başka cepheleri (her biri +10, en fazla 3),
-    /// oyunun barış puanı (+15 / -15), elçi gönderdilerse +15. Her şartın bir ağırlığı var; kabul = %50 + güç - ağırlık, %3-95.
+    /// oyunun barış puanı (+15 / -15), elçi gönderdilerse +15, diplomatın Charm'ı (en fazla +15). Her şartın bir ağırlığı var; kabul = %50 + güç - ağırlık, %3-95.
     /// </summary>
     public static class PeaceTreatyRules
     {
@@ -31,14 +31,17 @@ namespace CheatMenu.Intrigue.Core
         /// <summary>Asker seçenekleri (garnizonlarından, senin partine).</summary>
         public static readonly IReadOnlyList<int> TroopLevels = new[] { 0, 20, 50, 100, 150 };
 
-        public static int Willingness(float theirExhaustion, float ourExhaustion, double strengthRatio, int otherWars, bool gameLeansToPeace, bool theyAsked)
+        /// <param name="diplomatBonus">Diplomatın katkısı (DiplomatRules.PeaceBonus).</param>
+        public static int Willingness(float theirExhaustion, float ourExhaustion, double strengthRatio, int otherWars, bool gameLeansToPeace, bool theyAsked,
+            int diplomatBonus = 0)
         {
             double ratio = double.IsNaN(strengthRatio) || double.IsInfinity(strengthRatio) ? 1 : strengthRatio;
             double score = (theirExhaustion - ourExhaustion)
                 + SchemeMath.Clamp((int)Math.Round((ratio - 1) * 40), -40, 40)
                 + 10 * SchemeMath.Clamp(otherWars, 0, 3)
                 + (gameLeansToPeace ? 15 : -15)
-                + (theyAsked ? AskedBonus : 0);
+                + (theyAsked ? AskedBonus : 0)
+                + Math.Max(0, diplomatBonus);
             return (int)Math.Round(score);
         }
 

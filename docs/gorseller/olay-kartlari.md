@@ -49,7 +49,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 
 ## Kontrol listesi
 
-`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 49/69 tamamlandı** — 29 adet `★` öncelikli + 20 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
+`tools\resim-aktar.ps1` her çalışmada Durum sütununu ve bu sayıyı oyundaki resimlere göre kendisi günceller (**Durum: 49/70 tamamlandı** — 29 adet `★` öncelikli + 20 adet normal kart). **Öncelik** sütunu: ★ en sık görülen kartlar, önce bunlar.
 
 | # | Dosya | Nerede görünür | Öncelik | Durum |
 |---|---|---|---|---|
@@ -122,6 +122,7 @@ Ortak stil (yeni bir prompt yazarsan sonuna ekle):
 | 67 | `sonuc_genelev_yoldas.png` | Genelev: evdeki yoldaşlar; kendi isteğiyle çalışan ya da ayrılan yoldaş | | ⏳ |
 | 68 | `sonuc_baris_elcisi.png` | Barış Masası: köşeye sıkışan krallığın elçisi barış istiyor; reddedilen teklif | | ⏳ |
 | 69 | `sonuc_baris_antlasmasi.png` | Barış Masası: antlaşma imzalandı (tazminat, kale, şehir, asker) | ★ | ⏳ |
+| 70 | `sonuc_diplomat.png` | Divan: diplomatın uyarısı (savaşa hazırlanan krallık) ve ilişki görevinin başarısı | | ⏳ |
 
 ## Prompt'lar (kopyalamaya hazır)
 
@@ -491,6 +492,12 @@ A weary envoy in a travel-stained cloak kneeling before a ruler's high seat in a
 
 ```
 Two rival rulers seated across a heavy oak table inside a large tent at dusk, a scribe pressing a wax seal onto a parchment treaty, a chest of silver and a ring of castle keys laid on the table, their banners on either side, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**70 · `sonuc_diplomat.png`** — diplomat
+
+```
+A well-dressed court diplomat at a writing desk by candlelight, sealing a letter with wax, an open map of rival kingdoms and a small chest of gifts beside him, a messenger waiting at the door, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```
 
 ### Olaylar (entrika aşamaları arasında)
@@ -1253,4 +1260,14 @@ Sturgian and Imperial nobles clasping forearms on a wooden river bridge between 
 
 ```
 A defeated lord handing the keys of a castle gate to a victorious ruler before the castle walls, the old garrison filing out under an overcast sky, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+**`sonuc_diplomat_2.png`** · `sonuc_diplomat_3.png` — diplomat
+
+```
+An Imperial envoy in an embroidered tunic whispering to a ruler behind a carved screen in a palace corridor, courtiers watching from a distance, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
+```
+
+```
+A Khuzait diplomat presenting a falcon as a gift to a foreign khan inside a large felt tent, both sides' retainers looking on, painterly digital concept art in the style of Mount & Blade II: Bannerlord loading screens, grounded realistic early medieval world of Calradia around the 11th-12th century, period-accurate clothing and armor such as mail hauberks, lamellar, padded gambesons, wool tunics and fur-trimmed cloaks, no full plate armor, no fantasy elements, muted earthy palette of browns, ochres and desaturated blues, warm candle or torch light with deep shadows, visible brush strokes, cinematic 16:9 composition, no text, no letters, no logos, no watermark, no gore, no nudity
 ```

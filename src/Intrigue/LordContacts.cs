@@ -30,8 +30,10 @@ namespace CheatMenu.Intrigue
 
         public static Summon SummonOf(IntrigueState state, Hero lord) => state.Summons.FirstOrDefault(s => s.HeroId == lord.StringId);
 
+        /// <summary>Gelme olasılığı; diplomatın varsa Charm'ı kadar artar (en fazla %95).</summary>
         public static int SummonChance(Hero lord) =>
-            LordContactRules.SummonAcceptChance(lord.GetRelation(Hero.MainHero), SameKingdom(lord), SameKingdom(lord) && Hero.MainHero.IsKingdomLeader);
+            SchemeMath.Clamp(LordContactRules.SummonAcceptChance(lord.GetRelation(Hero.MainHero), SameKingdom(lord), SameKingdom(lord) && Hero.MainHero.IsKingdomLeader)
+                + Diplomat.InviteBonus(), 5, 95);
 
         /// <summary>Çağırmanın bedeli: aynı krallıktansa nüfuz, değilse altın.</summary>
         public static string SummonCostText(Hero lord) =>
@@ -126,8 +128,12 @@ namespace CheatMenu.Intrigue
         public static Settlement FeastHall() =>
             Settlement.CurrentSettlement is Settlement s && s.IsFortification && s.OwnerClan == Clan.PlayerClan ? s : null;
 
-        public static int AcceptChance(Hero lord) =>
-            LordContactRules.FeastAcceptChance(lord.GetRelation(Hero.MainHero), Messengers.TravelDays(lord), SameKingdom(lord), AtWarWith(lord));
+        /// <summary>Ziyafete gelme olasılığı; savaştaysanız 0, değilse diplomatın Charm'ı kadar artar (en fazla %95).</summary>
+        public static int AcceptChance(Hero lord)
+        {
+            int chance = LordContactRules.FeastAcceptChance(lord.GetRelation(Hero.MainHero), Messengers.TravelDays(lord), SameKingdom(lord), AtWarWith(lord));
+            return chance <= 0 ? 0 : SchemeMath.Clamp(chance + Diplomat.InviteBonus(), 5, 95);
+        }
 
         /// <summary>null: bu konuklarla ziyafet verilebilir; değilse neden.</summary>
         public static string FeastBlocked(IntrigueState state, IList<Hero> guests)

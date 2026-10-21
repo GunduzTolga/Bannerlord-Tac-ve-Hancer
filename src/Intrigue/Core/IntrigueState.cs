@@ -381,6 +381,13 @@ namespace CheatMenu.Intrigue.Core
         public string StewardId;
         /// <summary>Kâhyanın uyarıları: "yerleşim|tür" → yeniden uyarabileceği gün.</summary>
         public Dictionary<string, int> StewardWarned = new Dictionary<string, int>();
+
+        // Divan, diplomat
+        public string DiplomatId;
+        /// <summary>Diplomatın "ilişkileri geliştir" görevinin hedefi (kahraman); boşsa görev yok.</summary>
+        public string DiplomatTargetId;
+        /// <summary>Diplomatın savaş uyarısı: krallık → yeniden uyarabileceği gün.</summary>
+        public Dictionary<string, int> DiplomatWarned = new Dictionary<string, int>();
         /// <summary>Saray günü: yerleşim → yeniden divan kurulabileceği gün.</summary>
         public Dictionary<string, int> CourtDayUntil = new Dictionary<string, int>();
         public List<HostageDeal> Hostages = new List<HostageDeal>();
@@ -450,6 +457,8 @@ namespace CheatMenu.Intrigue.Core
             if (PhysicianId == newPlayerId) { PhysicianId = null; dropped++; }
             if (MarshalId == newPlayerId) { MarshalId = null; dropped++; }
             if (StewardId == newPlayerId) { StewardId = null; dropped++; }
+            if (DiplomatId == newPlayerId) { DiplomatId = null; DiplomatTargetId = null; dropped++; }
+            if (DiplomatTargetId == newPlayerId) DiplomatTargetId = null;
             foreach (House house in Houses)
             {
                 if (house.ManagerId == newPlayerId) { house.ManagerId = null; dropped++; }
@@ -499,6 +508,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (string id in TailUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) TailUntil.Remove(id);
             foreach (string id in MarshalWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) MarshalWarned.Remove(id);
             foreach (string id in StewardWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) StewardWarned.Remove(id);
+            foreach (string id in DiplomatWarned.Where(p => p.Value <= today).Select(p => p.Key).ToList()) DiplomatWarned.Remove(id);
             foreach (string id in CourtDayUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) CourtDayUntil.Remove(id);
             foreach (string id in GiftUntil.Where(p => p.Value <= today).Select(p => p.Key).ToList()) GiftUntil.Remove(id);
             Audiences.RemoveAll(a => a.Until <= today);
@@ -517,6 +527,7 @@ namespace CheatMenu.Intrigue.Core
                     .Add("mission", I((int)Mission)).Add("rumor", RumorTargetId).Add("agents", I(Agents)).Add("agenttrain", I(AgentTraining))
                     .Add("treasurer", TreasurerId).Add("embezzled", I(Embezzled)).Add("embezzlefound", B(EmbezzleFound))
                     .Add("physician", PhysicianId).Add("physicianwarn", I(PhysicianWarnUntil)).Add("marshal", MarshalId).Add("steward", StewardId)
+                    .Add("diplomat", DiplomatId).Add("diptarget", DiplomatTargetId)
                     .Add("brothelvisit", I(BrothelVisitUntil)).Add("troopnight", I(TroopNightUntil)).Add("feast", I(FeastUntil))
                     .Add("illsince", I(IllnessSince)).Add("illuntil", I(IllnessUntil)),
             };
@@ -589,6 +600,7 @@ namespace CheatMenu.Intrigue.Core
             foreach (KeyValuePair<string, int> p in Conceived) records.Add(new TextRecord("conceived").Add("hero", p.Key).Add("day", I(p.Value)));
             foreach (KeyValuePair<string, int> p in MarshalWarned) records.Add(new TextRecord("marshalwarn").Add("key", p.Key).Add("until", I(p.Value)));
             foreach (KeyValuePair<string, int> p in StewardWarned) records.Add(new TextRecord("stewardwarn").Add("key", p.Key).Add("until", I(p.Value)));
+            foreach (KeyValuePair<string, int> p in DiplomatWarned) records.Add(new TextRecord("diplomatwarn").Add("key", p.Key).Add("until", I(p.Value)));
             foreach (CaravanBook b in CaravanBooks)
                 records.Add(new TextRecord("caravanbook").Add("party", b.PartyId).Add("town", b.TownId).Add("worth", I(b.Worth))
                     .Add("day", I(b.Day)).Add("sent", I(b.SentHome)));
@@ -652,6 +664,8 @@ namespace CheatMenu.Intrigue.Core
                         state.PhysicianWarnUntil = Int(r, "physicianwarn");
                         state.MarshalId = Empty(r.Get("marshal"));
                         state.StewardId = Empty(r.Get("steward"));
+                        state.DiplomatId = Empty(r.Get("diplomat"));
+                        state.DiplomatTargetId = Empty(r.Get("diptarget"));
                         state.BrothelVisitUntil = Int(r, "brothelvisit");
                         state.FeastUntil = Int(r, "feast");
                         state.TroopNightUntil = Int(r, "troopnight");
@@ -812,6 +826,9 @@ namespace CheatMenu.Intrigue.Core
                         break;
                     case "marshalwarn":
                         if (Empty(r.Get("key")) != null) state.MarshalWarned[r.Get("key")] = Int(r, "until");
+                        break;
+                    case "diplomatwarn":
+                        if (Empty(r.Get("key")) != null) state.DiplomatWarned[r.Get("key")] = Int(r, "until");
                         break;
                     case "conceived":
                         if (Empty(r.Get("hero")) != null) state.Conceived[r.Get("hero")] = Int(r, "day");
