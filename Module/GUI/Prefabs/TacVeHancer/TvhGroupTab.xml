@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Entrika ekranının bölüm sekmesi (ViewModel: TabVM): Entrika, Kişiler, Saray, Savaş ve barış. Oyunun başlık sekmesi (Tvh.Tab). -->
+<Prefab>
+  <Window>
+    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="230" SuggestedHeight="44" MarginRight="4" Brush="Tvh.Tab" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="8" MarginRight="8" Brush="Tvh.Text.Tab" Text="@Name" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

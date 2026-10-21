@@ -9,13 +9,31 @@ para + asker gibi şeyler eklersek güzel olur. Oyunda sadece haraç alma var di
 - Diplomacy: bir taraf savaş yorgunluğunda %100'e varınca barış zorla gelir; kaybeden savaş tazminatı ve 5 yıl haraç öder, bu savaşta
   aldığı yerleri geri verir. Barış Masası bunun yerine geçmez; tükenmeden önce pazarlık etmeyi sağlar.
 
-## Masa (`UI.PeaceTableScreen`, `PeaceTableVM`, prefab `TvhPeaceTable` + `TvhPeaceTerm`)
+## Masa (Entrika ekranı > Savaş ve barış > Savaşlar: `WarsVM`, `PeaceTableVM`, prefab `TvhWarsPanel` + `TvhPeaceTablePanel` + `TvhPeaceTerm`)
 
-- Açılış: Savaş Raporu'nun sağ üstündeki **Barış Masası...**, Insert > Entrika > **Barış Masası...**, elçi kartındaki "Barış Masası'na otur".
+- Solda savaşların (sancak, süre, güç oranı, yorgunluk, şartsız barış olasılığı, Savaş Raporu düğmesi), sağda seçilinin masası.
+- Açılış: Savaş Raporu'nun sağ üstündeki **Barış Masası...**, Insert > Entrika > **Barış Masası...**, elçi kartındaki "Barış Masası'na
+  otur", Divan'daki diplomasi raporu. Hepsi Savaşlar sekmesini o savaşla açar (21 Ekim'e kadar ayrı pencereydi).
 - **İstediklerin** (her biri - / + ile): haraç (günde 100/250/500/1.000, 60-120 gün; oyunun haraç düzeniyle her gün ödenir), savaş
   tazminatı (hükümdarın kesesinin %5-75'i), garnizonlarından asker (20-150; partindeki boş yer ve onların sağlam askeri kadar, yüksek
   kademeliler önce), sınırına en yakın 8 şehir ve kale (her biri ayrı ayrı istenir).
-- **Verdiklerin:** altın (keseden 1.000-50.000), haraç ödemek (kaybederken barış almak için). Hem haraç alıp hem verilemez.
+- **Verdiklerin:** altın (keseden 1.000-50.000), haraç ödemek (kaybederken barış almak için), elindeki lordlarını bırakmak. Hem haraç
+  alıp hem verilemez.
+- Şartlar bölümlü: **Para** (haraç, tazminat), **Asker ve esirler** (asker, esir lordlarını bıraksınlar), **Toprak**, **Anlaşmalar**
+  (rehine, saldırmazlık, ticaret, ittifak).
+
+## Anlaşmalar ve esirler (21 Ekim, ikinci adım)
+
+| Şart | Ağırlık | Uygulama |
+|---|---|---|
+| Esir lordlarımızı bıraksınlar | lord başına 4 | barıştan sonra `EndCaptivityAction.ApplyByPeace` |
+| Esirlerini bırak (senin klanının elindekiler) | lord başına 4 eksi | aynı |
+| Rehine | 20, hükümdarın çocuğuysa 35 | rehine sistemi: onların hanedanından biri 84 gün senin sarayında (`Hostages.TakeForTreaty`), süresince saldırmazlık |
+| Saldırmazlık (Diplomacy) | her 40 gün 1 | 60 / 120 / 240 gün (`FormNonAggressionPact`) |
+| Ticaret anlaşması | oyunun gözüyle isterlerse 0, istemezlerse 8 | barıştan sonra oyunun kendi anlaşması (`ITradeAgreementsCampaignBehavior`), oyun izin verirse |
+| İttifak | isterlerse 5, istemezlerse 25 | barıştan sonra oyunun kendi ittifakı (`IAllianceCampaignBehavior`), oyun izin verirse |
+
+Ticaret ve ittifak savaş sürerken denetlenemez (oyunun kuralı barışta bakar): kurulamazsa sonuç kartında oyunun verdiği neden yazar.
 - Altta: şartların özeti, **kabul olasılığı**, şartların ağırlığı ve pazarlık gücün, engel varsa nedeni; **Şartları sıfırla**, **Teklif et**.
 
 ## Kurallar (`PeaceTreatyRules`, saf, testli)

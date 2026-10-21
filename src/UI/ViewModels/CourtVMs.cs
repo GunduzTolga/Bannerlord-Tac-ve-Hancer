@@ -23,10 +23,13 @@ namespace CheatMenu.UI.ViewModels
         private bool _hasKingdom, _hasNoLords, _canSwitch;
         private ImageIdentifierVM _rulerPortrait;
 
-        public CourtVM(Action changed, Action<SchemeKind, Hero> startScheme)
+        private readonly Action<Kingdom> _showRebellions;
+
+        public CourtVM(Action changed, Action<SchemeKind, Hero> startScheme, Action<Kingdom> showRebellions)
         {
             _changed = changed;
             _startScheme = startScheme;
+            _showRebellions = showRebellions;
             Lords = new MBBindingList<CourtLordItemVM>();
             _rulerPortrait = PortraitOf(null);
         }
@@ -60,22 +63,14 @@ namespace CheatMenu.UI.ViewModels
             if (_kingdom != null && CanHostage) EventCards.ShowHostage(_kingdom, _changed);
         }
 
-        [DataSourceProperty] public string LordsText => "Lordlar...";
         [DataSourceProperty] public string RebellionsText => "İsyanlar...";
         [DataSourceProperty] public bool CanRebellions => Bundle.DiplomacyCompat.IsAvailable;
 
-        /// <summary>Lordlar penceresi: iletişim, ziyafet, yanına çağır (o an açık ekranın üstünde).</summary>
-        public void ExecuteLords() => Run("Lordlar", () =>
+        /// <summary>Seçili krallığın isyan grupları: Savaş ve barış > İsyanlar sekmesinde.</summary>
+        public void ExecuteRebellions()
         {
-            if (!LordsScreen.Open(TaleWorlds.ScreenSystem.ScreenManager.TopScreen)) throw new InvalidOperationException("Lordlar penceresi açılamadı");
-        });
-
-        /// <summary>Seçili krallığın isyanlar ve iç savaş penceresi.</summary>
-        public void ExecuteRebellions() => Run("İsyanlar", () =>
-        {
-            if (_kingdom == null || !CanRebellions) return;
-            if (!RebellionsScreen.Open(_kingdom, TaleWorlds.ScreenSystem.ScreenManager.TopScreen)) throw new InvalidOperationException("İsyanlar penceresi açılamadı");
-        });
+            if (_kingdom != null && CanRebellions) _showRebellions(_kingdom);
+        }
         [DataSourceProperty] public string PrevText => "« Önceki";
         [DataSourceProperty] public string NextText => "Sonraki »";
         [DataSourceProperty] public string EmptyText => "Bu krallıkta hükümdardan başka klan lideri yok.";

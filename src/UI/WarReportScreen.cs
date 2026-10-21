@@ -88,7 +88,7 @@ namespace CheatMenu.UI
                     Close();
                     return;
                 }
-                bool busy = InformationManager.IsAnyInquiryActive() || EventCards.IsOpen || MenuUI.HasPending || PeaceTableScreen.IsOpen;
+                bool busy = InformationManager.IsAnyInquiryActive() || EventCards.IsOpen || MenuUI.HasPending;
                 if (Escape.Released(!busy))
                 {
                     MenuUI.Defer(Close);

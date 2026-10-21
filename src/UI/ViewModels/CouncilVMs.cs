@@ -23,9 +23,13 @@ namespace CheatMenu.UI.ViewModels
         private readonly Action _changed;
         private readonly CouncilSeatVM _marshal, _steward, _treasurer, _physician, _diplomat;
 
-        public CouncilVM(Action changed)
+        private readonly Action<Kingdom> _openWar;
+
+        /// <param name="openWar">Savaş ve barış > Savaşlar'da bu savaşın Barış Masası.</param>
+        public CouncilVM(Action changed, Action<Kingdom> openWar)
         {
             _changed = changed;
+            _openWar = openWar;
             _marshal = new CouncilSeatVM("MAREŞAL",
                 "Tactics ve Scouting: düşmanın gücü, orduları, zayıf kaleleri; sana yürüyen ordulara erken uyarı. Sahada da çalışır.",
                 AssignMarshal, () => Dismiss("Mareşal", Marshal.Dismiss), null);
@@ -191,10 +195,7 @@ namespace CheatMenu.UI.ViewModels
                 Kingdom shown = enemy;
                 Rows.Add(new CouncilRowVM(enemy.Name + " · " + (leverage.GameLeans ? "barışa yatkın" : "barışa yanaşmıyor") + " · pazarlık gücün " + leverage.Willingness
                         + "\nŞartsız barışı kabul etme olasılıkları %" + PeaceTreatyRules.Chance(leverage.Willingness, 0),
-                    null, false, "Barış Masası", blocked, () => MenuUI.Defer(() =>
-                    {
-                        if (!PeaceTableScreen.Open(shown, null, TaleWorlds.ScreenSystem.ScreenManager.TopScreen)) MenuUI.Error("Barış Masası açılamadı");
-                    })));
+                    null, false, "Barış Masası", blocked, () => MenuUI.Defer(() => _openWar(shown))));
             }
         }
 

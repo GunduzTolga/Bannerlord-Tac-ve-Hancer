@@ -59,17 +59,11 @@ namespace CheatMenu.Menu
             };
             if (spymaster != null) entries.Add(MenuEntry.Simple("Casus başını görevden al", SchemeEngine.DismissSpymaster));
             entries.Add(MenuEntry.Submenu("Hanedan: meşrulaştırma ve klanı devretme...", ShowDynasty));
-            entries.Add(MenuEntry.Simple("Lordlar: iletişim, ziyafet, yanına çağır", () => MenuUI.Defer(() =>
-            {
-                if (!UI.LordsScreen.Open()) MenuUI.Error("Lordlar penceresi açılamadı");
-            })));
+            entries.Add(MenuEntry.Simple("Lordlar: iletişim, ziyafet, yanına çağır", () => UI.IntrigueScreen.OpenTab(UI.ViewModels.IntrigueScreenVM.TabLords)));
             Kingdom realm = Clan.PlayerClan.Kingdom;
             string rebellions = realm == null ? "bir krallıkta değilsin" : !Bundle.DiplomacyCompat.IsAvailable ? "Diplomacy paketli değil" : null;
             entries.Add(rebellions == null
-                ? MenuEntry.Simple("İsyanlar ve iç savaş: " + realm.Name, () => MenuUI.Defer(() =>
-                {
-                    if (!UI.RebellionsScreen.Open(realm)) MenuUI.Error("İsyanlar penceresi açılamadı");
-                }))
+                ? MenuEntry.Simple("İsyanlar ve iç savaş: " + realm.Name, () => UI.IntrigueScreen.OpenRebellions(null))
                 : MenuEntry.Simple("İsyanlar ve iç savaş - " + rebellions, () => MenuUI.Error(rebellions)));
             List<Kingdom> wars = realm == null ? new List<Kingdom>() : Marshal.Enemies();
             string reports = rebellions ?? (wars.Count == 0 ? "kimseyle savaşta değilsin" : null);
@@ -83,10 +77,7 @@ namespace CheatMenu.Menu
             if (reports == null)
                 entries.Add(MenuEntry.Submenu("Barış Masası...", () => Picker.Pick("Kiminle barış?", wars,
                     k => k.Name + (PeaceTreaties.Blocked(state, k) is string why ? "  [" + why + "]" : ""),
-                    k => MenuUI.Defer(() =>
-                    {
-                        if (!UI.PeaceTableScreen.Open(k)) MenuUI.Error("Barış Masası açılamadı");
-                    }), ShowIntrigue)));
+                    k => UI.IntrigueScreen.OpenWar(k), ShowIntrigue)));
 
             ShowCategory("Entrika", entries, ShowIntrigue,
                 (spymaster == null ? "Entrikaya başlamak için önce klanından birini casus başı yap (Roguery'si yüksek olan iyi). " : "")

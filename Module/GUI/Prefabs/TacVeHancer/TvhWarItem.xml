@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Savaşlar listesinde bir savaş (ViewModel: WarItemVM): tıklanınca seçilir (Barış Masası sağda açılır). Sancak, ad, süre ve güç,
+  şartsız barış olasılığı (ya da neden olmadığı); sağ altta Savaş Raporu. Yazılar tıklamayı alta (kartın kendisine) geçirir.
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="112" MarginBottom="6">
+      <Children>
+        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.ListItem" IsSelected="@IsSelected" Command.Click="ExecuteSelect" UpdateChildrenStates="true" DoNotPassEventsToChildren="true" />
+        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="64" SuggestedHeight="86" MarginLeft="12" VerticalAlignment="Center" DoNotAcceptEvents="true">
+          <Children>
+            <ImageIdentifierWidget DataSource="{Banner}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ImageId="@Id" AdditionalArgs="@AdditionalArgs" TextureProviderName="@TextureProviderName" DoNotAcceptEvents="true" />
+          </Children>
+        </Widget>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginLeft="90" MarginRight="10" MarginTop="8" Brush="Tvh.Text.Name" Text="@Name" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="90" MarginRight="10" MarginTop="38" Brush="Tvh.Text.Small" Text="@StatsText" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="90" MarginRight="10" MarginTop="62" Brush="Tvh.Text.Gold" Text="@ChanceText" IsVisible="@IsOpen" DoNotAcceptEvents="true" />
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginLeft="90" MarginRight="10" MarginTop="62" Brush="Tvh.Text.Bad" Text="@ChanceText" IsVisible="@IsBlocked" DoNotAcceptEvents="true" />
+        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="140" SuggestedHeight="28" HorizontalAlignment="Right" VerticalAlignment="Bottom" MarginRight="10" MarginBottom="8" Brush="Tvh.Button.Small" Command.Click="ExecuteReport" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.ButtonSmall" Text="@ReportText" />
+          </Children>
+        </ButtonWidget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

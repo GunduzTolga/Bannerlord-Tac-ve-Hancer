@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Kişiler > Lordlar paneli (ViewModel: LordsVM). Başlık şeridi (bütün panellerde aynı düzen): solda süzgeçler ve bilgi, sağda ana düğme
+  (Ziyafet ver) ve koşulu. Altında lord kartları (TvhLordCard).
+-->
+<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+      <Children>
+        <!-- ===== Başlık şeridi ===== -->
+        <ListPanel DataSource="{Tabs}" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="HorizontalLeftToRight">
+          <ItemTemplate>
+            <TvhSmallTab />
+          </ItemTemplate>
+        </ListPanel>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="24" MarginTop="44" MarginRight="420" Brush="Tvh.Text.Muted" Text="@Subtitle" />
+        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="400" SuggestedHeight="40" HorizontalAlignment="Right" Brush="Tvh.Button.Primary" Command.Click="ExecuteFeast" IsEnabled="@CanFeast" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="8" MarginRight="8" Brush="Tvh.Text.Button" Text="@FeastText" />
+          </Children>
+        </ButtonWidget>
+        <RichTextWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="560" SuggestedHeight="26" HorizontalAlignment="Right" MarginTop="44" Brush="Tvh.Text.MutedRight" Text="@FeastHint" />
+
+        <!-- ===== Gövde ===== -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="78">
+          <Children>
+            <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Tvh.Text.BodyCenter" Text="@EmptyText" IsVisible="@HasNoLords" />
+            <ScrollablePanel Id="LordsScroll" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="18" AutoHideScrollBars="true" ClipRect="LordsClip" InnerPanel="LordsClip\LordsList" VerticalScrollbar="..\LordsBar\Scrollbar">
+              <Children>
+                <Widget Id="LordsClip" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+                  <Children>
+                    <ListPanel Id="LordsList" DataSource="{Lords}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                      <ItemTemplate>
+                        <TvhLordCard />
+                      </ItemTemplate>
+                    </ListPanel>
+                  </Children>
+                </Widget>
+              </Children>
+            </ScrollablePanel>
+            <Standard.VerticalScrollbar Id="LordsBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" />
+          </Children>
+        </Widget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

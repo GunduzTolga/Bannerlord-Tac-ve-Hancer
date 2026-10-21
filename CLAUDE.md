@@ -24,7 +24,8 @@ denetim, git) **ona yaptırma, kendin yap**. Yalnızca oyunda bakılması gereke
 - `src/Intrigue/Core/*Rules.cs`: saf kurallar (oyunsuz, `tests/` test eder). `src/Intrigue/*.cs`: oyun katmanı.
 - Kayıt: `IntrigueState` metin kayıtları. Oyun modelleri `AddModel<T>` ile zincirlenir, hep `BaseModel`'e devreder.
 - Arayüz: Gauntlet prefab'ları `Module/GUI/Prefabs/TacVeHancer`, fırçalar `Module/GUI/Brushes/TacVeHancer.xml`.
-  Entrika paneli Klan ekranının bir sekmesi (`src/UI/ClanIntrigueTab.cs`, UIExtenderEx mixin + prefab eki).
+  Entrika paneli Klan ekranının bir sekmesi (`src/UI/ClanIntrigueTab.cs`, UIExtenderEx mixin + prefab eki). Dört bölüm (Entrika, Kişiler,
+  Saray, Savaş ve barış) ve alt sekmeler: `docs/superpowers/specs/2026-10-21-arayuz-duzeni.md`.
   `TvhUi.GameLooks`: açılışta oyunun fırçaları bizimkilere kopyalanır. `tools/GuiCheck` her prefab'ı denetler (`--game` ile oyuna karşı).
 - Paketleme: `tools/bundle.ps1` `third_party/<mod>` klasörlerini dağıtılan modüle katar; `src/Bundle/*` uyum kodları.
   `tools/RefCheck`: paketli DLL'ler oyunda yüklenebilir mi. `tools/RsPatch`: Regard and Standing'den Calradia Remembers bağlantısını söker.
@@ -33,6 +34,8 @@ denetim, git) **ona yaptırma, kendin yap**. Yalnızca oyunda bakılması gereke
 ## Kurallar
 - Her değişiklikten sonra `build.ps1` (ya da en azından testler + GuiCheck) temiz geçmeli.
 - Arayüz metinleri yalnızca Latin-1 + ŞşİıĞğ.
+- Yeni özellik yeni pencere açmaz: Entrika ekranının bir alt sekmesine girer (kullanıcı isteği, 21 Ekim). Ayrı pencere yalnızca olay
+  kartları ve Savaş Raporu (Diplomacy'nin harita girişi).
 - Yetişkin içerik yalnızca metin ve perde kapanır; 18+ zorunlu. Reddedilenler: cariyelik; esirleri, eşleri ya da adlı karakterleri
   zorla fuhşa sokmak; eşini pazarlamak. Genelev: adlı, gönüllü, ücretli yetişkin çalışanlar. Yoldaşlar da çalışan ya da yönetici
   olabilir (21 Ekim, kullanıcı kararı) ama yalnızca kendi kararıyla: karakterine göre kabul ya da ret eder, istediği hafta bırakır,
