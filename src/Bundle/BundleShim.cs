@@ -115,8 +115,8 @@ namespace CheatMenu.Bundle
         {
             try
             {
-                if (Intrigue.SchemeEngine.State == null) return true;
                 if ((DateTime.UtcNow - _autoTraderOpened).TotalMilliseconds < 1500) return false;
+                if (!UI.IntrigueScreen.CanRedirect()) return true;
                 _autoTraderOpened = DateTime.UtcNow;
                 UI.IntrigueScreen.OpenTab(UI.ViewModels.IntrigueScreenVM.TabTrade);
                 return false;
@@ -133,7 +133,7 @@ namespace CheatMenu.Bundle
         {
             try
             {
-                if (Clan.PlayerClan?.Kingdom == null || Intrigue.SchemeEngine.State == null) return true;
+                if (Clan.PlayerClan?.Kingdom == null || !UI.IntrigueScreen.CanRedirect()) return true;
                 UI.IntrigueScreen.OpenRealm(clan != null && clan.Kingdom == Clan.PlayerClan.Kingdom ? clan : null);
                 return false;
             }
@@ -155,7 +155,7 @@ namespace CheatMenu.Bundle
         {
             try
             {
-                if (kingdom == null || Intrigue.SchemeEngine.State == null) return true;
+                if (kingdom == null || !UI.IntrigueScreen.CanRedirect()) return true;
                 UI.IntrigueScreen.OpenRebellions(kingdom == Clan.PlayerClan.Kingdom ? null : kingdom);
                 return false;
             }

@@ -43,6 +43,7 @@ namespace CheatMenu.UI.ViewModels
         }
 
         private readonly Action _close;
+        private readonly TabVM[] _tabVMs;
         private int _tab;
         private bool _dirty;
         private string _subtitle = "", _status = "";
@@ -64,8 +65,12 @@ namespace CheatMenu.UI.ViewModels
                 Groups.Add(new TabVM(g, GroupNames[g], t => SelectTab(_lastInGroup[t.Index])));
                 _lastInGroup[g] = GroupTabs[g][0];
             }
+            // Şeritte bölümün sırasıyla (GroupTabs), adlarla erişimde sekme numarasıyla (_tabVMs).
+            _tabVMs = new TabVM[TabNames.Length];
+            for (int i = 0; i < TabNames.Length; i++) _tabVMs[i] = new TabVM(i, TabNames[i], t => SelectTab(t.Index));
             Tabs = new MBBindingList<TabVM>();
-            for (int i = 0; i < TabNames.Length; i++) Tabs.Add(new TabVM(i, TabNames[i], t => SelectTab(t.Index)));
+            foreach (int[] group in GroupTabs)
+                foreach (int index in group) Tabs.Add(_tabVMs[index]);
             Lords = new LordsVM();
             Wars = new WarsVM(MarkDirty);
             Rebellions = new RebellionsVM(close);
@@ -241,11 +246,11 @@ namespace CheatMenu.UI.ViewModels
             int people = state.Reports.Select(r => r.TargetId).Concat(state.Secrets.Select(s => s.TargetId))
                 .Concat(state.Hooks.Where(h => h.Until > today).Select(h => h.TargetId)).Distinct().Count();
             List<Interrogation.Prisoner> prisoners = Interrogation.Prisoners();
-            Tabs[TabPeople].Name = "Kişiler (" + people + ")";
-            Tabs[TabPrisoners].Name = "Esirler (" + prisoners.Count + ")";
-            Tabs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count + Courtships.Rows(state).Count()) + ")";
-            Tabs[TabNetworks].Name = "Ağlar (" + state.Networks.Count + ")";
-            Tabs[TabPlots].Name = "Sana karşı (" + detected + ")";
+            _tabVMs[TabPeople].Name = "Kişiler (" + people + ")";
+            _tabVMs[TabPrisoners].Name = "Esirler (" + prisoners.Count + ")";
+            _tabVMs[TabSchemes].Name = "Süren (" + (state.Schemes.Count + state.Letters.Count + Courtships.Rows(state).Count()) + ")";
+            _tabVMs[TabNetworks].Name = "Ağlar (" + state.Networks.Count + ")";
+            _tabVMs[TabPlots].Name = "Sana karşı (" + detected + ")";
             int group = GroupOf(_tab);
             _lastInGroup[group] = _tab;
             foreach (TabVM g in Groups) g.IsSelected = g.Index == group;

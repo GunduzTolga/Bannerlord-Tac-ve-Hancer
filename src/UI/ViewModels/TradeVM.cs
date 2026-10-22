@@ -61,7 +61,7 @@ namespace CheatMenu.UI.ViewModels
             Settings.Add(StepRowVM.Header("YÜK VE KESE"));
             Settings.Add(Row("Kullanılacak envanter", TradeSettingsRules.Percent(150), "UseInventorySpaceValue", Percent, v =>
             {
-                if (Get("MaxCapacityValue") > v) AutoTraderCompat.Set("MaxCapacityValue", v);
+                if (Get("MaxCapacityValue") > v) Change("MaxCapacityValue", v);
             }));
             Settings.Add(Row("Tek bir mal en çok (envanterin)", TradeSettingsRules.Percent(Get("UseInventorySpaceValue")), "MaxCapacityValue", Percent));
             if (AutoTraderCompat.FleetAvailable)
@@ -71,12 +71,12 @@ namespace CheatMenu.UI.ViewModels
             Settings.Add(StepRowVM.Header("ELDE TUTULACAKLAR"));
             Settings.Add(Row("Tahıl en az", TradeSettingsRules.GrainMin(), "KeepGrainsMinValue", v => v.ToString(), v =>
             {
-                if (Get("KeepGrainsMaxValue") < v) AutoTraderCompat.Set("KeepGrainsMaxValue", v);
+                if (Get("KeepGrainsMaxValue") < v) Change("KeepGrainsMaxValue", v);
             }));
             Settings.Add(Row("Tahıl en çok", TradeSettingsRules.GrainMax(Get("KeepGrainsMinValue")), "KeepGrainsMaxValue", TradeSettingsRules.GrainMaxText));
             Settings.Add(Row("Öteki yiyecekler en az (her biri)", TradeSettingsRules.ConsumableMin(), "KeepConsumablesMinValue", v => v.ToString(), v =>
             {
-                if (Get("KeepConsumablesMaxValue") < v) AutoTraderCompat.Set("KeepConsumablesMaxValue", v);
+                if (Get("KeepConsumablesMaxValue") < v) Change("KeepConsumablesMaxValue", v);
             }));
             Settings.Add(Row("Öteki yiyecekler en çok (her biri)", TradeSettingsRules.ConsumableMax(Get("KeepConsumablesMinValue")), "KeepConsumablesMaxValue",
                 v => v.ToString()));
@@ -101,6 +101,9 @@ namespace CheatMenu.UI.ViewModels
 
         private static int Get(string name) => AutoTraderCompat.Get(name);
 
+        /// <summary>AutoTrader'ın kendi penceresi gibi: bağlı ayarlar da değişir (TradeSettingsRules.Set).</summary>
+        private static void Change(string name, int value) => TradeSettingsRules.Set(name, value, Get, AutoTraderCompat.Set);
+
         private static string OnOff(int value) => value == 1 ? "açık" : "kapalı";
 
         private static string Percent(int value) => "%" + value;
@@ -109,7 +112,7 @@ namespace CheatMenu.UI.ViewModels
         private StepRowVM Row(string label, List<int> steps, string name, Func<int, string> format, Action<int> after = null) =>
             new StepRowVM(label, TradeSettingsRules.WithCurrent(steps, Get(name)), () => Get(name), v => Run("AutoTrader ayarı", () =>
             {
-                AutoTraderCompat.Set(name, v);
+                Change(name, v);
                 after?.Invoke(v);
             }), format, Saved);
 
@@ -118,8 +121,8 @@ namespace CheatMenu.UI.ViewModels
             new StepRowVM(label, new List<int> { 0, 1, 2, 3 }, () => TradeSettingsRules.BuySell(Get("Buy" + kind + "Value") == 1, Get("Sell" + kind + "Value") == 1),
                 v => Run("AutoTrader ayarı", () =>
                 {
-                    AutoTraderCompat.Set("Buy" + kind + "Value", v & 1);
-                    AutoTraderCompat.Set("Sell" + kind + "Value", (v & 2) >> 1);
+                    Change("Buy" + kind + "Value", v & 1);
+                    Change("Sell" + kind + "Value", (v & 2) >> 1);
                 }), TradeSettingsRules.BuySellText, Saved);
 
         private void Saved() => Run("AutoTrader ayarı", () =>
@@ -139,7 +142,7 @@ namespace CheatMenu.UI.ViewModels
             string name = TradeSettingsRules.PresetNames[index];
             MenuUI.Confirm("Hazır ayar: " + name, name + " ayarları uygulansın mı? Değiştirdiği ayarların şimdiki değerleri gider.", () =>
             {
-                foreach (KeyValuePair<string, int> setting in TradeSettingsRules.Preset(index)) AutoTraderCompat.Set(setting.Key, setting.Value);
+                foreach (KeyValuePair<string, int> setting in TradeSettingsRules.Preset(index)) Change(setting.Key, setting.Value);
                 AutoTraderCompat.Save();
                 MenuUI.Success("AutoTrader: " + name + " ayarları uygulandı");
                 _changed();

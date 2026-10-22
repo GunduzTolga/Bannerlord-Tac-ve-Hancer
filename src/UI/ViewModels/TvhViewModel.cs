@@ -72,7 +72,7 @@ namespace CheatMenu.UI.ViewModels
         [DataSourceProperty]
         public bool IsVisible { get => _isVisible; set => Set(ref _isVisible, value, nameof(IsVisible)); }
 
-        public void ExecuteSelect() => _onSelect(this);
+        public void ExecuteSelect() => Run(Name, () => _onSelect(this));
     }
 
     /// <summary>Düğme: etiket, seçilemiyorsa nedeni (ipucu) ve eylem.</summary>
@@ -190,11 +190,11 @@ namespace CheatMenu.UI.ViewModels
 
         public void ExecuteMore() => Step(1);
 
-        private void Step(int delta)
+        private void Step(int delta) => Run(Label, () =>
         {
             int next = SchemeMath.Clamp(Index + delta, 0, _steps.Count - 1);
             _set(_steps[next]);
             _changed();
-        }
+        });
     }
 }

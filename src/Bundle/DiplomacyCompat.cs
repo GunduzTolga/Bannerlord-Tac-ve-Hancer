@@ -152,15 +152,31 @@ namespace CheatMenu.Bundle
         /// </summary>
         internal static object CreateFactionItem(object faction, Action onComplete, Action refresh)
         {
-            Type type = AccessTools.TypeByName("Diplomacy.ViewModel.RebelFactionItemVM");
-            return type == null || faction == null ? null : Activator.CreateInstance(type, faction, onComplete, refresh);
+            try
+            {
+                Type type = AccessTools.TypeByName("Diplomacy.ViewModel.RebelFactionItemVM");
+                return type == null || faction == null ? null : Activator.CreateInstance(type, faction, onComplete, refresh);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy faction item could not be created: " + ex);
+                return null;
+            }
         }
 
         /// <summary>Krallığın grup penceresi ViewModel'i (Diplomacy.ViewModel.RebelFactionsVM): grup kurma kuralı ve seçimi onun.</summary>
         internal static object CreateFactionsWindow(Kingdom kingdom, Action onComplete)
         {
-            Type type = AccessTools.TypeByName("Diplomacy.ViewModel.RebelFactionsVM");
-            return type == null || kingdom == null ? null : Activator.CreateInstance(type, kingdom, onComplete);
+            try
+            {
+                Type type = AccessTools.TypeByName("Diplomacy.ViewModel.RebelFactionsVM");
+                return type == null || kingdom == null ? null : Activator.CreateInstance(type, kingdom, onComplete);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("[CheatMenu] Diplomacy factions window could not be created: " + ex);
+                return null;
+            }
         }
 
         /// <summary>Bir nesnenin özelliği (Diplomacy'nin iç türleri için); okunamazsa varsayılan.</summary>
@@ -512,9 +528,6 @@ namespace CheatMenu.Bundle
                 return -1f;
             }
         }
-
-        /// <summary>Diplomacy'nin ittifak bedeli (nüfuz ve altın; divansız kurulan ittifak için); okunamazsa null.</summary>
-        internal static Cost AllianceCost(Kingdom mine, Kingdom other) => CostOf("DetermineCostForFormingAlliance", mine, other, true);
 
         /// <summary>Diplomacy'nin yayılmacılığı (kuşatmayla artar, günde azalır); okunamazsa -1.</summary>
         internal static float Expansionism(Kingdom kingdom)

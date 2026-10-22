@@ -111,12 +111,13 @@ namespace CheatMenu.UI
         /// </summary>
         public static void OpenAt(Action<IntrigueScreenVM> focus)
         {
-            MapEncyclopediaView encyclopedia = MapScreen.Instance?.EncyclopediaScreenManager;
-            if (encyclopedia != null && encyclopedia.IsEncyclopediaOpen) encyclopedia.CloseEncyclopedia();
-            WarReportScreen.Close();
-            // Krallık ekranından geliniyorsa önce o kapanır (Entrika yalnızca haritada ya da Klan ekranında açılır); açılış bir sonraki karede.
+            // Çağıran çoğu zaman kapanacak pencerenin kendi düğmesi (ansiklopedi, Savaş Raporu, Krallık ekranı): o tıklama sürerken
+            // katmanı sökülmesin; hepsi bir sonraki karede kapanır, Entrika ondan sonraki karede açılır.
             MenuUI.Defer(() =>
             {
+                MapEncyclopediaView encyclopedia = MapScreen.Instance?.EncyclopediaScreenManager;
+                if (encyclopedia != null && encyclopedia.IsEncyclopediaOpen) encyclopedia.CloseEncyclopedia();
+                WarReportScreen.Close();
                 GameStateManager states = Game.Current?.GameStateManager;
                 if (states?.ActiveState is KingdomState) states.PopState();
                 MenuUI.Defer(() =>
@@ -189,6 +190,18 @@ namespace CheatMenu.UI
                 MenuUI.Error("Entrika ekranı hata verdi ve kapatıldı: " + ex.Message);
                 Close();
             }
+        }
+
+        /// <summary>
+        /// Başka bir modun penceresi buraya yönlendirilebilir mi (BundleShim): haritada, Klan ekranında ya da OpenAt'in kapatacağı Krallık
+        /// ekranında, konuşma yokken. Değilse o modun kendi penceresi açılsın (ör. Gruplar ya da Envanter ekranından açılan ansiklopedi).
+        /// </summary>
+        public static bool CanRedirect()
+        {
+            if (Campaign.Current == null || IntrigueBehavior.Current == null || SchemeEngine.State == null) return false;
+            if (Campaign.Current.ConversationManager?.IsConversationInProgress == true) return false;
+            GameState active = Game.Current?.GameStateManager?.ActiveState;
+            return active is MapState || active is KingdomState || (ClanIntrigueTab.Registered && active is ClanState);
         }
 
         /// <summary>null: Entrika açılabilir (sekmeyse haritada ya da Klan ekranında; ayrı ekransa yalnızca haritada).</summary>

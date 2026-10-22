@@ -28,6 +28,7 @@ namespace CheatMenu.Intrigue
                 Tailing.RegisterMenus(starter);
                 Brothels.RegisterMenus(starter);
                 Treasury.ResetCache();
+                UI.ViewModels.LordsVM.ResetGuests();
                 IntrigueDialogs.Register(starter);
             });
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, () =>

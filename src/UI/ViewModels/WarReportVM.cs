@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CheatMenu.Intrigue;
 using CheatMenu.Intrigue.Core;
+using CheatMenu.Menu;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core.ViewModelCollection.Information;
 using TaleWorlds.Library;
@@ -60,7 +61,7 @@ namespace CheatMenu.UI.ViewModels
         public void ExecuteClose() => _close();
 
         /// <summary>Rapor kapanır, Entrika ekranında bu savaşın Barış Masası açılır (Savaş ve barış > Savaşlar).</summary>
-        public void ExecutePeace() => IntrigueScreen.OpenWar(_enemy);
+        public void ExecutePeace() => MenuUI.Defer(() => IntrigueScreen.OpenWar(_enemy));
 
         public override void OnFinalize()
         {

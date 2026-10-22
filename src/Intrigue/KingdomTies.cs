@@ -13,7 +13,7 @@ namespace CheatMenu.Intrigue
     /// <summary>
     /// Krallığının öteki krallıklarla bağları (Savaş ve barış > Krallıklar; tasarım: docs/superpowers/specs/2026-10-21-kralliklar-sekmesi.md):
     /// durum, kalan süreler, karşı tarafın istekleri ve hükümdarın doğrudan işleri. Savaş ilanı ve saldırmazlık Diplomacy'nin (koşulları ve
-    /// bedeli onun), ittifak, ticaret ve savaşa çağırma oyunun kendi sistemi (ittifak bedeli Diplomacy'nin hesabıyla). Divansız: Diplomacy'nin
+    /// bedeli onun), ittifak, ticaret ve savaşa çağırma oyunun kendi sistemi (ittifak bedeli oyunun önerme bedeli). Divansız: Diplomacy'nin
     /// "divanı toplamadan" düğmeleri gibi yalnızca hükümdar yapar; öteki üyeler oyunun Krallık ekranından divana sunar.
     /// </summary>
     public static class KingdomTies
@@ -106,13 +106,12 @@ namespace CheatMenu.Intrigue
 
         public static void ProposePact(Kingdom kingdom) => DiplomacyCompat.ProposePact(Mine, kingdom);
 
-        /// <summary>İttifak bedeli: Diplomacy'nin hesabı (nüfuz ve altın); okunamazsa oyunun önerme bedeli (nüfuz).</summary>
-        public static (int Influence, int Gold) AllianceCost(Kingdom kingdom)
-        {
-            DiplomacyCompat.Cost cost = Mine == null ? null : DiplomacyCompat.AllianceCost(Mine, kingdom);
-            return cost != null ? (cost.Influence, cost.Gold)
-                : (Campaign.Current.Models.AllianceModel.GetInfluenceCostOfProposingStartingAlliance(Clan.PlayerClan), 0);
-        }
+        /// <summary>
+        /// İttifak bedeli: oyunun ittifak önerme bedeli (nüfuz). Diplomacy'nin DetermineCostForFormingAlliance'ı kendi kodunda hiç
+        /// kullanılmıyor ve büyük krallıkta yüzlerce nüfuz artı on binlerce dinar çıkıyor; onu almıyoruz.
+        /// </summary>
+        public static (int Influence, int Gold) AllianceCost(Kingdom kingdom) =>
+            (Campaign.Current.Models.AllianceModel.GetInfluenceCostOfProposingStartingAlliance(Clan.PlayerClan), 0);
 
         public static string AllianceBlocked(Kingdom kingdom)
         {
@@ -126,9 +125,7 @@ namespace CheatMenu.Intrigue
 
         public static void MakeAlliance(Kingdom kingdom)
         {
-            DiplomacyCompat.Cost cost = DiplomacyCompat.AllianceCost(Mine, kingdom);
-            if (cost != null) cost.Pay();
-            else ChangeClanInfluenceAction.Apply(Clan.PlayerClan, -AllianceCost(kingdom).Influence);
+            ChangeClanInfluenceAction.Apply(Clan.PlayerClan, -AllianceCost(kingdom).Influence);
             Alliances.StartAlliance(Mine, kingdom);
         }
 

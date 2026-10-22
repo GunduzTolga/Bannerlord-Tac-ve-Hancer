@@ -62,44 +62,86 @@ namespace CheatMenu.Intrigue.Core
         public static readonly string[] PresetNames = { "Varsayılan", "Ganimet satıcısı", "Uzak ticaret", "Yakın ticaret" };
 
         /// <summary>
-        /// AutoTrader'ın hazır ayar setleri (kendi penceresindeki düğmelerle aynı değerler; ad: AutoTraderConfig özelliği, aç/kapa 1/0).
-        /// Varsayılan her şeyi, ötekiler yalnızca kendi alanlarını değiştirir.
+        /// Bir ayarı AutoTrader'ın kendi penceresindeki gibi değiştirir: o pencerenin özellikleri birbirine bağlı (ör. "bütün sığırları sat"
+        /// açılınca hayvan alımı kapanır, satışı açılır; fiyat yöntemi değişince eşikler o yöntemin varsayılanına döner). Değer zaten aynıysa
+        /// hiçbir şey olmaz (onun setter'ları gibi). get/set: AutoTraderConfig'in özellikleri (aç/kapa 1/0).
         /// </summary>
-        public static Dictionary<string, int> Preset(int index)
+        public static void Set(string name, int value, Func<string, int> get, Action<string, int> set)
+        {
+            if (get(name) == value) return;
+            set(name, value);
+            switch (name)
+            {
+                case "SimpleTradingAI":
+                    Set("SellThresholdValue", value == 1 ? 125 : 95, get, set);
+                    Set("BuyThresholdValue", value == 1 ? 80 : 70, get, set);
+                    break;
+                case "JunkCattleValue":
+                    if (value == 1)
+                    {
+                        Set("BuyLivestockValue", 0, get, set);
+                        Set("SellLivestockValue", 1, get, set);
+                    }
+                    break;
+                case "BuyLivestockValue":
+                    if (value == 1) Set("JunkCattleValue", 0, get, set);
+                    break;
+                case "ResupplyValue":
+                    if (value == 1) Set("BuyConsumablesValue", 1, get, set);
+                    break;
+                case "BuyConsumablesValue":
+                    if (value == 0) Set("ResupplyValue", 0, get, set);
+                    break;
+                case "ResupplyHardwoodValue":
+                    if (value == 1) Set("BuyGoodsValue", 1, get, set);
+                    break;
+                case "BuyGoodsValue":
+                    if (value == 0) Set("ResupplyHardwoodValue", 0, get, set);
+                    break;
+            }
+        }
+
+        private static KeyValuePair<string, int> P(string name, int value) => new KeyValuePair<string, int>(name, value);
+
+        /// <summary>
+        /// AutoTrader'ın hazır ayar setleri: kendi penceresindeki düğmelerle aynı değerler ve aynı sırayla (Set ile uygulanır, bağlı ayarlar da
+        /// onunki gibi değişir; ad: AutoTraderConfig özelliği, aç/kapa 1/0). Varsayılan her şeyi, ötekiler yalnızca kendi alanlarını değiştirir.
+        /// </summary>
+        public static List<KeyValuePair<string, int>> Preset(int index)
         {
             switch (index)
             {
                 case 0:
-                    return new Dictionary<string, int>
+                    return new List<KeyValuePair<string, int>>
                     {
-                        ["SimpleTradingAI"] = 1, ["BuyThresholdValue"] = 85, ["SellThresholdValue"] = 95, ["UseWeightedValue"] = 0,
-                        ["MaxCapacityValue"] = 15, ["KeepGrainsMinValue"] = 10, ["KeepGrainsMaxValue"] = 100, ["KeepConsumablesMinValue"] = 4,
-                        ["KeepConsumablesMaxValue"] = 20, ["UseInventorySpaceValue"] = 90, ["UseMaxFleetCapacityValue"] = 0, ["KeepWagesValue"] = 5,
-                        ["SearchRadiusValue"] = 300, ["WeaponsArmorTierValue"] = 2, ["JunkCattleValue"] = 0, ["SellSmithingValue"] = 0,
-                        ["KeepSmeltingValue"] = 0, ["ResupplyHardwoodValue"] = 0, ["ResupplyValue"] = 1,
-                        ["BuyHorsesValue"] = 1, ["SellHorsesValue"] = 0, ["BuyWeaponsValue"] = 0, ["SellWeaponsValue"] = 1,
-                        ["BuyArmorValue"] = 0, ["SellArmorValue"] = 1, ["BuyGoodsValue"] = 1, ["SellGoodsValue"] = 1,
-                        ["BuyConsumablesValue"] = 1, ["SellConsumablesValue"] = 1, ["BuyLivestockValue"] = 0, ["SellLivestockValue"] = 1,
+                        P("SimpleTradingAI", 1), P("BuyThresholdValue", 85), P("SellThresholdValue", 95), P("UseWeightedValue", 0),
+                        P("MaxCapacityValue", 15), P("KeepGrainsMinValue", 10), P("KeepGrainsMaxValue", 100), P("KeepConsumablesMinValue", 4),
+                        P("KeepConsumablesMaxValue", 20), P("UseInventorySpaceValue", 90), P("UseMaxFleetCapacityValue", 0), P("KeepWagesValue", 5),
+                        P("SearchRadiusValue", 300), P("WeaponsArmorTierValue", 2), P("JunkCattleValue", 0), P("SellSmithingValue", 0),
+                        P("KeepSmeltingValue", 0), P("ResupplyHardwoodValue", 0), P("ResupplyValue", 1),
+                        P("BuyHorsesValue", 1), P("SellHorsesValue", 0), P("BuyWeaponsValue", 0), P("SellWeaponsValue", 1),
+                        P("BuyArmorValue", 0), P("SellArmorValue", 1), P("BuyGoodsValue", 1), P("SellGoodsValue", 1),
+                        P("BuyConsumablesValue", 1), P("SellConsumablesValue", 1), P("BuyLivestockValue", 0), P("SellLivestockValue", 1),
                     };
                 case 1:
-                    return new Dictionary<string, int>
+                    return new List<KeyValuePair<string, int>>
                     {
-                        ["WeaponsArmorTierValue"] = 3, ["SellSmithingValue"] = 0, ["KeepSmeltingValue"] = 0,
-                        ["BuyHorsesValue"] = 0, ["SellHorsesValue"] = 1, ["BuyWeaponsValue"] = 0, ["SellWeaponsValue"] = 1,
-                        ["BuyArmorValue"] = 0, ["SellArmorValue"] = 1, ["BuyGoodsValue"] = 0, ["SellGoodsValue"] = 0,
-                        ["BuyConsumablesValue"] = 0, ["SellConsumablesValue"] = 0, ["BuyLivestockValue"] = 0, ["SellLivestockValue"] = 0,
-                        ["JunkCattleValue"] = 1,
+                        P("WeaponsArmorTierValue", 3), P("SellSmithingValue", 0), P("KeepSmeltingValue", 0),
+                        P("BuyHorsesValue", 0), P("SellHorsesValue", 1), P("BuyWeaponsValue", 0), P("SellWeaponsValue", 1),
+                        P("BuyArmorValue", 0), P("SellArmorValue", 1), P("BuyGoodsValue", 0), P("SellGoodsValue", 0),
+                        P("BuyConsumablesValue", 0), P("SellConsumablesValue", 0), P("BuyLivestockValue", 0), P("SellLivestockValue", 0),
+                        P("JunkCattleValue", 1),
                     };
                 case 2:
                 case 3:
                     bool global = index == 2;
-                    return new Dictionary<string, int>
+                    return new List<KeyValuePair<string, int>>
                     {
-                        ["SimpleTradingAI"] = 0, ["SearchRadiusValue"] = global ? 1000 : 300, ["UseWeightedValue"] = global ? 0 : 1,
-                        ["BuyHorsesValue"] = 1, ["BuyGoodsValue"] = 1, ["SellGoodsValue"] = 1, ["BuyConsumablesValue"] = 1, ["SellConsumablesValue"] = 1,
+                        P("SimpleTradingAI", 0), P("SearchRadiusValue", global ? 1000 : 300), P("UseWeightedValue", global ? 0 : 1),
+                        P("BuyHorsesValue", 1), P("BuyGoodsValue", 1), P("SellGoodsValue", 1), P("BuyConsumablesValue", 1), P("SellConsumablesValue", 1),
                     };
                 default:
-                    return new Dictionary<string, int>();
+                    return new List<KeyValuePair<string, int>>();
             }
         }
     }

@@ -35,7 +35,7 @@ bağları izler ve ulak gönderir.
 |---|---|---|---|
 | Savaş ilanı | Diplomacy (`DeclareWarConditions`, `DeclareWarAction.ApplyByKingdomDecision`) | yetki, nüfuz, saldırmazlık yok, müttefik değil, süre, ilişki | Diplomacy'nin savaş bedeli (nüfuz) |
 | Saldırmazlık | Diplomacy (`NonAggressionPactConditions`, `FormNonAggressionPactAction`) | barış, ittifak yok, karşı tarafın puanı, bedel | Diplomacy'nin hesabı (nüfuz + altın) |
-| İttifak | oyun (`AllianceModel.CanMakeAlliance`, `GetScoreOfStartingAlliance`, `IAllianceCampaignBehavior.StartAlliance`) | oyunun (Diplomacy'nin modeliyle) koşulları ve karşı tarafın puanı | Diplomacy'nin ittifak hesabı (nüfuz + altın); okunamazsa oyunun önerme bedeli |
+| İttifak | oyun (`AllianceModel.CanMakeAlliance`, `GetScoreOfStartingAlliance`, `IAllianceCampaignBehavior.StartAlliance`) | oyunun (Diplomacy'nin modeliyle) koşulları ve karşı tarafın puanı | oyunun ittifak önerme bedeli (nüfuz). Diplomacy'nin `DetermineCostForFormingAlliance`'ı denenip bırakıldı: kendi kodunda kullanılmıyor, büyük krallıkta ~750 nüfuz + ~75.000 dinar çıkıyordu |
 | İttifakı boz | oyun (`EndAlliance`; Diplomacy'nin düğmesi de bunu yapar) | müttefik olmak | yok |
 | Ticaret | oyun (`TradeAgreementModel.CanMakeTradeAgreement` karşı tarafın isteğiyle, `MakeTradeAgreement`) | oyunun koşulları | oyunun önerme bedeli (nüfuz) |
 | Savaşa çağır | oyun (`GetKingdomsToCallToWarAgainst`, `GetScoreOfCallingToWar`, `StartCallToWarAgreement`, oyuncu öder) | müttefikin isteği | oyunun çağırma bedeli (nüfuz) + savaş bedeli (altın, oyunun kuralıyla) |

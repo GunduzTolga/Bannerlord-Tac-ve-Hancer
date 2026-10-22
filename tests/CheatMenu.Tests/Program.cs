@@ -553,6 +553,8 @@ namespace CheatMenu.Tests
                 && Tr.TimarToToprak("bu tımarı ver") == "bu toprağı ver" && Tr.TimarToToprak("tımarsız krallık") == "topraksız krallık"
                 && Tr.TimarToToprak("Tımarın, tımara") == "Toprağın, toprağa" && Tr.TimarToToprak("TIMARLAR") == "TOPRAKLAR"
                 && Tr.TimarToToprak("TIMARI") == "TOPRAĞI");
+            Check("tr: timar suffix hardening", Tr.TimarToToprak("tımarda") == "toprakta" && Tr.TimarToToprak("Tımardan") == "Topraktan"
+                && Tr.TimarToToprak("tımardaki") == "topraktaki" && Tr.TimarToToprak("tımarcı") == "toprakçı" && Tr.TimarToToprak("TIMARDA") == "TOPRAKTA");
             Check("tr: timar left alone elsewhere", Tr.TimarToToprak("Fiefs") == "Fiefs" && Tr.TimarToToprak("PRIMARY") == "PRIMARY"
                 && Tr.TimarToToprak("mimar") == "mimar" && Tr.TimarToToprak(null) == null && Tr.TimarToToprak("") == "");
             ExpectSuffix(Tr.Dative("Caladog"), "Caladog'a");
@@ -953,10 +955,31 @@ namespace CheatMenu.Tests
                 && TradeSettingsRules.GrainMaxText(500) == "hepsi" && TradeSettingsRules.GrainMaxText(1000) == "hepsi" && TradeSettingsRules.GrainMaxText(100) == "100");
             Check("trade: buy and sell", TradeSettingsRules.BuySell(true, true) == 3 && TradeSettingsRules.BuySell(false, true) == 2
                 && TradeSettingsRules.BuySellText(1) == "yalnızca al" && TradeSettingsRules.BuySellText(0) == "dokunma");
-            Check("trade: presets like AutoTrader's", TradeSettingsRules.Preset(0).Count == 31 && TradeSettingsRules.Preset(0)["BuyThresholdValue"] == 85
-                && TradeSettingsRules.Preset(1)["JunkCattleValue"] == 1 && TradeSettingsRules.Preset(2)["SearchRadiusValue"] == 1000
-                && TradeSettingsRules.Preset(3)["UseWeightedValue"] == 1 && TradeSettingsRules.Preset(9).Count == 0
+            Check("trade: presets like AutoTrader's", TradeSettingsRules.Preset(0).Count == 31 && TradeSettingsRules.Preset(9).Count == 0
                 && TradeSettingsRules.PresetNames.Length == 4);
+            // AutoTrader'ın bağlı ayarları: kendi penceresindeki setter'larla aynı sonuç.
+            Dictionary<string, int> AfterPreset(int index)
+            {
+                var values = new Dictionary<string, int>();
+                foreach (var p in TradeSettingsRules.Preset(0)) values[p.Key] = p.Value;
+                values["SimpleTradingAI"] = 1;
+                foreach (var p in TradeSettingsRules.Preset(index))
+                    TradeSettingsRules.Set(p.Key, p.Value, n => values.TryGetValue(n, out int v) ? v : 0, (n, v) => values[n] = v);
+                return values;
+            }
+            Dictionary<string, int> seller = AfterPreset(1);
+            Check("trade: loot seller sells cattle", seller["JunkCattleValue"] == 1 && seller["SellLivestockValue"] == 1 && seller["BuyLivestockValue"] == 0
+                && seller["ResupplyValue"] == 0 && seller["ResupplyHardwoodValue"] == 0);
+            Dictionary<string, int> local = AfterPreset(3);
+            Check("trade: average price resets thresholds", local["SimpleTradingAI"] == 0 && local["BuyThresholdValue"] == 70 && local["SellThresholdValue"] == 95
+                && local["UseWeightedValue"] == 1 && local["SearchRadiusValue"] == 300);
+            var linked = new Dictionary<string, int> { ["BuyConsumablesValue"] = 0, ["ResupplyValue"] = 0, ["BuyLivestockValue"] = 1, ["JunkCattleValue"] = 1 };
+            Func<string, int> read = n => linked.TryGetValue(n, out int v) ? v : 0;
+            Action<string, int> write = (n, v) => linked[n] = v;
+            TradeSettingsRules.Set("ResupplyValue", 1, read, write);
+            bool resupplyBuys = linked["BuyConsumablesValue"] == 1;
+            TradeSettingsRules.Set("BuyConsumablesValue", 0, read, write);
+            Check("trade: linked toggles", resupplyBuys && linked["ResupplyValue"] == 0);
         }
 
         private static void KingdomsTests()

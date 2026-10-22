@@ -128,7 +128,8 @@ namespace CheatMenu.UI.ViewModels
             SummaryText = PeaceTreaties.Describe(_enemy, _terms);
             int weight = PeaceTreaties.Weight(_enemy, _terms);
             int chance = leverage == null ? 0 : PeaceTreatyRules.Chance(leverage.Willingness, weight);
-            ChanceText = leverage == null ? "" : "Kabul olasılığı: %" + chance;
+            ChanceText = leverage == null ? "" : PeaceTreaties.WithinOffer(state, _enemy, _terms)
+                ? "Kabul ederler: kendi elçilerinin teklifi" : "Kabul olasılığı: %" + chance;
             WeightText = "Şartların ağırlığı " + weight + (leverage != null ? "  ·  pazarlık gücün " + leverage.Willingness : "");
             blocked = blocked ?? PeaceTreaties.TermsBlocked(_enemy, _terms);
             BlockedText = blocked ?? "";
@@ -174,11 +175,11 @@ namespace CheatMenu.UI.ViewModels
             });
         }
 
-        public void ExecuteReset()
+        public void ExecuteReset() => Run("Masayı temizle", () =>
         {
             _terms.Reset();
             Refresh();
-        }
+        });
 
         public override void OnFinalize()
         {

@@ -38,7 +38,7 @@ namespace CheatMenu.Intrigue.Core
 
         /// <summary>
         /// Oyunun Türkçesindeki "tımar"ı "toprak" yapar (kullanıcı kararı, CLAUDE.md > Terimler), ekleriyle ve büyük/küçük harfine göre:
-        /// Tımarlar → Topraklar, tımarı → toprağı, tımarsız → topraksız, TIMAR → TOPRAK. "tımar" geçmeyen metin olduğu gibi döner.
+        /// Tımarlar → Topraklar, tımarı → toprağı, tımarsız → topraksız, tımarda → toprakta, TIMAR → TOPRAK. "tımar" geçmeyen metin olduğu gibi döner.
         /// </summary>
         public static string TimarToToprak(string text)
         {
@@ -50,6 +50,9 @@ namespace CheatMenu.Intrigue.Core
                 bool upper = word == "TIMAR";
                 string stem = upper ? "TOPRA" : word[0] == 'T' ? "Topra" : "topra";
                 bool softens = rest.Length > 0 && (Vowels + "AIOUEİÖÜÂÎÛ").IndexOf(rest[0]) >= 0;
+                // k sert ünsüz: ardından gelen ek de sertleşir (tımarda -> toprakta, tımarcı -> toprakçı).
+                if (rest.Length > 0 && "dDcC".IndexOf(rest[0]) >= 0)
+                    rest = (rest[0] == 'd' ? "t" : rest[0] == 'D' ? "T" : rest[0] == 'c' ? "ç" : "Ç") + rest.Substring(1);
                 return stem + (softens ? (upper ? "Ğ" : "ğ") : (upper ? "K" : "k")) + rest;
             });
         }

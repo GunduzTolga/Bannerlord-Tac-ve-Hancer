@@ -188,13 +188,14 @@ namespace CheatMenu.UI.ViewModels
             if (!CanDonate || _selected == null) return;
             Clan clan = _selected;
             int amount = _gift;
-            Run("Bağış", () =>
-            {
-                if (!DiplomacyCompat.DonateGold(clan, amount)) throw new InvalidOperationException("Diplomacy'nin bağış işlemine ulaşılamadı");
-                MenuUI.Success(clan.Name + " klanına " + SchemeFactors.Money(amount) + " bağışladın");
-                _gift = 0;
-                _changed();
-            });
+            MenuUI.Confirm(clan.Name + " klanına " + SchemeFactors.Money(amount) + " bağışlansın mı?",
+                "Altın klanın komutanlarına paylaşılır; geri alınamaz. " + DonatePreview + ".", () =>
+                {
+                    if (!DiplomacyCompat.DonateGold(clan, amount)) throw new InvalidOperationException("Diplomacy'nin bağış işlemine ulaşılamadı");
+                    MenuUI.Success(clan.Name + " klanına " + SchemeFactors.Money(amount) + " bağışladın");
+                    _gift = 0;
+                    _changed();
+                }, null);
         }
 
         private void RefreshReturns(Kingdom mine)

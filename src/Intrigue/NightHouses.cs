@@ -632,7 +632,18 @@ namespace CheatMenu.Intrigue
         public static void Weekly()
         {
             IntrigueState state = IntrigueBehavior.Current?.State;
-            if (state == null || state.Houses.Count == 0 || !Enabled) return;
+            if (state == null || state.Houses.Count == 0) return;
+            if (!Enabled)
+            {
+                // Ayar kapatıldı: evdeki yoldaşlar sana döner (yoksa düğmesiz kalır, "meşgul" sayılırlardı); ev kaydı ayar açılınca sürer.
+                List<string> back = state.Houses
+                    .Select(h => Settlement.Find(h.TownId) is Settlement place ? ReleaseCompanions(h, place) : null)
+                    .Where(line => line != null).ToList();
+                if (back.Count > 0)
+                    SchemeOutcomes.Notify(state, "Genelevlerdeki yoldaşlar dönüyor", "Genelev ayarı kapalı: " + string.Join(", ", back) + ".", null,
+                        CardImages.BrothelCompanion);
+                return;
+            }
             EnsureNamed(state);
             int income = 0;
             foreach (House house in state.Houses.ToList())
@@ -646,6 +657,18 @@ namespace CheatMenu.Intrigue
                 }
                 CheckCompanions(state, house, town);
                 Hero manager = Manager(house);
+                // Yönetici de her hafta kendi kararını verir (çalışanlar gibi): artık istemiyorsa ya da yoldaşın/eşin değilse bırakır.
+                string quit = manager == null ? null : Refusal(state, manager)
+                    ?? (Clan.PlayerClan.Companions.Contains(manager) || manager == Hero.MainHero.Spouse ? null : "artık yoldaşın ya da eşin değil");
+                if (quit != null)
+                {
+                    house.ManagerId = null;
+                    house.ManagerSince = 0;
+                    SchemeOutcomes.Notify(state, "Genelevin yöneticisi bıraktı: " + town.Name,
+                        manager.Name + " evi artık yönetmek istemiyor (" + quit + "); " + (SendBack(manager, town) ?? "şehirde kaldı") + ".",
+                        manager, CardImages.BrothelCompanion);
+                    manager = null;
+                }
                 float prosperity = town.Town?.Prosperity ?? 0f;
                 income += HouseRules.Net(house, prosperity, Charm(manager));
                 if (manager != null) manager.ChangeHeroGold(HouseRules.ManagerPay(HouseRules.Gross(house, prosperity, Charm(manager))));

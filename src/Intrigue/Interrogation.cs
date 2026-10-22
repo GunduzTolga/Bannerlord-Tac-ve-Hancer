@@ -67,7 +67,7 @@ namespace CheatMenu.Intrigue
         {
             int mine = Hero.MainHero.GetSkillValue(DefaultSkills.Roguery);
             Hero spymaster = SchemeFactors.Spymaster(state);
-            return spymaster != null && !spymaster.IsPrisoner ? Math.Max(mine, SchemeFactors.Roguery(spymaster)) : mine;
+            return spymaster != null && SchemeFactors.SpymasterBusyReason(spymaster) == null ? Math.Max(mine, SchemeFactors.Roguery(spymaster)) : mine;
         }
 
         public static int Chance(IntrigueState state, Hero prisoner, InterrogationMethod method) =>

@@ -112,11 +112,20 @@ namespace CheatMenu.Intrigue
             if (!hero.IsAlive) throw new InvalidOperationException("Hayatta değil");
             if (hero.IsPrisoner) throw new InvalidOperationException(hero.Name + " şu an esir");
             if (Campaign.Current.ConversationManager?.IsConversationInProgress == true) throw new InvalidOperationException("Başka bir konuşma sürüyor");
-            state.Audiences.Remove(audience);
             UI.IntrigueScreen.Close();
-            CampaignMapConversation.OpenConversation(
-                new ConversationCharacterData(CharacterObject.PlayerCharacter, PartyBase.MainParty),
-                new ConversationCharacterData(hero.CharacterObject, hero.PartyBelongedTo?.Party));
+            // Konuşma haritanın üstünde açılır: Klan ekranındaysak önce o kapanır (düello ve takip gibi).
+            UI.ClanIntrigueTab.WhenOnMap(() =>
+            {
+                if (!hero.IsAlive || hero.IsPrisoner || Campaign.Current.ConversationManager?.IsConversationInProgress == true)
+                {
+                    MenuUI.Error(hero.Name + " ile şu an görüşülemiyor");
+                    return;
+                }
+                state.Audiences.Remove(audience);
+                CampaignMapConversation.OpenConversation(
+                    new ConversationCharacterData(CharacterObject.PlayerCharacter, PartyBase.MainParty),
+                    new ConversationCharacterData(hero.CharacterObject, hero.PartyBelongedTo?.Party));
+            });
         }
 
         private static void ResolveAudience(IntrigueState state, Letter letter, Hero target)

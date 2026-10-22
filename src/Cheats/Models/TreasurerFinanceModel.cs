@@ -16,29 +16,33 @@ namespace CheatMenu.Cheats.Models
     /// </summary>
     public sealed class TreasurerFinanceModel : ClanFinanceModel
     {
+        // Hazinedarın payı oyunun hesabından ÖNCE hesaplanır: applyWithdrawals'ta oyun kervan ve atölye kesesinden günlük payı çeker,
+        // sonra hesaplasak azalmış keseye göre çıkardı (ipucunda tam, gerçekte eksik).
         public override ExplainedNumber CalculateClanGoldChange(Clan clan, bool includeDescriptions = false, bool applyWithdrawals = false, bool includeDetails = false)
         {
+            int bonus = TreasurerBonus(clan, out string name);
             ExplainedNumber result = BaseModel.CalculateClanGoldChange(clan, includeDescriptions, applyWithdrawals, includeDetails);
-            AddTreasurer(clan, ref result);
+            if (bonus > 0) result.Add(bonus, new TextObject("Hazinedar " + name));
             return result;
         }
 
         public override ExplainedNumber CalculateClanIncome(Clan clan, bool includeDescriptions = false, bool applyWithdrawals = false, bool includeDetails = false)
         {
+            int bonus = TreasurerBonus(clan, out string name);
             ExplainedNumber result = BaseModel.CalculateClanIncome(clan, includeDescriptions, applyWithdrawals, includeDetails);
-            AddTreasurer(clan, ref result);
+            if (bonus > 0) result.Add(bonus, new TextObject("Hazinedar " + name));
             return result;
         }
 
-        private void AddTreasurer(Clan clan, ref ExplainedNumber result)
+        private int TreasurerBonus(Clan clan, out string name)
         {
-            if (clan == null || clan != Clan.PlayerClan) return;
+            name = null;
+            if (clan == null || clan != Clan.PlayerClan) return 0;
             int income = Hero.MainHero.OwnedWorkshops.Where(w => w?.Settlement?.Town != null && w.WorkshopType != null)
                     .Sum(w => BaseModel.CalculateOwnerIncomeFromWorkshop(w))
                 + clan.Heroes.Where(h => h.IsAlive).SelectMany(h => h.OwnedCaravans).Select(c => c?.MobileParty)
                     .Where(p => p != null && p.IsActive).Distinct().Sum(p => BaseModel.CalculateOwnerIncomeFromCaravan(p));
-            int bonus = Treasury.IncomeBonus(income, out string name);
-            if (bonus > 0) result.Add(bonus, new TextObject("Hazinedar " + name));
+            return Treasury.IncomeBonus(income, out name);
         }
 
         public override ExplainedNumber CalculateClanExpenses(Clan clan, bool includeDescriptions = false, bool applyWithdrawals = false, bool includeDetails = false) =>

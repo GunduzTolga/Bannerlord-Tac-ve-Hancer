@@ -249,6 +249,8 @@ namespace CheatMenu.Intrigue
         {
             string blocked = Blocked(state, enemy) ?? TermsBlocked(enemy, terms);
             if (blocked != null) throw new InvalidOperationException(blocked);
+            // Elçinin kendi teklifi (ya da ondan hafifi) geçerliyken masada da kabul edilir: kendi sözlerini geri çevirmezler.
+            if (WithinOffer(state, enemy, terms)) return new Outcome { Accepted = true, Text = Apply(state, enemy, terms, true) };
             int chance = Chance(state, enemy, terms);
             if (state.Roll100() <= chance) return new Outcome { Accepted = true, Text = Apply(state, enemy, terms) };
 
@@ -264,8 +266,18 @@ namespace CheatMenu.Intrigue
             };
         }
 
-        /// <summary>Barış ve şartlar: önce barış (yerler barışta el değiştirsin), sonra yerler, altın, asker. Haraçı oyun her gün öder.</summary>
-        public static string Apply(IntrigueState state, Kingdom enemy, Terms terms)
+        /// <summary>Elçinin getirdiği teklif hâlâ geçerli ve bu şartlar ondan ağır değil mi.</summary>
+        public static bool WithinOffer(IntrigueState state, Kingdom enemy, Terms terms)
+        {
+            PeaceTalk talk = state.PeaceTalkWith(enemy.StringId);
+            return talk.AskedUntil > Today && Weight(enemy, terms) <= Weight(enemy, new Terms { Gold = talk.OfferGold });
+        }
+
+        /// <summary>
+        /// Barış ve şartlar: önce barış, sonra asker (devredilecek yerlerin garnizonları dahil, masada da öyle sayıldı), yerler, altın.
+        /// Haraçı oyun her gün öder. theirOffer: şartlar onların kendi teklifi (ağır şart kırgınlığı yok).
+        /// </summary>
+        public static string Apply(IntrigueState state, Kingdom enemy, Terms terms, bool theirOffer = false)
         {
             Kingdom mine = Mine;
             Hero ruler = enemy.Leader, me = Hero.MainHero;
@@ -274,6 +286,7 @@ namespace CheatMenu.Intrigue
             int weight = Weight(enemy, terms);
             List<Town> fiefs = enemy.Fiefs.Where(t => terms.Fiefs.Contains(t.Settlement.StringId)).ToList();
             Hero hostage = terms.Hostage ? HostageCandidate(state, enemy) : null;
+            string summary = Describe(enemy, terms);
             var lines = new List<string>();
 
             if (daily > 0) MakePeaceAction.ApplyByKingdomDecision(enemy, mine, daily, days);
@@ -283,29 +296,31 @@ namespace CheatMenu.Intrigue
             if (daily > 0) lines.Add(enemy.Name + " sana " + TributeText(terms.Tribute) + " haraç ödeyecek.");
             if (payDaily > 0) lines.Add("Sen " + Tr.Dative(enemy.Name.ToString()) + " " + TributeText(terms.Pay) + " haraç ödeyeceksin.");
 
+            if (terms.Troops > 0)
+            {
+                int moved = TakeTroops(enemy, Math.Min(terms.Troops, TroopsAvailable(enemy)));
+                lines.Add(moved > 0 ? "Garnizonlarından " + moved + " asker partine katıldı." : "Garnizonlarında verecek asker kalmamıştı.");
+            }
             foreach (Town town in fiefs)
             {
                 Hero formerOwner = town.OwnerClan?.Leader;
+                bool resents = formerOwner != null && formerOwner != ruler;
                 ChangeOwnerOfSettlementAction.ApplyByBarter(me, town.Settlement);
-                if (formerOwner != null && formerOwner != ruler) SchemeOutcomes.Relate(formerOwner, -10);
-                lines.Add(town.Name + " (" + (town.IsTown ? "şehir" : "kale") + ") artık senin" + (formerOwner != null ? "; " + formerOwner.Name + " sana kırgın" : "") + ".");
+                if (resents) SchemeOutcomes.Relate(formerOwner, -10);
+                lines.Add(town.Name + " (" + (town.IsTown ? "şehir" : "kale") + ") artık senin" + (resents ? "; " + formerOwner.Name + " sana kırgın" : "") + ".");
             }
             if (terms.Gold > 0)
             {
                 int paid = Math.Min(terms.Gold, ruler.Gold);
                 if (paid > 0) GiveGoldAction.ApplyBetweenCharacters(ruler, me, paid);
-                lines.Add(ruler.Name + " savaş tazminatı olarak " + SchemeFactors.Money(paid) + " ödedi.");
+                lines.Add(paid > 0 ? ruler.Name + " savaş tazminatı olarak " + SchemeFactors.Money(paid) + " ödedi."
+                    : ruler.Name + " savaş tazminatı ödeyemedi: kesesi boş.");
             }
             if (terms.Gift > 0)
             {
                 int given = Math.Min(terms.Gift, me.Gold);
                 if (given > 0) GiveGoldAction.ApplyBetweenCharacters(me, ruler, given);
                 lines.Add(Tr.Dative(ruler.Name.ToString()) + " " + SchemeFactors.Money(given) + " verdin.");
-            }
-            if (terms.Troops > 0)
-            {
-                int moved = TakeTroops(enemy, Math.Min(terms.Troops, TroopsAvailable(enemy)));
-                lines.Add(moved > 0 ? "Garnizonlarından " + moved + " asker partine katıldı." : "Garnizonlarında verecek asker kalmamıştı.");
             }
             if (terms.ReleaseOurs)
             {
@@ -319,18 +334,21 @@ namespace CheatMenu.Intrigue
                 foreach (Hero lord in freed) EndCaptivityAction.ApplyByPeace(lord, me);
                 if (freed.Count > 0) lines.Add("Esirlerini bıraktın: " + string.Join(", ", freed.Select(h => h.Name)) + ".");
             }
-            if (terms.PactDays > 0)
-                lines.Add(DiplomacyCompat.FormNonAggressionPact(mine, enemy, terms.PactDays)
-                    ? terms.PactDays + " günlük saldırmazlık anlaşması." : "Saldırmazlık anlaşması kurulamadı (zaten var ya da Diplomacy izin vermedi).");
+            // Rehineyle birlikteyse tek anlaşma kurulur, rehinenin süresinden kısa olmaz (rehine anlaşması ayrıca kurmaz, bitirmez de).
+            int pactDays = terms.PactDays > 0 && terms.Hostage ? Math.Max(terms.PactDays, HostageRules.DurationDays) : terms.PactDays;
+            if (pactDays > 0)
+                lines.Add(DiplomacyCompat.FormNonAggressionPact(mine, enemy, pactDays)
+                    ? pactDays + " günlük saldırmazlık anlaşması." : "Saldırmazlık anlaşması kurulamadı (zaten var ya da Diplomacy izin vermedi).");
             if (terms.Hostage) lines.Add(Hostages.TakeForTreaty(state, enemy, hostage));
             if (terms.Trade) lines.Add(MakeTrade(mine, enemy));
             if (terms.Alliance) lines.Add(MakeAlliance(mine, enemy));
-            if (weight >= 40) SchemeOutcomes.Relate(ruler, -Math.Min(10, weight / 10));
+            if (!theirOffer && weight >= 40) SchemeOutcomes.Relate(ruler, -Math.Min(10, weight / 10));
 
             PeaceTalk talk = state.PeaceTalkWith(enemy.StringId);
             talk.RefusedUntil = 0;
             talk.AskedUntil = 0;
-            state.AddLog(Today, enemy.Name + " ile barış: " + Describe(enemy, terms));
+            talk.OfferGold = 0;
+            state.AddLog(Today, enemy.Name + " ile barış: " + summary);
             return string.Join("\n", lines);
         }
 
@@ -400,7 +418,7 @@ namespace CheatMenu.Intrigue
                 if (chance <= 0 || state.Roll100() > chance + Intrigue.Diplomat.EnvoyBonus()) continue;
                 talk.EnvoyUntil = Today + PeaceTreatyRules.EnvoyCooldownDays;
                 talk.AskedUntil = Today + PeaceTreatyRules.AskedDays;
-                ShowEnvoy(state, enemy);
+                ShowEnvoy(state, enemy, talk);
                 return;
             }
         }
@@ -409,9 +427,10 @@ namespace CheatMenu.Intrigue
         public static Terms EnvoyOffer(IntrigueState state, Kingdom enemy) =>
             new Terms { Gold = PeaceTreatyRules.EnvoyGold(LeverageOf(state, enemy).Willingness, Treasury(enemy)) };
 
-        private static void ShowEnvoy(IntrigueState state, Kingdom enemy)
+        private static void ShowEnvoy(IntrigueState state, Kingdom enemy, PeaceTalk talk)
         {
             Terms offer = EnvoyOffer(state, enemy);
+            talk.OfferGold = offer.Gold;
             string text = enemy.Leader.Name + " elçisini gönderdi. " + enemy.Name + " bu savaştan yoruldu ve barış istiyor.\n\n"
                 + "Teklifleri: " + (offer.Gold > 0 ? SchemeFactors.Money(offer.Gold) + " savaş tazminatı ve barış." : "şartsız barış.")
                 + "\n\nKabul edebilir, Barış Masası'na oturup daha fazlasını isteyebilir (elçi gönderdikleri için elleri zayıf) ya da geri çevirebilirsin.";
@@ -429,7 +448,7 @@ namespace CheatMenu.Intrigue
                     {
                         string blocked = Blocked(state, enemy);
                         if (blocked != null) throw new InvalidOperationException(blocked);
-                        string result = Apply(state, enemy, offer);
+                        string result = Apply(state, enemy, offer, true);
                         SchemeOutcomes.Notify(state, "Barış: " + enemy.Name, result, enemy.Leader, CardImages.Treaty);
                     }),
                 },

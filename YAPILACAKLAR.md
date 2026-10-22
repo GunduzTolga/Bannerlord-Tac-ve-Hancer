@@ -107,6 +107,9 @@ Diplomacy'nin bağış ve fief pencereleri artık Entrika ekranının Saray > Kr
 - Tasarım: `docs\superpowers\specs\2026-10-21-divan-diplomat.md`
 
 ### Barış Masası: şartlı barış (21 Ekim, yeni; hükümdar olmalısın; ekran görüntüsü çok işe yarar)
+- [ ] (22 Ekim düzeltmesi) Elçinin teklifini "Barış Masası'na otur" ile masaya taşıyıp aynen ya da daha hafifini teklif edersen "Kabul ederler:
+      kendi elçilerinin teklifi" yazıyor ve kabul ediyorlar; elçinin teklifini kabul etmek ilişkiyi düşürmüyor
+- [ ] Barış olunca oyun esir lordları kendisi serbest bırakıyor mu? Bırakıyorsa "esirleri bırak" şartları boşa çalışıyor (yaz, kaldırırım)
 - [ ] Entrika ekranı > Savaş ve barış > **Savaşlar**: solda savaşların (sancak, kaç gündür, güç, yorgunluk, şartsız barış %), sağda seçilinin
       masası. Savaş Raporu'ndaki **Barış Masası...** ve Insert > Entrika > **Barış Masası...** buraya getiriyor
 - [ ] Masa: üstte pazarlık gücün ve nedenleri; solda bölümlü istediklerin (**Para**: haraç, tazminat · **Asker ve esirler** · **Toprak**:

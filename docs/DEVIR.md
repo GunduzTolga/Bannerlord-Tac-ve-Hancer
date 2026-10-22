@@ -68,6 +68,19 @@
   Diplomacy'nin barış koşulları), esirler, savaş günlüğü (`IWarLog`). `Intrigue.WarReport`, `WarReportRules` (testli), tasarım
   `2026-10-21-savas-raporu.md`. GuiCheck artık `ViewModel` türündeki veri kaynağının alt ağacını (başka modun iç türü) denetlemiyor.
   Insert > Entrika > Savaş raporları da açar. Oyunda henüz denenmedi.
+- **Hata avı (22 Ekim, telefondan; oyunda henüz denenmedi):** 20-21 Ekim'de eklenen denenmemiş kod 4 ayrı denetimle tarandı, doğrulanan
+  bulgular düzeltildi. Çökme riskleri: Savaş Raporu kendi tıklamasının içinde kapanıyordu (artık bir sonraki karede); sekme ve -/+
+  tıklamaları ile Masa'yı temizle `Run` korumasında; Diplomacy grup ViewModel'i kurulamazsa çökme yerine boş. Yanlış davranışlar:
+  "Görüş" konuşması Klan ekranının arkasında açılıyordu (artık önce haritaya dönülüyor); yönlendirmeler ansiklopedi başka ekrandan
+  açılmışken Diplomacy'nin penceresini susturup hiçbir şey açmıyordu (`IntrigueScreen.CanRedirect`); elçinin teklifini kabul etmek
+  ilişkiyi düşürüyordu, masada aynı teklif reddedilebiliyordu (`PeaceTalk.OfferGold`); istenen asker toprak devrinden sonra alınıyordu;
+  rehine ile saldırmazlık aynı antlaşmada çakışıyordu (`HostageDeal.Pact`: yalnızca kendi kurduğu paktı bitirir, savaşta da bitirir);
+  savaştaki isyan grubundan "ayrıl" düğmesi görünüyordu; AutoTrader'ın bağlı ayarları (sığır satışı, yiyecek tamamlama, fiyat yöntemi
+  eşikleri) uygulanmıyordu (`TradeSettingsRules.Set`, testli); alt sekmeler bölüm sırasında değildi; ittifak bedeli Diplomacy'nin hiç
+  kullanmadığı devasa hesaptan oyunun önerme bedeline indi; bağış onay istiyor; varis değişince hazinedarın zimmet kaydı kilitli
+  kalıyordu; genelev ayarı kapatılınca yoldaşlar dışarıda kalıyordu, yönetici her hafta yeniden sorulmuyordu; hazinedarın payı oyunun
+  günlük çekiminden önce hesaplanıyor; meşgul casus başı gizli infaza katılmıyor; varis rehineyse değişim anlaşması kapanmıyor;
+  ziyafet davetlileri kayıtlar arasında taşınmıyor; "tımarda" → "toprakta" sertleşmesi; Diplomacy hata mesajları içteki hatayı gösteriyor.
 - **Paketli modların Türkçesi (21 Ekim, kullanıcı seçimi "Kalan modları Türkçeleştir"):** DLX Hair Layers (80 metin) ve Extra Complexion
   (27) hiç Türkçe değildi, çevrildi (`third_party/<mod>/ModuleData/Languages/TR`). Companion Autonomy (143) ve Regard and Standing (322)
   zaten tamdı; Women in Calradia'nın "eksik" 13 metni oyunun kendi kimlikleri (oyunun Türkçesi çeviriyor). Böylece paketli modların

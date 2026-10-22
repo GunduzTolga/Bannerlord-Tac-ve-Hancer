@@ -675,7 +675,7 @@ namespace CheatMenu.Menu
             IntrigueState state = SchemeEngine.State;
             if (!Courtships.Enabled)
             {
-                MenuUI.Info("Kurallar'dan kapalı: \"Gizli ilişki ve gayrimeşru çocuk sırları\" ayarı");
+                MenuUI.Info("Kurallar'dan kapalı: \"Kur ve sevgililer\" ayarı");
                 MenuUI.Defer(ShowIntrigue);
                 return;
             }

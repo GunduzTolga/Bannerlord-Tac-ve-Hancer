@@ -188,9 +188,11 @@ namespace CheatMenu.UI.ViewModels
 
             Actions = new MBBindingList<ActionItemVM>();
             if (_item == null) return;
-            if (DiplomacyCompat.Read<bool>(_item, "ShouldShowLeave"))
+            // Savaş başladıysa katılma ve ayrılma yok (Diplomacy'nin kendi penceresi de gizler; savaşan gruptan çıkmak iç savaşı bozar).
+            bool member = DiplomacyCompat.Read<bool>(_item, "ShouldShowLeave");
+            if (member && !IsAtWar)
                 Actions.Add(new ActionItemVM("Gruptan ayrıl", null, () => DiplomacyCompat.Invoke(_item, "OnLeave"), true));
-            else if (!IsAtWar)
+            else if (!member && !IsAtWar)
                 Actions.Add(new ActionItemVM("Gruba katıl", DiplomacyCompat.JoinBlocked(faction), () =>
                 {
                     DiplomacyCompat.Invoke(_item, "OnJoin");

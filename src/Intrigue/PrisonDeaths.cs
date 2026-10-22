@@ -58,7 +58,7 @@ namespace CheatMenu.Intrigue
             bool suspected = !hidden && state.Roll100() <= suspicion;
             bool proven = suspected && state.Roll100() <= proof;
             Hero spymaster = SchemeFactors.Spymaster(state);
-            if (spymaster != null && !spymaster.IsPrisoner) spymaster.AddSkillXp(TaleWorlds.Core.DefaultSkills.Roguery, 300);
+            if (spymaster != null && SchemeFactors.SpymasterBusyReason(spymaster) == null) spymaster.AddSkillXp(TaleWorlds.Core.DefaultSkills.Roguery, 300);
             return SchemeOutcomes.PrisonDeath(state, prisoner.Hero, method, suspected, proven);
         }
     }

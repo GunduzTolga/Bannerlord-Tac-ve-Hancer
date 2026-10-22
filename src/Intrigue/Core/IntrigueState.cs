@@ -168,6 +168,8 @@ namespace CheatMenu.Intrigue.Core
         public int RefusedUntil;
         public int EnvoyUntil;
         public int AskedUntil;
+        /// <summary>Elçinin getirdiği tazminat teklifi (AskedUntil'e kadar geçerli): masada bundan ağır olmayan teklif kabul edilir.</summary>
+        public int OfferGold;
     }
 
     /// <summary>Rehine anlaşması (P2.10): verdiğin ve/veya tuttuğun misafir. Biri null olabilir (tek taraflı teminat).</summary>
@@ -182,6 +184,8 @@ namespace CheatMenu.Intrigue.Core
         public int Until;
         /// <summary>Misafirlerin şimdiye kadar kazandığı yakınlık.</summary>
         public int Fostered;
+        /// <summary>Saldırmazlık anlaşmasını bu rehine anlaşması mı kurdu (erken bitince ya da savaşta yalnızca onu bitiririz).</summary>
+        public bool Pact;
     }
 
     /// <summary>Süren bir kur (P2.6): sen ya da eşin, hedefe üç aşamada.</summary>
@@ -453,7 +457,7 @@ namespace CheatMenu.Intrigue.Core
             SpouseApartWeeks = 0;
             if (newPlayerId == null) return dropped;
             if (SpymasterId == newPlayerId) { SpymasterId = null; Mission = SpymasterMission.None; RumorTargetId = null; dropped++; }
-            if (TreasurerId == newPlayerId) { TreasurerId = null; dropped++; }
+            if (TreasurerId == newPlayerId) { TreasurerId = null; Embezzled = 0; EmbezzleFound = false; dropped++; }
             if (PhysicianId == newPlayerId) { PhysicianId = null; dropped++; }
             if (MarshalId == newPlayerId) { MarshalId = null; dropped++; }
             if (StewardId == newPlayerId) { StewardId = null; dropped++; }
@@ -464,7 +468,13 @@ namespace CheatMenu.Intrigue.Core
                 if (house.ManagerId == newPlayerId) { house.ManagerId = null; dropped++; }
                 dropped += house.Workers.RemoveAll(w => w.HeroId == newPlayerId);
             }
-            dropped += Hostages.RemoveAll(d => d.GivenId == newPlayerId);
+            // Rehine olarak verilen varis artık oyuncu: tek taraflı anlaşma biter; değişimde onların misafiri bizde kalır, anlaşma sürer.
+            dropped += Hostages.RemoveAll(d => d.GivenId == newPlayerId && d.HeldId == null);
+            foreach (HostageDeal deal in Hostages.Where(d => d.GivenId == newPlayerId))
+            {
+                deal.GivenId = null;
+                dropped++;
+            }
             return dropped;
         }
 
@@ -610,10 +620,10 @@ namespace CheatMenu.Intrigue.Core
             foreach (Summon m in Summons) records.Add(new TextRecord("summon").Add("hero", m.HeroId).Add("until", I(m.Until)));
             foreach (PeaceTalk t in PeaceTalks)
                 records.Add(new TextRecord("peacetalk").Add("kingdom", t.KingdomId).Add("refused", I(t.RefusedUntil)).Add("envoy", I(t.EnvoyUntil))
-                    .Add("asked", I(t.AskedUntil)));
+                    .Add("asked", I(t.AskedUntil)).Add("offer", I(t.OfferGold)));
             foreach (HostageDeal h in Hostages)
                 records.Add(new TextRecord("hostage").Add("kingdom", h.KingdomId).Add("given", h.GivenId).Add("held", h.HeldId)
-                    .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)));
+                    .Add("since", I(h.Since)).Add("until", I(h.Until)).Add("fostered", I(h.Fostered)).Add("pact", B(h.Pact)));
             foreach (KeyValuePair<string, int> p in CourtDayUntil) records.Add(new TextRecord("courtday").Add("place", p.Key).Add("until", I(p.Value)));
             foreach (string id in AgeFrozen) records.Add(new TextRecord("frozen").Add("hero", id));
             if (SpouseWatchUntil > 0 || SpouseApartWeeks > 0)
@@ -802,6 +812,7 @@ namespace CheatMenu.Intrigue.Core
                             state.PeaceTalks.Add(new PeaceTalk
                             {
                                 KingdomId = r.Get("kingdom"), RefusedUntil = Int(r, "refused"), EnvoyUntil = Int(r, "envoy"), AskedUntil = Int(r, "asked"),
+                                OfferGold = Math.Max(0, Int(r, "offer")),
                             });
                         break;
                     case "hostage":
@@ -809,7 +820,7 @@ namespace CheatMenu.Intrigue.Core
                         state.Hostages.Add(new HostageDeal
                         {
                             KingdomId = r.Get("kingdom"), GivenId = Empty(r.Get("given")), HeldId = Empty(r.Get("held")),
-                            Since = Int(r, "since"), Until = Int(r, "until"), Fostered = Int(r, "fostered"),
+                            Since = Int(r, "since"), Until = Int(r, "until"), Fostered = Int(r, "fostered"), Pact = Bool(r, "pact"),
                         });
                         break;
                     case "courtday":

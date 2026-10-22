@@ -661,7 +661,8 @@ namespace CheatMenu.UI
             IntrigueState state = SchemeEngine.State;
             Hero hero = prisoner.Hero;
             Hero spymaster = SchemeFactors.Spymaster(state);
-            bool byYou = spymaster == null || spymaster.IsPrisoner || SchemeFactors.Roguery(spymaster) <= Hero.MainHero.GetSkillValue(DefaultSkills.Roguery);
+            bool byYou = spymaster == null || SchemeFactors.SpymasterBusyReason(spymaster) != null
+                || SchemeFactors.Roguery(spymaster) <= Hero.MainHero.GetSkillValue(DefaultSkills.Roguery);
             var cancel = new CardOption { Label = "Vazgeç", Apply = () => { } };
             List<CardOption> options = PrisonDeathRules.Methods
                 .Select(method => new CardOption

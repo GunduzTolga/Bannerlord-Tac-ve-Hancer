@@ -23,6 +23,9 @@ namespace CheatMenu.UI.ViewModels
         /// <summary>Ziyafet davet listesi: pencere kapanıp açılsa da oturum boyunca durur (kayda yazılmaz).</summary>
         private static readonly List<string> Guests = new List<string>();
 
+        /// <summary>Kampanya açılınca: lord kimlikleri her kampanyada aynı, başka bir kaydın davetlileri taşınmasın.</summary>
+        public static void ResetGuests() => Guests.Clear();
+
         private int _tab;
         private bool _finalized, _canFeast, _hasNoLords;
         private string _subtitle, _feastText, _feastHint, _emptyText;

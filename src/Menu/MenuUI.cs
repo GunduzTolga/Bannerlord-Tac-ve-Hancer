@@ -120,7 +120,9 @@ namespace CheatMenu.Menu
             }
             catch (Exception ex)
             {
-                Error("'" + what + "' uygulanamadı: " + ex.Message);
+                // Başka modun koduna reflection'la girilen yerlerde asıl hata içeride ("Exception has been thrown by the target...").
+                Exception shown = ex is System.Reflection.TargetInvocationException wrapped && wrapped.InnerException != null ? wrapped.InnerException : ex;
+                Error("'" + what + "' uygulanamadı: " + shown.Message);
                 TaleWorlds.Library.Debug.Print("[CheatMenu] " + what + " failed: " + ex);
             }
         }
