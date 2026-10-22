@@ -2,6 +2,9 @@
 
 ## PC'ye geçince yapılacaklar (kullanıcı: "PC'ye geçince yaparız")
 **1. Kur ve oyunda bak (önce bunlar)**
+- **Bir kereye mahsus (22 Ekim, commit geçmişi yeniden yazıldı, main ve dal force-push'landı):** her zamanki `pull` yerine
+  `git fetch origin; git checkout main; git reset --hard origin/ccr-561e2390-s83s0r; .\build.ps1`. Eski main'e `pull` yapılırsa eski
+  commit'ler geri birleşir; o main asla push'lanmasın. Sonrasında yine her zamanki komut.
 - `git checkout main; git pull origin ccr-561e2390-s83s0r; .\build.ps1` → temiz mi? Özellikle oyuna karşı arayüz denetimi (`--game`):
   yeni pencerelerin (Lordlar, İsyanlar, Savaş Raporu, Barış Masası) oyun fırçaları ve sprite'ları. Savaş Raporu'nun üst kısmı
   Diplomacy'nin prefab'ı olduğu için denetlenmiyor; oyunda göz ile bak.
