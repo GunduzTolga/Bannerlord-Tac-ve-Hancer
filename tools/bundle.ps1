@@ -324,3 +324,20 @@ if ($written.Count -gt 0) {
 $list = ($packages | ForEach-Object { $_.Name }) -join ', '
 if (-not $list) { $list = 'none' }
 Write-Host "bundle: $list ($($written.Count) files, $copied copied, $removed removed)"
+
+# --- Large content (models, textures, images) is git-ignored: it comes only from the PC copy of each mod. Without it a mod
+# loads but shows nothing (DLX Hair Layers: picking a hair does nothing, its cards show numbers instead of pictures).
+$largeContent = '\.(tpac|dds|png|jpe?g|tga|mtsm|xscene|ogg|wav|bnk|wem)$'
+$needsLargeContent = @{
+    'HairAddons' = 'its hair models and card pictures (DLX Hair Layers)'
+    'ScarsExtra' = 'its scar, make-up and paint textures (Extra Complexion)'
+}
+foreach ($p in $packages) {
+    $large = @(Get-ChildItem $p.Dir -Recurse -File | Where-Object { $_.Name -match $largeContent })
+    $kinds = ($large | Group-Object { $_.Extension.ToLowerInvariant() } | Sort-Object Name | ForEach-Object { "$($_.Count) $($_.Name)" }) -join ', '
+    if (-not $kinds) { $kinds = 'none' }
+    Write-Host "bundle:   $($p.Name) large content: $kinds"
+    if ($large.Count -eq 0 -and $needsLargeContent.ContainsKey($p.Name)) {
+        Write-Warning "bundle: third_party\$($p.Name) has no models or images, so $($needsLargeContent[$p.Name]) are missing. Copy the mod's whole folder from its download into third_party\$($p.Name)."
+    }
+}

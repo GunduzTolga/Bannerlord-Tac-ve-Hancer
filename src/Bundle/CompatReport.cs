@@ -33,6 +33,8 @@ namespace CheatMenu.Bundle
                     .Select(Name).Where(n => n != null && !IsGame(n))
                     .Distinct().OrderBy(n => n, StringComparer.OrdinalIgnoreCase);
                 string text = CompatRules.Format(patches, models, mods, DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+                List<string> hair = BundleShim.HairAssetsReport(out bool hairMissing);
+                if (hair.Count > 0) text += Environment.NewLine + string.Join(Environment.NewLine, hair) + Environment.NewLine;
                 Directory.CreateDirectory(CrashLog.Folder);
                 File.WriteAllText(Path.Combine(CrashLog.Folder, FileName), text);
 
@@ -44,6 +46,10 @@ namespace CheatMenu.Bundle
                         high > 0 ? Color.FromUint(0xFFFF6B6B) : Color.FromUint(0xFFE4C59B)));
                 else
                     Debug.Print("[CheatMenu] compatibility report: no conflicts");
+                if (hairMissing)
+                    InformationManager.DisplayMessage(new InformationMessage("[" + ModInfo.DisplayName + "] DLX Hair Layers: saç modelleri oyuna "
+                        + "yüklenmemiş, saç seçmek bir şey yapmaz. Ayrıntı: Belgeler\\Mount and Blade II Bannerlord\\Configs\\TacVeHancer\\" + FileName,
+                        Color.FromUint(0xFFFF6B6B)));
             }
             catch (Exception ex)
             {

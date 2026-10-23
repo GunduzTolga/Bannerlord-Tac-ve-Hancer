@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using HarmonyLib;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using MetaMesh = TaleWorlds.Engine.MetaMesh;
 
 namespace CheatMenu.Bundle
 {
@@ -60,6 +63,40 @@ namespace CheatMenu.Bundle
                         finalizer: new HarmonyMethod(typeof(BundleShim), nameof(HairMissionFinalizer)));
             }
         }
+
+        /// <summary>
+        /// DLX Hair Layers'ın büyük içeriği oyuna ulaştı mı (uyum raporunun satırları; paketli değilse boş). Saç modelleri (_HSS_*_bl) yoksa
+        /// saç seçmek hiçbir şey yapmaz; kart resimleri (GUI\Icons\*_icon.png) yoksa kartlarda numara çıkar. Bu dosyalar repoda değil,
+        /// PC'deki third_party\HairAddons kopyasından gelir (tools\bundle.ps1 derlerken de uyarır). Kampanya açılırken çağrılır.
+        /// </summary>
+        internal static List<string> HairAssetsReport(out bool modelsMissing)
+        {
+            modelsMissing = false;
+            var lines = new List<string>();
+            if (AccessTools.TypeByName("HairAddons.SubModule") == null) return lines;
+
+            modelsMissing = MetaMesh.GetCopy("_HSS_front_001_bl", false, true) == null;
+            string module = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(typeof(BundleShim).Assembly.Location), "..", ".."));
+            string icons = Path.Combine(module, "GUI", "Icons");
+            // DLX Hair Layers'ın kartları (Catalog.Items): 6 perçem, 7 tutam, 24 saç modeli.
+            var expected = Enumerable.Range(1, 6).Select(i => "_hss_front_" + i.ToString("000"))
+                .Concat(Enumerable.Range(1, 7).Select(i => "_hss_side_" + i.ToString("000")))
+                .Concat(Enumerable.Range(1, 24).Select(i => "_hss_" + i.ToString("000"))).ToList();
+            int found = expected.Count(id => File.Exists(Path.Combine(icons, id + "_icon.png")));
+            string packages = Path.Combine(module, "AssetPackages");
+            string[] tpac = Directory.Exists(packages) ? Directory.GetFiles(packages, "*.tpac").Select(Path.GetFileName).ToArray() : new string[0];
+
+            lines.Add("DLX Hair Layers (paketli modun içeriği):");
+            lines.Add("  Saç modelleri: " + (modelsMissing ? "YOK, oyun _HSS_front_001_bl'i bulamıyor (saç seçmek hiçbir şey yapmaz)" : "yüklü"));
+            lines.Add("  Kart resimleri (GUI\\Icons): " + found + "/" + expected.Count + (found == 0 ? " (kartlarda resim yerine numara çıkar)" : ""));
+            lines.Add("  Modüldeki doku paketleri (AssetPackages): " + (tpac.Length == 0 ? "yok" : string.Join(", ", tpac)));
+            lines.Add("  Assets klasörü (açık modeller ve dokular): " + FileCount(Path.Combine(module, "Assets")));
+            lines.Add("  RuntimeDataCache klasörü: " + FileCount(Path.Combine(module, "RuntimeDataCache")));
+            return lines;
+        }
+
+        private static string FileCount(string folder) =>
+            Directory.Exists(folder) ? Directory.GetFiles(folder, "*", SearchOption.AllDirectories).Length + " dosya" : "yok";
 
         /// <summary>Hata veren saç katmanı davranışı: o savaşta bir daha çalışmaz (yeni savaşta yenisi kurulur).</summary>
         private static readonly WeakReference BrokenHairMission = new WeakReference(null);

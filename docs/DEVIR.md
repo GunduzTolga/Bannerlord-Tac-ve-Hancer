@@ -198,6 +198,16 @@
    mesaj + `cokme_*.txt`). Yerel (native) çökmeyse bu kurtarmaz. Bakılacaklar: `Configs\TacVeHancer\cokme_20261022.txt`,
    `<oyun>\Modules\CheatMenu\hairaddons.log`, `C:\ProgramData\Mount and Blade II Bannerlord\crashes\` en yeni klasör; savaşta hangi
    hileler açıktı (ölümsüzlük, tek vuruş, cephane, herkesi biç).
+6. **DLX Hair Layers hiç çalışmıyor** (23 Ekim, kullanıcı: "saç seçiyorum bir şey olmuyor", panel de çok kötü görünüyor). Kod ve
+   kancalar 1.4.8'de yerinde (FaceGenVM'in hedefleri var). Saç modelleri (`_HSS_*_bl`, MetaMesh) ve kart resimleri (`GUI\Icons\*_icon.png`)
+   repoda yok (gitignore), yalnızca PC'deki `third_party\HairAddons` kopyasından gelir: ya orada yoklar ya da paketlenince oyun onları
+   CheatMenu'dan okumuyor. Artık derleme her paketli modun büyük içerik sayısını yazar, Hair Layers ve Extra Complexion'da hiç yoksa
+   uyarır; kampanya açılınca `uyum_raporu.txt` saç modelinin yüklenip yüklenmediğini, kart resmi sayısını, AssetPackages/Assets/
+   RuntimeDataCache içeriğini yazar, model yoksa kırmızı mesaj. Karar: modeller AssetPackages'ta duruyor ama yüklenmiyorsa paketleme
+   onları kırıyor (Hair Layers ayrı modül olarak kalmalı ya da başka yol); hiç yoksa modun tam klasörünü third_party'ye koymak yeter.
+   Ayrıca `Modules\CheatMenu\hairaddons.log` (oyun her açılışta siler; saç denedikten sonra oyun kapanmadan bak: "mesh not found").
+   Çalışınca panel (`third_party\HairAddons\GUI\Prefabs\HairAddonsPanel.xml`, 118 düz renkli kareyle çizilmiş) oyunun karakter
+   düzenleyicisi gibi yeniden yapılacak: önce oyunun `SandBox\GUI\Prefabs` FaceGen prefab'larına ve kullanıcının ekran görüntüsüne bak.
 
 ## Kullanıcının istedikleri (sıradaki işler)
 - ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`; barış için Barış Masası düğmesi).
