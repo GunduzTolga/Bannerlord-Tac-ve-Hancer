@@ -1,47 +1,44 @@
 <Prefab>
+  <!--
+    DLX Hair Layers'ın paneli, karakter düzenleyicinin saç sekmesinde solda. Taç ve Hançer (23 Ekim) oyunun pencereleri gibi yeniden
+    yaptı: çerçeve, sekme ve düğmeler oyunun popup ve düğme resimleriyle (Tvh.Hair.*, Tvh.Button*), saç kartları oyunun kendi
+    düzenleyici kartı (FaceGen.Card). Bağlantılar modun HairPanelVM'iyle birebir aynı (GuiCheck paketli prefab denetimi).
+    Kök tıklamaları geçirir: karakter döndürülebilsin.
+  -->
   <Window>
     <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
       <Children>
-        <Widget IsVisible="@IsVisible" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="380" SuggestedHeight="860" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="30" MarginTop="185" Sprite="BlankWhiteSquare_9" Color="#0E0B08E6">
+        <BrushWidget IsVisible="@IsVisible" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="380" SuggestedHeight="860" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="30" MarginTop="185" Brush="Tvh.Hair.Panel">
           <Children>
-            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="12" MarginRight="8" MarginTop="8" MarginBottom="8" StackLayout.LayoutMethod="VerticalTopToBottom">
+            <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="16" MarginRight="12" MarginTop="10" MarginBottom="12" StackLayout.LayoutMethod="VerticalTopToBottom">
               <Children>
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" Brush="Stage.Title.Text" Brush.FontSize="28" Text="@TitleText" />
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="23" MarginTop="2" Sprite="StdAssets\Popup\divider" DoNotAcceptEvents="true" />
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
                   <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTab0">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTab0" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@Tab0Text" IsVisible="@IsTab0" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@Tab0Text" IsHidden="@IsTab0" />
+                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsTab0" Command.Click="ExecuteTab0" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@Tab0Text" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTab1">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTab1" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@Tab1Text" IsVisible="@IsTab1" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@Tab1Text" IsHidden="@IsTab1" />
+                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsTab1" Command.Click="ExecuteTab1" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@Tab1Text" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTab2">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTab2" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@Tab2Text" IsVisible="@IsTab2" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@Tab2Text" IsHidden="@IsTab2" />
+                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsTab2" Command.Click="ExecuteTab2" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@Tab2Text" />
                       </Children>
                     </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteTab3">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsTab3" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@Tab3Text" IsVisible="@IsTab3" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@Tab3Text" IsHidden="@IsTab3" />
+                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsTab3" Command.Click="ExecuteTab3" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@Tab3Text" />
                       </Children>
                     </ButtonWidget>
                   </Children>
                 </ListPanel>
-                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="12" MarginTop="3" MarginBottom="3" Sprite="General\CharacterCreation\stone_divider" />
-
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" StackLayout.LayoutMethod="HorizontalRightToLeft">
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="6" StackLayout.LayoutMethod="HorizontalRightToLeft">
                   <Children>
                     <ScrollbarWidget Id="HraScrollbar" WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="8" HorizontalAlignment="Right" VerticalAlignment="Center" MarginTop="6" MarginBottom="6" AlignmentAxis="Vertical" Handle="HraScrollbarHandle" MaxValue="100" MinValue="0">
                       <Children>
@@ -59,15 +56,15 @@
                                   <Children>
                                     <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" IsVisible="@HasIcon" IconPath="@IconPath" />
                                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontSize="22" Text="@Label" />
-                                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="12" SuggestedHeight="12" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="7" MarginTop="7" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsMarked" />
+                                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="12" SuggestedHeight="12" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="7" MarginTop="7" Sprite="BlankWhiteSquare_9" Color="#FFC349FF" IsVisible="@IsMarked" />
                                     <Widget WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" SuggestedHeight="20" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="5" MarginTop="5" Sprite="BlankWhiteSquare_9" Color="#000000B0" IsVisible="@HasBadge">
                                       <Children>
-                                        <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="FaceGen.Input.Text" Brush.FontSize="14" Brush.FontColor="#F0E4CCFF" Text="@Badge" />
+                                        <TextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="FaceGen.Input.Text" Brush.FontSize="14" Brush.FontColor="#F4E1C4FF" Text="@Badge" />
                                       </Children>
                                     </Widget>
                                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" VerticalAlignment="Bottom" MarginLeft="5" MarginRight="5" MarginBottom="5" Sprite="BlankWhiteSquare_9" Color="#000000B0" IsVisible="@HasCaption">
                                       <Children>
-                                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="FaceGen.Input.Text" Brush.FontSize="13" Brush.FontColor="#F0E4CCFF" Text="@Caption" />
+                                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="FaceGen.Input.Text" Brush.FontSize="13" Brush.FontColor="#F4E1C4FF" Text="@Caption" />
                                       </Children>
                                     </Widget>
                                   </Children>
@@ -80,288 +77,253 @@
                     </ScrollablePanel>
                   </Children>
                 </ListPanel>
-                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="12" MarginTop="3" MarginBottom="3" Sprite="General\CharacterCreation\stone_divider" />
-
-                <!-- выбранные накладки (до 6): клик = подгонять эту -->
+                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" MarginTop="6" MarginBottom="6" Sprite="SPGeneral\SPOptions\options_divider_flat" DoNotAcceptEvents="true" />
+                <!-- seçili katmanlar (en çok 6): tıkla = bunu ayarla, sağ tık = kaldır -->
                 <ListPanel DataSource="{Active}" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="56" StackLayout.LayoutMethod="HorizontalLeftToRight">
                   <ItemTemplate>
-                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="52" SuggestedHeight="52" HorizontalAlignment="Center" VerticalAlignment="Center" MarginRight="4" Brush="FaceGen.Card" Command.Click="ExecuteAction" Command.AlternateClick="ExecuteAltAction" Command.HoverBegin="ExecuteHoverBegin" Command.HoverEnd="ExecuteHoverEnd" IsSelected="@IsSelected">
-                                  <Children>
-                                    <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" IsVisible="@HasIcon" IconPath="@IconPath" />
-                                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontSize="14" Text="@Label" />
-
-                                  </Children>
-                                </ButtonWidget>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="52" SuggestedHeight="52" HorizontalAlignment="Center" VerticalAlignment="Center" MarginRight="4" Brush="FaceGen.Card" Command.Click="ExecuteAction" Command.AlternateClick="ExecuteAltAction" Command.HoverBegin="ExecuteHoverBegin" Command.HoverEnd="ExecuteHoverEnd" IsSelected="@IsSelected">
+                      <Children>
+                        <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" IsVisible="@HasIcon" IconPath="@IconPath" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontSize="14" Text="@Label" />
+                      </Children>
+                    </ButtonWidget>
                   </ItemTemplate>
                 </ListPanel>
                 <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" Brush="FaceGen.Input.Text" Brush.FontSize="15" Text="@InfoText" IsHidden="@HasEdit" />
-
-                <ListPanel IsVisible="@HasEdit" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@HasEdit">
                   <Children>
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" Brush="FaceGen.Input.Text" Brush.FontSize="15" Text="@EditText" />
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontSize="13" Brush.FontColor="#C9A25EFF" Text="@NoteText" />
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteFitMode">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsFit" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@TextFit" IsVisible="@IsFit" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@TextFit" IsHidden="@IsFit" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteColorMode">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsColor" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@TextColor" IsVisible="@IsColor" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@TextColor" IsHidden="@IsColor" />
-                      </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-
-                <!-- подгонка -->
-                <ListPanel IsVisible="@IsFit" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                  <Children>
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteUp" Command.HoverBegin="ExecuteHoverUp" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconUp" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteDown" Command.HoverBegin="ExecuteHoverDown" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconDown" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteFwd" Command.HoverBegin="ExecuteHoverFwd" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconFwd" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteBack" Command.HoverBegin="ExecuteHoverBack" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconBack" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteLeft" Command.HoverBegin="ExecuteHoverLeft" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconLeft" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteRight" Command.HoverBegin="ExecuteHoverRight" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconRight" />
-                      </Children>
-                    </ButtonWidget>
-
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteReset" Command.HoverBegin="ExecuteHoverReset" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconReset" />
-                      </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-                  </Children>
-                </ListPanel>
-                <!-- цвет -->
-                <ListPanel IsVisible="@IsColor" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                  <Children>
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteLink" Command.HoverBegin="ExecuteHoverLink" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel0" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="@HairSwatchColor" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="24" SuggestedHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconLink" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteNotint" Command.HoverBegin="ExecuteHoverNotint" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel1" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" IconPath="@IconNotint" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC0" Command.HoverBegin="ExecuteHoverC0" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel2" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#1A120CFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC1" Command.HoverBegin="ExecuteHoverC1" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel3" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#3B2414FF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC2" Command.HoverBegin="ExecuteHoverC2" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel4" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#5A3A22FF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC3" Command.HoverBegin="ExecuteHoverC3" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel5" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#7A3A1AFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC4" Command.HoverBegin="ExecuteHoverC4" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel6" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#A87A4AFF" />
-                      </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginTop="3" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC5" Command.HoverBegin="ExecuteHoverC5" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel7" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#B8925AFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC6" Command.HoverBegin="ExecuteHoverC6" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel8" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#D9B77AFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC7" Command.HoverBegin="ExecuteHoverC7" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel9" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#EDE0C0FF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC8" Command.HoverBegin="ExecuteHoverC8" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel10" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#8C3A1EFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC9" Command.HoverBegin="ExecuteHoverC9" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel11" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#B5522AFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC10" Command.HoverBegin="ExecuteHoverC10" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel12" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#8A8A8AFF" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" Command.Click="ExecuteC11" Command.HoverBegin="ExecuteHoverC11" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#5A4A3AFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#E8C27AFF" IsVisible="@Sel13" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginRight="3" MarginTop="3" MarginBottom="3" Sprite="BlankWhiteSquare_9" Color="#EFEFEFFF" />
-                      </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="38" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteLighter" Command.HoverBegin="ExecuteHoverLighter" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconLighter" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteDarker" Command.HoverBegin="ExecuteHoverDarker" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconDarker" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteWarmer" Command.HoverBegin="ExecuteHoverWarmer" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconWarmer" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteCooler" Command.HoverBegin="ExecuteHoverCooler" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconCooler" />
-                      </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" Command.Click="ExecuteToall" Command.HoverBegin="ExecuteHoverToall" Command.HoverEnd="ExecuteHoverEnd">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
-                        <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="30" SuggestedHeight="30" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconToall" />
-                      </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-                  </Children>
-                </ListPanel>
-                  </Children>
-                </ListPanel>
-
-                <ListPanel IsVisible="@IsPresets" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom">
-                  <Children>
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginBottom="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteSetsMale">
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="20" Brush="FaceGen.Input.Text" Brush.FontSize="15" Text="@EditText" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="18" Brush="FaceGen.Input.Text" Brush.FontSize="13" Brush.FontColor="#E4C59BFF" Text="@NoteText" />
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
                       <Children>
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsSetsMale" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@TextSetsMale" IsVisible="@IsSetsMale" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@TextSetsMale" IsHidden="@IsSetsMale" />
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsFit" Command.Click="ExecuteFitMode" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@TextFit" />
+                          </Children>
+                        </ButtonWidget>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsColor" Command.Click="ExecuteColorMode" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@TextColor" />
+                          </Children>
+                        </ButtonWidget>
                       </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteSetsFemale">
+                    </ListPanel>
+                    <!-- oturtma: yukarı/aşağı, öne/arkaya, sola/sağa, sıfırla -->
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@IsFit">
                       <Children>
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="@IsSetsFemale" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="16" Text="@TextSetsFemale" IsVisible="@IsSetsFemale" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="16" Text="@TextSetsFemale" IsHidden="@IsSetsFemale" />
+                        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="40" MarginTop="6" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                          <Children>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteUp" Command.HoverBegin="ExecuteHoverUp" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconUp" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteDown" Command.HoverBegin="ExecuteHoverDown" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconDown" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteFwd" Command.HoverBegin="ExecuteHoverFwd" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconFwd" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteBack" Command.HoverBegin="ExecuteHoverBack" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconBack" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteLeft" Command.HoverBegin="ExecuteHoverLeft" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconLeft" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteRight" Command.HoverBegin="ExecuteHoverRight" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconRight" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteReset" Command.HoverBegin="ExecuteHoverReset" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconReset" />
+                              </Children>
+                            </ButtonWidget>
+                          </Children>
+                        </ListPanel>
                       </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" Brush="FaceGen.Input.Text" Brush.FontSize="14" Text="@TextPresetHelp" />
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#6A4E2EFF" Command.Click="ExecuteSavePreset">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#6A4E2EFF" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#F0E4CCFF" Brush.FontSize="17" Text="@TextSavePreset" />
-                      </Children>
-                    </ButtonWidget>
-                  </Children>
-                </ListPanel>
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="28" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
-                  <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteRenamePreset">
+                    </ListPanel>
+                    <!-- renk: saç rengi gibi, boyasız, renkler; açık/koyu, sıcak/soğuk, hepsine -->
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@IsColor">
                       <Children>
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="15" Text="@TextRenamePreset" />
+                        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="6" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                          <Children>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel0" Command.Click="ExecuteLink" Command.HoverBegin="ExecuteHoverLink" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="@HairSwatchColor" />
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="22" SuggestedHeight="22" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconLink" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel1" Command.Click="ExecuteNotint" Command.HoverBegin="ExecuteHoverNotint" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#2A1E16FF" />
+                                <HairAddonIconWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" IconPath="@IconNotint" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel2" Command.Click="ExecuteC0" Command.HoverBegin="ExecuteHoverC0" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#1A120CFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel3" Command.Click="ExecuteC1" Command.HoverBegin="ExecuteHoverC1" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#3B2414FF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel4" Command.Click="ExecuteC2" Command.HoverBegin="ExecuteHoverC2" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#5A3A22FF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel5" Command.Click="ExecuteC3" Command.HoverBegin="ExecuteHoverC3" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#7A3A1AFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel6" Command.Click="ExecuteC4" Command.HoverBegin="ExecuteHoverC4" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#A87A4AFF" />
+                              </Children>
+                            </ButtonWidget>
+                          </Children>
+                        </ListPanel>
+                        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                          <Children>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel7" Command.Click="ExecuteC5" Command.HoverBegin="ExecuteHoverC5" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#B8925AFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel8" Command.Click="ExecuteC6" Command.HoverBegin="ExecuteHoverC6" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#D9B77AFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel9" Command.Click="ExecuteC7" Command.HoverBegin="ExecuteHoverC7" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#EDE0C0FF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel10" Command.Click="ExecuteC8" Command.HoverBegin="ExecuteHoverC8" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#8C3A1EFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel11" Command.Click="ExecuteC9" Command.HoverBegin="ExecuteHoverC9" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#B5522AFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel12" Command.Click="ExecuteC10" Command.HoverBegin="ExecuteHoverC10" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#8A8A8AFF" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Swatch" IsSelected="@Sel13" Command.Click="ExecuteC11" Command.HoverBegin="ExecuteHoverC11" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" MarginTop="4" MarginBottom="4" Sprite="BlankWhiteSquare_9" Color="#EFEFEFFF" />
+                              </Children>
+                            </ButtonWidget>
+                          </Children>
+                        </ListPanel>
+                        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="38" MarginTop="6" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                          <Children>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteLighter" Command.HoverBegin="ExecuteHoverLighter" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconLighter" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteDarker" Command.HoverBegin="ExecuteHoverDarker" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconDarker" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteWarmer" Command.HoverBegin="ExecuteHoverWarmer" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconWarmer" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteCooler" Command.HoverBegin="ExecuteHoverCooler" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconCooler" />
+                              </Children>
+                            </ButtonWidget>
+                            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteToall" Command.HoverBegin="ExecuteHoverToall" Command.HoverEnd="ExecuteHoverEnd" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                              <Children>
+                                <HairAddonIconWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="28" SuggestedHeight="28" HorizontalAlignment="Center" VerticalAlignment="Center" IconPath="@IconToall" />
+                              </Children>
+                            </ButtonWidget>
+                          </Children>
+                        </ListPanel>
                       </Children>
-                    </ButtonWidget>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteDeletePreset">
-                      <Children>
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="15" Text="@TextDeletePreset" />
-                      </Children>
-                    </ButtonWidget>
+                    </ListPanel>
                   </Children>
                 </ListPanel>
-                  </Children>
-                </ListPanel>
-                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginTop="3" Brush="FaceGen.Input.Text" Brush.FontSize="15" Brush.FontColor="#E8DCC8FF" Text="@StatusText" />
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="26" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" StackLayout.LayoutMethod="VerticalTopToBottom" IsVisible="@IsPresets">
                   <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" Command.Click="ExecuteClear">
-                      <Children><Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#3A2A1EFF" />
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="BlankWhiteSquare_9" Color="#C9A25EFF" IsVisible="false" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#1A120CFF" Brush.FontSize="15" Text="@TextClear" IsVisible="false" />
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="FaceGen.Input.Text" Brush.FontColor="#E8DCC8FF" Brush.FontSize="15" Text="@TextClear"  />
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="32" MarginTop="0" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                      <Children>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsSetsMale" Command.Click="ExecuteSetsMale" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@TextSetsMale" />
+                          </Children>
+                        </ButtonWidget>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Hair.Tab" IsSelected="@IsSetsFemale" Command.Click="ExecuteSetsFemale" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Hair.Text.Tab" Text="@TextSetsFemale" />
+                          </Children>
+                        </ButtonWidget>
+                      </Children>
+                    </ListPanel>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" MarginTop="2" Brush="FaceGen.Input.Text" Brush.FontSize="14" Text="@TextPresetHelp" />
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="36" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                      <Children>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button" Command.Click="ExecuteSavePreset" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Text.ButtonSmall" Text="@TextSavePreset" />
+                          </Children>
+                        </ButtonWidget>
+                      </Children>
+                    </ListPanel>
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginTop="4" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                      <Children>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteRenamePreset" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Text.ButtonSmall" Text="@TextRenamePreset" />
+                          </Children>
+                        </ButtonWidget>
+                        <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteDeletePreset" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Text.ButtonSmall" Text="@TextDeletePreset" />
+                          </Children>
+                        </ButtonWidget>
+                      </Children>
+                    </ListPanel>
+                  </Children>
+                </ListPanel>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="22" MarginTop="4" Brush="FaceGen.Input.Text" Brush.FontSize="15" Brush.FontColor="#F4E1C4FF" Text="@StatusText" />
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="30" MarginTop="2" StackLayout.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="2" MarginRight="2" Brush="Tvh.Button.Small" Command.Click="ExecuteClear" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+                      <Children>
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="4" MarginRight="4" Brush="Tvh.Text.ButtonSmall" Text="@TextClear" />
                       </Children>
                     </ButtonWidget>
                   </Children>
                 </ListPanel>
-
               </Children>
             </ListPanel>
           </Children>
-        </Widget>
+        </BrushWidget>
       </Children>
     </Widget>
   </Window>

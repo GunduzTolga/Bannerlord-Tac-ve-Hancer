@@ -20,6 +20,19 @@ Mod adı artık **Taç ve Hançer** (Launcher'da bu adla görünür). **Kademeye
 - [ ] **Esc → Mod Seçenekleri → Taç ve Hançer** açılıyor: Kurallar, Entrika, Harita grupları; eski ayarların (CheatMenu.txt) değerleri gelmiş
 - [ ] MCM'de bir ayarı değiştir → Insert → Kurallar'da da değişmiş; Kurallar'da değiştir → MCM'de de değişmiş
 
+### DLX Hair Layers: çalışıyor mu, yeni panel (23 Ekim, yeni; ekran görüntüsü çok işe yarar)
+Kullanıcı: "saç seçiyorum bir şey olmuyor", panel de çok kötü. Panel oyunun pencereleri gibi yeniden yapıldı (popup çerçevesi,
+oyunun düğme ve sekme resimleri, renk kutularında altın çerçeve; saç kartları oyunun kendi düzenleyici kartı). Bağlantılar aynı,
+bulutta GuiCheck paketli prefab denetimiyle doğrulandı; oyunda hiç açılmadı.
+- [ ] build.ps1: HairAddons için sarı "no models or images" uyarısı yok (varsa modun tam klasörünü third_party\HairAddons'a koy)
+- [ ] Kampanya açılınca kırmızı "saç modelleri yüklenmemiş" mesajı yok; `uyum_raporu.txt` en altta "Saç modelleri: yüklü", kart resimleri 37/37
+- [ ] Karakter düzenleyici > saç sekmesi: solda "Saç Katmanları" paneli oyunun penceresi gibi (koyu popup zemini, altın çerçeve);
+      yazılar okunuyor ve sığıyor (sekmeler: Kakül, Tutamlar, Modeller, Takımlar)
+- [ ] Bir karta tıkla: saç karakterde görünüyor; seçili katmanlar satırına ekleniyor; sağ tık kaldırıyor
+- [ ] Oturtma: yukarı/aşağı/öne/arkaya/sola/sağa/sıfırla düğmeleri ve simgeleri; Renk: kutular, seçilenin çerçevesi altın, açık/koyu/sıcak/soğuk
+- [ ] Takımlar: Erkek/Kadın, Kaydet, Yeniden adlandır, Sil; "Hepsini kaldır"
+- [ ] Karakter oluşturmada (yeni oyun, bizim hiçbir ekran açılmadan) da panelin yazıları görünüyor
+
 ### Tek mod: Diplomacy, DLX Hair Layers ve Women in Calradia içimizde (yeni, 20 Ekim)
 Üçü ayrı mod değil, Taç ve Hançer'in klasörüne paketlendi (`third_party\BENIOKU.md`). Ayrı klasörleri oyundan silindi,
 launcher listesinden çıkarıldı (yedek: `Configs\LauncherData.xml.yedek-20261020-000338`). Çevrimdışı doğrulandı: Diplomacy
@@ -67,7 +80,7 @@ Diplomacy'nin çevrilmemiş 118 metni ve mod yükleme uyarıları Türkçe; "tı
 - [ ] İsyan grubundayken klan liderine "Destekçi Kazan": konuşma satırları Türkçe mi, yazılar taşıyor mu
 - [ ] Hâlâ İngilizce kalan bir Diplomacy yazısı görürsen ekran görüntüsü at
 - [ ] **DLX saç katmanları ve Extra Complexion da Türkçe** (21 Ekim): karakter düzenleyicide "Saç Katmanları" paneli (Kakül, Tutamlar,
-      Saç modelleri, Takımlar) ve "Ek yara izleri" paneli (Yara izleri, Makyaj, Boya, Ten); envanterde "Kaskın altında saç". Yazılar
+      Modeller, Takımlar) ve "Ek yara izleri" paneli (Yara izleri, Makyaj, Boya, Ten); envanterde "Kaskın altında saç". Yazılar
       dar düğmelere sığıyor mu (taşan varsa ekran görüntüsü at, kısaltırım)
 - [ ] **Oyunun kendi "tımar"ı da "toprak":** Klan ekranında sekme "Topraklar"; Krallık ekranındaki sekme, ansiklopedi ve ipuçlarında da
       "Tımar" kalmamış olmalı (bütün oyun metinleri `FiefWordPatch`'ten geçiyor). Bir yerde hâlâ "tımar" görürsen ekran görüntüsü at;

@@ -23,8 +23,9 @@ dotnet run --project (Join-Path $PSScriptRoot 'tools\GuiCheck\GuiCheck.csproj') 
     (Join-Path $PSScriptRoot 'Module\GUI') (Join-Path $PSScriptRoot 'src\bin\Release\CheatMenu.dll') `
     (Join-Path $packages 'bannerlord.referenceassemblies.core\1.4.8.119303\ref\net472') `
     (Join-Path $packages 'bannerlord.referenceassemblies.sandbox\1.4.8.119303\ref\net472') `
-    (Join-Path $packages 'bannerlord.uiextenderex\2.13.3\lib\netstandard2.0') @gameArgs
-if ($LASTEXITCODE -ne 0) { throw 'Arayuz denetimi basarisiz: oyunda Entrika ekrani acilmayabilir' }
+    (Join-Path $packages 'bannerlord.uiextenderex\2.13.3\lib\netstandard2.0') @gameArgs `
+    --bundled (Join-Path $PSScriptRoot 'third_party')
+if ($LASTEXITCODE -ne 0) { throw 'Arayuz denetimi basarisiz: oyunda Entrika ekrani ya da paketli bir modun paneli acilmayabilir' }
 
 # Paketlenen modların DLL'leri oyunda yüklenebilir mi (oyunun "dependency conflict" uyarısının nedeni). Yalnızca oyun kuruluysa.
 if ($gameArgs.Count -gt 0) {

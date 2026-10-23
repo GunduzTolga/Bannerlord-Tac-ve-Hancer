@@ -493,4 +493,88 @@
     </SoundProperties>
   </Brush>
 
+  <!--
+    DLX Hair Layers paneli (karakter düzenleyicide, third_party\HairAddons\GUI\Prefabs\HairAddonsPanel.xml). Panel bizim ekranlarımızdan
+    önce açılabilir (karakter oluşturma): bu yüzden yazı tipleri açıkça yazılı ve hiçbiri TvhUi.GameLooks ile oyundan kopyalanmaz
+    (kopyalanan Tvh.Panel ve Tvh.Tab'ın oyun resimleri Klan ekranının kategorisinde, düzenleyicide yüklü değil). Resimler hep yüklü olanlar.
+  -->
+  <Brush Name="Tvh.Hair.Panel">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="StdAssets\Popup\canvas" />
+      <BrushLayer Name="Gradient" Sprite="StdAssets\Popup\canvas_gradient" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#8C6D3FFF" />
+    </Layers>
+    <Styles>
+      <Style Name="Default" />
+    </Styles>
+  </Brush>
+
+  <Brush Name="Tvh.Hair.Tab">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="button_default_9" IsHidden="true" />
+      <BrushLayer Name="Hovered" Sprite="button_default_hover_9" IsHidden="true" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" ColorFactor="0.8" AlphaFactor="0.85" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Hovered" ColorFactor="1.0" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Hovered" ColorFactor="0.8" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Hovered" ColorFactor="1.6" Color="#FFC349FF" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default" ColorFactor="0.5" AlphaFactor="0.6" IsHidden="false" HorizontalFlip="true" />
+      </Style>
+    </Styles>
+    <SoundProperties>
+      <EventSounds>
+        <EventSound EventName="Click" Audio="default" />
+      </EventSounds>
+    </SoundProperties>
+  </Brush>
+
+  <Brush Name="Tvh.Hair.Text.Tab" Font="Galahad" FontSize="17" TextHorizontalAlignment="Center" TextVerticalAlignment="Center">
+    <Styles>
+      <Style Name="Default" FontColor="#C9B696FF" TextOutlineAmount="0.1" TextGlowRadius="0" TextBlur="0" TextShadowOffset="1" TextShadowAngle="60" />
+      <Style Name="Hovered" FontColor="#F4E1C4FF" />
+      <Style Name="Pressed" FontColor="#F4E1C4FF" />
+      <Style Name="Selected" FontColor="#FEDBA6FF" />
+      <Style Name="Disabled" FontColor="#C9B696FF" TextAlphaFactor="0.45" />
+    </Styles>
+  </Brush>
+
+  <!-- Renk kutusu: içi rengin kendisi (prefab'daki çocuk), çerçevesi seçilince altın. -->
+  <Brush Name="Tvh.Hair.Swatch" TransitionDuration="0.085">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="rounded_canvas_9" Color="#1A120CFF" />
+      <BrushLayer Name="Frame" Sprite="rounded_frame_9" Color="#593F26FF" />
+    </Layers>
+    <Styles>
+      <Style Name="Default" />
+      <Style Name="Hovered">
+        <BrushLayer Name="Frame" ColorFactor="1.6" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Frame" ColorFactor="0.8" />
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Frame" Color="#FFC349FF" ColorFactor="1.3" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default" AlphaFactor="0.6" />
+        <BrushLayer Name="Frame" AlphaFactor="0.6" />
+      </Style>
+    </Styles>
+    <SoundProperties>
+      <EventSounds>
+        <EventSound EventName="Click" Audio="default" />
+      </EventSounds>
+    </SoundProperties>
+  </Brush>
+
 </Brushes>

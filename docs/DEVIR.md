@@ -206,8 +206,9 @@
    RuntimeDataCache içeriğini yazar, model yoksa kırmızı mesaj. Karar: modeller AssetPackages'ta duruyor ama yüklenmiyorsa paketleme
    onları kırıyor (Hair Layers ayrı modül olarak kalmalı ya da başka yol); hiç yoksa modun tam klasörünü third_party'ye koymak yeter.
    Ayrıca `Modules\CheatMenu\hairaddons.log` (oyun her açılışta siler; saç denedikten sonra oyun kapanmadan bak: "mesh not found").
-   Çalışınca panel (`third_party\HairAddons\GUI\Prefabs\HairAddonsPanel.xml`, 118 düz renkli kareyle çizilmiş) oyunun karakter
-   düzenleyicisi gibi yeniden yapılacak: önce oyunun `SandBox\GUI\Prefabs` FaceGen prefab'larına ve kullanıcının ekran görüntüsüne bak.
+   Panel (`third_party\HairAddons\GUI\Prefabs\HairAddonsPanel.xml`, eskiden 118 düz renkli kare) 23 Ekim'de oyunun pencereleri gibi
+   yeniden yapıldı (`Tvh.Hair.*` fırçaları; bağlantılar aynı, GuiCheck `--bundled` denetliyor); oyunda hiç açılmadı.
+   Düzenleyicinin kendi görünümüne daha da yaklaştırmak için oyunun `Native\GUI\Prefabs\FaceGen` prefab'larına bak (bulutta yok).
 
 ## Kullanıcının istedikleri (sıradaki işler)
 - ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`; barış için Barış Masası düğmesi).

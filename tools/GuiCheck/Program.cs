@@ -12,7 +12,8 @@ using System.Xml;
 //   - "@Ad" bağlantıları ViewModel'de [DataSourceProperty] olarak var mı, türleri uyuyor mu
 //   - "Command.Click" metotları ve "{Ad}" alt veri kaynakları var mı; liste şablonları doğru türle mi
 //   - fırçalar fırça dosyamızda, sprite'lar izinli listede mi; parça yolları (ClipRect, Handle...) bir Id'ye çıkıyor mu
-// Kullanım: GuiCheck <GUI klasörü> <CheatMenu.dll> <referans klasörü>...
+//   - "--bundled <third_party>": yeniden yaptığımız paketli mod prefab'ları da o modun DLL'ine karşı (BundledRoots)
+// Kullanım: GuiCheck <GUI klasörü> <CheatMenu.dll> <referans klasörü>... [--game <oyun>] [--bundled <third_party>]
 static class Program
 {
     // Hangi kök prefab hangi ViewModel ile açılır (UI/*.cs içindeki Movie sabitleriyle aynı).
@@ -33,6 +34,17 @@ static class Program
         "button_default_9", "button_default_hover_9", "done_button_9", "done_button_hover_9",
         "rounded_canvas_9", "rounded_frame_9", "stone_texture_continuous",
     };
+
+    // Paketli modların yeniden yaptığımız prefab'ları (third_party\<mod>\GUI\Prefabs): o modun ViewModel'ine ve parçalarına karşı.
+    // Ekran fırçaları ve sprite'ları prefab'ın açıldığı oyun ekranının kendi yükledikleri (modun o ekranda kullandığı bilinenler);
+    // yalnızca o prefab'da geçerli. Bizim fırçalarımızdan da oyundan kopyalananlar (GameLooks) "--game" ile ayrıca denetlenir.
+    static readonly (string Mod, string Prefab, string Vm, string[] ScreenBrushes, string[] ScreenSprites)[] BundledRoots =
+    {
+        ("HairAddons", "HairAddonsPanel", "HairAddons.HairPanelVM",
+            new[] { "FaceGen.Card", "FaceGen.Input.Text", "FaceGen.Scrollbar.Handle", "Stage.Title.Text" },
+            new[] { @"General\CharacterCreation\stone_divider" }),
+    };
+    static HashSet<string> ScreenBrushes = new HashSet<string>(), ScreenSprites = new HashSet<string>();
 
     // Prefab'larımızda doğrudan kullandığımız oyun fırçaları (sprite'ları da her zaman yüklü olmalı).
     static readonly HashSet<string> GameBrushes = new HashSet<string> { "Popup.Frame" };
@@ -57,6 +69,8 @@ static class Program
     static readonly Dictionary<string, string> PrefabFiles = new Dictionary<string, string>();
     static readonly HashSet<string> Brushes = new HashSet<string>();
     static readonly HashSet<string> Checked = new HashSet<string>();
+    // Oyunun düzen türleri (GridLayout, StackLayout...): prefab yükleyicisi "LayoutImp" değerini bu adla kurar.
+    static readonly HashSet<string> LayoutTypes = new HashSet<string>();
     static readonly HashSet<string> UsedPrefabs = new HashSet<string>();
     // Fırça -> onu kullanan kök prefab'lar (oyundan kopyalanan fırçaların sprite kategorisi buna göre denetlenir).
     static readonly Dictionary<string, HashSet<string>> BrushRoots = new Dictionary<string, HashSet<string>>();
@@ -68,20 +82,17 @@ static class Program
 
     static int Main(string[] args)
     {
-        string game = null;
-        int gameArg = Array.IndexOf(args, "--game");
-        if (gameArg >= 0 && gameArg + 1 < args.Length)
-        {
-            game = args[gameArg + 1];
-            args = args.Where((_, i) => i != gameArg && i != gameArg + 1).ToArray();
-        }
+        string game = Option(ref args, "--game"), bundled = Option(ref args, "--bundled");
         if (args.Length < 3)
         {
-            Console.WriteLine("Kullanım: GuiCheck <GUI klasörü> <CheatMenu.dll> <referans klasörü>... [--game <oyun klasörü>]");
+            Console.WriteLine("Kullanım: GuiCheck <GUI klasörü> <CheatMenu.dll> <referans klasörü>... [--game <oyun klasörü>] [--bundled <third_party>]");
             return 2;
         }
         string gui = args[0];
         var dirs = args.Skip(2).ToList();
+        // Paketli modların DLL'leri (ViewModel'leri ve özel parçaları için) referanslarla birlikte yüklenir.
+        if (bundled != null)
+            foreach (var b in BundledRoots) dirs.Add(Path.Combine(bundled, b.Mod, "bin", "Win64_Shipping_Client"));
         var paths = dirs.SelectMany(d => Directory.GetFiles(d, "*.dll")).ToList();
         paths.Add(args[1]);
         paths.AddRange(Directory.GetFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "*.dll"));
@@ -99,6 +110,9 @@ static class Program
             foreach (Type t in SafeTypes(a))
                 if (!t.IsAbstract && IsWidget(t) && !WidgetTypes.ContainsKey(t.Name)) WidgetTypes[t.Name] = t;
         Console.WriteLine(WidgetTypes.Count + " parça türü yüklendi");
+        foreach (Assembly a in assemblies)
+            foreach (Type t in SafeTypes(a))
+                if (!t.IsAbstract && Implements(t, "TaleWorlds.GauntletUI.Layout.ILayout")) LayoutTypes.Add(t.Name);
 
         foreach (string file in Directory.GetFiles(Path.Combine(gui, "Brushes"), "*.xml", SearchOption.AllDirectories))
         {
@@ -133,6 +147,7 @@ static class Program
             CheckPrefab(pair.Key, vm);
         }
         foreach (string unused in Prefabs.Keys.Where(k => !UsedPrefabs.Contains(k))) Error(PrefabFiles[unused], "hiçbir yerde kullanılmayan prefab");
+        if (bundled != null) CheckBundled(bundled, assemblies);
         if (game != null) CheckGameAssets(game);
         else Console.WriteLine("Oyun klasörü verilmedi: oyun sprite, fırça ve prefab'ları yalnızca izinli listeye göre denetlendi");
 
@@ -140,6 +155,39 @@ static class Program
         if (Foreign > 0) Console.WriteLine(Foreign + " alt ağaç başka bir modun ViewModel'ine bağlı (o modun prefab'ından alındı): denetlenmedi");
         Console.WriteLine(Errors.Count == 0 ? "ARAYÜZ DENETİMİ GEÇTİ (" + Prefabs.Count + " prefab, " + Brushes.Count + " fırça)" : Errors.Count + " hata");
         return Errors.Count == 0 ? 0 : 1;
+    }
+
+    static string Option(ref string[] args, string name)
+    {
+        int at = Array.IndexOf(args, name);
+        if (at < 0 || at + 1 >= args.Length) return null;
+        string value = args[at + 1];
+        args = args.Where((_, i) => i != at && i != at + 1).ToArray();
+        return value;
+    }
+
+    /// <summary>Paketli modların yeniden yaptığımız prefab'ları (BundledRoots): parçalar, bağlantılar, fırçalar ve sprite'lar.</summary>
+    static void CheckBundled(string bundled, List<Assembly> assemblies)
+    {
+        foreach (var b in BundledRoots)
+        {
+            string file = Path.Combine(bundled, b.Mod, "GUI", "Prefabs", b.Prefab + ".xml");
+            if (!File.Exists(file)) { Error(file, "paketli prefab bulunamadı"); continue; }
+            Type vm = Find(assemblies, b.Vm);
+            if (vm == null) { Error(file, "ViewModel bulunamadı: " + b.Vm); continue; }
+            var doc = new XmlDocument();
+            doc.Load(file);
+            if (!(doc.SelectSingleNode("/Prefab/Window/*") is XmlElement root)) { Error(file, "Prefab/Window altında kök parça yok"); continue; }
+            Prefabs[b.Prefab] = root;
+            PrefabFiles[b.Prefab] = file;
+            ScreenBrushes = new HashSet<string>(b.ScreenBrushes);
+            ScreenSprites = new HashSet<string>(b.ScreenSprites);
+            CurrentRoot = b.Prefab;
+            CheckPrefab(b.Prefab, vm);
+            ScreenBrushes = new HashSet<string>();
+            ScreenSprites = new HashSet<string>();
+            Console.WriteLine("Paketli prefab denetlendi: " + b.Mod + "/" + b.Prefab + " (" + b.Vm + ")");
+        }
     }
 
     /// <summary>
@@ -185,6 +233,13 @@ static class Program
             foreach (XmlElement b in doc.SelectNodes("//Brush"))
                 gameBrushLayers[b.GetAttribute("Name")] = b.SelectNodes(".//BrushLayer").Cast<XmlElement>()
                     .SelectMany(l => new[] { l.GetAttribute("Sprite"), l.GetAttribute("OverlaySprite") }).Where(s => s.Length > 0).ToList();
+        }
+        foreach (var b in BundledRoots)
+        {
+            foreach (string brush in b.ScreenBrushes)
+                if (!gameBrushLayers.ContainsKey(brush)) Error(b.Prefab + " ekran fırçası", "oyunda böyle bir fırça yok: " + brush);
+            foreach (string sprite in b.ScreenSprites)
+                if (!category.ContainsKey(sprite)) Error(b.Prefab + " ekran sprite'ı", "oyunda böyle bir sprite yok: " + sprite);
         }
         foreach (string brush in GameBrushes)
         {
@@ -292,6 +347,12 @@ static class Program
                     continue;
                 }
                 if (name.StartsWith("Parameter.")) { Error(where, "parametreli prefab kullanılmıyor: " + name); continue; }
+                if (name == "LayoutImp")
+                {
+                    // Özellik dışarıdan yazılamaz; oyunun prefab yükleyicisi düzeni adıyla kurar (ör. GridLayout).
+                    if (!LayoutTypes.Contains(value)) Error(where, "LayoutImp=" + value + ": oyunda böyle bir düzen yok");
+                    continue;
+                }
                 Type propType = WidgetPropertyType(widget, name, out string problem);
                 if (propType == null) { Error(where, problem); continue; }
                 if (value.StartsWith("@"))
@@ -352,13 +413,13 @@ static class Program
         }
         else if (type.Name == "Brush")
         {
-            if (!Brushes.Contains(value)) Error(where, "fırça yok: " + value);
+            if (!Brushes.Contains(value) && !ScreenBrushes.Contains(value)) Error(where, "fırça yok: " + value);
             if (!BrushRoots.TryGetValue(value, out HashSet<string> roots)) BrushRoots[value] = roots = new HashSet<string>();
             roots.Add(CurrentRoot);
         }
         else if (type.Name == "Sprite")
         {
-            if (!AllowedSprites.Contains(value)) Error(where, "izinsiz sprite: " + value);
+            if (!AllowedSprites.Contains(value) && !ScreenSprites.Contains(value)) Error(where, "izinsiz sprite: " + value);
         }
         else if (IsWidget(type))
         {
@@ -415,6 +476,12 @@ static class Program
     static bool IsWidget(Type t) => DerivesFrom(t, WidgetBase);
 
     static bool IsViewModel(Type t) => DerivesFrom(t, ViewModelType);
+
+    static bool Implements(Type t, string interfaceName)
+    {
+        try { return t.GetInterfaces().Any(i => i.FullName == interfaceName); }
+        catch { return false; }
+    }
 
     static bool DerivesFrom(Type t, Type baseType)
     {
