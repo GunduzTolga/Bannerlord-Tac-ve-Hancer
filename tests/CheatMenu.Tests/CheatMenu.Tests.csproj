@@ -19,6 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="SaveRoundTrip.cs" />
     <Compile Include="..\..\src\AmountParser.cs" Link="AmountParser.cs" />
     <Compile Include="..\..\src\NameRules.cs" Link="NameRules.cs" />
     <Compile Include="..\..\src\ModSettings.cs" Link="ModSettings.cs" />

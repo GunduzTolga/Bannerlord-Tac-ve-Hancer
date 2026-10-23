@@ -5,7 +5,7 @@ using CheatMenu.Intrigue.Core;
 
 namespace CheatMenu.Tests
 {
-    internal static class Program
+    internal static partial class Program
     {
         private static int _failures;
 
@@ -170,6 +170,7 @@ namespace CheatMenu.Tests
             Check("intrigue: null -> empty", IntrigueState.Parse(null).SaveTestMarker == null);
             Check("intrigue: garbage -> empty", IntrigueState.Parse("çöp\\x\n\t\t").SaveTestMarker == null);
 
+            SaveRoundTripTests();
             IntrigueMathTests();
             IntrigueE2MathTests();
             SettlementSchemeTests();
