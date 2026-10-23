@@ -49,6 +49,39 @@ namespace CheatMenu.Bundle
             var roleEffectsHeight = AccessTools.PropertyGetter("CompanionAutonomy.ClanPartyBudgetMixin:CARoleEffectsHeight");
             if (roleEffectsHeight != null && roleEffectsHeight.ReturnType == typeof(float))
                 harmony.Patch(roleEffectsHeight, postfix: new HarmonyMethod(typeof(BundleShim), nameof(RoleEffectsHeight)));
+
+            // DLX Hair Layers'ın savaş davranışında hata yakalama yok: savaşın ortasındaki bir istisna oyunu masaüstüne atar (22 Ekim deniz
+            // savaşı çökmesinin adayı). Hata verirse o savaşta saç katmanları durur, oyun sürer; hata çökme kaydına yazılır.
+            foreach (string name in new[] { "OnAgentBuild", "OnAgentDeleted", "OnMissionTick" })
+            {
+                var hairMission = AccessTools.Method("HairAddons.HairAddonsMissionBehavior:" + name);
+                if (hairMission != null)
+                    harmony.Patch(hairMission, prefix: new HarmonyMethod(typeof(BundleShim), nameof(HairMissionPrefix)),
+                        finalizer: new HarmonyMethod(typeof(BundleShim), nameof(HairMissionFinalizer)));
+            }
+        }
+
+        /// <summary>Hata veren saç katmanı davranışı: o savaşta bir daha çalışmaz (yeni savaşta yenisi kurulur).</summary>
+        private static readonly WeakReference BrokenHairMission = new WeakReference(null);
+
+        private static bool HairMissionPrefix(object __instance) => !ReferenceEquals(BrokenHairMission.Target, __instance);
+
+        /// <summary>null: istisna yutulur, savaş sürer.</summary>
+        private static Exception HairMissionFinalizer(object __instance, Exception __exception)
+        {
+            if (__exception == null) return null;
+            BrokenHairMission.Target = __instance;
+            CrashLog.Note("DLX Hair Layers savaşta hata verdi (oyun sürdü, saç katmanları bu savaş için durdu)", __exception.ToString());
+            Debug.Print("[CheatMenu] DLX Hair Layers mission error: " + __exception);
+            try
+            {
+                Menu.MenuUI.Error("DLX Hair Layers bu savaşta hata verdi; saç katmanları bu savaş için kapatıldı.");
+            }
+            catch
+            {
+                // Mesaj gösterilemezse de savaş sürsün.
+            }
+            return null;
         }
 
         /// <summary>

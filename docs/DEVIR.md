@@ -190,6 +190,14 @@
 4. **Haritadaki savaş yorgunluğu afişinde "ENTRİKA" yazıyor** (Diplomacy'nin 25 ⚑ 68 göstergesi). Olması gereken krallık adı ya da
    "Savaş". Bizim bir metnimiz/dil dosyamız ya da harita çubuğu düğmemiz (`src/UI/MapBarButton.cs`, `MapBar.Left.*` fırçalarına katman
    ekliyor) Diplomacy'ninkiyle çakışıyor olabilir — kontrol et.
+5. **Deniz savaşında oyundan attı** (22 Ekim akşamı, kullanıcı). Kayıt henüz yok. Kodda bakıldı: bizim savaş hilesi (`CheatMissionLogic`),
+   olay dinleyicileri ve her kare çalışan işler hata yakalıyor; hasar modeli (`CutThroughDamageModel`) oyunun 34 abstract üyesinin
+   hepsini (gemi ateşi dahil) önceki modele devrediyor (virtual üye yok). Paketlilerde savaşa giren tek kod DLX Hair Layers'ın
+   `HairAddonsMissionBehavior`'ı: hata yakalaması yok, ajanların görünümüne mesh ekliyor; yazarı onun için `mission_hook.txt` kapatma
+   düğmesi bile koymuş. 23 Ekim: `BundleShim` onu Harmony finalizer'la sarıyor (hata yutulur, o savaşta saç katmanları durur, kırmızı
+   mesaj + `cokme_*.txt`). Yerel (native) çökmeyse bu kurtarmaz. Bakılacaklar: `Configs\TacVeHancer\cokme_20261022.txt`,
+   `<oyun>\Modules\CheatMenu\hairaddons.log`, `C:\ProgramData\Mount and Blade II Bannerlord\crashes\` en yeni klasör; savaşta hangi
+   hileler açıktı (ölümsüzlük, tek vuruş, cephane, herkesi biç).
 
 ## Kullanıcının istedikleri (sıradaki işler)
 - ~~Savaş Raporu (Diplomacy) ekranını geliştir~~ (21 Ekim yapıldı: `UI.WarReportScreen`; barış için Barış Masası düğmesi).

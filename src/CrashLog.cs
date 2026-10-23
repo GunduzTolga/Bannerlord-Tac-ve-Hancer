@@ -34,6 +34,9 @@ namespace CheatMenu
             AppDomain.CurrentDomain.FirstChanceException += OnFirstChance;
         }
 
+        /// <summary>Yakalanıp yutulan ama kaydı gereken bir hata (ör. paketli bir modun savaşta verdiği).</summary>
+        public static void Note(string title, string body) => Write(title, body);
+
         private static void OnUnhandled(object sender, UnhandledExceptionEventArgs e) =>
             Write("ÇÖKME: yakalanmayan istisna (oyun kapanıyor)", e.ExceptionObject?.ToString() ?? "(istisna nesnesi yok)");
 
